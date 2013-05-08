@@ -12,7 +12,7 @@ To deploy this app you need the following Libraries in your Eclipse workspace:
 	Extract the directory library from the downloaded file and create a android library project named ActionBarSherlock with it.
 
 * GuiLib (Combination of the following libraries below
-	Can be checked out from google code too: see http://code.google.com/p/guilib for further instructions
+	Can be checked out from google code too: see https://github.com/gandulf/GuiLib for further instructions
 	Create a library project named GuiLib.
 
 	* Drag Sort list
