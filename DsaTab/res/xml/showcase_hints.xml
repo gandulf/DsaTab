@@ -1,0 +1,46 @@
+<hints>
+
+    <fragment name="CharacterFragment">
+        <hint
+            id="PROBE_DICE_MU"
+            description="Um eine Probe zu würfeln, klicke einfach auf diese mit Kreisen markierten Werte.\n\n Zum Editieren, klicke lange auf den Wert (manche Werte sind nicht editierbar)."
+            title="Probe würfeln"
+            viewId="@id/attr_mu"/>        
+    </fragment>
+    
+    <fragment name="FightFragment">
+        <hint
+            id="FIGHT_PICKER_SWITCH"
+            description="Hier kannst du die unterschiedlichen Werten durchwechseln (LE,Ae,KE,AU,ERS,INI). \n\n Durch einen langen Klick auf INI wird eine Probe mit dem aktuellen Wert gewürfelt."
+            title="Schnellzugriff"
+            viewId="@id/fight_btn_picker"/>
+        <hint
+            id="FIGHT_VARIANT_SWITCH"
+            description="Manche Waffen verfügen über unterschiedliche Varianten (ein-/zweihändig, Wurfwaffe/Nahkampf). Um zwischen den Varianten zu wechseln klick in der Kampfübersicht lange auf den Eintrag, falls die Option in der Actionbar erscheint verfügt die Waffe über Varianten und du kannst zwischen ihnen wechseln."
+            title="Varianten"
+            viewId="@id/fight_list"/>
+                
+        <hint
+            id="FIGHT_CUSTOM_MODIFIER"
+            description="Um auch auf im Regelwerk nicht vorgesehene Modifikatoren reagieren zu können, kannst du beliebig viele Modifikatoren für deinen Charakter definieren.\nUm einen Modifikator zu erstellen klicke in der Kampfübersicht auf das Plussymbol neben der Modifikatorüberschrift.\n\nDu kannst bei einem Modifikator beliebig viele Regeln (durch Beistriche getrennt) hinzufügen. Eine Regel besteht immer aus einem Bezeichner für den Wert der angepasst werden soll und einer Zahl, die angibt um wieviel der Wert verändert werden soll z.B.: MU+5 oder AT-2. Zusätzlich zu den Abkürzungen für die einzelnen Werte (MU, IN, KL, AT, PA, MR, AW, ...) kannst du auch die Schlüsselwörter Zauber, Talente und Liturigen verwenden."
+            title="Zusätzliche Modifikatoren"
+            viewId="@id/fight_modifiers_add"/>        
+    </fragment>
+    <fragment name="ItemsFragment">
+        <hint
+            id="ITEMS_CONTAINER_MENU"
+            description="Du kannst deine Behälter bearbeiten und neue hinzufügen, indem du lange auf die Liste klickst."
+            title="Behälter bearbeiten"
+            viewId="@id/container_list"/>
+    </fragment>
+    
+    <fragment name="DiceSlider">
+        <hint
+            id="PROBE_MANUAL_MODIFIER"
+            description="Wird eine Probe durch den Spielleiter noch zusätzlich erschwert oder erleichtert, kannst du dies beim Probenwurf nachträglich anpassen. Klicke hierzu auf die Infozeile, es erscheint dann ein Popup in dem sämtliche Modifikatoren der Probe aufgelistet werden und du eine manuelle Erschwernis hinzufügen kannst."
+            title="Zusätzliche Probenzuschläge"
+            viewId="@id/dice_info"/>
+        
+    </fragment>
+
+</hints>

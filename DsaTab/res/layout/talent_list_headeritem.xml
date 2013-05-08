@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.dsatab.view.CheckableFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:paddingRight="6dp"
+    android:paddingLeft="6dp">
+
+    <TextView
+        android:id="@+id/talent_list_headeritem"
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="40dip"
+        android:ellipsize="end"
+        android:text="Groupname" />
+
+    <ImageView
+        android:id="@+id/talent_list_item_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|right"
+        android:src="@drawable/indicator_house"
+        android:visibility="invisible" />
+
+</com.dsatab.view.CheckableFrameLayout>

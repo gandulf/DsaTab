@@ -1,0 +1,32 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/option_item_add_table"
+        android:icon="?attr/imgBarSwordAdd"
+        android:showAsAction="withText|ifRoom"
+        android:title="Gegenstand hinzufügen"/>
+    <item
+        android:id="@+id/option_itemgrid_set"
+        android:icon="?attr/imgBarSet"
+        android:showAsAction="withText|always"
+        android:title="Set">
+        <menu>
+            <item
+                android:id="@+id/option_itemgrid_set1"
+                android:icon="?attr/imgBarSet1"
+                android:showAsAction="withText"
+                android:title="Set 1"/>
+            <item
+                android:id="@+id/option_itemgrid_set2"
+                android:icon="?attr/imgBarSet2"
+                android:showAsAction="withText"
+                android:title="Set 2"/>
+            <item
+                android:id="@+id/option_itemgrid_set3"
+                android:icon="?attr/imgBarSet3"
+                android:showAsAction="withText"
+                android:title="Set 3"/>
+        </menu>
+    </item>
+
+</menu>

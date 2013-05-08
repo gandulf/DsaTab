@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true" >
+
+    <TableLayout
+        android:id="@+id/popup_spell_table"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:shrinkColumns="1"
+        android:stretchColumns="0,1" >
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                style="@style/TextLabel.Popup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Zauberdauer" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/popup_spell_castduration"
+                style="@style/TextValue.NoTouch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right|center_vertical"
+                android:text="10SP" >
+            </TextView>
+
+            <EditText
+                android:id="@+id/popup_spell_castduration_edit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:inputType="text"
+                android:visibility="gone" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                style="@style/TextLabel.Popup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Probe" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/popup_spell_probe"
+                style="@style/TextValue.NoTouch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right|center_vertical"
+                android:text="" >
+            </TextView>
+
+            <EditText
+                android:id="@+id/popup_spell_probe_edit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:inputType="text"
+                android:visibility="gone" />
+        </TableRow>
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                style="@style/TextLabel.Popup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kosten" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/popup_spell_costs"
+                style="@style/TextValue.NoTouch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right|center_vertical"
+                android:text="10SP" >
+            </TextView>
+
+            <EditText
+                android:id="@+id/popup_spell_costs_edit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:inputType="text"
+                android:visibility="gone" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                style="@style/TextLabel.Popup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ziel" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/popup_spell_target"
+                style="@style/TextValue.NoTouch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right|center_vertical"
+                android:text="1 Person" >
+            </TextView>
+
+            <EditText
+                android:id="@+id/popup_spell_target_edit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:inputType="text"
+                android:visibility="gone" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                style="@style/TextLabel.Popup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reichweite" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/popup_spell_range"
+                style="@style/TextValue.NoTouch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right|center_vertical"
+                android:text="10Schritt" >
+            </TextView>
+
+            <EditText
+                android:id="@+id/popup_spell_range_edit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:inputType="text"
+                android:visibility="gone" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                style="@style/TextLabel.Popup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="5dp"
+                android:text="Wirkungsdauer" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/popup_spell_effectduration"
+                style="@style/TextValue.NoTouch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right|center_vertical"
+                android:text="10Schritt" >
+            </TextView>
+
+            <EditText
+                android:id="@+id/popup_spell_effectduration_edit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:inputType="text"
+                android:visibility="gone" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                style="@style/TextLabel.Popup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wirkung" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/popup_spell_effect"
+                style="@style/TextValue.NoTouch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right|center_vertical"
+                android:textStyle="normal" >
+            </TextView>
+
+            <EditText
+                android:id="@+id/popup_spell_effect_edit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:inputType="text"
+                android:visibility="gone" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                style="@style/TextLabel.Popup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="5dp"
+                android:text="Merkmal" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/popup_spell_merkmal"
+                style="@style/TextValue.NoTouch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right|center_vertical"
+                android:text="Objekt" />
+
+            <EditText
+                android:id="@+id/popup_spell_merkmal_edit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:inputType="text"
+                android:visibility="gone" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                style="@style/TextLabel.Popup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="5dp"
+                android:text="Repräsentation" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/popup_spell_representation"
+                style="@style/TextValue.NoTouch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right|center_vertical"
+                android:text="Magier" >
+            </TextView>
+
+            <EditText
+                android:id="@+id/popup_spell_representation_edit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:inputType="text"
+                android:visibility="gone" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                style="@style/TextLabel.Popup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quelle" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/popup_spell_source"
+                style="@style/TextValue.NoTouch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right|center_vertical" >
+            </TextView>
+
+            <EditText
+                android:id="@+id/popup_spell_source_edit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:inputType="text"
+                android:visibility="gone" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                style="@style/TextLabel.Popup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Komplexität" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/popup_spell_complexity"
+                style="@style/TextValue.NoTouch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right|center_vertical" >
+            </TextView>
+
+            <EditText
+                android:id="@+id/popup_spell_complexity_edit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:inputType="text"
+                android:visibility="gone" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/popup_spell_hero_values_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="3"
+                android:text="Charakter spezifische Werte" >
+            </TextView>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/popup_spell_row_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                style="@style/TextLabel.Popup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kommentar" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/popup_spell_comment"
+                style="@style/TextValue.NoTouch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right|center_vertical"
+                android:textStyle="normal" >
+            </TextView>
+
+            <EditText
+                android:id="@+id/popup_spell_comment_edit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:inputType="text"
+                android:visibility="gone" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/popup_spell_row_variant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                style="@style/TextLabel.Popup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Variante" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/popup_spell_variant"
+                style="@style/TextValue.NoTouch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right|center_vertical" >
+            </TextView>
+
+            <EditText
+                android:id="@+id/popup_spell_variant_edit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:inputType="text"
+                android:visibility="gone" />
+        </TableRow>
+    </TableLayout>
+
+</ScrollView>

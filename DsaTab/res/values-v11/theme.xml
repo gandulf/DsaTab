@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>    
+    <style name="DsaTabTheme.Dark" parent="@DsaTabTheme.__Dark">    
+        
+        <!-- Holo generated styles -->
+        <item name="android:editTextBackground">@drawable/edit_text_holo_dark</item>
+        <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewDsaTabDark</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_holo_dark</item>
+        <item name="android:listChoiceIndicatorSingle">@drawable/btn_radio_holo_dark</item>
+        <item name="android:buttonStyle">@style/ButtonDsaTabDark</item>
+        <item name="android:imageButtonStyle">@style/ImageButtonDsaTabDark</item>
+        <item name="android:dropDownSpinnerStyle">@style/SpinnerDsaTabDark</item>
+        <item name="android:progressBarStyleHorizontal">@style/ProgressBarDsaTabDark</item>
+        <item name="android:seekBarStyle">@style/SeekBarDsaTabDark</item>
+        <item name="android:ratingBarStyle">@style/RatingBarDsaTabDark</item>
+        <item name="android:ratingBarStyleIndicator">@style/RatingBarBigDsaTabDark</item>
+        <item name="android:ratingBarStyleSmall">@style/RatingBarSmallDsaTabDark</item>
+        <item name="android:buttonStyleToggle">@style/ToggleDsaTabDark</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_holo_dark</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo_dark</item>
+        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb_holo</item>
+        <!-- Holo generated styles -->
+        
+        <!--  ActionBar styles -->
+        <item name="actionBarItemBackground">@drawable/selectable_background_dsatabdark</item>
+        <item name="popupMenuStyle">@style/dsatabdark_PopupMenu</item>
+        <item name="dropDownListViewStyle">@style/dsatabdark_DropDownListView</item>
+        <item name="actionBarTabStyle">@style/dsatabdark_ActionBarTabStyle</item>
+        <item name="actionDropDownStyle">@style/dsatabdark_DropDownNav</item>
+        <item name="actionBarStyle">@style/dsatabdark_transparent_ActionBar</item>
+
+        <item name="android:actionBarItemBackground">@drawable/selectable_background_dsatabdark</item>
+        <item name="android:popupMenuStyle">@style/dsatabdark_PopupMenu</item>
+        <item name="android:dropDownListViewStyle">@style/dsatabdark_DropDownListView</item>
+        <item name="android:actionBarTabStyle">@style/dsatabdark_ActionBarTabStyle</item>
+        <item name="android:actionDropDownStyle">@style/dsatabdark_DropDownNav</item>
+        <item name="android:actionBarStyle">@style/dsatabdark_transparent_ActionBar</item>
+        <item name="android:panelBackground">@drawable/menu_hardkey_panel_dsatabdark</item>
+        <!--  ActionBar styles -->        
+    </style>
+    
+    <style name="Theme.Dialog.Dark" parent="@Theme.Dialog.__Dark">                        
+        <!-- Holo generated styles -->
+        <item name="android:editTextBackground">@drawable/edit_text_holo_dark</item>
+        <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewDsaTabDark</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_holo_dark</item>
+        <item name="android:listChoiceIndicatorSingle">@drawable/btn_radio_holo_dark</item>
+        <item name="android:buttonStyle">@style/ButtonDsaTabDark</item>
+        <item name="android:imageButtonStyle">@style/ImageButtonDsaTabDark</item>
+        <item name="android:dropDownSpinnerStyle">@style/SpinnerDsaTabDark</item>
+        <item name="android:progressBarStyleHorizontal">@style/ProgressBarDsaTabDark</item>
+        <item name="android:seekBarStyle">@style/SeekBarDsaTabDark</item>
+        <item name="android:ratingBarStyle">@style/RatingBarDsaTabDark</item>
+        <item name="android:ratingBarStyleIndicator">@style/RatingBarBigDsaTabDark</item>
+        <item name="android:ratingBarStyleSmall">@style/RatingBarSmallDsaTabDark</item>
+        <item name="android:buttonStyleToggle">@style/ToggleDsaTabDark</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_holo_dark</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo_dark</item>
+        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb_holo</item>
+        <!-- Holo generated styles -->               
+    </style>
+    
+    
+</resources>

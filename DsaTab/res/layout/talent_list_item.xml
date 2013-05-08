@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.dsatab.view.CheckableFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:background="?attr/listItemBackground"
+    android:paddingRight="6dp"
+    android:paddingLeft="6dp">
+    
+    <ImageView
+        android:id="@+id/talent_list_item_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|right"
+        android:src="@drawable/indicator_house"
+        android:visibility="invisible" />
+    
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:paddingRight="3dp"
+    android:weightSum="1.0">
+
+    <TextView
+        android:id="@+id/talent_list_item_text1"
+        style="@style/TextLabel"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.3"        
+        android:gravity="center_vertical"        
+        android:layout_gravity="center_vertical"/>
+
+    <TextView
+        android:id="@+id/talent_list_item_text2"
+        style="@style/TextLabel.Small"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.15"
+        android:gravity="center_vertical"       
+        android:layout_gravity="center_vertical"/>
+
+    <TextView
+        android:id="@+id/talent_list_item_text3"
+        style="@style/TextLabel.Small"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.3"        
+        android:gravity="center_vertical"        
+        android:layout_gravity="center_vertical"/>
+
+    <TextView
+        android:id="@+id/talent_list_item_text4"
+        style="@style/TextValue"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center_vertical"
+        android:layout_weight="0.125" />
+
+    <TextView
+        android:id="@+id/talent_list_item_text5"
+        style="@style/TextValue"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginLeft="3dp"
+        android:layout_weight="0.125" />
+
+    
+
+</LinearLayout>
+
+</com.dsatab.view.CheckableFrameLayout>

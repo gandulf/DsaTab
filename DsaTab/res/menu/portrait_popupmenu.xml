@@ -1,0 +1,24 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/option_pick_avatar"
+        android:icon="?attr/imgBarUser"
+        android:showAsAction="withText|ifRoom"
+        android:title="Portrait auswählen"/>
+    <item
+        android:id="@+id/option_view_portrait"
+        android:icon="?attr/imgBarView"
+        android:showAsAction="withText|ifRoom"
+        android:title="Portrait anzeigen"/>
+    <item
+        android:id="@+id/option_take_photo"
+        android:icon="?attr/imgBarCamera"
+        android:showAsAction="withText|ifRoom"
+        android:title="Photo aufnehmen"/>
+    <item
+        android:id="@+id/option_pick_image"
+        android:icon="?attr/imgBarView"
+        android:showAsAction="withText|ifRoom"
+        android:title="Galerie öffnen"/>
+
+</menu>

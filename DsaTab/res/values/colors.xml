@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<color name="Darker">#AA000000</color>
+	<color name="Brighter">#66FFFFFF</color>
+	
+	<color name="RowEven">#11000000</color>
+	<color name="RowOdd">#11FFFFFF</color>
+	<color name="RowFavoriteEven">#22005500</color>
+	<color name="RowFavoriteOdd">#22AAFFAA</color>	
+	<color name="RowUnusedEven">#22550000</color>
+	<color name="RowUnusedOdd">#22FFAAAA</color>
+	
+	<color name="ValueRed">#FFCC0000</color>
+	<color name="ValueGreen">#FF669900</color>
+		
+	<color name="delete_color_filter">#88FF0000</color>
+	<color name="accept_color_filter">#3300FF00</color>
+	<color name="reject_color_filter">#33FF0000</color>
+	
+	<!--  Actionbar colors -->
+	<color name="pressed_dsatablight">#CCcc0000</color>
+	<color name="pressed_dsatabdark">#CCcc0000</color>
+	<!--  Actionbar colors -->
+</resources>

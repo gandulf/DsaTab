@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/inc_attributes"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/black"
+    android:orientation="horizontal"
+    android:padding="4dp" >
+
+    <TextView
+        android:id="@+id/attr_name"
+        style="@style/TextValue.Small.NoTouch.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:gravity="left|center_vertical"
+        android:singleLine="true"
+        android:text="Character Name" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_le_label"
+        style="@style/TextLabel.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="1dp"
+        android:text="LE" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_le"
+        style="@style/TextValue.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="2.5dp" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_au_label"
+        style="@style/TextLabel.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="1dp"
+        android:text="AU" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_au"
+        style="@style/TextValue.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="2.5dp" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_ae_label"
+        style="@style/TextLabel.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="1dp"
+        android:text="AE" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_ae"
+        style="@style/TextValue.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="2.5dp" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_ke_label"
+        style="@style/TextLabel.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="1dp"
+        android:text="KE" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_ke"
+        style="@style/TextValue.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="2.5dp" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_be_label"
+        style="@style/TextLabel.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="1dp"
+        android:text="BE" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_be"
+        style="@style/TextValue.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="2.5dp" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_mr_label"
+        style="@style/TextLabel.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="1dp"
+        android:text="MR" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_mr"
+        style="@style/TextValue.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="2.5dp" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_gs_label"
+        style="@style/TextLabel.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="1dp"
+        android:text="GS" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_gs"
+        style="@style/TextValue.Small.NoTouch.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="2.5dp"
+        android:text="10" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_ws_label"
+        style="@style/TextLabel.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="1dp"
+        android:text="WS" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_ws"
+        style="@style/TextValue.Small.NoTouch.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_mu_label"
+        style="@style/TextLabel.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="0"
+        android:paddingRight="1dip"
+        android:singleLine="true"
+        android:text="MU" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_mu"
+        style="@style/TextValue.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_weight="0"
+        android:ellipsize="none"
+        android:singleLine="true" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_kl_label"
+        style="@style/TextLabel.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:paddingRight="1dip"
+        android:singleLine="true"
+        android:text="KL" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_kl"
+        style="@style/TextValue.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_weight="0"
+        android:ellipsize="none"
+        android:singleLine="true" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_in_label"
+        style="@style/TextLabel.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:paddingRight="1dip"
+        android:singleLine="true"
+        android:text="IN" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_in"
+        style="@style/TextValue.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_weight="0"
+        android:ellipsize="none"
+        android:singleLine="true" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_ch_label"
+        style="@style/TextLabel.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:paddingRight="1dip"
+        android:singleLine="true"
+        android:text="CH" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_ch"
+        style="@style/TextValue.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_weight="0"
+        android:ellipsize="none"
+        android:singleLine="true" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_ff_label"
+        style="@style/TextLabel.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:paddingRight="1dip"
+        android:singleLine="true"
+        android:text="FF" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_ff"
+        style="@style/TextValue.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_weight="0"
+        android:ellipsize="none"
+        android:singleLine="true" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_ge_label"
+        style="@style/TextLabel.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:paddingRight="1dip"
+        android:singleLine="true"
+        android:text="GE" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_ge"
+        style="@style/TextValue.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_weight="0"
+        android:ellipsize="none"
+        android:singleLine="true" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_ko_label"
+        style="@style/TextLabel.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:paddingRight="1dip"
+        android:singleLine="true"
+        android:text="KO" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_ko"
+        style="@style/TextValue.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_weight="0"
+        android:ellipsize="none"
+        android:singleLine="true" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_kk_label"
+        style="@style/TextLabel.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:paddingRight="1dip"
+        android:singleLine="true"
+        android:text="KK" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/attr_kk"
+        style="@style/TextValue.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_weight="0"
+        android:ellipsize="none"
+        android:singleLine="true" >
+    </TextView>
+
+</LinearLayout>

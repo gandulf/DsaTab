@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+        <com.mobeta.android.dslv.DragSortListView
+            android:id="@+id/popup_tab_list"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            app:collapsed_height="1dp"
+            app:drag_scroll_start="0.33"
+            app:max_drag_scroll_speed="0.3"
+            app:remove_mode="flingLeft"
+            app:drag_start_mode="onDown"
+            app:drag_handle_id="@+id/drag" 
+            app:drag_enabled="true"
+            app:float_alpha="0.5" 
+            app:float_background_color="@android:color/transparent"/>
+
+        <ScrollView android:fillViewport="true" android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+        <LinearLayout
+            android:id="@+id/popup_edit_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="4dip">
+
+            <TextView
+                android:id="@+id/popup_edit_primary_label"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:text="Primär" />
+
+            <Spinner
+                android:id="@+id/popup_edit_primary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </Spinner>
+
+            <LinearLayout
+                android:id="@+id/popup_edit_primary_addon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/popup_edit_secondary_label"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"                
+                android:gravity="left|center_vertical"
+                android:text="Sekundär" />
+
+            <Spinner
+                android:id="@+id/popup_edit_secondary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </Spinner>
+
+            <LinearLayout
+                android:id="@+id/popup_edit_secondary_addon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            </LinearLayout>
+
+            
+            <TextView
+                android:id="@+id/popup_edit_general_label"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"                
+                android:gravity="left|center_vertical"
+                android:text="Allgemein" />
+            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+                
+	            <TextView
+	                android:id="@+id/popup_edit_icon_label"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_gravity="center_vertical"
+	                android:gravity="left|center_vertical"
+	                android:text="Icon" />
+	
+	            <ImageView
+	                android:id="@+id/popup_edit_icon"
+	                style="?attr/android:spinnerStyle"
+	                android:layout_width="@dimen/icon_button_size"
+	                android:layout_height="@dimen/icon_button_size"
+	                android:scaleType="fitCenter" />
+
+            </LinearLayout>
+            
+            <CheckBox
+                android:id="@+id/popup_edit_diceslider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Würfel anzeigen" >
+            </CheckBox>
+
+            <CheckBox
+                android:id="@+id/popup_edit_attributelist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Kopfleiste anzeigen" >
+            </CheckBox>
+            
+
+            
+
+            
+        </LinearLayout>        
+        </ScrollView>
+</LinearLayout>

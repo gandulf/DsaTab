@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <style name="DsaTabTheme.Light" parent="@DsaTabTheme.__Light">
+        
+        <!-- Holo generated styles -->
+        <item name="android:editTextBackground">@drawable/edit_text_holo_light</item>
+        <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewDsaTabLight</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_holo_light</item>
+        <item name="android:listChoiceIndicatorSingle">@drawable/btn_radio_holo_light</item>
+        <item name="android:buttonStyle">@style/ButtonDsaTabLight</item>
+        <item name="android:imageButtonStyle">@style/ImageButtonDsaTabLight</item>
+        <item name="android:dropDownSpinnerStyle">@style/SpinnerDsaTabLight</item>
+        <item name="android:progressBarStyleHorizontal">@style/ProgressBarDsaTabLight</item>
+        <item name="android:seekBarStyle">@style/SeekBarDsaTabLight</item>
+        <item name="android:ratingBarStyle">@style/RatingBarDsaTabLight</item>
+        <item name="android:ratingBarStyleIndicator">@style/RatingBarBigDsaTabLight</item>
+        <item name="android:ratingBarStyleSmall">@style/RatingBarSmallDsaTabLight</item>
+        <item name="android:buttonStyleToggle">@style/ToggleDsaTabLight</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_holo_light</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo_light</item>
+        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb_holo</item>
+        <!-- Holo generated styles -->
+        
+        <!--  ActionBar styles -->
+        <item name="actionBarItemBackground">@drawable/selectable_background_dsatablight</item>
+        <item name="popupMenuStyle">@style/dsatablight_PopupMenu</item>
+        <item name="dropDownListViewStyle">@style/dsatablight_DropDownListView</item>
+        <item name="actionBarTabStyle">@style/dsatablight_ActionBarTabStyle</item>
+        <item name="actionDropDownStyle">@style/dsatablight_DropDownNav</item>
+        <item name="actionBarStyle">@style/dsatablight_solid_ActionBar</item>
+
+        <item name="android:actionBarItemBackground">@drawable/selectable_background_dsatablight</item>
+        <item name="android:popupMenuStyle">@style/dsatablight_PopupMenu</item>
+        <item name="android:dropDownListViewStyle">@style/dsatablight_DropDownListView</item>
+        <item name="android:actionBarTabStyle">@style/dsatablight_ActionBarTabStyle</item>
+        <item name="android:actionDropDownStyle">@style/dsatablight_DropDownNav</item>
+        <item name="android:actionBarStyle">@style/dsatablight_solid_ActionBar</item>
+        <!--  item name="android:panelBackground">@drawable/menu_hardkey_panel_dsatablight</item -->        
+         
+         <!-- Light.DarkActionBar specific -->
+        <item name="actionBarWidgetTheme">@style/Theme.dsatablight.widget</item>
+        <item name="android:actionBarWidgetTheme">@style/Theme.dsatablight.widget</item>
+        <!--  ActionBar styles -->
+    </style>
+        
+    <style name="Theme.Dialog.Light" parent="@Theme.Dialog.__Light">
+        <!-- Holo generated styles -->
+        <item name="android:editTextBackground">@drawable/edit_text_holo_light</item>
+        <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewDsaTabLight</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_holo_light</item>
+        <item name="android:listChoiceIndicatorSingle">@drawable/btn_radio_holo_light</item>
+        <item name="android:buttonStyle">@style/ButtonDsaTabLight</item>
+        <item name="android:imageButtonStyle">@style/ImageButtonDsaTabLight</item>
+        <item name="android:dropDownSpinnerStyle">@style/SpinnerDsaTabLight</item>
+        <item name="android:progressBarStyleHorizontal">@style/ProgressBarDsaTabLight</item>
+        <item name="android:seekBarStyle">@style/SeekBarDsaTabLight</item>
+        <item name="android:ratingBarStyle">@style/RatingBarDsaTabLight</item>
+        <item name="android:ratingBarStyleIndicator">@style/RatingBarBigDsaTabLight</item>
+        <item name="android:ratingBarStyleSmall">@style/RatingBarSmallDsaTabLight</item>
+        <item name="android:buttonStyleToggle">@style/ToggleDsaTabLight</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_holo_light</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo_light</item>
+        <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb_holo</item>
+        <!-- Holo generated styles -->
+    </style>    
+    
+</resources>

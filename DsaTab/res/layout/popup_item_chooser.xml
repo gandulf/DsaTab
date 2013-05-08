@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"    
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="4dip" >
+
+    <ListView
+        android:id="@+id/popup_item_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/popup_item_new"
+        android:layout_alignParentRight="true"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_below="@+id/popup_item_category" >
+
+    </ListView>
+
+    <Spinner
+        android:id="@+id/popup_item_category"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/popup_search_button"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/popup_search_button" >
+    </Spinner>
+
+    <ImageButton
+        android:id="@+id/popup_search_button"
+        android:layout_width="@dimen/icon_button_size"
+        android:layout_height="@dimen/icon_button_size"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="2.5dp"
+        android:scaleType="centerInside"
+        android:src="?attr/imgSearch" />
+
+    <EditText
+        android:id="@+id/popup_autosearch"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/popup_search_button"
+        android:layout_alignTop="@+id/popup_search_button"
+        android:layout_toLeftOf="@+id/popup_search_button"
+        android:hint="@string/label_search"
+        android:visibility="invisible" >
+    </EditText>
+
+    <Button
+        android:id="@+id/popup_item_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="?attr/imgSwordAdd"
+        android:layout_alignLeft="@+id/popup_item_list"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/popup_item_list"
+        android:text="Neuen Gegenstand erstellen" />
+
+</RelativeLayout>

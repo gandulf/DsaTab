@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+                
+    <declare-styleable name="Theme">
+        <attr name="iconImageViewStyle" format="reference"/>
+        
+        <attr name="listItemBackground" format="reference"/>
+        <attr name="selectableBackground" format="reference" />
+        <attr name="imgDividerVertical" format="reference" />
+        <attr name="imgDragVertical" format="reference"/>
+        
+        <attr name="imgChainTop" format="reference"/>
+        <attr name="imgChainBottom" format="reference"/>
+        
+        <attr name="imgCharacter" format="reference"/>
+        <attr name="imgEmpty" format="reference"/>
+        
+        <attr name="imgExpander" format="reference"/>
+        <attr name="imgExpanderOpen" format="reference"/>
+        <attr name="imgExpanderClose" format="reference"/>
+        
+        <attr name="imgLove" format="reference"/>
+        <attr name="imgBarLove" format="reference"/>
+        
+        <attr name="imgFile" format="reference"/>
+        <attr name="imgBarFile" format="reference"/>
+        
+        <attr name="imgUp" format="reference"/>
+        <attr name="imgBarUp" format="reference"/>
+        
+        <attr name="imgSettings" format="reference"/>
+        <attr name="imgBarSettings" format="reference"/>
+        
+        <attr name="imgAccept" format="reference"/>
+        <attr name="imgBarAccept" format="reference"/>
+        
+        <attr name="imgCancel" format="reference"/>
+        <attr name="imgBarCancel" format="reference"/>
+        
+        <attr name="imgStar" format="reference"/>
+        <attr name="imgBarStar" format="reference"/>
+        <attr name="imgStarEmpty" format="reference"/>
+        <attr name="imgBarStarEmpty" format="reference"/>
+        
+        <attr name="imgCamera" format="reference"/>
+        <attr name="imgBarCamera" format="reference"/>
+        
+        <attr name="imgUser" format="reference"/>
+        <attr name="imgBarUser" format="reference"/>
+        
+        <attr name="imgMap" format="reference"/>
+        <attr name="imgBarMap" format="reference"/>
+        
+        <attr name="imgSplit" format="reference"/>
+        <attr name="imgBarSplit" format="reference"/>
+        
+        <attr name="imgPlay" format="reference"/>
+        <attr name="imgBarPlay" format="reference"/>
+        
+        <attr name="imgDelete" format="reference"/>
+        <attr name="imgBarDelete" format="reference"/>
+        
+        <attr name="imgEdit" format="reference"/>
+        <attr name="imgBarEdit" format="reference"/>
+        
+        <attr name="imgView" format="reference"/>
+        <attr name="imgBarView" format="reference"/>
+        
+        <attr name="imgInfo" format="reference"/>
+        <attr name="imgBarInfo" format="reference"/>
+        
+        <attr name="imgSearch" format="reference"/>
+        <attr name="imgBarSearch" format="reference"/>
+        
+        <attr name="imgNoteAdd" format="reference"/>
+        <attr name="imgBarNoteAdd" format="reference"/>
+        
+        <attr name="imgNoteRecord" format="reference"/>
+        <attr name="imgBarNoteRecord" format="reference"/>
+        
+        <attr name="imgFilter" format="reference"/>
+        <attr name="imgBarFilter" format="reference"/>
+        
+        <attr name="imgSwordAdd" format="reference"/>
+        <attr name="imgBarSwordAdd" format="reference"/>
+        
+        <attr name="imgSet" format="reference"/>
+        <attr name="imgSet1" format="reference"/>
+        <attr name="imgSet2" format="reference"/>
+        <attr name="imgSet3" format="reference"/>
+        
+        <attr name="imgBarSet" format="reference"/>
+        <attr name="imgBarSet1" format="reference"/>
+        <attr name="imgBarSet2" format="reference"/>
+        <attr name="imgBarSet3" format="reference"/>
+        
+        <attr name="imgModifier" format="reference"/>
+        <attr name="imgModifierAdd" format="reference"/>
+        
+        <attr name="imgBarModifier" format="reference"/>
+        <attr name="imgBarModifierAdd" format="reference"/>
+        
+        
+        <attr name="imgActionMicrophone" format="reference"/>
+        <attr name="imgBarActionMicrophone" format="reference"/>
+    </declare-styleable>
+        
+</resources>

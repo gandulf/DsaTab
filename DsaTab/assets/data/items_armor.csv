@@ -1,0 +1,89 @@
+#Type,Name,Image,Kategorie,BE,Ko,Br,Rü,Ba,LH,RH,LF,RF,ZR,TR,Stars,Z,Pieces
+A,Cyclopeische Tuchrüstung,,Torso									 ,1,0,2,2,2,0,0,0,0,0,0,0,,
+A,Legionärshelm,,Helm												 ,1,3,0,0,0,0,0,0,0,2,1,1,,
+,,,,,,,,,,,,,,,,,
+A,"Armschiene (links), Leder",lederzeug_arme_links00.jpg,Arme          ,1,0,0,0,0,1,0,0,0,0,1,0,Z,4
+A,"Armschiene (rechts), Leder",lederzeug_arme_rechts00.jpg,Arme        ,1,0,0,0,0,0,1,0,0,0,1,0,Z,4
+A,"Armschiene links, Bronze",plattenzeug_links00.jpg,Arme              ,2,0,0,0,0,2,0,0,0,0,2,0,Z,5
+A,"Armschiene rechts, Bronze",plattenzeug_rechts00.jpg,Arme            ,2,0,0,0,0,0,2,0,0,0,2,0,Z,5
+A,"Armschienen links, Stahl",plattenzeug_links00.jpg,Arme              ,2,0,0,0,0,3,0,0,0,0,2,0,Z,7
+A,"Armschienen rechts, Stahl",plattenzeug_rechts00.jpg,Arme            ,2,0,0,0,0,0,3,0,0,0,2,0,Z,7
+A,Kettenhandschuh (links),,Arme                             		 ,1,0,0,0,0,1,0,0,0,0,1,0,Z,5
+A,Kettenhandschuh (rechts),,Arme          				             ,1,0,0,0,0,0,1,0,0,0,1,0,Z,5
+A,Panzerhandschuhe links,plattenzeug_links00.jpg,Arme                ,2,0,0,0,0,2,0,0,0,1,2,0,Z,7
+A,Panzerhandschuhe rechts,plattenzeug_rechts00.jpg,Arme              ,2,0,0,0,0,0,2,0,0,1,2,0,Z,7
+A,Plattenarm links,plattenzeug_links00.jpg,Arme                      ,2,0,0,0,0,5,0,0,0,1,2,0,Z,7
+A,Plattenarm rechts,plattenzeug_rechts00.jpg,Arme                    ,2,0,0,0,0,0,5,0,0,1,2,0,Z,7
+A,Plattenschulter links,plattenzeug_links00.jpg,Arme                 ,2,0,0,1,0,2,0,0,0,1,2,0,Z,7
+A,Plattenschulter rechts,plattenzeug_rechts00.jpg,Arme               ,2,0,1,0,0,0,2,0,0,1,2,0,Z,7
+A,"Beinschienen (links), Leder",lederzeug_beine_links00.jpg,Beine      ,1,0,0,0,0,0,0,1,0,0,1,0,Z,4
+A,"Beinschienen (rechts), Leder",lederzeug_beine_rechts00.jpg,Beine    ,1,0,0,0,0,0,0,0,1,0,1,0,Z,4
+A,"Beinschienen, Bronze",plattenzeug_beine00.jpg,Beine                 ,1,0,0,0,0,0,0,2,2,0,1,0,Z,
+A,"Beinschienen, Stahl",plattenzeug_beine00.jpg,Beine                  ,1,0,0,0,0,0,0,3,3,1,1,0,Z,
+A,Beintaschen / Schürze,,Beine                              		 ,2,0,0,0,2,0,0,2,2,1,2,0,Z,7
+A,Hohe Stiefel,stiefel_stulpen03.jpg,Beine                           ,0,0,0,0,0,0,0,1,1,0,0,0,Z,
+A,Kettenbeinling (links),,Beine                             		 ,1,0,0,0,0,0,0,4,0,0,1,0,Z,5
+A,Kettenbeinling (rechts),,Beine                            		 ,1,0,0,0,0,0,0,0,4,0,1,0,Z,5
+A,Lederhose,lederhose00.jpg,Beine                                    ,0,0,0,0,1,0,0,1,1,0,0,0,Z,
+A,Panzerbein,plattenzeug_beine00.jpg,Beine                           ,2,0,0,0,0,0,0,4,4,1,2,0,Z,
+A,Panzerschuh,plattenzeug_beine00.jpg,Beine                          ,1,0,0,0,0,0,0,1,1,0,0,0,Z,
+A,Streifenschurz,lendenschurz00.jpg,Beine                            ,0,0,0,0,2,0,0,2,2,1,1,1,Z,
+A,Baburiner Hut,,Helm                                       		 ,1,4,0,1,0,0,0,0,0,1,2,1,Z,
+A,Bart / Halsberge,,Helm                                    		 ,0,2,1,1,0,0,0,0,0,1,0,0,Z,
+A,Drachenhelm,drachenhelm00.jpg,Helm                                 ,1,3,0,1,0,0,0,0,0,1,2,0,Z,
+A,Kettenhaube,kettenhaube00.jpg,Helm                                 ,1,3,1,1,0,0,0,0,0,1,1,0,Z,
+A,Kettenhaube mit Gesichtsschutz,kettenhaube00.jpg,Helm              ,1,4,1,1,0,0,0,0,0,1,1,0,Z,
+A,Kettenkragen,,Helm                                        		 ,1,2,1,1,0,0,0,0,0,0,1,0,Z,5
+A,Lederhelm,lederhelm00.jpg,Helm                                     ,1,2,0,0,0,0,0,0,0,0,1,0,Z,
+A,"Lederhelm, verstärkt",lederhelm00.jpg,Helm                          ,1,3,0,0,0,0,0,0,0,0,1,0,Z,
+A,Morion,morion_leicht00.jpg,Helm                                    ,1,3,0,0,0,0,0,0,0,0,2,1,Z,
+A,Schaller,,Helm                                            		 ,1,4,0,0,0,0,0,0,0,0,2,1,Z,
+A,Stechhelm / Visierhelm,topfhelm00.jpg,Helm                         ,2,5,0,0,0,0,0,0,0,0,2,0,Z,
+A,Sturmhaube,sturmhaube00.jpg,Helm                                   ,1,3,0,0,0,0,0,0,0,0,2,1,Z,
+A,Tellerhelm,,Helm                                          		 ,1,2,0,0,0,0,0,0,0,0,1,0,Z,
+A,Topfhelm,topfhelm00.jpg,Helm                                       ,2,5,0,0,0,0,0,0,0,1,2,0,Z,
+A,Wattierte Kappe,,Helm                                     		 ,0,1,0,0,0,0,0,0,0,0,0,0,Z,
+A,Amazonenrüstung (kompl),,Komplettrüstung                  		 ,3,3,5,3,5,2,2,3,3,4,5,2,,
+A,Dicke Kleidung,,Komplettrüstung                                    ,1,0,1,1,1,1,1,1,1,1,1,0,,
+A,Garether Platte,garether_platte00.jpg,Komplettrüstung  ,4,0,6,5,6,5,5,4,4,5,6,1,,
+A,Gestechrüstung,,Komplettrüstung                           ,10,8,8,7,8,7,7,7,7,8,12,0,,
+A,Horasischer Reiterharnisch,,Komplettrüstung               ,5,3,7,5,7,5,5,5,5,6,8,2,,
+A,Brigantina,,Torso                                         ,2,0,5,4,4,2,2,0,0,3,3,0,,
+A,Bronzeharnisch,,Torso                                     ,3,0,5,4,4,0,0,0,0,3,3,0,,
+A,Torsoharnisch (Bronze),,Torso                             ,3,0,5,4,4,0,0,0,0,3,3,0,,
+A,Torsoharnisch (Stahl),,Torso								,3,0,5,4,4,0,0,0,0,3,3,0,,
+A,"Brustplatte, Leder",,Torso                                 ,1,0,2,0,1,0,0,0,0,1,1,0,,
+A,"Brustplatte, Stahl",,Torso                                 ,1,0,2,0,1,0,0,0,0,1,1,0,,
+A,Brustschalen,,Torso                                       ,0,0,2,0,0,0,0,0,0,0,1,0,Z,
+A,Eisenmantel,,Torso                                        ,2,0,5,5,5,2,2,2,2,4,3,1,,
+A,Fellumhang,umhang03.jpg,Torso                                      ,0,0,1,2,0,1,1,1,1,1,1,0,Z,
+A,Fuhrmannsmantel,mantel_leder00.jpg,Torso                           ,0,0,1,2,0,1,1,1,1,1,1,0,Z,
+A,Fünflagenharnisch,,Torso                                              ,2,0,5,5,4,0,0,1,1,3,3,0,,
+A,Gambeson,gambeson00.jpg,Torso                                      ,2,0,2,2,2,1,1,1,1,2,2,0,,
+A,Gladiatorenschulter,,Torso                                            ,1,0,3,2,0,3,0,0,0,1,2,1,,
+A,Hartholzharnisch,,Torso                                               ,2,0,4,4,4,1,1,1,1,3,4,1,,
+A,Iryanrüstung,iryanruestung00.jpg,Torso                             ,2,0,3,2,2,0,0,1,1,2,3,1,,
+A,"Kettenhemd, Halbarm",kettenhemd00.jpg,Torso                         ,3,0,4,4,4,2,2,1,1,3,3,1,,
+A,"Kettenhemd, Lang",kettenhemd_lang00.jpg,Torso                       ,4,0,4,4,4,3,3,2,2,3,4,1,,
+A,Kettenmantel,kettenmantel00.jpg,Torso                              ,5,0,4,4,4,3,3,3,3,3,5,1,,
+A,Kettenweste,kettenweste00.jpg,Torso                                ,2,0,4,4,4,0,0,0,0,2,2,1,,
+A,Krötenhaut,kroetenhaut00.jpg,Torso                                 ,2,0,3,2,2,1,1,0,0,2,3,1,,
+A,Kusliker Lamellar,,Torso                                  			,3,0,5,4,4,1,1,1,1,3,4,0,,
+A,Kürass,kuerass00.jpg,Torso                                         ,2,0,5,1,2,0,0,0,0,2,3,1,,
+A,Lederharnisch,lederruestung00.jpg,Torso                            ,3,0,3,3,3,0,0,0,0,2,3,0,,
+A,Lederweste,weste00.jpg,Torso                                       ,1,0,1,1,1,0,0,0,0,1,1,0,,
+A,"Lederweste, dick",weste00.jpg,Torso                                 ,1,0,1,1,1,0,0,1,1,1,1,0,,
+A,Leichte Platte,platte_leicht00.jpg,Torso                           ,3,0,5,4,5,0,0,2,2,3,4,1,,
+A,Löwenmähne,,Torso                                         ,1,2,2,2,0,1,1,0,0,1,1,1,Z,
+A,Mammutonpanzer,,Torso                                     ,3,0,4,4,4,2,2,2,2,3,5,1,,
+A,Mattenrücken,,Torso                                       ,0,1,1,3,0,0,0,0,0,1,1,0,,
+A,Pelzweste,,Torso                                          ,1,0,1,1,1,0,0,0,0,1,1,0,,
+A,"Pelzweste, dick",,Torso                                    ,1,0,1,1,1,0,0,1,1,1,1,0,,
+A,Ringelpanzer,ringelpanzer00.jpg,Torso                              ,3,0,4,4,4,3,3,1,1,3,4,1,,
+A,Ringmantel (Brabakmantel),ringelpanzer00.jpg,Torso                 ,3,0,3,3,3,2,2,2,2,3,3,1,,
+A,Schuppenpanzer,schuppenpanzer00.jpg,Torso                          ,5,0,5,5,5,3,3,3,3,4,5,0,,
+A,"Schuppenpanzer, Lang",schuppenpanzer00.jpg,Torso                    ,6,0,5,5,5,3,3,4,4,4,6,0,,
+A,Spiegelpanzer,,Torso                                      ,4,0,5,5,5,3,3,2,2,4,5,1,,
+A,Tuchrüstung,,Torso                                        ,2,0,2,2,2,0,0,0,0,1,2,0,,
+A,Unterzeug mit Kettenteilen,,Torso                         ,1,0,2,2,1,2,2,1,1,1,2,0,,
+A,Wattiertes Unterzeug,,Torso                               ,1,0,1,1,1,1,1,1,1,1,1,0,,

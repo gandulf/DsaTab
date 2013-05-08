@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:unified="http://schemas.android.com/apk/res-auto">
+
+    <header
+    		unified:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsRulesFragment"
+    		unified:icon="?attr/imgSettings"
+    		unified:title="Regeln"
+    		unified:summary="Einstellungen die Regeln von DSA betreffend."
+    		unified:preferenceRes="@xml/preferences_hc_rules" />
+    
+	<header unified:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsDisplayFragment"
+            unified:icon="?attr/imgView"
+            unified:title="Darstellung"
+            unified:summary="Einstellungen die Darstellung von DsaTab betreffend."
+            unified:preferenceRes="@xml/preferences_hc_display" />
+
+	<header unified:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsSetupFragment"
+            unified:icon="?attr/imgSettings"
+            unified:title="Setup"
+            unified:summary="Systemeinstellungen DsaTab betreffend." 
+            unified:preferenceRes="@xml/preferences_hc_setup" />
+    
+	<header unified:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsInfoFragment"
+            unified:icon="?attr/imgInfo"
+            unified:title="Informationen"
+            unified:summary="Alle möglichen Informationen rund um DsaTab."
+            unified:preferenceRes="@xml/preferences_hc_info" />                            
+     
+    <header unified:icon="?attr/imgLove"
+            unified:title="Spenden"
+            unified:summary="Bringt dich direkt zur Spendenseite.">
+        <intent android:action="android.intent.action.VIEW"
+                android:data="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=gandulf%2ek%40gmx%2enet&amp;lc=DE&amp;item_name=Gandulf&amp;item_number=DsaTab&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted" />
+    </header>
+    
+</preference-headers>

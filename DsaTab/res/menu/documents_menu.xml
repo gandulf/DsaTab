@@ -1,0 +1,7 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:id="@+id/option_documents_choose"
+        android:icon="?attr/imgBarFilter"
+        android:showAsAction="withText|always"
+        android:title="Ordner auswählen"/>
+</menu>

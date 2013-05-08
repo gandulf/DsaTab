@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.dsatab"
+    android:installLocation="auto"
+    android:versionCode="64"
+    android:versionName="4.1" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-feature
+        android:name="android.hardware.microphone"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.sensor.gyroscope"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.sensor.accelerometer"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="true" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
+    <application
+        android:name="DsaTabApplication"
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@drawable/icon"
+        android:label="DsaTab"
+        android:largeHeap="true"
+        android:theme="@style/DsaTabTheme.Dark" >
+        <activity
+            android:name="com.dsatab.activity.DsaTabActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustUnspecified" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.dsatab.activity.DsaTabPreferenceActivity"
+            android:label="Einstellungen" >
+        </activity>
+        <activity
+            android:name="com.dsatab.activity.ItemChooserActivity"
+            android:label="Inventar" >
+        </activity>
+        <activity
+            android:name="com.dsatab.activity.NotesEditActivity"
+            android:label="Notiz bearbeiten"
+            android:logo="@android:drawable/ic_menu_edit"
+            android:theme="@style/Theme.Dialog.Dark" >
+        </activity>
+        <activity
+            android:name=".activity.TabEditActivity"
+            android:label="Tab bearbeiten"
+            android:logo="@android:drawable/ic_menu_edit"
+            android:theme="@style/Theme.Dialog.Dark" >
+        </activity>
+        <activity
+            android:name=".activity.ModificatorEditActivity"
+            android:label="Modifikator bearbeiten"
+            android:logo="@android:drawable/ic_menu_edit"
+            android:theme="@style/Theme.Dialog.Dark" >
+        </activity>
+        <activity
+            android:name=".activity.ItemContainerEditActivity"
+            android:label="Behälter bearbeiten"
+            android:logo="@android:drawable/ic_menu_edit"
+            android:theme="@style/Theme.Dialog.Dark" />
+        <activity
+            android:name=".activity.ItemEditActivity"
+            android:label="Gegenstand"
+            android:logo="@android:drawable/ic_menu_edit"
+            android:theme="@style/Theme.Dialog.Dark" />
+        <activity
+            android:name=".activity.ItemViewActivity"
+            android:label="Gegenstand"
+            android:logo="@android:drawable/ic_menu_view"
+            android:theme="@style/Theme.Dialog.Dark" />
+        <activity
+            android:name="com.dsatab.activity.HeroChooserActivity"
+            android:label="Held auswählen" >
+        </activity>
+        <activity
+            android:name="com.dsatab.activity.SearchableActivity"
+            android:label="Suche"
+            android:launchMode="singleTop" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+
+        <receiver
+            android:name="com.gandulf.guilib.download.DownloadBroadcastReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.gandulf.guilib.download.UnzipIntentService"
+            android:exported="false" >
+        </service>
+        <!--
+        service
+            android:name="com.dsatab.common.ExportHeroService"
+            android:exported="false" >
+        </service
+        -->
+
+        <meta-data
+            android:name="android.app.default_searchable"
+            android:value="com.dsatab.activity.SearchableActivity"
+            android:voiceSearchMode="showVoiceSearchButton|launchRecognizer" />
+    </application>
+
+</manifest>

@@ -1,0 +1,76 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sheet_body"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_margin="@dimen/page_margin"
+    android:layout_weight="1" >
+
+    <ImageView
+        android:id="@+id/body_background"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="fitCenter"
+        android:src="?attr/imgCharacter" />
+
+    <com.dsatab.view.BodyLayout
+        android:id="@+id/body_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/body_total_be"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/icon_armor_btn"
+            android:gravity="center"
+            android:height="50dp"
+            android:padding="5dp"
+            android:text="0"
+            android:textColor="@android:color/primary_text_light"
+            android:textSize="25sp"
+            android:width="50dp" />
+        
+        <TextView            
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"            
+            android:gravity="center"            
+            android:text="@string/label_be" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|top"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/body_total_rs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/icon_armor_btn"
+            android:gravity="center"
+            android:height="50dp"
+            android:padding="5dp"
+            android:text="0"
+            android:textColor="@android:color/primary_text_light"
+            android:textSize="25sp"
+            android:width="50dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/label_total" />
+    </LinearLayout>
+
+</FrameLayout>

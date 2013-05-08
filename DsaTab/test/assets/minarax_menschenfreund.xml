@@ -1,0 +1,401 @@
+<helden xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="helden.xsd">
+<held key="1309646579836" name="Minarax Menschenfreund" stand="0">
+<basis>
+<geschlecht name="männlich"/>
+<settings name="DSA4.1"/>
+<mods/>
+<rasse name="helden.model.rasse.Zwerg" string="Zwerg">
+<groesse gewicht="55" value="135"/>
+<aussehen alter="37" augenfarbe="dunkelbraun" aussehentext0="" aussehentext1="" aussehentext2="" aussehentext3="" familietext0="" familietext1="" familietext2="" familietext3="" familietext4="" familietext5="" gbjahr="1003" gbmonat="11" gbtag="5" gprest="0" gpstart="120" haarfarbe="blond" kalender="Bosparans Fall" stand="" titel=""/>
+<variante name="Brillantzwerge"/>
+</rasse>
+<kultur name="helden.model.kultur.Brillantzwerge" string="Brillantzwerge" zweitsprache="Sprachen kennen Tulamidya"/>
+<ausbildungen>
+<ausbildung art="Hauptprofession" name="helden.model.profession.Fernhaendler" string="Fernhändler"/>
+</ausbildungen>
+<notiz notiz0="Notizen" notiz1="" notiz10="" notiz11="" notiz2="" notiz3="" notiz4="" notiz5="" notiz6="" notiz7="" notiz8="" notiz9=""/>
+<portraet value=""/>
+<abenteuerpunkte value="3500"/>
+<freieabenteuerpunkte value="0"/>
+</basis>
+<eigenschaften>
+<eigenschaft mod="1" name="Mut" startwert="13" value="13"/>
+<eigenschaft mod="0" name="Klugheit" startwert="12" value="12"/>
+<eigenschaft mod="0" name="Intuition" startwert="13" value="13"/>
+<eigenschaft mod="1" name="Charisma" startwert="15" value="15"/>
+<eigenschaft mod="1" name="Fingerfertigkeit" startwert="14" value="14"/>
+<eigenschaft mod="-1" name="Gewandtheit" startwert="14" value="15"/>
+<eigenschaft mod="2" name="Konstitution" startwert="10" value="10"/>
+<eigenschaft mod="1" name="Körperkraft" startwert="9" value="10"/>
+<eigenschaft mod="0" name="Sozialstatus" startwert="7" value="7"/>
+<eigenschaft mod="10" name="Lebensenergie" value="0"/>
+<eigenschaft mod="18" name="Ausdauer" value="0"/>
+<eigenschaft grossemeditation="0" mod="0" mrmod="-4" name="Astralenergie" value="0"/>
+<eigenschaft karmalqueste="0" mod="0" name="Karmaenergie" value="0"/>
+<eigenschaft mod="-4" name="Magieresistenz" value="0"/>
+<eigenschaft mod="0" name="ini" value="11"/>
+<eigenschaft mod="0" name="at" value="8"/>
+<eigenschaft mod="0" name="pa" value="8"/>
+<eigenschaft mod="0" name="fk" value="8"/>
+</eigenschaften>
+<vt>
+<vorteil name="Besonderer Besitz" value="Maultier"/>
+<vorteil name="Dämmerungssicht"/>
+<vorteil name="Gutes Gedächtnis"/>
+<vorteil name="Resistenz gegen Gift" value="mineralische Gifte"/>
+<vorteil name="Resistenz gegen Krankheiten"/>
+<vorteil name="Richtungssinn"/>
+<vorteil name="Schwer zu verzaubern"/>
+<vorteil name="Eitelkeit" value="7"/>
+<vorteil name="Goldgier" value="6"/>
+<vorteil name="Jähzorn" value="6"/>
+<vorteil name="Meeresangst" value="5"/>
+<vorteil name="Neugier" value="7"/>
+<vorteil name="Platzangst" value="6"/>
+<vorteil name="Schulden" value="1000"/>
+<vorteil name="Unfähigkeit für [Talent]" value="Schwimmen"/>
+<vorteil name="Zwergenwuchs"/>
+</vt>
+<sf>
+<sonderfertigkeit name="Binden"/>
+<sonderfertigkeit name="Höhlenkundig"/>
+<sonderfertigkeit name="Kulturkunde">
+<kultur name="Aranien"/>
+<kultur name="Brillantzwerge"/>
+<kultur name="Südaventurien"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Meisterparade"/>
+<sonderfertigkeit name="Rüstungsgewöhnung I">
+<gegenstand name="Fünflagenharnisch"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Steppenkundig"/>
+</sf>
+<ereignisse>
+<ereignis obj="max GP für Helden: 120" text="EINSTELLUNG" time="1309646594076" version="5.1.3"/>
+<ereignis obj="max Eigenschafts-GP für Helden: 100" text="EINSTELLUNG" time="1309646594076" version="5.1.3"/>
+<ereignis obj="max Eigenschafts-Wert für Helden15" text="EINSTELLUNG" time="1309646594076" version="5.1.3"/>
+<ereignis obj="Kein Standard. Max Eigenschafts-Wert für Helden: 15" text="Meistergenehmigung notwendig" time="1309646594079" version="5.1.3"/>
+<ereignis obj="Kein Standard. Max GP für Helden: 120" text="Meistergenehmigung notwendig" time="1309646594079" version="5.1.3"/>
+<ereignis obj="Vorteil Platzangst ist ungeeignet." text="Meistergenehmigung notwendig" time="1309646594079" version="5.1.3"/>
+<ereignis Alt="0" Neu="0" kommentar="12 GP" obj="Rasse: Zwerg" text="RKP" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="0" kommentar="3 GP" obj="Kultur: Brillantzwerge" text="RKP" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="0" kommentar="7 GP" obj="Profession: Fernhändler" text="RKP" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="14" kommentar="13 GP" obj="Mut: 14" text="EIGENSCHAFTEN" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="12" kommentar="12 GP" obj="Klugheit: 12" text="EIGENSCHAFTEN" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="13" kommentar="13 GP" obj="Intuition: 13" text="EIGENSCHAFTEN" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="16" kommentar="15 GP" obj="Charisma: 16" text="EIGENSCHAFTEN" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="15" kommentar="14 GP" obj="Fingerfertigkeit: 15" text="EIGENSCHAFTEN" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="13" kommentar="14 GP" obj="Gewandtheit: 13" text="EIGENSCHAFTEN" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="12" kommentar="10 GP" obj="Konstitution: 12" text="EIGENSCHAFTEN" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="10" kommentar="9 GP" obj="Körperkraft: 10" text="EIGENSCHAFTEN" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="7" kommentar="0 GP" obj="Sozialstatus: 7" text="EIGENSCHAFTEN" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="0" kommentar="2 GP" obj="Kulturkunde (Aranien)" text="SF" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="0" kommentar="2 GP" obj="Kulturkunde (Südaventurien)" text="SF" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="0" kommentar="1 GP" obj="Steppenkundig" text="SF" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="4" kommentar="13 AP" obj="Armbrust: 4" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="5" kommentar="17 AP" obj="Armbrust: 5" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="6" kommentar="21 AP" obj="Armbrust: 6" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="2" kommentar="9 AP" obj="Schwerter: 2" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="3" kommentar="15 AP" obj="Schwerter: 3" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="4" kommentar="21 AP" obj="Schwerter: 4" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="5" kommentar="28 AP" obj="Schwerter: 5" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="6" kommentar="34 AP" obj="Schwerter: 6" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="3" kommentar="12 AP" obj="Reiten: 3" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="4" kommentar="17 AP" obj="Reiten: 4" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="5" kommentar="22 AP" obj="Reiten: 5" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="6" kommentar="27 AP" obj="Reiten: 6" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="7" kommentar="33 AP" obj="Reiten: 7" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="4" kommentar="8 AP" obj="Etikette: 4" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="5" kommentar="11 AP" obj="Etikette: 5" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="2" kommentar="4 AP" obj="Gassenwissen: 2" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="3" kommentar="6 AP" obj="Gassenwissen: 3" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="4" kommentar="8 AP" obj="Gassenwissen: 4" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="5" kommentar="11 AP" obj="Gassenwissen: 5" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="4" kommentar="8 AP" obj="Menschenkenntnis: 4" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="5" kommentar="11 AP" obj="Menschenkenntnis: 5" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="6" kommentar="14 AP" obj="Menschenkenntnis: 6" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="7" kommentar="17 AP" obj="Menschenkenntnis: 7" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="6" kommentar="14 AP" obj="Überreden: 6" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="7" kommentar="17 AP" obj="Überreden: 7" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="4" kommentar="8 AP" obj="Orientierung: 4" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="5" kommentar="11 AP" obj="Orientierung: 5" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="6" kommentar="14 AP" obj="Orientierung: 6" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="4" kommentar="8 AP" obj="Geografie: 4" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="5" kommentar="11 AP" obj="Geografie: 5" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="11" kommentar="11 AP" obj="Sprachen kennen Rogolan: 11" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="12" kommentar="12 AP" obj="Sprachen kennen Rogolan: 12" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="13" kommentar="13 AP" obj="Sprachen kennen Rogolan: 13" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="14" kommentar="14 AP" obj="Sprachen kennen Rogolan: 14" text="TALENT" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="0" kommentar="7 GP" obj="Besonderer Besitz: Maultier" text="VORTEILE" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="Dämmerungssicht" text="VORTEILE" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="0" kommentar="-2 GP" obj="Eitelkeit: 7" text="VORTEILE" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="0" kommentar="4 GP" obj="Goldgier: 6" text="VORTEILE" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="0" kommentar="7 GP" obj="Gutes Gedächtnis" text="VORTEILE" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="0" kommentar="-9 GP" obj="Jähzorn: 6" text="VORTEILE" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="Meeresangst: 5" text="VORTEILE" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="0" kommentar="-7 GP" obj="Neugier: 7" text="VORTEILE" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="Platzangst: 6" text="VORTEILE" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="Resistenz gegen Gift: mineralische Gifte" text="VORTEILE" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="Resistenz gegen Krankheiten" text="VORTEILE" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="0" kommentar="3 GP" obj="Richtungssinn" text="VORTEILE" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="0" kommentar="-10 GP" obj="Schulden: 1000" text="VORTEILE" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="Schwer zu verzaubern" text="VORTEILE" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="Unfähigkeit für [Talent]: Schwimmen" text="VORTEILE" time="1309646594080" version="5.1.3"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="Zwergenwuchs" text="VORTEILE" time="1309646594080" version="5.1.3"/>
+<ereignis obj="Auswahl" text="Eitelkeit" time="1309646594080" version="5.1.3"/>
+<ereignis obj="Auswahl" text="Goldgier" time="1309646594080" version="5.1.3"/>
+<ereignis obj="Auswahl" text="Steppenkundig" time="1309646594080" version="5.1.3"/>
+<ereignis obj="Auswahl" text="Sprachen kennen Tulamidya" time="1309646594081" version="5.1.3"/>
+<ereignis Neu="1" obj="Auswahl" text="Schwerter" time="1309646594081" version="5.1.3"/>
+<ereignis Neu="3" obj="Auswahl" text="Steinschneider/Juwelier" time="1309646594081" version="5.1.3"/>
+<ereignis Neu="2" obj="Auswahl" text="Hiebwaffen" time="1309646594081" version="5.1.3"/>
+<ereignis Neu="2" obj="Auswahl" text="Raufen" time="1309646594081" version="5.1.3"/>
+<ereignis Neu="6" obj="Auswahl" text="Sprachen kennen Garethi" time="1309646594081" version="5.1.3"/>
+<ereignis Neu="6" obj="Auswahl" text="Sprachen kennen Tulamidya" time="1309646594081" version="5.1.3"/>
+<ereignis Neu="2" obj="Auswahl" text="Sprachen kennen Alaani" time="1309646594081" version="5.1.3"/>
+<ereignis Neu="2" obj="Auswahl" text="Sprachen kennen Ferkina" time="1309646594081" version="5.1.3"/>
+<ereignis Neu="4" obj="Auswahl" text="Lesen/Schreiben Tulamidya" time="1309646594081" version="5.1.3"/>
+<ereignis Neu="2" obj="Auswahl" text="Fahrzeug lenken" time="1309646594081" version="5.1.3"/>
+<ereignis Neu="2" obj="Auswahl" text="Gesteinskunde" time="1309646594081" version="5.1.3"/>
+<ereignis Neu="1" obj="Auswahl" text="Staatskunst" time="1309646594081" version="5.1.3"/>
+<ereignis Neu="1" obj="Auswahl" text="Feinmechanik" time="1309646594081" version="5.1.3"/>
+<ereignis Neu="4" obj="Auswahl" text="Steinschneider/Juwelier" time="1309646594081" version="5.1.3"/>
+<ereignis Abenteuerpunkte="3000" kommentar="Start-AP" obj="Abenteuerpunkte" text="Ereignis eingeben" time="1309646738475" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-150" obj="Rüstungsgewöhnung I (Fünflagenharnisch)" text="Sonderfertigkeit hinzugefügt" time="1309648401795" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-280" Alt="9" Neu="10" obj="Körperkraft" text="Eigenschaft steigern" time="1309648539174" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-380" Alt="14" Neu="15" obj="Gewandtheit" text="Eigenschaft steigern" time="1309648550069" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-200" obj="Meisterparade" text="Sonderfertigkeit hinzugefügt" time="1309648575712" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-19" Alt="7" Info="Gegenseitiges Lehren" Neu="8" obj="Handel" text="Talent steigern" time="1309649037759" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-22" Alt="8" Info="Gegenseitiges Lehren" Neu="9" obj="Handel" text="Talent steigern" time="1309649038206" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-19" Alt="7" Info="Gegenseitiges Lehren" Neu="8" obj="Steinschneider/Juwelier" text="Talent steigern" time="1309649041885" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-22" Alt="8" Info="Gegenseitiges Lehren" Neu="9" obj="Steinschneider/Juwelier" text="Talent steigern" time="1309649042343" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-10" Neu="0" obj="Brett-/Kartenspiel" text="Talent aktivieren" time="1309649115230" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-8" Neu="0" obj="Lesen/Schreiben Kusliker Zeichen" text="Talent aktivieren" time="1309649156204" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-10" Neu="0" obj="Abrichten" text="Talent aktivieren" time="1309649169837" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-2" Alt="0" Info="Gegenseitiges Lehren" Neu="1" obj="Lesen/Schreiben Kusliker Zeichen" text="Talent steigern" time="1309649198381" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-3" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Lesen/Schreiben Kusliker Zeichen" text="Talent steigern" time="1309649198555" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-5" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Lesen/Schreiben Kusliker Zeichen" text="Talent steigern" time="1309649198734" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-6" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Lesen/Schreiben Kusliker Zeichen" text="Talent steigern" time="1309649198917" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-8" Alt="4" Info="Gegenseitiges Lehren" Neu="5" obj="Lesen/Schreiben Kusliker Zeichen" text="Talent steigern" time="1309649199097" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-11" Alt="5" Info="Gegenseitiges Lehren" Neu="6" obj="Lesen/Schreiben Kusliker Zeichen" text="Talent steigern" time="1309649199267" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-25" Alt="6" Info="Gegenseitiges Lehren" Neu="7" obj="Armbrust" text="Talent steigern" time="1309649208914" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-29" Alt="7" Info="Gegenseitiges Lehren" Neu="8" obj="Armbrust" text="Talent steigern" time="1309649209105" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-34" Alt="8" Info="Gegenseitiges Lehren" Neu="9" obj="Armbrust" text="Talent steigern" time="1309649209273" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-41" Alt="6;1;5" Info="Gegenseitiges Lehren" Neu="7;1;5" obj="Schwerter" text="Nahkampftalent steigern" time="1309649212627" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-48" Alt="7;1;5" Info="Gegenseitiges Lehren" Neu="8;1;5" obj="Schwerter" text="Nahkampftalent steigern" time="1309649212816" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-55" Alt="8;1;5" Info="Gegenseitiges Lehren" Neu="9;1;5" obj="Schwerter" text="Nahkampftalent steigern" time="1309649212977" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-39" Alt="7" Info="Gegenseitiges Lehren" Neu="8" obj="Reiten" text="Talent steigern" time="1309649222607" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-45" Alt="8" Info="Gegenseitiges Lehren" Neu="9" obj="Reiten" text="Talent steigern" time="1309649222775" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-7" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Klettern" text="Talent steigern" time="1309649228977" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-12" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Körperbeherrschung" text="Talent steigern" time="1309649231010" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-12" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Klettern" text="Talent steigern" time="1309649233005" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-7" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Athletik" text="Talent steigern" time="1309649234191" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-12" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Schleichen" text="Talent steigern" time="1309649239340" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-12" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Selbstbeherrschung" text="Talent steigern" time="1309649242827" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-12" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Sich verstecken" text="Talent steigern" time="1309649244486" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-12" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Sinnenschärfe" text="Talent steigern" time="1309649247181" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-3" Alt="0" Info="Gegenseitiges Lehren" Neu="1" obj="Tanzen" text="Talent steigern" time="1309649249467" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-7" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Tanzen" text="Talent steigern" time="1309649249891" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-12" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Tanzen" text="Talent steigern" time="1309649250350" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-17" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Zechen" text="Talent steigern" time="1309649252092" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-14" Alt="5" Info="Gegenseitiges Lehren" Neu="6" obj="Etikette" text="Talent steigern" time="1309649255081" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-14" Alt="5" Info="Gegenseitiges Lehren" Neu="6" obj="Gassenwissen" text="Talent steigern" time="1309649256648" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-19" Alt="7" Info="Gegenseitiges Lehren" Neu="8" obj="Menschenkenntnis" text="Talent steigern" time="1309649257768" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-22" Alt="8" Info="Gegenseitiges Lehren" Neu="9" obj="Menschenkenntnis" text="Talent steigern" time="1309649258204" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-19" Alt="7" Info="Gegenseitiges Lehren" Neu="8" obj="Überreden" text="Talent steigern" time="1309649261603" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-22" Alt="8" Info="Gegenseitiges Lehren" Neu="9" obj="Überreden" text="Talent steigern" time="1309649262100" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-17" Alt="6" Info="Gegenseitiges Lehren" Neu="7" obj="Orientierung" text="Talent steigern" time="1309649264436" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-19" Alt="7" Info="Gegenseitiges Lehren" Neu="8" obj="Orientierung" text="Talent steigern" time="1309649265077" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-22" Alt="8" Info="Gegenseitiges Lehren" Neu="9" obj="Orientierung" text="Talent steigern" time="1309649265538" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-6" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Wildnisleben" text="Talent steigern" time="1309649286068" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-8" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Wildnisleben" text="Talent steigern" time="1309649286429" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-11" Alt="4" Info="Gegenseitiges Lehren" Neu="5" obj="Wildnisleben" text="Talent steigern" time="1309649291701" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-14" Alt="5" Info="Gegenseitiges Lehren" Neu="6" obj="Wildnisleben" text="Talent steigern" time="1309649292558" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-14" Alt="5" Info="Gegenseitiges Lehren" Neu="6" obj="Geografie" text="Talent steigern" time="1309649311236" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-6" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Geschichtswissen" text="Talent steigern" time="1309649318102" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-8" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Geschichtswissen" text="Talent steigern" time="1309649318797" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-19" Alt="7" Info="Gegenseitiges Lehren" Neu="8" obj="Schätzen" text="Talent steigern" time="1309649339218" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-22" Alt="8" Info="Gegenseitiges Lehren" Neu="9" obj="Schätzen" text="Talent steigern" time="1309649339385" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-4" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Staatskunst" text="Talent steigern" time="1309649348075" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-2" Alt="0" Info="Gegenseitiges Lehren" Neu="1" obj="Abrichten" text="Talent steigern" time="1309649358140" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-4" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Abrichten" text="Talent steigern" time="1309649358675" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-8" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Fahrzeug lenken" text="Talent steigern" time="1309649366591" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-4" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Heilkunde: Wunden" text="Talent steigern" time="1309649377530" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-6" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Heilkunde: Wunden" text="Talent steigern" time="1309649377989" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-8" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Heilkunde: Wunden" text="Talent steigern" time="1309649378546" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-8" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Kartografie" text="Talent steigern" time="1309649383975" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-25" Alt="9" Info="Gegenseitiges Lehren" Neu="10" obj="Handel" text="Talent steigern" time="1309649410019" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-28" Alt="10" Info="Gegenseitiges Lehren" Neu="11" obj="Handel" text="Talent steigern" time="1309649410345" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-32" Alt="11" Info="Gegenseitiges Lehren" Neu="12" obj="Handel" text="Talent steigern" time="1309649410781" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-25" Alt="9" Info="Gegenseitiges Lehren" Neu="10" obj="Überreden" text="Talent steigern" time="1309649436688" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-28" Alt="10" Info="Gegenseitiges Lehren" Neu="11" obj="Überreden" text="Talent steigern" time="1309649436859" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-32" Alt="11" Info="Gegenseitiges Lehren" Neu="12" obj="Überreden" text="Talent steigern" time="1309649437087" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-200" obj="Binden" text="Sonderfertigkeit hinzugefügt" time="1309649528074" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-35" Alt="12" Info="Gegenseitiges Lehren" Neu="13" obj="Überreden" text="Talent steigern" time="1309649549507" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-35" Alt="12" Info="Gegenseitiges Lehren" Neu="13" obj="Handel" text="Talent steigern" time="1309649555809" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-38" Alt="9" Info="Gegenseitiges Lehren" Neu="10" obj="Armbrust" text="Talent steigern" time="1309649562295" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-65" Alt="9;1;5" Info="Gegenseitiges Lehren" Neu="10;1;5" obj="Schwerter" text="Nahkampftalent steigern" time="1309649566481" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-43" Alt="10" Info="Gegenseitiges Lehren" Neu="11" obj="Armbrust" text="Talent steigern" time="1309649576136" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-47" Alt="11" Info="Gegenseitiges Lehren" Neu="12" obj="Armbrust" text="Talent steigern" time="1309649578195" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-51" Alt="12" Info="Gegenseitiges Lehren" Neu="13" obj="Armbrust" text="Talent steigern" time="1309649579478" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-50" Alt="9" Info="Gegenseitiges Lehren" Neu="10" obj="Reiten" text="Talent steigern" time="1309649590186" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-25" Alt="9" Info="Gegenseitiges Lehren" Neu="10" obj="Menschenkenntnis" text="Talent steigern" time="1309649595124" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-25" Alt="9" Info="Gegenseitiges Lehren" Neu="10" obj="Orientierung" text="Talent steigern" time="1309649599685" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-25" Alt="9" Info="Gegenseitiges Lehren" Neu="10" obj="Schätzen" text="Talent steigern" time="1309649606158" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-6" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Hauswirtschaft" text="Talent steigern" time="1309649611073" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-25" Alt="9" Info="Gegenseitiges Lehren" Neu="10" obj="Steinschneider/Juwelier" text="Talent steigern" time="1309649616874" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-17" Alt="6" Info="Gegenseitiges Lehren" Neu="7" obj="Etikette" text="Talent steigern" time="1309649644078" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-17" Alt="6" Info="Gegenseitiges Lehren" Neu="7" obj="Gassenwissen" text="Talent steigern" time="1309649645371" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-17" Alt="6" Info="Gegenseitiges Lehren" Neu="7" obj="Wildnisleben" text="Talent steigern" time="1309649651832" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-17" Alt="6" Info="Gegenseitiges Lehren" Neu="7" obj="Geografie" text="Talent steigern" time="1309649654047" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-17" Alt="6" Info="Gegenseitiges Lehren" Neu="7" obj="Rechnen" text="Talent steigern" time="1309649660689" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-70" Alt="10;1;5" Info="Gegenseitiges Lehren" Neu="11;1;5" obj="Schwerter" text="Nahkampftalent steigern" time="1309649706751" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-55" Alt="10" Info="Gegenseitiges Lehren" Neu="11" obj="Reiten" text="Talent steigern" time="1309649711190" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-28" Alt="10" Info="Gegenseitiges Lehren" Neu="11" obj="Menschenkenntnis" text="Talent steigern" time="1309649714276" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-2" Alt="0" Info="Gegenseitiges Lehren" Neu="1" obj="Wettervorhersage" text="Talent steigern" time="1309649746127" version="5.1.3"/>
+<ereignis Abenteuerpunkte="-4" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Wettervorhersage" text="Talent steigern" time="1309649750436" version="5.1.3"/>
+</ereignisse>
+<talentliste>
+<talent lernmethode="Gegenseitiges Lehren" name="Armbrust" probe=" (GE/FF/KK)" value="13"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Dolche" probe=" (GE/GE/KK)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Hiebwaffen" probe=" (GE/GE/KK)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Raufen" probe=" (GE/GE/KK)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Ringen" probe=" (GE/GE/KK)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schwerter" probe=" (GE/GE/KK)" value="11"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Säbel" probe=" (GE/GE/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wurfmesser" probe=" (GE/FF/KK)" value="0"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Akrobatik" probe=" (MU/GE/KK)" value="-3"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Athletik" probe=" (GE/KO/KK)" value="2"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Klettern" probe=" (MU/GE/KK)" value="3"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Körperbeherrschung" probe=" (MU/IN/GE)" value="3"/>
+<talent be="BE-2" lernmethode="Gegenseitiges Lehren" name="Reiten" probe=" (CH/GE/KK)" value="11"/>
+<talent be="BE" lernmethode="Gegenseitiges Lehren" name="Schleichen" probe=" (MU/IN/GE)" value="3"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Schwimmen" probe=" (GE/KO/KK)" value="-2"/>
+<talent be="" lernmethode="Gegenseitiges Lehren" name="Selbstbeherrschung" probe=" (MU/KO/KK)" value="3"/>
+<talent be="BE-2" lernmethode="Gegenseitiges Lehren" name="Sich verstecken" probe=" (MU/IN/GE)" value="3"/>
+<talent be="BE-3" lernmethode="Gegenseitiges Lehren" name="Singen" probe=" (IN/CH/CH)" value="0"/>
+<talent be="0-&gt;BE" lernmethode="Gegenseitiges Lehren" name="Sinnenschärfe" probe=" (KL/IN/IN)" value="3"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Tanzen" probe=" (CH/GE/GE)" value="3"/>
+<talent be="" lernmethode="Gegenseitiges Lehren" name="Zechen" probe=" (IN/KO/KK)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Etikette" probe=" (KL/IN/CH)" value="7"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Gassenwissen" probe=" (KL/IN/CH)" value="7"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Menschenkenntnis" probe=" (KL/IN/CH)" value="11"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schriftlicher Ausdruck" probe=" (KL/IN/IN)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Sich verkleiden" probe=" (MU/CH/GE)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Überreden" probe=" (MU/IN/CH)" value="13"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Fährtensuchen" probe=" (KL/IN/KO)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Orientierung" probe=" (KL/IN/IN)" value="10"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wettervorhersage" probe=" (KL/IN/IN)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wildnisleben" probe=" (IN/GE/KO)" value="7"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Brett-/Kartenspiel" probe=" (KL/KL/IN)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Geografie" probe=" (KL/KL/IN)" value="7"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Geschichtswissen" probe=" (KL/KL/IN)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Gesteinskunde" probe=" (KL/IN/FF)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Götter und Kulte" probe=" (KL/KL/IN)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Heraldik" probe=" (KL/KL/FF)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Magiekunde" probe=" (KL/KL/IN)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Mechanik" probe=" (KL/KL/FF)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Rechnen" probe=" (KL/KL/IN)" value="7"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Rechtskunde" probe=" (KL/KL/IN)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Sagen und Legenden" probe=" (KL/IN/CH)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schätzen" probe=" (KL/IN/IN)" value="10"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Staatskunst" probe=" (KL/IN/CH)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Sternkunde" probe=" (KL/KL/IN)" value="1"/>
+<talent k="21" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Alaani" probe=" (KL/IN/CH)" value="2"/>
+<talent k="16" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Ferkina" probe=" (KL/IN/CH)" value="2"/>
+<talent k="18" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Garethi" probe=" (KL/IN/CH)" value="6"/>
+<talent k="21" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Rogolan" probe=" (KL/IN/CH)" value="14"/>
+<talent k="18" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Tulamidya" probe=" (KL/IN/CH)" value="14"/>
+<talent k="10" lernmethode="Gegenseitiges Lehren" name="Lesen/Schreiben Kusliker Zeichen" probe=" (KL/KL/FF)" value="6"/>
+<talent k="11" lernmethode="Gegenseitiges Lehren" name="Lesen/Schreiben Rogolan" probe=" (KL/KL/FF)" value="12"/>
+<talent k="14" lernmethode="Gegenseitiges Lehren" name="Lesen/Schreiben Tulamidya" probe=" (KL/KL/FF)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Abrichten" probe=" (MU/IN/CH)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Bergbau" probe=" (IN/KO/KK)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Fahrzeug lenken" probe=" (IN/CH/FF)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Feinmechanik" probe=" (KL/FF/FF)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Handel" probe=" (KL/IN/CH)" value="13"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Hauswirtschaft" probe=" (IN/CH/FF)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Heilkunde: Gift" probe=" (MU/KL/IN)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Heilkunde: Wunden" probe=" (KL/CH/FF)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Holzbearbeitung" probe=" (KL/FF/KK)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Kartografie" probe=" (KL/KL/FF)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Kochen" probe=" (KL/IN/FF)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Lederarbeiten" probe=" (KL/FF/FF)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Malen/Zeichnen" probe=" (KL/IN/FF)" value="7"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schlösser knacken" probe=" (IN/FF/FF)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schneidern" probe=" (KL/FF/FF)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Steinschneider/Juwelier" probe=" (IN/FF/FF)" value="10"/>
+</talentliste>
+<zauberliste/>
+<kampf>
+<kampfwerte name="Dolche">
+<attacke value="8"/>
+<parade value="9"/>
+</kampfwerte>
+<kampfwerte name="Hiebwaffen">
+<attacke value="8"/>
+<parade value="11"/>
+</kampfwerte>
+<kampfwerte name="Raufen">
+<attacke value="8"/>
+<parade value="11"/>
+</kampfwerte>
+<kampfwerte name="Ringen">
+<attacke value="8"/>
+<parade value="10"/>
+</kampfwerte>
+<kampfwerte name="Schwerter">
+<attacke value="11"/>
+<parade value="16"/>
+</kampfwerte>
+<kampfwerte name="Säbel">
+<attacke value="8"/>
+<parade value="8"/>
+</kampfwerte>
+</kampf>
+<gegenstände>
+<gegenstand anzahl="1" name="(Lang-)Schwert" slot="0"/>
+<gegenstand anzahl="1" name="Abakus" slot="0"/>
+<gegenstand anzahl="1" name="Balestrina" slot="0">
+<Fernkampfwaffe>
+<talente kampftalent="Armbrust"/>
+</Fernkampfwaffe>
+</gegenstand>
+<gegenstand anzahl="1" name="Barett" slot="0"/>
+<gegenstand anzahl="1" name="Bürste" slot="0"/>
+<gegenstand anzahl="1" name="Drachenzahn" slot="0"/>
+<gegenstand anzahl="1" name="Fernrohr" slot="0"/>
+<gegenstand anzahl="1" name="Fibel" slot="0"/>
+<gegenstand anzahl="1" name="Fünflagenharnisch" slot="0"/>
+<gegenstand anzahl="1" name="Handspiegel, versilbertes Glas" slot="0"/>
+<gegenstand anzahl="1" name="Hemd" slot="0"/>
+<gegenstand anzahl="1" name="Hose" slot="0"/>
+<gegenstand anzahl="1" name="Kaftan" slot="0"/>
+<gegenstand anzahl="30" name="Kugel" slot="0"/>
+<gegenstand anzahl="1" name="Ledergürtel" slot="0"/>
+<gegenstand anzahl="1" name="Leichte Stiefel" slot="0"/>
+<gegenstand anzahl="1" name="Lupe" slot="0"/>
+<gegenstand anzahl="1" name="Nagelfeile" slot="0"/>
+<gegenstand anzahl="1" name="Ohrring" slot="0"/>
+<gegenstand anzahl="1" name="Parfüm" slot="0"/>
+<gegenstand anzahl="1" name="Schiefertafel" slot="0"/>
+<gegenstand anzahl="1" name="Schreibkreide" slot="0"/>
+<gegenstand anzahl="1" name="Schwamm" slot="0"/>
+<gegenstand anzahl="1" name="Seife" slot="0"/>
+<gegenstand anzahl="1" name="Tabakdose, Silber" slot="0"/>
+<gegenstand anzahl="1" name="Tabakpfeife, Wurzelholz" slot="0"/>
+<gegenstand anzahl="1" name="Taschenuhr" slot="0"/>
+<gegenstand anzahl="1" name="Turban" slot="0"/>
+</gegenstände>
+<ausrüstungen>
+<heldenausruestung bezeichner="" bfakt="1" bfmin="1" hand="rechts" name="nkwaffe1" schild="0" set="0" slot="0" talent="Schwerter" waffenname="(Lang-)Schwert"/>
+<heldenausruestung bezeichner="" bfakt="0" bfmin="0" hand="links" name="nkwaffe2" schild="0" set="0" slot="0" talent="Dolche" waffenname="Drachenzahn"/>
+<heldenausruestung name="fkwaffe1" set="0" slot="0" waffenname="Balestrina"/>
+<heldenausruestung name="ruestung1" ruestungsname="Fünflagenharnisch" set="0" slot="0"/>
+<heldenausruestung name="jagtwaffe" nummer="0" set="0"/>
+</ausrüstungen>
+<verbindungen/>
+<extention/>
+<geldboerse/>
+</held>
+</helden>

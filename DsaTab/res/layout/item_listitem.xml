@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.dsatab.view.ItemListItem xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:background="?attr/listItemBackground"
+    android:paddingRight="6dp"
+    android:paddingLeft="6dp">
+
+    <ImageView
+        android:id="@+id/icon_chain_top"
+        android:src="?attr/imgChainTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"        
+        android:layout_marginRight="100dip"        
+        android:visibility="gone" />
+    <ImageView
+        android:id="@+id/icon_chain_bottom"
+        android:src="?attr/imgChainBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"        
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="100dip"
+        android:visibility="gone" />
+    
+    <ImageButton
+        android:id="@android:id/icon1"
+        android:layout_width="@dimen/icon_button_size"
+        android:layout_height="@dimen/icon_button_size"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="4dip"
+        android:scaleType="fitCenter"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@android:id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_toLeftOf="@android:id/icon2"
+        android:layout_toRightOf="@android:id/icon1"
+        android:ellipsize="marquee"
+        android:lines="1"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"        
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@android:id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@android:id/text1"
+        android:layout_alignRight="@android:id/text1"
+        android:layout_below="@android:id/text1"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle="normal" />
+    
+    <TextView
+        android:id="@+id/text3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@android:id/text1"
+        android:layout_alignRight="@android:id/text1"
+        android:layout_below="@android:id/text2"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="10sp"
+        android:textAllCaps="true"
+        android:gravity="right"
+        android:textStyle="normal" />
+
+    <ImageButton
+        android:id="@android:id/icon2"
+        android:layout_width="@dimen/icon_button_size"
+        android:layout_height="@dimen/icon_button_size"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="4dip"
+        android:scaleType="fitCenter"
+        android:visibility="gone" />
+
+</com.dsatab.view.ItemListItem>

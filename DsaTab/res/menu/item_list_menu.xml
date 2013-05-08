@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+		
+    <item
+        android:id="@+id/option_item_add_list"
+        android:icon="?attr/imgBarSwordAdd"
+        android:showAsAction="withText|ifRoom"
+        android:title="Gegenstand hinzufügen"/>
+    
+    <item
+        android:id="@+id/option_item_filter"
+        android:icon="?attr/imgBarFilter"
+        android:showAsAction="withText|ifRoom"
+        android:title="Filtern">
+    </item>
+
+</menu>

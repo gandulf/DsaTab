@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/gen_main_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <fragment
+        android:id="@+id/inc_attributes"
+        android:name="com.dsatab.fragment.AttributeListFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        class="com.dsatab.fragment.AttributeListFragment"
+        android:tag="attributeListFragment"
+        tools:layout="@layout/attributes_list" >
+    </fragment>
+
+    <com.dsatab.view.MyViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/inc_attributes" />
+
+    <LinearLayout
+        android:id="@+id/SlidingContainer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom"
+        android:orientation="vertical" >
+
+	<com.dsatab.view.DiceSlider 
+		android:id="@+id/SlidingDrawer" android:handle="@+id/SlidingHandle"
+		android:content="@+id/inc_dice_slider_content" android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<LinearLayout android:layout_height="wrap_content"
+			android:id="@+id/SlidingHandle" android:orientation="horizontal"
+			android:layout_width="wrap_content">
+			<ImageButton android:id="@+id/slideHandleButton"
+				android:src="@drawable/w20" android:background="@null"
+				android:scaleType="fitCenter" android:layout_height="50dip"
+				android:layout_width="50dip"></ImageButton>
+		</LinearLayout>
+	
+		<include android:layout_width="fill_parent"
+			android:layout_height="fill_parent" layout="@layout/dice_slider_content"
+			android:id="@+id/inc_dice_slider_content"></include>
+		
+		
+	</com.dsatab.view.DiceSlider>
+	</LinearLayout>
+	
+    <FrameLayout android:id="@+id/loading" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/Darker" android:visibility="gone">
+        
+        <ProgressBar android:layout_width="wrap_content" android:layout_height="wrap_content" android:indeterminate="true" android:layout_gravity="center"/>
+        
+    </FrameLayout>
+</RelativeLayout>

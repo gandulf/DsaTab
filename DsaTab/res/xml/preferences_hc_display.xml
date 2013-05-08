@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+        <ListPreference
+            android:defaultValue="paper"
+            android:entries="@array/themes"
+            android:entryValues="@array/themesValues"
+            
+            android:key="theme"
+            android:summary="Bestimme das Aussehen von DsaTab (Erfordert Neustart):"
+            android:title="Theme" />
+
+        <com.dsatab.view.PreferenceWithButton
+            android:key="theme.bg.path"
+            android:summary="Hier kannst du das Standard Hintergrundbild überschreiben"
+            android:title="Hintergrundbild auswählen" />
+        <com.dsatab.view.PreferenceWithButton            
+            android:key="theme.wound.bg.path"
+            android:summary="Hier kannst du das Standard Wunden-Hintergrundbild überschreiben"
+            android:title="Wunden Hintergrundbild auswählen" />
+
+        <ListPreference
+            android:defaultValue="auto"
+            android:entries="@array/screenOrientation"
+            android:entryValues="@array/screenOrientationValues"            
+            android:key="screen_orientation"
+            android:summary="Definiere die Ausrichtung deiner Oberfläche:"
+            android:title="Bildschirmausrichtung" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="fullscreen"
+            android:summary="Im Vollbildmodus wird weder die Titel- noch die Statusleiste angezeigt."
+            android:title="Vollbild" />
+
+        <PreferenceScreen
+            android:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsDisplayDiceSliderFragment"            
+            android:key="displayDiceSliderScreen"
+            android:summary="Hier kannst du einstellen wie sich die Würfelleiste verhalten soll."
+            android:title="Würfelleiste konfigurieren">
+            <intent                
+            	android:targetPackage="com.dsatab"
+            	android:targetClass="com.dsatab.activity.DsaTabPreferenceActivity"
+            	android:action="VIEW">
+            	<extra android:name="layout" android:value="@xml/preferences_hc_display_diceslider" />
+            </intent>
+            </PreferenceScreen>
+        <PreferenceScreen
+            android:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsDisplayHeaderFragment"            
+            android:key="displayHeaderScreen"
+            android:summary="Hier kannst du einstellen was alles in der Kopfzeile angezeigt werden soll."
+            android:title="Kopfzeile konfigurieren" >
+            <intent                
+            	android:targetPackage="com.dsatab"
+            	android:targetClass="com.dsatab.activity.DsaTabPreferenceActivity"
+            	android:action="VIEW">
+            	<extra android:name="layout" android:value="@xml/preferences_hc_display_header" />
+            </intent>
+         </PreferenceScreen>
+</PreferenceScreen>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.dsatab.view.CheckableRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:background="?attr/listItemBackground"
+    android:paddingRight="6dp"
+    android:paddingLeft="6dp">
+
+    <ImageView
+        android:id="@android:id/icon1"
+        style="?attr/iconImageViewStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="8dip"
+        android:visibility="visible" >
+    </ImageView>
+
+    <TextView
+        android:id="@android:id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_marginTop="4dip"
+        android:layout_toLeftOf="@android:id/icon2"
+        android:layout_toRightOf="@android:id/icon1"
+        android:ellipsize="marquee"
+        android:lines="1"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@android:id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@android:id/text1"
+        android:layout_alignRight="@android:id/text1"
+        android:layout_below="@android:id/text1"
+        android:paddingBottom="4dip"
+        android:textSize="15sp"
+        android:textStyle="normal" />
+
+    <ImageView
+        android:id="@android:id/icon2"
+        style="?attr/iconImageViewStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="8dip"
+        android:visibility="gone" >
+    </ImageView>
+
+</com.dsatab.view.CheckableRelativeLayout>

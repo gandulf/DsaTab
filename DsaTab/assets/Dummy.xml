@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="helden.xsl"?>
+
+<helden xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="5.1.3" xsi:noNamespaceSchemaLocation="helden.xsd">
+<held key="1295281918939" name="Dummy">
+<basis>
+<geschlecht name="männlich"/>
+<settings name="DSA4.1">
+<inc name="Unter dem Westwind"/>
+<inc name="Wege der Alchimie"/>
+</settings>
+<mods/>
+<rasse name="helden.model.rasse.Mittellaender" string="Mittelländer">
+<groesse gewicht="82" value="184"/>
+<aussehen alter="45" augenfarbe="grün" aussehentext0="Sehr &amp; &quot;hübsch&quot;" aussehentext1="'herrlich'" aussehentext2="" aussehentext3="" familietext0="" familietext1="" familietext2="" familietext3="" familietext4="" familietext5="" gbjahr="0" gbmonat="9" gbtag="1" gprest="0" gpstart="0" haarfarbe="rotbraun" kalender="Hal" stand="" titel=""/>
+</rasse>
+<kultur name="helden.model.kultur.Garetien" string="Mittelländische Städte"/>
+<ausbildungen>
+<ausbildung art="Hauptprofession" name="helden.model.profession.Soeldner" string="Söldner/Schweres Fußvolk">
+<variante name="Schweres Fußvolk"/>
+</ausbildung>
+</ausbildungen>
+<eingegeben value="true"/>
+<notiz notiz0="" notiz1="" notiz10="" notiz11="" notiz2="" notiz3="" notiz4="" notiz5="" notiz6="" notiz7="" notiz8="" notiz9=""/>
+<portraet value=""/>
+<abenteuerpunkte value="10000"/>
+<freieabenteuerpunkte value="5045"/>
+</basis>
+<eigenschaften>
+<eigenschaft mod="1" name="Mut" permanent="1" startwert="13" value="16"/>
+<eigenschaft mod="0" name="Klugheit" startwert="10" value="11"/>
+<eigenschaft mod="0" name="Intuition" startwert="11" value="13"/>
+<eigenschaft mod="0" name="Charisma" startwert="11" value="11"/>
+<eigenschaft mod="0" name="Fingerfertigkeit" startwert="10" value="10"/>
+<eigenschaft mod="0" name="Gewandtheit" startwert="14" value="15"/>
+<eigenschaft mod="0" name="Konstitution" startwert="12" value="13"/>
+<eigenschaft mod="0" name="Körperkraft" startwert="15" value="16"/>
+<eigenschaft mod="0" name="Sozialstatus" startwert="7" value="8"/>
+<eigenschaft mod="10" name="Lebensenergie" permanent="-1" value="7"/>
+<eigenschaft mod="15" name="Ausdauer" value="5"/>
+<eigenschaft grossemeditation="0" mod="0" mrmod="-4" name="Astralenergie" value="0"/>
+<eigenschaft karmalqueste="0" mod="0" name="Karmaenergie" value="0"/>
+<eigenschaft mod="-4" name="Magieresistenz" value="2"/>
+<eigenschaft mod="0" name="ini" value="12"/>
+<eigenschaft mod="0" name="at" value="10"/>
+<eigenschaft mod="0" name="pa" value="9"/>
+<eigenschaft mod="0" name="fk" value="8"/>
+</eigenschaften>
+<vt>
+<vorteil name="Ausdauernd" value="3"/>
+<vorteil name="Eisern"/>
+<vorteil name="Gefahreninstinkt"/>
+<vorteil name="Kälteresistenz"/>
+<vorteil name="Aberglaube" value="6"/>
+<vorteil name="Arroganz" value="7"/>
+<vorteil name="Einbildungen"/>
+</vt>
+<sf>
+<sonderfertigkeit name="Kampfreflexe"/>
+<sonderfertigkeit name="Talentspezialisierung Infanteriewaffen (Warunker Hammer)">
+<talent name="Infanteriewaffen"/>
+<spezialisierung name="Warunker Hammer"/>
+</sonderfertigkeit>
+</sf>
+<ereignisse>
+<ereignis Abenteuerpunkte="-140" Alt="5" Neu="6" obj="Lebensenergie" text="Eigenschaft steigern" time="1301912771843" version="5.1.0"/>
+<ereignis Abenteuerpunkte="-165" Alt="6" Neu="7" obj="Lebensenergie" text="Eigenschaft steigern" time="1301912772508" version="5.1.0"/>
+<ereignis Abenteuerpunkte="-150" obj="Kampfreflexe" text="Sonderfertigkeit hinzugefügt" time="1301921011799" version="5.1.0"/>
+<ereignis Abenteuerpunkte="5000" obj="Abenteuerpunkte" text="Ereignis eingeben" time="1301921158387" version="5.1.0"/>
+</ereignisse>
+<talentliste>
+<talent lernmethode="Gegenseitiges Lehren" name="Anderthalbhänder" probe=" (GE/GE/KK)" value="8"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Armbrust" probe=" (GE/FF/KK)" value="12"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Belagerungswaffen" probe=" (GE/FF/KK)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Bogen" probe=" (GE/FF/KK)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Dolche" probe=" (GE/GE/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Fechtwaffen" probe=" (GE/GE/KK)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Hiebwaffen" probe=" (GE/GE/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Infanteriewaffen" probe=" (GE/GE/KK)" value="18"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Kettenstäbe" probe=" (GE/GE/KK)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Kettenwaffen" probe=" (GE/GE/KK)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Raufen" probe=" (GE/GE/KK)" value="10"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Ringen" probe=" (GE/GE/KK)" value="11"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schwerter" probe=" (GE/GE/KK)" value="15"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Speere" probe=" (GE/GE/KK)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Stäbe" probe=" (GE/GE/KK)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Säbel" probe=" (GE/GE/KK)" value="8"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wurfmesser" probe=" (GE/FF/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Zweihandflegel" probe=" (GE/GE/KK)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Zweihandhiebwaffen" probe=" (GE/GE/KK)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Zweihandschwerter/-säbel" probe=" (GE/GE/KK)" value="5"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Akrobatik" probe=" (MU/GE/KK)" value="3"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Athletik" probe=" (GE/KO/KK)" value="4"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Klettern" probe=" (MU/GE/KK)" value="11"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Körperbeherrschung" probe=" (MU/IN/GE)" value="12"/>
+<talent be="BE-2" lernmethode="Gegenseitiges Lehren" name="Reiten" probe=" (CH/GE/KK)" value="15"/>
+<talent be="BE" lernmethode="Gegenseitiges Lehren" name="Schleichen" probe=" (MU/IN/GE)" value="8"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Schwimmen" probe=" (GE/KO/KK)" value="6"/>
+<talent be="" lernmethode="Gegenseitiges Lehren" name="Selbstbeherrschung" probe=" (MU/KO/KK)" value="11"/>
+<talent be="BE-2" lernmethode="Gegenseitiges Lehren" name="Sich verstecken" probe=" (MU/IN/GE)" value="5"/>
+<talent be="BE-3" lernmethode="Gegenseitiges Lehren" name="Singen" probe=" (IN/CH/CH)" value="4"/>
+<talent be="0-&gt;BE" lernmethode="Gegenseitiges Lehren" name="Sinnenschärfe" probe=" (KL/IN/IN)" value="9"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Tanzen" probe=" (CH/GE/GE)" value="2"/>
+<talent be="" lernmethode="Gegenseitiges Lehren" name="Zechen" probe=" (IN/KO/KK)" value="6"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Gassenwissen" probe=" (KL/IN/CH)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Menschenkenntnis" probe=" (KL/IN/CH)" value="8"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Sich verkleiden" probe=" (MU/CH/GE)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Überreden" probe=" (MU/IN/CH)" value="6"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Fährtensuchen" probe=" (KL/IN/KO)" value="6"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Orientierung" probe=" (KL/IN/IN)" value="8"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wildnisleben" probe=" (IN/GE/KO)" value="8"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Götter und Kulte" probe=" (KL/KL/IN)" value="8"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Kriegskunst" probe=" (MU/KL/CH)" value="12"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Rechnen" probe=" (KL/KL/IN)" value="6"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Sagen und Legenden" probe=" (KL/IN/CH)" value="4"/>
+<talent k="18" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Garethi" probe=" (KL/IN/CH)" value="10"/>
+<talent k="18" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Tulamidya" probe=" (KL/IN/CH)" value="6"/>
+<talent k="10" lernmethode="Gegenseitiges Lehren" name="Lesen/Schreiben Kusliker Zeichen" probe=" (KL/KL/FF)" value="8"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Abrichten" probe=" (MU/IN/CH)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Boote fahren" probe=" (GE/KO/KK)" value="6"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Heilkunde: Gift" probe=" (MU/KL/IN)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Heilkunde: Krankheiten" probe=" (MU/KL/CH)" value="6"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Heilkunde: Seele" probe=" (IN/CH/CH)" value="8"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Heilkunde: Wunden" probe=" (KL/CH/FF)" value="8"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Holzbearbeitung" probe=" (KL/FF/KK)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Kochen" probe=" (KL/IN/FF)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Lederarbeiten" probe=" (KL/FF/FF)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Malen/Zeichnen" probe=" (KL/IN/FF)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schneidern" probe=" (KL/FF/FF)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Gefahreninstinkt" probe=" (KL/IN/IN)" value="8"/>
+</talentliste>
+<zauberliste/>
+<kampf>
+<kampfwerte name="Anderthalbhänder">
+<attacke value="14"/>
+<parade value="13"/>
+</kampfwerte>
+<kampfwerte name="Dolche">
+<attacke value="10"/>
+<parade value="9"/>
+</kampfwerte>
+<kampfwerte name="Fechtwaffen">
+<attacke value="11"/>
+<parade value="10"/>
+</kampfwerte>
+<kampfwerte name="Hiebwaffen">
+<attacke value="10"/>
+<parade value="9"/>
+</kampfwerte>
+<kampfwerte name="Infanteriewaffen">
+<attacke value="20"/>
+<parade value="17"/>
+</kampfwerte>
+<kampfwerte name="Kettenstäbe">
+<attacke value="11"/>
+<parade value="10"/>
+</kampfwerte>
+<kampfwerte name="Kettenwaffen">
+<attacke value="11"/>
+<parade value="10"/>
+</kampfwerte>
+<kampfwerte name="Raufen">
+<attacke value="15"/>
+<parade value="14"/>
+</kampfwerte>
+<kampfwerte name="Ringen">
+<attacke value="16"/>
+<parade value="14"/>
+</kampfwerte>
+<kampfwerte name="Schwerter">
+<attacke value="17"/>
+<parade value="17"/>
+</kampfwerte>
+<kampfwerte name="Speere">
+<attacke value="12"/>
+<parade value="11"/>
+</kampfwerte>
+<kampfwerte name="Stäbe">
+<attacke value="11"/>
+<parade value="10"/>
+</kampfwerte>
+<kampfwerte name="Säbel">
+<attacke value="15"/>
+<parade value="12"/>
+</kampfwerte>
+<kampfwerte name="Zweihandflegel">
+<attacke value="12"/>
+<parade value="10"/>
+</kampfwerte>
+<kampfwerte name="Zweihandhiebwaffen">
+<attacke value="12"/>
+<parade value="11"/>
+</kampfwerte>
+<kampfwerte name="Zweihandschwerter/-säbel">
+<attacke value="13"/>
+<parade value="11"/>
+</kampfwerte>
+</kampf>
+<gegenstände>
+<gegenstand anzahl="1" name="(Lang-)Schwert" slot="0"/>
+<gegenstand anzahl="1" name="Amazonenrüstung (kompl)" slot="0"/>
+<gegenstand anzahl="1" name="Anaurak" slot="0">
+<Rüstung>
+<sterne value="0"/>
+</Rüstung>
+</gegenstand>
+<gegenstand anzahl="1" name="Armschiene (links), Leder" slot="0">
+<Rüstung>
+<bauch value="1"/>
+<brust value="2"/>
+<kopf value="1"/>
+<linkerarm value="2"/>
+<rechterarm value="1"/>
+<ruecken value="1"/>
+<rechtesbein value="1"/>
+<linkesbein value="1"/>
+</Rüstung>
+</gegenstand>
+<gegenstand anzahl="1" name="Armschiene (rechts), Leder" slot="0"/>
+<gegenstand anzahl="1" name="Armschiene links, Bronze" slot="0"/>
+<gegenstand anzahl="1" name="Armschiene rechts, Bronze" slot="0"/>
+<gegenstand anzahl="1" name="Armschienen links, Stahl" slot="0"/>
+<gegenstand anzahl="1" name="Armschienen rechts, Stahl" slot="0"/>
+<gegenstand anzahl="1" name="Baburiner Hut" slot="0"/>
+<gegenstand anzahl="1" name="Bart / Halsberge" slot="0"/>
+<gegenstand anzahl="1" name="Beinschienen (links), Leder" slot="0"/>
+<gegenstand anzahl="1" name="Beinschienen (rechts), Leder" slot="0"/>
+<gegenstand anzahl="1" name="Beinschienen, Bronze" slot="0"/>
+<gegenstand anzahl="1" name="Beinschienen, Stahl" slot="0"/>
+<gegenstand anzahl="1" name="Beintaschen / Schürze" slot="0"/>
+<gegenstand anzahl="1" name="Brigantina" slot="0"/>
+<gegenstand anzahl="1" name="Bronzeharnisch" slot="0"/>
+<gegenstand anzahl="1" name="Brustplatte, Leder" slot="0"/>
+<gegenstand anzahl="1" name="Brustplatte, Stahl" slot="0"/>
+<gegenstand anzahl="1" name="Brustschalen" slot="0"/>
+<gegenstand anzahl="1" name="Dicke Kleidung" slot="0"/>
+<gegenstand anzahl="1" name="Dolch" slot="0"/>
+<gegenstand anzahl="1" name="Drachenhelm" slot="0"/>
+<gegenstand anzahl="1" name="Drachenhelm" slot="1"/>
+<gegenstand anzahl="1" name="Eisenmantel" slot="0"/>
+<gegenstand anzahl="1" name="Fellumhang" slot="0"/>
+<gegenstand anzahl="1" name="Fuhrmannsmantel" slot="0"/>
+<gegenstand anzahl="1" name="Fünflagenharnisch" slot="0"/>
+<gegenstand anzahl="1" name="Gambeson" slot="0"/>
+<gegenstand anzahl="1" name="Garether Platte" slot="0"/>
+<gegenstand anzahl="1" name="Garether Platte" slot="1"/>
+<gegenstand anzahl="1" name="Gestechrüstung" slot="0"/>
+<gegenstand anzahl="1" name="Gladiatorenschulter" slot="0"/>
+<gegenstand anzahl="1" name="Hartholzharnisch" slot="0"/>
+<gegenstand anzahl="1" name="Hohe Stiefel" slot="0"/>
+<gegenstand anzahl="1" name="Horasischer Reiterharnisch" slot="0"/>
+<gegenstand anzahl="1" name="Iryanrüstung" slot="0"/>
+<gegenstand anzahl="1" name="Kettenbeinling (links)" slot="0"/>
+<gegenstand anzahl="1" name="Kettenbeinling (rechts)" slot="0"/>
+<gegenstand anzahl="1" name="Kettenhandschuh (links)" slot="0"/>
+<gegenstand anzahl="1" name="Kettenhandschuh (rechts)" slot="0"/>
+<gegenstand anzahl="1" name="Kettenhaube" slot="0"/>
+<gegenstand anzahl="1" name="Kettenhaube mit Gesichtsschutz" slot="0"/>
+<gegenstand anzahl="1" name="Kettenhemd, Halbarm" slot="0"/>
+<gegenstand anzahl="1" name="Kettenhemd, Lang" slot="0"/>
+<gegenstand anzahl="1" name="Kettenkragen" slot="0"/>
+<gegenstand anzahl="1" name="Kettenmantel" slot="0"/>
+<gegenstand anzahl="1" name="Kettenweste" slot="0"/>
+<gegenstand anzahl="1" name="Krötenhaut" slot="0"/>
+<gegenstand anzahl="1" name="Kusliker Lamellar" slot="0"/>
+<gegenstand anzahl="1" name="Kürass" slot="0"/>
+<gegenstand anzahl="1" name="Lederharnisch" slot="0"/>
+<gegenstand anzahl="1" name="Lederhelm" slot="0"/>
+<gegenstand anzahl="1" name="Lederhelm, verstärkt" slot="0"/>
+<gegenstand anzahl="1" name="Lederhose" slot="0"/>
+<gegenstand anzahl="1" name="Lederschild" slot="0"/>
+<gegenstand anzahl="1" name="Lederweste" slot="0"/>
+<gegenstand anzahl="1" name="Lederweste, dick" slot="0"/>
+<gegenstand anzahl="1" name="Leichte Armbrust" slot="0"/>
+<gegenstand anzahl="1" name="Leichte Platte" slot="0"/>
+<gegenstand anzahl="1" name="Löwenmähne" slot="0"/>
+<gegenstand anzahl="1" name="Mammutonpanzer" slot="0"/>
+<gegenstand anzahl="1" name="Mattenrücken" slot="0"/>
+<gegenstand anzahl="1" name="Morion" slot="0"/>
+<gegenstand anzahl="2" name="Panzerbein" slot="0"/>
+<gegenstand anzahl="1" name="Panzerhandschuhe links" slot="0"/>
+<gegenstand anzahl="1" name="Panzerhandschuhe rechts" slot="0"/>
+<gegenstand anzahl="2" name="Panzerschuh" slot="0"/>
+<gegenstand anzahl="1" name="Pelzweste" slot="0"/>
+<gegenstand anzahl="1" name="Pelzweste, dick" slot="0"/>
+<gegenstand anzahl="1" name="Plattenarm links" slot="0"/>
+<gegenstand anzahl="1" name="Plattenarm rechts" slot="0"/>
+<gegenstand anzahl="1" name="Plattenschulter links" slot="0"/>
+<gegenstand anzahl="1" name="Plattenschulter rechts" slot="0"/>
+<gegenstand anzahl="1" name="Ringelpanzer" slot="0"/>
+<gegenstand anzahl="1" name="Ringmantel (Brabakmantel)" slot="0"/>
+<gegenstand anzahl="1" name="Schaller" slot="0"/>
+<gegenstand anzahl="1" name="Schuppenpanzer" slot="0"/>
+<gegenstand anzahl="1" name="Schuppenpanzer, Lang" slot="0"/>
+<gegenstand anzahl="1" name="Spiegelpanzer" slot="0"/>
+<gegenstand anzahl="1" name="Stechhelm / Visierhelm" slot="0"/>
+<gegenstand anzahl="1" name="Streifenschurz" slot="0"/>
+<gegenstand anzahl="1" name="Sturmhaube" slot="0"/>
+<gegenstand anzahl="1" name="Tellerhelm" slot="0"/>
+<gegenstand anzahl="1" name="Topfhelm" slot="0"/>
+<gegenstand anzahl="1" name="Tuchrüstung" slot="0"/>
+<gegenstand anzahl="1" name="Unterzeug mit Kettenteilen" slot="0"/>
+<gegenstand anzahl="1" name="Warunker Hammer" slot="0"/>
+<gegenstand anzahl="1" name="Wattierte Kappe" slot="0"/>
+<gegenstand anzahl="1" name="Wattiertes Unterzeug" slot="0"/>
+</gegenstände>
+<ausrüstungen>
+<heldenausruestung bezeichner="" bfakt="2" bfmin="2" hand="rechts" name="nkwaffe1" schild="0" set="0" slot="0" talent="Infanteriewaffen" waffenname="Warunker Hammer"/>
+<heldenausruestung name="fkwaffe1" set="0" slot="0" waffenname="Leichte Armbrust"/>
+<heldenausruestung name="fkwaffe2" set="0" slot="0" waffenname="Leichte Armbrust"/>
+<heldenausruestung name="ruestung1" ruestungsname="Garether Platte" set="0" slot="0"/>
+<heldenausruestung name="ruestung2" ruestungsname="Drachenhelm" set="0" slot="0"/>
+<heldenausruestung name="jagtwaffe" nummer="1" set="0"/>
+<heldenausruestung bezeichner="" bfakt="1" bfmin="1" hand="rechts" name="nkwaffe1" schild="1" set="1" slot="0" talent="Schwerter" waffenname="(Lang-)Schwert"/>
+<heldenausruestung name="fkwaffe1" set="1" slot="0" waffenname="Leichte Armbrust"/>
+<heldenausruestung name="schild1" schildname="Lederschild" set="1" slot="0" verwendungsArt="Schild"/>
+<heldenausruestung name="ruestung1" ruestungsname="Garether Platte" set="1" slot="0"/>
+<heldenausruestung name="ruestung2" ruestungsname="Drachenhelm" set="1" slot="0"/>
+<heldenausruestung name="jagtwaffe" nummer="0" set="1"/>
+<heldenausruestung bezeichner="" bfakt="2" bfmin="2" hand="rechts" name="nkwaffe1" schild="0" set="2" slot="0" talent="Infanteriewaffen" waffenname="Warunker Hammer"/>
+<heldenausruestung name="jagtwaffe" nummer="0" set="2"/>
+</ausrüstungen>
+<verbindungen/>
+<extention/>
+<geldboerse>
+<muenze anzahl="1" name="Dukat" waehrung="Mittelreich"/>
+<muenze anzahl="1" name="Zholvari" waehrung="Xeranien"/>
+<muenze anzahl="1" name="Zwergentaler" waehrung="Zwerge"/>
+<muenze anzahl="1" name="Ch'ryskl" waehrung="Trahelien"/>
+<muenze anzahl="1" name="Borbaradstaler" waehrung="Xeranien"/>
+<muenze anzahl="1" name="Oreal" waehrung="Al'Anfa"/>
+<muenze anzahl="1" name="Hedsch" waehrung="Trahelien"/>
+<muenze anzahl="1" name="Zechine" waehrung="Kalifat"/>
+<muenze anzahl="1" name="Horasdor" waehrung="Horasreich"/>
+<muenze anzahl="1" name="Heller" waehrung="Mittelreich"/>
+<muenze anzahl="1" name="Amazonenkronen" waehrung="Amazonen"/>
+<muenze anzahl="1" name="Stüber" waehrung="Vallusa"/>
+<muenze anzahl="1" name="Marawedi" waehrung="Kalifat"/>
+<muenze anzahl="1" name="Kreuzer" waehrung="Mittelreich"/>
+<muenze anzahl="1" name="Batzen" waehrung="Bornland"/>
+<muenze anzahl="1" name="Silbertaler" waehrung="Mittelreich"/>
+<muenze anzahl="1" name="Dirham" waehrung="Al'Anfa"/>
+<muenze anzahl="1" name="Muwlat" waehrung="Kalifat"/>
+<muenze anzahl="1" name="Deut" waehrung="Bornland"/>
+<muenze anzahl="1" name="Witten" waehrung="Vallusa"/>
+<muenze anzahl="1" name="Hallah" waehrung="Aranien"/>
+<muenze anzahl="1" name="Schekel" waehrung="Aranien"/>
+<muenze anzahl="1" name="Kleiner Oreal" waehrung="Al'Anfa"/>
+<muenze anzahl="1" name="Splitter" waehrung="Xeranien"/>
+<muenze anzahl="1" name="Flindrich" waehrung="Vallusa"/>
+<muenze anzahl="1" name="Groschen" waehrung="Bornland"/>
+<muenze anzahl="1" name="Doublone" waehrung="Al'Anfa"/>
+<muenze anzahl="1" name="Suvar" waehrung="Trahelien"/>
+<muenze anzahl="1" name="Kurush" waehrung="Aranien"/>
+<muenze anzahl="1" name="Dinar" waehrung="Aranien"/>
+</geldboerse>
+</held>
+</helden>

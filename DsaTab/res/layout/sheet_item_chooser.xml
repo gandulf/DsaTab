@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_weight="1" android:layout_height="fill_parent" android:layout_margin="@dimen/page_margin" android:id="@+id/sheet_item">
+	
+	<Gallery android:id="@+id/gal_gallery" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+		android:layout_alignParentRight="true" android:layout_width="fill_parent" android:layout_height="@dimen/gallery_thumb_height" android:visibility="visible"></Gallery>
+
+	<com.dsatab.view.CardView android:id="@+id/gal_imageView"
+		android:layout_height="wrap_content" android:scaleType="fitCenter"
+		android:layout_below="@+id/gal_gallery" android:layout_above="@+id/inc_gal_item_view"
+		android:layout_width="fill_parent" android:layout_toRightOf="@+id/body_attack_button"
+		android:layout_toLeftOf="@+id/body_cloth_button" android:layout_alignWithParentIfMissing="true">
+	</com.dsatab.view.CardView>
+		
+	<ImageButton android:id="@+id/body_attack_button"
+		android:layout_alignParentLeft="true" android:layout_height="@dimen/icon_button_size"
+		android:layout_width="@dimen/icon_button_size" android:src="@drawable/icon_longsword"
+		 android:layout_below="@+id/gal_gallery" android:layout_marginBottom="2dp"/>
+	<ImageButton android:id="@+id/body_defense_button"
+		android:layout_height="@dimen/icon_button_size" android:layout_width="@dimen/icon_button_size"
+		android:src="@drawable/icon_metal_shield" 
+		android:layout_alignParentLeft="true" android:layout_below="@+id/body_attack_button" android:layout_marginBottom="2dp"/>
+	<ImageButton android:id="@+id/body_distance_button"
+		android:layout_height="@dimen/icon_button_size" android:layout_width="@dimen/icon_button_size"
+		android:src="@drawable/icon_longbow" 
+		android:layout_alignParentLeft="true" android:layout_below="@+id/body_defense_button" android:layout_marginBottom="2dp"/>
+	<ImageButton android:id="@+id/body_armor_button"
+		android:layout_height="@dimen/icon_button_size" android:layout_width="@dimen/icon_button_size"
+		android:src="@drawable/icon_steel_armor" 
+		android:layout_alignParentLeft="true" android:layout_below="@+id/body_distance_button"/>
+	<ImageButton android:layout_height="@dimen/icon_button_size"
+		android:layout_width="@dimen/icon_button_size" 
+		android:id="@+id/body_cloth_button" android:layout_alignParentRight="true"
+		android:layout_below="@+id/gal_gallery" android:src="@drawable/icon_armor_cloth" android:layout_marginBottom="2dp"/>
+	<ImageButton android:layout_height="@dimen/icon_button_size"
+		android:layout_width="@dimen/icon_button_size" android:layout_below="@+id/body_cloth_button"
+		android:id="@+id/body_bags_button" android:layout_alignParentRight="true"
+		 android:src="@drawable/icon_bags" android:layout_marginBottom="2dp"/>
+	<ImageButton android:layout_height="@dimen/icon_button_size"
+		android:layout_width="@dimen/icon_button_size" android:id="@+id/body_items_button"
+		android:layout_below="@+id/body_bags_button"
+		android:layout_alignParentRight="true" 
+		android:src="@drawable/icon_misc" android:layout_marginBottom="2dp"/>
+	<ImageButton android:layout_height="@dimen/icon_button_size"
+		android:layout_width="@dimen/icon_button_size" android:src="@drawable/icon_special"
+		android:id="@+id/body_special_button" android:layout_below="@+id/body_items_button"
+		android:layout_alignParentRight="true"/>
+	
+	<include android:layout_height="wrap_content"
+		layout="@layout/item_listitem_view" android:id="@+id/inc_gal_item_view"
+		android:layout_width="fill_parent" android:layout_alignParentBottom="true"></include>
+	
+</RelativeLayout>

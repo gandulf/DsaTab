@@ -1,0 +1,43 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <item android:id="@+id/option_view"
+          android:icon="?attr/imgBarView"
+          android:showAsAction="withText|ifRoom"
+          android:title="Details" />
+    
+    <item android:id="@+id/option_edit"
+          android:icon="?attr/imgBarEdit"
+          android:showAsAction="withText|ifRoom"
+          android:title="Bearbeiten" />
+    
+    <item android:id="@+id/option_assign_secondary"
+          android:icon="?attr/imgBarSplit"
+          android:showAsAction="withText|ifRoom"
+          android:title="@string/menu_assign_secondary_weapon" />
+    
+    <item android:id="@+id/option_assign_hunting"
+          android:icon="?attr/imgBarStar"
+          android:showAsAction="withText|ifRoom"
+          android:title="@string/menu_assign_hunting_weapon" />
+    
+    <item android:id="@+id/option_unassign"
+          android:icon="?attr/imgBarCancel"
+          android:showAsAction="withText|ifRoom"
+          android:title="@string/menu_unassign_item" />
+
+    <item android:id="@+id/option_select_version"
+          android:icon="?attr/imgBarSplit"
+          android:showAsAction="withText|ifRoom"
+          android:title="@string/menu_select_version" />			
+
+    <item android:id="@+id/option_select_talent"
+          android:icon="?attr/imgBarSplit"
+          android:showAsAction="withText|ifRoom"
+          android:title="@string/menu_select_talent" />
+    		
+    <item android:id="@+id/option_delete"
+          android:icon="?attr/imgBarDelete"
+          android:showAsAction="withText|ifRoom"
+          android:title="Löschen" />                    
+    
+</menu>

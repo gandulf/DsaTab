@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:padding="5dp" >
+
+    <android.support.v7.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:columnCount="2"
+        app:orientation="vertical"
+        app:useDefaultMargins="true" >
+
+        <TextView
+                android:id="@+id/popup_notes_spn_category_label"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"                
+                app:layout_gravity="fill_horizontal"                
+                android:text="Kategorie" />
+        <Spinner
+            android:id="@+id/popup_notes_spn_category"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" 
+            app:layout_gravity="fill_horizontal">
+        </Spinner>
+
+        <TextView
+                android:id="@+id/popup_notes_edit_name_label"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"                
+                app:layout_gravity="fill_horizontal"                
+                android:text="Name" />
+        
+        <EditText
+            android:id="@+id/popup_notes_edit_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            app:layout_gravity="fill_horizontal"
+            android:hint="@string/label_name"
+            android:inputType="textPersonName" >
+        </EditText>
+
+        <TextView
+                android:id="@+id/popup_notes_edit_so_label"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"                
+                app:layout_gravity="fill_horizontal"                
+                android:text="@string/label_social_state" />
+        
+        <EditText
+            android:id="@+id/popup_notes_edit_so"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_gravity="fill_horizontal"
+            android:hint="@string/label_social_state" >
+        </EditText>
+
+        <TextView
+                android:id="@+id/popup_notes_edit_text_label"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"                
+                app:layout_gravity="fill_horizontal"                
+                android:text="@string/label_note" />
+        
+        <EditText
+            android:id="@+id/popup_notes_edit_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:layout_gravity="fill"
+            android:gravity="top"
+            android:hint="@string/label_note"
+            android:inputType="text|textMultiLine"
+            android:minHeight="50dip" >
+        </EditText>
+    </android.support.v7.widget.GridLayout>
+
+</ScrollView>

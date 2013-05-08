@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBox
+        android:id="@+id/popup_edit_fight_show_modifier"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Modifikatoren anzeigen"
+        android:textAppearance="?android:attr/textAppearanceSmall" >
+    </CheckBox>
+
+    <CheckBox
+        android:id="@+id/popup_edit_fight_include_modifier"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Modifikatoren einberechnen"
+        android:textAppearance="?android:attr/textAppearanceSmall" >
+    </CheckBox>
+
+    <CheckBox
+        android:id="@+id/popup_edit_fight_show_armor"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Rüstungen anzeigen"
+        android:textAppearance="?android:attr/textAppearanceSmall" >
+    </CheckBox>
+
+    <CheckBox
+        android:id="@+id/popup_edit_fight_show_evade"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Ausweichen anzeigen"
+        android:textAppearance="?android:attr/textAppearanceSmall" >
+    </CheckBox>
+
+</merge>

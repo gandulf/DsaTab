@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/option_modifier_add"
+        android:icon="?attr/imgBarModifierAdd"
+        android:showAsAction="withText|ifRoom"
+        android:title="Modifikator hinzufügen"/>
+    
+    <item
+        android:id="@+id/option_set"
+        android:icon="?attr/imgBarSet"
+        android:showAsAction="withText|always"
+        android:title="Set">
+    </item>
+
+</menu>

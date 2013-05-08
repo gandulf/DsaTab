@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBox
+        android:id="@+id/popup_edit_show_unused"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Ungenütze anzeigen" />
+
+    <CheckBox
+        android:id="@+id/popup_edit_show_favorites"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Favoriten anzeigen" />
+
+    <CheckBox
+        android:id="@+id/popup_edit_show_normal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Normale anzeigen" />
+
+    <CheckBox
+        android:id="@+id/popup_edit_include_modifiers"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Modifikatoren einberechnen" />
+
+</merge>

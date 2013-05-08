@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <plurals name="items">
+        <item quantity="one">Gegenstand</item>
+        <item quantity="other">Gegenstände</item>
+    </plurals>
+    <string name="label_capacity">%1$s von %2$s Unzen</string>
+    
+    <string name="path_items">http://dsa-tab.googlecode.com/files/dsatab-items3.zip</string>
+    <string name="app_name">DsaTab</string>
+    <string name="label_haar_augen_farbe">Haar,Augen</string>
+    <string name="label_alter">Alter</string>
+    <string name="label_ausbildung">Ausbildung</string>
+    <string name="label_gewicht">Gewicht</string>
+    <string name="label_groesse">Größe</string>
+    <string name="label_rasse">Rasse</string>
+    <string name="label_kultur">Kultur</string>
+    <string name="label_aussehen">Aussehen</string>
+    <string name="label_familie">Familie</string>
+    <string name="label_stand">Stand</string>
+    <string name="label_titel">Titel</string>
+    <string name="label_ws">WS</string>
+    <string name="label_ini">Ini</string>
+    <string name="label_fk">FK</string>
+    <string name="label_pa">PA</string>
+    <string name="label_at">AT</string>
+    <string name="label_kk">Körperkraft</string>
+    <string name="label_ko">Konstitution</string>
+    <string name="label_ge">Gewandtheit</string>
+    <string name="label_ff">Fingerfertigkeit</string>
+    <string name="label_ch">Charisma</string>
+    <string name="label_in">Intuition</string>
+    <string name="label_kl">Klugheit</string>
+    <string name="label_mu">Mut</string>
+    <string name="label_be">BE</string>
+    <string name="label_gs">GS</string>
+    <string name="label_ap">AP</string>
+    <string name="label_st">Stufe</string>
+    <string name="label_so">SO</string>
+    <string name="label_mr">MR</string>
+    <string name="label_ke">KE</string>
+    <string name="label_ae">AE</string>
+    <string name="label_au">AU</string>
+    <string name="label_le">LE</string>
+    <string name="label_donate">Spenden</string>
+    <string name="label_no_thanks">Nein danke</string>
+    <string name="hero_loaded">%s geladen</string>
+    <string name="hero_saved">%s gespeichert</string>    
+    <string name="menu_assign_secondary_weapon">Zweitwaffe zuweisen</string>
+    <string name="offensive">Offensiver Kampfstil</string>
+    <string name="defensive">Defensiver Kampfstil</string>
+    <string name="menu_unassign_item">Zuweisung aufheben</string>
+    <string name="menu_delete_item">Eintrag löschen</string>
+    <string name="menu_assign_hunting_weapon">Als Jagdwaffe verwenden</string>
+    <string name="menu_sort_items">Einträge sortieren</string>
+    <string name="menu_select_version">Variante auswählen</string>
+    <string name="menu_select_talent">Talent auswählen</string>
+    <string name="menu_reset_values">Werte zurücksetzen</string>
+    <string name="menu_equipment_set">Ausrüstungsset %s</string>
+    <string name="advantages">Vorteile</string>
+    <string name="disadvantages">Nachteile</string>
+    <string name="specialfeatures">Sonderfertigkeiten</string>
+    <string name="label_ok">OK</string>
+    <string name="label_edit">Ändern</string>
+    <string name="label_cancel">Abbrechen</string>
+    <string name="modifikatoren">Modifikatoren</string>
+    <string name="menu_edit_item">Eintrag bearbeiten</string>
+    <string name="recording">Aufnahme</string>
+    <string name="recording_message">Aufnahme läuft&#8230;</string>
+    <string name="label_save">Speichern</string>
+    <string name="label_delete">Löschen</string>
+    <string name="settings">Einstellungen</string>
+    <string name="menu_done">Fertig</string>
+    <string name="menu_discard">Verwerfen</string>
+    <string name="menu_view_item">Eintrag betrachten</string>
+    <string name="menu_download_item">Eintrag herunterladen</string>
+    <string name="menu_upload_item">Eintrag hochladen</string>
+    <string name="menu_show_comments">Kommentare einblenden</string>
+    <string name="menu_hide_comments">Kommentare ausblenden</string>
+    <string name="message_spell_empty">"Keine Zaubersprüche gefunden."\n\n
+"Um diesen Tab zu entfernen, wähle den Menüpunkt <b>Tabs anpassen</b>."</string>
+    <string name="message_art_empty">"Keine Künste gefunden."\n\n
+"Um diesen Tab zu entfernen, wähle den Menüpunkt <b>Tabs anpassen</b>."</string>
+    <string name="message_documents_empty">"Keine Dokumente gefunden."\n\n
+"Kopiere sie auf deine SD-Karte unter \""<b>%1$s</b>"\"."</string>
+    <string name="message_map_empty">"Kein Kartenmaterial gefunden."\n\n
+"Scan deine Karten ein und kopiere sie auf deine SD-Karte unter \""<b>%1$s</b>"\"."\n
+"Oder lade dir unter <b>Einstellungen > Portaits, Bilder, etc herunterladen</b> das offiziele Kartenpaket herunter."</string>
+    <string name="message_heroes_empty">"Es wurden keine Helden-Dateien gefunden."\n\n
+"Stell sicher, dass sich auf der SD-Karte unter \""<b>%1$s</b>"\"\n die als XML-Datei exportierten Helden der Helden-Software befinden."</string>
+    <string name="search_hint">Suchen</string>
+    <string name="title_credits">Credits</string>
+    <string name="news_title">Informationen</string>
+    <string name="tip_0_title">Tabs anpassen</string>
+    <string name="tip_1_title">Varianten auswählen</string>
+    <string name="tip_2_title">Zusätzliche Probenzuschläge</string>
+    <string name="tip_3_title">Zusätzliche Modifikatoren</string>
+    <string name="message_search_empty">Die Suche hat keine Treffer gefunden.</string>
+    <string name="label_name">Name</string>
+    <string name="label_social_state">Sozialstatus</string>
+    <string name="label_note">Notiz</string>
+    <string name="message_maps_empty">Keine Karten gefunden</string>
+    <string name="message_notes_empty">Keine Notizen gefunden</string>
+    <string name="message_item_list_empty">Keine Gegenstände gefunden.\n Klicke auf "Gegenstand hinzufügen" um dein Inventar zu füllen.</string>    
+    <string name="message_map_loading">Karte wird geladen</string>
+    <string name="label_total">Total</string>
+    <string name="message_show_tip_of_the_day">Tip des Tages anzeigen</string>
+    <string name="label_manual">Manuell</string>
+    <string name="label_talentname">Talentname</string>
+    <string name="label_search">Suchen</string>
+    <string name="label_owner">Eigentümer</string>
+    <string name="label_herokey_heroid">HeldenKey / HeldenID</string>
+    <string name="label_new_hero">Neuen Held</string>
+    <string name="label_current_hero">Aktuellen Held</string>
+    <string name="label_distance">Entfernung</string>
+    <string name="label_enemy">Gegner</string>
+    <string name="label_size">Größe</string>
+    <string name="label_misc_modifications">Sonstige Modifikatoren</string>
+	<string name="message_modifikator">Erschwernis: %1$s</string>
+
+	<string name="pref_sdcardPath_description">Pfad auf der SD Karte zu den DsaTab Daten (Karten Material, &#8230;)</string>
+	<string name="pref_sdcardPath_title">Internal Storage: Pfad zu DsaTab</string>
+	<string name="pref_sdcardHeroPath_description">Pfad auf der SD Karte zu den DsaTab Helden Dateien</string>
+	<string name="pref_sdcardHeroPath_title">Internal Storage: Pfad zu Helden Xml-Dateien</string>
+	<string name="modifier_reichweite_jagdwaffe_schritt">Reichweite der Jagdwaffe unter %1$s Schritt</string>
+	<string name="modifier_wache_gefahreninstinkt">Gefahreninstinkt TaW/2</string>
+	<string name="modifier_wache_ausdauernd">Ausdauernd Pkt/3</string>
+	<string name="modifier_waffe_geringe_kk">Zu geringe Körperkraft</string>
+	<string name="modifier_waffe_waffenmodifikator_at">Waffenmodifikator At</string>
+	<string name="modifier_waffe_waffenmodifikator_pa">Waffenmodifikator Pa</string>
+	<string name="modifier_schildkampf_modifikator_at">Schildkampf Modifikator At</string>
+	<string name="modifier_schildmodifikator_at">Schildmodifikator At</string>
+	<string name="modifier_schildmodifikator_pa">Schildmodifikator PA</string>
+	<string name="modifier_shield_hauptwaffe_paradewert">Hauptwaffe hat Paradewert von %1$s. Schildparade %2$s</string>
+	<string name="modifier_behinderung">Behinderung %1$s</string>
+	
+</resources>

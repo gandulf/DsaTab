@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    
+        <PreferenceScreen
+            android:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsHouseRulesFragment"
+            android:key="houseRules"
+            android:summary="Spezielle Hausregeln konfigurieren die vom offiziellen Regelwerk abweichen"
+            android:title="Hausregeln verwenden" >
+            <intent                
+            	android:targetPackage="com.dsatab"
+            	android:targetClass="com.dsatab.activity.DsaTabPreferenceActivity"
+            	android:action="VIEW">
+            	<extra android:name="layout" android:value="@xml/preferences_hc_rules_houserules" />
+            </intent>
+        </PreferenceScreen>
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="shakeRollDice"
+            android:summary="Durch das Schütteln des Handies wird ein Würfel (W20) geworfen"
+            android:title="Schüttelwurf" />
+
+        <ListPreference
+            android:defaultValue="ZonenRuestung"
+            android:key="armorType"
+            android:summary="Wähle nach welcher Art der Rüstungsschutz berechnet wird:"
+            android:title="Rüstungsschutzart" />
+        <ListPreference
+            android:defaultValue="Trefferzonen"
+            android:key="woundType"
+            android:summary="Wähle nach welcher Art die Wunden berechnet werden:"
+            android:title="Wundensystem" />
+    
+
+</PreferenceScreen>

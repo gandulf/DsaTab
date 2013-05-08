@@ -1,0 +1,41 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dsatab="http://schemas.android.com/apk/res/com.dsatab"
+    android:id="@+id/sheet_fight"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_margin="@dimen/page_margin"
+    android:layout_weight="1"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/fight_le_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/page_margin"
+        android:gravity="center_horizontal"
+        android:weightSum="1.0" >
+
+        <Button
+            android:id="@+id/fight_btn_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/icon_button_size"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:text="@string/label_le" />
+
+        <kankan.wheel.widget.WheelView
+            android:id="@+id/fight_picker"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/icon_button_size"
+            dsatab:orientation="vertical"
+            dsatab:visibleItems="@integer/fight_wheel_items" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/fight_list"        
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+
+</LinearLayout>

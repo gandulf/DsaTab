@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<array name="themes">
+	<item>Light</item>	
+	<item>Dark</item>	
+</array>
+
+<array name="themesValues">
+	<item>light_plain</item>
+	<item>dark_plain</item>
+</array>
+
+<array name="screenOrientation">
+	<item>Automatisch</item>
+	<item>Portrait</item>
+	<item>Landschaft</item>
+</array>
+<array name="screenOrientationValues">
+	<item>auto</item>
+	<item>portrait</item>
+	<item>landscape</item>
+</array>
+<array name="archerySize">
+        <item>Winzig (Münze) +8</item>
+        <item>Sehr Klein (Schlange,Rabe) +6</item>
+        <item>Klein (Wolf) +4</item>
+        <item>Mittel (Mensch) +2</item>
+        <item>Groß( Pferd) +0</item>
+        <item>Sehr Groß (Scheunentor) -2</item>
+</array>
+<array name="archerySizeValues">
+        <item>8</item>
+        <item>6</item>
+        <item>4</item>
+        <item>2</item>
+        <item>0</item>
+        <item>-2</item>
+</array>
+
+<array name="archeryDistance">
+        <item>Sehr Nah -2</item>
+        <item>Nah +0</item>
+        <item>Mittel +4</item>
+        <item>Weit +8</item>
+        <item>Extrem Weit +12</item>        
+</array>
+<array name="archeryDistanceValues">
+        <item>-2</item>
+        <item>0</item>
+        <item>4</item>
+        <item>8</item>
+        <item>12</item>        
+</array>
+
+
+<array name="evadeDistance">
+        <item>Handgemenge +4</item>
+        <item>Nahkampf +2</item>
+        <item>Stangenwaffen +1</item>
+        <item>Pike +0</item>
+</array>
+<array name="evadeDistanceValues">
+        <item>4</item>
+        <item>2</item>
+        <item>1</item>
+        <item>0</item>               
+</array>
+
+<array name="evadeEnemy">
+        <item>1 Gegner +0</item>
+        <item>2 Gegner +2</item>
+        <item>3 Gegner +4</item>
+        <item>4 Gegner +6</item>       
+</array>
+
+<array name="evadeEnemyValues">
+        <item>0</item>
+        <item>2</item>
+        <item>4</item>
+        <item>6</item>       
+</array>
+
+<array name="evadeModificationStrings">        
+        <item>Gezieltes Ausweichen DK-Mod. x2</item>
+</array>
+<array name="evadeModificationValues">        
+        <item>0</item>                
+</array>
+
+<array name="archeryModificationStrings">
+	<item>Schnelle Bewegungen +2</item>
+	<item>Schnelle Bewegungen quer +4</item>
+	<item>Ziel weicht aus +4</item>
+	<item>Unbewegtes Ziel -2</item>
+	<item>Unbewegliches/ montiertes Ziel -4</item>
+	<item>Dämmerung, Dunst +2</item>
+	<item>Mondlicht, Nebel +4</item>
+	<item>Sternenlicht +6</item>
+	<item>Steilschuss/-wurf nach unten +2</item>
+	<item>Steilschuss nach oben +4</item>
+	<item>Steilwurf nach oben +8</item>
+	<item>Seitenwind +4</item>
+	<item>Starker Seitenwind +8</item>
+	<item>Schnellschuß +2</item>
+	<item>Kampfgetümmel (2 Pers.) +4</item>
+	<item>Kampfgetümmel (3 Pers.) +6</item>
+</array>
+
+<array name="archeryModificationValues">
+	<item>2</item>
+	<item>4</item>
+	<item>4</item>
+	<item>-2</item>
+	<item>-4</item>
+	<item>2</item>
+	<item>4</item>
+	<item>6</item>
+	<item>2</item>
+	<item>4</item>
+	<item>8</item>
+	<item>4</item>
+	<item>8</item>
+	<item>2</item>
+	<item>4</item>
+	<item>6</item>
+</array>
+
+</resources>

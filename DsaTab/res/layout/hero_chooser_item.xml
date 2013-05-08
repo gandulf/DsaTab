@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.dsatab.view.CheckableFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"    
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="4dp"
+    android:background="?attr/listItemBackground">
+
+    <ImageView
+        android:id="@android:id/icon"
+        android:layout_width="@dimen/portrait_width_small"
+        android:layout_height="@dimen/portrait_height_small"
+        android:layout_gravity="center"
+        android:focusable="false"
+        android:scaleType="centerCrop"
+        android:src="@drawable/profile_picture" >
+
+    </ImageView>
+    
+    <ImageView
+        android:id="@+id/hero_cloud"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="10dp"
+        android:focusable="false"
+        android:src="@drawable/hero_cloud_dark">
+    </ImageView>
+
+    <TextView
+        android:id="@android:id/text1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"        
+        android:padding="4dp"
+        android:layout_gravity="bottom|fill_horizontal"
+        android:ellipsize="marquee"
+        android:focusable="false"
+        android:gravity="center_vertical|left"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
+        android:background="@color/Darker"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/primary_text_dark" >
+    </TextView>
+
+</com.dsatab.view.CheckableFrameLayout>

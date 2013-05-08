@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<resources 
+    	xmlns:android="http://schemas.android.com/apk/res/android"
+    	xmlns:custom="http://schemas.android.com/apk/res-auto">
+    
+    <style name="Widget.IconImageView">
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:minWidth">@dimen/icon_button_size</item>
+        <item name="android:minHeight">@dimen/icon_button_size</item>
+    	<item name="android:background">@drawable/btn_plain_bg_normal</item>
+    	<item name="android:padding">5dp</item>
+    </style>
+    
+    <style name="TextValue" parent="@android:style/Widget.TextView">
+        <item name="android:background">@drawable/btn_touch</item>
+    	<item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+    	<item name="android:minWidth">48dp</item>
+    	<item name="android:minHeight">48dp</item>
+    	<item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center_vertical</item>
+		<item name="android:ellipsize">end</item>
+		<item name="android:layout_marginTop">4dp</item>
+		<item name="android:layout_marginBottom">4dp</item>
+		<item name="android:layout_marginLeft">4dp</item>
+		<item name="android:layout_marginRight">4dp</item>
+    </style>
+    
+    <style name="TextValue.Left">
+        <item name="android:background">@drawable/btn_touch_left</item>
+        <item name="android:layout_marginRight">0dp</item>        
+    </style>
+    <style name="TextValue.Right">
+        <item name="android:background">@drawable/btn_touch_right</item>
+        <item name="android:layout_marginLeft">0dp</item>        
+    </style>    
+    
+    <style name="TextValue.NoTouch">
+        <item name="android:background">@null</item>
+        <item name="android:minHeight">0dp</item>    	
+        <item name="android:minWidth">0dp</item>
+    </style>
+    
+    <style name="TextValue.NoTouch.Inverse" >
+        <item name="android:textAppearance">?android:attr/textAppearanceLargeInverse</item>
+        <item name="android:textColor">@android:color/primary_text_dark</item>
+    </style>
+    
+    <style name="TextValue.Small">
+    	<item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+    	<item name="android:minWidth">30dp</item>
+    	<item name="android:minHeight">25dp</item>
+    </style>
+    
+    <style name="TextValue.Small.Inverse">
+        <item name="android:background">@drawable/btn_touch_inverse</item>
+    	<item name="android:textAppearance">?android:attr/textAppearanceSmallInverse</item>
+    	<item name="android:textColor">@android:color/primary_text_dark</item>
+    </style>
+    
+    <style name="TextValue.Small.NoTouch">
+        <item name="android:background">@null</item>
+        <item name="android:minWidth">0dp</item>
+    	<item name="android:minHeight">0dp</item>    	            
+    </style>
+    
+    <style name="TextValue.Small.NoTouch.Inverse">
+    	<item name="android:textAppearance">?android:attr/textAppearanceSmallInverse</item>
+    	<item name="android:textColor">@android:color/primary_text_dark</item>
+    </style>    
+    
+    <style name="TextLabel" parent="@android:style/Widget.TextView">
+    	<item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:padding">4dp</item>
+    </style>
+    
+    <style name="TextLabel.Inverse">
+    	<item name="android:textAppearance">?android:attr/textAppearanceMediumInverse</item>
+    	<item name="android:textColor">@android:color/primary_text_dark</item>        
+    </style>
+            
+    <style name="TextLabel.Small">
+    	<item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+    	        
+    </style>
+    <style name="TextLabel.Mini">
+    	<item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+    	<item name="android:textSize">9sp</item>
+    	<item name="android:textAllCaps">true</item>        
+    	<item name="android:gravity">right</item>
+    </style>
+    
+    <style name="TextLabel.Small.Inverse">
+        <item name="android:textSize">10sp</item>
+    	<item name="android:textAppearance">?android:attr/textAppearanceSmallInverse</item>
+    	<item name="android:textColor">@android:color/primary_text_dark</item>        
+    </style>
+    
+    <style name="TextLabel.Popup">    	
+    	<item name="android:textStyle">bold</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+    
+    <style name="TextViewTitle" parent="@android:style/Widget.TextView">
+    	<item name="android:textAppearance">?android:attr/textAppearanceLarge</item>        
+        <item name="android:shadowColor">#ffffff</item>
+        <item name="android:shadowDx">1.0</item>
+        <item name="android:shadowDy">1.0</item>
+        <item name="android:shadowRadius">2.0</item>
+    </style>
+    
+    <style name="BodyItemImage" parent="@android:style/Widget.ImageButton">
+    	<item name="android:background">@drawable/border_patch</item>      
+        <item name="android:layout_margin">2.5dp</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>                
+        <item name="android:scaleType">fitXY</item>        
+    </style>
+</resources>

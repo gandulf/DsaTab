@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/contentLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center|top"
+    android:orientation="vertical"
+    android:paddingBottom="2.5dip"
+    android:paddingTop="10dip" >
+
+    <TextView
+        android:id="@+id/dice_talent"
+        style="@style/TextLabel.Inverse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center_horizontal"
+        android:lines="1"
+        android:paddingRight="3dip"
+        android:text="Schleichen" >
+    </TextView>
+
+    <ViewStub
+        android:id="@+id/modifier_container_stub"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_horizontal"
+        android:inflatedId="@+id/modifier_container"
+        android:layout="@layout/popup_probe_info" >
+    </ViewStub>
+
+    <LinearLayout
+        android:id="@+id/dice_dices"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+
+        <TableLayout
+            android:id="@+id/dice_probe_table"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:shrinkColumns="0" >
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/dice_taw"
+                    style="@style/TextLabel.Small.Inverse"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:paddingRight="4dip"
+                    android:text="TaW" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/dice_probe"
+                    style="@style/TextLabel.Small.Inverse"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="(KK/KO/IN)" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/dice_effect"
+                    style="@style/TextLabel.Small.Inverse"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dip"
+                    android:gravity="center_horizontal"
+                    android:text="TaP*" >
+                </TextView>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/dice_talent_value"
+                    style="@style/TextValue.NoTouch.Inverse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:text="5"
+                    android:textStyle="bold" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/dice_value"
+                    style="@style/TextValue.NoTouch.Inverse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="13/15/9" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/dice_effect_value"
+                    style="@style/TextValue.NoTouch.Inverse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dip"
+                    android:gravity="center_horizontal"
+                    android:text="5"
+                    android:textStyle="bold" >
+                </TextView>
+            </TableRow>
+        </TableLayout>
+
+        <ImageButton
+            android:id="@+id/dice_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            android:src="?attr/imgBarInfo" >
+        </ImageButton>
+
+        <ImageView
+            android:id="@+id/dice_w20"
+            android:layout_width="@dimen/dice_size"
+            android:layout_height="@dimen/dice_size"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="4dip"
+            android:scaleType="fitCenter"
+            android:src="@drawable/w20" >
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/dice_w6"
+            android:layout_width="@dimen/dice_size"
+            android:layout_height="@dimen/dice_size"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="4dip"
+            android:scaleType="fitCenter"
+            android:src="@drawable/w6_6" >
+        </ImageView>
+
+        <ImageButton
+            android:id="@+id/dice_area"
+            android:layout_width="@dimen/dice_size"
+            android:layout_height="@dimen/dice_size"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="4dip"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_dummy"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/dice_execute"
+            android:layout_width="@dimen/dice_size"
+            android:layout_height="@dimen/dice_size"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="4dp"            
+            android:src="?attr/imgBarPlay" />
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:id="@+id/dice_dice_result"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dip"
+        android:gravity="center_horizontal"
+        android:minHeight="@dimen/dices_size"
+        android:orientation="horizontal" >
+
+    </LinearLayout>
+
+</LinearLayout>
