@@ -84,6 +84,7 @@ public class Hero {
 	private Map<TalentType, Talent> talentByType;
 	private Map<String, Spell> spellsByName;
 	private Map<String, Art> artsByName;
+	private Map<FeatureType, Art> artsByType;
 
 	private Map<Position, ArmorAttribute>[] armorAttributes;
 	private Map<Position, WoundAttribute> wounds;
@@ -146,6 +147,7 @@ public class Hero {
 		this.talentByType = new EnumMap<TalentType, Talent>(TalentType.class);
 		this.spellsByName = new HashMap<String, Spell>();
 		this.artsByName = new TreeMap<String, Art>();
+		this.artsByType = new EnumMap<FeatureType, Art>(FeatureType.class);
 		this.featuresByName = new EnumMap<FeatureType, Feature>(FeatureType.class);
 
 		for (int i = 0; i < equippedItems.length; i++) {
@@ -161,6 +163,11 @@ public class Hero {
 	 * 
 	 */
 	private void fillConfiguration() {
+		// refill modificators
+		// clear modificators no make sure the user defined ones are loaded into modificators map too
+		this.modificators = null;
+		this.modificatorsByType = null;
+
 		// fill metatalents
 
 		List<TalentType> metaTalentTypes = new ArrayList<TalentType>(Arrays.asList(TalentType.WacheHalten,
@@ -1702,6 +1709,10 @@ public class Hero {
 		return artsByName.get(name);
 	}
 
+	public Art getArt(FeatureType type) {
+		return artsByType.get(type);
+	}
+
 	public Map<String, Art> getArts() {
 		return artsByName;
 	}
@@ -1971,6 +1982,9 @@ public class Hero {
 	 */
 	public void addArt(Art art) {
 		artsByName.put(art.getName(), art);
+		if (art.getType() != null) {
+			artsByType.put(art.getType(), art);
+		}
 	}
 
 	/**

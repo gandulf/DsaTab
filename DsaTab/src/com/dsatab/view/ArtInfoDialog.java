@@ -54,7 +54,7 @@ public class ArtInfoDialog extends AlertDialog implements DialogInterface.OnClic
 		}
 		setTitle(sb);
 
-		set(R.id.popup_liturgie_type, art.getType().getName());
+		set(R.id.popup_liturgie_type, art.getGroupType().getName());
 		set(R.id.popup_liturgie_costs, info.getCosts());
 		set(R.id.popup_liturgie_effect, info.getEffect());
 		set(R.id.popup_liturgie_probe, info.getProbe());
@@ -64,8 +64,8 @@ public class ArtInfoDialog extends AlertDialog implements DialogInterface.OnClic
 			set(R.id.popup_liturgie_origin, info.getOrigin());
 			set(R.id.popup_liturgie_range, info.getRangeDetailed());
 			set(R.id.popup_liturgie_target, info.getTargetDetailed());
-			set(R.id.popup_liturgie_merkmal, info.getSource());
-			set(R.id.popup_liturgie_source, info.getMerkmale());
+			set(R.id.popup_liturgie_merkmal, info.getMerkmale());
+			set(R.id.popup_liturgie_source, info.getSource());
 		}
 
 	}
@@ -96,9 +96,7 @@ public class ArtInfoDialog extends AlertDialog implements DialogInterface.OnClic
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.content.DialogInterface.OnClickListener#onClick(android.content
-	 * .DialogInterface, int)
+	 * @see android.content.DialogInterface.OnClickListener#onClick(android.content .DialogInterface, int)
 	 */
 	@Override
 	public void onClick(DialogInterface dialog, int which) {

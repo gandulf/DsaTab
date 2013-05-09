@@ -1,4 +1,10 @@
 <changelog>    
+<release version="4.1.1" versioncode="65">
+    <fix>Modifikatoren werden wieder gespeichert</fix>
+    <fix>Stabilitätsverbesserungen</fix>
+    <change>Sprachkomplexität wird bei Talenten angezeigt</change>
+    <change>Sonderfertigkeiten, Künste Kommentare werden wieder eingelesen</change>
+</release>
 <release version="4.0.9" versioncode="62">
     <fix>Abstürze beim Wechseln des aktiven Sets</fix>
     <fix>Stabilitätsverbesserungen</fix>

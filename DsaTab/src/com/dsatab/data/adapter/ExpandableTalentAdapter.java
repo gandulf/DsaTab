@@ -184,6 +184,7 @@ public class ExpandableTalentAdapter extends BaseExpandableListAdapter {
 			listItem = inflater.inflate(R.layout.talent_list_item, parent, false);
 
 			holder = new ViewHolder();
+			// name
 			holder.text1 = (TextView) listItem.findViewById(R.id.talent_list_item_text1);
 			// be
 			holder.text2 = (TextView) listItem.findViewById(R.id.talent_list_item_text2);
@@ -208,9 +209,16 @@ public class ExpandableTalentAdapter extends BaseExpandableListAdapter {
 
 		if (TextUtils.isEmpty(be)) {
 			Util.setVisibility(holder.text2, false, holder.text1);
+			holder.text2.setText(null);
 		} else {
 			Util.setVisibility(holder.text2, true, holder.text1);
 			holder.text2.setText(be);
+		}
+		if (talent.getComplexity() != null) {
+			Util.setVisibility(holder.text2, true, holder.text1);
+			if (holder.text2.length() > 0)
+				holder.text2.append(" ");
+			holder.text2.append(Util.toString(talent.getComplexity()));
 		}
 		holder.text3.setText(talent.getProbeInfo().getAttributesString());
 

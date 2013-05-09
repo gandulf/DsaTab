@@ -32,6 +32,7 @@ public abstract class Xml {
 	public static final String KEY_VERSION = "version";
 
 	public static final String KEY_KOMMENTAR = "kommentar";
+	public static final String KEY_KOMMENTARE = "kommentare";
 	public static final String KEY_DSATAB_VALUE = "dsatab_value";
 	public static final String KEY_GELDBOERSE = "geldboerse";
 	public static final String KEY_HELDENAUSRUESTUNG = "heldenausruestung";
@@ -167,6 +168,8 @@ public abstract class Xml {
 	public static final String KEY_ALT = "Alt";
 	public static final String KEY_NEU = "Neu";
 	public static final String KEY_INFO = "Info";
+	public static final String KEY_SF_INFOS = "sfInfos";
+	public static final String KEY_SF_NAME = "sfname";
 
 	public static String toString(String s) {
 		if (s == null)

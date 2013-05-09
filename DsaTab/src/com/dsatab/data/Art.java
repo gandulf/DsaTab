@@ -10,6 +10,7 @@ import com.bugsense.trace.BugSenseHandler;
 import com.dsatab.common.DsaTabRuntimeException;
 import com.dsatab.data.enums.ArtGroupType;
 import com.dsatab.data.enums.AttributeType;
+import com.dsatab.data.enums.FeatureType;
 import com.dsatab.data.enums.TalentType;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 import com.dsatab.util.Debug;
@@ -50,11 +51,12 @@ public class Art extends MarkableElement implements Value {
 
 	};
 
-	private ArtGroupType type;
+	private ArtGroupType groupType;
 
 	private Hero hero;
 
 	private String name;
+	private FeatureType type;
 
 	private ArtInfo info;
 
@@ -108,12 +110,16 @@ public class Art extends MarkableElement implements Value {
 		return name;
 	}
 
-	public ArtGroupType getType() {
+	public FeatureType getType() {
 		return type;
 	}
 
-	protected void setType(ArtGroupType type) {
-		this.type = type;
+	public ArtGroupType getGroupType() {
+		return groupType;
+	}
+
+	protected void setGroupType(ArtGroupType type) {
+		this.groupType = type;
 
 		switch (type) {
 		case Ritual:
@@ -156,10 +162,11 @@ public class Art extends MarkableElement implements Value {
 
 	public void setName(String name) {
 		this.name = name.trim();
+		this.type = FeatureType.byXmlName(this.name);
 
-		setType(ArtGroupType.getTypeOfArt(name));
-		if (type != null) {
-			name = type.truncateName(name);
+		setGroupType(ArtGroupType.getTypeOfArt(name));
+		if (groupType != null) {
+			name = groupType.truncateName(name);
 		} else {
 			throw new DsaTabRuntimeException("Unknown Art type for: " + name);
 		}

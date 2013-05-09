@@ -106,7 +106,7 @@ public enum ItemType {
 			return Schmuck;
 		default:
 			BugSenseHandler.sendException(new InconsistentDataException("Character " + c
-					+ " not regognized for itemtype"));
+					+ " not recognized for itemtype"));
 			return Sonstiges;
 		}
 	}

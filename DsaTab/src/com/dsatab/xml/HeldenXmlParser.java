@@ -89,6 +89,7 @@ import com.dsatab.data.items.MiscSpecification;
 import com.dsatab.data.items.Shield;
 import com.dsatab.data.items.UsageType;
 import com.dsatab.data.items.Weapon;
+import com.dsatab.exception.FeatureTypeUnknownExcpetion;
 import com.dsatab.exception.InconsistentDataException;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
@@ -171,6 +172,7 @@ public class HeldenXmlParser {
 		fillPurse(hero, heroElement);
 		fillEvents(hero, heroElement);
 		fillConnections(hero, heroElement);
+		fillComments(hero, heroElement);
 		hero.onPostHeroLoaded(context);
 		return hero;
 	}
@@ -189,7 +191,7 @@ public class HeldenXmlParser {
 			try {
 				featureType = FeatureType.byXmlName(element.getAttributeValue(Xml.KEY_NAME));
 			} catch (IllegalArgumentException e) {
-				BugSenseHandler.sendEvent("Unknown FeatureType:" + element.getAttributeValue(Xml.KEY_NAME));
+				BugSenseHandler.sendException(new FeatureTypeUnknownExcpetion(element.getAttributeValue(Xml.KEY_NAME)));
 				continue;
 			}
 			Feature adv = new Feature(featureType);
@@ -269,7 +271,8 @@ public class HeldenXmlParser {
 				try {
 					featureType = FeatureType.byXmlName(element.getAttributeValue(Xml.KEY_NAME));
 				} catch (IllegalArgumentException e) {
-					BugSenseHandler.sendEvent("Unknown FeatureType:" + element.getAttributeValue(Xml.KEY_NAME));
+					BugSenseHandler.sendException(new FeatureTypeUnknownExcpetion(element
+							.getAttributeValue(Xml.KEY_NAME)));
 					continue;
 				}
 				Feature specialFeature = new Feature(featureType);
@@ -562,6 +565,55 @@ public class HeldenXmlParser {
 			hero.addConnection(connection);
 		}
 
+	}
+
+	protected static void fillComments(Hero hero, Element heroElement) {
+		Element kommentareElement = heroElement.getChild(Xml.KEY_KOMMENTARE);
+		if (kommentareElement != null) {
+			List<Element> kommentare = kommentareElement.getChildren(Xml.KEY_KOMMENTAR);
+
+			for (Element kommentar : kommentare) {
+				// <kommentar key="Akklimatisierung: Hitze" kommentar="Muuh" />
+				String key = kommentar.getAttributeValue(Xml.KEY_KEY);
+
+				try {
+					FeatureType featureType = FeatureType.byXmlName(key);
+					Art art = hero.getArt(featureType);
+					if (art != null && !TextUtils.isEmpty(kommentar.getAttributeValue(Xml.KEY_KOMMENTAR))) {
+						art.getInfo().setMerkmale(kommentar.getAttributeValue(Xml.KEY_KOMMENTAR));
+					}
+					Feature feature = hero.getFeature(featureType);
+					if (feature != null && !TextUtils.isEmpty(kommentar.getAttributeValue(Xml.KEY_KOMMENTAR))) {
+						feature.setComment(kommentar.getAttributeValue(Xml.KEY_KOMMENTAR));
+					}
+				} catch (IllegalArgumentException e) {
+					BugSenseHandler.sendException(new FeatureTypeUnknownExcpetion(key));
+				}
+			}
+
+			List<Element> sfInfos = kommentareElement.getChildren(Xml.KEY_SF_INFOS);
+			for (Element sfInfo : sfInfos) {
+				// <sfInfos dauer="" kosten="" probe="" sf="" sfname="Stabzauber: Flammenschwert" wirkung="" />
+
+				String infoName = sfInfo.getAttributeValue(Xml.KEY_SF_NAME);
+				try {
+					FeatureType featureType = FeatureType.byXmlName(infoName);
+					Art art = hero.getArt(featureType);
+					if (art != null) {
+						if (!TextUtils.isEmpty(sfInfo.getAttributeValue(Xml.KEY_PROBE)))
+							art.setProbePattern(sfInfo.getAttributeValue(Xml.KEY_PROBE));
+						if (!TextUtils.isEmpty(sfInfo.getAttributeValue(Xml.KEY_KOSTEN)))
+							art.getInfo().setCosts(sfInfo.getAttributeValue(Xml.KEY_KOSTEN));
+						if (!TextUtils.isEmpty(sfInfo.getAttributeValue(Xml.KEY_WIRKUNG)))
+							art.getInfo().setEffect(sfInfo.getAttributeValue(Xml.KEY_WIRKUNG));
+						if (!TextUtils.isEmpty(sfInfo.getAttributeValue(Xml.KEY_DAUER)))
+							art.getInfo().setCastDuration(sfInfo.getAttributeValue(Xml.KEY_DAUER));
+					}
+				} catch (IllegalArgumentException e) {
+					BugSenseHandler.sendException(new FeatureTypeUnknownExcpetion(infoName));
+				}
+			}
+		}
 	}
 
 	protected static void fillEvents(Hero hero, Element heroElement) {
@@ -1064,6 +1116,7 @@ public class HeldenXmlParser {
 			talent.setProbeBe(element.getAttributeValue(Xml.KEY_BE));
 			talent.setType(talentType);
 			talent.setValue(talentValue);
+			talent.setComplexity(Util.parseInteger(element.getAttributeValue(Xml.KEY_K)));
 
 			hero.addTalent(talent);
 		}

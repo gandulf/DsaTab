@@ -26,6 +26,8 @@ public class Talent extends MarkableElement implements Value {
 
 	protected Integer value;
 
+	protected Integer complexity;
+
 	protected TalentType type;
 
 	private String talentSpezialisierung;
@@ -51,6 +53,14 @@ public class Talent extends MarkableElement implements Value {
 
 	public void setType(TalentType type) {
 		this.type = type;
+	}
+
+	public Integer getComplexity() {
+		return complexity;
+	}
+
+	public void setComplexity(Integer complexity) {
+		this.complexity = complexity;
 	}
 
 	/*
