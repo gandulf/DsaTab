@@ -34,6 +34,8 @@ public class MetaTalent extends Talent implements JSONable {
 	private static final String FIELD_FAVORITE = "favorite";
 	private static final String FIELD_UNUSED = "unused";
 
+	private static final String DEPRECATED_WACHE_NAME = "Wache";
+
 	private boolean favorite, unused;
 
 	public MetaTalent(Hero hero, TalentType type) {
@@ -45,8 +47,12 @@ public class MetaTalent extends Talent implements JSONable {
 
 	public MetaTalent(Hero hero, JSONObject json) throws JSONException {
 		super(hero);
-
-		this.type = TalentType.valueOf(json.getString(FIELD_META_TYPE));
+		String type = json.getString(FIELD_META_TYPE);
+		if (DEPRECATED_WACHE_NAME.equalsIgnoreCase(type)) {
+			this.type = TalentType.WacheHalten;
+		} else {
+			this.type = TalentType.valueOf(type);
+		}
 		this.favorite = json.getBoolean(FIELD_FAVORITE);
 		this.unused = json.getBoolean(FIELD_UNUSED);
 		init();

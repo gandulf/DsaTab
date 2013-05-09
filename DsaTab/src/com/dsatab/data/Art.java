@@ -37,6 +37,12 @@ public class Art extends MarkableElement implements Value {
 	public static final String ZAUBERTANZ_PREFIX = "Zaubertanz: ";
 	public static final String ZAUBERZEICHEN_PREFIX = "Zauberzeichen: ";
 	public static final String ZIBILJA_RITUAL_PREFIX = "Zibilja-Ritual: ";
+	public static final String ELFENLIEDER_PREFIX = "Elfenlied: ";
+	public static final String KEULEN_RITUAL_PREFIX = "Keulenritual: ";
+	public static final String SZEPTER_RITUAL_PREFIX = "Szepter: ";
+	public static final String RITUELLE_STRAFE_PREFIX = "Rituelle Strafe: ";
+	public static final String KISTALLPENDEL_PREFIX = "Kristallpendel: ";
+	public static final String TAPASUUL_PREFIX = "Tapasuul: ";
 
 	public static final Comparator<Art> NAME_COMPARATOR = new Comparator<Art>() {
 		/*

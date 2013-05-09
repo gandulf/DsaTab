@@ -39,7 +39,15 @@ public enum ArtGroupType {
 			TalentType.RitualkenntnisDurroDûn), DruidischesHerrschaftsritual(Art.DRUIDISCHES_HERRSCHAFTSRITUAL_PREFIX,
 			TalentType.RitualkenntnisDruide), DruidischesDolchritual(Art.DRUIDISCHES_DOLCHRITUAL_PREFIX,
 			TalentType.RitualkenntnisDruide), Zaubertanz(Art.ZAUBERTANZ_PREFIX, TalentType.RitualkenntnisZaubertänzer), Zauberzeichen(
-			Art.ZAUBERZEICHEN_PREFIX), ZibiljaRitual(Art.ZIBILJA_RITUAL_PREFIX, TalentType.RitualkenntnisZibilja);
+			Art.ZAUBERZEICHEN_PREFIX), ZibiljaRitual(Art.ZIBILJA_RITUAL_PREFIX, TalentType.RitualkenntnisZibilja), Elfenlieder(
+			Art.ELFENLIEDER_PREFIX, TalentType.Musizieren), Keulenritual(Art.KEULEN_RITUAL_PREFIX,
+			TalentType.Ritualkenntnis), Szepter(Art.SZEPTER_RITUAL_PREFIX, null), RituelleStrafe(
+			Art.RITUELLE_STRAFE_PREFIX, null), Kristallpendel(Art.KISTALLPENDEL_PREFIX, null), Tapasuul(
+			Art.TAPASUUL_PREFIX, null);
+	;
+	// public static final String RITUELLE_STRAFE_PREFIX = "Rituelle Strafe: ";
+	// public static final String KISTALLPENDEL_PREFIX = "Kristallpendel: ";
+	// public static final String TAPASUUL_PREFIX = "Tapasuul: ";;
 
 	public static final Map<String, ArtGroupType> artMappings = new HashMap<String, ArtGroupType>();
 	static {
