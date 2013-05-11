@@ -64,6 +64,12 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
 
+Disclaimer
+==========
+
+    „DAS SCHWARZE AUGE, AVENTURIEN, DERE, MYRANOR, THARUN, UTHURIA und RIESLAND sind eingetragene Marken der
+    Significant Fantasy Medienrechte GbR. Ohne vorherige schriftliche Genehmigung der Ulisses Medien und Spiel
+    Distribution GmbH ist eine Verwendung der genannten Markenzeichen nicht gestattet.“
 
 [1]: [http://www.helden-software.de/]
 [2]: [http://www.dasschwarzeauge.de/]
