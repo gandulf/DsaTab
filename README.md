@@ -19,30 +19,30 @@ Development
 ===========
 To deploy this app you need the following Libraries in your Eclipse workspace:
 
-* ActionBarSherlock
+* ActionBarSherlock<br>
   Can be downloaded from http://actionbarsherlock.com, you need at least version 4.2.0+.
 	Extract the directory library from the downloaded file and create a android library project named ActionBarSherlock with it.
 
-* GuiLib (Combination of the following libraries below
-	Can be checked out from google code too: see https://github.com/gandulf/GuiLib for further instructions
-	Create a library project named GuiLib.
+* GuiLib (Combination of the following libraries below)<br>
+	Can be checked out from github, see https://github.com/gandulf/GuiLib for further instructions.<br>
+	Create a library project named GuiLib. These library includes the following projects:
 
-	* Drag Sort list
+	* Drag Sort list<br>
 		Can be downloaded from https://github.com/bauerca/drag-sort-listview	
 	
-	* PhotoView
+	* PhotoView<br>
 		Can be downloaded from https://github.com/chrisbanes/PhotoView	
 	
-	* ShowcaseView
+	* ShowcaseView<br>
 		Can be downloaded from https://github.com/Espiandev/ShowcaseView	
 		
-	* Draggable GridView 
+	* Draggable GridView<br> 
 		Can be downloaded from https://github.com/thquinn/DraggableGridView
 	
-	* GridViewCompat
+	* GridViewCompat<br>
 		Can be downloaded from https://github.com/paramvir-b/AndroidGridViewCompatLib
 	
-* GridLayout v7 support library from google sdk	
+* GridLayout v7 support library from google sdk<br>	
 	Can be downloaded from google using sdk manager
 
 
