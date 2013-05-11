@@ -2,6 +2,9 @@ package com.dsatab.view;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +31,9 @@ import com.dsatab.util.Util;
 
 public class ArcheryChooserDialog extends AlertDialog implements android.view.View.OnClickListener,
 		OnItemClickListener, DialogInterface.OnClickListener {
+
+	public static final String PREF_DISTANCE = "com.dsatab.archery.distance";
+	public static final String PREF_SIZE = "com.dsatab.archery.size";
 
 	private int[] distanceProbe;
 	private int[] sizeProbe;
@@ -74,9 +80,7 @@ public class ArcheryChooserDialog extends AlertDialog implements android.view.Vi
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.content.DialogInterface.OnClickListener#onClick(android.content
-	 * .DialogInterface, int)
+	 * @see android.content.DialogInterface.OnClickListener#onClick(android.content .DialogInterface, int)
 	 */
 	@Override
 	public void onClick(DialogInterface dialog, int which) {
@@ -93,6 +97,13 @@ public class ArcheryChooserDialog extends AlertDialog implements android.view.Vi
 	private void accept() {
 		CombatProbe combatProbe = equippedItem.getCombatProbeAttacke();
 		combatProbe.getProbeInfo().setErschwernis(erschwernis);
+
+		// store current position for later
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+		Editor edit = preferences.edit();
+		edit.putInt(PREF_DISTANCE, distanceSpinner.getSelectedItemPosition());
+		edit.putInt(PREF_SIZE, sizeSpinner.getSelectedItemPosition());
+		edit.commit();
 
 		dismiss();
 		main.checkProbe(combatProbe);
@@ -153,6 +164,17 @@ public class ArcheryChooserDialog extends AlertDialog implements android.view.Vi
 		SpinnerAdapter distanceAdapter = new SpinnerSimpleAdapter<String>(getContext(), distances);
 		distanceSpinner.setAdapter(distanceAdapter);
 
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getContext());
+		int distanceSelection = pref.getInt(PREF_DISTANCE, 1);
+		int sizeSelection = pref.getInt(PREF_SIZE, 3);
+
+		if (distanceSelection < distanceAdapter.getCount()) {
+			distanceSpinner.setSelection(distanceSelection);
+		}
+		if (sizeSelection < sizeSpinner.getAdapter().getCount()) {
+			sizeSpinner.setSelection(sizeSelection);
+		}
+
 		super.onStart();
 	}
 
@@ -183,6 +205,7 @@ public class ArcheryChooserDialog extends AlertDialog implements android.view.Vi
 			}
 
 		});
+
 		sizeSpinner = (Spinner) popupcontent.findViewById(R.id.archery_size);
 		sizeSpinner.setPrompt("Größe");
 		sizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -233,9 +256,7 @@ public class ArcheryChooserDialog extends AlertDialog implements android.view.Vi
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget
-	 * .AdapterView, android.view.View, int, long)
+	 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget .AdapterView, android.view.View, int, long)
 	 */
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {

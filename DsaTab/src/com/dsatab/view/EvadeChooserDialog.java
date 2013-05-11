@@ -2,6 +2,9 @@ package com.dsatab.view;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +27,9 @@ import com.dsatab.util.Util;
 
 public class EvadeChooserDialog extends AlertDialog implements android.view.View.OnClickListener,
 		DialogInterface.OnClickListener, OnItemClickListener {
+
+	public static final String PREF_DISTANCE = "com.dsatab.evade.distance";
+	public static final String PREF_ENEMIES = "com.dsatab.evade.enemies";
 
 	private int[] distanceValues;
 	private int[] enemyValues;
@@ -48,9 +54,7 @@ public class EvadeChooserDialog extends AlertDialog implements android.view.View
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.content.DialogInterface.OnClickListener#onClick(android.content
-	 * .DialogInterface, int)
+	 * @see android.content.DialogInterface.OnClickListener#onClick(android.content .DialogInterface, int)
 	 */
 	@Override
 	public void onClick(DialogInterface dialog, int which) {
@@ -68,6 +72,13 @@ public class EvadeChooserDialog extends AlertDialog implements android.view.View
 	protected void accept() {
 		Attribute ausweichen = main.getHero().getAttribute(AttributeType.Ausweichen);
 		ausweichen.getProbeInfo().setErschwernis(erschwernis);
+
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+		Editor edit = preferences.edit();
+		edit.putInt(PREF_DISTANCE, distanceSpinner.getSelectedItemPosition());
+		edit.putInt(PREF_ENEMIES, enemySpinner.getSelectedItemPosition());
+
+		edit.commit();
 
 		main.getHero().fireValueChangedEvent(ausweichen);
 		dismiss();
@@ -125,6 +136,19 @@ public class EvadeChooserDialog extends AlertDialog implements android.view.View
 			text1.setText(title);
 			text2.setText("Modifikator " + ausweichen.getProbeInfo().getErschwernis());
 		}
+
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+		int distanceIndex = preferences.getInt(PREF_DISTANCE, 1);
+		int enemyIndex = preferences.getInt(PREF_ENEMIES, 0);
+
+		if (distanceIndex < distanceSpinner.getAdapter().getCount()) {
+			distanceSpinner.setSelection(distanceIndex);
+		}
+
+		if (enemyIndex < enemySpinner.getAdapter().getCount()) {
+			enemySpinner.setSelection(enemyIndex);
+		}
+
 		super.onStart();
 	}
 
@@ -199,9 +223,7 @@ public class EvadeChooserDialog extends AlertDialog implements android.view.View
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget
-	 * .AdapterView, android.view.View, int, long)
+	 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget .AdapterView, android.view.View, int, long)
 	 */
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
