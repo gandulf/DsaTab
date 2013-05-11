@@ -4,6 +4,8 @@ DsaTab
 An android app to handle your [DSA][2] Pen&amp;Paper roleplaying characters.
 DsaTab requires Android 2.2 and is compatible with the newest version of [Helden-Software][1] 5.2.6
 
+Get the current version (only in german) from the [google play store][3]
+
 Howto use DsaTab
 ================
 DsaTab builds upon the software [Helden-Software][1] and enables you to take your character with you on your android smartphone or tablet.
@@ -73,3 +75,4 @@ Disclaimer
 
 [1]: [http://www.helden-software.de/]
 [2]: [http://www.dasschwarzeauge.de/]
+[3]: [https://play.google.com/store/apps/details?id=com.dsatab]
