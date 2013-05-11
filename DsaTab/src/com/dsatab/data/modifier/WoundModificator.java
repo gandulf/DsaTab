@@ -68,8 +68,7 @@ public class WoundModificator extends AbstractModificator {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.data.modifier.Modificator#affects(com.dsatab.data.enums.
-	 * AttributeType)
+	 * @see com.dsatab.data.modifier.Modificator#affects(com.dsatab.data.enums. AttributeType)
 	 */
 	@Override
 	public boolean affects(AttributeType type) {

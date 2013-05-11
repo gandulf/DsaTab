@@ -1837,20 +1837,46 @@ public class Hero {
 	}
 
 	public void addModificator(Modificator modificator) {
-		if (modificator instanceof CustomModificator) {
-			getHeroConfiguration().addModificator((CustomModificator) modificator);
-		}
-		if (getModificators().add(modificator)) {
-			fireModifierAddedEvent(modificator);
+		if (modificator != null) {
+			if (modificatorsByType != null) {
+				for (ModificatorType modType : modificator.getAffectedModifierTypes()) {
+					Set<Modificator> modificators = modificatorsByType.get(modType);
+
+					if (modificators == null) {
+						modificators = new HashSet<Modificator>();
+						modificatorsByType.put(modType, modificators);
+					}
+					modificators.add(modificator);
+				}
+			}
+
+			if (modificator instanceof CustomModificator) {
+				getHeroConfiguration().addModificator((CustomModificator) modificator);
+			}
+			if (getModificators().add(modificator)) {
+				fireModifierAddedEvent(modificator);
+			}
 		}
 	}
 
 	public void removeModificator(Modificator modificator) {
-		if (modificator instanceof CustomModificator) {
-			getHeroConfiguration().removeModificator((CustomModificator) modificator);
-		}
-		if (getModificators().remove(modificators)) {
-			fireModifierRemovedEvent(modificator);
+		if (modificator != null) {
+			if (modificatorsByType != null) {
+				for (ModificatorType modType : modificator.getAffectedModifierTypes()) {
+					Set<Modificator> modificators = modificatorsByType.get(modType);
+
+					if (modificators != null) {
+						modificators.add(modificator);
+					}
+				}
+			}
+
+			if (modificator instanceof CustomModificator) {
+				getHeroConfiguration().removeModificator((CustomModificator) modificator);
+			}
+			if (getModificators().remove(modificator)) {
+				fireModifierRemovedEvent(modificator);
+			}
 		}
 	}
 
