@@ -3,10 +3,13 @@ DsaTab
 An android app to handle your [DSA][2] Pen&amp;Paper roleplaying characters.
 DsaTab requires Android 2.2 and is compatible with the newest version of [Helden-Software][1] 5.2.6
 
-Get the current version (only in german) from the [google play store][3]
+Get the current version (only in german) from the [google play store][3], old release can be found in the [releases](https://github.com/gandulf/DsaTab/tree/master/Releases) folder:
 
-Howto use DsaTab
-================
+[![Get it on Google Play](http://www.android.com/images/brand/get_it_on_play_logo_small.png)](http://play.google.com/store/apps/details?id=com.dsatab)
+
+
+## How to use DsaTab
+
 DsaTab builds upon the software [Helden-Software][1] and enables you to take your character with you on your android smartphone or tablet.
 
 * Create your character using Helden-Software
@@ -16,8 +19,8 @@ DsaTab builds upon the software [Helden-Software][1] and enables you to take you
 * Start DsaTab again and load your character.
 * Don't forget to save the character to keep changes made in DsaTab for the next session.
 
-Development
-===========
+## Development
+
 To deploy this app you need the following Libraries in your Eclipse workspace:
 
 * [ActionBarSherlock][4]<br>
@@ -35,8 +38,7 @@ To deploy this app you need the following Libraries in your Eclipse workspace:
 * GridLayout v7 support library from google sdk<br>	
 	Can be downloaded from google using sdk manager
 
-License
-=======
+## License
 
     Copyright 2012 Gandulf Kohlweiss
 
@@ -52,8 +54,7 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
 
-Disclaimer
-==========
+## Disclaimer
 
     „DAS SCHWARZE AUGE, AVENTURIEN, DERE, MYRANOR, THARUN, UTHURIA und RIESLAND sind eingetragene Marken der
     Significant Fantasy Medienrechte GbR. Ohne vorherige schriftliche Genehmigung der Ulisses Medien und Spiel
