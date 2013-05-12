@@ -1,4 +1,3 @@
-
 package com.dsatab.test;
 
 import android.test.AndroidTestCase;
@@ -14,8 +13,8 @@ public class AdvantageTest extends AndroidTestCase {
 
 	// Advantages without a value consist of only the name
 	public void testToStringWithNoValue() {
-		Feature advantage = new Feature(FeatureType.Beidh�ndig);
-		assertEquals(FeatureType.Beidh�ndig.xmlName(), advantage.toString());
+		Feature advantage = new Feature(FeatureType.Beidhändig);
+		assertEquals(FeatureType.Beidhändig.xmlName(), advantage.toString());
 	}
 
 	// Advantages with exactly one value consist of the name and the value
@@ -28,15 +27,15 @@ public class AdvantageTest extends AndroidTestCase {
 	// Multiple values in advantages are shown in brackets
 	public void testToStringWithMultipleValues() {
 		Feature advantage = new Feature(FeatureType.HerausragenderSinn);
-		advantage.addValue("Geh�r");
+		advantage.addValue("Gehör");
 		advantage.addValue("Geruch");
-		assertEquals("Herausragender Sinn (Geh�r, Geruch)", advantage.toString());
+		assertEquals("Herausragender Sinn (Gehör, Geruch)", advantage.toString());
 	}
 
 	// Empty values will be omitted
 	public void testToStringWithEmptyValue() {
-		Feature advantage = new Feature(FeatureType.Beidh�ndig);
+		Feature advantage = new Feature(FeatureType.Beidhändig);
 		advantage.addValue("");
-		assertEquals(FeatureType.Beidh�ndig.xmlName(), advantage.toString());
+		assertEquals(FeatureType.Beidhändig.xmlName(), advantage.toString());
 	}
 }

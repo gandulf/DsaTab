@@ -1,4 +1,3 @@
-
 package com.dsatab.test;
 
 import java.io.InputStream;
@@ -20,7 +19,6 @@ import com.dsatab.data.items.Hand;
 import com.dsatab.data.items.Weapon;
 import com.dsatab.util.Util;
 import com.dsatab.xml.HeldenXmlParser;
-
 
 public class XmlParserTest extends InstrumentationTestCase {
 
@@ -115,15 +113,15 @@ public class XmlParserTest extends InstrumentationTestCase {
 
 		assertEquals(TEST_GS, (int) hero.getModifiedValue(AttributeType.Geschwindigkeit, true, true));
 
-		assertTrue(hero.hasFeature(FeatureType.D�mmerungssicht));
-		assertTrue(hero.hasFeature(FeatureType.GutesGed�chtnis));
+		assertTrue(hero.hasFeature(FeatureType.Dämmerungssicht));
+		assertTrue(hero.hasFeature(FeatureType.GutesGedächtnis));
 		assertTrue(hero.hasFeature(FeatureType.Zwergenwuchs));
 
 		assertTrue(hero.hasFeature(FeatureType.Eitelkeit));
 		assertEquals(7, (int) hero.getFeature(FeatureType.Eitelkeit).getValue());
 
-		assertTrue(hero.hasFeature(FeatureType.R�stungsgew�hnungI));
-		assertEquals("F�nflagenharnisch", hero.getFeature(FeatureType.R�stungsgew�hnungI).getValueAsString());
+		assertTrue(hero.hasFeature(FeatureType.RüstungsgewöhnungI));
+		assertEquals("Fünflagenharnisch", hero.getFeature(FeatureType.RüstungsgewöhnungI).getValueAsString());
 
 		assertTrue(hero.hasFeature(FeatureType.Kulturkunde));
 
