@@ -1,18 +1,3 @@
-/*
- * Copyright (C) 2006 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.dsatab.data.adapter;
 
 import java.util.ArrayList;
@@ -32,60 +17,46 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 /**
- * A ListAdapter that manages a ListView backed by an array of arbitrary
- * objects. By default this class expects that the provided resource id
- * references a single TextView. If you want to use a more complex layout, use
- * the constructors that also takes a field id. That field id should reference a
- * TextView in the larger layout resource.
+ * A ListAdapter that manages a ListView backed by an array of arbitrary objects. By default this class expects that the provided resource id references a
+ * single TextView. If you want to use a more complex layout, use the constructors that also takes a field id. That field id should reference a TextView in the
+ * larger layout resource.
  * 
- * However the TextView is referenced, it will be filled with the toString() of
- * each object in the array. You can add lists or arrays of custom objects.
- * Override the toString() method of your objects to determine what text will be
- * displayed for the item in the list.
+ * However the TextView is referenced, it will be filled with the toString() of each object in the array. You can add lists or arrays of custom objects.
+ * Override the toString() method of your objects to determine what text will be displayed for the item in the list.
  * 
- * To use something other than TextViews for the array display, for instance,
- * ImageViews, or to have some of data besides toString() results fill the
- * views, override {@link #getView(int, View, ViewGroup)} to return the type of
- * view you want.
+ * To use something other than TextViews for the array display, for instance, ImageViews, or to have some of data besides toString() results fill the views,
+ * override {@link #getView(int, View, ViewGroup)} to return the type of view you want.
  */
 public class OpenArrayAdapter<T> extends BaseAdapter implements Filterable {
 	/**
-	 * Contains the list of objects that represent the data of this
-	 * ArrayAdapter. The content of this list is referred to as "the array" in
-	 * the documentation.
+	 * Contains the list of objects that represent the data of this ArrayAdapter. The content of this list is referred to as "the array" in the documentation.
 	 */
 	List<T> mObjects;
 
 	/**
-	 * Lock used to modify the content of {@link #mObjects}. Any write operation
-	 * performed on the array should be synchronized on this lock. This lock is
-	 * also used by the filter (see {@link #getFilter()} to make a synchronized
-	 * copy of the original array of data.
+	 * Lock used to modify the content of {@link #mObjects}. Any write operation performed on the array should be synchronized on this lock. This lock is also
+	 * used by the filter (see {@link #getFilter()} to make a synchronized copy of the original array of data.
 	 */
 	final Object mLock = new Object();
 
 	/**
-	 * The resource indicating what views to inflate to display the content of
-	 * this array adapter.
+	 * The resource indicating what views to inflate to display the content of this array adapter.
 	 */
 	private int mResource;
 
 	/**
-	 * The resource indicating what views to inflate to display the content of
-	 * this array adapter in a drop down widget.
+	 * The resource indicating what views to inflate to display the content of this array adapter in a drop down widget.
 	 */
 	private int mDropDownResource;
 
 	/**
-	 * If the inflated resource is not a TextView, {@link #mFieldId} is used to
-	 * find a TextView inside the inflated views hierarchy. This field must
-	 * contain the identifier that matches the one defined in the resource file.
+	 * If the inflated resource is not a TextView, {@link #mFieldId} is used to find a TextView inside the inflated views hierarchy. This field must contain the
+	 * identifier that matches the one defined in the resource file.
 	 */
 	private int mFieldId = 0;
 
 	/**
-	 * Indicates whether or not {@link #notifyDataSetChanged()} must be called
-	 * whenever {@link #mObjects} is modified.
+	 * Indicates whether or not {@link #notifyDataSetChanged()} must be called whenever {@link #mObjects} is modified.
 	 */
 	private boolean mNotifyOnChange = true;
 
@@ -103,8 +74,7 @@ public class OpenArrayAdapter<T> extends BaseAdapter implements Filterable {
 	 * @param context
 	 *            The current context.
 	 * @param textViewResourceId
-	 *            The resource ID for a layout file containing a TextView to use
-	 *            when instantiating views.
+	 *            The resource ID for a layout file containing a TextView to use when instantiating views.
 	 */
 	public OpenArrayAdapter(Context context, int textViewResourceId) {
 		init(context, textViewResourceId, 0, new ArrayList<T>());
@@ -116,11 +86,9 @@ public class OpenArrayAdapter<T> extends BaseAdapter implements Filterable {
 	 * @param context
 	 *            The current context.
 	 * @param resource
-	 *            The resource ID for a layout file containing a layout to use
-	 *            when instantiating views.
+	 *            The resource ID for a layout file containing a layout to use when instantiating views.
 	 * @param textViewResourceId
-	 *            The id of the TextView within the layout resource to be
-	 *            populated
+	 *            The id of the TextView within the layout resource to be populated
 	 */
 	public OpenArrayAdapter(Context context, int resource, int textViewResourceId) {
 		init(context, resource, textViewResourceId, new ArrayList<T>());
@@ -132,8 +100,7 @@ public class OpenArrayAdapter<T> extends BaseAdapter implements Filterable {
 	 * @param context
 	 *            The current context.
 	 * @param textViewResourceId
-	 *            The resource ID for a layout file containing a TextView to use
-	 *            when instantiating views.
+	 *            The resource ID for a layout file containing a TextView to use when instantiating views.
 	 * @param objects
 	 *            The objects to represent in the ListView.
 	 */
@@ -147,11 +114,9 @@ public class OpenArrayAdapter<T> extends BaseAdapter implements Filterable {
 	 * @param context
 	 *            The current context.
 	 * @param resource
-	 *            The resource ID for a layout file containing a layout to use
-	 *            when instantiating views.
+	 *            The resource ID for a layout file containing a layout to use when instantiating views.
 	 * @param textViewResourceId
-	 *            The id of the TextView within the layout resource to be
-	 *            populated
+	 *            The id of the TextView within the layout resource to be populated
 	 * @param objects
 	 *            The objects to represent in the ListView.
 	 */
@@ -165,8 +130,7 @@ public class OpenArrayAdapter<T> extends BaseAdapter implements Filterable {
 	 * @param context
 	 *            The current context.
 	 * @param textViewResourceId
-	 *            The resource ID for a layout file containing a TextView to use
-	 *            when instantiating views.
+	 *            The resource ID for a layout file containing a TextView to use when instantiating views.
 	 * @param objects
 	 *            The objects to represent in the ListView.
 	 */
@@ -180,11 +144,9 @@ public class OpenArrayAdapter<T> extends BaseAdapter implements Filterable {
 	 * @param context
 	 *            The current context.
 	 * @param resource
-	 *            The resource ID for a layout file containing a layout to use
-	 *            when instantiating views.
+	 *            The resource ID for a layout file containing a layout to use when instantiating views.
 	 * @param textViewResourceId
-	 *            The id of the TextView within the layout resource to be
-	 *            populated
+	 *            The id of the TextView within the layout resource to be populated
 	 * @param objects
 	 *            The objects to represent in the ListView.
 	 */
@@ -288,8 +250,7 @@ public class OpenArrayAdapter<T> extends BaseAdapter implements Filterable {
 	 * Sorts the content of this adapter using the specified comparator.
 	 * 
 	 * @param comparator
-	 *            The comparator used to sort the objects contained in this
-	 *            adapter.
+	 *            The comparator used to sort the objects contained in this adapter.
 	 */
 	public void sort(Comparator<? super T> comparator) {
 		Collections.sort(mObjects, comparator);
@@ -316,18 +277,13 @@ public class OpenArrayAdapter<T> extends BaseAdapter implements Filterable {
 	}
 
 	/**
-	 * Control whether methods that change the list ({@link #add},
-	 * {@link #insert}, {@link #remove}, {@link #clear}) automatically call
-	 * {@link #notifyDataSetChanged}. If set to false, caller must manually call
-	 * notifyDataSetChanged() to have the changes reflected in the attached
-	 * view.
+	 * Control whether methods that change the list ({@link #add}, {@link #insert}, {@link #remove}, {@link #clear}) automatically call
+	 * {@link #notifyDataSetChanged}. If set to false, caller must manually call notifyDataSetChanged() to have the changes reflected in the attached view.
 	 * 
-	 * The default is true, and calling notifyDataSetChanged() resets the flag
-	 * to true.
+	 * The default is true, and calling notifyDataSetChanged() resets the flag to true.
 	 * 
 	 * @param notifyOnChange
-	 *            if true, modifications to the list will automatically call
-	 *            {@link #notifyDataSetChanged}
+	 *            if true, modifications to the list will automatically call {@link #notifyDataSetChanged}
 	 */
 	public void setNotifyOnChange(boolean notifyOnChange) {
 		mNotifyOnChange = notifyOnChange;
@@ -342,8 +298,7 @@ public class OpenArrayAdapter<T> extends BaseAdapter implements Filterable {
 	}
 
 	/**
-	 * Returns the context associated with this array adapter. The context is
-	 * used to create views from the resource passed to the constructor.
+	 * Returns the context associated with this array adapter. The context is used to create views from the resource passed to the constructor.
 	 * 
 	 * @return The Context associated with this adapter.
 	 */
@@ -354,6 +309,7 @@ public class OpenArrayAdapter<T> extends BaseAdapter implements Filterable {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public int getCount() {
 		return mObjects.size();
 	}
@@ -361,6 +317,7 @@ public class OpenArrayAdapter<T> extends BaseAdapter implements Filterable {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public T getItem(int position) {
 		return mObjects.get(position);
 	}
@@ -380,6 +337,7 @@ public class OpenArrayAdapter<T> extends BaseAdapter implements Filterable {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public long getItemId(int position) {
 		return position;
 	}
@@ -387,6 +345,7 @@ public class OpenArrayAdapter<T> extends BaseAdapter implements Filterable {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		return createViewFromResource(position, convertView, parent, mResource);
 	}
@@ -447,9 +406,7 @@ public class OpenArrayAdapter<T> extends BaseAdapter implements Filterable {
 	}
 
 	/**
-	 * Creates a new ArrayAdapter from external resources. The content of the
-	 * array is obtained through
-	 * {@link android.content.res.Resources#getTextArray(int)}.
+	 * Creates a new ArrayAdapter from external resources. The content of the array is obtained through {@link android.content.res.Resources#getTextArray(int)}.
 	 * 
 	 * @param context
 	 *            The application's environment.
@@ -469,6 +426,7 @@ public class OpenArrayAdapter<T> extends BaseAdapter implements Filterable {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public OpenFilter<T> getFilter() {
 		if (mFilter == null) {
 			mFilter = new OpenFilter<T>(this);
@@ -484,9 +442,8 @@ public class OpenArrayAdapter<T> extends BaseAdapter implements Filterable {
 
 	/**
 	 * <p>
-	 * An array filter constrains the content of the array adapter with a
-	 * prefix. Each item that does not start with the supplied prefix is removed
-	 * from the list.
+	 * An array filter constrains the content of the array adapter with a prefix. Each item that does not start with the supplied prefix is removed from the
+	 * list.
 	 * </p>
 	 */
 	// private class ArrayFilter extends Filter {

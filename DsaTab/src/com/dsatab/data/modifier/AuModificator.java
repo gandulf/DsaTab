@@ -73,8 +73,7 @@ public class AuModificator extends AbstractModificator {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.data.modifier.Modificator#affects(com.dsatab.data.enums.
-	 * AttributeType)
+	 * @see com.dsatab.data.modifier.Modificator#affects(com.dsatab.data.enums. AttributeType)
 	 */
 	@Override
 	public boolean affects(AttributeType type) {
@@ -124,9 +123,7 @@ public class AuModificator extends AbstractModificator {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.data.modifier.Modificator#getModifierValue(com.dsatab.data
-	 * .Probe)
+	 * @see com.dsatab.data.modifier.Modificator#getModifierValue(com.dsatab.data .Probe)
 	 */
 	@Override
 	public int getModifierValue(Probe probe) {
@@ -169,9 +166,7 @@ public class AuModificator extends AbstractModificator {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.data.modifier.Modificator#getModifierValue(com.dsatab.data
-	 * .enums.AttributeType)
+	 * @see com.dsatab.data.modifier.Modificator#getModifierValue(com.dsatab.data .enums.AttributeType)
 	 */
 	@Override
 	public int getModifierValue(AttributeType type) {

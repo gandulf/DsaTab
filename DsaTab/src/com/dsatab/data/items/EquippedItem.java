@@ -225,6 +225,7 @@ public class EquippedItem implements ItemCard {
 		hero.fireItemChangedEvent(this);
 	}
 
+	@Override
 	public ItemLocationInfo getItemInfo() {
 		return itemInfo;
 	}
@@ -353,6 +354,7 @@ public class EquippedItem implements ItemCard {
 		return nameId;
 	}
 
+	@Override
 	public Item getItem() {
 		return item;
 	}

@@ -256,6 +256,7 @@ public class BodyLayout extends FrameLayout {
 		return rsText;
 	}
 
+	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 		int count = getChildCount();
@@ -269,6 +270,7 @@ public class BodyLayout extends FrameLayout {
 		}
 	}
 
+	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
 
 		int width = r - l;
@@ -515,10 +517,12 @@ public class BodyLayout extends FrameLayout {
 
 	}
 
+	@Override
 	public LayoutParams generateLayoutParams(AttributeSet attrs) {
-		return new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, Position.Kopf);
+		return new LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, Position.Kopf);
 	}
 
+	@Override
 	protected boolean checkLayoutParams(android.view.ViewGroup.LayoutParams p) {
 
 		// if the layout params is invalid, the android will throw a runtime

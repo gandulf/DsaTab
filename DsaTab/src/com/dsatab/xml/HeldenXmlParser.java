@@ -1,19 +1,3 @@
-/**
- *  This file is part of DsaTab.
- *
- *  DsaTab is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  DsaTab is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with DsaTab.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.dsatab.xml;
 
 import java.io.IOException;
@@ -134,7 +118,7 @@ public class HeldenXmlParser {
 
 		Document dom = readDocument(in);
 
-		Element heroElement = (Element) dom.getRootElement().getChild(Xml.KEY_HELD);
+		Element heroElement = dom.getRootElement().getChild(Xml.KEY_HELD);
 		// check for valid hero node
 		if (heroElement == null) {
 			throw new DsaTabRuntimeException("Invalid Hero xml file, could not find <" + Xml.KEY_HELD
@@ -677,7 +661,7 @@ public class HeldenXmlParser {
 		List<EquippedItem> secondaryItems = new ArrayList<EquippedItem>();
 
 		for (int i = 0; i < equippedElements.size(); i++) {
-			Element element = (Element) equippedElements.get(i);
+			Element element = equippedElements.get(i);
 
 			String name = element.getAttributeValue(Xml.KEY_NAME);
 			if (name.equals(Hero.JAGTWAFFE)) {
@@ -807,7 +791,7 @@ public class HeldenXmlParser {
 				Item item = DataManager.getItemByName(element.getAttributeValue(Xml.KEY_NAME));
 
 				if (item != null) {
-					item = (Item) item.duplicate();
+					item = item.duplicate();
 				} else {
 					Debug.warning("Item not found generating it:" + element.getAttributeValue(Xml.KEY_NAME));
 
@@ -998,7 +982,7 @@ public class HeldenXmlParser {
 		List<Element> spellList = DomUtil.getChildrenByTagName(heldElement, Xml.KEY_ZAUBERLISTE, Xml.KEY_ZAUBER);
 
 		for (int i = 0; i < spellList.size(); i++) {
-			Element element = (Element) spellList.get(i);
+			Element element = spellList.get(i);
 			Spell spell = new Spell(hero, element.getAttributeValue(Xml.KEY_NAME));
 
 			spell.setProbePattern(element.getAttributeValue(Xml.KEY_PROBE));
@@ -1051,7 +1035,7 @@ public class HeldenXmlParser {
 		Talent talent = null;
 		boolean found = false;
 		for (int i = 0; i < talentList.size(); i++) {
-			Element element = (Element) talentList.get(i);
+			Element element = talentList.get(i);
 
 			talent = null;
 			TalentType talentType;
@@ -1088,7 +1072,7 @@ public class HeldenXmlParser {
 
 							CombatMeleeAttribute at = null, pa = null;
 							for (Element node : nodes) {
-								Element item = (Element) node;
+								Element item = node;
 								if (Xml.KEY_ATTACKE.equals(item.getName())) {
 									at = new CombatMeleeAttribute(hero);
 									at.setName(CombatMeleeAttribute.ATTACKE);
@@ -1130,7 +1114,7 @@ public class HeldenXmlParser {
 			List<Element> nodes = combatElement.getChildren();
 			CombatMeleeAttribute at = null, pa = null;
 			for (Element node : nodes) {
-				Element item = (Element) node;
+				Element item = node;
 				if (Xml.KEY_ATTACKE.equals(item.getName())) {
 					at = new CombatMeleeAttribute(hero);
 					at.setName(CombatMeleeAttribute.ATTACKE);
@@ -1184,7 +1168,7 @@ public class HeldenXmlParser {
 				List<Element> nodes = element.getChildren();
 
 				for (Element node : nodes) {
-					Element item = (Element) node;
+					Element item = node;
 					if (Xml.KEY_ATTACKE.equals(item.getName()))
 						writeCombatMeleeAttribute(hero, meleeTalent.getAttack(), item);
 					else if (Xml.KEY_PARADE.equals(item.getName()))

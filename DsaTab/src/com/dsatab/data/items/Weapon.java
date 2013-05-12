@@ -197,6 +197,7 @@ public class Weapon extends CloseCombatItem {
 		return "Nahkampf";
 	}
 
+	@Override
 	public String getInfo() {
 		if (info == null) {
 			info = TextUtils.expandTemplate("^1 ^2/^3 ^4/^5 Ini ^6 ^7 ^8", getTp(), Util.toString(getTpKKMin()),

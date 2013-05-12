@@ -41,9 +41,7 @@ public class PortraitViewDialog extends AlertDialog implements DialogInterface.O
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.content.DialogInterface.OnClickListener#onClick(android.content
-	 * .DialogInterface, int)
+	 * @see android.content.DialogInterface.OnClickListener#onClick(android.content .DialogInterface, int)
 	 */
 	@Override
 	public void onClick(DialogInterface dialog, int which) {

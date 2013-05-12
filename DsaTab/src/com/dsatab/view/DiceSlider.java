@@ -197,6 +197,7 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 		}
 	}
 
+	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.dice_execute:
@@ -323,6 +324,7 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 		return manualModifer;
 	}
 
+	@Override
 	protected void onFinishInflate() {
 
 		BitmapDrawable tileMe = new BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(),
@@ -371,6 +373,7 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 		super.onFinishInflate();
 	}
 
+	@Override
 	public void onDrawerClosed() {
 		tblDiceProbe.setVisibility(View.GONE);
 		infoButton.setVisibility(View.INVISIBLE);
@@ -402,9 +405,7 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * kankan.wheel.widget.OnWheelChangedListener#onChanged(kankan.wheel.widget
-	 * .WheelView, int, int)
+	 * @see kankan.wheel.widget.OnWheelChangedListener#onChanged(kankan.wheel.widget .WheelView, int, int)
 	 */
 	@Override
 	public void onWheelChanged(WheelView wheel, int oldValue, int newValue) {
@@ -428,9 +429,7 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * kankan.wheel.widget.OnWheelClickedListener#onWheelClick(kankan.wheel.
-	 * widget.WheelView, int)
+	 * @see kankan.wheel.widget.OnWheelClickedListener#onWheelClick(kankan.wheel. widget.WheelView, int)
 	 */
 	@Override
 	public void onWheelClick(WheelView wheel, int itemIndex) {
@@ -1023,8 +1022,8 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 		int width = getResources().getDimensionPixelSize(R.dimen.dices_size);
 		int padding = getResources().getDimensionPixelSize(R.dimen.dices_padding);
 
-		res.setWidth((int) width);
-		res.setHeight((int) width);
+		res.setWidth(width);
+		res.setHeight(width);
 
 		if (referenceValue < 0 || value <= referenceValue)
 			res.setBackgroundResource(R.drawable.w20_empty);

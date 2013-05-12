@@ -1,19 +1,3 @@
-/**
- *  This file is part of DsaTab.
- *
- *  DsaTab is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  DsaTab is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with DsaTab.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.dsatab.fragment;
 
 import java.util.List;
@@ -37,10 +21,6 @@ import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.modifier.Modificator;
 import com.dsatab.view.listener.HeroChangedListener;
 
-/**
- * @author Ganymede
- * 
- */
 public class AttributeListFragment extends BaseAttributesFragment implements HeroChangedListener {
 
 	public static final String TAG = "attributeListFragment";
@@ -57,9 +37,7 @@ public class AttributeListFragment extends BaseAttributesFragment implements Her
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater,
-	 * android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,9 +51,7 @@ public class AttributeListFragment extends BaseAttributesFragment implements Her
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.support.v4.app.Fragment#onConfigurationChanged(android.content
-	 * .res.Configuration)
+	 * @see android.support.v4.app.Fragment#onConfigurationChanged(android.content .res.Configuration)
 	 */
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
@@ -86,8 +62,7 @@ public class AttributeListFragment extends BaseAttributesFragment implements Her
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.fragment.BaseFragment#onActivityCreated(android.os.Bundle)
+	 * @see com.dsatab.fragment.BaseFragment#onActivityCreated(android.os.Bundle)
 	 */
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -163,9 +138,7 @@ public class AttributeListFragment extends BaseAttributesFragment implements Her
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.view.listener.ValueChangedListener#onValueChanged(com.dsatab
-	 * .data.Value)
+	 * @see com.dsatab.view.listener.ValueChangedListener#onValueChanged(com.dsatab .data.Value)
 	 */
 	@Override
 	public void onValueChanged(Value value) {
@@ -217,9 +190,7 @@ public class AttributeListFragment extends BaseAttributesFragment implements Her
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.fragment.BaseFragment#onModifierAdded(com.dsatab.data.modifier
-	 * .Modificator)
+	 * @see com.dsatab.fragment.BaseFragment#onModifierAdded(com.dsatab.data.modifier .Modificator)
 	 */
 	@Override
 	public void onModifierAdded(Modificator value) {
@@ -230,9 +201,7 @@ public class AttributeListFragment extends BaseAttributesFragment implements Her
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.fragment.BaseFragment#onModifierChanged(com.dsatab.data.modifier
-	 * .Modificator)
+	 * @see com.dsatab.fragment.BaseFragment#onModifierChanged(com.dsatab.data.modifier .Modificator)
 	 */
 	@Override
 	public void onModifierChanged(Modificator value) {
@@ -243,9 +212,7 @@ public class AttributeListFragment extends BaseAttributesFragment implements Her
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.fragment.BaseFragment#onModifierRemoved(com.dsatab.data.modifier
-	 * .Modificator)
+	 * @see com.dsatab.fragment.BaseFragment#onModifierRemoved(com.dsatab.data.modifier .Modificator)
 	 */
 	@Override
 	public void onModifierRemoved(Modificator value) {
@@ -267,8 +234,7 @@ public class AttributeListFragment extends BaseAttributesFragment implements Her
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.activity.BaseMenuActivity#onHeroLoaded(com.dsatab.data.Hero)
+	 * @see com.dsatab.activity.BaseMenuActivity#onHeroLoaded(com.dsatab.data.Hero)
 	 */
 	@Override
 	public void onHeroLoaded(Hero hero) {
@@ -351,9 +317,7 @@ public class AttributeListFragment extends BaseAttributesFragment implements Her
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.fragment.BaseFragment#onSharedPreferenceChanged(android.content
-	 * .SharedPreferences, java.lang.String)
+	 * @see com.dsatab.fragment.BaseFragment#onSharedPreferenceChanged(android.content .SharedPreferences, java.lang.String)
 	 */
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

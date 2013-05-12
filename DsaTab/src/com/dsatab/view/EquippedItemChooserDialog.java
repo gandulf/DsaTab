@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.ListView;
@@ -55,7 +56,7 @@ public class EquippedItemChooserDialog extends AlertDialog implements AdapterVie
 
 		itemAdapter = new EquippedItemAdapter(getContext(), equippedItems);
 		itemList.setAdapter(itemAdapter);
-		itemList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+		itemList.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 		if (selectedItem != null) {
 			itemList.setItemChecked(itemAdapter.getPosition(selectedItem), true);
 		}
@@ -97,8 +98,8 @@ public class EquippedItemChooserDialog extends AlertDialog implements AdapterVie
 
 		RelativeLayout popupcontent = (RelativeLayout) LayoutInflater.from(getContext()).inflate(
 				R.layout.popup_equipped_item_chooser, null, false);
-		popupcontent.setLayoutParams(new LayoutParams(android.widget.LinearLayout.LayoutParams.MATCH_PARENT,
-				android.widget.LinearLayout.LayoutParams.WRAP_CONTENT));
+		popupcontent.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
+				LayoutParams.WRAP_CONTENT));
 		setView(popupcontent);
 
 		setButton(BUTTON_POSITIVE, getContext().getString(android.R.string.ok), this);
@@ -113,9 +114,7 @@ public class EquippedItemChooserDialog extends AlertDialog implements AdapterVie
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.content.DialogInterface.OnClickListener#onClick(android.content
-	 * .DialogInterface, int)
+	 * @see android.content.DialogInterface.OnClickListener#onClick(android.content .DialogInterface, int)
 	 */
 	@Override
 	public void onClick(DialogInterface dialog, int which) {

@@ -1,19 +1,3 @@
-/**
- *  This file is part of DsaTab.
- *
- *  Risk is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  Risk is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with DsaTab.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.dsatab.activity;
 
 import java.util.ArrayList;
@@ -27,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -98,7 +83,7 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 		tabsList.setDropListener(this);
 		tabsList.setRemoveListener(this);
 		tabsList.setOnItemClickListener(this);
-		tabsList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+		tabsList.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 		// tabsList.setItemHeightExpanded(tabsList.getItemHeightNormal() * 2);
 
 		if (DsaTabApplication.getInstance().getHero() != null
@@ -204,7 +189,7 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 		case R.id.option_tab_delete:
 			tabs.remove(currentInfo);
 			tabsAdapter.notifyDataSetChanged();
-			if (tabsList.getCheckedItemPosition() != DragSortListView.INVALID_POSITION
+			if (tabsList.getCheckedItemPosition() != AdapterView.INVALID_POSITION
 					&& tabsList.getCheckedItemPosition() < tabsAdapter.getCount()) {
 				selectTabInfo(tabsAdapter.getItem(tabsList.getCheckedItemPosition()));
 			} else {
@@ -380,7 +365,7 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 	public void remove(int which) {
 		tabs.remove(which);
 		tabsAdapter.notifyDataSetChanged();
-		if (tabsList.getCheckedItemPosition() != DragSortListView.INVALID_POSITION
+		if (tabsList.getCheckedItemPosition() != AdapterView.INVALID_POSITION
 				&& tabsList.getCheckedItemPosition() < tabsAdapter.getCount()) {
 			selectTabInfo(tabsAdapter.getItem(tabsList.getCheckedItemPosition()));
 		} else {

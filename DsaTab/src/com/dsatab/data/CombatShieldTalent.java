@@ -41,6 +41,7 @@ public class CombatShieldTalent extends BaseCombatTalent {
 		this.value = 0;
 	}
 
+	@Override
 	public String getName() {
 		switch (usageType) {
 		case Schild:
@@ -51,10 +52,12 @@ public class CombatShieldTalent extends BaseCombatTalent {
 		return null;
 	}
 
+	@Override
 	public Probe getAttack() {
 		return null;
 	}
 
+	@Override
 	public Probe getDefense() {
 		return this;
 	}
@@ -68,6 +71,7 @@ public class CombatShieldTalent extends BaseCombatTalent {
 		return ProbeType.TwoOfThree;
 	}
 
+	@Override
 	public Integer getProbeValue(int i) {
 		return getValue();
 	}
@@ -77,6 +81,7 @@ public class CombatShieldTalent extends BaseCombatTalent {
 		return null;
 	}
 
+	@Override
 	public Integer getValue() {
 
 		if (this.value != null) {
@@ -121,6 +126,7 @@ public class CombatShieldTalent extends BaseCombatTalent {
 		return baseValue;
 	}
 
+	@Override
 	public Position getPosition(int w20) {
 		if (DsaTabApplication.getPreferences().getBoolean(DsaTabPreferenceActivity.KEY_HOUSE_RULES_MORE_TARGET_ZONES,
 				false)) {

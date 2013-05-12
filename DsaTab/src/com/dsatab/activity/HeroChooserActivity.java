@@ -1,18 +1,3 @@
-/*
- * Copyright (C) 2010 Gandulf Kohlweiss
- * 
- * This program is free software; you can redistribute it and/or modify it under the terms
- * of the GNU General Public License as published by the Free Software Foundation;
- * either version 3 of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with this program;
- * if not, see <http://www.gnu.org/licenses/>.
- * 
- */
 package com.dsatab.activity;
 
 import java.io.BufferedInputStream;
@@ -34,6 +19,7 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
@@ -146,10 +132,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * com.actionbarsherlock.view.ActionMode.Callback#onPrepareActionMode
-		 * (com.actionbarsherlock.view.ActionMode,
-		 * com.actionbarsherlock.view.Menu)
+		 * @see com.actionbarsherlock.view.ActionMode.Callback#onPrepareActionMode (com.actionbarsherlock.view.ActionMode, com.actionbarsherlock.view.Menu)
 		 */
 		@Override
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
@@ -256,7 +239,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 			heroes = DsaTabApplication.getInstance().getHeroes();
 
 		list = (GridViewCompat) findViewById(R.id.popup_hero_chooser_list);
-		list.setChoiceModeC(GridView.CHOICE_MODE_MULTIPLE);
+		list.setChoiceModeC(AbsListView.CHOICE_MODE_MULTIPLE);
 		adapter = new HeroAdapter(this, R.layout.hero_chooser_item, heroes);
 		list.setAdapter(adapter);
 		list.setOnItemClickListener(this);
@@ -298,8 +281,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.actionbarsherlock.app.SherlockActivity#onPrepareOptionsMenu(com.
-	 * actionbarsherlock.view.Menu)
+	 * @see com.actionbarsherlock.app.SherlockActivity#onPrepareOptionsMenu(com. actionbarsherlock.view.Menu)
 	 */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
@@ -324,8 +306,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.actionbarsherlock.app.SherlockActivity#onCreateOptionsMenu(com.
-	 * actionbarsherlock.view.Menu)
+	 * @see com.actionbarsherlock.app.SherlockActivity#onCreateOptionsMenu(com. actionbarsherlock.view.Menu)
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
@@ -353,8 +334,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 				/*
 				 * (non-Javadoc)
 				 * 
-				 * @see com.dsatab.common.HeroExchange.OnHeroExchangeListener#
-				 * onHeroLoaded(java.lang.String)
+				 * @see com.dsatab.common.HeroExchange.OnHeroExchangeListener# onHeroLoaded(java.lang.String)
 				 */
 				@Override
 				public void onHeroLoaded(String path) {
@@ -363,8 +343,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 				/*
 				 * (non-Javadoc)
 				 * 
-				 * @see com.dsatab.common.HeroExchange.OnHeroExchangeListener#
-				 * onHeroInfoLoaded(com.dsatab.data.HeroOnlineInfo)
+				 * @see com.dsatab.common.HeroExchange.OnHeroExchangeListener# onHeroInfoLoaded(com.dsatab.data.HeroOnlineInfo)
 				 */
 				@Override
 				public void onHeroInfoLoaded(HeroFileInfo info) {
@@ -441,8 +420,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.app.Activity#onActivityResult(int, int,
-	 * android.content.Intent)
+	 * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
 	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -458,6 +436,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
+	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		if (mMode != null) {
 			SparseBooleanArray checked = list.getCheckedItemPositionsC();
@@ -501,6 +480,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 		}
 	}
 
+	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 		if (mCallback == null) {
 			throw new IllegalArgumentException("ListView with Contextual Action Bar needs mCallback to be defined!");

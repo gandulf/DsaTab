@@ -21,8 +21,7 @@ public interface Probe {
 	public Integer getProbeValue(int i);
 
 	/**
-	 * Returns the value that can be used to counter negative dice rolls
-	 * (talent, spell value)
+	 * Returns the value that can be used to counter negative dice rolls (talent, spell value)
 	 * 
 	 * @return Integer
 	 */

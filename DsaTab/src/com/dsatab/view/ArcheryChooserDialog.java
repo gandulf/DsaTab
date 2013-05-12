@@ -9,6 +9,7 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -109,6 +110,7 @@ public class ArcheryChooserDialog extends AlertDialog implements android.view.Vi
 		main.checkProbe(combatProbe);
 	}
 
+	@Override
 	public void onClick(View v) {
 		if (v == iconLeft) {
 			accept();
@@ -127,10 +129,10 @@ public class ArcheryChooserDialog extends AlertDialog implements android.view.Vi
 			}
 		}
 
-		if (distanceSpinner.getSelectedItemPosition() != Spinner.INVALID_POSITION)
+		if (distanceSpinner.getSelectedItemPosition() != AdapterView.INVALID_POSITION)
 			erschwernis += distanceProbe[distanceSpinner.getSelectedItemPosition()];
 
-		if (sizeSpinner.getSelectedItemPosition() != Spinner.INVALID_POSITION)
+		if (sizeSpinner.getSelectedItemPosition() != AdapterView.INVALID_POSITION)
 			erschwernis += sizeProbe[sizeSpinner.getSelectedItemPosition()];
 
 		probeValue.setText(getContext().getString(R.string.message_modifikator, Util.toProbe(erschwernis)));
@@ -141,7 +143,7 @@ public class ArcheryChooserDialog extends AlertDialog implements android.view.Vi
 
 		String[] distances = getContext().getResources().getStringArray(R.array.archeryDistance);
 		if (equippedItem != null) {
-			DistanceWeapon item = (DistanceWeapon) equippedItem.getItem().getSpecification(DistanceWeapon.class);
+			DistanceWeapon item = equippedItem.getItem().getSpecification(DistanceWeapon.class);
 			if (item != null) {
 				String from, to;
 
@@ -244,7 +246,7 @@ public class ArcheryChooserDialog extends AlertDialog implements android.view.Vi
 		}
 
 		othersList = (ListView) popupcontent.findViewById(R.id.archery_others);
-		othersList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+		othersList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 		othersList.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_multiple_choice,
 				modificationStrings));
 		othersList.setOnItemClickListener(this);

@@ -75,6 +75,7 @@ public class ExpandableItemAdapter extends BaseExpandableListAdapter implements 
 		super.notifyDataSetChanged();
 	}
 
+	@Override
 	public Item getChild(int groupPosition, int childPosition) {
 		ItemContainer groupType = getGroup(groupPosition);
 		if (groupType != null) {
@@ -114,10 +115,12 @@ public class ExpandableItemAdapter extends BaseExpandableListAdapter implements 
 		}
 	}
 
+	@Override
 	public long getChildId(int groupPosition, int childPosition) {
 		return childPosition;
 	}
 
+	@Override
 	public int getChildrenCount(int groupPosition) {
 		ItemContainer groupType = getGroup(groupPosition);
 		if (groupType != null) {
@@ -130,6 +133,7 @@ public class ExpandableItemAdapter extends BaseExpandableListAdapter implements 
 		return 0;
 	}
 
+	@Override
 	public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
 			ViewGroup parent) {
 
@@ -170,6 +174,7 @@ public class ExpandableItemAdapter extends BaseExpandableListAdapter implements 
 		return view;
 	}
 
+	@Override
 	public ItemContainer getGroup(int groupPosition) {
 		if (groupPosition >= 0 && groupPosition < itemContainers.size())
 			return itemContainers.get(groupPosition);
@@ -177,14 +182,17 @@ public class ExpandableItemAdapter extends BaseExpandableListAdapter implements 
 			return null;
 	}
 
+	@Override
 	public int getGroupCount() {
 		return itemContainers.size();
 	}
 
+	@Override
 	public long getGroupId(int groupPosition) {
 		return groupPosition;
 	}
 
+	@Override
 	public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 
 		View listItem = null;
@@ -220,10 +228,12 @@ public class ExpandableItemAdapter extends BaseExpandableListAdapter implements 
 		return listItem;
 	}
 
+	@Override
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
 		return true;
 	}
 
+	@Override
 	public boolean hasStableIds() {
 		return false;
 	}

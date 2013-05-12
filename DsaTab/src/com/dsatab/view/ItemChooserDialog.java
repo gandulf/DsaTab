@@ -158,8 +158,8 @@ public class ItemChooserDialog extends AlertDialog implements android.view.View.
 		RelativeLayout popupcontent = (RelativeLayout) LayoutInflater.from(getContext()).inflate(
 				R.layout.popup_item_chooser, null, false);
 
-		popupcontent.setLayoutParams(new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-				LinearLayout.LayoutParams.WRAP_CONTENT));
+		popupcontent.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
+				LayoutParams.WRAP_CONTENT));
 
 		setView(popupcontent);
 
@@ -206,9 +206,7 @@ public class ItemChooserDialog extends AlertDialog implements android.view.View.
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.widget.AdapterView.OnItemSelectedListener#onItemSelected(android
-	 * .widget.AdapterView, android.view.View, int, long)
+	 * @see android.widget.AdapterView.OnItemSelectedListener#onItemSelected(android .widget.AdapterView, android.view.View, int, long)
 	 */
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -221,9 +219,7 @@ public class ItemChooserDialog extends AlertDialog implements android.view.View.
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.widget.AdapterView.OnItemSelectedListener#onNothingSelected(android
-	 * .widget.AdapterView)
+	 * @see android.widget.AdapterView.OnItemSelectedListener#onNothingSelected(android .widget.AdapterView)
 	 */
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {

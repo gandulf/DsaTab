@@ -1,18 +1,3 @@
-/*
- * Copyright (C) 2010 Gandulf Kohlweiss
- * 
- * This program is free software; you can redistribute it and/or modify it under the terms
- * of the GNU General Public License as published by the Free Software Foundation;
- * either version 3 of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with this program;
- * if not, see <http://www.gnu.org/licenses/>.
- * 
- */
 package com.dsatab.activity;
 
 import java.io.File;
@@ -44,7 +29,9 @@ import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.provider.MediaStore;
+import android.provider.MediaStore.Images.ImageColumns;
 import android.provider.MediaStore.Images.Media;
+import android.provider.MediaStore.MediaColumns;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -367,9 +354,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * net.saik0.android.unifiedpreference.UnifiedSherlockPreferenceActivity
-	 * #onPostCreate(android.os.Bundle)
+	 * @see net.saik0.android.unifiedpreference.UnifiedSherlockPreferenceActivity #onPostCreate(android.os.Bundle)
 	 */
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
@@ -396,9 +381,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.activity.DsaTabPreferenceActivity#onSharedPreferenceChanged(
-	 * android.content.SharedPreferences, java.lang.String)
+	 * @see com.dsatab.activity.DsaTabPreferenceActivity#onSharedPreferenceChanged( android.content.SharedPreferences, java.lang.String)
 	 */
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -415,8 +398,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.preference.PreferenceActivity#onPreferenceTreeClick(android.
-	 * preference.PreferenceScreen, android.preference.Preference)
+	 * @see android.preference.PreferenceActivity#onPreferenceTreeClick(android. preference.PreferenceScreen, android.preference.Preference)
 	 */
 	@Override
 	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
@@ -453,8 +435,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.preference.PreferenceActivity#onActivityResult(int, int,
-	 * android.content.Intent)
+	 * @see android.preference.PreferenceActivity#onActivityResult(int, int, android.content.Intent)
 	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -472,7 +453,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 	protected void handleImagePick(String prefKey, Intent data) {
 
 		Uri selectedImage = data.getData();
-		String[] filePathColumn = { MediaStore.Images.Media.DATA, MediaStore.Images.Media.BUCKET_ID };
+		String[] filePathColumn = { MediaColumns.DATA, ImageColumns.BUCKET_ID };
 
 		Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
 		cursor.moveToFirst();
@@ -501,7 +482,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 		String folderPath = DsaTabApplication.getDirectory(DsaTabApplication.DIR_PORTRAITS).getAbsolutePath();
 		String folderBucketId = Integer.toString(folderPath.toLowerCase(Locale.GERMAN).hashCode());
 
-		targetUri = targetUri.buildUpon().appendQueryParameter(MediaStore.Images.Media.BUCKET_ID, folderBucketId)
+		targetUri = targetUri.buildUpon().appendQueryParameter(ImageColumns.BUCKET_ID, folderBucketId)
 				.build();
 
 		Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
@@ -570,8 +551,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 				/*
 				 * (non-Javadoc)
 				 * 
-				 * @see com.dsatab.view.DirectoryChooserDialogHelper.Result#
-				 * onChooseDirectory(java.lang.String)
+				 * @see com.dsatab.view.DirectoryChooserDialogHelper.Result# onChooseDirectory(java.lang.String)
 				 */
 				@Override
 				public void onChooseDirectory(String dir) {
@@ -595,8 +575,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 				/*
 				 * (non-Javadoc)
 				 * 
-				 * @see com.dsatab.view.DirectoryChooserDialogHelper.Result#
-				 * onChooseDirectory(java.lang.String)
+				 * @see com.dsatab.view.DirectoryChooserDialogHelper.Result# onChooseDirectory(java.lang.String)
 				 */
 				@Override
 				public void onChooseDirectory(String dir) {
@@ -780,8 +759,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * android.preference.PreferenceFragment#onCreate(android.os.Bundle)
+		 * @see android.preference.PreferenceFragment#onCreate(android.os.Bundle)
 		 */
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
@@ -812,9 +790,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * android.content.SharedPreferences.OnSharedPreferenceChangeListener
-		 * #onSharedPreferenceChanged(android.content.SharedPreferences,
+		 * @see android.content.SharedPreferences.OnSharedPreferenceChangeListener #onSharedPreferenceChanged(android.content.SharedPreferences,
 		 * java.lang.String)
 		 */
 		@Override
@@ -825,9 +801,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * android.preference.PreferenceFragment#onPreferenceTreeClick(android
-		 * .preference.PreferenceScreen, android.preference.Preference)
+		 * @see android.preference.PreferenceFragment#onPreferenceTreeClick(android .preference.PreferenceScreen, android.preference.Preference)
 		 */
 		@Override
 		public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
@@ -861,9 +835,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * com.dsatab.activity.DsaTabPreferenceActivity.BasePreferenceFragment
-		 * #getPreferenceResourceId()
+		 * @see com.dsatab.activity.DsaTabPreferenceActivity.BasePreferenceFragment #getPreferenceResourceId()
 		 */
 		@Override
 		public int getPreferenceResourceId() {
@@ -880,9 +852,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * com.dsatab.activity.DsaTabPreferenceActivity.BasePreferenceFragment
-		 * #getPreferenceResourceId()
+		 * @see com.dsatab.activity.DsaTabPreferenceActivity.BasePreferenceFragment #getPreferenceResourceId()
 		 */
 		@Override
 		public int getPreferenceResourceId() {
@@ -899,9 +869,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * com.dsatab.activity.DsaTabPreferenceActivity.BasePreferenceFragment
-		 * #getPreferenceResourceId()
+		 * @see com.dsatab.activity.DsaTabPreferenceActivity.BasePreferenceFragment #getPreferenceResourceId()
 		 */
 		@Override
 		public int getPreferenceResourceId() {
@@ -918,9 +886,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * com.dsatab.activity.DsaTabPreferenceActivity.BasePreferenceFragment
-		 * #getPreferenceResourceId()
+		 * @see com.dsatab.activity.DsaTabPreferenceActivity.BasePreferenceFragment #getPreferenceResourceId()
 		 */
 		@Override
 		public int getPreferenceResourceId() {
@@ -937,9 +903,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * com.dsatab.activity.DsaTabPreferenceActivity.BasePreferenceFragment
-		 * #getPreferenceResourceId()
+		 * @see com.dsatab.activity.DsaTabPreferenceActivity.BasePreferenceFragment #getPreferenceResourceId()
 		 */
 		@Override
 		public int getPreferenceResourceId() {
@@ -957,9 +921,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * com.dsatab.activity.DsaTabPreferenceActivity.BasePreferenceFragment
-		 * #getPreferenceResourceId()
+		 * @see com.dsatab.activity.DsaTabPreferenceActivity.BasePreferenceFragment #getPreferenceResourceId()
 		 */
 		@Override
 		public int getPreferenceResourceId() {
@@ -976,9 +938,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * com.dsatab.activity.DsaTabPreferenceActivity.BasePreferenceFragment
-		 * #getPreferenceResourceId()
+		 * @see com.dsatab.activity.DsaTabPreferenceActivity.BasePreferenceFragment #getPreferenceResourceId()
 		 */
 		@Override
 		public int getPreferenceResourceId() {
@@ -995,9 +955,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * com.dsatab.activity.DsaTabPreferenceActivity.BasePreferenceFragment
-		 * #getPreferenceResourceId()
+		 * @see com.dsatab.activity.DsaTabPreferenceActivity.BasePreferenceFragment #getPreferenceResourceId()
 		 */
 		@Override
 		public int getPreferenceResourceId() {

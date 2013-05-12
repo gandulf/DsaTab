@@ -1,19 +1,3 @@
-/**
- *  This file is part of DsaTab.
- *
- *  DsaTab is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  DsaTab is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with DsaTab.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.dsatab.data.modifier;
 
 import java.util.Arrays;
@@ -44,10 +28,6 @@ import com.dsatab.data.items.Shield;
 import com.dsatab.data.items.Weapon;
 import com.dsatab.util.Util;
 
-/**
- * @author Ganymede
- * 
- */
 public class RulesModificator extends AbstractModificator {
 
 	public enum ModificatorType {
@@ -87,6 +67,7 @@ public class RulesModificator extends AbstractModificator {
 		modifierObject = new Modifier(modifier, title, description);
 	}
 
+	@Override
 	public List<ModificatorType> getAffectedModifierTypes() {
 		List<ModificatorType> modificatorTypes = new LinkedList<ModificatorType>();
 
@@ -230,8 +211,7 @@ public class RulesModificator extends AbstractModificator {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.data.modifier.Modificator#affects(com.dsatab.data.enums.
-	 * AttributeType)
+	 * @see com.dsatab.data.modifier.Modificator#affects(com.dsatab.data.enums. AttributeType)
 	 */
 	@Override
 	public boolean affects(AttributeType type) {
@@ -327,9 +307,7 @@ public class RulesModificator extends AbstractModificator {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.data.modifier.AbstractModificator#getModifier(com.dsatab.data
-	 * .Probe)
+	 * @see com.dsatab.data.modifier.AbstractModificator#getModifier(com.dsatab.data .Probe)
 	 */
 	@Override
 	public int getModifierValue(Probe type) {
@@ -374,9 +352,7 @@ public class RulesModificator extends AbstractModificator {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.data.modifier.AbstractModificator#getModifier(com.dsatab.data
-	 * .enums.AttributeType)
+	 * @see com.dsatab.data.modifier.AbstractModificator#getModifier(com.dsatab.data .enums.AttributeType)
 	 */
 	@Override
 	public int getModifierValue(AttributeType type) {

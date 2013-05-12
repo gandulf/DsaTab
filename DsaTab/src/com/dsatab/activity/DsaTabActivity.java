@@ -1,18 +1,3 @@
-/*
- * Copyright (C) 2010 Gandulf Kohlweiss
- * 
- * This program is free software; you can redistribute it and/or modify it under the terms
- * of the GNU General Public License as published by the Free Software Foundation;
- * either version 3 of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with this program;
- * if not, see <http://www.gnu.org/licenses/>.
- * 
- */
 package com.dsatab.activity;
 
 import java.io.File;
@@ -113,6 +98,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 			this.mActivity = new WeakReference<DsaTabActivity>(context);
 		}
 
+		@Override
 		public void onClick(View v) {
 
 			Value value = null;
@@ -136,6 +122,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 
 		}
 
+		@Override
 		public boolean onLongClick(View v) {
 			Value value = null;
 			if (v.getTag(R.id.TAG_KEY_VALUE) instanceof Value) {
@@ -173,6 +160,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 			this.mActivity = new WeakReference<DsaTabActivity>(context);
 		}
 
+		@Override
 		public void onClick(View v) {
 
 			Probe probe = null;
@@ -197,6 +185,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 
 		}
 
+		@Override
 		public boolean onLongClick(View v) {
 			Probe probe = null;
 
@@ -343,11 +332,13 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		}
 	}
 
+	@Override
 	public Loader<Hero> onCreateLoader(int id, Bundle args) {
 		// Debug.verbose("Creating loader for " + args.getString(KEY_HERO_PATH));
 		return new HeroLoaderTask(this, args.getString(KEY_HERO_PATH));
 	}
 
+	@Override
 	public void onLoadFinished(Loader<Hero> loader, Hero hero) {
 		loadingView.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
 		loadingView.setVisibility(View.GONE);
@@ -370,6 +361,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		onHeroLoaded(hero);
 	}
 
+	@Override
 	public void onLoaderReset(Loader<Hero> loader) {
 		// This is called when the last Cursor provided to onLoadFinished()
 		// above is about to be closed. We need to make sure we are no
@@ -690,6 +682,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		}
 	}
 
+	@Override
 	public void onClick(View v) {
 
 		if (v.getTag() instanceof TabInfo) {
@@ -763,6 +756,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 				final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 				mShaker = new ShakeListener(this);
 				mShaker.setOnShakeListener(new ShakeListener.OnShakeListener() {
+					@Override
 					public void onShake() {
 						vibe.vibrate(100);
 						if (diceSlider != null)

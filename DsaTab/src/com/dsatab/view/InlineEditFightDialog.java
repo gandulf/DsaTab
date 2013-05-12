@@ -140,9 +140,7 @@ public class InlineEditFightDialog extends AlertDialog implements DialogInterfac
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.content.DialogInterface.OnClickListener#onClick(android.content
-	 * .DialogInterface, int)
+	 * @see android.content.DialogInterface.OnClickListener#onClick(android.content .DialogInterface, int)
 	 */
 	@Override
 	public void onClick(DialogInterface dialog, int which) {
@@ -221,9 +219,7 @@ public class InlineEditFightDialog extends AlertDialog implements DialogInterfac
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * kankan.wheel.widget.OnWheelChangedListener#onChanged(kankan.wheel.widget
-	 * .WheelView, int, int)
+	 * @see kankan.wheel.widget.OnWheelChangedListener#onChanged(kankan.wheel.widget .WheelView, int, int)
 	 */
 	@Override
 	public void onWheelChanged(WheelView wheel, int oldValue, int newValue) {

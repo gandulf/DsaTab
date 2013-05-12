@@ -1,19 +1,4 @@
-/**
- *  This file is part of DsaTabTest.
- *
- *  DsaTabTest is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  DsaTabTest is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with DsaTabTest.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 package com.dsatab.test;
 
 import java.io.InputStream;
@@ -36,10 +21,7 @@ import com.dsatab.data.items.Weapon;
 import com.dsatab.util.Util;
 import com.dsatab.xml.HeldenXmlParser;
 
-/**
- * @author Ganymede
- * 
- */
+
 public class XmlParserTest extends InstrumentationTestCase {
 
 	XPathFactory factory;
@@ -133,15 +115,15 @@ public class XmlParserTest extends InstrumentationTestCase {
 
 		assertEquals(TEST_GS, (int) hero.getModifiedValue(AttributeType.Geschwindigkeit, true, true));
 
-		assertTrue(hero.hasFeature(FeatureType.Dämmerungssicht));
-		assertTrue(hero.hasFeature(FeatureType.GutesGedächtnis));
+		assertTrue(hero.hasFeature(FeatureType.Dï¿½mmerungssicht));
+		assertTrue(hero.hasFeature(FeatureType.GutesGedï¿½chtnis));
 		assertTrue(hero.hasFeature(FeatureType.Zwergenwuchs));
 
 		assertTrue(hero.hasFeature(FeatureType.Eitelkeit));
 		assertEquals(7, (int) hero.getFeature(FeatureType.Eitelkeit).getValue());
 
-		assertTrue(hero.hasFeature(FeatureType.RüstungsgewöhnungI));
-		assertEquals("Fünflagenharnisch", hero.getFeature(FeatureType.RüstungsgewöhnungI).getValueAsString());
+		assertTrue(hero.hasFeature(FeatureType.Rï¿½stungsgewï¿½hnungI));
+		assertEquals("Fï¿½nflagenharnisch", hero.getFeature(FeatureType.Rï¿½stungsgewï¿½hnungI).getValueAsString());
 
 		assertTrue(hero.hasFeature(FeatureType.Kulturkunde));
 

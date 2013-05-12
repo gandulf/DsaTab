@@ -14,18 +14,22 @@ public class CombatDistanceTalent extends BaseCombatTalent implements Value {
 		super(hero);
 	}
 
+	@Override
 	public Probe getAttack() {
 		return this;
 	}
 
+	@Override
 	public Probe getDefense() {
 		return null;
 	}
 
+	@Override
 	public int getMinimum() {
 		return 0;
 	}
 
+	@Override
 	public int getMaximum() {
 		return 32;
 	}
@@ -35,6 +39,7 @@ public class CombatDistanceTalent extends BaseCombatTalent implements Value {
 		return ProbeType.TwoOfThree;
 	}
 
+	@Override
 	public Integer getProbeValue(int i) {
 		return getValue();
 	}
@@ -44,12 +49,14 @@ public class CombatDistanceTalent extends BaseCombatTalent implements Value {
 		return null;
 	}
 
+	@Override
 	public Integer getReferenceValue() {
 		if (referenceValue == null)
 			this.referenceValue = getValue();
 		return referenceValue;
 	}
 
+	@Override
 	public Integer getValue() {
 		if (value != null) {
 			return value + getBaseValue();
@@ -68,6 +75,7 @@ public class CombatDistanceTalent extends BaseCombatTalent implements Value {
 		return baseValue;
 	}
 
+	@Override
 	public void setValue(Integer value) {
 		if (this.value != value) {
 			this.value = value;
@@ -76,6 +84,7 @@ public class CombatDistanceTalent extends BaseCombatTalent implements Value {
 		}
 	}
 
+	@Override
 	public Position getPosition(int w20) {
 		if (DsaTabApplication.getPreferences().getBoolean(DsaTabPreferenceActivity.KEY_HOUSE_RULES_MORE_TARGET_ZONES,
 				false)) {

@@ -1,18 +1,3 @@
-/*
- * Copyright (C) 2010 Gandulf Kohlweiss
- * 
- * This program is free software; you can redistribute it and/or modify it under the terms
- * of the GNU General Public License as published by the Free Software Foundation;
- * either version 3 of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with this program;
- * if not, see <http://www.gnu.org/licenses/>.
- * 
- */
 package com.dsatab.fragment;
 
 import java.util.ArrayList;
@@ -91,9 +76,7 @@ public class ItemChooserFragment extends BaseFragment implements View.OnClickLis
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater,
-	 * android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -278,6 +261,7 @@ public class ItemChooserFragment extends BaseFragment implements View.OnClickLis
 
 	}
 
+	@Override
 	public boolean onLongClick(View v) {
 
 		if (v.getTag() instanceof ItemType) {
@@ -312,8 +296,7 @@ public class ItemChooserFragment extends BaseFragment implements View.OnClickLis
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com.
-	 * actionbarsherlock.view.Menu, com.actionbarsherlock.view.MenuInflater)
+	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu, com.actionbarsherlock.view.MenuInflater)
 	 */
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -353,6 +336,7 @@ public class ItemChooserFragment extends BaseFragment implements View.OnClickLis
 		// Set the CursorToStringConverter, to provide the labels for the
 		// choices to be displayed in the AutoCompleteTextView.
 		adapter.setCursorToStringConverter(new CursorToStringConverter() {
+			@Override
 			public String convertToString(android.database.Cursor cursor) {
 				// Get the label for this row out of the "state" column
 				if (cursor != null) {
@@ -368,6 +352,7 @@ public class ItemChooserFragment extends BaseFragment implements View.OnClickLis
 		// Set the FilterQueryProvider, to run queries for choices
 		// that match the specified input.
 		adapter.setFilterQueryProvider(new FilterQueryProvider() {
+			@Override
 			public Cursor runQuery(CharSequence constraint) {
 				// Search for states whose names begin with the specified
 				// letters.
@@ -408,8 +393,7 @@ public class ItemChooserFragment extends BaseFragment implements View.OnClickLis
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.actionbarsherlock.app.SherlockFragment#onPrepareOptionsMenu(com.
-	 * actionbarsherlock.view.Menu)
+	 * @see com.actionbarsherlock.app.SherlockFragment#onPrepareOptionsMenu(com. actionbarsherlock.view.Menu)
 	 */
 	@Override
 	public void onPrepareOptionsMenu(Menu menu) {
@@ -449,9 +433,7 @@ public class ItemChooserFragment extends BaseFragment implements View.OnClickLis
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.support.v4.app.Fragment#onOptionsItemSelected(android.view.MenuItem
-	 * )
+	 * @see android.support.v4.app.Fragment#onOptionsItemSelected(android.view.MenuItem )
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -501,9 +483,7 @@ public class ItemChooserFragment extends BaseFragment implements View.OnClickLis
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.content.DialogInterface.OnMultiChoiceClickListener#onClick(android
-	 * .content.DialogInterface, int, boolean)
+	 * @see android.content.DialogInterface.OnMultiChoiceClickListener#onClick(android .content.DialogInterface, int, boolean)
 	 */
 	@Override
 	public void onClick(DialogInterface dialog, int which, boolean isChecked) {

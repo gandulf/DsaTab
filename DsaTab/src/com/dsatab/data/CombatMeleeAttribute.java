@@ -48,10 +48,12 @@ public class CombatMeleeAttribute extends BaseProbe implements Value {
 		return ModificatorType.CombatTalent;
 	}
 
+	@Override
 	public int getMinimum() {
 		return getBaseValue();
 	}
 
+	@Override
 	public int getMaximum() {
 		if (talent != null)
 			return getBaseValue() + talent.getValue();
@@ -59,6 +61,7 @@ public class CombatMeleeAttribute extends BaseProbe implements Value {
 			return getBaseValue();
 	}
 
+	@Override
 	public String getName() {
 		if (talent == null)
 			return name;
@@ -85,6 +88,7 @@ public class CombatMeleeAttribute extends BaseProbe implements Value {
 		setValue(getReferenceValue());
 	}
 
+	@Override
 	public Integer getProbeValue(int i) {
 		return getValue();
 	}
@@ -94,6 +98,7 @@ public class CombatMeleeAttribute extends BaseProbe implements Value {
 		return null;
 	}
 
+	@Override
 	public Integer getReferenceValue() {
 		if (referenceValue == null)
 			this.referenceValue = getValue();
@@ -104,6 +109,7 @@ public class CombatMeleeAttribute extends BaseProbe implements Value {
 		return value != null;
 	}
 
+	@Override
 	public Integer getValue() {
 		if (value != null)
 			return value;
@@ -116,6 +122,7 @@ public class CombatMeleeAttribute extends BaseProbe implements Value {
 		}
 	}
 
+	@Override
 	public void setValue(Integer value) {
 		if (this.value != value) {
 			this.value = value;

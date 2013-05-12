@@ -35,9 +35,7 @@ public class PurseFragment extends BaseFragment implements OnItemSelectedListene
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater,
-	 * android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -86,8 +84,7 @@ public class PurseFragment extends BaseFragment implements OnItemSelectedListene
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.activity.BaseMainActivity#onHeroLoaded(com.dsatab.data.Hero)
+	 * @see com.dsatab.activity.BaseMainActivity#onHeroLoaded(com.dsatab.data.Hero)
 	 */
 	@Override
 	public void onHeroLoaded(Hero hero) {
@@ -115,9 +112,7 @@ public class PurseFragment extends BaseFragment implements OnItemSelectedListene
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * kankan.wheel.widget.OnWheelChangedListener#onChanged(kankan.wheel.widget
-	 * .WheelView, int, int)
+	 * @see kankan.wheel.widget.OnWheelChangedListener#onChanged(kankan.wheel.widget .WheelView, int, int)
 	 */
 	@Override
 	public void onWheelChanged(WheelView wheel, int oldValue, int newValue) {
@@ -151,9 +146,7 @@ public class PurseFragment extends BaseFragment implements OnItemSelectedListene
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.widget.AdapterView.OnItemSelectedListener#onItemSelected(android
-	 * .widget.AdapterView, android.view.View, int, long)
+	 * @see android.widget.AdapterView.OnItemSelectedListener#onItemSelected(android .widget.AdapterView, android.view.View, int, long)
 	 */
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -167,9 +160,7 @@ public class PurseFragment extends BaseFragment implements OnItemSelectedListene
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.widget.AdapterView.OnItemSelectedListener#onNothingSelected(android
-	 * .widget.AdapterView)
+	 * @see android.widget.AdapterView.OnItemSelectedListener#onNothingSelected(android .widget.AdapterView)
 	 */
 	@Override
 	public void onNothingSelected(AdapterView<?> parent) {

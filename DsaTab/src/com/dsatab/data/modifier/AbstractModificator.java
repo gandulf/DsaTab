@@ -24,6 +24,7 @@ public abstract class AbstractModificator implements Modificator {
 		this.modifier = new Modifier(0, null);
 	}
 
+	@Override
 	public boolean isActive() {
 		return active;
 	}

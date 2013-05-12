@@ -103,6 +103,7 @@ public class InlineEditDialog extends AlertDialog implements DialogInterface.OnC
 
 	}
 
+	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		if (buttonView == combatStyleBtn) {
 
@@ -124,9 +125,7 @@ public class InlineEditDialog extends AlertDialog implements DialogInterface.OnC
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * kankan.wheel.widget.OnWheelClickedListener#onItemClicked(kankan.wheel
-	 * .widget.WheelView, int, boolean)
+	 * @see kankan.wheel.widget.OnWheelClickedListener#onItemClicked(kankan.wheel .widget.WheelView, int, boolean)
 	 */
 	@Override
 	public void onWheelClick(WheelView wheel, int itemIndex) {
@@ -169,9 +168,7 @@ public class InlineEditDialog extends AlertDialog implements DialogInterface.OnC
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.content.DialogInterface.OnClickListener#onClick(android.content
-	 * .DialogInterface, int)
+	 * @see android.content.DialogInterface.OnClickListener#onClick(android.content .DialogInterface, int)
 	 */
 	@Override
 	public void onClick(DialogInterface dialog, int which) {

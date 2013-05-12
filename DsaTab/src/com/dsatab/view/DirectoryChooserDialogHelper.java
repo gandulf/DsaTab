@@ -23,12 +23,6 @@ import android.widget.TextView;
 import com.dsatab.R;
 import com.dsatab.util.Util;
 
-/*
- * Copyright (C) 2011-2012 George Yunaev
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- */
 public class DirectoryChooserDialogHelper implements OnItemClickListener, OnClickListener {
 
 	public interface Result {
@@ -99,6 +93,7 @@ public class DirectoryChooserDialogHelper implements OnItemClickListener, OnClic
 		}
 
 		Collections.sort(m_entries, new Comparator<File>() {
+			@Override
 			public int compare(File f1, File f2) {
 				return f1.getName().toLowerCase(Locale.GERMAN).compareTo(f2.getName().toLowerCase(Locale.GERMAN));
 			}
@@ -129,6 +124,7 @@ public class DirectoryChooserDialogHelper implements OnItemClickListener, OnClic
 		builder.setAdapter(adapter, this);
 
 		builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+			@Override
 			public void onClick(DialogInterface dialog, int id) {
 				if (m_result != null)
 					m_result.onChooseDirectory(m_currentDir.getAbsolutePath());
@@ -137,6 +133,7 @@ public class DirectoryChooserDialogHelper implements OnItemClickListener, OnClic
 		});
 
 		builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+			@Override
 			public void onClick(DialogInterface dialog, int id) {
 				dialog.cancel();
 			}
@@ -163,6 +160,7 @@ public class DirectoryChooserDialogHelper implements OnItemClickListener, OnClic
 		m_list.setAdapter(adapter);
 	}
 
+	@Override
 	public void onClick(DialogInterface dialog, int which) {
 	}
 }

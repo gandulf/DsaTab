@@ -171,6 +171,7 @@ public class DistanceWeapon extends ItemSpecification {
 		return "Fernkampf";
 	}
 
+	@Override
 	public String getInfo() {
 		return getTp() + " " + getDistances() + " " + getTpDistances();
 	}
@@ -213,6 +214,7 @@ public class DistanceWeapon extends ItemSpecification {
 		return info;
 	}
 
+	@Override
 	public int getResourceId() {
 		switch (getTalentType()) {
 		case Wurfmesser:

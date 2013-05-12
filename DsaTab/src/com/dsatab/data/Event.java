@@ -110,6 +110,7 @@ public class Event implements JSONable {
 	 * @return
 	 * @throws JSONException
 	 */
+	@Override
 	public JSONObject toJSONObject() throws JSONException {
 		// do not return json for events with an element they are stored in the
 		// xml data

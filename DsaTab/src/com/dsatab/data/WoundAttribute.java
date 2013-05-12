@@ -40,6 +40,7 @@ public class WoundAttribute extends EditableValue implements JSONable {
 		setValue(json.getInt(FIELD_VALUE));
 	}
 
+	@Override
 	public String getName() {
 		return position.getName();
 	}
@@ -70,6 +71,7 @@ public class WoundAttribute extends EditableValue implements JSONable {
 	 * @return
 	 * @throws JSONException
 	 */
+	@Override
 	public JSONObject toJSONObject() throws JSONException {
 		JSONObject out = new JSONObject();
 

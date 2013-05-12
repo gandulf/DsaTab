@@ -1,19 +1,3 @@
-/**
- *  This file is part of DsaTab.
- *
- *  DsaTab is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  DsaTab is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with DsaTab.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.dsatab.data;
 
 import java.util.Locale;
@@ -26,10 +10,6 @@ import com.dsatab.data.enums.AttributeType;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 
-/**
- * @author Ganymede
- * 
- */
 public class ProbeInfo implements Cloneable {
 
 	// e.g.: MU/IN/KL (+5) or (MU/IN/KL) or +5
@@ -40,8 +20,7 @@ public class ProbeInfo implements Cloneable {
 	private String attributesString;
 
 	/**
-	 * Returns the probe modification positive values means the probe is more
-	 * difficult, negative values simplifies the probe
+	 * Returns the probe modification positive values means the probe is more difficult, negative values simplifies the probe
 	 * 
 	 * @return
 	 */
@@ -157,8 +136,7 @@ public class ProbeInfo implements Cloneable {
 	}
 
 	/**
-	 * Returns the probe modification positive values means the probe is more
-	 * difficult, negative values simplifies the probe
+	 * Returns the probe modification positive values means the probe is more difficult, negative values simplifies the probe
 	 * 
 	 * @return
 	 */
@@ -207,6 +185,7 @@ public class ProbeInfo implements Cloneable {
 		this.erschwernis = erschwernis;
 	}
 
+	@Override
 	public String toString() {
 
 		if (attributeTypes != null && erschwernis != null)

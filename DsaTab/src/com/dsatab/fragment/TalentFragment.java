@@ -1,19 +1,3 @@
-/**
- *  This file is part of DsaTab.
- *
- *  DsaTab is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  DsaTab is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with DsaTab.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.dsatab.fragment;
 
 import java.util.List;
@@ -24,6 +8,7 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
@@ -177,16 +162,14 @@ public class TalentFragment extends BaseListFragment implements HeroChangedListe
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater,
-	 * android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View root = configureContainerView(inflater.inflate(R.layout.sheet_talent, container, false));
 
 		talentList = (ExpandableListView) root.findViewById(R.id.talent_list);
-		talentList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+		talentList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 		talentList.setOnItemLongClickListener(this);
 		talentList.setGroupIndicator(getResources().getDrawable(
 				Util.getThemeResourceId(getActivity(), R.attr.imgExpander)));
@@ -240,14 +223,14 @@ public class TalentFragment extends BaseListFragment implements HeroChangedListe
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.activity.BaseMenuActivity#onHeroLoaded(com.dsatab.data.Hero)
+	 * @see com.dsatab.activity.BaseMenuActivity#onHeroLoaded(com.dsatab.data.Hero)
 	 */
 	@Override
 	public void onHeroLoaded(Hero hero) {
 		loadHeroTalents(hero);
 	}
 
+	@Override
 	public void onValueChanged(Value value) {
 		if (value == null) {
 			return;
@@ -266,9 +249,7 @@ public class TalentFragment extends BaseListFragment implements HeroChangedListe
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.fragment.BaseFragment#onModifierAdded(com.dsatab.data.modifier
-	 * .Modificator)
+	 * @see com.dsatab.fragment.BaseFragment#onModifierAdded(com.dsatab.data.modifier .Modificator)
 	 */
 	@Override
 	public void onModifierAdded(Modificator value) {
@@ -279,9 +260,7 @@ public class TalentFragment extends BaseListFragment implements HeroChangedListe
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.fragment.BaseFragment#onModifierChanged(com.dsatab.data.modifier
-	 * .Modificator)
+	 * @see com.dsatab.fragment.BaseFragment#onModifierChanged(com.dsatab.data.modifier .Modificator)
 	 */
 	@Override
 	public void onModifierChanged(Modificator value) {
@@ -292,9 +271,7 @@ public class TalentFragment extends BaseListFragment implements HeroChangedListe
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.fragment.BaseFragment#onModifierRemoved(com.dsatab.data.modifier
-	 * .Modificator)
+	 * @see com.dsatab.fragment.BaseFragment#onModifierRemoved(com.dsatab.data.modifier .Modificator)
 	 */
 	@Override
 	public void onModifierRemoved(Modificator value) {
@@ -302,6 +279,7 @@ public class TalentFragment extends BaseListFragment implements HeroChangedListe
 		super.onModifierRemoved(value);
 	}
 
+	@Override
 	protected ListFilterSettings getFilterSettings() {
 		return (ListFilterSettings) super.getFilterSettings();
 	}
@@ -337,8 +315,7 @@ public class TalentFragment extends BaseListFragment implements HeroChangedListe
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.fragment.BaseFragment#onFilterChanged(com.dsatab.view.
-	 * FilterSettings.FilterType, com.dsatab.view.FilterSettings)
+	 * @see com.dsatab.fragment.BaseFragment#onFilterChanged(com.dsatab.view. FilterSettings.FilterType, com.dsatab.view.FilterSettings)
 	 */
 	@Override
 	public void onFilterChanged(FilterType type, FilterSettings settings) {

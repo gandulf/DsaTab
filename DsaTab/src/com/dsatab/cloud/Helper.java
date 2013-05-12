@@ -53,19 +53,21 @@ public class Helper {
 	}
 
 	/**
-	 * Deaktiviert alle SSL Checks Nur fÃ¼r selbst-signierte Certifikate bei
-	 * localhost zu nutzen! Alles andere fÃ¼r zu extremen Sicherheitsproblemen!
+	 * Deaktiviert alle SSL Checks Nur fÃ¼r selbst-signierte Certifikate bei localhost zu nutzen! Alles andere fÃ¼r zu extremen Sicherheitsproblemen!
 	 */
 	public static void disableSSLCheck() {
 		// Create a trust manager that does not validate certificate chains
 		TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+			@Override
 			public java.security.cert.X509Certificate[] getAcceptedIssuers() {
 				return null;
 			}
 
+			@Override
 			public void checkClientTrusted(java.security.cert.X509Certificate[] certs, String authType) {
 			}
 
+			@Override
 			public void checkServerTrusted(java.security.cert.X509Certificate[] certs, String authType) {
 			}
 		} };

@@ -1,18 +1,3 @@
-/*
- * Copyright (C) 2010 Gandulf Kohlweiss
- * 
- * This program is free software; you can redistribute it and/or modify it under the terms
- * of the GNU General Public License as published by the Free Software Foundation;
- * either version 3 of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with this program;
- * if not, see <http://www.gnu.org/licenses/>.
- * 
- */
 package com.dsatab;
 
 import java.io.BufferedReader;
@@ -60,9 +45,6 @@ import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 public class DsaTabApplication extends Application implements OnSharedPreferenceChangeListener {
 
-	/**
-	 * 
-	 */
 	public static final String TILESOURCE_AVENTURIEN = "AVENTURIEN";
 
 	public static final String FLURRY_APP_ID = "AK17DSVJZBNH35G554YR";
@@ -160,9 +142,7 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.content.SharedPreferences.OnSharedPreferenceChangeListener#
-	 * onSharedPreferenceChanged(android.content.SharedPreferences,
-	 * java.lang.String)
+	 * @see android.content.SharedPreferences.OnSharedPreferenceChangeListener# onSharedPreferenceChanged(android.content.SharedPreferences, java.lang.String)
 	 */
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -481,7 +461,7 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 			Document dom = HeldenXmlParser.readDocument(fis);
 			fis.close();
 
-			Element heroElement = (Element) dom.getRootElement().getChild(Xml.KEY_HELD);
+			Element heroElement = dom.getRootElement().getChild(Xml.KEY_HELD);
 			HeldenXmlParser.onPreHeroSaved(hero, heroElement);
 
 			out = new FileOutputStream(destFile);

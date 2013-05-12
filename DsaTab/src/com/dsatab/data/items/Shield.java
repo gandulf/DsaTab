@@ -73,6 +73,7 @@ public class Shield extends CloseCombatItem {
 			return "NO SHIELD AND PARADES";
 	}
 
+	@Override
 	public String getInfo() {
 		if (info == null) {
 			info = TextUtils.expandTemplate("^1/^2 Bf ^3 Ini ^4", Util.toString(getWmAt()), Util.toString(getWmPa()),

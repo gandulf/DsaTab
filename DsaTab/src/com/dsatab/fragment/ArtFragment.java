@@ -1,19 +1,3 @@
-/**
- *  This file is part of DsaTab.
- *
- *  DsaTab is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  DsaTab is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with DsaTab.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.dsatab.fragment;
 
 import java.util.Collections;
@@ -25,6 +9,7 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
@@ -187,6 +172,7 @@ public class ArtFragment extends BaseListFragment implements OnItemClickListener
 		mCallback = new ArtActionMode();
 	}
 
+	@Override
 	protected ListFilterSettings getFilterSettings() {
 		return (ListFilterSettings) super.getFilterSettings();
 	}
@@ -217,7 +203,7 @@ public class ArtFragment extends BaseListFragment implements OnItemClickListener
 
 		artList.setOnItemClickListener(this);
 		artList.setOnItemLongClickListener(this);
-		artList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+		artList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 
 	}
 
@@ -330,6 +316,7 @@ public class ArtFragment extends BaseListFragment implements OnItemClickListener
 		}
 	}
 
+	@Override
 	public void onValueChanged(Value value) {
 		if (value == null) {
 			return;

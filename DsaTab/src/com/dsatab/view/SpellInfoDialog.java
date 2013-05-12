@@ -94,12 +94,12 @@ public class SpellInfoDialog extends AlertDialog implements DialogInterface.OnCl
 	private void init() {
 		setCanceledOnTouchOutside(true);
 
-		popupcontent = (View) LayoutInflater.from(getContext()).inflate(R.layout.popup_spell_info, null, false);
+		popupcontent = LayoutInflater.from(getContext()).inflate(R.layout.popup_spell_info, null, false);
 		popupcontent.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 		setView(popupcontent);
 
-		setButton(AlertDialog.BUTTON_POSITIVE, getContext().getString(R.string.label_ok), this);
-		setButton(AlertDialog.BUTTON_NEGATIVE, getContext().getString(R.string.label_edit), this);
+		setButton(DialogInterface.BUTTON_POSITIVE, getContext().getString(R.string.label_ok), this);
+		setButton(DialogInterface.BUTTON_NEGATIVE, getContext().getString(R.string.label_edit), this);
 
 		TableLayout table = (TableLayout) popupcontent.findViewById(R.id.popup_spell_table);
 
@@ -123,7 +123,7 @@ public class SpellInfoDialog extends AlertDialog implements DialogInterface.OnCl
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+		getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -159,7 +159,7 @@ public class SpellInfoDialog extends AlertDialog implements DialogInterface.OnCl
 
 			}
 		});
-		getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
+		getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -185,9 +185,7 @@ public class SpellInfoDialog extends AlertDialog implements DialogInterface.OnCl
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.content.DialogInterface.OnClickListener#onClick(android.content
-	 * .DialogInterface, int)
+	 * @see android.content.DialogInterface.OnClickListener#onClick(android.content .DialogInterface, int)
 	 */
 	@Override
 	public void onClick(DialogInterface dialog, int which) {
@@ -234,11 +232,11 @@ public class SpellInfoDialog extends AlertDialog implements DialogInterface.OnCl
 		}
 
 		if (edit) {
-			getButton(AlertDialog.BUTTON_NEGATIVE).setText(R.string.label_cancel);
-			getButton(AlertDialog.BUTTON_POSITIVE).setText(R.string.label_save);
+			getButton(DialogInterface.BUTTON_NEGATIVE).setText(R.string.label_cancel);
+			getButton(DialogInterface.BUTTON_POSITIVE).setText(R.string.label_save);
 		} else {
-			getButton(AlertDialog.BUTTON_NEGATIVE).setText(R.string.label_edit);
-			getButton(AlertDialog.BUTTON_POSITIVE).setText(R.string.label_ok);
+			getButton(DialogInterface.BUTTON_NEGATIVE).setText(R.string.label_edit);
+			getButton(DialogInterface.BUTTON_POSITIVE).setText(R.string.label_ok);
 		}
 
 	}

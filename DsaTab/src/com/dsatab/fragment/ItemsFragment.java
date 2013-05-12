@@ -1,21 +1,7 @@
-/*
- * Copyright (C) 2010 Gandulf Kohlweiss
- * 
- * This program is free software; you can redistribute it and/or modify it under the terms
- * of the GNU General Public License as published by the Free Software Foundation;
- * either version 3 of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with this program;
- * if not, see <http://www.gnu.org/licenses/>.
- * 
- */
 package com.dsatab.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -24,6 +10,7 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -160,10 +147,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * com.actionbarsherlock.view.ActionMode.Callback#onPrepareActionMode
-		 * (com.actionbarsherlock.view.ActionMode,
-		 * com.actionbarsherlock.view.Menu)
+		 * @see com.actionbarsherlock.view.ActionMode.Callback#onPrepareActionMode (com.actionbarsherlock.view.ActionMode, com.actionbarsherlock.view.Menu)
 		 */
 		@Override
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
@@ -274,10 +258,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * com.actionbarsherlock.view.ActionMode.Callback#onPrepareActionMode
-		 * (com.actionbarsherlock.view.ActionMode,
-		 * com.actionbarsherlock.view.Menu)
+		 * @see com.actionbarsherlock.view.ActionMode.Callback#onPrepareActionMode (com.actionbarsherlock.view.ActionMode, com.actionbarsherlock.view.Menu)
 		 */
 		@Override
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
@@ -306,8 +287,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.activity.BaseMenuActivity#onHeroLoaded(com.dsatab.data.Hero)
+	 * @see com.dsatab.activity.BaseMenuActivity#onHeroLoaded(com.dsatab.data.Hero)
 	 */
 	@Override
 	public void onHeroLoaded(Hero hero) {
@@ -335,7 +315,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		containerAdapter.insert(set3, 2);
 		containerList.setAdapter(containerAdapter);
 
-		SharedPreferences pref = getActivity().getPreferences(Activity.MODE_PRIVATE);
+		SharedPreferences pref = getActivity().getPreferences(Context.MODE_PRIVATE);
 		int screen = pref.getInt(PREF_KEY_LAST_OPEN_SCREEN, 0);
 
 		showScreen(screen);
@@ -399,8 +379,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com.
-	 * actionbarsherlock.view.Menu, com.actionbarsherlock.view.MenuInflater)
+	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu, com.actionbarsherlock.view.MenuInflater)
 	 */
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -419,8 +398,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.actionbarsherlock.app.SherlockFragment#onPrepareOptionsMenu(com.
-	 * actionbarsherlock.view.Menu)
+	 * @see com.actionbarsherlock.app.SherlockFragment#onPrepareOptionsMenu(com. actionbarsherlock.view.Menu)
 	 */
 	@Override
 	public void onPrepareOptionsMenu(Menu menu) {
@@ -431,9 +409,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.actionbarsherlock.app.SherlockFragment#onOptionsItemSelected(com.
-	 * actionbarsherlock.view.MenuItem)
+	 * @see com.actionbarsherlock.app.SherlockFragment#onOptionsItemSelected(com. actionbarsherlock.view.MenuItem)
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -467,9 +443,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater,
-	 * android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -492,20 +466,18 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		// 120*180
 
 		itemAdapter = new GridItemAdapter(getActivity());
-		itemGridCompat.setChoiceModeC(ListView.CHOICE_MODE_MULTIPLE);
+		itemGridCompat.setChoiceModeC(AbsListView.CHOICE_MODE_MULTIPLE);
 		itemGridCompat.setAdapter(itemAdapter);
 		itemGridCompat.setOnItemClickListener(this);
 		itemGridCompat.setOnItemLongClickListener(this);
 
-		containerList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+		containerList.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 		containerList.setOnItemClickListener(this);
 		containerList.setOnItemLongClickListener(new ListView.OnItemLongClickListener() {
 			/*
 			 * (non-Javadoc)
 			 * 
-			 * @see
-			 * android.widget.AdapterView.OnItemLongClickListener#onItemLongClick
-			 * (android.widget.AdapterView, android.view.View, int, long)
+			 * @see android.widget.AdapterView.OnItemLongClickListener#onItemLongClick (android.widget.AdapterView, android.view.View, int, long)
 			 */
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -532,9 +504,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget
-	 * .AdapterView, android.view.View, int, long)
+	 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget .AdapterView, android.view.View, int, long)
 	 */
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -590,7 +560,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	public void onStop() {
 		super.onStop();
 
-		SharedPreferences pref = getActivity().getPreferences(Activity.MODE_PRIVATE);
+		SharedPreferences pref = getActivity().getPreferences(Context.MODE_PRIVATE);
 		Editor edit = pref.edit();
 		edit.putInt(PREF_KEY_LAST_OPEN_SCREEN, mCurrentScreen);
 		edit.commit();
@@ -633,9 +603,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.view.listener.InventoryChangedListener#onItemAdded(com.dsatab
-	 * .data.items.Item)
+	 * @see com.dsatab.view.listener.InventoryChangedListener#onItemAdded(com.dsatab .data.items.Item)
 	 */
 	@Override
 	public void onItemAdded(Item item) {
@@ -654,9 +622,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.view.listener.InventoryChangedListener#onItemChanged(com.dsatab
-	 * .data.items.EquippedItem)
+	 * @see com.dsatab.view.listener.InventoryChangedListener#onItemChanged(com.dsatab .data.items.EquippedItem)
 	 */
 	@Override
 	public void onItemChanged(EquippedItem item) {
@@ -668,9 +634,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.view.listener.HeroChangedListener#onItemChanged(com.dsatab
-	 * .data.items.Item)
+	 * @see com.dsatab.view.listener.HeroChangedListener#onItemChanged(com.dsatab .data.items.Item)
 	 */
 	@Override
 	public void onItemChanged(Item item) {
@@ -682,9 +646,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.view.listener.InventoryChangedListener#onItemRemoved(com.dsatab
-	 * .data.items.Item)
+	 * @see com.dsatab.view.listener.InventoryChangedListener#onItemRemoved(com.dsatab .data.items.Item)
 	 */
 	@Override
 	public void onItemRemoved(Item item) {
@@ -697,9 +659,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.view.listener.InventoryChangedListener#onItemEquipped(com.
-	 * dsatab.data.items.EquippedItem)
+	 * @see com.dsatab.view.listener.InventoryChangedListener#onItemEquipped(com. dsatab.data.items.EquippedItem)
 	 */
 	@Override
 	public void onItemEquipped(EquippedItem item) {
@@ -712,9 +672,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.view.listener.InventoryChangedListener#onItemUnequipped(com
-	 * .dsatab.data.items.EquippedItem)
+	 * @see com.dsatab.view.listener.InventoryChangedListener#onItemUnequipped(com .dsatab.data.items.EquippedItem)
 	 */
 	@Override
 	public void onItemUnequipped(EquippedItem item) {
@@ -726,9 +684,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.view.listener.HeroInventoryChangedListener#onActiveSetChanged
-	 * (int, int)
+	 * @see com.dsatab.view.listener.HeroInventoryChangedListener#onActiveSetChanged (int, int)
 	 */
 	@Override
 	public void onActiveSetChanged(int newSet, int oldSet) {
@@ -738,9 +694,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerAdded
-	 * (com.dsatab.data.items.ItemContainer)
+	 * @see com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerAdded (com.dsatab.data.items.ItemContainer)
 	 */
 	@Override
 	public void onItemContainerAdded(ItemContainer itemContainer) {
@@ -750,9 +704,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerRemoved
-	 * (com.dsatab.data.items.ItemContainer)
+	 * @see com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerRemoved (com.dsatab.data.items.ItemContainer)
 	 */
 	@Override
 	public void onItemContainerRemoved(ItemContainer itemContainer) {
@@ -762,9 +714,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerChanged
-	 * (com.dsatab.data.items.ItemContainer)
+	 * @see com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerChanged (com.dsatab.data.items.ItemContainer)
 	 */
 	@Override
 	public void onItemContainerChanged(ItemContainer itemContainer) {

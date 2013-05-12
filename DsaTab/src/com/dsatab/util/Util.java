@@ -30,6 +30,7 @@ import android.graphics.drawable.LevelListDrawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.MediaStore.MediaColumns;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.SpannedString;
@@ -722,24 +723,20 @@ public class Util {
 	 * 
 	 * double v = 0;
 	 * 
-	 * int t = 0; if (probe.getProbeBonus() != null) { t = probe.getProbeBonus()
-	 * + modifier; } else t = modifier;
+	 * int t = 0; if (probe.getProbeBonus() != null) { t = probe.getProbeBonus() + modifier; } else t = modifier;
 	 * 
 	 * Debug.verbose("T=" + t);
 	 * 
-	 * // see Wege des Meisters page 170 if (t <= 0) { v = Math.min(20,
-	 * probe.getProbeValue(0) + t); for (int i = 1; i < 3; i++) { v *=
-	 * Math.min(20, probe.getProbeValue(i) + t); } } else {
+	 * // see Wege des Meisters page 170 if (t <= 0) { v = Math.min(20, probe.getProbeValue(0) + t); for (int i = 1; i < 3; i++) { v *= Math.min(20,
+	 * probe.getProbeValue(i) + t); } } else {
 	 * 
-	 * v = Math.min(20, probe.getProbeValue(0)); for (int i = 1; i < 3; i++) { v
-	 * *= Math.min(20, probe.getProbeValue(i)); }
+	 * v = Math.min(20, probe.getProbeValue(0)); for (int i = 1; i < 3; i++) { v *= Math.min(20, probe.getProbeValue(i)); }
 	 * 
 	 * // E i=1 - 3 for (int i = 0; i < 3; i++) {
 	 * 
 	 * int ti = Math.min(20 - probe.getProbeValue(i), t);
 	 * 
-	 * Debug.verbose("T" + i + "=" + ti); // E n=1 - Ti for (int n = 1; n <= ti;
-	 * n++) { v += (Math.min(20, probe.getProbeValue(i % 3) - n) * Math.min(20,
+	 * Debug.verbose("T" + i + "=" + ti); // E n=1 - Ti for (int n = 1; n <= ti; n++) { v += (Math.min(20, probe.getProbeValue(i % 3) - n) * Math.min(20,
 	 * probe.getProbeValue((i + 1) % 3) - n)); }
 	 * 
 	 * }
@@ -1039,7 +1036,7 @@ public class Util {
 
 	public static String retrieveBitmapPath(Context context, Intent data) {
 		Uri selectedImage = data.getData();
-		String[] filePathColumn = { MediaStore.Images.Media.DATA };
+		String[] filePathColumn = { MediaColumns.DATA };
 
 		Cursor cursor = context.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
 

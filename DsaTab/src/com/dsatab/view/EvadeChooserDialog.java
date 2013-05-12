@@ -9,6 +9,7 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -85,6 +86,7 @@ public class EvadeChooserDialog extends AlertDialog implements android.view.View
 		main.checkProbe(ausweichen);
 	}
 
+	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case android.R.id.icon1:
@@ -111,13 +113,13 @@ public class EvadeChooserDialog extends AlertDialog implements android.view.View
 			}
 		}
 
-		if (distanceSpinner.getSelectedItemPosition() != Spinner.INVALID_POSITION) {
+		if (distanceSpinner.getSelectedItemPosition() != AdapterView.INVALID_POSITION) {
 			erschwernis += distanceValues[distanceSpinner.getSelectedItemPosition()];
 			if (doubleDK) {
 				erschwernis += distanceValues[distanceSpinner.getSelectedItemPosition()];
 			}
 		}
-		if (enemySpinner.getSelectedItemPosition() != Spinner.INVALID_POSITION)
+		if (enemySpinner.getSelectedItemPosition() != AdapterView.INVALID_POSITION)
 			erschwernis += enemyValues[enemySpinner.getSelectedItemPosition()];
 
 		text2.setText(getContext().getString(R.string.message_modifikator, Util.toProbe(erschwernis)));
@@ -209,7 +211,7 @@ public class EvadeChooserDialog extends AlertDialog implements android.view.View
 
 		String[] modificationStrings = getContext().getResources().getStringArray(R.array.evadeModificationStrings);
 
-		othersList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+		othersList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 		othersList.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_multiple_choice,
 				modificationStrings));
 

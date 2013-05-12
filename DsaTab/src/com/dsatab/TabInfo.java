@@ -1,18 +1,3 @@
-/*
- * Copyright (C) 2010 Gandulf Kohlweiss
- * 
- * This program is free software; you can redistribute it and/or modify it under the terms
- * of the GNU General Public License as published by the Free Software Foundation;
- * either version 3 of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with this program;
- * if not, see <http://www.gnu.org/licenses/>.
- * 
- */
 package com.dsatab;
 
 import java.util.UUID;
@@ -36,10 +21,6 @@ import com.dsatab.view.FightFilterSettings;
 import com.dsatab.view.FilterSettings;
 import com.dsatab.view.ListFilterSettings;
 
-/**
- * @author Ganymede
- * 
- */
 public class TabInfo implements Parcelable, JSONable, Cloneable {
 
 	public static final int MAX_TABS_PER_PAGE = 2;
@@ -352,10 +333,12 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 	 * Creator for the Parcelable
 	 */
 	public static final Parcelable.Creator<TabInfo> CREATOR = new Parcelable.Creator<TabInfo>() {
+		@Override
 		public TabInfo createFromParcel(Parcel in) {
 			return new TabInfo(in);
 		}
 
+		@Override
 		public TabInfo[] newArray(int size) {
 			return new TabInfo[size];
 		}
@@ -384,6 +367,7 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 	 * @return
 	 * @throws JSONException
 	 */
+	@Override
 	public JSONObject toJSONObject() throws JSONException {
 		JSONObject out = new JSONObject();
 

@@ -89,6 +89,7 @@ public class Armor extends ItemSpecification {
 		return "Rüstung";
 	}
 
+	@Override
 	public String getInfo() {
 
 		if (info == null) {
@@ -211,6 +212,7 @@ public class Armor extends ItemSpecification {
 		this.totalRs = totalRs;
 	}
 
+	@Override
 	public int getResourceId() {
 		if (CATEGORY_HELM.equalsIgnoreCase(item.getCategory())) {
 			if (getRs(Position.Head_Face) > 5)

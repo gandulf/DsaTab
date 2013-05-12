@@ -1,19 +1,3 @@
-/**
- *  This file is part of DsaTab.
- *
- *  DsaTab is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  DsaTab is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with DsaTab.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.dsatab.data;
 
 import org.json.JSONException;
@@ -48,6 +32,7 @@ public class ArmorAttribute implements Value, JSONable {
 		this.manual = json.getBoolean(FIELD_MANUAL);
 	}
 
+	@Override
 	public String getName() {
 		return position.getName();
 	}
@@ -84,6 +69,7 @@ public class ArmorAttribute implements Value, JSONable {
 		return position;
 	}
 
+	@Override
 	public Integer getValue() {
 		return value;
 	}
@@ -113,6 +99,7 @@ public class ArmorAttribute implements Value, JSONable {
 		setValue(value);
 	}
 
+	@Override
 	public void setValue(Integer value) {
 		int oldValue = this.value;
 
@@ -125,14 +112,17 @@ public class ArmorAttribute implements Value, JSONable {
 			hero.fireValueChangedEvent(this);
 	}
 
+	@Override
 	public Integer getReferenceValue() {
 		return hero.getArmorRs(getPosition());
 	}
 
+	@Override
 	public int getMinimum() {
 		return 0;
 	}
 
+	@Override
 	public int getMaximum() {
 		return 20;
 	}
@@ -143,6 +133,7 @@ public class ArmorAttribute implements Value, JSONable {
 	 * @return
 	 * @throws JSONException
 	 */
+	@Override
 	public JSONObject toJSONObject() throws JSONException {
 		JSONObject out = new JSONObject();
 

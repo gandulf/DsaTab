@@ -81,7 +81,8 @@ public class ShakeListener implements SensorEventListener {
 
 		if ((now - mLastTime) > TIME_THRESHOLD) {
 			long diff = now - mLastTime;
-			float speed = Math.abs(values[SensorManager.DATA_X] + values[SensorManager.DATA_Y] + values[SensorManager.DATA_Z] - mLastX - mLastY - mLastZ)
+			float speed = Math.abs(values[SensorManager.DATA_X] + values[SensorManager.DATA_Y]
+					+ values[SensorManager.DATA_Z] - mLastX - mLastY - mLastZ)
 					/ diff * 10000;
 			if (speed > FORCE_THRESHOLD) {
 				if ((++mShakeCount >= SHAKE_COUNT) && (now - mLastShake > SHAKE_DURATION)) {

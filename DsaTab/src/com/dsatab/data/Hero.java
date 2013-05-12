@@ -1634,7 +1634,7 @@ public class Hero {
 
 		for (EquippedItem equippedItem : getEquippedItems()) {
 			Item item = equippedItem.getItem();
-			Armor armor = (Armor) item.getSpecification(Armor.class);
+			Armor armor = item.getSpecification(Armor.class);
 			if (armor != null && armor.getRs(pos) > 0) {
 				items.add(equippedItem);
 			}
@@ -1648,7 +1648,7 @@ public class Hero {
 		int rs = 0;
 		for (EquippedItem equippedItem : getEquippedItems()) {
 			Item item = equippedItem.getItem();
-			Armor armor = (Armor) item.getSpecification(Armor.class);
+			Armor armor = item.getSpecification(Armor.class);
 			if (armor != null) {
 				rs += armor.getRs(pos);
 			}

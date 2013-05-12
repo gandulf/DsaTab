@@ -205,6 +205,7 @@ public class Item implements Serializable, Comparable<Item>, Cloneable, ItemCard
 		this.weight = weight;
 	}
 
+	@Override
 	public boolean isImageTextOverlay() {
 		return imageTextOverlay;
 	}
@@ -227,6 +228,7 @@ public class Item implements Serializable, Comparable<Item>, Cloneable, ItemCard
 		return !TextUtils.isEmpty(title);
 	}
 
+	@Override
 	public String getTitle() {
 		if (!TextUtils.isEmpty(title))
 			return title;
@@ -261,6 +263,7 @@ public class Item implements Serializable, Comparable<Item>, Cloneable, ItemCard
 			this.title = title;
 	}
 
+	@Override
 	public Uri getImageUri() {
 		if (imageUri == null && imageUriHelper != null) {
 			imageUri = Uri.parse(imageUriHelper);
@@ -277,6 +280,7 @@ public class Item implements Serializable, Comparable<Item>, Cloneable, ItemCard
 		return false;
 	}
 
+	@Override
 	public boolean hasImage() {
 		if (hasCardImage == null) {
 			hasCardImage = getImageUri() != null;
@@ -373,6 +377,7 @@ public class Item implements Serializable, Comparable<Item>, Cloneable, ItemCard
 	/**
 	 * @return the itemInfo
 	 */
+	@Override
 	public ItemLocationInfo getItemInfo() {
 		return itemInfo;
 	}

@@ -122,9 +122,9 @@ public class FightModificatorAdapter extends OpenArrayAdapter<Modificator> imple
 			if (!(convertView instanceof LinearLayout)) {
 				// We need the layoutinflater to pick up the view from xml
 				// Pick up the TwoLineListItem defined in the xml file
-				titleLayout = (LinearLayout) inflater.inflate(R.layout.fight_sheet_modifier_title, parent, false);
+				titleLayout = inflater.inflate(R.layout.fight_sheet_modifier_title, parent, false);
 			} else {
-				titleLayout = (LinearLayout) convertView;
+				titleLayout = convertView;
 			}
 			titleLayout.findViewById(R.id.fight_modifiers_add).setOnClickListener(this);
 

@@ -1,18 +1,3 @@
-/*
- * Copyright (C) 2010 Gandulf Kohlweiss
- * 
- * This program is free software; you can redistribute it and/or modify it under the terms
- * of the GNU General Public License as published by the Free Software Foundation;
- * either version 3 of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with this program;
- * if not, see <http://www.gnu.org/licenses/>.
- * 
- */
 package com.dsatab.fragment;
 
 import java.io.File;
@@ -110,8 +95,7 @@ public class MapFragment extends BaseFragment {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com.
-	 * actionbarsherlock.view.Menu, com.actionbarsherlock.view.MenuInflater)
+	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu, com.actionbarsherlock.view.MenuInflater)
 	 */
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -122,9 +106,7 @@ public class MapFragment extends BaseFragment {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.actionbarsherlock.app.SherlockFragment#onOptionsItemSelected(com.
-	 * actionbarsherlock.view.MenuItem)
+	 * @see com.actionbarsherlock.app.SherlockFragment#onOptionsItemSelected(com. actionbarsherlock.view.MenuItem)
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -139,9 +121,7 @@ public class MapFragment extends BaseFragment {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater,
-	 * android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -365,6 +345,7 @@ public class MapFragment extends BaseFragment {
 			mapFragmentRef = new WeakReference<MapFragment>(mapFragment);
 		}
 
+		@Override
 		protected Bitmap doInBackground(String... urls) {
 			File file = new File(DsaTabApplication.getDirectory(DsaTabApplication.DIR_MAPS), urls[0]);
 			publishProgress(file.getName());
@@ -381,6 +362,7 @@ public class MapFragment extends BaseFragment {
 
 		}
 
+		@Override
 		protected void onPostExecute(Bitmap result) {
 			if (isCancelled()) {
 				onCancelled(result);
@@ -407,6 +389,7 @@ public class MapFragment extends BaseFragment {
 		 * 
 		 * @see android.os.AsyncTask#onCancelled(java.lang.Object)
 		 */
+		@Override
 		protected void onCancelled(Bitmap result) {
 			MapFragment mapFragment = mapFragmentRef.get();
 			if (mapFragment != null && mapFragment.getActivity() != null) {

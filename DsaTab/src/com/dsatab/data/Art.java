@@ -158,6 +158,7 @@ public class Art extends MarkableElement implements Value {
 		flags.add(flag);
 	}
 
+	@Override
 	public String getName() {
 		if (info != null) {
 			return info.getName();
@@ -250,6 +251,7 @@ public class Art extends MarkableElement implements Value {
 		return kenntnis;
 	}
 
+	@Override
 	public ProbeInfo getProbeInfo() {
 		return probeInfo;
 	}
@@ -263,6 +265,7 @@ public class Art extends MarkableElement implements Value {
 		return ProbeType.ThreeOfThree;
 	}
 
+	@Override
 	public Integer getProbeValue(int i) {
 		if (probeInfo.getAttributeTypes() != null) {
 			AttributeType type = probeInfo.getAttributeTypes()[i];
@@ -279,6 +282,7 @@ public class Art extends MarkableElement implements Value {
 		return getValue();
 	}
 
+	@Override
 	public Integer getValue() {
 		if (getArtTalent() != null)
 			return getArtTalent().getValue();
@@ -296,14 +300,17 @@ public class Art extends MarkableElement implements Value {
 		// todo cannot change value of liturgie
 	}
 
+	@Override
 	public Integer getReferenceValue() {
 		return getValue();
 	}
 
+	@Override
 	public int getMinimum() {
 		return 0;
 	}
 
+	@Override
 	public int getMaximum() {
 		return 25;
 	}

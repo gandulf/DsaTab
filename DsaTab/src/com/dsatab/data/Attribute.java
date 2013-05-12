@@ -63,6 +63,7 @@ public class Attribute extends BaseProbe implements Value, Cloneable {
 		return hero;
 	}
 
+	@Override
 	public String getName() {
 		switch (type) {
 		case pa:
@@ -107,6 +108,7 @@ public class Attribute extends BaseProbe implements Value, Cloneable {
 		lazyInit = true;
 	}
 
+	@Override
 	public ProbeType getProbeType() {
 		return ProbeType.TwoOfThree;
 	}
@@ -116,10 +118,12 @@ public class Attribute extends BaseProbe implements Value, Cloneable {
 		return null;
 	}
 
+	@Override
 	public Integer getProbeValue(int i) {
 		return hero.getAttributeValue(type);
 	}
 
+	@Override
 	public Integer getValue() {
 		if (!lazyInit)
 			lazyInit();
@@ -134,6 +138,7 @@ public class Attribute extends BaseProbe implements Value, Cloneable {
 		this.mod = mod;
 	}
 
+	@Override
 	public void setValue(Integer value) {
 		if (!Util.equalsOrNull(this.value, value)) {
 			this.value = value;
@@ -250,6 +255,7 @@ public class Attribute extends BaseProbe implements Value, Cloneable {
 		this.referenceValue = referenceValue;
 	}
 
+	@Override
 	public Integer getReferenceValue() {
 
 		switch (type) {
@@ -290,6 +296,7 @@ public class Attribute extends BaseProbe implements Value, Cloneable {
 		}
 	}
 
+	@Override
 	public int getMinimum() {
 		switch (type) {
 		case Lebensenergie_Aktuell:
@@ -299,6 +306,7 @@ public class Attribute extends BaseProbe implements Value, Cloneable {
 		}
 	}
 
+	@Override
 	public int getMaximum() {
 		int max = 0;
 

@@ -21,6 +21,7 @@ public class CombatMeleeTalent extends BaseCombatTalent {
 		this.pa = pa;
 	}
 
+	@Override
 	public void setType(TalentType type) {
 		super.setType(type);
 
@@ -31,14 +32,17 @@ public class CombatMeleeTalent extends BaseCombatTalent {
 			pa.setCombatMeleeTalent(this);
 	}
 
+	@Override
 	public CombatMeleeAttribute getAttack() {
 		return at;
 	}
 
+	@Override
 	public CombatMeleeAttribute getDefense() {
 		return pa;
 	}
 
+	@Override
 	public Position getPosition(int w20) {
 
 		if (DsaTabApplication.getPreferences().getBoolean(DsaTabPreferenceActivity.KEY_HOUSE_RULES_MORE_TARGET_ZONES,

@@ -1,19 +1,3 @@
-/**
- *  This file is part of DsaTab.
- *
- *  DsaTab is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  DsaTab is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with DsaTab.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.dsatab.fragment;
 
 import java.lang.ref.WeakReference;
@@ -26,6 +10,7 @@ import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.WheelView;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,6 +22,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -481,6 +467,7 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 			this.mActivity = new WeakReference<DsaTabActivity>(activity);
 		}
 
+		@Override
 		public void onClick(View v) {
 			if (v.getTag() instanceof EquippedItem) {
 				EquippedItem item = (EquippedItem) v.getTag();
@@ -509,8 +496,7 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.app.Activity#onActivityResult(int, int,
-	 * android.content.Intent)
+	 * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
 	 */
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -553,6 +539,7 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
+	@Override
 	protected Callback getActionModeCallback(List<Object> objects) {
 		boolean hasItems = false;
 		boolean hasModifiers = false;
@@ -574,8 +561,7 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.fragment.BaseFragment#onFilterChanged(com.dsatab.view.
-	 * FilterSettings.FilterType, com.dsatab.view.FilterSettings)
+	 * @see com.dsatab.fragment.BaseFragment#onFilterChanged(com.dsatab.view. FilterSettings.FilterType, com.dsatab.view.FilterSettings)
 	 */
 	@Override
 	public void onFilterChanged(FilterType type, FilterSettings settings) {
@@ -596,8 +582,7 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com.
-	 * actionbarsherlock.view.Menu, com.actionbarsherlock.view.MenuInflater)
+	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu, com.actionbarsherlock.view.MenuInflater)
 	 */
 	@Override
 	public void onCreateOptionsMenu(Menu menu, com.actionbarsherlock.view.MenuInflater inflater) {
@@ -609,9 +594,7 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.actionbarsherlock.app.SherlockFragment#onOptionsItemSelected(com.
-	 * actionbarsherlock.view.MenuItem)
+	 * @see com.actionbarsherlock.app.SherlockFragment#onOptionsItemSelected(com. actionbarsherlock.view.MenuItem)
 	 */
 	@Override
 	public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
@@ -669,6 +652,7 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 
 	}
 
+	@Override
 	protected FightFilterSettings getFilterSettings() {
 		return (FightFilterSettings) super.getFilterSettings();
 	}
@@ -717,9 +701,7 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater,
-	 * android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -741,7 +723,7 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 	public void onActivityCreated(Bundle savedInstanceState) {
 
 		fightList.setOnItemLongClickListener(this);
-		fightList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+		fightList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 		fightList.setOnItemClickListener(this);
 
 		targetListener = new TargetListener((DsaTabActivity) getActivity());
@@ -787,7 +769,7 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 
 		fightLpLayout.setOnClickListener(getBaseActivity().getEditListener());
 
-		SharedPreferences pref = getActivity().getPreferences(Activity.MODE_PRIVATE);
+		SharedPreferences pref = getActivity().getPreferences(Context.MODE_PRIVATE);
 		try {
 			String typeString = pref.getString(KEY_PICKER_TYPE, AttributeType.Lebensenergie_Aktuell.name());
 			setFightPickerType(AttributeType.valueOf(typeString));
@@ -831,7 +813,7 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 	public void onPause() {
 		super.onPause();
 
-		SharedPreferences pref = getActivity().getPreferences(Activity.MODE_PRIVATE);
+		SharedPreferences pref = getActivity().getPreferences(Context.MODE_PRIVATE);
 
 		Editor edit = pref.edit();
 		edit.putString(KEY_PICKER_TYPE, fightPickerType.name());
@@ -841,8 +823,7 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.activity.BaseMenuActivity#onHeroLoaded(com.dsatab.data.Hero)
+	 * @see com.dsatab.activity.BaseMenuActivity#onHeroLoaded(com.dsatab.data.Hero)
 	 */
 	@Override
 	public void onHeroLoaded(Hero hero) {
@@ -962,6 +943,7 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 		fightPickerButton.setText(value.getType().code());
 	}
 
+	@Override
 	public void onValueChanged(Value value) {
 		if (value == null) {
 			return;
@@ -1035,9 +1017,7 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget
-	 * .AdapterView, android.view.View, int, long)
+	 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget .AdapterView, android.view.View, int, long)
 	 */
 	@Override
 	public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -1073,9 +1053,7 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.view.listener.InventoryChangedListener#onItemAdded(com.dsatab
-	 * .data.items.Item)
+	 * @see com.dsatab.view.listener.InventoryChangedListener#onItemAdded(com.dsatab .data.items.Item)
 	 */
 	@Override
 	public void onItemAdded(Item item) {
@@ -1085,9 +1063,7 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.view.listener.InventoryChangedListener#onItemRemoved(com.dsatab
-	 * .data.items.Item)
+	 * @see com.dsatab.view.listener.InventoryChangedListener#onItemRemoved(com.dsatab .data.items.Item)
 	 */
 	@Override
 	public void onItemRemoved(Item item) {
@@ -1097,9 +1073,7 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.view.listener.InventoryChangedListener#onItemChanged(com.dsatab
-	 * .data.items.EquippedItem)
+	 * @see com.dsatab.view.listener.InventoryChangedListener#onItemChanged(com.dsatab .data.items.EquippedItem)
 	 */
 	@Override
 	public void onItemChanged(EquippedItem item) {
@@ -1110,9 +1084,7 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.view.listener.InventoryChangedListener#onItemEquipped(com.
-	 * dsatab.data.items.EquippedItem)
+	 * @see com.dsatab.view.listener.InventoryChangedListener#onItemEquipped(com. dsatab.data.items.EquippedItem)
 	 */
 	@Override
 	public void onItemEquipped(EquippedItem item) {
@@ -1124,9 +1096,7 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.view.listener.InventoryChangedListener#onItemUnequipped(com
-	 * .dsatab.data.items.EquippedItem)
+	 * @see com.dsatab.view.listener.InventoryChangedListener#onItemUnequipped(com .dsatab.data.items.EquippedItem)
 	 */
 	@Override
 	public void onItemUnequipped(EquippedItem item) {
@@ -1139,9 +1109,7 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.view.listener.HeroInventoryChangedListener#onItemChanged(com
-	 * .dsatab.data.items.Item)
+	 * @see com.dsatab.view.listener.HeroInventoryChangedListener#onItemChanged(com .dsatab.data.items.Item)
 	 */
 	@Override
 	public void onItemChanged(Item item) {
@@ -1152,9 +1120,7 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerAdded
-	 * (com.dsatab.data.items.ItemContainer)
+	 * @see com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerAdded (com.dsatab.data.items.ItemContainer)
 	 */
 	@Override
 	public void onItemContainerAdded(ItemContainer itemContainer) {
@@ -1165,9 +1131,7 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerRemoved
-	 * (com.dsatab.data.items.ItemContainer)
+	 * @see com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerRemoved (com.dsatab.data.items.ItemContainer)
 	 */
 	@Override
 	public void onItemContainerRemoved(ItemContainer itemContainer) {
@@ -1178,9 +1142,7 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerChanged
-	 * (com.dsatab.data.items.ItemContainer)
+	 * @see com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerChanged (com.dsatab.data.items.ItemContainer)
 	 */
 	@Override
 	public void onItemContainerChanged(ItemContainer itemContainer) {

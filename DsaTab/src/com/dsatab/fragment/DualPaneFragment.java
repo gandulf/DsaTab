@@ -1,19 +1,3 @@
-/**
- *  This file is part of DsaTab.
- *
- *  DsaTab is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  DsaTab is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with DsaTab.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.dsatab.fragment;
 
 import java.util.ArrayList;
@@ -38,10 +22,6 @@ import com.dsatab.view.FilterSettings.FilterType;
 import com.dsatab.view.listener.FilterChangedListener;
 import com.gandulf.guilib.util.Debug;
 
-/**
- * @author Ganymede
- * 
- */
 public class DualPaneFragment extends SherlockFragment implements FilterChangedListener,
 		OnSharedPreferenceChangeListener {
 
@@ -82,8 +62,7 @@ public class DualPaneFragment extends SherlockFragment implements FilterChangedL
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onActivityResult(int, int,
-	 * android.content.Intent)
+	 * @see android.support.v4.app.Fragment#onActivityResult(int, int, android.content.Intent)
 	 */
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -99,8 +78,7 @@ public class DualPaneFragment extends SherlockFragment implements FilterChangedL
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com.
-	 * actionbarsherlock.view.Menu, com.actionbarsherlock.view.MenuInflater)
+	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu, com.actionbarsherlock.view.MenuInflater)
 	 */
 	@Override
 	public void onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu,
@@ -117,9 +95,7 @@ public class DualPaneFragment extends SherlockFragment implements FilterChangedL
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.support.v4.app.Fragment#onOptionsItemSelected(android.view.MenuItem
-	 * )
+	 * @see android.support.v4.app.Fragment#onOptionsItemSelected(android.view.MenuItem )
 	 */
 	@Override
 	public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
@@ -138,8 +114,7 @@ public class DualPaneFragment extends SherlockFragment implements FilterChangedL
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.support.v4.app.Fragment#onSaveInstanceState(android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onSaveInstanceState(android.os.Bundle)
 	 */
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
@@ -150,8 +125,7 @@ public class DualPaneFragment extends SherlockFragment implements FilterChangedL
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.support.v4.app.Fragment#onViewStateRestored(android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onViewStateRestored(android.os.Bundle)
 	 */
 	@Override
 	public void onViewStateRestored(Bundle savedInstanceState) {
@@ -164,9 +138,7 @@ public class DualPaneFragment extends SherlockFragment implements FilterChangedL
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater,
-	 * android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -182,8 +154,7 @@ public class DualPaneFragment extends SherlockFragment implements FilterChangedL
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onViewCreated(android.view.View,
-	 * android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onViewCreated(android.view.View, android.os.Bundle)
 	 */
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -226,6 +197,7 @@ public class DualPaneFragment extends SherlockFragment implements FilterChangedL
 		setUserVisibleHint(getUserVisibleHint());
 	}
 
+	@Override
 	public void setMenuVisibility(boolean value) {
 		super.setMenuVisibility(value);
 
@@ -236,6 +208,7 @@ public class DualPaneFragment extends SherlockFragment implements FilterChangedL
 
 	}
 
+	@Override
 	public void setUserVisibleHint(boolean value) {
 		super.setUserVisibleHint(value);
 
@@ -277,8 +250,7 @@ public class DualPaneFragment extends SherlockFragment implements FilterChangedL
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.fragment.FilterChangedListener#onFilterChanged(com.dsatab
-	 * .view.FilterSettings.FilterType, com.dsatab.view.FilterSettings)
+	 * @see com.dsatab.fragment.FilterChangedListener#onFilterChanged(com.dsatab .view.FilterSettings.FilterType, com.dsatab.view.FilterSettings)
 	 */
 	@Override
 	public void onFilterChanged(FilterType type, FilterSettings settings) {
@@ -292,9 +264,7 @@ public class DualPaneFragment extends SherlockFragment implements FilterChangedL
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.content.SharedPreferences.OnSharedPreferenceChangeListener
-	 * #onSharedPreferenceChanged(android.content.SharedPreferences,
-	 * java.lang.String)
+	 * @see android.content.SharedPreferences.OnSharedPreferenceChangeListener #onSharedPreferenceChanged(android.content.SharedPreferences, java.lang.String)
 	 */
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

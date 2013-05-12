@@ -1,19 +1,3 @@
-/**
- *  This file is part of DsaTab.
- *
- *  DsaTab is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  DsaTab is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with DsaTab.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.dsatab.data;
 
 import java.util.ArrayList;
@@ -41,10 +25,6 @@ import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 
-/**
- * @author Ganymede
- * 
- */
 public class CustomModificator extends AbstractModificator implements JSONable {
 
 	private static final String POSTFIX_TP = " tp";
@@ -121,6 +101,7 @@ public class CustomModificator extends AbstractModificator implements JSONable {
 		this.name = name;
 	}
 
+	@Override
 	public String getModificatorInfo() {
 		if (TextUtils.isEmpty(comment))
 			return rules;
@@ -212,8 +193,7 @@ public class CustomModificator extends AbstractModificator implements JSONable {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.data.modifier.Modificator#affects(com.dsatab.data.enums.
-	 * AttributeType)
+	 * @see com.dsatab.data.modifier.Modificator#affects(com.dsatab.data.enums. AttributeType)
 	 */
 	@Override
 	public boolean affects(AttributeType type) {
@@ -346,9 +326,7 @@ public class CustomModificator extends AbstractModificator implements JSONable {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.data.modifier.AbstractModificator#getModifier(com.dsatab.data
-	 * .Probe)
+	 * @see com.dsatab.data.modifier.AbstractModificator#getModifier(com.dsatab.data .Probe)
 	 */
 	@Override
 	public int getModifierValue(Probe probe) {
@@ -414,9 +392,7 @@ public class CustomModificator extends AbstractModificator implements JSONable {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dsatab.data.modifier.AbstractModificator#getModifier(com.dsatab.data
-	 * .enums.AttributeType)
+	 * @see com.dsatab.data.modifier.AbstractModificator#getModifier(com.dsatab.data .enums.AttributeType)
 	 */
 	@Override
 	public int getModifierValue(AttributeType type) {
@@ -455,6 +431,7 @@ public class CustomModificator extends AbstractModificator implements JSONable {
 	 * @return
 	 * @throws JSONException
 	 */
+	@Override
 	public JSONObject toJSONObject() throws JSONException {
 		JSONObject out = new JSONObject();
 

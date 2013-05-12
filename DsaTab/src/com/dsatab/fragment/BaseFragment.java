@@ -1,19 +1,3 @@
-/**
- *  This file is part of DsaTab.
- *
- *  DsaTab is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  DsaTab is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with DsaTab.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.dsatab.fragment;
 
 import java.util.Arrays;
@@ -50,10 +34,6 @@ import com.dsatab.view.listener.HeroChangedListener;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
 import com.dsatab.view.listener.HeroLoader;
 
-/**
- * @author Ganymede
- * 
- */
 public abstract class BaseFragment extends SherlockFragment implements HeroLoader, HeroChangedListener,
 		FilterChangedListener, OnSharedPreferenceChangeListener {
 
@@ -147,7 +127,7 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 		if (hero != null) {
 
 			if (this instanceof HeroChangedListener) {
-				hero.addHeroChangedListener((HeroChangedListener) this);
+				hero.addHeroChangedListener(this);
 			}
 			if (this instanceof HeroInventoryChangedListener) {
 				hero.addHeroInventoryChangedListener((HeroInventoryChangedListener) this);
@@ -158,7 +138,7 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 	protected void onDetachListener(Hero hero) {
 		if (hero != null) {
 			if (this instanceof HeroChangedListener) {
-				hero.removeHeroChangedListener((HeroChangedListener) this);
+				hero.removeHeroChangedListener(this);
 			}
 			if (this instanceof HeroInventoryChangedListener) {
 				hero.addHeroInventoryChangedListener((HeroInventoryChangedListener) this);
@@ -237,7 +217,7 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 		if (view.getLayoutParams() instanceof LinearLayout.LayoutParams) {
 			params = ((LinearLayout.LayoutParams) view.getLayoutParams());
 		} else {
-			params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+			params = new LinearLayout.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT);
 			view.setLayoutParams(params);
 		}
 
@@ -292,11 +272,13 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 		return DsaTabApplication.getInstance().getHero();
 	}
 
+	@Override
 	public final void loadHero(Hero hero) {
 		onHeroLoaded(hero);
 		onAttachListener(hero);
 	}
 
+	@Override
 	public final void unloadHero(Hero hero) {
 		onDetachListener(hero);
 	}

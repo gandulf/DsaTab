@@ -43,6 +43,7 @@ public class Talent extends MarkableElement implements Value {
 		this.hero = hero;
 	}
 
+	@Override
 	public String getName() {
 		return type.xmlName();
 	}
@@ -112,6 +113,7 @@ public class Talent extends MarkableElement implements Value {
 		flags.add(flag);
 	}
 
+	@Override
 	public Integer getProbeValue(int i) {
 
 		if (probeInfo.getAttributeTypes() != null) {
@@ -127,10 +129,12 @@ public class Talent extends MarkableElement implements Value {
 		return getValue();
 	}
 
+	@Override
 	public Integer getValue() {
 		return value;
 	}
 
+	@Override
 	public void setValue(Integer value) {
 		Integer oldValue = getValue();
 		this.value = value;
@@ -139,14 +143,17 @@ public class Talent extends MarkableElement implements Value {
 			hero.fireValueChangedEvent(this);
 	}
 
+	@Override
 	public Integer getReferenceValue() {
 		return getValue();
 	}
 
+	@Override
 	public int getMinimum() {
 		return 0;
 	}
 
+	@Override
 	public int getMaximum() {
 		return 25;
 	}

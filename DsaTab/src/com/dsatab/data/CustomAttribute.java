@@ -1,19 +1,3 @@
-/**
- *  This file is part of DsaTab.
- *
- *  DsaTab is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  DsaTab is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with DsaTab.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.dsatab.data;
 
 import org.json.JSONException;
@@ -24,10 +8,6 @@ import com.dsatab.data.enums.FeatureType;
 import com.dsatab.data.enums.TalentType;
 import com.dsatab.util.Util;
 
-/**
- * @author Ganymede
- * 
- */
 public class CustomAttribute extends Attribute implements JSONable {
 
 	private static final String FIELD_NAME = "name";
@@ -80,6 +60,7 @@ public class CustomAttribute extends Attribute implements JSONable {
 		setName(type.name());
 	}
 
+	@Override
 	public String getName() {
 		if (type != null) {
 			switch (type) {
@@ -97,10 +78,12 @@ public class CustomAttribute extends Attribute implements JSONable {
 		return name;
 	}
 
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	@Override
 	public Integer getValue() {
 		if (value != null)
 			return value;
@@ -108,6 +91,7 @@ public class CustomAttribute extends Attribute implements JSONable {
 			return getCoreValue();
 	}
 
+	@Override
 	public void setValue(Integer value) {
 		Integer oldValue = getValue();
 		this.value = value;
@@ -208,6 +192,7 @@ public class CustomAttribute extends Attribute implements JSONable {
 	 * @return
 	 * @throws JSONException
 	 */
+	@Override
 	public JSONObject toJSONObject() throws JSONException {
 		JSONObject out = new JSONObject();
 

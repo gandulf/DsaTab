@@ -54,6 +54,7 @@ public class PortraitChooserDialog extends AlertDialog implements AdapterView.On
 		list.setOnItemClickListener(this);
 	}
 
+	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		imageUri = adapter.getItem(position);
 		dismiss();

@@ -94,6 +94,7 @@ public class ExpandableTalentAdapter extends BaseExpandableListAdapter {
 		super.notifyDataSetChanged();
 	}
 
+	@Override
 	public Talent getChild(int groupPosition, int childPosition) {
 		TalentGroupType groupType = getGroup(groupPosition);
 
@@ -136,10 +137,12 @@ public class ExpandableTalentAdapter extends BaseExpandableListAdapter {
 		}
 	}
 
+	@Override
 	public long getChildId(int groupPosition, int childPosition) {
 		return childPosition;
 	}
 
+	@Override
 	public int getChildrenCount(int groupPosition) {
 		TalentGroupType groupType = getGroup(groupPosition);
 
@@ -175,6 +178,7 @@ public class ExpandableTalentAdapter extends BaseExpandableListAdapter {
 			return TYPE_SIMPLE_TALENT;
 	}
 
+	@Override
 	public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
 			ViewGroup parent) {
 
@@ -307,18 +311,22 @@ public class ExpandableTalentAdapter extends BaseExpandableListAdapter {
 		return listItem;
 	}
 
+	@Override
 	public TalentGroupType getGroup(int groupPosition) {
 		return groups.get(groupPosition);
 	}
 
+	@Override
 	public int getGroupCount() {
 		return groups.size();
 	}
 
+	@Override
 	public long getGroupId(int groupPosition) {
 		return groupPosition;
 	}
 
+	@Override
 	public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 
 		View listItem = null;
@@ -352,10 +360,12 @@ public class ExpandableTalentAdapter extends BaseExpandableListAdapter {
 		return listItem;
 	}
 
+	@Override
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
 		return true;
 	}
 
+	@Override
 	public boolean hasStableIds() {
 		return false;
 	}
