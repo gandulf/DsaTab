@@ -319,7 +319,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	}
 
 	private void loadHero() {
-		// in case of orientation chage the hero is already loaded, just recreate the menu etc...
+		// in case of orientation change the hero is already loaded, just recreate the menu etc...
 		if (DsaTabApplication.getInstance().getHero() != null) {
 			onHeroLoaded(DsaTabApplication.getInstance().getHero());
 		} else {
@@ -353,7 +353,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 				Toast.makeText(this, heroLoader.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
 			}
 		}
-		DsaTabApplication.getInstance().hero = hero;
+		DsaTabApplication.getInstance().setHero(hero);
 
 		if (hero != null) {
 			Toast.makeText(this, getString(R.string.hero_loaded, hero.getName()), Toast.LENGTH_SHORT).show();
@@ -487,8 +487,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 			return;
 		}
 
-		// TODO make sure the viewpager fragments are already initialized
-		// here!!!
+		// TODO make sure the viewpager fragments are already initialized here!!!
 		loadHero();
 
 		showNewsInfoPopup();

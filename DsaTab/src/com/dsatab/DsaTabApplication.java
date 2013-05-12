@@ -362,6 +362,10 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 			return null;
 	}
 
+	public void setHero(Hero hero) {
+		this.hero = hero;
+	}
+
 	public boolean hasHeroes() {
 		boolean result = false;
 
