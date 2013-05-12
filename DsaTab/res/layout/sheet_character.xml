@@ -809,8 +809,10 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="none"
+                android:lineSpacingExtra="4dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp" >
+
             </TextView>
 
             <TextView
@@ -827,6 +829,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="none"
+                android:lineSpacingExtra="4dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp" />
 
@@ -844,6 +847,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="none"
+                android:lineSpacingExtra="4dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp" >
             </TextView>

@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import android.app.Activity;
@@ -18,6 +19,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -46,10 +48,13 @@ import com.dsatab.data.HeroBaseInfo;
 import com.dsatab.data.Value;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.modifier.Modificator;
+import com.dsatab.util.ClickSpan;
+import com.dsatab.util.ClickSpan.OnSpanClickListener;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.dsatab.view.PortraitChooserDialog;
 import com.dsatab.view.PortraitViewDialog;
+import com.dsatab.view.WebInfoDialog;
 
 public class CharacterFragment extends BaseAttributesFragment implements OnClickListener, OnLongClickListener {
 
@@ -233,12 +238,12 @@ public class CharacterFragment extends BaseAttributesFragment implements OnClick
 		tfExperience.setOnLongClickListener(getBaseActivity().getEditListener());
 		findViewById(R.id.gen_description).setOnClickListener(this);
 
-		tfSpecialFeatures.setOnClickListener(this);
-		tfSpecialFeaturesTitle.setOnClickListener(this);
-		tfAdvantages.setOnClickListener(this);
-		tfAdvantagesTitle.setOnClickListener(this);
-		tfDisadvantages.setOnClickListener(this);
-		tfDisadvantgesTitle.setOnClickListener(this);
+		tfSpecialFeatures.setOnLongClickListener(this);
+		tfSpecialFeaturesTitle.setOnLongClickListener(this);
+		tfAdvantages.setOnLongClickListener(this);
+		tfAdvantagesTitle.setOnLongClickListener(this);
+		tfDisadvantages.setOnLongClickListener(this);
+		tfDisadvantgesTitle.setOnLongClickListener(this);
 
 		portraitView.setOnLongClickListener(this);
 		portraitView.setOnClickListener(this);
@@ -399,22 +404,24 @@ public class CharacterFragment extends BaseAttributesFragment implements OnClick
 				customizeActionModeCloseButton();
 				mMode.invalidate();
 				resizePortaiView();
-
-				// ObjectAnimator moveDown = ObjectAnimator.ofInt(layoutParams,
-				// "width", portraitView.getWidth(),
-				// portraitView.getWidth() * 3);
-				// moveDown.setDuration(2000);
-				// moveDown.addUpdateListener(new
-				// ValueAnimator.AnimatorUpdateListener() {
-				// @Override
-				// public void onAnimationUpdate(ValueAnimator arg0) {
-				// portraitView.requestLayout();
-				// }
-				// });
-				// moveDown.start();
-
 			}
 			return true;
+		case R.id.gen_specialfeatures:
+		case R.id.gen_specialfeatures_title:
+		case R.id.gen_advantages:
+		case R.id.gen_advantages_title:
+		case R.id.gen_disadvantages:
+		case R.id.gen_disadvantages_title: {
+			boolean showComments = preferences.getBoolean(PREF_SHOW_FEATURE_COMMENTS, true);
+
+			showComments = !showComments;
+			Editor edit = preferences.edit();
+			edit.putBoolean(PREF_SHOW_FEATURE_COMMENTS, showComments);
+			edit.commit();
+
+			fillSpecialFeatures(getHero());
+			break;
+		}
 		}
 		return false;
 	}
@@ -433,22 +440,6 @@ public class CharacterFragment extends BaseAttributesFragment implements OnClick
 				showPortrait();
 			}
 			break;
-		case R.id.gen_specialfeatures:
-		case R.id.gen_specialfeatures_title:
-		case R.id.gen_advantages:
-		case R.id.gen_advantages_title:
-		case R.id.gen_disadvantages:
-		case R.id.gen_disadvantages_title: {
-			boolean showComments = preferences.getBoolean(PREF_SHOW_FEATURE_COMMENTS, true);
-
-			showComments = !showComments;
-			Editor edit = preferences.edit();
-			edit.putBoolean(PREF_SHOW_FEATURE_COMMENTS, showComments);
-			edit.commit();
-
-			fillSpecialFeatures(getHero());
-			break;
-		}
 		case R.id.gen_description:
 		case R.id.details_switch: {
 			Editor edit = preferences.edit();
@@ -746,6 +737,24 @@ public class CharacterFragment extends BaseAttributesFragment implements OnClick
 		StyleableSpannableStringBuilder advantageBuilder = new StyleableSpannableStringBuilder();
 		StyleableSpannableStringBuilder disadvantageBuilder = new StyleableSpannableStringBuilder();
 
+		tfSpecialFeatures.setMovementMethod(LinkMovementMethod.getInstance());
+		String[] featureInfos;
+		try {
+			featureInfos = getActivity().getResources().getAssets().list("data/feature");
+			Arrays.sort(featureInfos);
+		} catch (IOException e) {
+			featureInfos = new String[0];
+		}
+
+		OnSpanClickListener linkClicker = new OnSpanClickListener() {
+
+			@Override
+			public void onClick(CharSequence tag, ClickSpan v) {
+				String url = "file:///android_asset/data/feature/" + tag + ".html";
+				WebInfoDialog infoDialog = new WebInfoDialog(getActivity(), url);
+				infoDialog.show();
+			}
+		};
 		StyleableSpannableStringBuilder currentBuilder = null;
 		if (hero != null && !hero.getSpecialFeatures().isEmpty()) {
 			for (Feature feature : hero.getSpecialFeatures().values()) {
@@ -764,7 +773,12 @@ public class CharacterFragment extends BaseAttributesFragment implements OnClick
 				if (currentBuilder.length() > 0) {
 					currentBuilder.append(", ");
 				}
-				currentBuilder.append(feature.toString());
+				if (Arrays.binarySearch(featureInfos, feature.getType().xmlName() + ".html") >= 0) {
+					currentBuilder.appendClick(linkClicker, feature.toString(), feature.getType().xmlName());
+				} else {
+					currentBuilder.append(feature.toString());
+				}
+
 				if (showComments && !TextUtils.isEmpty(feature.getComment())) {
 					currentBuilder.appendColor(Color.GRAY, " (");
 					currentBuilder.appendColor(Color.GRAY, feature.getComment());
