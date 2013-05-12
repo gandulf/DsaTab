@@ -64,6 +64,13 @@ To deploy this app you need the following Libraries in your Eclipse workspace:
     Significant Fantasy Medienrechte GbR. Ohne vorherige schriftliche Genehmigung der Ulisses Medien und Spiel
     Distribution GmbH ist eine Verwendung der genannten Markenzeichen nicht gestattet.“
 
+## Credits
+
+    Herkunft der Bilder für das Funktionsbild sind:
+    * Anja Di Paolo
+    * Anna Steinbauer
+    * Bildmaterial aus dem DSA MMORPG Herokon Online der Silver Style Studios GmbH
+     
 [1]: http://www.helden-software.de/
 [2]: http://www.dasschwarzeauge.de/
 [3]: https://play.google.com/store/apps/details?id=com.dsatab
