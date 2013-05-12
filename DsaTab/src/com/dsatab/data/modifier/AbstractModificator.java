@@ -1,5 +1,7 @@
 package com.dsatab.data.modifier;
 
+import java.util.Comparator;
+
 import com.dsatab.data.Attribute;
 import com.dsatab.data.Hero;
 import com.dsatab.data.Modifier;
@@ -7,6 +9,22 @@ import com.dsatab.data.Probe;
 import com.dsatab.data.enums.AttributeType;
 
 public abstract class AbstractModificator implements Modificator {
+
+	public static Comparator<Modificator> NAME_COMPARATOR = new Comparator<Modificator>() {
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+		 */
+		@Override
+		public int compare(Modificator lhs, Modificator rhs) {
+			if (lhs != null && rhs != null && lhs.getModificatorName() != null && rhs.getModificatorName() != null) {
+				return lhs.getModificatorName().compareTo(rhs.getModificatorName());
+			} else {
+				return -1;
+			}
+		}
+	};
 
 	protected Hero hero;
 

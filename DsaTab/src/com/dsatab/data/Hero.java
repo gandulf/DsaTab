@@ -46,6 +46,7 @@ import com.dsatab.data.items.ItemContainer;
 import com.dsatab.data.items.ItemSpecification;
 import com.dsatab.data.items.Shield;
 import com.dsatab.data.items.Weapon;
+import com.dsatab.data.modifier.AbstractModificator;
 import com.dsatab.data.modifier.AuModificator;
 import com.dsatab.data.modifier.LeModificator;
 import com.dsatab.data.modifier.Modificator;
@@ -1903,7 +1904,7 @@ public class Hero {
 			return result;
 	}
 
-	public Set<Modificator> getUserModificators() {
+	public List<Modificator> getUserModificators() {
 		Set<Modificator> modificators = new HashSet<Modificator>();
 
 		for (Modificator mod : getModificators()) {
@@ -1913,7 +1914,9 @@ public class Hero {
 			modificators.add(mod);
 		}
 
-		return modificators;
+		List<Modificator> mods = new ArrayList<Modificator>(modificators);
+		Collections.sort(mods, AbstractModificator.NAME_COMPARATOR);
+		return mods;
 	}
 
 	public Set<Modificator> getModificators() {

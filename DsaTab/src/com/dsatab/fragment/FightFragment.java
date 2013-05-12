@@ -34,6 +34,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.ActionMode.Callback;
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.commonsware.cwac.merge.MergeAdapter;
 import com.commonsware.cwac.sacklist.SackOfViewsAdapter;
 import com.dsatab.R;
@@ -177,6 +178,9 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 
 		@Override
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+
+			MenuItem edit = menu.findItem(R.id.option_edit);
+
 			SparseBooleanArray checkedPositions = fightList.getCheckedItemPositions();
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
@@ -184,15 +188,15 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 						Object obj = fightList.getItemAtPosition(checkedPositions.keyAt(i));
 
 						if (obj instanceof CustomModificator) {
-							if (!menu.findItem(R.id.option_edit).isEnabled()) {
-								menu.findItem(R.id.option_edit).setEnabled(true);
+							if (edit != null && !edit.isEnabled()) {
+								edit.setEnabled(true);
 								return true;
 							} else {
 								return false;
 							}
 						} else {
-							if (menu.findItem(R.id.option_edit).isEnabled()) {
-								menu.findItem(R.id.option_edit).setEnabled(false);
+							if (edit != null && edit.isEnabled()) {
+								edit.setEnabled(false);
 								return true;
 							} else {
 								return false;
@@ -694,6 +698,9 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 
 			updateNumberPicker(attr);
 			break;
+		case R.id.fight_modifiers_add:
+			getActivity().startActivityForResult(new Intent(getActivity(), ModificatorEditActivity.class),
+					DsaTabActivity.ACTION_ADD_MODIFICATOR);
 		}
 
 	}
@@ -844,7 +851,13 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 		fightMergeAdapter.addAdapter(evadeAdapter);
 		fightMergeAdapter.setActive(evadeAdapter, getFilterSettings().isShowEvade());
 
+		LayoutInflater inflater = (LayoutInflater) LayoutInflater.from(getActivity());
+		View modificatorTitleLayout = inflater.inflate(R.layout.fight_sheet_modifier_title, null, false);
+		modificatorTitleLayout.findViewById(R.id.fight_modifiers_add).setOnClickListener(this);
+
+		fightMergeAdapter.addView(modificatorTitleLayout);
 		fightModificatorAdapter = new FightModificatorAdapter(getActivity(), hero.getUserModificators());
+
 		fightMergeAdapter.addAdapter(fightModificatorAdapter);
 		fightMergeAdapter.setActive(fightModificatorAdapter, getFilterSettings().isShowModifier());
 
@@ -887,6 +900,7 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 	@Override
 	public void onModifierAdded(Modificator value) {
 		fightModificatorAdapter.add(value);
+		fightModificatorAdapter.sort(AbstractModificator.NAME_COMPARATOR);
 		fightItemAdapter.notifyDataSetChanged();
 		updateAusweichen();
 		updateNumberPicker();
