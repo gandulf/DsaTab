@@ -1,5 +1,6 @@
 package com.dsatab.fragment;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,6 +26,7 @@ import com.dsatab.data.Talent;
 import com.dsatab.data.TalentGroup;
 import com.dsatab.data.Value;
 import com.dsatab.data.adapter.ArtAdapter;
+import com.dsatab.data.enums.ArtGroupType;
 import com.dsatab.data.enums.TalentGroupType;
 import com.dsatab.data.enums.TalentType;
 import com.dsatab.util.Util;
@@ -251,6 +253,26 @@ public class ArtFragment extends BaseListFragment implements OnItemClickListener
 			talents = Collections.emptyList();
 		}
 
+		boolean elfenLieder = false;
+		for (Art art : hero.getArts().values()) {
+			if (art.getGroupType() == ArtGroupType.Elfenlieder) {
+				elfenLieder = true;
+				break;
+			}
+		}
+
+		if (elfenLieder) {
+			talents = new ArrayList<Talent>(talents);
+			Talent talent = hero.getTalent(TalentType.Singen);
+			if (talent != null) {
+				talents.add(talent);
+			}
+
+			talent = hero.getTalent(TalentType.Musizieren);
+			if (talent != null) {
+				talents.add(talent);
+			}
+		}
 		// remove talentViews that are no longer needed
 
 		LayoutInflater inflater = getActivity().getLayoutInflater();
