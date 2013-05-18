@@ -185,6 +185,13 @@ public class HeldenXmlParser {
 			}
 			adv.setComment(element.getAttributeValue(Xml.KEY_COMMENT));
 
+			List<Element> auswahls = element.getChildren(Xml.KEY_AUSWAHL);
+			if (auswahls != null) {
+				for (Element auswahl : auswahls) {
+					adv.addValue(auswahl.getAttributeValue(Xml.KEY_VALUE));
+				}
+			}
+
 			if (adv.getType() == FeatureType.BegabungFürTalent) {
 				Talent talent = hero.getTalent(adv.getValueAsString());
 				if (talent != null) {

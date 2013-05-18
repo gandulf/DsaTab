@@ -1,5 +1,6 @@
 package com.dsatab.data.enums;
 
+
 public enum TalentType {
 	Anderthalbhänder("Anderthalbhänder", TalentGroupType.Nahkampf, -2), Armbrust("Armbrust", TalentGroupType.Fernkampf,
 			-5), Bastardstäbe("Bastardstäbe", TalentGroupType.Nahkampf, -2), Belagerungswaffen("Belagerungswaffen",
@@ -145,16 +146,34 @@ public enum TalentType {
 			"Geister binden", TalentGroupType.Gaben, null), GeisterAufnehmen("Geister aufnehmen",
 			TalentGroupType.Gaben, null), PirschUndAnsitzjagd("Pirsch- und Ansitzjagd", TalentGroupType.Meta, null), NahrungSammeln(
 			"Nahrung sammeln", TalentGroupType.Meta, null), Kräutersuche("Kräutersuche", TalentGroupType.Meta, null), WacheHalten(
-			"Wache halten", TalentGroupType.Meta, null), Ritualkenntnis("Ritualkenntnis", TalentGroupType.Gaben, null), RitualkenntnisAlchimist(
-			"Ritualkenntnis: Alchimist", TalentGroupType.Gaben, null), RitualkenntnisDerwisch(
+			"Wache halten", TalentGroupType.Meta, null), Ritualkenntnis("Ritualkenntnis", TalentGroupType.Gaben, null), RitualkenntnisAchazSchamane(
+			"Ritualkenntnis: Achaz-Schamane", TalentGroupType.Gaben, null), RitualkenntnisAlchimist(
+			"Ritualkenntnis: Alchimist", TalentGroupType.Gaben, null), RitualkenntnisAlhanisch(
+			"Ritualkenntnis: Alhanisch", TalentGroupType.Gaben, null), RitualkenntnisDerwisch(
 			"Ritualkenntnis: Derwisch", TalentGroupType.Gaben, null), RitualkenntnisDruide("Ritualkenntnis: Druide",
+			TalentGroupType.Gaben, null), RitualkenntnisDruidischGeodisch("Ritualkenntnis: Druidisch-Geodisch",
 			TalentGroupType.Gaben, null), RitualkenntnisDurroDûn("Ritualkenntnis: Durro-Dûn", TalentGroupType.Gaben,
-			null), RitualkenntnisGeode("Ritualkenntnis: Geode", TalentGroupType.Gaben, null), RitualkenntnisGildenmagie(
-			"Ritualkenntnis: Gildenmagie", TalentGroupType.Gaben, null), RitualkenntnisHexe("Ritualkenntnis: Hexe",
+			null), RitualkenntnisFerkinaSchamane("Ritualkenntnis: Ferkina-Schamane", TalentGroupType.Gaben, null), RitualkenntnisGjalskerSchamane(
+			"Ritualkenntnis: Gjalsker-Schamane", TalentGroupType.Gaben, null), RitualkenntnisGoblinSchamanin(
+			"Ritualkenntnis: Goblin-Schamanin", TalentGroupType.Gaben, null), RitualkenntnisGeode(
+			"Ritualkenntnis: Geode", TalentGroupType.Gaben, null), RitualkenntnisGildenmagie(
+			"Ritualkenntnis: Gildenmagie", TalentGroupType.Gaben, null), RitualkenntnisGüldenländisch(
+			"Ritualkenntnis: Güldenländisch", TalentGroupType.Gaben, null), RitualkenntnisGrolmisch(
+			"Ritualkenntnis: Grolmisch", TalentGroupType.Gaben, null), RitualkenntnisHexe("Ritualkenntnis: Hexe",
+			TalentGroupType.Gaben, null), RitualkenntnisKophtanisch("Ritualkenntnis: Kophtanisch",
 			TalentGroupType.Gaben, null), RitualkenntnisKristallomantie("Ritualkenntnis: Kristallomantie",
+			TalentGroupType.Gaben, null), RitualkenntnisMudramulisch("Ritualkenntnis: Mudramulisch",
+			TalentGroupType.Gaben, null), RitualkenntnisNivesenSchamane("Ritualkenntnis: Nivesen-Schamane",
+			TalentGroupType.Gaben, null), RitualkenntnisOrkSchamane("Ritualkenntnis: Ork-Schamane",
 			TalentGroupType.Gaben, null), RitualkenntnisRunenzauberei("Ritualkenntnis: Runenzauberei",
-			TalentGroupType.Gaben, null), RitualkenntnisScharlatan("Ritualkenntnis: Scharlatan", TalentGroupType.Gaben,
-			null), RitualkenntnisZaubertänzer("Ritualkenntnis: Zaubertänzer", TalentGroupType.Gaben, null), RitualkenntnisZaubertänzerHazaqi(
+			TalentGroupType.Gaben, null), RitualkenntnisSatuarisch("Ritualkenntnis: Satuarisch", TalentGroupType.Gaben,
+			null), RitualkenntnisScharlatan("Ritualkenntnis: Scharlatan", TalentGroupType.Gaben, null), RitualkenntnisTapasuul(
+			"Ritualkenntnis: Tapasuul", TalentGroupType.Gaben, null), RitualkenntnisTrollzackerSchamane(
+			"Ritualkenntnis: Trollzacker-Schamane", null, null), RitualkenntnisWaldmenschenSchamane(
+			"Ritualkenntnis: Waldmenschen-Schamane", null, null), RitualkenntnisWaldmenschenSchamaneUtulus(
+			"Ritualkenntnis: Waldmenschen-Schamane (Utulus)", null, null), RitualkenntnisWaldmenschenSchamaneTocamuyac(
+			"Ritualkenntnis: Waldmenschen-Schamane (Tocamuyac)", null, null), RitualkenntnisZaubertänzer(
+			"Ritualkenntnis: Zaubertänzer", TalentGroupType.Gaben, null), RitualkenntnisZaubertänzerHazaqi(
 			"Ritualkenntnis: Zaubertänzer (Hazaqi)", TalentGroupType.Gaben, null), RitualkenntnisZaubertänzerMajuna(
 			"Ritualkenntnis: Zaubertänzer (Majuna)", TalentGroupType.Gaben, null), RitualkenntnisZaubertänzernovadischeSharisad(
 			"Ritualkenntnis: Zaubertänzer (novadische Sharisad)", TalentGroupType.Gaben, null), RitualkenntnisZaubertänzertulamidischeSharisad(
@@ -168,15 +187,16 @@ public enum TalentType {
 			"Liturgiekenntnis (Gravesh)", TalentGroupType.Gaben, null), LiturgiekenntnisHRanga(
 			"Liturgiekenntnis (H'Ranga)", TalentGroupType.Gaben, null), LiturgiekenntnisHSzint(
 			"Liturgiekenntnis (H'Szint)", TalentGroupType.Gaben, null), LiturgiekenntnisHesinde(
-			"Liturgiekenntnis (Hesinde)", TalentGroupType.Gaben, null), LiturgiekenntnisIfirn(
+			"Liturgiekenntnis (Hesinde)", TalentGroupType.Gaben, null), LiturgiekenntnisHimmelswölfe(
+			"Liturgiekenntnis (Himmelswölfe)", TalentGroupType.Gaben, null), LiturgiekenntnisIfirn(
 			"Liturgiekenntnis (Ifirn)", TalentGroupType.Gaben, null), LiturgiekenntnisIngerimm(
 			"Liturgiekenntnis (Ingerimm)", TalentGroupType.Gaben, null), LiturgiekenntnisKamaluq(
 			"Liturgiekenntnis (Kamaluq)", TalentGroupType.Gaben, null), LiturgiekenntnisKor("Liturgiekenntnis (Kor)",
 			TalentGroupType.Gaben, null), LiturgiekenntnisNandus("Liturgiekenntnis (Nandus)", TalentGroupType.Gaben,
-			null), LiturgiekenntnisPeraine("Liturgiekenntnis (Peraine)", TalentGroupType.Gaben, null), LiturgiekenntnisPhex(
-			"Liturgiekenntnis (Phex)", TalentGroupType.Gaben, null), LiturgiekenntnisPraios(
-			"Liturgiekenntnis (Praios)", TalentGroupType.Gaben, null), LiturgiekenntnisRahja(
-			"Liturgiekenntnis (Rahja)", TalentGroupType.Gaben, null), LiturgiekenntnisRondra(
+			null), LiturgiekenntnisNamenloser("Liturgiekenntnis (Namenloser)", TalentGroupType.Gaben, null), LiturgiekenntnisPeraine(
+			"Liturgiekenntnis (Peraine)", TalentGroupType.Gaben, null), LiturgiekenntnisPhex("Liturgiekenntnis (Phex)",
+			TalentGroupType.Gaben, null), LiturgiekenntnisPraios("Liturgiekenntnis (Praios)", TalentGroupType.Gaben,
+			null), LiturgiekenntnisRahja("Liturgiekenntnis (Rahja)", TalentGroupType.Gaben, null), LiturgiekenntnisRondra(
 			"Liturgiekenntnis (Rondra)", TalentGroupType.Gaben, null), LiturgiekenntnisSwafnir(
 			"Liturgiekenntnis (Swafnir)", TalentGroupType.Gaben, null), LiturgiekenntnisTairach(
 			"Liturgiekenntnis (Tairach)", TalentGroupType.Gaben, null), LiturgiekenntnisTravia(
