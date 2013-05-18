@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
@@ -27,17 +26,13 @@ import com.dsatab.data.Value;
 import com.dsatab.data.adapter.ExpandableTalentAdapter;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.modifier.Modificator;
+import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.dsatab.view.FilterSettings;
 import com.dsatab.view.FilterSettings.FilterType;
 import com.dsatab.view.ListFilterSettings;
 import com.dsatab.view.listener.HeroChangedListener;
-import com.gandulf.guilib.util.Debug;
 
-/**
- * 
- * 
- */
 public class TalentFragment extends BaseListFragment implements HeroChangedListener, OnItemLongClickListener {
 
 	private static final String PREF_KEY_GROUP_EXPANDED = "GROUP_EXPANDED";
