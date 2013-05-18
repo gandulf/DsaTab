@@ -46,6 +46,8 @@ public class XmlParserTest extends InstrumentationTestCase {
 		final int TEST_GS = 5;
 		final int TEST_LP = 28;
 		final int TEST_AU = 38;
+		final int TEST_AE = 0;
+		final int TEST_KE = 0;
 		final int TEST_MR = 4;
 		final int TEST_AT = 8;
 		final int TEST_PA = 8;
@@ -82,10 +84,10 @@ public class XmlParserTest extends InstrumentationTestCase {
 		assertEquals(TEST_LP, (int) hero.getAttributeValue(AttributeType.Lebensenergie));
 		assertEquals(TEST_AU, (int) hero.getAttributeValue(AttributeType.Ausdauer_Aktuell));
 		assertEquals(TEST_AU, (int) hero.getAttributeValue(AttributeType.Ausdauer));
-		assertNull(hero.getAttributeValue(AttributeType.Astralenergie_Aktuell));
-		assertNull(hero.getAttributeValue(AttributeType.Astralenergie));
-		assertNull(hero.getAttributeValue(AttributeType.Karmaenergie_Aktuell));
-		assertNull(hero.getAttributeValue(AttributeType.Karmaenergie));
+		assertEquals(TEST_AE, (int) hero.getAttributeValue(AttributeType.Astralenergie_Aktuell));
+		assertEquals(TEST_AE, (int) hero.getAttributeValue(AttributeType.Astralenergie));
+		assertEquals(TEST_KE, (int) hero.getAttributeValue(AttributeType.Karmaenergie_Aktuell));
+		assertEquals(TEST_KE, (int) hero.getAttributeValue(AttributeType.Karmaenergie));
 
 		assertEquals(TEST_MR, (int) hero.getAttributeValue(AttributeType.Magieresistenz));
 

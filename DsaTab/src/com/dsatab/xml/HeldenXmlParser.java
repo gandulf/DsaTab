@@ -448,6 +448,7 @@ public class HeldenXmlParser {
 			le.setReferenceValue(le.getValue());
 			hero.addAttribute(le);
 		}
+
 		if (!hero.hasAttribute(AttributeType.Astralenergie_Aktuell)) {
 			CustomAttribute le = new CustomAttribute(hero, AttributeType.Astralenergie_Aktuell);
 			le.setValue(hero.getAttributeValue(AttributeType.Astralenergie));
