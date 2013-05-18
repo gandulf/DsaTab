@@ -24,10 +24,6 @@ public class EquippedItemListFilter extends OpenFilter<EquippedItem> {
 		return settings;
 	}
 
-	public void setSettings(FightFilterSettings settings) {
-		this.settings = settings;
-	}
-
 	@Override
 	protected boolean isFilterSet() {
 		return constraint != null || (settings != null && !settings.isShowArmor());

@@ -139,28 +139,33 @@ public class EquippedItemListItem extends CheckableRelativeLayout {
 		return set3;
 	}
 
-	public void setItem(EquippedItem e) {
-		setItem(e.getItem());
+	public void setItem(EquippedItem equippedItem) {
+		setItem((Item) (equippedItem != null ? equippedItem.getItem() : null));
 	}
 
-	public void setItem(Item e) {
+	public void setItem(Item item) {
 
 		ItemSpecification itemSpecification = null;
-		if (e != null && !e.getSpecifications().isEmpty()) {
-			itemSpecification = e.getSpecifications().get(0);
+		if (item != null && !item.getSpecifications().isEmpty()) {
+			itemSpecification = item.getSpecifications().get(0);
 		}
-		setItem(e, itemSpecification);
+		setItem(item, itemSpecification);
 	}
 
-	public void setItem(Item e, ItemSpecification spec) {
+	public void setItem(Item item, ItemSpecification spec) {
 
 		if (icon1 != null) {
-			icon1.setVisibility(View.VISIBLE);
-			icon1.setImageURI(e.getIconUri());
+			if (item != null) {
+				icon1.setVisibility(View.VISIBLE);
+				icon1.setImageURI(item.getIconUri());
+			} else {
+				icon1.setVisibility(View.INVISIBLE);
+			}
+
 		}
 		// Set value for the first text field
 		if (text1 != null) {
-			text1.setText(e.getTitle());
+			text1.setText(item != null ? item.getTitle() : null);
 			if (textColor != Color.TRANSPARENT)
 				text1.setTextColor(textColor);
 		}
@@ -176,13 +181,13 @@ public class EquippedItemListItem extends CheckableRelativeLayout {
 			}
 		}
 
-		int visibility = e.isEquipable() ? View.VISIBLE : View.GONE;
+		int visibility = (item != null && item.isEquipable()) ? View.VISIBLE : View.GONE;
 		set1.setVisibility(visibility);
 		set2.setVisibility(visibility);
 		set3.setVisibility(visibility);
 
-		if (e.getCount() > 1) {
-			countOverlay.setText(Util.toString(e.getCount()));
+		if (item != null && item.getCount() > 1) {
+			countOverlay.setText(Util.toString(item.getCount()));
 			countOverlay.setVisibility(View.VISIBLE);
 		} else {
 			countOverlay.setVisibility(View.GONE);

@@ -207,6 +207,17 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		return activityClazz;
 	}
 
+	public BaseFragment getFragment() throws InstantiationException, IllegalAccessException {
+		BaseFragment fragment = null;
+		for (int i = 0; i < activityClazz.length; i++) {
+			fragment = getFragment(i);
+			if (fragment != null)
+				break;
+		}
+
+		return fragment;
+	}
+
 	public BaseFragment getFragment(int pos) throws InstantiationException, IllegalAccessException {
 		BaseFragment fragment = null;
 		if (activityClazz[pos] != null) {
@@ -303,13 +314,16 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 	}
 
 	public FilterSettings getFilterSettings(int pos) {
+		if (filterSettings[pos] == null) {
+			updateFilterSettings();
+		}
 		return filterSettings[pos];
 	}
 
 	public FilterSettings getFilterSettings(BaseFragment baseFragment) {
 		for (int i = 0; i < activityClazz.length; i++) {
 			if (activityClazz[i] == baseFragment.getClass()) {
-				return filterSettings[i];
+				return getFilterSettings(i);
 			}
 		}
 		return null;

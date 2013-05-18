@@ -178,7 +178,6 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 
 		@Override
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-
 			MenuItem edit = menu.findItem(R.id.option_edit);
 
 			SparseBooleanArray checkedPositions = fightList.getCheckedItemPositions();

@@ -43,10 +43,10 @@ public class ArtAdapter extends OpenArrayAdapter<Art> {
 
 		this.filterSettings = new ListFilterSettings();
 
-		inflater = LayoutInflater.from(getContext());
+		inflater = LayoutInflater.from(context);
 		indicatorStarGray = BitmapFactory.decodeResource(context.getResources(), R.drawable.indicator_star_gray);
 
-		if (!settings.isAllVisible())
+		if (settings != null && !settings.isAllVisible())
 			filter(settings);
 	}
 

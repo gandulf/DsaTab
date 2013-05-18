@@ -732,7 +732,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 
 	public boolean checkProbe(Probe probe) {
 		if (diceSlider != null) {
-			if (probe != null) {
+			if (probe != null && getHero() != null) {
 				diceSlider.checkProbe(getHero(), probe);
 				return true;
 			}

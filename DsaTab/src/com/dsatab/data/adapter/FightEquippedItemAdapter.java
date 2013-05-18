@@ -57,13 +57,15 @@ public class FightEquippedItemAdapter extends OpenArrayAdapter<EquippedItem> {
 	}
 
 	public void filter(FightFilterSettings settings) {
+		boolean hasChanged = false;
+		if (settings != null) {
+			hasChanged = (getFilter().getSettings().isShowArmor() != settings.isShowArmor() || getFilter()
+					.getSettings().isIncludeModifiers() != settings.isIncludeModifiers());
 
-		boolean hasChanged = (getFilter().getSettings().isShowArmor() != settings.isShowArmor() || getFilter()
-				.getSettings().isIncludeModifiers() != settings.isIncludeModifiers());
-
-		if (hasChanged) {
-			getFilter().getSettings().set(settings);
-			filter.filter((String) null);
+			if (hasChanged) {
+				getFilter().getSettings().set(settings);
+				filter.filter((String) null);
+			}
 		}
 	}
 
@@ -98,9 +100,9 @@ public class FightEquippedItemAdapter extends OpenArrayAdapter<EquippedItem> {
 	 */
 	@Override
 	public EquippedItemListFilter getFilter() {
-		if (filter == null)
+		if (filter == null) {
 			filter = new EquippedItemListFilter(this);
-
+		}
 		return filter;
 	}
 

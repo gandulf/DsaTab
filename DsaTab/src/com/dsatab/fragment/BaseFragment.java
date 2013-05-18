@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -96,17 +95,17 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 	 */
 	@Override
 	public void onAttach(Activity activity) {
-		// Debug.verbose(getClass().getName() + " attached");
+		super.onAttach(activity);
 
 		// if we reattach a fragment there is already a view present
-		if (getView() != null) {
+		if (getView() != null && getActivity() != null) {
 			Hero hero = getHero();
 			if (hero != null) {
 				Debug.verbose("Loading hero in " + getClass() + " onAttach " + hero.getName());
 				loadHero(hero);
 			}
 		}
-		super.onAttach(activity);
+
 	}
 
 	/*
@@ -217,7 +216,8 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 		if (view.getLayoutParams() instanceof LinearLayout.LayoutParams) {
 			params = ((LinearLayout.LayoutParams) view.getLayoutParams());
 		} else {
-			params = new LinearLayout.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT);
+			params = new LinearLayout.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+					android.view.ViewGroup.LayoutParams.MATCH_PARENT);
 			view.setLayoutParams(params);
 		}
 

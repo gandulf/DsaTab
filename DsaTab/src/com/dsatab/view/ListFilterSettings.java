@@ -129,8 +129,9 @@ public class ListFilterSettings implements FilterSettings, JSONable, Serializabl
 	}
 
 	public boolean equals(ListFilterSettings settings) {
-		return equals(settings.isShowFavorite(), settings.isShowNormal(), settings.isShowUnused(),
-				settings.isIncludeModifiers());
+		return settings != null
+				&& equals(settings.isShowFavorite(), settings.isShowNormal(), settings.isShowUnused(),
+						settings.isIncludeModifiers());
 	}
 
 	public boolean equals(boolean showFavorite, boolean showNormal, boolean showUnused, boolean includeModifiers) {

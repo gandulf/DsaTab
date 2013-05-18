@@ -68,7 +68,7 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
 				if (tabInfo.getTabCount() == 0) {
 					f = new EmptyFragment();
 				} else if (tabInfo.getTabCount() == 1) {
-					f = tabInfo.getFragment(0);
+					f = tabInfo.getFragment();
 				} else {
 					f = new DualPaneFragment(tabInfos.get(pos));
 				}

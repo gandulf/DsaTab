@@ -147,8 +147,7 @@ public class ExpandableItemAdapter extends BaseExpandableListAdapter implements 
 		Item item = getChild(groupPosition, childPosition);
 		view.setItem(item);
 
-		if (item.isEquipable()) {
-
+		if (item != null && item.isEquipable()) {
 			for (int set = 0; set < Hero.MAXIMUM_SET_NUMBER; set++) {
 				CheckableImageButton setButton = view.getSet(set);
 				setButton.setChecked(false);
@@ -163,7 +162,6 @@ public class ExpandableItemAdapter extends BaseExpandableListAdapter implements 
 					}
 				}
 			}
-
 		} else {
 			for (int set = 0; set < Hero.MAXIMUM_SET_NUMBER; set++) {
 				view.getSet(set).setTag(null);
