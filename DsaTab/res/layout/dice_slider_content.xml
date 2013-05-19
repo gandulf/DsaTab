@@ -155,16 +155,6 @@
         </ImageView>
 
         <ImageButton
-            android:id="@+id/dice_area"
-            android:layout_width="@dimen/dice_size"
-            android:layout_height="@dimen/dice_size"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dip"
-            android:scaleType="fitCenter"
-            android:src="@drawable/icon_dummy"
-            android:visibility="gone" />
-
-        <ImageButton
             android:id="@+id/dice_execute"
             android:layout_width="@dimen/dice_size"
             android:layout_height="@dimen/dice_size"

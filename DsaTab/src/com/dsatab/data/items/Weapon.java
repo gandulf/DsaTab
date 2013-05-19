@@ -138,6 +138,37 @@ public class Weapon extends CloseCombatItem {
 		return kkModifier;
 	}
 
+	/**
+	 * @param kk
+	 * @param modifier
+	 * @return an actual tp amount using dice, so this returns a different result for each call
+	 */
+	public Integer getTp(int kk, int modifier, boolean successOne) {
+		Integer result = null;
+		Dice dice = Dice.parseDice(getTp());
+		if (dice != null) {
+			result = 0;
+			for (int i = 0; i < dice.diceCount; i++) {
+				result += Util.dice(dice.diceType);
+			}
+			result += dice.constant;
+			// only multiply weapon damage in case of successOne
+			if (successOne) {
+				// Debug.verbose("ONE *2" + result);
+				result *= 2;
+			}
+
+			// the rest is added only once
+			result += getKKModifier(kk);
+			result += modifier;
+
+			// Debug.verbose("const=" + dice.constant + ",mod=" + modifier + ",kk=" + getKKModifier(kk));
+		}
+
+		return result;
+
+	}
+
 	public CharSequence getInfo(int kk, int modifier) {
 
 		StyleableSpannableStringBuilder info = new StyleableSpannableStringBuilder();

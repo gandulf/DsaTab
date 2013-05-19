@@ -1,11 +1,9 @@
 package com.dsatab.view;
 
 import java.lang.ref.WeakReference;
-import java.security.SecureRandom;
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.OnWheelClickedListener;
@@ -40,7 +38,6 @@ import android.widget.SlidingDrawer.OnDrawerCloseListener;
 import android.widget.SlidingDrawer.OnDrawerOpenListener;
 import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
@@ -60,6 +57,9 @@ import com.dsatab.data.Probe.ProbeType;
 import com.dsatab.data.Spell;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.FeatureType;
+import com.dsatab.data.items.DistanceWeapon;
+import com.dsatab.data.items.EquippedItem;
+import com.dsatab.data.items.Weapon;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Hint;
 import com.dsatab.util.Util;
@@ -70,8 +70,6 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 
 	private static final int HANDLE_DICE_20 = 1;
 	private static final int HANDLE_DICE_6 = 2;
-	private static final int HANDLE_MELEE_FAILURE = 3;
-	private static final int HANDLE_DISTANCE_FAILURE = 4;
 
 	private View slideHandleButton;
 	private boolean sliderVisible = true;
@@ -79,7 +77,7 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 	private TableLayout tblDiceProbe;
 	private TextView tfDiceTalent, tfDiceTalentValue, tfDiceProbesAttr, tfDiceProbesAttrValues, tfEffect,
 			tfEffectValue;
-	private ImageView tfDice20, tfDice6, tfArea;
+	private ImageView tfDice20, tfDice6;
 
 	private ImageButton infoButton;
 
@@ -93,13 +91,9 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 
 	private DiceHandler mHandler;
 
-	private Random rnd = new SecureRandom();
-
 	private NumberFormat effectFormat = NumberFormat.getNumberInstance();
 
 	private NumberFormat probabilityFormat = NumberFormat.getPercentInstance();
-
-	private CombatTalent lastCombatTalent = null;
 
 	private List<Modifier> modifiers;
 
@@ -119,6 +113,7 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 	private int soundWin;
 	private int soundFail;
 	private Activity activity;
+	private Hero hero;
 
 	public DiceSlider(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -215,11 +210,6 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 		} else if (v == linDiceResult) {
 			linDiceResult.removeAllViews();
 			linDiceResult.scrollTo(0, 0);
-		} else if (v == tfArea && tfArea.getTag() instanceof CombatTalent) {
-			CombatTalent talent = (CombatTalent) tfArea.getTag();
-			int w20 = rnd.nextInt(20) + 1;
-			Toast.makeText(getContext(), "Treffer auf " + talent.getPosition(w20).getName() + " (" + w20 + ")",
-					Toast.LENGTH_LONG).show();
 		} else if (v == tfDice20) {
 			rollDice20();
 		}
@@ -355,10 +345,6 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 		executeButton.setOnClickListener(this);
 		executeButton.setVisibility(View.GONE);
 
-		tfArea = (ImageView) findViewById(R.id.dice_area);
-		if (tfArea != null) {
-			tfArea.setOnClickListener(this);
-		}
 		linDiceResult = (LinearLayout) findViewById(R.id.dice_dice_result);
 		linDiceResult.setOnClickListener(this);
 
@@ -378,7 +364,7 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 		tblDiceProbe.setVisibility(View.GONE);
 		infoButton.setVisibility(View.INVISIBLE);
 		executeButton.setVisibility(View.GONE);
-		tfArea.setVisibility(View.GONE);
+
 		tfDiceTalent.setText(null);
 		if (modifiersContainer != null) {
 			modifiersContainer.setVisibility(View.GONE);
@@ -453,6 +439,8 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 			sounds.play(soundNeutral, 1.0f, 1.0f, 0, 0, 1.0f);
 		}
 
+		CombatTalent combatTalent = getCombatTalent(info.probe);
+
 		if (effect != null) {
 			tfEffectValue.setVisibility(View.VISIBLE);
 			tfEffect.setVisibility(View.VISIBLE);
@@ -471,11 +459,14 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 
 					linDiceResult.setBackgroundResource(R.drawable.probe_red_highlight);
 
-					if (lastCombatTalent instanceof CombatDistanceTalent) {
-						mHandler.sendMessageDelayed(Message.obtain(mHandler, HANDLE_DISTANCE_FAILURE), 1000);
-					} else if (lastCombatTalent instanceof CombatMeleeTalent
-							|| lastCombatTalent instanceof CombatMeleeAttribute) {
-						mHandler.sendMessageDelayed(Message.obtain(mHandler, HANDLE_MELEE_FAILURE), 1000);
+					if (combatTalent instanceof CombatDistanceTalent) {
+						tfDiceTalent.append(" | ");
+						tfDiceTalent.append(getFailureDistance());
+
+					} else if (combatTalent instanceof CombatMeleeTalent
+							|| combatTalent instanceof CombatMeleeAttribute) {
+						tfDiceTalent.append(" | ");
+						tfDiceTalent.append(getFailureMelee());
 					}
 
 				} else { // unbestätigter patzer
@@ -485,8 +476,9 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 				tfDiceTalent.setTextColor(getResources().getColor(R.color.ValueRed));
 
 				if (info.sound && preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_SOUND_ROLL_DICE, true)
-						&& preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_SOUND_RESULT_DICE, true))
+						&& preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_SOUND_RESULT_DICE, true)) {
 					sounds.play(soundFail, 1.0f, 1.0f, 0, 0, 1.0f);
+				}
 			} else { // geschafft
 
 				if (info.successOne && effect >= 0) {
@@ -499,13 +491,30 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 					tfDiceTalent.setText(info.probe.getName() + " gelungen");
 					tfEffectValue.setTextColor(getResources().getColor(android.R.color.secondary_text_dark));
 					tfDiceTalent.setTextColor(getResources().getColor(android.R.color.primary_text_dark));
-					;
 					linDiceResult.setBackgroundResource(0);
 				}
 
+				StringBuilder sb = new StringBuilder();
+				if (info.tp != null) {
+					sb.append(Integer.toString(info.tp));
+					sb.append(" TP ");
+				} else if (combatTalent != null && info.target != null) {
+					sb.append("Treffer ");
+				}
+
+				if (combatTalent != null && info.target != null) {
+					sb.append("auf ");
+					sb.append(combatTalent.getPosition(info.target).getName());
+					// sb.append(" (" + info.target + ")");
+				}
+				if (sb.length() > 0) {
+					tfDiceTalent.append(" | " + sb);
+				}
+
 				if (info.sound && preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_SOUND_ROLL_DICE, true)
-						&& preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_SOUND_RESULT_DICE, true))
+						&& preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_SOUND_RESULT_DICE, true)) {
 					sounds.play(soundWin, 1.0f, 1.0f, 0, 0, 1.0f);
+				}
 
 			}
 		} else {
@@ -520,7 +529,6 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 		mHandler.removeMessages(HANDLE_DICE_6);
 		dice20Count = 0;
 		dice6Count = 0;
-		lastCombatTalent = null;
 		linDiceResult.removeAllViews();
 		if (probeData != null) {
 			probeData.clearDice();
@@ -534,6 +542,7 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 		if (activity != null) {
 			Hint.showRandomHint("DiceSlider", activity);
 		}
+		this.hero = hero;
 
 		clearDice();
 
@@ -707,21 +716,6 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 			tfDiceProbesAttrValues.setVisibility(View.VISIBLE);
 		}
 
-		if (probe instanceof CombatProbe) {
-			lastCombatTalent = ((CombatProbe) probe).getCombatTalent();
-		} else if (probe instanceof CombatTalent) {
-			lastCombatTalent = (CombatTalent) probe;
-		} else if (probe instanceof CombatMeleeAttribute) {
-			lastCombatTalent = ((CombatMeleeAttribute) probe).getTalent();
-		}
-
-		if (lastCombatTalent != null) {
-			tfArea.setVisibility(View.VISIBLE);
-			tfArea.setTag(lastCombatTalent);
-		} else {
-			tfArea.setVisibility(View.GONE);
-		}
-
 		if (isModifiersPopup()) {
 			if (modifiersContainer != null) {
 				modifiersContainer.setVisibility(View.GONE);
@@ -751,6 +745,19 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 
 		}
 
+	}
+
+	private CombatTalent getCombatTalent(Probe probe) {
+		CombatTalent lastCombatTalent = null;
+		if (probe instanceof CombatProbe) {
+			lastCombatTalent = ((CombatProbe) probe).getCombatTalent();
+		} else if (probe instanceof CombatTalent) {
+			lastCombatTalent = (CombatTalent) probe;
+		} else if (probe instanceof CombatMeleeAttribute) {
+			lastCombatTalent = ((CombatMeleeAttribute) probe).getTalent();
+		}
+
+		return lastCombatTalent;
 	}
 
 	private Double checkProbe(ProbeData info, Modifier... modificators) {
@@ -960,6 +967,43 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 			}
 		}
 
+		CombatTalent combatTalent = getCombatTalent(info.probe);
+		if (combatTalent != null) {
+			if (info.target == null) {
+				info.target = Util.dice(20);
+			}
+		}
+
+		if (probe instanceof CombatProbe) {
+			CombatProbe combatProbe = (CombatProbe) probe;
+			EquippedItem item = combatProbe.getEquippedItem();
+			// remove target in case of defense
+			if (!combatProbe.isAttack()) {
+				info.target = null;
+			}
+
+			if (item != null && info.tp == null && combatProbe.isAttack()) {
+				boolean realSuccessOne = info.successOne != null && info.successOne && effect >= 0;
+				if (item.getItemSpecification() instanceof Weapon) {
+
+					Weapon weapon = (Weapon) item.getItemSpecification();
+
+					info.tp = weapon.getTp(hero.getModifiedValue(AttributeType.Körperkraft, true, true),
+							hero.getModifierTP(item), realSuccessOne);
+
+				} else if (item.getItemSpecification() instanceof DistanceWeapon) {
+					DistanceWeapon weapon = (DistanceWeapon) item.getItemSpecification();
+
+					info.tp = weapon.getTp(hero.getModifiedValue(AttributeType.Körperkraft, true, true),
+							hero.getModifierTP(item), realSuccessOne);
+				}
+
+				if (info.tp != null && combatProbe.getTpModifier() != null) {
+					info.tp += combatProbe.getTpModifier();
+				}
+			}
+		}
+
 		showEffect(effect, erschwernis, info);
 
 		return effect;
@@ -971,7 +1015,7 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 
 		dice20Count++;
 
-		int dice = rnd.nextInt(20) + 1;
+		int dice = Util.dice(20);
 
 		if (preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_ANIM_ROLL_DICE, true)) {
 
@@ -997,7 +1041,7 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 
 		dice6Count++;
 
-		int dice = rnd.nextInt(6) + 1;
+		int dice = Util.dice(6);
 
 		if (preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_ANIM_ROLL_DICE, true)) {
 			if (dice6Count == 1 && (!shakeDice6.hasStarted() || shakeDice6.hasEnded())) {
@@ -1069,7 +1113,7 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 	}
 
 	private String getFailureMelee() {
-		int w6 = rnd.nextInt(6) + 1 + rnd.nextInt(6) + 1;
+		int w6 = Util.dice(6) + Util.dice(6);
 
 		switch (w6) {
 		case 2:
@@ -1096,7 +1140,7 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 	}
 
 	private String getFailureDistance() {
-		int w6 = rnd.nextInt(6) + 1 + rnd.nextInt(6) + 1;
+		int w6 = Util.dice(6) + Util.dice(6);
 
 		switch (w6) {
 		case 2:
@@ -1149,12 +1193,6 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 					diceSlider.dice20Count--;
 					break;
 				}
-				case HANDLE_DISTANCE_FAILURE:
-					Toast.makeText(diceSlider.getContext(), diceSlider.getFailureDistance(), Toast.LENGTH_LONG).show();
-					break;
-				case HANDLE_MELEE_FAILURE:
-					Toast.makeText(diceSlider.getContext(), diceSlider.getFailureMelee(), Toast.LENGTH_LONG).show();
-					break;
 				}
 			}
 		}
@@ -1164,6 +1202,10 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 		Integer[] value = new Integer[3];
 
 		Integer[] dice = new Integer[3];
+
+		Integer tp;
+
+		Integer target;
 
 		Hero hero;
 
@@ -1180,6 +1222,8 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 
 			failureTwenty = null;
 			successOne = null;
+			tp = null;
+			target = null;
 		}
 
 	}

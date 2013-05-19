@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.security.SecureRandom;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Arrays;
@@ -15,6 +16,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.StringTokenizer;
 
 import android.content.ContentResolver;
@@ -29,7 +31,6 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LevelListDrawable;
 import android.net.Uri;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 import android.text.Html;
 import android.text.Spanned;
@@ -75,6 +76,8 @@ public class Util {
 	private static final String PLUS = "+";
 	private static final String MINUS = "-";
 	private static final String NULL = "null";
+
+	private static Random rnd = new SecureRandom();
 
 	private static final List<String> ROMANS = Arrays.asList("", "I", "II", "III", "IV", "V", "VI", "VII", "VIII",
 			"IX", "X");
@@ -1062,5 +1065,15 @@ public class Util {
 		else
 			return Boolean.parseBoolean(value);
 
+	}
+
+	/**
+	 * Returns a value between 1 and max (incl)
+	 * 
+	 * @param max
+	 * @return
+	 */
+	public static int dice(int max) {
+		return rnd.nextInt(max) + 1;
 	}
 }

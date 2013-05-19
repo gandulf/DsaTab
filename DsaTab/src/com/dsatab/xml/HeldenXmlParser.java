@@ -894,7 +894,7 @@ public class HeldenXmlParser {
 								for (int i = 0; i < DistanceWeapon.DISTANCE_COUNT; i++) {
 									String value = child.getAttributeValue("M" + i);
 									if (!TextUtils.isEmpty(value)) {
-										distanceWeapon.setTpDistances(i, value);
+										distanceWeapon.setTpDistance(i, value);
 									}
 								}
 							}

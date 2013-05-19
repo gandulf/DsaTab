@@ -99,6 +99,13 @@ public class ArcheryChooserDialog extends AlertDialog implements android.view.Vi
 		CombatProbe combatProbe = equippedItem.getCombatProbeAttacke();
 		combatProbe.getProbeInfo().setErschwernis(erschwernis);
 
+		if (equippedItem.getItemSpecification() instanceof DistanceWeapon) {
+			DistanceWeapon distanceWeapon = (DistanceWeapon) equippedItem.getItemSpecification();
+			combatProbe.setTpModifier(distanceWeapon.getTpDistance(distanceSpinner.getSelectedItemPosition()));
+		} else {
+			combatProbe.setTpModifier(null);
+		}
+
 		// store current position for later
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 		Editor edit = preferences.edit();

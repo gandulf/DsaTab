@@ -21,6 +21,8 @@ public class CombatProbe extends BaseProbe {
 
 	protected TalentType type;
 
+	private Integer tpModifier;
+
 	public CombatProbe(EquippedItem item, boolean attack) {
 		this.equippedItem = item;
 		this.attack = attack;
@@ -96,6 +98,14 @@ public class CombatProbe extends BaseProbe {
 
 	public CombatTalent getCombatTalent() {
 		return combatTalent;
+	}
+
+	public Integer getTpModifier() {
+		return tpModifier;
+	}
+
+	public void setTpModifier(Integer tpModifier) {
+		this.tpModifier = tpModifier;
 	}
 
 	/*

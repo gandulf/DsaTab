@@ -14,7 +14,7 @@ public class Dice {
 	public int diceType = 6;
 	public int constant = 0;
 
-	private static Pattern p = Pattern.compile("(\\d*)W(\\d*)([+-]?\\d*)", Pattern.CASE_INSENSITIVE);
+	private static Pattern p = Pattern.compile("(\\d*)WA?(\\d*)([+-]?\\d*)", Pattern.CASE_INSENSITIVE);
 
 	public static Dice parseDice(String tp) {
 

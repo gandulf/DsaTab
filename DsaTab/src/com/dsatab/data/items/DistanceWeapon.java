@@ -49,6 +49,34 @@ public class DistanceWeapon extends ItemSpecification {
 		return tp;
 	}
 
+	/**
+	 * @param kk
+	 * @param modifier
+	 * @return an acual tp amount using dice, so this returns a different result for each call
+	 */
+	public Integer getTp(int kk, int modifier, boolean successOne) {
+		Integer result = null;
+		Dice dice = Dice.parseDice(getTp());
+		if (dice != null) {
+			result = 0;
+
+			for (int i = 0; i < dice.diceCount; i++) {
+				result += Util.dice(dice.diceType);
+			}
+			result += dice.constant;
+			// only multiply weapon damage in case of successOne
+			if (successOne) {
+				result *= 2;
+			}
+
+			result += modifier;
+
+		}
+
+		return result;
+
+	}
+
 	public void setTp(String tp) {
 		this.tp = tp;
 	}
@@ -132,13 +160,21 @@ public class DistanceWeapon extends ItemSpecification {
 		return tpDistances;
 	}
 
+	public Integer getTpDistance(int index) {
+		if (tpDistance != null && tpDistance.length > index) {
+			return Util.parseInteger(tpDistance[index]);
+		} else {
+			return null;
+		}
+	}
+
 	public void setTpDistances(String tpDistances) {
 		this.tpDistances = tpDistances;
 		this.tpDistance = null;
 		initTpDistances();
 	}
 
-	public void setTpDistances(int index, String value) {
+	public void setTpDistance(int index, String value) {
 		if (tpDistance == null) {
 			tpDistance = new String[DISTANCE_COUNT];
 		}
