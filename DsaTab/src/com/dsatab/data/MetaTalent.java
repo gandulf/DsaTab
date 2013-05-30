@@ -15,6 +15,7 @@ public class MetaTalent extends Talent implements JSONable {
 	private static final String FIELD_UNUSED = "unused";
 
 	private static final String DEPRECATED_WACHE_NAME = "Wache";
+	private static final String DEPRECATED_KRÄUTERSUCHE_NAME = "Kräutersuchen";
 
 	private boolean favorite, unused;
 
@@ -28,7 +29,9 @@ public class MetaTalent extends Talent implements JSONable {
 	public MetaTalent(Hero hero, JSONObject json) throws JSONException {
 		super(hero);
 		String type = json.getString(FIELD_META_TYPE);
-		if (DEPRECATED_WACHE_NAME.equalsIgnoreCase(type)) {
+		if (DEPRECATED_KRÄUTERSUCHE_NAME.equalsIgnoreCase(type)) {
+			this.type = TalentType.Kräutersuche;
+		} else if (DEPRECATED_WACHE_NAME.equalsIgnoreCase(type)) {
 			this.type = TalentType.WacheHalten;
 		} else {
 			this.type = TalentType.valueOf(type);

@@ -335,7 +335,7 @@ public class DataManager {
 		return DsaTabApplication.getInstance().getDBHelper().getRuntimeDao(ArtInfo.class).queryForFirst(artNameQuery);
 	}
 
-	public static ArtInfo getArtByNameAndGrady(String name, String grade) {
+	public static ArtInfo getArtByNameAndGrade(String name, String grade) {
 		initArtQueries();
 		artGradeArg.setValue(grade);
 		artNameArg.setValue(name);

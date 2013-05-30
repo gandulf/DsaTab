@@ -13,6 +13,7 @@ import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.FeatureType;
 import com.dsatab.data.enums.TalentType;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
+import com.dsatab.exception.FeatureTypeUnknownException;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.dsatab.xml.DataManager;
@@ -126,15 +127,16 @@ public class Art extends MarkableElement implements Value {
 
 	protected void setGroupType(ArtGroupType type) {
 		this.groupType = type;
-
-		switch (type) {
-		case Ritual:
-			kenntnis = hero.getTalent(TalentType.GeisterRufen);
-			break;
-		default:
-			if (type.talentType() != null)
-				kenntnis = hero.getTalent(type.talentType());
-			break;
+		if (groupType != null) {
+			switch (groupType) {
+			case Ritual:
+				kenntnis = hero.getTalent(TalentType.GeisterRufen);
+				break;
+			default:
+				if (groupType.talentType() != null)
+					kenntnis = hero.getTalent(groupType.talentType());
+				break;
+			}
 		}
 
 		if (kenntnis != null) {
@@ -167,9 +169,14 @@ public class Art extends MarkableElement implements Value {
 		}
 	}
 
-	public void setName(String name) {
-		this.name = name.trim();
-		this.type = FeatureType.byXmlName(this.name);
+	public void setName(String nameValue) {
+		this.name = nameValue.trim();
+
+		try {
+			this.type = FeatureType.byXmlName(name);
+		} catch (FeatureTypeUnknownException e) {
+			BugSenseHandler.sendException(e);
+		}
 
 		setGroupType(ArtGroupType.getTypeOfArt(name));
 		if (groupType != null) {
@@ -199,7 +206,7 @@ public class Art extends MarkableElement implements Value {
 		if (grade == null) {
 			info = DataManager.getArtByName(name);
 		} else {
-			info = DataManager.getArtByNameAndGrady(name, grade);
+			info = DataManager.getArtByNameAndGrade(name, grade);
 		}
 
 		if (info == null) {

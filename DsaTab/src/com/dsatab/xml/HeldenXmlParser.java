@@ -73,7 +73,7 @@ import com.dsatab.data.items.MiscSpecification;
 import com.dsatab.data.items.Shield;
 import com.dsatab.data.items.UsageType;
 import com.dsatab.data.items.Weapon;
-import com.dsatab.exception.FeatureTypeUnknownExcpetion;
+import com.dsatab.exception.FeatureTypeUnknownException;
 import com.dsatab.exception.InconsistentDataException;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
@@ -139,7 +139,9 @@ public class HeldenXmlParser {
 		hero.getFreeExperience().setValue(Util.parseInteger(freeXpElement.getAttributeValue(Xml.KEY_VALUE)));
 
 		fillArtsAndSpecialFeatures(hero, heroElement);
-		fillAdvantages(hero, heroElement); // has to be done before attributes because vollzauber features havea effect on astralenergie
+		fillAdvantages(hero, heroElement); // has to be done before attributes
+											// because vollzauber features havea
+											// effect on astralenergie
 
 		fillAttributes(hero, heroElement);
 
@@ -173,9 +175,9 @@ public class HeldenXmlParser {
 		for (Element element : sfs) {
 			FeatureType featureType;
 			try {
-				featureType = FeatureType.byXmlName(element.getAttributeValue(Xml.KEY_NAME));
-			} catch (IllegalArgumentException e) {
-				BugSenseHandler.sendException(new FeatureTypeUnknownExcpetion(element.getAttributeValue(Xml.KEY_NAME)));
+				featureType = FeatureType.byXmlName(element.getAttributeValue(Xml.KEY_NAME).trim());
+			} catch (FeatureTypeUnknownException e) {
+				BugSenseHandler.sendException(e);
 				continue;
 			}
 			Feature adv = new Feature(featureType);
@@ -261,9 +263,8 @@ public class HeldenXmlParser {
 				FeatureType featureType = null;
 				try {
 					featureType = FeatureType.byXmlName(element.getAttributeValue(Xml.KEY_NAME));
-				} catch (IllegalArgumentException e) {
-					BugSenseHandler.sendException(new FeatureTypeUnknownExcpetion(element
-							.getAttributeValue(Xml.KEY_NAME)));
+				} catch (FeatureTypeUnknownException e) {
+					BugSenseHandler.sendException(e);
 					continue;
 				}
 				Feature specialFeature = new Feature(featureType);
@@ -578,8 +579,8 @@ public class HeldenXmlParser {
 					if (feature != null && !TextUtils.isEmpty(kommentar.getAttributeValue(Xml.KEY_KOMMENTAR))) {
 						feature.setComment(kommentar.getAttributeValue(Xml.KEY_KOMMENTAR));
 					}
-				} catch (IllegalArgumentException e) {
-					BugSenseHandler.sendException(new FeatureTypeUnknownExcpetion(key));
+				} catch (FeatureTypeUnknownException e) {
+					BugSenseHandler.sendException(e);
 				}
 			}
 
@@ -601,8 +602,8 @@ public class HeldenXmlParser {
 						if (!TextUtils.isEmpty(sfInfo.getAttributeValue(Xml.KEY_DAUER)))
 							art.getInfo().setCastDuration(sfInfo.getAttributeValue(Xml.KEY_DAUER));
 					}
-				} catch (IllegalArgumentException e) {
-					BugSenseHandler.sendException(new FeatureTypeUnknownExcpetion(infoName));
+				} catch (FeatureTypeUnknownException e) {
+					BugSenseHandler.sendException(e);
 				}
 			}
 		}
