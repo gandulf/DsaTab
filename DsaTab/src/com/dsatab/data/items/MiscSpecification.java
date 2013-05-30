@@ -51,16 +51,20 @@ public class MiscSpecification extends ItemSpecification {
 	 */
 	@Override
 	public int getResourceId() {
-		switch (type) {
-		case Behälter:
-			return R.drawable.icon_bags;
-		case Schmuck:
-			return R.drawable.icon_special;
-		case Kleidung:
-			return R.drawable.icon_armor_cloth;
-		case Sonstiges:
-			return R.drawable.icon_misc;
-		default:
+		if (type != null) {
+			switch (type) {
+			case Behälter:
+				return R.drawable.icon_bags;
+			case Schmuck:
+				return R.drawable.icon_special;
+			case Kleidung:
+				return R.drawable.icon_armor_cloth;
+			case Sonstiges:
+				return R.drawable.icon_misc;
+			default:
+				return R.drawable.icon_other;
+			}
+		} else {
 			return R.drawable.icon_other;
 		}
 	}

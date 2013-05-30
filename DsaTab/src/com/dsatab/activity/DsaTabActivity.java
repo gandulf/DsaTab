@@ -301,19 +301,20 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		if (getSupportActionBar().getSelectedNavigationIndex() != position) {
 			getSupportActionBar().setSelectedNavigationItem(position);
 		}
+		if (getHeroConfiguration() != null) {
+			tabInfo = getHeroConfiguration().getTab(position);
 
-		tabInfo = getHeroConfiguration().getTab(position);
+			if (tabInfo.isDiceSlider())
+				showDiceSlider();
+			else
+				hideDiceSlider();
 
-		if (tabInfo.isDiceSlider())
-			showDiceSlider();
-		else
-			hideDiceSlider();
-
-		if (attributeFragment != null && attributeFragment.isAdded() && attributeFragment.getView() != null) {
-			if (tabInfo.isAttributeList()) {
-				attributeFragment.getView().setVisibility(View.VISIBLE);
-			} else {
-				attributeFragment.getView().setVisibility(View.GONE);
+			if (attributeFragment != null && attributeFragment.isAdded() && attributeFragment.getView() != null) {
+				if (tabInfo.isAttributeList()) {
+					attributeFragment.getView().setVisibility(View.VISIBLE);
+				} else {
+					attributeFragment.getView().setVisibility(View.GONE);
+				}
 			}
 		}
 	}
@@ -947,7 +948,8 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.content.SharedPreferences.OnSharedPreferenceChangeListener# onSharedPreferenceChanged(android.content.SharedPreferences, java.lang.String)
+	 * @see android.content.SharedPreferences.OnSharedPreferenceChangeListener#
+	 * onSharedPreferenceChanged(android.content.SharedPreferences, java.lang.String)
 	 */
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

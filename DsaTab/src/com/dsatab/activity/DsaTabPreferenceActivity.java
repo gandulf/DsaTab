@@ -28,7 +28,6 @@ import android.preference.Preference;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
-import android.provider.MediaStore;
 import android.provider.MediaStore.Images.ImageColumns;
 import android.provider.MediaStore.Images.Media;
 import android.provider.MediaStore.MediaColumns;
@@ -381,7 +380,8 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.activity.DsaTabPreferenceActivity#onSharedPreferenceChanged( android.content.SharedPreferences, java.lang.String)
+	 * @see com.dsatab.activity.DsaTabPreferenceActivity#onSharedPreferenceChanged( android.content.SharedPreferences,
+	 * java.lang.String)
 	 */
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -398,7 +398,8 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.preference.PreferenceActivity#onPreferenceTreeClick(android. preference.PreferenceScreen, android.preference.Preference)
+	 * @see android.preference.PreferenceActivity#onPreferenceTreeClick(android. preference.PreferenceScreen,
+	 * android.preference.Preference)
 	 */
 	@Override
 	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
@@ -456,24 +457,27 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 		String[] filePathColumn = { MediaColumns.DATA, ImageColumns.BUCKET_ID };
 
 		Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-		cursor.moveToFirst();
 
-		int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-		// int bucketIndex = cursor.getColumnIndex(filePathColumn[1]);
-		String filePath = cursor.getString(columnIndex);
-		// String bucketId = cursor.getString(bucketIndex);
+		if (cursor.moveToFirst()) {
 
-		cursor.close();
-		File file = new File(filePath);
-		if (file.exists()) {
-			SharedPreferences preferences = DsaTabApplication.getPreferences();
-			Editor edit = preferences.edit();
-			edit.putString(prefKey, filePath);
-			edit.commit();
+			int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+			// int bucketIndex = cursor.getColumnIndex(filePathColumn[1]);
+			String filePath = cursor.getString(columnIndex);
+			// String bucketId = cursor.getString(bucketIndex);
 
-			Toast.makeText(this, "Hintergrundbild wurde verändert.", Toast.LENGTH_SHORT).show();
+			cursor.close();
+			if (filePath != null) {
+				File file = new File(filePath);
+				if (file.exists()) {
+					SharedPreferences preferences = DsaTabApplication.getPreferences();
+					Editor edit = preferences.edit();
+					edit.putString(prefKey, filePath);
+					edit.commit();
+
+					Toast.makeText(this, "Hintergrundbild wurde verändert.", Toast.LENGTH_SHORT).show();
+				}
+			}
 		}
-
 	}
 
 	protected static void pickImage(Activity activity, int action) {
@@ -482,8 +486,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 		String folderPath = DsaTabApplication.getDirectory(DsaTabApplication.DIR_PORTRAITS).getAbsolutePath();
 		String folderBucketId = Integer.toString(folderPath.toLowerCase(Locale.GERMAN).hashCode());
 
-		targetUri = targetUri.buildUpon().appendQueryParameter(ImageColumns.BUCKET_ID, folderBucketId)
-				.build();
+		targetUri = targetUri.buildUpon().appendQueryParameter(ImageColumns.BUCKET_ID, folderBucketId).build();
 
 		Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
 		photoPickerIntent.setData(targetUri);
@@ -790,8 +793,8 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see android.content.SharedPreferences.OnSharedPreferenceChangeListener #onSharedPreferenceChanged(android.content.SharedPreferences,
-		 * java.lang.String)
+		 * @see android.content.SharedPreferences.OnSharedPreferenceChangeListener
+		 * #onSharedPreferenceChanged(android.content.SharedPreferences, java.lang.String)
 		 */
 		@Override
 		public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -801,7 +804,8 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see android.preference.PreferenceFragment#onPreferenceTreeClick(android .preference.PreferenceScreen, android.preference.Preference)
+		 * @see android.preference.PreferenceFragment#onPreferenceTreeClick(android .preference.PreferenceScreen,
+		 * android.preference.Preference)
 		 */
 		@Override
 		public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {

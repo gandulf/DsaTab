@@ -23,7 +23,6 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -65,6 +64,9 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 		@Override
 		public boolean onActionItemClicked(ActionMode mode, com.actionbarsherlock.view.MenuItem item) {
 			boolean notifyChanged = false;
+			if (list == null || adapter == null) {
+				return false;
+			}
 
 			SparseBooleanArray checkedPositions = list.getCheckedItemPositionsC();
 			if (checkedPositions != null) {
@@ -125,14 +127,19 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 		@Override
 		public void onDestroyActionMode(ActionMode mode) {
 			mMode = null;
-			list.clearChoicesC();
-			adapter.notifyDataSetChanged();
+			if (list != null) {
+				list.clearChoicesC();
+			}
+			if (adapter != null) {
+				adapter.notifyDataSetChanged();
+			}
 		}
 
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see com.actionbarsherlock.view.ActionMode.Callback#onPrepareActionMode (com.actionbarsherlock.view.ActionMode, com.actionbarsherlock.view.Menu)
+		 * @see com.actionbarsherlock.view.ActionMode.Callback#onPrepareActionMode
+		 * (com.actionbarsherlock.view.ActionMode, com.actionbarsherlock.view.Menu)
 		 */
 		@Override
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
@@ -163,11 +170,12 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 		}
 	}
 
-	/**
-	 * 
-	 */
-	public HeroChooserActivity() {
-
+	@Override
+	protected void onPause() {
+		if (mMode != null) {
+			mMode.finish();
+		}
+		super.onPause();
 	}
 
 	/*
@@ -343,7 +351,8 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 				/*
 				 * (non-Javadoc)
 				 * 
-				 * @see com.dsatab.common.HeroExchange.OnHeroExchangeListener# onHeroInfoLoaded(com.dsatab.data.HeroOnlineInfo)
+				 * @see com.dsatab.common.HeroExchange.OnHeroExchangeListener#
+				 * onHeroInfoLoaded(com.dsatab.data.HeroOnlineInfo)
 				 */
 				@Override
 				public void onHeroInfoLoaded(HeroFileInfo info) {

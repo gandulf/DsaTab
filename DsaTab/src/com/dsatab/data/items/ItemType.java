@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.bugsense.trace.BugSenseHandler;
-import com.dsatab.exception.InconsistentDataException;
+import com.dsatab.exception.ItemTypeUnknownException;
 
 public enum ItemType {
 	Waffen('W', "weapons", true), Fernwaffen('D', "weapons", true), Rüstung('A', "weapons", true), Schilde('S',
@@ -90,8 +90,7 @@ public enum ItemType {
 		case 'X':
 			return Schmuck;
 		default:
-			BugSenseHandler.sendException(new InconsistentDataException("Character " + c
-					+ " not recognized for itemtype"));
+			BugSenseHandler.sendException(new ItemTypeUnknownException(c));
 			return Sonstiges;
 		}
 	}

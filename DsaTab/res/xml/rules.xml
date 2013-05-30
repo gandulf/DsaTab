@@ -94,7 +94,7 @@
 	    </affected>
 	    <modifier><![CDATA[
 			com.dsatab.data.items.EquippedItem huntingWeapon = hero.getHuntingWeapon();
-			if (huntingWeapon != null) {
+			if (huntingWeapon != null && huntingWeapon.getItemSpecification() instanceof com.dsatab.data.items.DistanceWeapon) {
 				int maxDistance = ((com.dsatab.data.items.DistanceWeapon)(huntingWeapon.getItemSpecification())).getMaxDistance();
 				if (maxDistance <= 20) {
 					return -7;
@@ -188,7 +188,7 @@
 	        <talent name="Gefahreninstinkt"/>	        			
 	    </required>
 	    <modifier>
-	        hero.getTalent("Gefahreninstinkt").getValue() / 2;	        
+	        hero.getTalent(com.dsatab.data.enums.TalentType.Gefahreninstinkt).getValue() / 2;	        
 	    </modifier>
 	</rule>
 	<rule title="Ausdauernd" description="Wache Ausdauernd TaW/3" dynamic="false">
@@ -199,7 +199,7 @@
 	        <specialfeature name="Ausdauernd"/>	        			
 	    </required>
 	    <modifier>
-	        hero.getFeature("Ausdauernd").getValue() / 3;	        
+	        hero.getFeature(com.dsatab.data.enums.FeatureType.Ausdauernd).getValue() / 3;	        
 	    </modifier>
 	</rule>
 	

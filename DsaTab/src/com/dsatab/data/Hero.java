@@ -348,8 +348,12 @@ public class Hero {
 	}
 
 	public void setHuntingWeapon(EquippedItem item) {
-		if (item.isDistanceWeapon() && huntingWeapons[activeSet] != null) {
-			huntingWeapons[activeSet].setNumber(item.getNameId());
+		if (huntingWeapons[activeSet] != null) {
+			if (item != null && item.isDistanceWeapon()) {
+				huntingWeapons[activeSet].setNumber(item.getNameId());
+			} else {
+				huntingWeapons[activeSet].setNumber(0);
+			}
 		}
 	}
 
@@ -1805,6 +1809,10 @@ public class Hero {
 
 		if (equippedItem.getSecondaryItem() != null) {
 			equippedItem.getSecondaryItem().setSecondaryItem(null);
+		}
+
+		if (getHuntingWeapon() == equippedItem) {
+			setHuntingWeapon(null);
 		}
 
 		int set = equippedItem.getSet();

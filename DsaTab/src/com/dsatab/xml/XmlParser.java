@@ -195,7 +195,7 @@ public class XmlParser {
 			RuntimeExceptionDao<DistanceWeapon, Integer> distanceWeaponDao = DsaTabApplication.getInstance()
 					.getDBHelper().getRuntimeDao(DistanceWeapon.class);
 
-			RuntimeExceptionDao<MiscSpecification, Integer> miscspecDao = DsaTabApplication.getInstance().getDBHelper()
+			RuntimeExceptionDao<MiscSpecification, Integer> miscSpecDao = DsaTabApplication.getInstance().getDBHelper()
 					.getRuntimeDao(MiscSpecification.class);
 
 			RuntimeExceptionDao<Item, UUID> itemDao = DsaTabApplication.getInstance().getDBHelper().getItemDao();
@@ -262,7 +262,7 @@ public class XmlParser {
 					MiscSpecification m = new MiscSpecification(item, type);
 					m.setSpecificationLabel(specLabel);
 					item.addSpecification(m);
-					miscspecDao.create(m);
+					miscSpecDao.create(m);
 				}
 				itemDao.update(item);
 
@@ -331,15 +331,22 @@ public class XmlParser {
 			w.setRs(pos, Util.parseInt(lineData[i++], 0));
 		}
 
-		w.setZonenRs(Util.parseInt(lineData[i++], 0));
-		w.setTotalRs(Util.parseInt(lineData[i++], 0));
-		w.setStars(Util.parseInt(lineData[i++], 0));
+		if (lineData.length > i + 1)
+			w.setZonenRs(Util.parseInt(lineData[i++], 0));
+		if (lineData.length > i + 1)
+			w.setTotalRs(Util.parseInt(lineData[i++], 0));
+		if (lineData.length > i + 1)
+			w.setStars(Util.parseInt(lineData[i++], 0));
 
-		String mod = lineData[i++];
-		if (mod.contains("Z"))
-			w.setZonenHalfBe(true);
-
-		w.setTotalPieces(Util.parseInt(lineData[i++], 1));
+		if (lineData.length > i + 1) {
+			String mod = lineData[i++];
+			if (mod.contains("Z")) {
+				w.setZonenHalfBe(true);
+			}
+		}
+		if (lineData.length > i + 1) {
+			w.setTotalPieces(Util.parseInt(lineData[i++], 1));
+		}
 
 		return w;
 	}

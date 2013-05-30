@@ -25,7 +25,8 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 /**
- * Database helper class used to manage the creation and upgrading of your database. This class also usually provides the DAOs used by the other classes.
+ * Database helper class used to manage the creation and upgrading of your database. This class also usually provides
+ * the DAOs used by the other classes.
  */
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
@@ -34,7 +35,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	private static final String DATABASE_NAME = "dsatab.db";
 	// any time you make changes to your database objects, you may have to
 	// increase the database version
-	private static final int DATABASE_VERSION = 31;
+	private static final int DATABASE_VERSION = 32;
 
 	// the DAO object we use to access the SimpleData table
 	private RuntimeExceptionDao<Item, UUID> itemRuntimeDao = null;
@@ -47,7 +48,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	}
 
 	/**
-	 * This is called when the database is first created. Usually you should call createTable statements here to create the tables that will store your data.
+	 * This is called when the database is first created. Usually you should call createTable statements here to create
+	 * the tables that will store your data.
 	 */
 	@Override
 	public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource) {
@@ -75,8 +77,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	}
 
 	/**
-	 * This is called when your application is upgraded and it has a higher version number. This allows you to adjust the various data to match the new version
-	 * number.
+	 * This is called when your application is upgraded and it has a higher version number. This allows you to adjust
+	 * the various data to match the new version number.
 	 */
 	@Override
 	public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVersion, int newVersion) {
@@ -100,8 +102,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	}
 
 	/**
-	 * Returns the RuntimeExceptionDao (Database Access Object) version of a Dao for our SimpleData class. It will create it or just give the cached value.
-	 * RuntimeExceptionDao only through RuntimeExceptions.
+	 * Returns the RuntimeExceptionDao (Database Access Object) version of a Dao for our SimpleData class. It will
+	 * create it or just give the cached value. RuntimeExceptionDao only through RuntimeExceptions.
 	 */
 	public RuntimeExceptionDao<Item, UUID> getItemDao() {
 		if (itemRuntimeDao == null) {
@@ -111,8 +113,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	}
 
 	/**
-	 * Returns the RuntimeExceptionDao (Database Access Object) version of a Dao for our SimpleData class. It will create it or just give the cached value.
-	 * RuntimeExceptionDao only through RuntimeExceptions.
+	 * Returns the RuntimeExceptionDao (Database Access Object) version of a Dao for our SimpleData class. It will
+	 * create it or just give the cached value. RuntimeExceptionDao only through RuntimeExceptions.
 	 */
 	public <T> RuntimeExceptionDao<T, Integer> getRuntimeDao(Class<T> clazz) {
 
