@@ -7,7 +7,6 @@ import java.util.List;
 import android.text.TextUtils;
 
 import com.dsatab.data.enums.FeatureType;
-import com.dsatab.util.Util;
 
 public class Feature {
 
@@ -46,16 +45,14 @@ public class Feature {
 		this.comment = comment;
 	}
 
-	public Integer getValue() {
-		if (values != null && values.size() == 1)
-			return Util.parseInteger(values.get(0));
-		else
-			return null;
+	public String getValue() {
+		return getValue(0);
 	}
 
-	public String getValueAsString() {
-		if (values != null && values.size() == 1)
-			return values.get(0);
+	public String getValue(int index) {
+
+		if (values != null && values.size() > index)
+			return values.get(index);
 		else
 			return null;
 	}
@@ -77,6 +74,14 @@ public class Feature {
 				values = new ArrayList<String>(3);
 			}
 			this.values.add(value);
+		}
+	}
+
+	public void addValues(List<String> values) {
+		if (values != null) {
+			for (String value : values) {
+				addValue(value);
+			}
 		}
 	}
 }

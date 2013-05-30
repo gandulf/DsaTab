@@ -15,7 +15,7 @@ public class Debug {
 
 	private static String tag = DsaTabApplication.TAG;
 
-	private static boolean TRACE = true;
+	public static boolean TRACE = true;
 
 	protected static boolean debugMode = com.dsatab.BuildConfig.DEBUG;
 

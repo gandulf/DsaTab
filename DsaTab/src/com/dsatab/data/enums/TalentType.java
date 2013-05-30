@@ -1,5 +1,6 @@
 package com.dsatab.data.enums;
 
+import com.dsatab.exception.TalentTypeUnknownException;
 
 public enum TalentType {
 	Anderthalbhänder("Anderthalbhänder", TalentGroupType.Nahkampf, -2), Armbrust("Armbrust", TalentGroupType.Fernkampf,
@@ -239,6 +240,6 @@ public enum TalentType {
 				return attr;
 			}
 		}
-		throw new IllegalArgumentException(code + " cannot be transformed into a TalentType enum");
+		throw new TalentTypeUnknownException(code);
 	}
 }

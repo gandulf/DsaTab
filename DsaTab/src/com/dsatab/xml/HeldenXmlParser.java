@@ -26,7 +26,6 @@ import android.os.Build;
 import android.text.TextUtils;
 
 import com.bugsense.trace.BugSenseHandler;
-import com.dsatab.common.DsaTabRuntimeException;
 import com.dsatab.data.Art;
 import com.dsatab.data.ArtInfo;
 import com.dsatab.data.Attribute;
@@ -51,8 +50,6 @@ import com.dsatab.data.Purse.PurseUnit;
 import com.dsatab.data.Spell;
 import com.dsatab.data.SpellInfo;
 import com.dsatab.data.Talent;
-import com.dsatab.data.Talent.Flags;
-import com.dsatab.data.TalentGroup;
 import com.dsatab.data.enums.ArtGroupType;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.EventCategory;
@@ -75,6 +72,7 @@ import com.dsatab.data.items.UsageType;
 import com.dsatab.data.items.Weapon;
 import com.dsatab.exception.FeatureTypeUnknownException;
 import com.dsatab.exception.InconsistentDataException;
+import com.dsatab.exception.TalentTypeUnknownException;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 
@@ -116,12 +114,14 @@ public class HeldenXmlParser {
 
 		Hero hero = null;
 
+		Debug.TRACE = true;
+
 		Document dom = readDocument(in);
 
 		Element heroElement = dom.getRootElement().getChild(Xml.KEY_HELD);
 		// check for valid hero node
 		if (heroElement == null) {
-			throw new DsaTabRuntimeException("Invalid Hero xml file, could not find <" + Xml.KEY_HELD
+			throw new InconsistentDataException("Invalid Hero xml file, could not find <" + Xml.KEY_HELD
 					+ "> element with in root node");
 		}
 		hero = new Hero(path);
@@ -138,34 +138,43 @@ public class HeldenXmlParser {
 		Element freeXpElement = DomUtil.getChildByTagName(heroElement, Xml.KEY_BASIS, Xml.KEY_FREIE_ABENTEUERPUNKTE);
 		hero.getFreeExperience().setValue(Util.parseInteger(freeXpElement.getAttributeValue(Xml.KEY_VALUE)));
 
+		Debug.verbose("--- fillArtsAndSpecialFeatures");
 		fillArtsAndSpecialFeatures(hero, heroElement);
-		fillAdvantages(hero, heroElement); // has to be done before attributes
-											// because vollzauber features havea
-											// effect on astralenergie
+		Debug.verbose("--- fillAdvantages");
 
+		// has to be done before attributes because vollzauber features have a effect on astralenergie
+		fillAdvantages(hero, heroElement);
+
+		Debug.verbose("--- fillAttributes");
 		fillAttributes(hero, heroElement);
 
 		Element basisElement = heroElement.getChild(Xml.KEY_BASIS);
 		if (basisElement == null)
 			basisElement = heroElement;
+		Debug.verbose("--- fillBaseInfo");
 		fillBaseInfo(hero, basisElement);
 
+		Debug.verbose("--- fillTalents");
 		fillTalents(hero, heroElement);
+		Debug.verbose("--- fillSpells");
 		fillSpells(hero, heroElement);
 
+		Debug.verbose("--- fillItems");
 		fillItems(hero, heroElement);
+		Debug.verbose("--- fillEquippedItems");
 		fillEquippedItems(hero, heroElement);
 		fillPurse(hero, heroElement);
 		fillEvents(hero, heroElement);
 		fillConnections(hero, heroElement);
 		fillComments(hero, heroElement);
+		Debug.verbose("--- onPostHeroLoaded");
 		hero.onPostHeroLoaded(context);
+
+		Debug.TRACE = false;
 		return hero;
 	}
 
 	/**
-	 * Depends on Talent, Spell, Arts
-	 * 
 	 * @param heldElement
 	 */
 	private static void fillAdvantages(Hero hero, Element heldElement) {
@@ -194,57 +203,11 @@ public class HeldenXmlParser {
 				}
 			}
 
-			if (adv.getType() == FeatureType.BegabungFürTalent) {
-				Talent talent = hero.getTalent(adv.getValueAsString());
-				if (talent != null) {
-					talent.addFlag(Flags.Begabung);
-				}
-			} else if (adv.getType() == FeatureType.Talentschub) {
-				Talent talent = hero.getTalent(adv.getValueAsString());
-				if (talent != null) {
-					talent.addFlag(Flags.Talentschub);
-				}
-			} else if (adv.getType() == FeatureType.Meisterhandwerk) {
-				Talent talent = hero.getTalent(adv.getValueAsString());
-				if (talent != null) {
-					talent.addFlag(Flags.Meisterhandwerk);
-				}
-			} else if (adv.getType() == FeatureType.BegabungFürTalentgruppe) {
-				try {
-					TalentGroupType groupType = TalentGroupType.valueOf(adv.getValueAsString());
-					TalentGroup talentGroup = hero.getTalentGroup(groupType);
-					if (talentGroup != null) {
-						talentGroup.addFlag(Flags.Begabung);
-					}
-				} catch (Exception e) {
-					Debug.warning("Begabung für [Talentgruppe], unknown talentgroup:" + adv.getValueAsString());
-				}
-			} else if (adv.getType() == FeatureType.BegabungFürZauber) {
-				Spell spell = hero.getSpells().get(adv.getValueAsString());
-				if (spell != null) {
-					spell.addFlag(com.dsatab.data.Spell.Flags.Begabung);
-				}
-
-			} else if (adv.getType() == FeatureType.BegabungFürRitual) {
-				Art art = hero.getArt(adv.getValueAsString());
-				if (art != null) {
-					art.addFlag(com.dsatab.data.Art.Flags.Begabung);
-				}
-
-			} else if (adv.getType() == FeatureType.ÜbernatürlicheBegabung) {
-				Spell spell = hero.getSpell(adv.getValueAsString());
-				if (spell != null) {
-					spell.addFlag(com.dsatab.data.Spell.Flags.ÜbernatürlicheBegabung);
-
-				}
-			}
-
 			hero.addFeature(adv);
 		}
 	}
 
 	/**
-	 * Depends on Talents and Spells
 	 * 
 	 * @param hero
 	 * @param heldElement
@@ -260,6 +223,7 @@ public class HeldenXmlParser {
 			ArtGroupType type = ArtGroupType.getTypeOfArt(name);
 
 			if (type == null) {
+
 				FeatureType featureType = null;
 				try {
 					featureType = FeatureType.byXmlName(element.getAttributeValue(Xml.KEY_NAME));
@@ -290,46 +254,37 @@ public class HeldenXmlParser {
 				}
 				String spezialisierungsName = null;
 				String spezialisierungsParam = null;
-				boolean add = true;
 
 				if (specialFeature.getType() == FeatureType.Talentspezialisierung) {
 					child = element.getChild(Xml.KEY_TALENT);
 					if (child != null) {
 						spezialisierungsName = child.getAttributeValue(Xml.KEY_NAME);
+						specialFeature.addValue(spezialisierungsName);
 					}
 					child = element.getChild(Xml.KEY_SPEZIALISIERUNG);
 					if (child != null) {
 						spezialisierungsParam = child.getAttributeValue(Xml.KEY_NAME);
+						specialFeature.addValue(spezialisierungsParam);
 					}
-					Talent talent = hero.getTalent(spezialisierungsName);
-					if (talent != null) {
-						talent.setTalentSpezialisierung(spezialisierungsParam);
-						add = false;
-					}
+
 				} else if (specialFeature.getType() == FeatureType.Zauberspezialisierung) {
 					child = element.getChild(Xml.KEY_ZAUBER);
 					if (child != null) {
 						spezialisierungsName = child.getAttributeValue(Xml.KEY_NAME);
+						specialFeature.addValue(spezialisierungsName);
 					}
 					child = element.getChild(Xml.KEY_SPEZIALISIERUNG);
 					if (child != null) {
 						spezialisierungsParam = child.getAttributeValue(Xml.KEY_NAME);
+						specialFeature.addValue(spezialisierungsParam);
 					}
 
-					Spell spell = hero.getSpell(spezialisierungsName);
-					if (spell != null) {
-						spell.setZauberSpezialisierung(spezialisierungsParam);
-						add = false;
-					}
 				} else if (specialFeature.getType() == FeatureType.Ritualspezialisierung) {
 					// skip specialfeature ritualkenntnis since it's listed as
 					// talent anyway.
-					add = false;
 				}
 
-				if (add) {
-					hero.addFeature(specialFeature);
-				}
+				hero.addFeature(specialFeature);
 			} else {
 				Art art = new Art(hero, element.getAttributeValue(Xml.KEY_NAME));
 				art.setUnused(Boolean.parseBoolean(element.getAttributeValue(Xml.KEY_UNUSED)));
@@ -1050,8 +1005,8 @@ public class HeldenXmlParser {
 			TalentType talentType;
 			try {
 				talentType = TalentType.byXmlName(element.getAttributeValue(Xml.KEY_NAME));
-			} catch (IllegalArgumentException e) {
-				BugSenseHandler.sendEvent("Unknown TalentType:" + element.getAttributeValue(Xml.KEY_NAME));
+			} catch (TalentTypeUnknownException e) {
+				BugSenseHandler.sendException(e);
 				continue;
 			}
 			int talentValue = Util.parseInt(element.getAttributeValue(Xml.KEY_VALUE));

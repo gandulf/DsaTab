@@ -31,6 +31,7 @@ import android.view.WindowManager;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabPreferenceActivity;
+import com.dsatab.data.Talent.Flags;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.FeatureType;
 import com.dsatab.data.enums.Position;
@@ -79,7 +80,7 @@ public class Hero {
 	private EditableValue experience, freeExperience;
 
 	private Map<AttributeType, Attribute> attributes;
-	private Map<FeatureType, Feature> featuresByName;
+	private Map<FeatureType, Feature> featuresByType;
 
 	private Map<TalentGroupType, TalentGroup> talentGroups;
 	private Map<TalentType, Talent> talentByType;
@@ -137,11 +138,11 @@ public class Hero {
 
 		// preload values
 
-		experience = new Experience(this, "Abenteuerpunkte");
-		experience.setMaximum(100000);
+		this.experience = new Experience(this, "Abenteuerpunkte");
+		this.experience.setMaximum(100000);
 
-		freeExperience = new EditableValue(this, "Freie Abenteuerpunkte");
-		freeExperience.setMaximum(100000);
+		this.freeExperience = new EditableValue(this, "Freie Abenteuerpunkte");
+		this.freeExperience.setMaximum(100000);
 
 		this.attributes = new EnumMap<AttributeType, Attribute>(AttributeType.class);
 		this.talentGroups = new EnumMap<TalentGroupType, TalentGroup>(TalentGroupType.class);
@@ -149,7 +150,7 @@ public class Hero {
 		this.spellsByName = new HashMap<String, Spell>();
 		this.artsByName = new TreeMap<String, Art>();
 		this.artsByType = new EnumMap<FeatureType, Art>(FeatureType.class);
-		this.featuresByName = new EnumMap<FeatureType, Feature>(FeatureType.class);
+		this.featuresByType = new EnumMap<FeatureType, Feature>(FeatureType.class);
 
 		for (int i = 0; i < equippedItems.length; i++) {
 			this.equippedItems[i] = new LinkedList<EquippedItem>();
@@ -548,7 +549,144 @@ public class Hero {
 
 		Collections.sort(connections, Connection.NAME_COMPARATOR);
 
+		prepareAdvantages(context);
+		prepareSpeciaFeatures(context);
 		prepareSystemRules(context);
+	}
+
+	private void prepareSpeciaFeatures(Context context) {
+
+		String spezialisierungsName = null;
+		String spezialisierungsParam = null;
+
+		Feature adv = getFeature(FeatureType.Talentspezialisierung);
+		if (adv != null) {
+			for (int i = 0; i < adv.getValues().size(); i = i + 2) {
+				spezialisierungsName = adv.getValue(i);
+				spezialisierungsParam = adv.getValue(i + 1);
+
+				if (spezialisierungsName != null) {
+					Talent talent = getTalent(spezialisierungsName);
+					if (talent != null) {
+						talent.setTalentSpezialisierung(spezialisierungsParam);
+						removeFeature(adv);
+					} else {
+						Debug.error("Could not find talent for spezialisierung " + spezialisierungsName);
+					}
+				}
+			}
+
+		}
+		adv = getFeature(FeatureType.Zauberspezialisierung);
+		if (adv != null) {
+			for (int i = 0; i < adv.getValues().size(); i = i + 2) {
+				spezialisierungsName = adv.getValue(i);
+				spezialisierungsParam = adv.getValue(i + 1);
+
+				if (spezialisierungsName != null) {
+					Spell spell = getSpell(spezialisierungsName);
+					if (spell != null) {
+						spell.setZauberSpezialisierung(spezialisierungsParam);
+						removeFeature(adv);
+					} else {
+						Debug.error("Could not find spell for spezialisierung " + spezialisierungsName);
+					}
+				}
+			}
+
+		}
+	}
+
+	private void prepareAdvantages(Context context) {
+		Feature adv = getFeature(FeatureType.BegabungFürTalent);
+		if (adv != null) {
+			for (String value : adv.getValues()) {
+				Talent talent = getTalent(value);
+				if (talent != null) {
+					talent.addFlag(Flags.Begabung);
+					removeFeature(adv);
+				} else {
+					Debug.error("Could not find talent for begabung " + value);
+				}
+			}
+		}
+		adv = getFeature(FeatureType.Talentschub);
+		if (adv != null) {
+			for (String value : adv.getValues()) {
+				Talent talent = getTalent(value);
+				if (talent != null) {
+					talent.addFlag(Flags.Talentschub);
+					removeFeature(adv);
+				} else {
+					Debug.error("Could not find talent for talentschub " + value);
+				}
+			}
+		}
+		adv = getFeature(FeatureType.Meisterhandwerk);
+		if (adv != null) {
+			for (String value : adv.getValues()) {
+				Talent talent = getTalent(value);
+				if (talent != null) {
+					talent.addFlag(Flags.Meisterhandwerk);
+					removeFeature(adv);
+				} else {
+					Debug.error("Could not find talent for meisterhandwerk " + value);
+				}
+			}
+		}
+		adv = getFeature(FeatureType.BegabungFürTalentgruppe);
+		if (adv != null) {
+			for (String value : adv.getValues()) {
+				try {
+					TalentGroupType groupType = TalentGroupType.valueOf(value);
+					TalentGroup talentGroup = getTalentGroup(groupType);
+					if (talentGroup != null) {
+						talentGroup.addFlag(Flags.Begabung);
+						removeFeature(adv);
+					} else {
+						Debug.error("Could not find talentgroup for begabung " + value);
+					}
+				} catch (Exception e) {
+					Debug.warning("Begabung für [Talentgruppe], unknown talentgroup:" + value);
+				}
+			}
+		}
+		adv = getFeature(FeatureType.BegabungFürZauber);
+		if (adv != null) {
+			for (String value : adv.getValues()) {
+				Spell spell = getSpells().get(value);
+				if (spell != null) {
+					spell.addFlag(com.dsatab.data.Spell.Flags.Begabung);
+					removeFeature(adv);
+				} else {
+					Debug.error("Could not find spell for begabung " + value);
+				}
+			}
+		}
+		adv = getFeature(FeatureType.BegabungFürRitual);
+		if (adv != null) {
+			for (String value : adv.getValues()) {
+				Art art = getArt(value);
+				if (art != null) {
+					art.addFlag(com.dsatab.data.Art.Flags.Begabung);
+					removeFeature(adv);
+				} else {
+					Debug.error("Could not find art for begabung " + value);
+				}
+			}
+		}
+		adv = getFeature(FeatureType.ÜbernatürlicheBegabung);
+		if (adv != null) {
+			for (String value : adv.getValues()) {
+				Spell spell = getSpell(value);
+				if (spell != null) {
+					spell.addFlag(com.dsatab.data.Spell.Flags.ÜbernatürlicheBegabung);
+					removeFeature(adv);
+				} else {
+					Debug.error("Could not find spell for übernatürlichebegabung " + value);
+				}
+			}
+		}
 	}
 
 	protected void prepareSystemRules(Context context) {
@@ -1345,7 +1483,7 @@ public class Hero {
 	}
 
 	public Map<FeatureType, Feature> getSpecialFeatures() {
-		return featuresByName;
+		return featuresByType;
 	}
 
 	public void addConnection(Connection connection) {
@@ -1368,15 +1506,18 @@ public class Hero {
 	 * @return
 	 */
 	public Feature getFeature(String type) {
+		Debug.trace("getFeature " + type);
 		return getFeature(FeatureType.byXmlName(type));
 	}
 
 	public Feature getFeature(FeatureType type) {
-		return featuresByName.get(type);
+		Debug.trace("getFeature " + type);
+		return featuresByType.get(type);
 	}
 
 	public boolean hasFeature(FeatureType type) {
-		return featuresByName.containsKey(type);
+		Debug.trace("hasFeature " + type);
+		return featuresByType.containsKey(type);
 	}
 
 	public void addChangeEvent(ChangeEvent event) {
@@ -1521,7 +1662,7 @@ public class Hero {
 			} else {
 				Feature rs1 = getFeature(FeatureType.RüstungsgewöhnungI);
 				if (rs1 != null) {
-					rs1Armor = rs1.getValueAsString();
+					rs1Armor = rs1.getValue();
 				}
 			}
 
@@ -1626,7 +1767,7 @@ public class Hero {
 
 			Feature natRs = getFeature(FeatureType.NatürlicherRüstungsschutz);
 			if (natRs != null && natRs.getValue() != null) {
-				totalRs += natRs.getValue();
+				totalRs += Util.parseInt(natRs.getValue());
 			}
 
 			break;
@@ -1661,7 +1802,7 @@ public class Hero {
 
 		Feature natRs = getFeature(FeatureType.NatürlicherRüstungsschutz);
 		if (natRs != null && natRs.getValue() != null)
-			rs += natRs.getValue();
+			rs += Util.parseInt(natRs.getValue());
 
 		return rs;
 	}
@@ -1679,6 +1820,7 @@ public class Hero {
 	}
 
 	public Talent getTalent(String talentName) {
+		Debug.trace("getTalent " + talentName);
 		TalentType type = null;
 
 		type = TalentType.byXmlName(talentName);
@@ -1687,6 +1829,7 @@ public class Hero {
 	}
 
 	public Spell getSpell(String spellName) {
+		Debug.trace("getSpell " + spellName);
 		return spellsByName.get(spellName);
 	}
 
@@ -1711,6 +1854,7 @@ public class Hero {
 	}
 
 	public Art getArt(String name) {
+		Debug.trace("getArt " + name);
 		return artsByName.get(name);
 	}
 
@@ -1727,6 +1871,8 @@ public class Hero {
 	}
 
 	public Item getItem(String name, String slot) {
+		Debug.trace("getItem " + name + ", slot=" + slot);
+
 		for (ItemContainer itemContainer : getItemContainers()) {
 			for (Item item : itemContainer.getItems()) {
 				if (item.getName().equals(name)) {
@@ -1754,6 +1900,7 @@ public class Hero {
 	}
 
 	public BaseCombatTalent getCombatTalent(String talentName) {
+		Debug.trace("getCombatTalent " + talentName);
 		TalentType type = TalentType.byXmlName(talentName);
 		return getCombatTalent(type);
 	}
@@ -2029,13 +2176,17 @@ public class Hero {
 	 */
 	public void addFeature(Feature adv) {
 
-		Feature existingAdv = featuresByName.get(adv.getType());
+		Feature existingAdv = featuresByType.get(adv.getType());
 		if (existingAdv == null) {
-			featuresByName.put(adv.getType(), adv);
+			featuresByType.put(adv.getType(), adv);
 		} else {
-			existingAdv.addValue(adv.getValueAsString());
+			existingAdv.addValues(adv.getValues());
 		}
 
+	}
+
+	public void removeFeature(Feature adv) {
+		featuresByType.remove(adv.getType());
 	}
 
 	/**

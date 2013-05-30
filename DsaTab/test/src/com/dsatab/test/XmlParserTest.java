@@ -120,10 +120,10 @@ public class XmlParserTest extends InstrumentationTestCase {
 		assertTrue(hero.hasFeature(FeatureType.Zwergenwuchs));
 
 		assertTrue(hero.hasFeature(FeatureType.Eitelkeit));
-		assertEquals(7, (int) hero.getFeature(FeatureType.Eitelkeit).getValue());
+		assertEquals(7, (int) Util.parseInt(hero.getFeature(FeatureType.Eitelkeit).getValue()));
 
 		assertTrue(hero.hasFeature(FeatureType.RüstungsgewöhnungI));
-		assertEquals("Fünflagenharnisch", hero.getFeature(FeatureType.RüstungsgewöhnungI).getValueAsString());
+		assertEquals("Fünflagenharnisch", hero.getFeature(FeatureType.RüstungsgewöhnungI).getValue());
 
 		assertTrue(hero.hasFeature(FeatureType.Kulturkunde));
 
