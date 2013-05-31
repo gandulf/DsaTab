@@ -2191,7 +2191,17 @@ public class Hero {
 	}
 
 	public void removeFeature(Feature adv) {
-		featuresByType.remove(adv.getType());
+		if (adv == null) {
+			return;
+		}
+
+		Feature feature = featuresByType.get(adv.getType());
+		if (feature != null) {
+			feature.getValues().removeAll(adv.getValues());
+			if (feature.getValues().isEmpty()) {
+				featuresByType.remove(adv.getType());
+			}
+		}
 	}
 
 	/**
