@@ -2,6 +2,7 @@ package com.dsatab.activity;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
+import java.util.Collections;
 import java.util.List;
 
 import android.app.Activity;
@@ -519,7 +520,12 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		viewPager.setOnPageChangeListener(null);
 
 		ActionBar bar = getSupportActionBar();
-		List<TabInfo> tabs = getHeroConfiguration().getTabs();
+		List<TabInfo> tabs;
+		if (getHeroConfiguration() != null)
+			tabs = getHeroConfiguration().getTabs();
+		else
+			tabs = Collections.emptyList();
+
 		if (getWidth() > 900) {
 			// TABS INIT
 			bar.removeAllTabs();
@@ -578,7 +584,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	}
 
 	protected boolean showNextTab() {
-		if (tabInfo != null) {
+		if (tabInfo != null && getHeroConfiguration() != null) {
 			int index = getHeroConfiguration().getTabs().indexOf(tabInfo);
 			return showTab(index + 1);
 		} else {
@@ -587,7 +593,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	}
 
 	protected boolean showPreviousTab() {
-		if (tabInfo != null) {
+		if (tabInfo != null && getHeroConfiguration() != null) {
 			int index = getHeroConfiguration().getTabs().indexOf(tabInfo);
 			return showTab(index - 1);
 		} else {
@@ -663,7 +669,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 
 	public boolean showTab(int index) {
 
-		if (index >= 0 && index < getHeroConfiguration().getTabs().size()) {
+		if (getHeroConfiguration() != null && index >= 0 && index < getHeroConfiguration().getTabs().size()) {
 			if (viewPager.getCurrentItem() != index)
 				viewPager.setCurrentItem(index, false);
 			return true;
@@ -948,8 +954,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.content.SharedPreferences.OnSharedPreferenceChangeListener#
-	 * onSharedPreferenceChanged(android.content.SharedPreferences, java.lang.String)
+	 * @see android.content.SharedPreferences.OnSharedPreferenceChangeListener# onSharedPreferenceChanged(android.content.SharedPreferences, java.lang.String)
 	 */
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

@@ -37,7 +37,7 @@ public class Spell extends MarkableElement implements Value {
 	private String zauberSpezialisierung;
 
 	public enum Flags {
-		Begabung, ÜbernatürlicheBegabung, Hauszauber
+		Begabung, ÜbernatürlicheBegabung, Hauszauber, ZauberSpezialisierung
 	}
 
 	private EnumSet<Flags> flags = EnumSet.noneOf(Flags.class);

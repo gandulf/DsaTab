@@ -30,9 +30,12 @@ public class MyViewPager extends ViewPager {
 	@Override
 	public boolean onInterceptTouchEvent(MotionEvent event) {
 		if (this.isEnabled()) {
-			return super.onInterceptTouchEvent(event);
+			try {
+				return super.onInterceptTouchEvent(event);
+			} catch (IllegalArgumentException e) {
+				// catch java.lang.IllegalArgumentException: pointerIndex out of range
+			}
 		}
-
 		return false;
 	}
 

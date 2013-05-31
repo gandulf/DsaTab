@@ -13,6 +13,10 @@ public class Feature {
 	public static final String TALENTSPEZIALISIERUNG_PREFIX = "Talentspezialisierung ";
 	public static final String ZAUBERSPEZIALISIERUNG_PREFIX = "Zauberspezialisierung ";
 	public static final String RITUAL_KENNTNIS_PREFIX = "Ritualkenntnis:";
+	public static final String LITURGIE_KENNTNIS_PREFIX = "Liturgiekenntnis ";
+
+	private static final String DELIM = "|";
+	private static final String DELIM_REG_EXP = "\\|";
 
 	private FeatureType type;
 	private String comment;
@@ -37,10 +41,6 @@ public class Feature {
 			return values;
 	}
 
-	public void setValues(List<String> values) {
-		this.values = values;
-	}
-
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
@@ -50,11 +50,24 @@ public class Feature {
 	}
 
 	public String getValue(int index) {
-
 		if (values != null && values.size() > index)
 			return values.get(index);
 		else
 			return null;
+	}
+
+	public String[] getValues(int index) {
+		String value = getValue(index);
+		if (value != null)
+			return TextUtils.split(value, DELIM_REG_EXP);
+		else
+			return null;
+	}
+
+	public void addValues(String... values) {
+		if (values != null) {
+			addValue(TextUtils.join(DELIM, values));
+		}
 	}
 
 	@Override
@@ -77,7 +90,7 @@ public class Feature {
 		}
 	}
 
-	public void addValues(List<String> values) {
+	public void addAllValues(List<String> values) {
 		if (values != null) {
 			for (String value : values) {
 				addValue(value);

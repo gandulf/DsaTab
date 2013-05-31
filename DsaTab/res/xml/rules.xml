@@ -93,9 +93,9 @@
 	        <talent name="Pirsch- und Ansitzjagd"/>
 	    </affected>
 	    <modifier><![CDATA[
-			com.dsatab.data.items.EquippedItem huntingWeapon = hero.getHuntingWeapon();
-			if (huntingWeapon != null && huntingWeapon.getItemSpecification() instanceof com.dsatab.data.items.DistanceWeapon) {
-				int maxDistance = ((com.dsatab.data.items.DistanceWeapon)(huntingWeapon.getItemSpecification())).getMaxDistance();
+			EquippedItem huntingWeapon = hero.getHuntingWeapon();
+			if (huntingWeapon != null && huntingWeapon.getItemSpecification() instanceof DistanceWeapon) {
+				int maxDistance = ((DistanceWeapon)(huntingWeapon.getItemSpecification())).getMaxDistance();
 				if (maxDistance <= 20) {
 					return -7;
 				} else if (maxDistance <= 50) {
@@ -188,7 +188,7 @@
 	        <talent name="Gefahreninstinkt"/>	        			
 	    </required>
 	    <modifier>
-	        hero.getTalent(com.dsatab.data.enums.TalentType.Gefahreninstinkt).getValue() / 2;	        
+	        hero.getTalent(TalentType.Gefahreninstinkt).getValue() / 2;	        
 	    </modifier>
 	</rule>
 	<rule title="Ausdauernd" description="Wache Ausdauernd TaW/3" dynamic="false">
@@ -199,7 +199,7 @@
 	        <specialfeature name="Ausdauernd"/>	        			
 	    </required>
 	    <modifier>
-	        hero.getFeature(com.dsatab.data.enums.FeatureType.Ausdauernd).getValue() / 3;	        
+	        Util.parseInt(hero.getFeature(FeatureType.Ausdauernd).getValue()) / 3;	        
 	    </modifier>
 	</rule>
 	
@@ -217,7 +217,7 @@
 	    </affected>
 	    <modifier><![CDATA[
 	        if (talent != null && talent.getTalentSpezialisierung() != null && talent.getTalentSpezialisierung().equalsIgnoreCase(item.getName())) {
-					return 2;					
+				return 2;					
 			} else {
 				return 0;
 			}
@@ -230,7 +230,7 @@
 	    </affected>
 	    <modifier><![CDATA[
 	        if (talent != null && talent.getTalentSpezialisierung() != null && talent.getTalentSpezialisierung().equalsIgnoreCase(item.getName())) {
-					return 1;					
+				return 1;					
 			} else {
 				return 0;
 			}

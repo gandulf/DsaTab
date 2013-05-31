@@ -290,7 +290,8 @@ public class ExpandableTalentAdapter extends BaseExpandableListAdapter {
 		}
 
 		if (holder.indicator != null) {
-			if (!TextUtils.isEmpty(talent.getTalentSpezialisierung())) {
+			if (talent.hasFlag(Talent.Flags.TalentSpezialisierung)
+					|| !TextUtils.isEmpty(talent.getTalentSpezialisierung())) {
 				holder.indicator.setVisibility(View.VISIBLE);
 				holder.indicator.setImageBitmap(indicatorFlash);
 			} else if (talent.hasFlag(Flags.Meisterhandwerk)) {

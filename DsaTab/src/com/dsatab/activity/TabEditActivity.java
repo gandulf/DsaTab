@@ -22,7 +22,6 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -131,7 +130,7 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 			Toast.makeText(this, "Tabs können erst editiert werden, wenn ein Held geladen wurde.", Toast.LENGTH_SHORT)
 					.show();
 			setResult(RESULT_CANCELED);
-			finish();
+			super.finish();
 			return;
 		}
 
@@ -394,7 +393,10 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 	public void finish() {
 
 		Util.hideKeyboard(tabsList);
-		DsaTabApplication.getInstance().getHero().getHeroConfiguration().setTabs(tabs);
+		if (DsaTabApplication.getInstance().getHero() != null
+				&& DsaTabApplication.getInstance().getHero().getHeroConfiguration() != null) {
+			DsaTabApplication.getInstance().getHero().getHeroConfiguration().setTabs(tabs);
+		}
 
 		setResult(RESULT_OK);
 		super.finish();

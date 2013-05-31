@@ -68,6 +68,7 @@ import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemSpecification;
 import com.dsatab.data.items.Shield;
 import com.dsatab.data.items.Weapon;
+import com.dsatab.view.DiceSlider.DiceRoll;
 
 public class Util {
 
@@ -1075,5 +1076,9 @@ public class Util {
 	 */
 	public static int dice(int max) {
 		return rnd.nextInt(max) + 1;
+	}
+
+	public static DiceRoll diceRoll(int max) {
+		return new DiceRoll(max, dice(max));
 	}
 }

@@ -33,7 +33,7 @@ public class Talent extends MarkableElement implements Value {
 	private String talentSpezialisierung;
 
 	public enum Flags {
-		Meisterhandwerk, Begabung, Talentschub
+		Meisterhandwerk, Begabung, Talentschub, TalentSpezialisierung
 	}
 
 	private EnumSet<Flags> flags = EnumSet.noneOf(Flags.class);

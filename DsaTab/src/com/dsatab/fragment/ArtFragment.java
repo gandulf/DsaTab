@@ -227,7 +227,7 @@ public class ArtFragment extends BaseListFragment implements OnItemClickListener
 	public void onHeroLoaded(Hero hero) {
 		loadHeroArts(hero);
 
-		fillLiturgieKenntnis(hero);
+		fillArtKenntnis(hero);
 
 		if (hero.getArts().isEmpty()) {
 			empty.setVisibility(View.VISIBLE);
@@ -243,7 +243,7 @@ public class ArtFragment extends BaseListFragment implements OnItemClickListener
 	/**
 	 * 
 	 */
-	private void fillLiturgieKenntnis(Hero hero) {
+	private void fillArtKenntnis(Hero hero) {
 
 		List<Talent> talents;
 		TalentGroup gabenGroup = hero.getTalentGroup(TalentGroupType.Gaben);
@@ -349,7 +349,7 @@ public class ArtFragment extends BaseListFragment implements OnItemClickListener
 		}
 
 		if (value instanceof Talent) {
-			fillLiturgieKenntnis(getHero());
+			fillArtKenntnis(getHero());
 		}
 
 	}

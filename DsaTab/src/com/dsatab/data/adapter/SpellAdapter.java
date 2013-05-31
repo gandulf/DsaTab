@@ -62,7 +62,7 @@ public class SpellAdapter extends OpenArrayAdapter<Spell> {
 
 		inflater = LayoutInflater.from(getContext());
 
-		if (!settings.isAllVisible())
+		if (settings != null && !settings.isAllVisible())
 			filter(settings);
 	}
 
@@ -144,7 +144,7 @@ public class SpellAdapter extends OpenArrayAdapter<Spell> {
 		Util.setVisibility(holder.text5, false, holder.text1);
 
 		if (holder.indicator != null) {
-			if (!TextUtils.isEmpty(spell.getZauberSpezialisierung())) {
+			if (spell.hasFlag(Flags.ZauberSpezialisierung) || !TextUtils.isEmpty(spell.getZauberSpezialisierung())) {
 				holder.indicator.setVisibility(View.VISIBLE);
 				holder.indicator.setImageBitmap(indicatorFlash);
 			} else if (spell.hasFlag(Flags.ÜbernatürlicheBegabung)) {

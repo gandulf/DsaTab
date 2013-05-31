@@ -26,6 +26,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.SystemClock;
+import android.text.TextUtils;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -563,40 +564,57 @@ public class Hero {
 
 		Feature adv = getFeature(FeatureType.Talentspezialisierung);
 		if (adv != null) {
-			for (int i = 0; i < adv.getValues().size(); i = i + 2) {
-				spezialisierungsName = adv.getValue(i);
-				spezialisierungsParam = adv.getValue(i + 1);
+			for (int i = adv.getValues().size() - 1; i >= 0; i--) {
+				String[] values = adv.getValues(i);
+				if (values != null) {
+					spezialisierungsName = values.length > 0 ? values[0] : null;
+					spezialisierungsParam = values.length > 1 ? values[1] : null;
 
-				if (spezialisierungsName != null) {
-					Talent talent = getTalent(spezialisierungsName);
-					if (talent != null) {
-						talent.setTalentSpezialisierung(spezialisierungsParam);
-						removeFeature(adv);
-					} else {
-						Debug.error("Could not find talent for spezialisierung " + spezialisierungsName);
+					if (!TextUtils.isEmpty(spezialisierungsName)) {
+						Talent talent = getTalent(spezialisierungsName);
+						if (talent != null) {
+							talent.addFlag(Talent.Flags.TalentSpezialisierung);
+							if (!TextUtils.isEmpty(spezialisierungsParam)) {
+								talent.setTalentSpezialisierung(spezialisierungsParam);
+							}
+							adv.getValues().remove(i);
+						} else {
+							Debug.error("Could not find talent for spezialisierung " + spezialisierungsName);
+						}
 					}
 				}
 			}
-
+			if (adv.getValues().isEmpty()) {
+				removeFeature(adv);
+			}
 		}
 		adv = getFeature(FeatureType.Zauberspezialisierung);
 		if (adv != null) {
-			for (int i = 0; i < adv.getValues().size(); i = i + 2) {
-				spezialisierungsName = adv.getValue(i);
-				spezialisierungsParam = adv.getValue(i + 1);
+			for (int i = adv.getValues().size() - 1; i >= 0; i--) {
+				String[] values = adv.getValues(i);
+				if (values != null) {
+					spezialisierungsName = values.length > 0 ? values[0] : null;
+					spezialisierungsParam = values.length > 1 ? values[1] : null;
 
-				if (spezialisierungsName != null) {
-					Spell spell = getSpell(spezialisierungsName);
-					if (spell != null) {
-						spell.setZauberSpezialisierung(spezialisierungsParam);
-						removeFeature(adv);
-					} else {
-						Debug.error("Could not find spell for spezialisierung " + spezialisierungsName);
+					if (!TextUtils.isEmpty(spezialisierungsName)) {
+						Spell spell = getSpell(spezialisierungsName);
+						if (spell != null) {
+							spell.addFlag(Spell.Flags.ZauberSpezialisierung);
+							if (!TextUtils.isEmpty(spezialisierungsParam)) {
+								spell.setZauberSpezialisierung(spezialisierungsParam);
+							}
+							adv.getValues().remove(i);
+						} else {
+							Debug.error("Could not find spell for spezialisierung " + spezialisierungsName);
+						}
 					}
 				}
 			}
-
+			if (adv.getValues().isEmpty()) {
+				removeFeature(adv);
+			}
 		}
+
 	}
 
 	private void prepareAdvantages(Context context) {
@@ -2214,7 +2232,7 @@ public class Hero {
 			if (existingAdv == null) {
 				featuresByType.put(adv.getType(), adv);
 			} else {
-				existingAdv.addValues(adv.getValues());
+				existingAdv.addAllValues(adv.getValues());
 			}
 		}
 	}

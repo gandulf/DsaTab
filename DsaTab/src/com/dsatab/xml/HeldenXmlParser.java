@@ -259,29 +259,31 @@ public class HeldenXmlParser {
 					child = element.getChild(Xml.KEY_TALENT);
 					if (child != null) {
 						spezialisierungsName = child.getAttributeValue(Xml.KEY_NAME);
-						specialFeature.addValue(spezialisierungsName);
 					}
 					child = element.getChild(Xml.KEY_SPEZIALISIERUNG);
 					if (child != null) {
 						spezialisierungsParam = child.getAttributeValue(Xml.KEY_NAME);
-						specialFeature.addValue(spezialisierungsParam);
 					}
+
+					specialFeature.addValues(spezialisierungsName, spezialisierungsParam);
 
 				} else if (specialFeature.getType() == FeatureType.Zauberspezialisierung) {
 					child = element.getChild(Xml.KEY_ZAUBER);
 					if (child != null) {
 						spezialisierungsName = child.getAttributeValue(Xml.KEY_NAME);
-						specialFeature.addValue(spezialisierungsName);
 					}
 					child = element.getChild(Xml.KEY_SPEZIALISIERUNG);
 					if (child != null) {
 						spezialisierungsParam = child.getAttributeValue(Xml.KEY_NAME);
-						specialFeature.addValue(spezialisierungsParam);
 					}
+					specialFeature.addValues(spezialisierungsName, spezialisierungsParam);
 
-				} else if (specialFeature.getType() == FeatureType.Ritualspezialisierung) {
-					// skip specialfeature ritualkenntnis since it's listed as
-					// talent anyway.
+				} else if (specialFeature.getType().xmlName().startsWith(Feature.RITUAL_KENNTNIS_PREFIX)) {
+					// skip specialfeature ritualkenntnis since it's listed as talent anyway.
+					continue;
+				} else if (specialFeature.getType().xmlName().startsWith(Feature.LITURGIE_KENNTNIS_PREFIX)) {
+					// skip specialfeature liturgiekenntnis since it's listed as talent anyway.
+					continue;
 				}
 
 				hero.addFeature(specialFeature);

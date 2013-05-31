@@ -2,6 +2,7 @@ package com.dsatab.view;
 
 import java.lang.ref.WeakReference;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -984,18 +985,26 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 
 			if (item != null && info.tp == null && combatProbe.isAttack()) {
 				boolean realSuccessOne = info.successOne != null && info.successOne && effect >= 0;
+				int diceSize = info.tpDices.size();
 				if (item.getItemSpecification() instanceof Weapon) {
-
 					Weapon weapon = (Weapon) item.getItemSpecification();
 
 					info.tp = weapon.getTp(hero.getModifiedValue(AttributeType.Körperkraft, true, true),
-							hero.getModifierTP(item), realSuccessOne);
+							hero.getModifierTP(item), realSuccessOne, info.tpDices);
 
 				} else if (item.getItemSpecification() instanceof DistanceWeapon) {
 					DistanceWeapon weapon = (DistanceWeapon) item.getItemSpecification();
 
 					info.tp = weapon.getTp(hero.getModifiedValue(AttributeType.Körperkraft, true, true),
-							hero.getModifierTP(item), realSuccessOne);
+							hero.getModifierTP(item), realSuccessOne, info.tpDices);
+				}
+
+				for (int i = diceSize; i < info.tpDices.size(); i++) {
+					DiceRoll diceRoll = info.tpDices.get(i);
+					if (diceRoll.dice == 6)
+						rollDice6(2500, diceRoll.result);
+					else if (diceRoll.dice == 20)
+						rollDice20(2500, diceRoll.result, -1);
 				}
 
 				if (info.tp != null && combatProbe.getTpModifier() != null) {
@@ -1010,54 +1019,57 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 	}
 
 	public int rollDice20(int delay, int referenceValue) {
+		int result = Util.dice(20);
+		return rollDice20(delay, result, referenceValue);
+	}
+
+	public int rollDice20(int delay, int result, int referenceValue) {
 		if (!isOpened())
 			animateOpen();
 
 		dice20Count++;
 
-		int dice = Util.dice(20);
-
-		if (preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_ANIM_ROLL_DICE, true)) {
+		if (delay > 0 && preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_ANIM_ROLL_DICE, true)) {
 
 			if (dice20Count == 1 && (!shakeDice20.hasStarted() || shakeDice20.hasEnded())) {
 				shakeDice20.reset();
 				tfDice20.startAnimation(shakeDice20);
 			}
 
-			mHandler.sendMessageDelayed(Message.obtain(mHandler, HANDLE_DICE_20, dice, referenceValue), delay);
+			mHandler.sendMessageDelayed(Message.obtain(mHandler, HANDLE_DICE_20, result, referenceValue), delay);
 		} else {
-			showDice20(dice, referenceValue);
+			showDice20(result, referenceValue);
 		}
-		return dice;
+		return result;
 	}
 
 	public int rollDice20() {
 		return rollDice20(1000, -1);
 	}
 
-	public int rollDice6(int delay) {
+	public int rollDice6(int delay, int result) {
 		if (!isOpened())
 			animateOpen();
 
 		dice6Count++;
 
-		int dice = Util.dice(6);
-
-		if (preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_ANIM_ROLL_DICE, true)) {
+		if (delay > 0 && preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_ANIM_ROLL_DICE, true)) {
 			if (dice6Count == 1 && (!shakeDice6.hasStarted() || shakeDice6.hasEnded())) {
 				shakeDice6.reset();
 				tfDice6.startAnimation(shakeDice6);
 			}
 
-			mHandler.sendMessageDelayed(Message.obtain(mHandler, HANDLE_DICE_6, dice, 0), delay);
+			mHandler.sendMessageDelayed(Message.obtain(mHandler, HANDLE_DICE_6, result, 0), delay);
 		} else {
-			showDice6(dice);
+			showDice6(result);
 		}
-		return dice;
+		return result;
 	}
 
 	public int rollDice6() {
-		return rollDice6(1000);
+		int result = Util.dice(6);
+
+		return rollDice6(1000, result);
 	}
 
 	private TextView showDice20(int value, int referenceValue) {
@@ -1198,12 +1210,23 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 		}
 	}
 
+	public static class DiceRoll {
+		public int dice;
+		public int result;
+
+		public DiceRoll(int dice, int result) {
+			this.dice = dice;
+			this.result = result;
+		}
+	}
+
 	static class ProbeData {
 		Integer[] value = new Integer[3];
 
 		Integer[] dice = new Integer[3];
 
 		Integer tp;
+		List<DiceRoll> tpDices = new ArrayList<DiceRoll>(3);
 
 		Integer target;
 
@@ -1224,6 +1247,7 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 			successOne = null;
 			tp = null;
 			target = null;
+			tpDices.clear();
 		}
 
 	}

@@ -48,8 +48,13 @@ public class SpellInfoDialog extends AlertDialog implements DialogInterface.OnCl
 			StyleableSpannableStringBuilder sb = new StyleableSpannableStringBuilder();
 
 			StringBuilder addons = new StringBuilder();
-			if (!TextUtils.isEmpty(spell.getZauberSpezialisierung())) {
-				addons.append(", " + spell.getZauberSpezialisierung());
+			if (spell.hasFlag(Spell.Flags.ZauberSpezialisierung)
+					|| !TextUtils.isEmpty(spell.getZauberSpezialisierung())) {
+
+				addons.append(", Spez.");
+				if (!TextUtils.isEmpty(spell.getZauberSpezialisierung())) {
+					addons.append(" " + spell.getZauberSpezialisierung());
+				}
 			}
 			if (spell.hasFlag(Spell.Flags.Hauszauber)) {
 				addons.append(", Hauszauber");

@@ -32,9 +32,10 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
 
 		tabInfos = new ArrayList<TabInfo>();
 		mPageReferenceMap = new HashMap<Integer, Fragment>();
-
-		for (TabInfo tabInfo : configuration.getTabs()) {
-			tabInfos.add(tabInfo.clone());
+		if (configuration != null) {
+			for (TabInfo tabInfo : configuration.getTabs()) {
+				tabInfos.add(tabInfo.clone());
+			}
 		}
 	}
 
@@ -47,8 +48,10 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
 		ft.commitAllowingStateLoss();
 
 		tabInfos.clear();
-		for (TabInfo tabInfo : configuration.getTabs()) {
-			tabInfos.add(tabInfo.clone());
+		if (configuration != null) {
+			for (TabInfo tabInfo : configuration.getTabs()) {
+				tabInfos.add(tabInfo.clone());
+			}
 		}
 		mPageReferenceMap.clear();
 		notifyDataSetChanged();

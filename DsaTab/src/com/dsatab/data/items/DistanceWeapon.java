@@ -1,5 +1,8 @@
 package com.dsatab.data.items;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.text.TextUtils;
 
 import com.dsatab.DsaTabApplication;
@@ -9,6 +12,7 @@ import com.dsatab.data.Dice;
 import com.dsatab.data.enums.TalentType;
 import com.dsatab.db.TalentTypeWrapper;
 import com.dsatab.util.Util;
+import com.dsatab.view.DiceSlider.DiceRoll;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -54,15 +58,22 @@ public class DistanceWeapon extends ItemSpecification {
 	 * @param modifier
 	 * @return an acual tp amount using dice, so this returns a different result for each call
 	 */
-	public Integer getTp(int kk, int modifier, boolean successOne) {
+	public Integer getTp(int kk, int modifier, boolean successOne, List<DiceRoll> diceRolls) {
 		Integer result = null;
 		Dice dice = Dice.parseDice(getTp());
 		if (dice != null) {
+			if (diceRolls == null) {
+				diceRolls = new ArrayList<DiceRoll>(dice.diceCount);
+			}
 			result = 0;
 
 			for (int i = 0; i < dice.diceCount; i++) {
-				result += Util.dice(dice.diceType);
+				while (diceRolls.size() <= i) {
+					diceRolls.add(Util.diceRoll(dice.diceType));
+				}
+				result += diceRolls.get(i).result;
 			}
+
 			result += dice.constant;
 			// only multiply weapon damage in case of successOne
 			if (successOne) {

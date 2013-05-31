@@ -55,6 +55,8 @@ public class RulesModificator extends AbstractModificator {
 
 	private Modifier modifierObject;
 
+	private Interpreter interpreter;
+
 	/**
 	 * 
 	 */
@@ -65,6 +67,21 @@ public class RulesModificator extends AbstractModificator {
 		this.modifier = modifier;
 
 		modifierObject = new Modifier(modifier, title, description);
+
+	}
+
+	protected Interpreter getInterpreter() throws EvalError {
+		if (interpreter == null) {
+			interpreter = new Interpreter(); // Construct an interpreter
+			interpreter.getNameSpace().importClass(Util.class.getName());
+			interpreter.getNameSpace().importPackage(com.dsatab.data.Value.class.getPackage().getName());
+			interpreter.getNameSpace().importPackage(com.dsatab.data.enums.AttributeType.class.getPackage().getName());
+			interpreter.getNameSpace().importPackage(com.dsatab.data.items.Item.class.getPackage().getName());
+
+			interpreter.set("hero", hero); // Set variables
+		}
+
+		return interpreter;
 	}
 
 	@Override
@@ -322,8 +339,7 @@ public class RulesModificator extends AbstractModificator {
 	protected void handleModifierExpression(Probe probe, AttributeType type) {
 		if (modifierExpression != null) {
 			try {
-				Interpreter i = new Interpreter(); // Construct an interpreter
-				i.set("hero", hero); // Set variables
+				Interpreter i = getInterpreter();
 				i.set("attributeType", type);
 				i.set("probe", probe);
 				if (probe instanceof CombatProbe) {
