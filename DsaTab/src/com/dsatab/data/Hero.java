@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -601,36 +602,45 @@ public class Hero {
 	private void prepareAdvantages(Context context) {
 		Feature adv = getFeature(FeatureType.BegabungFürTalent);
 		if (adv != null) {
-			for (String value : adv.getValues()) {
+			for (Iterator<String> iter = adv.getValues().iterator(); iter.hasNext();) {
+				String value = iter.next();
 				Talent talent = getTalent(value);
 				if (talent != null) {
 					talent.addFlag(Flags.Begabung);
-					removeFeature(adv);
+					iter.remove();
 				} else {
 					Debug.error("Could not find talent for begabung " + value);
 				}
 			}
+			if (adv.getValues().isEmpty()) {
+				removeFeature(adv);
+			}
 		}
 		adv = getFeature(FeatureType.Talentschub);
 		if (adv != null) {
-			for (String value : adv.getValues()) {
+			for (Iterator<String> iter = adv.getValues().iterator(); iter.hasNext();) {
+				String value = iter.next();
 				Talent talent = getTalent(value);
 				if (talent != null) {
 					talent.addFlag(Flags.Talentschub);
-					removeFeature(adv);
+					iter.remove();
 				} else {
 					Debug.error("Could not find talent for talentschub " + value);
 				}
 			}
+			if (adv.getValues().isEmpty()) {
+				removeFeature(adv);
+			}
 		}
 		adv = getFeature(FeatureType.Meisterhandwerk);
 		if (adv != null) {
-			for (String value : adv.getValues()) {
+			for (Iterator<String> iter = adv.getValues().iterator(); iter.hasNext();) {
+				String value = iter.next();
 				try {
 					Talent talent = getTalent(value);
 					if (talent != null) {
 						talent.addFlag(Flags.Meisterhandwerk);
-						removeFeature(adv);
+						iter.remove();
 					} else {
 						Debug.error("Could not find talent for meisterhandwerk " + value);
 					}
@@ -638,16 +648,20 @@ public class Hero {
 					// Meisterhandwerk can also be used for attributes in this case we have no special handling for it
 				}
 			}
+			if (adv.getValues().isEmpty()) {
+				removeFeature(adv);
+			}
 		}
 		adv = getFeature(FeatureType.BegabungFürTalentgruppe);
 		if (adv != null) {
-			for (String value : adv.getValues()) {
+			for (Iterator<String> iter = adv.getValues().iterator(); iter.hasNext();) {
+				String value = iter.next();
 				try {
 					TalentGroupType groupType = TalentGroupType.valueOf(value);
 					TalentGroup talentGroup = getTalentGroup(groupType);
 					if (talentGroup != null) {
 						talentGroup.addFlag(Flags.Begabung);
-						removeFeature(adv);
+						iter.remove();
 					} else {
 						Debug.error("Could not find talentgroup for begabung " + value);
 					}
@@ -655,41 +669,56 @@ public class Hero {
 					Debug.warning("Begabung für [Talentgruppe], unknown talentgroup:" + value);
 				}
 			}
+			if (adv.getValues().isEmpty()) {
+				removeFeature(adv);
+			}
 		}
 		adv = getFeature(FeatureType.BegabungFürZauber);
 		if (adv != null) {
-			for (String value : adv.getValues()) {
+			for (Iterator<String> iter = adv.getValues().iterator(); iter.hasNext();) {
+				String value = iter.next();
 				Spell spell = getSpells().get(value);
 				if (spell != null) {
 					spell.addFlag(com.dsatab.data.Spell.Flags.Begabung);
-					removeFeature(adv);
+					iter.remove();
 				} else {
 					Debug.error("Could not find spell for begabung " + value);
 				}
 			}
+			if (adv.getValues().isEmpty()) {
+				removeFeature(adv);
+			}
 		}
 		adv = getFeature(FeatureType.BegabungFürRitual);
 		if (adv != null) {
-			for (String value : adv.getValues()) {
+			for (Iterator<String> iter = adv.getValues().iterator(); iter.hasNext();) {
+				String value = iter.next();
 				Art art = getArt(value);
 				if (art != null) {
 					art.addFlag(com.dsatab.data.Art.Flags.Begabung);
-					removeFeature(adv);
+					iter.remove();
 				} else {
 					Debug.error("Could not find art for begabung " + value);
 				}
 			}
+			if (adv.getValues().isEmpty()) {
+				removeFeature(adv);
+			}
 		}
 		adv = getFeature(FeatureType.ÜbernatürlicheBegabung);
 		if (adv != null) {
-			for (String value : adv.getValues()) {
+			for (Iterator<String> iter = adv.getValues().iterator(); iter.hasNext();) {
+				String value = iter.next();
 				Spell spell = getSpell(value);
 				if (spell != null) {
 					spell.addFlag(com.dsatab.data.Spell.Flags.ÜbernatürlicheBegabung);
-					removeFeature(adv);
+					iter.remove();
 				} else {
 					Debug.error("Could not find spell for übernatürlichebegabung " + value);
 				}
+			}
+			if (adv.getValues().isEmpty()) {
+				removeFeature(adv);
 			}
 		}
 	}
@@ -2180,27 +2209,19 @@ public class Hero {
 	 * @param adv
 	 */
 	public void addFeature(Feature adv) {
-
-		Feature existingAdv = featuresByType.get(adv.getType());
-		if (existingAdv == null) {
-			featuresByType.put(adv.getType(), adv);
-		} else {
-			existingAdv.addValues(adv.getValues());
+		if (adv != null) {
+			Feature existingAdv = featuresByType.get(adv.getType());
+			if (existingAdv == null) {
+				featuresByType.put(adv.getType(), adv);
+			} else {
+				existingAdv.addValues(adv.getValues());
+			}
 		}
-
 	}
 
 	public void removeFeature(Feature adv) {
-		if (adv == null) {
-			return;
-		}
-
-		Feature feature = featuresByType.get(adv.getType());
-		if (feature != null) {
-			feature.getValues().removeAll(adv.getValues());
-			if (feature.getValues().isEmpty()) {
-				featuresByType.remove(adv.getType());
-			}
+		if (adv != null) {
+			featuresByType.remove(adv.getType());
 		}
 	}
 
