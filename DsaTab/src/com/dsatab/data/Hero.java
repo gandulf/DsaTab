@@ -53,6 +53,7 @@ import com.dsatab.data.modifier.LeModificator;
 import com.dsatab.data.modifier.Modificator;
 import com.dsatab.data.modifier.RulesModificator;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
+import com.dsatab.exception.TalentTypeUnknownException;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.dsatab.view.listener.HeroChangedListener;
@@ -625,12 +626,16 @@ public class Hero {
 		adv = getFeature(FeatureType.Meisterhandwerk);
 		if (adv != null) {
 			for (String value : adv.getValues()) {
-				Talent talent = getTalent(value);
-				if (talent != null) {
-					talent.addFlag(Flags.Meisterhandwerk);
-					removeFeature(adv);
-				} else {
-					Debug.error("Could not find talent for meisterhandwerk " + value);
+				try {
+					Talent talent = getTalent(value);
+					if (talent != null) {
+						talent.addFlag(Flags.Meisterhandwerk);
+						removeFeature(adv);
+					} else {
+						Debug.error("Could not find talent for meisterhandwerk " + value);
+					}
+				} catch (TalentTypeUnknownException e) {
+					// Meisterhandwerk can also be used for attributes in this case we have no special handling for it
 				}
 			}
 		}
