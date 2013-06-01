@@ -657,7 +657,11 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 
 	@Override
 	protected FightFilterSettings getFilterSettings() {
-		return (FightFilterSettings) super.getFilterSettings();
+		FilterSettings filterSettings = super.getFilterSettings();
+		if (filterSettings instanceof FightFilterSettings)
+			return (FightFilterSettings) filterSettings;
+		else
+			return new FightFilterSettings();
 	}
 
 	/*
@@ -848,7 +852,9 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 		evadeAdapter = new SackOfViewsAdapter(evadeViews);
 
 		fightMergeAdapter.addAdapter(evadeAdapter);
-		fightMergeAdapter.setActive(evadeAdapter, getFilterSettings().isShowEvade());
+		if (getFilterSettings() != null) {
+			fightMergeAdapter.setActive(evadeAdapter, getFilterSettings().isShowEvade());
+		}
 
 		LayoutInflater inflater = (LayoutInflater) LayoutInflater.from(getActivity());
 		View modificatorTitleLayout = inflater.inflate(R.layout.fight_sheet_modifier_title, null, false);
@@ -1007,23 +1013,28 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 
 	private void addWaffenloseTalente() {
 		Item raufen = DataManager.getItemByName(TalentType.Raufen.xmlName());
-		Weapon raufenSpec = (Weapon) raufen.getSpecifications().get(0);
-		EquippedItem raufenEquipped = new EquippedItem(getHero(),
-				getHero().getCombatTalent(raufenSpec.getTalentType()), raufen, raufenSpec);
-		fightItemAdapter.add(raufenEquipped);
-
+		Weapon raufenSpec = (Weapon) raufen.getSpecification(Weapon.class);
+		if (raufenSpec != null) {
+			EquippedItem raufenEquipped = new EquippedItem(getHero(), getHero().getCombatTalent(
+					raufenSpec.getTalentType()), raufen, raufenSpec);
+			fightItemAdapter.add(raufenEquipped);
+		}
 		Item ringen = DataManager.getItemByName(TalentType.Ringen.xmlName());
-		Weapon ringenSpec = (Weapon) ringen.getSpecifications().get(0);
-		EquippedItem ringenEquipped = new EquippedItem(getHero(),
-				getHero().getCombatTalent(ringenSpec.getTalentType()), ringen, ringenSpec);
-		fightItemAdapter.add(ringenEquipped);
+		Weapon ringenSpec = (Weapon) ringen.getSpecification(Weapon.class);
+		if (ringenSpec != null) {
+			EquippedItem ringenEquipped = new EquippedItem(getHero(), getHero().getCombatTalent(
+					ringenSpec.getTalentType()), ringen, ringenSpec);
+			fightItemAdapter.add(ringenEquipped);
+		}
 
 		if (getHero().hasFeature(FeatureType.WaffenloserKampfstilHruruzat)) {
 			Item hruruzat = DataManager.getItemByName("Hruruzat");
-			Weapon hruruzatSpec = (Weapon) ringen.getSpecifications().get(0);
-			EquippedItem hruruzatEquipped = new EquippedItem(getHero(), getHero().getCombatTalent(
-					ringenSpec.getTalentType()), hruruzat, hruruzatSpec);
-			fightItemAdapter.add(hruruzatEquipped);
+			Weapon hruruzatSpec = (Weapon) hruruzat.getSpecification(Weapon.class);
+			if (hruruzatSpec != null) {
+				EquippedItem hruruzatEquipped = new EquippedItem(getHero(), getHero().getCombatTalent(
+						hruruzatSpec.getTalentType()), hruruzat, hruruzatSpec);
+				fightItemAdapter.add(hruruzatEquipped);
+			}
 		}
 	}
 

@@ -16,6 +16,8 @@ import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.ActionMode.Callback;
+import com.dsatab.view.FilterSettings;
+import com.dsatab.view.ListFilterSettings;
 import com.rokoder.android.lib.support.v4.widget.GridViewCompat;
 
 public abstract class BaseListFragment extends BaseFragment implements OnItemLongClickListener, OnItemClickListener {
@@ -166,5 +168,14 @@ public abstract class BaseListFragment extends BaseFragment implements OnItemLon
 				findViewById(android.R.id.list).setVisibility(View.VISIBLE);
 			}
 		}
+	}
+
+	@Override
+	protected FilterSettings getFilterSettings() {
+		FilterSettings filterSettings = super.getFilterSettings();
+		if (filterSettings != null)
+			return (FilterSettings) filterSettings;
+		else
+			return new ListFilterSettings();
 	}
 }

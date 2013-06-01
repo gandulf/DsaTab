@@ -32,7 +32,7 @@ public class FightFilterSettings implements FilterSettings, Cloneable {
 	 * Basic constructor
 	 */
 	public FightFilterSettings() {
-
+		this(true, true, true, true);
 	}
 
 	public FightFilterSettings(boolean armor, boolean modifier, boolean evade, boolean incMod) {

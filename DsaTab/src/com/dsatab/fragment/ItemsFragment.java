@@ -1,6 +1,5 @@
 package com.dsatab.fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -151,7 +150,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		 */
 		@Override
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-			SparseBooleanArray checkedPositions = itemGridCompat.getCheckedItemPositions();
+			SparseBooleanArray checkedPositions = itemGridCompat.getCheckedItemPositionsC();
 			int selected = 0;
 			boolean isEquippable = true;
 			boolean changed = false;

@@ -32,7 +32,7 @@ public class ListFilterSettings implements FilterSettings, JSONable, Serializabl
 	 * Basic constructor
 	 */
 	public ListFilterSettings() {
-
+		this(true, true, true, true);
 	}
 
 	public ListFilterSettings(JSONObject jsonObject) {
