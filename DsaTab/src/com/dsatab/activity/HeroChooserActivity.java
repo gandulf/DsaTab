@@ -401,7 +401,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 			if (convertView instanceof ViewGroup) {
 				layout = (ViewGroup) convertView;
 			} else {
-				layout = (ViewGroup) layoutInflater.inflate(R.layout.hero_chooser_item, null);
+				layout = (ViewGroup) layoutInflater.inflate(R.layout.hero_chooser_item, parent, false);
 				layout.setFocusable(false);
 				layout.setClickable(false);
 			}

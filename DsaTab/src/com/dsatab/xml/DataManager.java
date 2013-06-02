@@ -247,15 +247,6 @@ public class DataManager {
 		return cursor;
 	}
 
-	public static List<Item> getItems() {
-		RuntimeExceptionDao<Item, UUID> itemDao = DsaTabApplication.getInstance().getDBHelper().getItemDao();
-		List<Item> items = itemDao.queryForAll();
-		Collections.sort(items, Item.NAME_COMPARATOR);
-
-		return items;
-
-	}
-
 	public static int deleteItem(Item item) {
 		RuntimeExceptionDao<Item, UUID> itemDao = DsaTabApplication.getInstance().getDBHelper().getItemDao();
 

@@ -2,9 +2,7 @@ package com.dsatab.data.adapter;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,8 +19,7 @@ import com.gandulf.guilib.util.Debug;
 public class TabPagerAdapter extends FragmentStatePagerAdapter {
 
 	private List<TabInfo> tabInfos;
-
-	private Map<Integer, Fragment> mPageReferenceMap;
+	private List<Fragment> mPageReferenceMap;
 
 	/**
 	 * 
@@ -31,10 +28,11 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
 		super(fm);
 
 		tabInfos = new ArrayList<TabInfo>();
-		mPageReferenceMap = new HashMap<Integer, Fragment>();
+		mPageReferenceMap = new ArrayList<Fragment>();
 		if (configuration != null) {
 			for (TabInfo tabInfo : configuration.getTabs()) {
 				tabInfos.add(tabInfo.clone());
+				mPageReferenceMap.add(null);
 			}
 		}
 	}
@@ -42,18 +40,21 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
 	public void setHeroConfiguration(FragmentManager fragmentManager, HeroConfiguration configuration) {
 
 		FragmentTransaction ft = fragmentManager.beginTransaction();
-		for (Fragment fragment : mPageReferenceMap.values()) {
-			ft.remove(fragment);
+		for (Fragment fragment : mPageReferenceMap) {
+			if (fragment != null) {
+				ft.remove(fragment);
+			}
 		}
 		ft.commitAllowingStateLoss();
 
 		tabInfos.clear();
+		mPageReferenceMap.clear();
 		if (configuration != null) {
 			for (TabInfo tabInfo : configuration.getTabs()) {
 				tabInfos.add(tabInfo.clone());
+				mPageReferenceMap.add(null);
 			}
 		}
-		mPageReferenceMap.clear();
 		notifyDataSetChanged();
 	}
 
@@ -64,7 +65,10 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
 	 */
 	@Override
 	public Fragment getItem(int pos) {
-		Fragment f = mPageReferenceMap.get(pos);
+		Fragment f = null;
+		if (pos < mPageReferenceMap.size()) {
+			f = mPageReferenceMap.get(pos);
+		}
 		if (f == null) {
 			try {
 				TabInfo tabInfo = tabInfos.get(pos);
@@ -75,8 +79,8 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
 				} else {
 					f = new DualPaneFragment(tabInfos.get(pos));
 				}
-
-				mPageReferenceMap.put(pos, f);
+				ensurePageSize(pos);
+				mPageReferenceMap.set(pos, f);
 			} catch (InstantiationException e) {
 				Debug.error(e);
 			} catch (IllegalAccessException e) {
@@ -84,6 +88,12 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
 			}
 		}
 		return f;
+	}
+
+	private void ensurePageSize(int index) {
+		while (mPageReferenceMap.size() <= index) {
+			mPageReferenceMap.add(null);
+		}
 	}
 
 	/*
@@ -106,7 +116,10 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
 	}
 
 	public Fragment getFragment(int key) {
-		return mPageReferenceMap.get(key);
+		if (mPageReferenceMap.size() > key)
+			return mPageReferenceMap.get(key);
+		else
+			return null;
 	}
 
 	/*
@@ -116,7 +129,8 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
 	 */
 	@Override
 	public void destroyItem(ViewGroup container, int position, Object object) {
-		mPageReferenceMap.remove(position);
+		ensurePageSize(position);
+		mPageReferenceMap.set(position, null);
 		super.destroyItem(container, position, object);
 	}
 
@@ -134,7 +148,7 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
 	 * @return
 	 */
 	public Collection<Fragment> getFragments() {
-		return mPageReferenceMap.values();
+		return mPageReferenceMap;
 	}
 
 }

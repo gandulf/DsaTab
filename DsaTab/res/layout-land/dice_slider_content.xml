@@ -120,6 +120,7 @@
             android:layout_marginRight="10dp"
             android:background="@null"
             android:scaleType="fitCenter"
+            android:contentDescription="Info"
             android:src="?attr/imgBarInfo" >
         </ImageButton>
 

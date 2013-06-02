@@ -49,6 +49,7 @@
                 android:layout_height="wrap_content"                
                 app:layout_column="1" 
                 app:layout_gravity="start|end"
+                android:inputType="text"
                 app:layout_row="1" />
 
             <TextView
@@ -68,6 +69,7 @@
                 android:layout_height="wrap_content"
                 app:layout_columnSpan="2"
                 app:layout_gravity="start|end"
+                android:inputType="text"
                 app:layout_row="3" />
 
             <LinearLayout
