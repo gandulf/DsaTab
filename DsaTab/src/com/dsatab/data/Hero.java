@@ -36,13 +36,13 @@ import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.data.Talent.Flags;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.FeatureType;
+import com.dsatab.data.enums.Hand;
 import com.dsatab.data.enums.Position;
 import com.dsatab.data.enums.TalentGroupType;
 import com.dsatab.data.enums.TalentType;
 import com.dsatab.data.items.Armor;
 import com.dsatab.data.items.DistanceWeapon;
 import com.dsatab.data.items.EquippedItem;
-import com.dsatab.data.items.Hand;
 import com.dsatab.data.items.HuntingWeapon;
 import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemContainer;
@@ -887,7 +887,7 @@ public class Hero {
 
 	public void moveItem(Item item, int newScreen) {
 		removeItem(item, false);
-		item.getItemInfo().setScreen(newScreen);
+		item.setScreen(newScreen);
 		addItem(item);
 	}
 
@@ -961,10 +961,10 @@ public class Hero {
 	 */
 	public boolean addItem(Item item) {
 
-		ItemContainer itemContainer = getItemContainer(item.getItemInfo().getScreen());
+		ItemContainer itemContainer = getItemContainer(item.getScreen());
 		if (itemContainer == null) {
 			itemContainer = getItemContainers().get(0);
-			item.getItemInfo().setScreen(Hero.FIRST_INVENTORY_SCREEN);
+			item.setScreen(Hero.FIRST_INVENTORY_SCREEN);
 		}
 
 		// item already added, no need to add again

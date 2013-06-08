@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Gallery;
 
 import com.dsatab.R;
-import com.dsatab.data.ItemLocationInfo;
 import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemCard;
 import com.dsatab.util.Util;
@@ -70,7 +69,9 @@ public class GalleryImageCursorAdapter extends SimpleCursorAdapter {
 	class ItemCardCursor implements ItemCard {
 
 		private Uri imageUri;
+		private String imagePath;
 		private String title;
+		private String name;
 		private boolean imageTextOverlay;
 
 		/**
@@ -79,14 +80,15 @@ public class GalleryImageCursorAdapter extends SimpleCursorAdapter {
 		public ItemCardCursor(Cursor c) {
 
 			this.title = c.getString(c.getColumnIndex("title"));
-			String name = c.getString(c.getColumnIndex("name"));
+			this.name = c.getString(c.getColumnIndex("name"));
+			this.imagePath = c.getString(c.getColumnIndex("imagePath"));
 			String imageTextOverlay = c.getString(c.getColumnIndex("imageTextOverlay"));
 
 			if (TextUtils.isEmpty(title)) {
 				this.title = name;
 			}
 
-			String imageUriHelper = c.getString(c.getColumnIndex("imageUriHelper"));
+			String imageUriHelper = c.getString(c.getColumnIndex("imageUri"));
 			if (!TextUtils.isEmpty(imageUriHelper)) {
 				imageUri = Uri.parse(imageUriHelper);
 			}
@@ -95,13 +97,26 @@ public class GalleryImageCursorAdapter extends SimpleCursorAdapter {
 		}
 
 		@Override
-		public ItemLocationInfo getItemInfo() {
-			return null;
+		public Uri getImageUri() {
+			if (imageUri == null) {
+				imageUri = Item.getImageUri(name, imagePath);
+			}
+			return imageUri;
 		}
 
 		@Override
-		public Uri getImageUri() {
-			return imageUri;
+		public int getCellNumber() {
+			return ItemCard.INVALID_POSITION;
+		}
+
+		@Override
+		public int getScreen() {
+			return ItemCard.INVALID_POSITION;
+		}
+
+		@Override
+		public void setCellNumber(int cell) {
+
 		}
 
 		/*
@@ -121,7 +136,7 @@ public class GalleryImageCursorAdapter extends SimpleCursorAdapter {
 		 */
 		@Override
 		public boolean hasImage() {
-			return imageUri != null;
+			return getImageUri() != null;
 		}
 
 		@Override

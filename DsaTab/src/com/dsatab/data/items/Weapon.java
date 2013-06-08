@@ -9,6 +9,7 @@ import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.common.StyleableSpannableStringBuilder;
 import com.dsatab.data.Dice;
+import com.dsatab.data.enums.ItemType;
 import com.dsatab.util.Util;
 import com.dsatab.view.DiceSlider.DiceRoll;
 import com.j256.ormlite.field.DatabaseField;
@@ -157,7 +158,7 @@ public class Weapon extends CloseCombatItem {
 			result = 0;
 			for (int i = 0; i < dice.diceCount; i++) {
 				while (diceRolls.size() <= i) {
-					diceRolls.add(Util.diceRoll(dice.diceType));
+					diceRolls.add(Dice.diceRoll(dice.diceType));
 				}
 				result += diceRolls.get(i).result;
 			}

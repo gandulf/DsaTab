@@ -51,6 +51,7 @@ import com.dsatab.data.CombatMeleeAttribute;
 import com.dsatab.data.CombatMeleeTalent;
 import com.dsatab.data.CombatProbe;
 import com.dsatab.data.CombatTalent;
+import com.dsatab.data.Dice;
 import com.dsatab.data.Hero;
 import com.dsatab.data.Modifier;
 import com.dsatab.data.Probe;
@@ -971,7 +972,7 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 		CombatTalent combatTalent = getCombatTalent(info.probe);
 		if (combatTalent != null) {
 			if (info.target == null) {
-				info.target = Util.dice(20);
+				info.target = Dice.dice(20);
 			}
 		}
 
@@ -1019,7 +1020,7 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 	}
 
 	public int rollDice20(int delay, int referenceValue) {
-		int result = Util.dice(20);
+		int result = Dice.dice(20);
 		return rollDice20(delay, result, referenceValue);
 	}
 
@@ -1067,7 +1068,7 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 	}
 
 	public int rollDice6() {
-		int result = Util.dice(6);
+		int result = Dice.dice(6);
 
 		return rollDice6(1000, result);
 	}
@@ -1125,7 +1126,7 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 	}
 
 	private String getFailureMelee() {
-		int w6 = Util.dice(6) + Util.dice(6);
+		int w6 = Dice.dice(6) + Dice.dice(6);
 
 		switch (w6) {
 		case 2:
@@ -1152,7 +1153,7 @@ public class DiceSlider extends WrappingSlidingDrawer implements View.OnClickLis
 	}
 
 	private String getFailureDistance() {
-		int w6 = Util.dice(6) + Util.dice(6);
+		int w6 = Dice.dice(6) + Dice.dice(6);
 
 		switch (w6) {
 		case 2:

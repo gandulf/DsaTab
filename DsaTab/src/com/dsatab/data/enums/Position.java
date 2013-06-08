@@ -12,7 +12,7 @@ public enum Position {
 			"Becken"), UpperLeg("Oberschenkel"), LowerLeg("Unterschenkel"), Kopf("Kopf"), LinkerArm("Linke Hand"), RechterArm(
 			"Rechte Hand"), LinkesBein("Linkes Bein"), RechtesBein("Rechtes Bein");
 
-	private String name;
+	protected String name;
 
 	private Position(String name) {
 		this.name = name;

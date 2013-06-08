@@ -27,8 +27,8 @@ import com.dsatab.R;
 import com.dsatab.activity.ItemEditActivity;
 import com.dsatab.data.adapter.ItemCursorAdapter;
 import com.dsatab.data.adapter.SpinnerSimpleAdapter;
+import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.items.Item;
-import com.dsatab.data.items.ItemType;
 import com.dsatab.util.Util;
 import com.dsatab.xml.DataManager;
 

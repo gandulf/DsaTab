@@ -6,8 +6,8 @@ import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.FeatureType;
 import com.dsatab.data.enums.Position;
 import com.dsatab.data.enums.TalentType;
+import com.dsatab.data.enums.UsageType;
 import com.dsatab.data.items.EquippedItem;
-import com.dsatab.data.items.UsageType;
 
 public class CombatShieldTalent extends BaseCombatTalent {
 

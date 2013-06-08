@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.security.SecureRandom;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Arrays;
@@ -16,7 +15,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 import java.util.StringTokenizer;
 
 import android.content.ContentResolver;
@@ -59,16 +57,15 @@ import com.dsatab.data.Markable;
 import com.dsatab.data.Probe;
 import com.dsatab.data.Value;
 import com.dsatab.data.enums.AttributeType;
+import com.dsatab.data.enums.Hand;
 import com.dsatab.data.enums.TalentType;
 import com.dsatab.data.items.Armor;
 import com.dsatab.data.items.DistanceWeapon;
 import com.dsatab.data.items.EquippedItem;
-import com.dsatab.data.items.Hand;
 import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemSpecification;
 import com.dsatab.data.items.Shield;
 import com.dsatab.data.items.Weapon;
-import com.dsatab.view.DiceSlider.DiceRoll;
 
 public class Util {
 
@@ -77,8 +74,6 @@ public class Util {
 	private static final String PLUS = "+";
 	private static final String MINUS = "-";
 	private static final String NULL = "null";
-
-	private static Random rnd = new SecureRandom();
 
 	private static final List<String> ROMANS = Arrays.asList("", "I", "II", "III", "IV", "V", "VI", "VII", "VIII",
 			"IX", "X");
@@ -731,17 +726,18 @@ public class Util {
 	 * 
 	 * Debug.verbose("T=" + t);
 	 * 
-	 * // see Wege des Meisters page 170 if (t <= 0) { v = Math.min(20, probe.getProbeValue(0) + t); for (int i = 1; i < 3; i++) { v *= Math.min(20,
-	 * probe.getProbeValue(i) + t); } } else {
+	 * // see Wege des Meisters page 170 if (t <= 0) { v = Math.min(20, probe.getProbeValue(0) + t); for (int i = 1; i <
+	 * 3; i++) { v *= Math.min(20, probe.getProbeValue(i) + t); } } else {
 	 * 
-	 * v = Math.min(20, probe.getProbeValue(0)); for (int i = 1; i < 3; i++) { v *= Math.min(20, probe.getProbeValue(i)); }
+	 * v = Math.min(20, probe.getProbeValue(0)); for (int i = 1; i < 3; i++) { v *= Math.min(20,
+	 * probe.getProbeValue(i)); }
 	 * 
 	 * // E i=1 - 3 for (int i = 0; i < 3; i++) {
 	 * 
 	 * int ti = Math.min(20 - probe.getProbeValue(i), t);
 	 * 
-	 * Debug.verbose("T" + i + "=" + ti); // E n=1 - Ti for (int n = 1; n <= ti; n++) { v += (Math.min(20, probe.getProbeValue(i % 3) - n) * Math.min(20,
-	 * probe.getProbeValue((i + 1) % 3) - n)); }
+	 * Debug.verbose("T" + i + "=" + ti); // E n=1 - Ti for (int n = 1; n <= ti; n++) { v += (Math.min(20,
+	 * probe.getProbeValue(i % 3) - n) * Math.min(20, probe.getProbeValue((i + 1) % 3) - n)); }
 	 * 
 	 * }
 	 * 
@@ -1066,19 +1062,5 @@ public class Util {
 		else
 			return Boolean.parseBoolean(value);
 
-	}
-
-	/**
-	 * Returns a value between 1 and max (incl)
-	 * 
-	 * @param max
-	 * @return
-	 */
-	public static int dice(int max) {
-		return rnd.nextInt(max) + 1;
-	}
-
-	public static DiceRoll diceRoll(int max) {
-		return new DiceRoll(max, dice(max));
 	}
 }

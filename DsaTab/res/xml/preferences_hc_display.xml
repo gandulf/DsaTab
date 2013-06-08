@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
         <ListPreference
-            android:defaultValue="paper"
+            android:defaultValue="light_plain"
             android:entries="@array/themes"
-            android:entryValues="@array/themesValues"
-            
+            android:entryValues="@array/themesValues"            
             android:key="theme"
             android:summary="Bestimme das Aussehen von DsaTab (Erfordert Neustart):"
             android:title="Theme" />

@@ -3,6 +3,7 @@ package com.dsatab.data.items;
 import android.text.TextUtils;
 
 import com.dsatab.R;
+import com.dsatab.data.enums.ItemType;
 import com.dsatab.util.Util;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;

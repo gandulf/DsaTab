@@ -264,7 +264,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 	 */
 	@Override
 	protected void onDestroy() {
-		Util.unbindDrawables(findViewById(android.R.id.content));
+		// Util.unbindDrawables(findViewById(android.R.id.content));
 		super.onDestroy();
 	}
 

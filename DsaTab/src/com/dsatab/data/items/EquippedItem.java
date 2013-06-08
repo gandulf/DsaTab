@@ -12,8 +12,9 @@ import com.dsatab.data.CombatProbe;
 import com.dsatab.data.CombatShieldTalent;
 import com.dsatab.data.CombatTalent;
 import com.dsatab.data.Hero;
-import com.dsatab.data.ItemLocationInfo;
+import com.dsatab.data.enums.Hand;
 import com.dsatab.data.enums.TalentType;
+import com.dsatab.data.enums.UsageType;
 import com.dsatab.util.Util;
 import com.gandulf.guilib.util.Debug;
 
@@ -46,7 +47,10 @@ public class EquippedItem implements ItemCard {
 
 	private Hero hero;
 
-	private ItemLocationInfo itemInfo;
+	/**
+	 * Indicates the position of the associated cell.
+	 */
+	private int cellNumber = INVALID_POSITION;
 
 	private CombatProbe at, pa;
 
@@ -63,7 +67,6 @@ public class EquippedItem implements ItemCard {
 	public EquippedItem(Hero hero, CombatTalent talent, Item item, ItemSpecification itemSpecification) {
 		this.id = UUID.randomUUID();
 		this.hero = hero;
-		this.itemInfo = new ItemLocationInfo();
 		this.item = item;
 		setTalent(talent);
 		setItemSpecification(itemSpecification);
@@ -225,11 +228,6 @@ public class EquippedItem implements ItemCard {
 		hero.fireItemChangedEvent(this);
 	}
 
-	@Override
-	public ItemLocationInfo getItemInfo() {
-		return itemInfo;
-	}
-
 	public UsageType getUsageType() {
 		if (usageType == null && itemSpecification instanceof Shield) {
 			Shield shield = (Shield) itemSpecification;
@@ -264,9 +262,6 @@ public class EquippedItem implements ItemCard {
 
 	public void setSet(int set) {
 		this.set = set;
-		if (itemInfo != null) {
-			itemInfo.setScreen(set);
-		}
 	}
 
 	public void setName(String name) {
@@ -411,6 +406,18 @@ public class EquippedItem implements ItemCard {
 
 		hero.clearModifiersCache(getCombatProbeAttacke());
 		hero.clearModifiersCache(getCombatProbeDefense());
+	}
+
+	public int getScreen() {
+		return set;
+	}
+
+	public int getCellNumber() {
+		return cellNumber;
+	}
+
+	public void setCellNumber(int cellNumber) {
+		this.cellNumber = cellNumber;
 	}
 
 	/*

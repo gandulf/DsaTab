@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Gallery;
 
 import com.dsatab.R;
+import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.filter.ItemListFilter;
 import com.dsatab.data.items.Item;
-import com.dsatab.data.items.ItemType;
 import com.dsatab.view.CardView;
 
 public class GalleryImageAdapter extends OpenArrayAdapter<Item> {

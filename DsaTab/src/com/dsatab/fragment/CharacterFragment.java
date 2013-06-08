@@ -130,7 +130,8 @@ public class CharacterFragment extends BaseAttributesFragment implements OnClick
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see com.actionbarsherlock.view.ActionMode.Callback#onPrepareActionMode (com.actionbarsherlock.view.ActionMode, com.actionbarsherlock.view.Menu)
+		 * @see com.actionbarsherlock.view.ActionMode.Callback#onPrepareActionMode
+		 * (com.actionbarsherlock.view.ActionMode, com.actionbarsherlock.view.Menu)
 		 */
 		@Override
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
@@ -149,7 +150,8 @@ public class CharacterFragment extends BaseAttributesFragment implements OnClick
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+	 * android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -740,7 +742,7 @@ public class CharacterFragment extends BaseAttributesFragment implements OnClick
 		tfSpecialFeatures.setMovementMethod(LinkMovementMethod.getInstance());
 		String[] featureInfos;
 		try {
-			featureInfos = getActivity().getResources().getAssets().list("data/feature");
+			featureInfos = getResources().getAssets().list("data/feature");
 			Arrays.sort(featureInfos);
 		} catch (IOException e) {
 			featureInfos = new String[0];
@@ -750,9 +752,11 @@ public class CharacterFragment extends BaseAttributesFragment implements OnClick
 
 			@Override
 			public void onClick(CharSequence tag, ClickSpan v) {
-				String url = "file:///android_asset/data/feature/" + tag + ".html";
-				WebInfoDialog infoDialog = new WebInfoDialog(getActivity(), url);
-				infoDialog.show();
+				if (getActivity() != null) {
+					String url = "file:///android_asset/data/feature/" + tag + ".html";
+					WebInfoDialog infoDialog = new WebInfoDialog(getActivity(), url);
+					infoDialog.show();
+				}
 			}
 		};
 		StyleableSpannableStringBuilder currentBuilder = null;

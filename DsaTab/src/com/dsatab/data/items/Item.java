@@ -1,5 +1,6 @@
 package com.dsatab.data.items;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,7 +11,9 @@ import java.util.UUID;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import com.dsatab.data.ItemLocationInfo;
+import com.dsatab.DsaTabApplication;
+import com.dsatab.data.enums.ItemType;
+import com.dsatab.db.UriPersister;
 import com.dsatab.util.Util;
 import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
@@ -20,12 +23,11 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "item")
 public class Item implements Serializable, Comparable<Item>, Cloneable, ItemCard {
 
-	/**
-	 * 
-	 */
+	private static final long serialVersionUID = 7011220901677479470L;
+
 	public static final String ITEM_TYPES_SEP = ";";
 
-	private static final long serialVersionUID = 7011220901677479470L;
+	public static final String IMAGE_POSTFIX = ".jpg";
 
 	public static Comparator<Item> NAME_COMPARATOR = new Comparator<Item>() {
 		/*
@@ -50,10 +52,13 @@ public class Item implements Serializable, Comparable<Item>, Cloneable, ItemCard
 	private String category;
 	@DatabaseField
 	private String itemTypes;
+	@DatabaseField(persisterClass = UriPersister.class)
+	private Uri iconUri;
+	@DatabaseField(persisterClass = UriPersister.class)
+	private Uri imageUri;
 	@DatabaseField
-	public String imageUriHelper = null;
-	@DatabaseField
-	public String iconUriHelper = null;
+	private String imagePath;
+
 	@DatabaseField
 	public boolean imageTextOverlay = true;
 	/**
@@ -85,16 +90,20 @@ public class Item implements Serializable, Comparable<Item>, Cloneable, ItemCard
 
 	private List<ItemSpecification> itemSpecs;
 
-	private ItemLocationInfo itemInfo;
+	private int screen = INVALID_POSITION;
+
+	/**
+	 * Indicates the position of the associated cell.
+	 */
+	private int cellNumber = INVALID_POSITION;
 
 	private Boolean hasCardImage;
-	private Uri iconUri = null, imageUri = null;
+
 	private int count;
 	private String slot;
 
 	public Item() {
 		id = UUID.randomUUID();
-		itemInfo = new ItemLocationInfo();
 
 		slot = "0";
 		count = 1;
@@ -248,6 +257,14 @@ public class Item implements Serializable, Comparable<Item>, Cloneable, ItemCard
 		this.count = count;
 	}
 
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
 	public void setSlot(String slot) {
 		this.slot = slot;
 	}
@@ -265,11 +282,38 @@ public class Item implements Serializable, Comparable<Item>, Cloneable, ItemCard
 
 	@Override
 	public Uri getImageUri() {
-		if (imageUri == null && imageUriHelper != null) {
-			imageUri = Uri.parse(imageUriHelper);
-			hasCardImage = true;
+		if (imageUri == null) {
+			setImageUri(getImageUri(getName(), imagePath));
 		}
 		return imageUri;
+	}
+
+	public static Uri getImageUri(String name, String imagePath) {
+		Uri result = null;
+		if (!TextUtils.isEmpty(imagePath)) {
+			File imageFile = null;
+			if (!TextUtils.isEmpty(imagePath)) {
+				imageFile = new File(imagePath);
+				if (!imageFile.exists())
+					imageFile = new File(DsaTabApplication.getDirectory(DsaTabApplication.DIR_CARDS), imagePath);
+				if (!imageFile.exists())
+					imageFile = null;
+			}
+
+			// try to find a image with name of item in cards directory
+			if (imageFile == null && !TextUtils.isEmpty(name)) {
+				imageFile = new File(DsaTabApplication.getDirectory(DsaTabApplication.DIR_CARDS), name + IMAGE_POSTFIX);
+				if (!imageFile.exists())
+					imageFile = null;
+			}
+
+			if (imageFile != null) {
+				result = Uri.fromFile(imageFile);
+			} else {
+				result = Uri.parse("https://dl.dropboxusercontent.com/u/15750588/dsatab/cards_small/" + imagePath);
+			}
+		}
+		return result;
 	}
 
 	public boolean isEquipable() {
@@ -341,9 +385,6 @@ public class Item implements Serializable, Comparable<Item>, Cloneable, ItemCard
 	}
 
 	public Uri getIconUri() {
-		if (iconUri == null && iconUriHelper != null) {
-			iconUri = Uri.parse(iconUriHelper);
-		}
 
 		if (iconUri != null) {
 			return iconUri;
@@ -357,29 +398,32 @@ public class Item implements Serializable, Comparable<Item>, Cloneable, ItemCard
 
 	public void setIconUri(Uri iconUri) {
 		this.iconUri = iconUri;
-		if (iconUri != null)
-			this.iconUriHelper = iconUri.toString();
-		else
-			this.iconUriHelper = null;
 	}
 
 	public void setImageUri(Uri imageUri) {
 		this.imageUri = imageUri;
 		if (imageUri != null) {
-			this.imageUriHelper = imageUri.toString();
 			this.hasCardImage = true;
+			this.imageTextOverlay = false;
 		} else {
 			this.hasCardImage = false;
-			this.imageUriHelper = null;
 		}
 	}
 
-	/**
-	 * @return the itemInfo
-	 */
-	@Override
-	public ItemLocationInfo getItemInfo() {
-		return itemInfo;
+	public int getScreen() {
+		return screen;
+	}
+
+	public void setScreen(int screen) {
+		this.screen = screen;
+	}
+
+	public int getCellNumber() {
+		return cellNumber;
+	}
+
+	public void setCellNumber(int cellNumber) {
+		this.cellNumber = cellNumber;
 	}
 
 	/*
@@ -408,7 +452,6 @@ public class Item implements Serializable, Comparable<Item>, Cloneable, ItemCard
 		Item item;
 		try {
 			item = (Item) super.clone();
-			item.itemInfo = (ItemLocationInfo) itemInfo.clone();
 
 			item.itemSpecs = new ArrayList<ItemSpecification>(getSpecifications().size());
 

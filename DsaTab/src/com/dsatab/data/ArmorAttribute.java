@@ -5,36 +5,29 @@ import org.json.JSONObject;
 
 import com.dsatab.data.enums.Position;
 
-public class ArmorAttribute implements Value, JSONable {
+public class ArmorAttribute extends EditableValue implements JSONable {
 
 	private static final String FIELD_POSITION = "position";
 	private static final String FIELD_VALUE = "value";
 	private static final String FIELD_MANUAL = "manual";
 
-	private Hero hero;
-
 	private Position position;
-
-	private int value;
 
 	private boolean manual = false;
 
 	public ArmorAttribute(Hero hero, Position position) {
-		this.hero = hero;
+		super(hero, position.getName());
 		this.position = position;
+		this.minimum = 0;
+		this.maximum = 20;
+
 	}
 
 	public ArmorAttribute(Hero hero, JSONObject json) throws JSONException {
-		this.hero = hero;
+		this(hero, Position.valueOf(json.getString(FIELD_POSITION)));
 
-		this.position = Position.valueOf(json.getString(FIELD_POSITION));
-		this.value = json.getInt(FIELD_VALUE);
-		this.manual = json.getBoolean(FIELD_MANUAL);
-	}
-
-	@Override
-	public String getName() {
-		return position.getName();
+		manual = json.getBoolean(FIELD_MANUAL);
+		value = json.getInt(FIELD_VALUE);
 	}
 
 	/*
@@ -45,17 +38,17 @@ public class ArmorAttribute implements Value, JSONable {
 	@Override
 	public void reset() {
 
-		int newValue = getReferenceValue();
+		int refValue = getReferenceValue();
 
 		if (manual) {
 			manual = false;
 
 			// still fire a value changed since the isManual value has changed
-			if (newValue == getValue()) {
+			if (refValue == getValue()) {
 				hero.fireValueChangedEvent(this);
 			}
 		}
-		setValue(newValue);
+		setValue(refValue);
 	}
 
 	public void recalcValue() {
@@ -67,11 +60,6 @@ public class ArmorAttribute implements Value, JSONable {
 
 	public Position getPosition() {
 		return position;
-	}
-
-	@Override
-	public Integer getValue() {
-		return value;
 	}
 
 	public boolean isManual() {
@@ -100,31 +88,8 @@ public class ArmorAttribute implements Value, JSONable {
 	}
 
 	@Override
-	public void setValue(Integer value) {
-		int oldValue = this.value;
-
-		if (value == null)
-			this.value = 0;
-		else
-			this.value = value;
-
-		if (oldValue != this.value)
-			hero.fireValueChangedEvent(this);
-	}
-
-	@Override
 	public Integer getReferenceValue() {
 		return hero.getArmorRs(getPosition());
-	}
-
-	@Override
-	public int getMinimum() {
-		return 0;
-	}
-
-	@Override
-	public int getMaximum() {
-		return 20;
 	}
 
 	/**

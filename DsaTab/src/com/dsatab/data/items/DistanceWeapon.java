@@ -9,11 +9,12 @@ import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.common.StyleableSpannableStringBuilder;
 import com.dsatab.data.Dice;
+import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.enums.TalentType;
-import com.dsatab.db.TalentTypeWrapper;
 import com.dsatab.util.Util;
 import com.dsatab.view.DiceSlider.DiceRoll;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.types.EnumStringType;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "item_distance_weapon")
@@ -30,8 +31,8 @@ public class DistanceWeapon extends ItemSpecification {
 	private String distances;
 	@DatabaseField
 	private String tpDistances;
-	@DatabaseField(foreign = true)
-	private TalentTypeWrapper combatTalentTypeWrapper;
+	@DatabaseField(persisterClass = EnumStringType.class)
+	private TalentType combatTalentTypeWrapper;
 
 	// cache for split tpDistances string
 	private String tpDistance[];
@@ -69,7 +70,7 @@ public class DistanceWeapon extends ItemSpecification {
 
 			for (int i = 0; i < dice.diceCount; i++) {
 				while (diceRolls.size() <= i) {
-					diceRolls.add(Util.diceRoll(dice.diceType));
+					diceRolls.add(Dice.diceRoll(dice.diceType));
 				}
 				result += diceRolls.get(i).result;
 			}
@@ -195,17 +196,11 @@ public class DistanceWeapon extends ItemSpecification {
 	}
 
 	public TalentType getTalentType() {
-		if (combatTalentTypeWrapper != null)
-			return combatTalentTypeWrapper.get();
-		else
-			return null;
+		return combatTalentTypeWrapper;
 	}
 
 	public void setTalentType(TalentType combatTalentType) {
-		if (combatTalentType != null)
-			this.combatTalentTypeWrapper = new TalentTypeWrapper(combatTalentType);
-		else
-			this.combatTalentTypeWrapper = null;
+		this.combatTalentTypeWrapper = combatTalentType;
 	}
 
 	/*

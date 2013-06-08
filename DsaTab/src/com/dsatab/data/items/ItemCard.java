@@ -4,25 +4,29 @@ import java.util.Comparator;
 
 import android.net.Uri;
 
-import com.dsatab.data.ItemLocationInfo;
-
 public interface ItemCard {
+
+	public static final int INVALID_POSITION = -1;
 
 	public static final Comparator<ItemCard> CELL_NUMBER_COMPARATOR = new Comparator<ItemCard>() {
 		@Override
 		public int compare(ItemCard lhs, ItemCard rhs) {
-			if (lhs.getItemInfo().getCellNumber() == -1 && rhs.getItemInfo().getCellNumber() >= 0)
+			if (lhs.getCellNumber() == -1 && rhs.getCellNumber() >= 0)
 				return 1;
-			else if (lhs.getItemInfo().getCellNumber() == -1 && rhs.getItemInfo().getCellNumber() == -1)
+			else if (lhs.getCellNumber() == -1 && rhs.getCellNumber() == -1)
 				return 0;
-			else if (lhs.getItemInfo().getCellNumber() > 0 && rhs.getItemInfo().getCellNumber() == -1)
+			else if (lhs.getCellNumber() > 0 && rhs.getCellNumber() == -1)
 				return -1;
 
-			return lhs.getItemInfo().getCellNumber() - rhs.getItemInfo().getCellNumber();
+			return lhs.getCellNumber() - rhs.getCellNumber();
 		}
 	};
 
-	public ItemLocationInfo getItemInfo();
+	public int getCellNumber();
+
+	public void setCellNumber(int cell);
+
+	public int getScreen();
 
 	public Uri getImageUri();
 

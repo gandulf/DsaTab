@@ -29,10 +29,9 @@
         android:layout_toLeftOf="@android:id/icon2"
         android:layout_toRightOf="@android:id/icon1"
         android:ellipsize="marquee"
-        android:lines="1"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:scrollHorizontally="true"
         android:singleLine="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"        
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textStyle="bold" />
 

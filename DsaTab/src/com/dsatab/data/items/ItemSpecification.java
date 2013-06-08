@@ -1,5 +1,6 @@
 package com.dsatab.data.items;
 
+import com.dsatab.data.enums.ItemType;
 import com.j256.ormlite.field.DatabaseField;
 
 public abstract class ItemSpecification implements Cloneable {

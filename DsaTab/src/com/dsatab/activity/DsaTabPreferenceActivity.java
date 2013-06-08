@@ -136,8 +136,6 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 	public static final String KEY_EXCHANGE_PASSWORD = "exchange_password";
 	public static final String KEY_EXCHANGE_TOKEN = "exchange_token";
 
-	public static final String KEY_USAGE_STATS = "usage_stats";
-
 	public static final String KEY_SCREEN_ORIENTATION = "screen_orientation";
 
 	public static final String KEY_TIP_TODAY = "tipToday";

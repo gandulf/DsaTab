@@ -42,7 +42,6 @@ import com.dsatab.data.Event;
 import com.dsatab.data.Feature;
 import com.dsatab.data.Hero;
 import com.dsatab.data.HeroBaseInfo;
-import com.dsatab.data.ItemLocationInfo;
 import com.dsatab.data.Markable;
 import com.dsatab.data.Purse;
 import com.dsatab.data.Purse.Currency;
@@ -54,21 +53,22 @@ import com.dsatab.data.enums.ArtGroupType;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.EventCategory;
 import com.dsatab.data.enums.FeatureType;
+import com.dsatab.data.enums.Hand;
+import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.enums.Position;
 import com.dsatab.data.enums.TalentGroupType;
 import com.dsatab.data.enums.TalentType;
+import com.dsatab.data.enums.UsageType;
 import com.dsatab.data.items.Armor;
 import com.dsatab.data.items.DistanceWeapon;
 import com.dsatab.data.items.EquippedItem;
-import com.dsatab.data.items.Hand;
 import com.dsatab.data.items.HuntingWeapon;
 import com.dsatab.data.items.Item;
+import com.dsatab.data.items.ItemCard;
 import com.dsatab.data.items.ItemContainer;
 import com.dsatab.data.items.ItemSpecification;
-import com.dsatab.data.items.ItemType;
 import com.dsatab.data.items.MiscSpecification;
 import com.dsatab.data.items.Shield;
-import com.dsatab.data.items.UsageType;
 import com.dsatab.data.items.Weapon;
 import com.dsatab.exception.FeatureTypeUnknownException;
 import com.dsatab.exception.InconsistentDataException;
@@ -681,7 +681,7 @@ public class HeldenXmlParser {
 			}
 
 			EquippedItem equippedItem = new EquippedItem(hero, combatTalent, item, itemSpecification);
-			equippedItem.getItemInfo().setCellNumber(Util.parseInt(element.getAttributeValue(Xml.KEY_CELL_NUMBER)));
+			equippedItem.setCellNumber(Util.parseInt(element.getAttributeValue(Xml.KEY_CELL_NUMBER)));
 
 			if (!TextUtils.isEmpty(element.getAttributeValue(Xml.KEY_HAND))) {
 				equippedItem.setHand(Hand.valueOf(element.getAttributeValue(Xml.KEY_HAND)));
@@ -769,11 +769,11 @@ public class HeldenXmlParser {
 				}
 
 				if (element.getAttribute(Xml.KEY_CELL_NUMBER) != null)
-					item.getItemInfo().setCellNumber(Util.parseInteger(element.getAttributeValue(Xml.KEY_CELL_NUMBER)));
+					item.setCellNumber(Util.parseInteger(element.getAttributeValue(Xml.KEY_CELL_NUMBER)));
 				if (element.getAttribute(Xml.KEY_SCREEN) != null) {
 					// there is only one inventory screen left...
 					int screen = Util.parseInt(element.getAttributeValue(Xml.KEY_SCREEN));
-					item.getItemInfo().setScreen(screen);
+					item.setScreen(screen);
 				}
 
 				Element domallgemein = element.getChild(Xml.KEY_MOD_ALLGEMEIN);
@@ -1655,9 +1655,8 @@ public class HeldenXmlParser {
 			weight.setAttribute(Xml.KEY_VALUE, Xml.toString(item.getWeight()));
 
 		}
-		if (item.getItemInfo() != null) {
-			writeItemInfo(item.getItemInfo(), element);
-		}
+
+		writeItemInfo(item, element);
 
 	}
 
@@ -1665,7 +1664,7 @@ public class HeldenXmlParser {
 	 * @param itemInfo
 	 * @param element
 	 */
-	private static void writeItemInfo(ItemLocationInfo itemInfo, Element element) {
+	private static void writeItemInfo(ItemCard itemInfo, Element element) {
 		if (itemInfo.getScreen() != Hero.FIRST_INVENTORY_SCREEN) {
 			element.setAttribute(Xml.KEY_SCREEN, Util.toString(itemInfo.getScreen()));
 		} else {

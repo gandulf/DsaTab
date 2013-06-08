@@ -30,7 +30,6 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.dsatab.AnalyticsManager;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.TabInfo;
@@ -781,7 +780,6 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	 */
 	@Override
 	protected void onStart() {
-		AnalyticsManager.startSession(this);
 		super.onStart();
 	}
 
@@ -825,7 +823,6 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	 */
 	@Override
 	protected void onStop() {
-		AnalyticsManager.endSession(this);
 		super.onStop();
 	}
 
@@ -954,7 +951,8 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.content.SharedPreferences.OnSharedPreferenceChangeListener# onSharedPreferenceChanged(android.content.SharedPreferences, java.lang.String)
+	 * @see android.content.SharedPreferences.OnSharedPreferenceChangeListener#
+	 * onSharedPreferenceChanged(android.content.SharedPreferences, java.lang.String)
 	 */
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

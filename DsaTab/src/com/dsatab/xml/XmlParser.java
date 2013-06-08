@@ -1,16 +1,13 @@
 package com.dsatab.xml;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
-import android.net.Uri;
 import android.text.TextUtils;
-import android.text.TextUtils.StringSplitter;
 import au.com.bytecode.opencsv.CSVReader;
 
 import com.dsatab.DsaTabApplication;
@@ -18,12 +15,12 @@ import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.common.DsaTabRuntimeException;
 import com.dsatab.data.ArtInfo;
 import com.dsatab.data.SpellInfo;
+import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.enums.Position;
 import com.dsatab.data.enums.TalentType;
 import com.dsatab.data.items.Armor;
 import com.dsatab.data.items.DistanceWeapon;
 import com.dsatab.data.items.Item;
-import com.dsatab.data.items.ItemType;
 import com.dsatab.data.items.MiscSpecification;
 import com.dsatab.data.items.Shield;
 import com.dsatab.data.items.Weapon;
@@ -32,8 +29,6 @@ import com.dsatab.util.Util;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 
 public class XmlParser {
-
-	public static final String IMAGE_POSTFIX = ".jpg";
 
 	public static final String ENCODING = "UTF-8";
 
@@ -179,7 +174,6 @@ public class XmlParser {
 
 			CSVReader reader = new CSVReader(r);
 			String[] lineData;
-			StringSplitter splitter = new TextUtils.SimpleStringSplitter(';');
 
 			List<Position> armorPositions = DsaTabApplication.getInstance().getConfiguration().getArmorPositions();
 
@@ -596,28 +590,9 @@ public class XmlParser {
 		item.setName(lineData[1].replace('_', ' ').trim());
 
 		String path = lineData[2].trim();
-		File imageFile = null;
-		if (!TextUtils.isEmpty(path)) {
-			imageFile = new File(path);
-			if (!imageFile.exists())
-				imageFile = new File(DsaTabApplication.getDirectory(DsaTabApplication.DIR_CARDS), path);
-			if (!imageFile.exists())
-				imageFile = null;
-		}
 
-		// try to find a image with name of item in cards directory
-		if (imageFile == null && !TextUtils.isEmpty(item.getName())) {
-			imageFile = new File(DsaTabApplication.getDirectory(DsaTabApplication.DIR_CARDS), item.getName()
-					+ IMAGE_POSTFIX);
-			if (!imageFile.exists())
-				imageFile = null;
-		}
-
-		if (imageFile != null) {
-			item.setImageTextOverlay(false);
-			item.setImageUri(Uri.fromFile(imageFile));
-		}
-
+		item.setImagePath(path);
+		item.setImageTextOverlay(TextUtils.isEmpty(path));
 		item.setCategory(lineData[3].trim()); // category
 
 		return type;

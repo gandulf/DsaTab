@@ -1,16 +1,12 @@
 package com.dsatab.data;
 
-/**
- * 
- * 
- */
 public class EditableValue implements Value {
 
-	private String name;
+	protected String name;
 
 	protected Hero hero;
 
-	private Integer minimum, maximum, value;
+	protected Integer minimum, maximum, value;
 
 	public EditableValue(Hero hero, String name) {
 		this.hero = hero;

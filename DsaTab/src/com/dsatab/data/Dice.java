@@ -1,5 +1,7 @@
 package com.dsatab.data;
 
+import java.security.SecureRandom;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -7,8 +9,11 @@ import android.text.TextUtils;
 
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
+import com.dsatab.view.DiceSlider.DiceRoll;
 
 public class Dice {
+
+	private static Random rnd = new SecureRandom();
 
 	public int diceCount = 1;
 	public int diceType = 6;
@@ -67,5 +72,19 @@ public class Dice {
 			sb.append(Util.toProbe(constant));
 
 		return sb.toString();
+	}
+
+	public static DiceRoll diceRoll(int max) {
+		return new DiceRoll(max, dice(max));
+	}
+
+	/**
+	 * Returns a value between 1 and max (incl)
+	 * 
+	 * @param max
+	 * @return
+	 */
+	public static int dice(int max) {
+		return rnd.nextInt(max) + 1;
 	}
 }

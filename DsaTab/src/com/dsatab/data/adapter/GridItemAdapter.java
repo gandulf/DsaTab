@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 
 import com.dsatab.R;
+import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.filter.ItemCardListFilter;
 import com.dsatab.data.items.ItemCard;
-import com.dsatab.data.items.ItemType;
 import com.dsatab.view.CardView;
 
 public class GridItemAdapter extends OpenArrayAdapter<ItemCard> {
@@ -79,7 +79,7 @@ public class GridItemAdapter extends OpenArrayAdapter<ItemCard> {
 			ItemCard card;
 			for (int i = 0; i < count; i++) {
 				card = mObjects.get(i);
-				card.getItemInfo().setCellNumber(i);
+				card.setCellNumber(i);
 			}
 		}
 	}

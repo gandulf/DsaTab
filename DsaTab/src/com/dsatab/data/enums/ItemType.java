@@ -1,4 +1,4 @@
-package com.dsatab.data.items;
+package com.dsatab.data.enums;
 
 import java.util.Arrays;
 import java.util.Collections;

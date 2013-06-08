@@ -35,7 +35,7 @@ public class BaseFragmentActivity extends SherlockFragmentActivity {
 	 */
 	@Override
 	protected void onDestroy() {
-		Util.unbindDrawables(getWindow().getDecorView());
+		// Util.unbindDrawables(getWindow().getDecorView());
 		super.onDestroy();
 	}
 

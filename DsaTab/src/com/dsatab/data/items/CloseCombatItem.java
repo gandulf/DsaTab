@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.text.TextUtils;
 
+import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.enums.TalentType;
 import com.j256.ormlite.field.DatabaseField;
 

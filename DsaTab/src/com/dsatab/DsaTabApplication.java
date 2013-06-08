@@ -142,7 +142,8 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.content.SharedPreferences.OnSharedPreferenceChangeListener# onSharedPreferenceChanged(android.content.SharedPreferences, java.lang.String)
+	 * @see android.content.SharedPreferences.OnSharedPreferenceChangeListener#
+	 * onSharedPreferenceChanged(android.content.SharedPreferences, java.lang.String)
 	 */
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -296,14 +297,7 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 		configuration = new DsaTabConfiguration(this);
 
 		poorRichFont = Typeface.createFromAsset(this.getAssets(), "fonts/poorich.ttf");
-		boolean stats = getPreferences().getBoolean(DsaTabPreferenceActivity.KEY_USAGE_STATS, true);
-
-		AnalyticsManager.setEnabled(stats);
-		if (stats) {
-			BugSenseHandler.initAndStartSession(this, BUGSENSE_API_KEY);
-		}
-
-		Debug.verbose("AnalytisManager enabled = " + AnalyticsManager.isEnabled());
+		BugSenseHandler.initAndStartSession(this, BUGSENSE_API_KEY);
 
 		checkDirectories();
 

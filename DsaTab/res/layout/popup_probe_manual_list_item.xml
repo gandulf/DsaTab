@@ -10,7 +10,7 @@
         android:layout_height="fill_parent"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
-        android:lines="1"
+        android:singleLine="true"
         android:gravity="center_vertical"
         android:text="@string/label_manual" />
 

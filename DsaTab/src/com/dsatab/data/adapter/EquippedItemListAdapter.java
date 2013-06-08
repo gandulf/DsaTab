@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 
 import com.dsatab.R;
 import com.dsatab.data.Hero;
+import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.filter.ItemListFilter;
 import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.items.Item;
-import com.dsatab.data.items.ItemType;
 import com.dsatab.util.Util;
 import com.dsatab.view.CheckableImageButton;
 import com.dsatab.view.EquippedItemListItem;

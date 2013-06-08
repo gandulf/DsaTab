@@ -70,7 +70,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 
 						if (item.getGroupId() == MENU_CONTAINER_GROUP) {
 							int newScreen = item.getItemId();
-							if (newScreen != selectedItem.getItemInfo().getScreen()) {
+							if (newScreen != selectedItem.getScreen()) {
 								getHero().moveItem(selectedItem, newScreen);
 								notifyChanged = true;
 							}
@@ -146,7 +146,8 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see com.actionbarsherlock.view.ActionMode.Callback#onPrepareActionMode (com.actionbarsherlock.view.ActionMode, com.actionbarsherlock.view.Menu)
+		 * @see com.actionbarsherlock.view.ActionMode.Callback#onPrepareActionMode
+		 * (com.actionbarsherlock.view.ActionMode, com.actionbarsherlock.view.Menu)
 		 */
 		@Override
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
@@ -257,7 +258,8 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see com.actionbarsherlock.view.ActionMode.Callback#onPrepareActionMode (com.actionbarsherlock.view.ActionMode, com.actionbarsherlock.view.Menu)
+		 * @see com.actionbarsherlock.view.ActionMode.Callback#onPrepareActionMode
+		 * (com.actionbarsherlock.view.ActionMode, com.actionbarsherlock.view.Menu)
 		 */
 		@Override
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
@@ -334,7 +336,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 						if (isSetIndex(mCurrentScreen)) {
 							getHero().addEquippedItem(getBaseActivity(), item, null, null, getActiveSet());
 						} else {
-							item.getItemInfo().setScreen(mCurrentScreen);
+							item.setScreen(mCurrentScreen);
 							getHero().addItem(item);
 						}
 					}
@@ -378,7 +380,8 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu, com.actionbarsherlock.view.MenuInflater)
+	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu,
+	 * com.actionbarsherlock.view.MenuInflater)
 	 */
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -442,7 +445,8 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+	 * android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -476,7 +480,8 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 			/*
 			 * (non-Javadoc)
 			 * 
-			 * @see android.widget.AdapterView.OnItemLongClickListener#onItemLongClick (android.widget.AdapterView, android.view.View, int, long)
+			 * @see android.widget.AdapterView.OnItemLongClickListener#onItemLongClick (android.widget.AdapterView,
+			 * android.view.View, int, long)
 			 */
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -503,7 +508,8 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget .AdapterView, android.view.View, int, long)
+	 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget .AdapterView, android.view.View,
+	 * int, long)
 	 */
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -606,7 +612,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	 */
 	@Override
 	public void onItemAdded(Item item) {
-		if (item.getItemInfo().getScreen() == mCurrentScreen) {
+		if (item.getScreen() == mCurrentScreen) {
 			// skip items that are equippable since they will be equipped using
 			// a onItemEquipped Event. this would cause duplicates
 			if (item.isEquipable() && isSetIndex(mCurrentScreen))
@@ -637,7 +643,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	 */
 	@Override
 	public void onItemChanged(Item item) {
-		if (item.getItemInfo().getScreen() == mCurrentScreen) {
+		if (item.getScreen() == mCurrentScreen) {
 			itemAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
 		}
 	}
@@ -649,7 +655,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	 */
 	@Override
 	public void onItemRemoved(Item item) {
-		if (item.getItemInfo().getScreen() == mCurrentScreen) {
+		if (item.getScreen() == mCurrentScreen) {
 			itemAdapter.remove(item);
 		}
 		containerAdapter.notifyDataSetChanged();
@@ -693,7 +699,8 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerAdded (com.dsatab.data.items.ItemContainer)
+	 * @see com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerAdded
+	 * (com.dsatab.data.items.ItemContainer)
 	 */
 	@Override
 	public void onItemContainerAdded(ItemContainer itemContainer) {
@@ -703,7 +710,8 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerRemoved (com.dsatab.data.items.ItemContainer)
+	 * @see com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerRemoved
+	 * (com.dsatab.data.items.ItemContainer)
 	 */
 	@Override
 	public void onItemContainerRemoved(ItemContainer itemContainer) {
@@ -713,7 +721,8 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerChanged (com.dsatab.data.items.ItemContainer)
+	 * @see com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerChanged
+	 * (com.dsatab.data.items.ItemContainer)
 	 */
 	@Override
 	public void onItemContainerChanged(ItemContainer itemContainer) {

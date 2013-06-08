@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:gravity="center_horizontal"
-        android:lines="1"
+        android:singleLine="true"
         android:text="Schleichen" >
     </TextView>
 

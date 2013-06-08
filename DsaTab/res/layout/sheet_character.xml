@@ -67,7 +67,7 @@
                     android:layout_span="3"
                     android:ellipsize="middle"
                     android:gravity="left"
-                    android:lines="1"
+                    android:singleLine="true"
                     android:paddingLeft="4dip" >
                 </TextView>
             </TableRow>
@@ -88,7 +88,7 @@
                     android:layout_span="3"
                     android:ellipsize="middle"
                     android:gravity="left"
-                    android:lines="1"
+                    android:singleLine="true"
                     android:paddingLeft="4dip" >
                 </TextView>
             </TableRow>
@@ -109,7 +109,7 @@
                     android:layout_span="3"
                     android:ellipsize="middle"
                     android:gravity="left"
-                    android:lines="1"
+                    android:singleLine="true"
                     android:paddingLeft="4dip" >
                 </TextView>
             </TableRow>
@@ -129,7 +129,7 @@
                     android:layout_span="3"
                     android:ellipsize="middle"
                     android:gravity="left"
-                    android:lines="1"
+                    android:singleLine="true"
                     android:paddingLeft="4dip" >
                 </TextView>
             </TableRow>
@@ -150,7 +150,7 @@
                     android:layout_span="3"
                     android:ellipsize="middle"
                     android:gravity="left"
-                    android:lines="1"
+                    android:singleLine="true"
                     android:paddingLeft="4dip" >
                 </TextView>
             </TableRow>
@@ -168,7 +168,7 @@
                     android:id="@+id/gen_gewicht"
                     style="@style/TextValue.Small.NoTouch"
                     android:gravity="left"
-                    android:lines="1"
+                    android:singleLine="true"
                     android:paddingLeft="4dip" >
                 </TextView>
 
@@ -181,7 +181,7 @@
                     android:id="@+id/gen_groesse"
                     style="@style/TextValue.Small.NoTouch"
                     android:gravity="left"
-                    android:lines="1"
+                    android:singleLine="true"
                     android:paddingLeft="4dip" >
                 </TextView>
             </TableRow>
@@ -199,7 +199,7 @@
                     android:id="@+id/gen_haar_augen"
                     style="@style/TextValue.Small.NoTouch"
                     android:gravity="left"
-                    android:lines="1"
+                    android:singleLine="true"
                     android:paddingLeft="4dip" >
                 </TextView>
 
@@ -213,7 +213,7 @@
                     style="@style/TextValue.Small.NoTouch"
                     android:ellipsize="middle"
                     android:gravity="left"
-                    android:lines="1"
+                    android:singleLine="true"
                     android:paddingLeft="4dip" >
                 </TextView>
             </TableRow>
@@ -234,7 +234,7 @@
                     android:layout_span="3"
                     android:ellipsize="middle"
                     android:gravity="left"
-                    android:lines="1"
+                    android:singleLine="true"
                     android:paddingLeft="4dip"
                     android:text="" >
                 </TextView>
@@ -254,7 +254,7 @@
                     style="@style/TextValue.Small.NoTouch"
                     android:ellipsize="none"
                     android:gravity="left"
-                    android:lines="1"
+                    android:singleLine="true"
                     android:paddingLeft="4dip" >
                 </TextView>
 
@@ -269,7 +269,7 @@
                     style="@style/TextValue.Small.NoTouch"                    
                     android:ellipsize="none"
                     android:gravity="left"
-                    android:lines="1"
+                    android:singleLine="true"
                     android:paddingLeft="4dip" >
                 </TextView>
             </TableRow>
@@ -292,7 +292,7 @@
                     style="@style/TextValue.Small.NoTouch"                    
                     android:ellipsize="none"
                     android:gravity="left"
-                    android:lines="1"
+                    android:singleLine="true"
                     android:paddingLeft="4dip"
                     android:text="1" >
 
@@ -338,7 +338,7 @@
                         style="@style/TextLabel"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:lines="1"
+                        android:singleLine="true"
                         android:text="@string/label_mu" >
                     </TextView>
 
@@ -359,7 +359,7 @@
                         style="@style/TextLabel"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:lines="1"
+                        android:singleLine="true"
                         android:text="@string/label_kl" >
                     </TextView>
 
@@ -380,7 +380,7 @@
                         style="@style/TextLabel"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:lines="1"
+                        android:singleLine="true"
                         android:text="@string/label_in" >
                     </TextView>
 
@@ -400,7 +400,7 @@
                         style="@style/TextLabel"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:lines="1"
+                        android:singleLine="true"
                         android:text="@string/label_ch" >
                     </TextView>
 
@@ -420,7 +420,7 @@
                         style="@style/TextLabel"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:lines="1"
+                        android:singleLine="true"
                         android:text="@string/label_ff" >
                     </TextView>
 
@@ -440,7 +440,7 @@
                         style="@style/TextLabel"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:lines="1"
+                        android:singleLine="true"
                         android:text="@string/label_ge" >
                     </TextView>
 
@@ -460,7 +460,7 @@
                         style="@style/TextLabel"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:lines="1"
+                        android:singleLine="true"
                         android:text="@string/label_ko" >
                     </TextView>
 
@@ -480,7 +480,7 @@
                         style="@style/TextLabel"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:lines="1"
+                        android:singleLine="true"
                         android:text="@string/label_kk" >
                     </TextView>
 

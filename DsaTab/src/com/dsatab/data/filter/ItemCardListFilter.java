@@ -8,11 +8,11 @@ import android.text.TextUtils;
 
 import com.dsatab.data.adapter.OpenArrayAdapter;
 import com.dsatab.data.adapter.OpenFilter;
+import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemCard;
 import com.dsatab.data.items.ItemSpecification;
-import com.dsatab.data.items.ItemType;
 
 public class ItemCardListFilter extends OpenFilter<ItemCard> {
 

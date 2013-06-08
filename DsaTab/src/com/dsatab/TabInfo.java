@@ -41,7 +41,6 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 	private boolean attributeList = true;
 
 	private transient UUID id;
-	private transient int containerId;
 	private Uri iconUri;
 
 	private FilterSettings[] filterSettings = new FilterSettings[MAX_TABS_PER_PAGE];
@@ -78,7 +77,6 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 	public TabInfo(Class<? extends BaseFragment> activityClazz1, Class<? extends BaseFragment> activityClazz2,
 			int tabResourceId) {
 		this(activityClazz1, activityClazz2, tabResourceId, true);
-
 	}
 
 	public TabInfo(Class<? extends BaseFragment> activityClazz1, int tabResourceId, boolean diceSlider) {
@@ -106,6 +104,7 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		this.id = UUID.randomUUID();
 		this.filterSettings = (FilterSettings[]) in.readSerializable();
 		this.attributeList = in.readInt() == 0 ? false : true;
+		updateFilterSettings();
 	}
 
 	/**
@@ -232,7 +231,7 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 
 	public void setActivityClazz(int pos, Class<? extends BaseFragment> activityClazz) {
 		this.activityClazz[pos] = activityClazz;
-		updateFilterSettings();
+		updateFilterSettings(pos);
 	}
 
 	public Uri getIconUri() {
@@ -273,14 +272,6 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		this.attributeList = attributeList;
 	}
 
-	public int getContainerId() {
-		return containerId;
-	}
-
-	public void setContainerId(int containerId) {
-		this.containerId = containerId;
-	}
-
 	public int getTabCount() {
 		int count = 0;
 		for (int i = 0; i < activityClazz.length; i++) {
@@ -293,23 +284,26 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 	}
 
 	public void updateFilterSettings() {
-
 		for (int i = 0; i < activityClazz.length; i++) {
-			if (activityClazz[i] != null) {
-				if (FightFragment.class.isAssignableFrom(activityClazz[i])) {
-					if (!(filterSettings[i] instanceof FightFilterSettings)) {
-						filterSettings[i] = new FightFilterSettings(true, true, true, true);
-					}
-				} else if (BaseListFragment.class.isAssignableFrom(activityClazz[i])) {
-					if (!(filterSettings[i] instanceof ListFilterSettings)) {
-						filterSettings[i] = new ListFilterSettings(true, true, true, true);
-					}
-				} else {
-					filterSettings[i] = null;
+			updateFilterSettings(i);
+		}
+	}
+
+	private void updateFilterSettings(int i) {
+		if (activityClazz[i] != null) {
+			if (FightFragment.class.isAssignableFrom(activityClazz[i])) {
+				if (!(filterSettings[i] instanceof FightFilterSettings)) {
+					filterSettings[i] = new FightFilterSettings(true, true, true, true);
+				}
+			} else if (BaseListFragment.class.isAssignableFrom(activityClazz[i])) {
+				if (!(filterSettings[i] instanceof ListFilterSettings)) {
+					filterSettings[i] = new ListFilterSettings(true, true, true, true);
 				}
 			} else {
 				filterSettings[i] = null;
 			}
+		} else {
+			filterSettings[i] = null;
 		}
 	}
 
