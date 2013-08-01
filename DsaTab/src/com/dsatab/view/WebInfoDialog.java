@@ -32,7 +32,6 @@ public class WebInfoDialog extends AlertDialog implements DialogInterface.OnClic
 		settings.setDefaultTextEncodingName("utf-8");
 
 		popupcontent.loadUrl(url);
-
 		setButton(DialogInterface.BUTTON_POSITIVE, getContext().getString(R.string.label_ok), this);
 	}
 

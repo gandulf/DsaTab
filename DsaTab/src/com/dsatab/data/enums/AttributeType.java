@@ -57,6 +57,7 @@ public enum AttributeType {
 		case fk:
 		case ini:
 		case Initiative_Aktuell:
+		case Ausweichen:
 			return true;
 		default:
 			return false;

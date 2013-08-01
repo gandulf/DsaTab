@@ -161,11 +161,37 @@ public class Util {
 		int n = s.length();
 		for (int i = 0; i < n; i++) {
 			char c = s.charAt(i);
-			int pos = UNICODE.indexOf(c);
-			if (pos > -1) {
-				sb.append(PLAIN_ASCII.charAt(pos));
-			} else if (Character.isLetterOrDigit(c)) {
-				sb.append(c);
+
+			switch (c) {
+			case 'Ä':
+				sb.append("Ae");
+				break;
+			case 'ä':
+				sb.append("ae");
+				break;
+			case 'Ö':
+				sb.append("Oe");
+				break;
+			case 'ö':
+				sb.append("oe");
+				break;
+			case 'Ü':
+				sb.append("Üe");
+				break;
+			case 'ü':
+				sb.append("ue");
+				break;
+			case 'ß':
+				sb.append("ss");
+				break;
+			default:
+				int pos = UNICODE.indexOf(c);
+				if (pos > -1) {
+					sb.append(PLAIN_ASCII.charAt(pos));
+				} else if (Character.isLetterOrDigit(c)) {
+					sb.append(c);
+				}
+				break;
 			}
 
 		}

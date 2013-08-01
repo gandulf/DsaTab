@@ -1,13 +1,5 @@
 package com.dsatab.test;
 
-import java.io.InputStream;
-
-import org.jdom2.Attribute;
-import org.jdom2.Document;
-import org.jdom2.filter.Filters;
-import org.jdom2.xpath.XPathExpression;
-import org.jdom2.xpath.XPathFactory;
-
 import android.test.InstrumentationTestCase;
 
 import com.dsatab.data.Hero;
@@ -19,6 +11,14 @@ import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.items.Weapon;
 import com.dsatab.util.Util;
 import com.dsatab.xml.HeldenXmlParser;
+
+import org.jdom2.Attribute;
+import org.jdom2.Document;
+import org.jdom2.filter.Filters;
+import org.jdom2.xpath.XPathExpression;
+import org.jdom2.xpath.XPathFactory;
+
+import java.io.InputStream;
 
 public class XmlParserTest extends InstrumentationTestCase {
 

@@ -777,8 +777,12 @@ public class CharacterFragment extends BaseAttributesFragment implements OnClick
 				if (currentBuilder.length() > 0) {
 					currentBuilder.append(", ");
 				}
-				if (Arrays.binarySearch(featureInfos, feature.getType().xmlName() + ".html") >= 0) {
-					currentBuilder.appendClick(linkClicker, feature.toString(), feature.getType().xmlName());
+				// due to a bugin webview we cannot load urls with spaces in it
+				String tag = feature.getType().xmlName().replace(" ", "");
+				tag = Util.convertNonAscii(tag);
+
+				if (Arrays.binarySearch(featureInfos, tag + ".html") >= 0) {
+					currentBuilder.appendClick(linkClicker, feature.toString(), tag);
 				} else {
 					currentBuilder.append(feature.toString());
 				}
