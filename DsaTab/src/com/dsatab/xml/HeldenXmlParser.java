@@ -49,13 +49,13 @@ import com.dsatab.data.Purse.PurseUnit;
 import com.dsatab.data.Spell;
 import com.dsatab.data.SpellInfo;
 import com.dsatab.data.Talent;
+import com.dsatab.data.enums.ArmorPosition;
 import com.dsatab.data.enums.ArtGroupType;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.EventCategory;
 import com.dsatab.data.enums.FeatureType;
 import com.dsatab.data.enums.Hand;
 import com.dsatab.data.enums.ItemType;
-import com.dsatab.data.enums.Position;
 import com.dsatab.data.enums.TalentGroupType;
 import com.dsatab.data.enums.TalentType;
 import com.dsatab.data.enums.UsageType;
@@ -808,7 +808,7 @@ public class HeldenXmlParser {
 							if (be != null) {
 								armor.setTotalBe(Util.parseFloat(be));
 							}
-							for (Position pos : Position.values()) {
+							for (ArmorPosition pos : ArmorPosition.values()) {
 								String rs = DomUtil.getChildValue(ruestung, pos.name().toLowerCase(Locale.GERMAN),
 										Xml.KEY_VALUE);
 								if (rs != null) {

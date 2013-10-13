@@ -9,7 +9,7 @@ public enum Position {
 	Head_Up("Kopf Oben"), Head_Side("Kopf seitl."), Head_Face("Gesicht"), Neck("Hals"), LeftShoulder("Linke Schulter"), LeftUpperArm(
 			"Linker Oberarm"), LeftLowerArm("Linker Unterarm"), RightShoulder("Rechte Schulter"), RightUpperArm(
 			"Rechter Oberarm"), RightLowerArm("Rechter Unterarm"), Brust("Brust"), Bauch("Bauch"), Ruecken("Rücken"), Pelvis(
-			"Becken"), UpperLeg("Oberschenkel"), LowerLeg("Unterschenkel"), Kopf("Kopf"), LinkerArm("Linke Hand"), RechterArm(
+			"Becken"), UpperLeg("Oberschenkel"), LowerLeg("Unterschenkel"), Kopf("Kopf"), LinkeHand("Linke Hand"), RechteHand(
 			"Rechte Hand"), LinkesBein("Linkes Bein"), RechtesBein("Rechtes Bein");
 
 	protected String name;
@@ -25,23 +25,6 @@ public enum Position {
 	public static List<Position> WOUND_POSITIONS = new ArrayList<Position>(Arrays.asList(Position.Kopf, Position.Bauch,
 			Position.Brust, Position.LeftLowerArm, Position.RightLowerArm, Position.LowerLeg, Position.UpperLeg));
 
-	// KO KS KG Hl SL OaL UaL SR OaR UaR Br Rü Ba Be OS US
-	// order must be the same as in ruestung.txt
-	// armor positions for our house rules
-	public static List<Position> ARMOR_POSITIONS_HOUSE = new ArrayList<Position>(Arrays.asList(Position.Head_Up,
-			Position.Head_Side, Position.Head_Face, Position.Neck, Position.LeftShoulder, Position.LeftUpperArm,
-			Position.LeftLowerArm, Position.RightShoulder, Position.RightUpperArm, Position.RightLowerArm,
-			Position.Brust, Position.Ruecken, Position.Bauch, Position.Pelvis, Position.UpperLeg, Position.LowerLeg));
-
-	// official armor positions 4.1
-	// Kopf, Rücken, RechterArm, LinkerArm, Brust, Bauch, RechtesBein,
-	// LinkesBein
-	public static List<Position> ARMOR_POSITIONS = new ArrayList<Position>(Arrays.asList(Position.Kopf, Position.Brust,
-			Position.Ruecken, Position.Bauch, Position.LeftLowerArm, Position.RightLowerArm, Position.LinkesBein,
-			Position.RechtesBein));
-
-	public static int[] ARMOR_POSITIONS_MULTIPLIER = { 2, 4, 4, 4, 1, 1, 2, 2 };
-
 	public static final Position[] messer_dolch_stich = new Position[21];
 	static {
 		messer_dolch_stich[1] = Position.UpperLeg;
@@ -49,12 +32,12 @@ public enum Position {
 		messer_dolch_stich[3] = Position.RightShoulder;
 		messer_dolch_stich[4] = Position.RightLowerArm;
 		messer_dolch_stich[5] = Position.RightLowerArm;
-		messer_dolch_stich[6] = Position.RechterArm;
-		messer_dolch_stich[7] = Position.RechterArm;
+		messer_dolch_stich[6] = Position.RechteHand;
+		messer_dolch_stich[7] = Position.RechteHand;
 		messer_dolch_stich[8] = Position.RightUpperArm;
 		messer_dolch_stich[9] = Position.LeftLowerArm;
 		messer_dolch_stich[10] = Position.LeftLowerArm;
-		messer_dolch_stich[11] = Position.LinkerArm;
+		messer_dolch_stich[11] = Position.LinkeHand;
 		messer_dolch_stich[12] = Position.Bauch;
 		messer_dolch_stich[13] = Position.Bauch;
 		messer_dolch_stich[14] = Position.Brust;
@@ -70,7 +53,7 @@ public enum Position {
 	static {
 		hieb_ketten[1] = Position.Pelvis;
 		hieb_ketten[2] = Position.UpperLeg;
-		hieb_ketten[3] = Position.RechterArm;
+		hieb_ketten[3] = Position.RechteHand;
 		hieb_ketten[4] = Position.RightLowerArm;
 		hieb_ketten[5] = Position.RightLowerArm;
 		hieb_ketten[6] = Position.LeftLowerArm;
@@ -92,7 +75,7 @@ public enum Position {
 
 	public static final Position[] schwert_saebel = new Position[21];
 	static {
-		schwert_saebel[1] = Position.RechterArm;
+		schwert_saebel[1] = Position.RechteHand;
 		schwert_saebel[2] = Position.RightUpperArm;
 		schwert_saebel[3] = Position.RightLowerArm;
 		schwert_saebel[4] = Position.RightLowerArm;
@@ -128,7 +111,7 @@ public enum Position {
 		stangen_zweih_stich[10] = Position.Bauch;
 		stangen_zweih_stich[11] = Position.Bauch;
 		stangen_zweih_stich[12] = Position.Bauch;
-		stangen_zweih_stich[13] = Position.RechterArm;
+		stangen_zweih_stich[13] = Position.RechteHand;
 		stangen_zweih_stich[14] = Position.Brust;
 		stangen_zweih_stich[15] = Position.Brust;
 		stangen_zweih_stich[16] = Position.Brust;
@@ -149,7 +132,7 @@ public enum Position {
 		stangen_zweih_hieb[7] = Position.RightLowerArm;
 		stangen_zweih_hieb[8] = Position.RightUpperArm;
 		stangen_zweih_hieb[9] = Position.LeftLowerArm;
-		stangen_zweih_hieb[10] = Position.RechterArm;
+		stangen_zweih_hieb[10] = Position.RechteHand;
 		stangen_zweih_hieb[11] = Position.LeftUpperArm;
 		stangen_zweih_hieb[12] = Position.LeftShoulder;
 		stangen_zweih_hieb[13] = Position.RightShoulder;
@@ -172,7 +155,7 @@ public enum Position {
 		box_rauf_hruru[6] = Position.LeftLowerArm;
 		box_rauf_hruru[7] = Position.RightLowerArm;
 		box_rauf_hruru[8] = Position.RightLowerArm;
-		box_rauf_hruru[9] = Position.RechterArm;
+		box_rauf_hruru[9] = Position.RechteHand;
 		box_rauf_hruru[10] = Position.Head_Face;
 		box_rauf_hruru[11] = Position.Head_Face;
 		box_rauf_hruru[12] = Position.Head_Face;
@@ -202,7 +185,7 @@ public enum Position {
 		fern_wurf[12] = Position.Neck;
 		fern_wurf[13] = Position.Bauch;
 		fern_wurf[14] = Position.Bauch;
-		fern_wurf[15] = Position.RechterArm;
+		fern_wurf[15] = Position.RechteHand;
 		fern_wurf[16] = Position.LowerLeg;
 		fern_wurf[17] = Position.UpperLeg;
 		fern_wurf[18] = Position.UpperLeg;
@@ -220,12 +203,12 @@ public enum Position {
 		official[6] = Position.RechtesBein;
 		official[7] = Position.Bauch;
 		official[8] = Position.Bauch;
-		official[9] = Position.LinkerArm;
-		official[10] = Position.RechterArm;
-		official[11] = Position.LinkerArm;
-		official[12] = Position.RechterArm;
-		official[13] = Position.LinkerArm;
-		official[14] = Position.RechterArm;
+		official[9] = Position.LinkeHand;
+		official[10] = Position.RechteHand;
+		official[11] = Position.LinkeHand;
+		official[12] = Position.RechteHand;
+		official[13] = Position.LinkeHand;
+		official[14] = Position.RechteHand;
 		official[15] = Position.Brust;
 		official[16] = Position.Brust;
 		official[17] = Position.Brust;

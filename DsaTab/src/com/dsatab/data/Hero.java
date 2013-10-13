@@ -34,6 +34,7 @@ import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.data.Talent.Flags;
+import com.dsatab.data.enums.ArmorPosition;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.FeatureType;
 import com.dsatab.data.enums.Hand;
@@ -91,7 +92,7 @@ public class Hero {
 	private Map<String, Art> artsByName;
 	private Map<FeatureType, Art> artsByType;
 
-	private Map<Position, ArmorAttribute>[] armorAttributes;
+	private Map<ArmorPosition, ArmorAttribute>[] armorAttributes;
 	private Map<Position, WoundAttribute> wounds;
 
 	private List<EquippedItem>[] equippedItems = null;
@@ -1064,22 +1065,22 @@ public class Hero {
 		return attributes.containsKey(type);
 	}
 
-	public Map<Position, ArmorAttribute> getArmorAttributes() {
+	public Map<ArmorPosition, ArmorAttribute> getArmorAttributes() {
 		return getArmorAttributes(activeSet);
 	}
 
 	@SuppressWarnings("unchecked")
-	public Map<Position, ArmorAttribute> getArmorAttributes(int set) {
+	public Map<ArmorPosition, ArmorAttribute> getArmorAttributes(int set) {
 		if (armorAttributes == null) {
 			armorAttributes = new EnumMap[MAXIMUM_SET_NUMBER];
 		}
 
 		if (armorAttributes[set] == null) {
 
-			final List<Position> armorPositions = DsaTabApplication.getInstance().getConfiguration()
+			final List<ArmorPosition> armorPositions = DsaTabApplication.getInstance().getConfiguration()
 					.getArmorPositions();
 
-			Map<Position, ArmorAttribute> map = new EnumMap<Position, ArmorAttribute>(Position.class);
+			Map<ArmorPosition, ArmorAttribute> map = new EnumMap<ArmorPosition, ArmorAttribute>(ArmorPosition.class);
 
 			if (getHeroConfiguration().getArmorAttributes(set) != null) {
 				for (ArmorAttribute rs : getHeroConfiguration().getArmorAttributes(set)) {
@@ -1090,7 +1091,7 @@ public class Hero {
 			}
 
 			// fill not existing values with 0
-			for (Position pos : armorPositions) {
+			for (ArmorPosition pos : armorPositions) {
 				ArmorAttribute rs = map.get(pos);
 
 				if (rs == null) {
@@ -1736,13 +1737,13 @@ public class Hero {
 							rs1Armor = null;
 						}
 
-						for (int i = 0; i < Position.ARMOR_POSITIONS.size(); i++) {
-							float armorRs = armor.getRs(Position.ARMOR_POSITIONS.get(i));
+						for (ArmorPosition pos : ArmorPosition.values()) {
+							float armorRs = armor.getRs(pos);
 
 							if (armor.isZonenHalfBe())
 								armorRs = armorRs / 2.0f;
 
-							itemRs += (armorRs * Position.ARMOR_POSITIONS_MULTIPLIER[i]);
+							itemRs += (armorRs * pos.getMultiplier());
 						}
 
 						if (itemRs >= 20) {
@@ -1800,8 +1801,8 @@ public class Hero {
 		switch (DsaTabApplication.getInstance().getConfiguration().getArmorType()) {
 
 		case ZonenRuestung:
-			for (int i = 0; i < Position.ARMOR_POSITIONS.size(); i++) {
-				totalRs += (getArmorRs(Position.ARMOR_POSITIONS.get(i)) * Position.ARMOR_POSITIONS_MULTIPLIER[i]);
+			for (ArmorPosition pos : ArmorPosition.values()) {
+				totalRs += (getArmorRs(pos) * pos.getMultiplier());
 			}
 			totalRs = (int) Math.round(totalRs / 20.0);
 			break;
@@ -1827,7 +1828,7 @@ public class Hero {
 		return (int) Math.ceil(totalRs);
 	}
 
-	public List<EquippedItem> getArmor(Position pos) {
+	public List<EquippedItem> getArmor(ArmorPosition pos) {
 		List<EquippedItem> items = new LinkedList<EquippedItem>();
 
 		for (EquippedItem equippedItem : getEquippedItems()) {
@@ -1841,7 +1842,7 @@ public class Hero {
 		return items;
 	}
 
-	public int getArmorRs(Position pos) {
+	public int getArmorRs(ArmorPosition pos) {
 
 		int rs = 0;
 		for (EquippedItem equippedItem : getEquippedItems()) {

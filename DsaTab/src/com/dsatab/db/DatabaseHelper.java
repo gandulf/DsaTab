@@ -32,10 +32,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
 	// name of the database file for your application -- change to something
 	// appropriate for your app
-	private static final String DATABASE_NAME = "dsatab.db";
+	public static final String DATABASE_NAME = "dsatab";
 	// any time you make changes to your database objects, you may have to
 	// increase the database version
-	private static final int DATABASE_VERSION = 39;
+	public static final int DATABASE_VERSION = 43;
 
 	// the DAO object we use to access the SimpleData table
 	private RuntimeExceptionDao<Item, UUID> itemRuntimeDao = null;
@@ -109,6 +109,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		if (itemRuntimeDao == null) {
 			itemRuntimeDao = getRuntimeExceptionDao(Item.class);
 		}
+
 		return itemRuntimeDao;
 	}
 

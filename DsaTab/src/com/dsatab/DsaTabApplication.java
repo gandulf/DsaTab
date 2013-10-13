@@ -7,6 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,7 +40,6 @@ import com.dsatab.db.DatabaseHelper;
 import com.dsatab.map.BitmapTileSource;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
-import com.dsatab.xml.DataManager;
 import com.dsatab.xml.HeldenXmlParser;
 import com.dsatab.xml.Xml;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
@@ -303,8 +304,6 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 
 		getPreferences().registerOnSharedPreferenceChangeListener(this);
 
-		DataManager.init(getApplicationContext());
-
 		TileSourceFactory.getTileSources().clear();
 		final ITileSource tileSource = new BitmapTileSource(TILESOURCE_AVENTURIEN, null, 2, 5, 256, ".jpg");
 		TileSourceFactory.addTileSource(tileSource);
@@ -327,7 +326,20 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 			}
 
 		}
+	}
 
+	public void copy(File src, File dst) throws IOException {
+		InputStream in = new FileInputStream(src);
+		OutputStream out = new FileOutputStream(dst);
+
+		// Transfer bytes from in to out
+		byte[] buf = new byte[1024];
+		int len;
+		while ((len = in.read(buf)) > 0) {
+			out.write(buf, 0, len);
+		}
+		in.close();
+		out.close();
 	}
 
 	private void cleanUp() {
@@ -485,6 +497,10 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 
 	public DatabaseHelper getDBHelper() {
 		if (databaseHelper == null) {
+
+			// AssetsDatabaseHelper assetsDatabaseHelper = new AssetsDatabaseHelper(getApplicationContext());
+			// assetsDatabaseHelper.getReadableDatabase();
+
 			databaseHelper = OpenHelperManager.getHelper(getApplicationContext(), DatabaseHelper.class);
 		}
 		return databaseHelper;

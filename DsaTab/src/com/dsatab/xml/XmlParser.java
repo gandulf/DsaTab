@@ -11,12 +11,11 @@ import android.text.TextUtils;
 import au.com.bytecode.opencsv.CSVReader;
 
 import com.dsatab.DsaTabApplication;
-import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.common.DsaTabRuntimeException;
 import com.dsatab.data.ArtInfo;
 import com.dsatab.data.SpellInfo;
+import com.dsatab.data.enums.ArmorPosition;
 import com.dsatab.data.enums.ItemType;
-import com.dsatab.data.enums.Position;
 import com.dsatab.data.enums.TalentType;
 import com.dsatab.data.items.Armor;
 import com.dsatab.data.items.DistanceWeapon;
@@ -33,16 +32,9 @@ public class XmlParser {
 	public static final String ENCODING = "UTF-8";
 
 	public static void fillItems() {
-
 		try {
 			readItems("data/items.csv");
-
-			if (DsaTabApplication.getPreferences().getBoolean(
-					DsaTabPreferenceActivity.KEY_HOUSE_RULES_MORE_WOUND_ZONES, false)) {
-				readItems("data/items_armor_house.csv");
-			} else {
-				readItems("data/items_armor.csv");
-			}
+			readItems("data/items_armor.csv");
 		} catch (IOException e) {
 			throw new DsaTabRuntimeException("Could not parse items from items.csv", e);
 		}
@@ -91,6 +83,14 @@ public class XmlParser {
 					item.setProbe(lineData[9].trim());
 				if (lineData.length > 10)
 					item.setMerkmale(lineData[10].trim());
+
+				List<ArtInfo> artInfos = artDao.queryForEq("name", item.getName().replace("'", "''"));
+				for (ArtInfo info : artInfos) {
+					if (info.getGrade() == item.getGrade()) {
+						Debug.verbose("Found duplicate " + item.getFullName());
+						continue;
+					}
+				}
 
 				artDao.create(item);
 
@@ -175,7 +175,7 @@ public class XmlParser {
 			CSVReader reader = new CSVReader(r);
 			String[] lineData;
 
-			List<Position> armorPositions = DsaTabApplication.getInstance().getConfiguration().getArmorPositions();
+			List<ArmorPosition> armorPositions = DsaTabApplication.getInstance().getConfiguration().getArmorPositions();
 
 			RuntimeExceptionDao<Weapon, Integer> weaponDao = DsaTabApplication.getInstance().getDBHelper()
 					.getRuntimeDao(Weapon.class);
@@ -314,19 +314,21 @@ public class XmlParser {
 		return null;
 	}
 
-	private static Armor readArmor(Item item, String[] lineData, List<Position> armorPositions) {
+	private static Armor readArmor(Item item, String[] lineData, List<ArmorPosition> armorPositions) {
 
 		Armor w = new Armor(item);
 
 		w.setTotalBe(Util.parseFloat(lineData[4]));
 
 		int i = 5;
-		for (Position pos : armorPositions) {
+		for (ArmorPosition pos : armorPositions) {
 			w.setRs(pos, Util.parseInt(lineData[i++], 0));
 		}
 
-		if (lineData.length > i + 1)
-			w.setZonenRs(Util.parseInt(lineData[i++], 0));
+		// if (lineData.length > i + 1)
+		// w.setZonenRs(Util.parseInt(lineData[i++], 0));
+		i++; // skip zoneenrs
+
 		if (lineData.length > i + 1)
 			w.setTotalRs(Util.parseInt(lineData[i++], 0));
 		if (lineData.length > i + 1)

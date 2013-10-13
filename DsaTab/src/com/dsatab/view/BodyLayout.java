@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.dsatab.R;
 import com.dsatab.data.ArmorAttribute;
 import com.dsatab.data.WoundAttribute;
+import com.dsatab.data.enums.ArmorPosition;
 import com.dsatab.data.enums.Position;
 import com.dsatab.util.Util;
 
@@ -57,7 +58,8 @@ public class BodyLayout extends FrameLayout {
 	private int woundSize;
 	private int rsSize, rsTextSize;
 
-	private Map<Position, TextView> armorButtons = new HashMap<Position, TextView>(Position.values().length);
+	private Map<ArmorPosition, TextView> armorButtons = new HashMap<ArmorPosition, TextView>(
+			ArmorPosition.values().length);
 	private Map<Position, ImageButton[]> woundButtons = new HashMap<Position, ImageButton[]>(Position.values().length);
 
 	private OnClickListener onArmorClickListener, onWoundClickListener;
@@ -65,16 +67,17 @@ public class BodyLayout extends FrameLayout {
 
 	public static class LayoutParams extends FrameLayout.LayoutParams {
 		private Position position;
-		private int row;
+		private ArmorPosition armorPosition;
 
 		public LayoutParams(int width, int height, Position position) {
-			this(width, height, position, 0);
-		}
-
-		public LayoutParams(int width, int height, Position position, int row) {
 			super(width, height);
 			this.position = position;
-			this.row = row;
+
+		}
+
+		public LayoutParams(int width, int height, ArmorPosition position) {
+			super(width, height);
+			this.armorPosition = position;
 		}
 
 		public Position getPosition() {
@@ -85,12 +88,12 @@ public class BodyLayout extends FrameLayout {
 			this.position = position;
 		}
 
-		public int getRow() {
-			return row;
+		public ArmorPosition getArmorPosition() {
+			return armorPosition;
 		}
 
-		public void setRow(int row) {
-			this.row = row;
+		public void setArmorPosition(ArmorPosition armorPosition) {
+			this.armorPosition = armorPosition;
 		}
 
 	}
@@ -118,7 +121,7 @@ public class BodyLayout extends FrameLayout {
 		setValue(rsText, attr);
 	}
 
-	public void setArmorAttributes(Map<Position, ArmorAttribute> attributes) {
+	public void setArmorAttributes(Map<ArmorPosition, ArmorAttribute> attributes) {
 
 		// remove old buttons if existing
 		for (TextView tv : armorButtons.values()) {
@@ -238,7 +241,7 @@ public class BodyLayout extends FrameLayout {
 		return woundButton;
 	}
 
-	protected TextView addArmorButton(Position pos) {
+	protected TextView addArmorButton(ArmorPosition pos) {
 		TextView rsText = new TextView(getContext());
 
 		rsText.setBackgroundResource(R.drawable.icon_armor_btn);
@@ -249,7 +252,7 @@ public class BodyLayout extends FrameLayout {
 		rsText.setTextColor(getResources().getColor(android.R.color.primary_text_light));
 		rsText.setMinimumWidth(rsSize);
 		rsText.setMinimumHeight(rsSize);
-		addView(rsText, new LayoutParams(rsSize, rsSize, pos, 1));
+		addView(rsText, new LayoutParams(rsSize, rsSize, pos));
 
 		armorButtons.put(pos, rsText);
 
@@ -293,7 +296,7 @@ public class BodyLayout extends FrameLayout {
 
 				LayoutParams lp = (LayoutParams) child.getLayoutParams();
 
-				if (lp.getRow() == 0) {
+				if (lp.getPosition() != null) {
 					switch (lp.getPosition()) {
 					case Kopf:
 						headWidth += child.getMeasuredWidth();
@@ -320,6 +323,34 @@ public class BodyLayout extends FrameLayout {
 						// do nothing
 						break;
 					}
+				} else if (lp.getArmorPosition() != null) {
+					switch (lp.getArmorPosition()) {
+					case Kopf:
+						headWidth += child.getMeasuredWidth();
+						break;
+					case Bauch:
+						torsoWidth += child.getMeasuredWidth();
+						break;
+					case Brust:
+						chestWidth += child.getMeasuredWidth();
+						break;
+					case LinkerArm:
+						leftArmWidth += child.getMeasuredWidth();
+						break;
+					case RechterArm:
+						rightArmWidth += child.getMeasuredWidth();
+						break;
+					case LinkesBein:
+						upperLegWidth += child.getMeasuredWidth();
+						break;
+					case RechtesBein:
+						lowerLegWidth += child.getMeasuredWidth();
+						break;
+					default:
+						// do nothing
+						break;
+					}
+
 				}
 			}
 		}
@@ -354,7 +385,7 @@ public class BodyLayout extends FrameLayout {
 				LayoutParams lp = (LayoutParams) child.getLayoutParams();
 
 				// wounds
-				if (lp.getRow() == 0) {
+				if (lp.getPosition() != null) {
 					switch (lp.getPosition()) {
 					case Kopf:
 						cl = headX;
@@ -403,110 +434,61 @@ public class BodyLayout extends FrameLayout {
 						break;
 					}
 					// armor
-				} else {
-					switch (lp.getPosition()) {
-					case Head_Up:
-						cl = (int) (width * OFFSET_HEAD_X) - (child.getMeasuredWidth() / 2);
-						cr = cl + child.getMeasuredWidth();
-						ct = (int) (height * (OFFSET_HEAD_UP_Y));
-						cb = ct + child.getMeasuredHeight();
-						break;
-					case Head_Side:
-						cl = (int) (width * OFFSET_HEAD_SIDE_X) - (child.getMeasuredWidth() / 2);
-						cr = cl + child.getMeasuredWidth();
-						ct = (int) (height * (OFFSET_HEAD_Y) + woundSize);
-						cb = ct + child.getMeasuredHeight();
-						break;
-					case Kopf:
-					case Head_Face:
-						cl = (int) (width * OFFSET_HEAD_X) - (child.getMeasuredWidth() / 2);
-						cr = cl + child.getMeasuredWidth();
-						ct = (int) (height * (OFFSET_HEAD_Y) + woundSize);
-						cb = ct + child.getMeasuredHeight();
-						break;
-					case Neck:
-						cl = (int) (width * OFFSET_HEAD_X) - (child.getMeasuredWidth() / 2);
-						cr = cl + child.getMeasuredWidth();
-						ct = (int) (height * (OFFSET_NECK_Y));
-						cb = ct + child.getMeasuredHeight();
-						break;
-					case Bauch:
-						cl = (int) (width * OFFSET_STOMACH_X) - (child.getMeasuredWidth() / 2);
-						cr = cl + child.getMeasuredWidth();
-						ct = (int) (height * (OFFSET_STOMACH_Y) + woundSize);
-						cb = ct + child.getMeasuredHeight();
-						break;
-					case Pelvis:
-						cl = (int) (width * OFFSET_STOMACH_X) - (child.getMeasuredWidth() / 2);
-						cr = cl + child.getMeasuredWidth();
-						ct = (int) (height * (OFFSET_PELVIS_Y));
-						cb = ct + child.getMeasuredHeight();
-						break;
-					case Brust:
-						cl = (int) (width * OFFSET_CHEST_X) - (child.getMeasuredWidth() / 2);
-						cr = cl + child.getMeasuredWidth();
-						ct = (int) (height * (OFFSET_CHEST_Y) + woundSize);
-						cb = ct + child.getMeasuredHeight();
-						break;
-					case Ruecken:
-						cl = (int) (width * OFFSET_BACK_X) - (child.getMeasuredWidth() / 2);
-						cr = cl + child.getMeasuredWidth();
-						ct = (int) (height * (OFFSET_BACK_Y) + woundSize);
-						cb = ct + child.getMeasuredHeight();
-						break;
-					case LeftShoulder:
-						cl = (int) (width * OFFSET_LEFT_SHOULDER_X) - (child.getMeasuredWidth() / 2);
-						cr = cl + child.getMeasuredWidth();
-						ct = (int) (height * (OFFSET_LEFT_SHOULDER_Y));
-						cb = ct + child.getMeasuredHeight();
-						break;
-					case LeftLowerArm:
-						cl = (int) (width * OFFSET_LEFT_ARM_X) - (child.getMeasuredWidth() / 2);
-						cr = cl + child.getMeasuredWidth();
-						ct = (int) (height * (OFFSET_LEFT_ARM_Y) + woundSize);
-						cb = ct + child.getMeasuredHeight();
-						break;
-					case LeftUpperArm:
-						cl = (int) (width * OFFSET_LEFT_UPPER_ARM_X) - (child.getMeasuredWidth() / 2);
-						cr = cl + child.getMeasuredWidth();
-						ct = (int) (height * (OFFSET_LEFT_UPPER_ARM_Y) + woundSize);
-						cb = ct + child.getMeasuredHeight();
-						break;
-					case RightShoulder:
-						cl = (int) (width * OFFSET_RIGHT_UPPER_ARM_X) - (child.getMeasuredWidth() / 2);
-						cr = cl + child.getMeasuredWidth();
-						ct = (int) (height * (OFFSET_RIGHT_SHOULDER_Y));
-						cb = ct + child.getMeasuredHeight();
-						break;
-					case RightLowerArm:
-						cl = (int) (width * OFFSET_RIGHT_ARM_X) - (child.getMeasuredWidth() / 2);
-						cr = cl + child.getMeasuredWidth();
-						ct = (int) (height * (OFFSET_RIGHT_ARM_Y) + woundSize);
-						cb = ct + child.getMeasuredHeight();
-						break;
-					case RightUpperArm:
-						cl = (int) (width * OFFSET_RIGHT_UPPER_ARM_X) - (child.getMeasuredWidth() / 2);
-						cr = cl + child.getMeasuredWidth();
-						ct = (int) (height * (OFFSET_RIGHT_UPPER_ARM_Y) + woundSize);
-						cb = ct + child.getMeasuredHeight();
-						break;
-					case LinkesBein:
-					case UpperLeg:
-						cl = (int) (width * OFFSET_UPPER_LEG_X) - (child.getMeasuredWidth() / 2);
-						cr = cl + child.getMeasuredWidth();
-						ct = (int) (height * (OFFSET_UPPER_LEG_Y) + woundSize);
-						cb = ct + child.getMeasuredHeight();
-						break;
-					case RechtesBein:
-					case LowerLeg:
-						cl = (int) (width * OFFSET_LOWER_LEG_X) - (child.getMeasuredWidth() / 2);
-						cr = cl + child.getMeasuredWidth();
-						ct = (int) (height * (OFFSET_LOWER_LEG_Y) + woundSize);
-						cb = ct + child.getMeasuredHeight();
-						break;
-					default:
-						// do nothing
-						break;
+				} else if (lp.getArmorPosition() != null) {
+					{
+						switch (lp.getArmorPosition()) {
+						case Kopf:
+							cl = (int) (width * OFFSET_HEAD_X) - (child.getMeasuredWidth() / 2);
+							cr = cl + child.getMeasuredWidth();
+							ct = (int) (height * (OFFSET_HEAD_Y) + woundSize);
+							cb = ct + child.getMeasuredHeight();
+							break;
+						case Bauch:
+							cl = (int) (width * OFFSET_STOMACH_X) - (child.getMeasuredWidth() / 2);
+							cr = cl + child.getMeasuredWidth();
+							ct = (int) (height * (OFFSET_STOMACH_Y) + woundSize);
+							cb = ct + child.getMeasuredHeight();
+							break;
+						case Brust:
+							cl = (int) (width * OFFSET_CHEST_X) - (child.getMeasuredWidth() / 2);
+							cr = cl + child.getMeasuredWidth();
+							ct = (int) (height * (OFFSET_CHEST_Y) + woundSize);
+							cb = ct + child.getMeasuredHeight();
+							break;
+						case Ruecken:
+							cl = (int) (width * OFFSET_BACK_X) - (child.getMeasuredWidth() / 2);
+							cr = cl + child.getMeasuredWidth();
+							ct = (int) (height * (OFFSET_BACK_Y) + woundSize);
+							cb = ct + child.getMeasuredHeight();
+							break;
+						case LinkerArm:
+							cl = (int) (width * OFFSET_LEFT_ARM_X) - (child.getMeasuredWidth() / 2);
+							cr = cl + child.getMeasuredWidth();
+							ct = (int) (height * (OFFSET_LEFT_ARM_Y) + woundSize);
+							cb = ct + child.getMeasuredHeight();
+							break;
+						case RechterArm:
+							cl = (int) (width * OFFSET_RIGHT_ARM_X) - (child.getMeasuredWidth() / 2);
+							cr = cl + child.getMeasuredWidth();
+							ct = (int) (height * (OFFSET_RIGHT_ARM_Y) + woundSize);
+							cb = ct + child.getMeasuredHeight();
+							break;
+						case LinkesBein:
+							cl = (int) (width * OFFSET_UPPER_LEG_X) - (child.getMeasuredWidth() / 2);
+							cr = cl + child.getMeasuredWidth();
+							ct = (int) (height * (OFFSET_UPPER_LEG_Y) + woundSize);
+							cb = ct + child.getMeasuredHeight();
+							break;
+						case RechtesBein:
+							cl = (int) (width * OFFSET_LOWER_LEG_X) - (child.getMeasuredWidth() / 2);
+							cr = cl + child.getMeasuredWidth();
+							ct = (int) (height * (OFFSET_LOWER_LEG_Y) + woundSize);
+							cb = ct + child.getMeasuredHeight();
+							break;
+						default:
+							// do nothing
+							break;
+						}
 					}
 				}
 
@@ -519,7 +501,8 @@ public class BodyLayout extends FrameLayout {
 
 	@Override
 	public LayoutParams generateLayoutParams(AttributeSet attrs) {
-		return new LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, Position.Kopf);
+		return new LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+				android.view.ViewGroup.LayoutParams.WRAP_CONTENT, Position.Kopf);
 	}
 
 	@Override

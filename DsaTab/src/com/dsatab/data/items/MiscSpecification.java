@@ -54,12 +54,6 @@ public class MiscSpecification extends ItemSpecification {
 	public int getResourceId() {
 		if (type != null) {
 			switch (type) {
-			case Behälter:
-				return R.drawable.icon_bags;
-			case Schmuck:
-				return R.drawable.icon_special;
-			case Kleidung:
-				return R.drawable.icon_armor_cloth;
 			case Sonstiges:
 				return R.drawable.icon_misc;
 			default:

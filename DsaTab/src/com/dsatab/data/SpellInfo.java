@@ -13,18 +13,22 @@ public class SpellInfo {
 
 	@DatabaseField
 	private String name;
-	@DatabaseField
-	private String source;
+	/**
+	 * Eigentschaft/eigenschaft/eigenschaft
+	 */
 	@DatabaseField
 	private String probe;
 	@DatabaseField
 	private String complexity;
 	@DatabaseField
+	private String merkmale;
+	@DatabaseField
+	private String source;
+
+	@DatabaseField
 	private String target;
 	@DatabaseField
 	private String range;
-	@DatabaseField
-	private String merkmale;
 	@DatabaseField
 	private String castDuration;
 	@DatabaseField

@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.dsatab.activity.DsaTabPreferenceActivity;
+import com.dsatab.data.enums.ArmorPosition;
 import com.dsatab.data.enums.Position;
 import com.dsatab.fragment.ArtFragment;
 import com.dsatab.fragment.BaseFragment;
@@ -127,12 +128,8 @@ public class DsaTabConfiguration {
 		return tabIcons.indexOf(resourceId);
 	}
 
-	public List<Position> getArmorPositions() {
-		if (DsaTabApplication.getPreferences().getBoolean(DsaTabPreferenceActivity.KEY_HOUSE_RULES_MORE_WOUND_ZONES,
-				false)) {
-			return Position.ARMOR_POSITIONS_HOUSE;
-		} else
-			return Position.ARMOR_POSITIONS;
+	public List<ArmorPosition> getArmorPositions() {
+		return Arrays.asList(ArmorPosition.values());
 	}
 
 	public List<Position> getWoundPositions() {

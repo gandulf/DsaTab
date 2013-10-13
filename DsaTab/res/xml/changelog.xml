@@ -1,4 +1,7 @@
 <changelog>    
+<release version="4.1.4" versioncode="70">    
+    <fix>Einstellung sind nun mit allen Devices kompatibel</fix>
+</release>
 <release version="4.1.3" versioncode="69">    
     <fix>Ausweichen wird nicht automatisch von den Wundmodifikatoren modifiziert</fix>
     <fix>Ausweichen wird nicht automatisch von niedriger LE/AU modifiziert</fix>

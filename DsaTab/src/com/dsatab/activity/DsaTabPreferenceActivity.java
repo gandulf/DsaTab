@@ -12,7 +12,6 @@ import net.saik0.android.unifiedpreference.UnifiedSherlockPreferenceActivity;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -58,26 +57,13 @@ import com.gandulf.guilib.util.ResUtil;
 public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity implements
 		OnSharedPreferenceChangeListener {
 
-	/**
-	 * 
-	 */
-	public static final String INTENT_DATA_LAYOUT = "layout";
-	public static final String INTENT_DATA_FRAGMENT = "fragment";
-
 	public static final String KEY_PROBE_PROBABILITY = "probeProbability";
-
 	public static final String KEY_NOTES_VISIBILITY = "showNotes";
-
 	public static final String KEY_PROBE_SHAKE_ROLL_DICE = "shakeRollDice";
-
 	public static final String KEY_PROBE_ANIM_ROLL_DICE = "animRollDice";
-
 	public static final String KEY_PROBE_SOUND_ROLL_DICE = "soundRollDice";
-
 	public static final String KEY_PROBE_AUTO_ROLL_DICE = "autoRollDice";
-
 	public static final String KEY_PROBE_SOUND_RESULT_DICE = "soundResultDice";
-
 	public static final String KEY_PROBE_SHOW_MODIFIKATORS = "probeShowModificators";
 
 	public static final String KEY_HOUSE_RULES = "houseRules";
@@ -89,9 +75,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 	public static final String KEY_HOUSE_RULES_MORE_TARGET_ZONES = "houseRules.moreTargetZones";
 
 	public static final String KEY_ARMOR_TYPE = "armorType";
-
 	public static final String KEY_WOUND_TYPE = "woundType";
-
 	public static final String KEY_FULLSCREEN = "fullscreen";
 
 	public static final String KEY_SETUP_SDCARD_PATH = "sdcardPath";
@@ -106,12 +90,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 	public static final String KEY_DOWNLOAD_MAPS = "downloadMaps";
 	public static final String KEY_DOWNLOAD_BACKGROUNDS = "downloadBackgrounds";
 	public static final String KEY_DOWNLOAD_OSMMAPS = "downloadOSMMaps";
-
-	public static final String KEY_DISPALY_HEADER_SCREEN = "displayHeaderScreen";
-	public static final String KEY_DISPALY_DICE_SLIDER_SCREEN = "displayDiceSliderScreen";
-
 	public static final String KEY_DOWNLOAD_WESNOTH_PORTRAITS = "downloadWesnothPortraits";
-
 	public static final String KEY_DOWNLOAD_ITEMS = "downloadItems";
 
 	public static final String KEY_CREDITS = "credits";
@@ -159,13 +138,13 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 
 	public static final String DEFAULT_SCREEN_ORIENTATION = SCREEN_ORIENTATION_AUTO;
 	// http://dl.dropbox.com/u/15750588/dsatab-wesnoth-portraits.zip
-	public static final String PATH_WESNOTH_PORTRAITS = "http://dsa-tab.googlecode.com/files/dsatab-wesnoth-portraits.zip";
+	public static final String PATH_WESNOTH_PORTRAITS = "https://dl.dropboxusercontent.com/u/15750588/dsatab-wesnoth-portraits.zip";
 
-	public static final String PATH_OFFICIAL_MAP_PACK = "http://dsa-tab.googlecode.com/files/Das%20Schwarze%20Auge%20Kartenpaketv1.zip";
+	public static final String PATH_OFFICIAL_MAP_PACK = "https://dl.dropboxusercontent.com/u/15750588/dsatab-maps-v1.zip";
 
-	public static final String PATH_OSM_MAP_PACK = "http://dsa-tab.googlecode.com/files/dsatab-osmmap-v1.zip";
+	public static final String PATH_OSM_MAP_PACK = "https://dl.dropboxusercontent.com/u/15750588/dsatab-osmmap-v1.zip";
 
-	public static final String PATH_BACKGROUNDS = "http://dsa-tab.googlecode.com/files/dsatab-backgrounds.zip";
+	public static final String PATH_BACKGROUNDS = "https://dl.dropboxusercontent.com/u/15750588/dsatab-backgrounds.zip";
 
 	private static final String[] RESTART_KEYS = { KEY_THEME };
 	static {
@@ -195,11 +174,11 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 
 				if (preference != null) {
 					if (preference.getKey().equals(KEY_STYLE_BG_PATH)) {
-						handlePreferenceClick(v.getContext(), DsaTabPreferenceActivity.KEY_STYLE_BG_DELETE,
+						handlePreferenceClick((Activity) v.getContext(), DsaTabPreferenceActivity.KEY_STYLE_BG_DELETE,
 								mgr.getSharedPreferences());
 					} else if (preference.getKey().equals(KEY_STYLE_BG_WOUNDS_PATH)) {
-						handlePreferenceClick(v.getContext(), DsaTabPreferenceActivity.KEY_STYLE_BG_WOUNDS_DELETE,
-								mgr.getSharedPreferences());
+						handlePreferenceClick((Activity) v.getContext(),
+								DsaTabPreferenceActivity.KEY_STYLE_BG_WOUNDS_DELETE, mgr.getSharedPreferences());
 					}
 				}
 			}
@@ -274,63 +253,10 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 		}
 	}
 
-	protected void legacyPreOnCreate(Bundle savedInstanceState) {
-		if (!hasIntentLegacyLayoutData()) {
-			setHeaderRes(com.dsatab.R.xml.preferences_headers);
-		}
-	}
-
-	protected void preOnCreate(Bundle savedInstanceState) {
-		setHeaderRes(com.dsatab.R.xml.preferences_headers);
-	}
-
-	protected boolean hasIntentLegacyLayoutData() {
-		return getIntent() != null && getIntent().getAction() != null && getIntent().hasExtra(INTENT_DATA_LAYOUT);
-	}
-
-	protected boolean hasIntentLayoutData() {
-		return getIntent() != null && getIntent().getAction() != null && getIntent().hasExtra(INTENT_DATA_FRAGMENT);
-	}
-
-	protected void legacyPostOnCreate(Bundle savedInstanceState) {
-		if (hasIntentLegacyLayoutData()) {
-			int layoutId = getIntent().getIntExtra(INTENT_DATA_LAYOUT, 0);
-			if (layoutId == 0) {
-				String layout = getIntent().getStringExtra(INTENT_DATA_LAYOUT);
-				if (layout.startsWith("@xml/"))
-					layout = layout.substring(5);
-				if (layout.startsWith("res/xml/"))
-					layout = layout.substring(8, layout.length() - 4);
-
-				layoutId = getResources().getIdentifier(layout, "xml", getPackageName());
-			}
-
-			if (layoutId != 0) {
-				addPreferencesFromResource(layoutId);
-			} else {
-				throw new IllegalArgumentException("Unable to find layout with name/id:"
-						+ getIntent().getStringExtra(INTENT_DATA_LAYOUT));
-			}
-		}
-	}
-
-	protected void postOnCreate(Bundle savedInstanceState) {
-		if (hasIntentLayoutData()) {
-			String fragment = getIntent().getStringExtra(INTENT_DATA_FRAGMENT);
-			if (!TextUtils.isEmpty(fragment)) {
-				switchToHeader(fragment, null);
-			}
-		}
-	}
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setTheme(DsaTabApplication.getInstance().getCustomPreferencesTheme());
-
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
-			legacyPreOnCreate(savedInstanceState);
-		else
-			preOnCreate(savedInstanceState);
+		setHeaderRes(com.dsatab.R.xml.preferences_headers);
 
 		super.onCreate(savedInstanceState);
 
@@ -342,10 +268,6 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 
 		updateFullscreenStatus(getWindow(), preferences.getBoolean(DsaTabPreferenceActivity.KEY_FULLSCREEN, true));
 
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
-			legacyPostOnCreate(savedInstanceState);
-		else
-			postOnCreate(savedInstanceState);
 	}
 
 	/*
@@ -401,7 +323,8 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 	 */
 	@Override
 	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-		return handlePreferenceTreeClick(this, preferenceScreen, preference);
+		return handlePreferenceClick(this, preference.getKey(), preference.getPreferenceManager()
+				.getSharedPreferences());
 	}
 
 	/*
@@ -531,9 +454,102 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 		window.getDecorView().requestLayout();
 	}
 
-	protected static boolean handlePreferenceClick(final Context context, final String key,
+	protected static boolean handlePreferenceClick(final Activity context, final String key,
 			final SharedPreferences preferences) {
-		if (KEY_STYLE_BG_WOUNDS_DELETE.equals(key)) {
+		AbstractDownloader downloader;
+		if (KEY_DOWNLOAD_ALL.equals(key)) {
+			cleanOldFiles();
+			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath(), context);
+			downloader.addPath(context.getString(R.string.path_items));
+			downloader.addPath(PATH_WESNOTH_PORTRAITS);
+			downloader.downloadZip();
+			Toast.makeText(context, "Download der Daten wurde im Hintergrund gestartet", Toast.LENGTH_SHORT).show();
+			return true;
+		} else if (KEY_DOWNLOAD_MAPS.equals(key)) {
+			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath() + DsaTabApplication.DIR_MAPS,
+					context);
+			downloader.addPath(PATH_OFFICIAL_MAP_PACK);
+			downloader.downloadZip();
+			Toast.makeText(context, "Download der Daten wurde im Hintergrund gestartet", Toast.LENGTH_SHORT).show();
+			return true;
+		} else if (KEY_DOWNLOAD_ITEMS.equals(key)) {
+			cleanOldFiles();
+			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath(), context);
+			downloader.addPath(context.getString(R.string.path_items));
+			downloader.downloadZip();
+			Toast.makeText(context, "Download der Daten wurde im Hintergrund gestartet", Toast.LENGTH_SHORT).show();
+			return true;
+		} else if (KEY_DOWNLOAD_WESNOTH_PORTRAITS.equals(key)) {
+			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath(), context);
+			downloader.addPath(PATH_WESNOTH_PORTRAITS);
+			downloader.downloadZip();
+			Toast.makeText(context, "Download der Daten wurde im Hintergrund gestartet", Toast.LENGTH_SHORT).show();
+			return true;
+		} else if (KEY_DOWNLOAD_BACKGROUNDS.equals(key)) {
+			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath(), context);
+			downloader.addPath(PATH_BACKGROUNDS);
+			downloader.downloadZip();
+			Toast.makeText(context, "Download der Daten wurde im Hintergrund gestartet", Toast.LENGTH_SHORT).show();
+			return true;
+		} else if (KEY_DOWNLOAD_OSMMAPS.equals(key)) {
+			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath(), context);
+			downloader.addPath(PATH_OSM_MAP_PACK);
+			downloader.downloadZip();
+			Toast.makeText(context, "Download der Daten wurde im Hintergrund gestartet", Toast.LENGTH_SHORT).show();
+			return true;
+		} else if (KEY_CREDITS.equals(key)) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			builder.setTitle(R.string.title_credits);
+			builder.setCancelable(true);
+			WebView webView = new WebView(context);
+			webView.getSettings().setDefaultTextEncodingName("utf-8");
+
+			String summary = ResUtil.loadResToString(R.raw.credits, context);
+			webView.loadDataWithBaseURL(null, summary, "text/html", "utf-8", null);
+			builder.setView(webView);
+			builder.setNeutralButton(R.string.label_ok, new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+			});
+			builder.show();
+			return true;
+		} else if (KEY_INFOS.equals(key)) {
+			ChangeLogDialog logDialog = new ChangeLogDialog(context);
+			logDialog.show(true);
+			return true;
+		} else if (KEY_DONATE.equals(key)) {
+			Uri uriUrl = Uri.parse(DsaTabApplication.PAYPAL_DONATION_URL);
+			final Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+			context.startActivity(launchBrowser);
+			return true;
+		} else if (KEY_DSA_LICENSE.equals(key)) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			builder.setTitle(R.string.title_credits);
+			builder.setCancelable(true);
+			WebView webView = new WebView(context);
+			webView.getSettings().setDefaultTextEncodingName("utf-8");
+			String summary = ResUtil.loadResToString(R.raw.ulisses_license, context);
+			webView.loadDataWithBaseURL(null, summary, "text/html", "utf-8", null);
+			builder.setView(webView);
+			builder.setNeutralButton(R.string.label_ok, new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+			});
+			builder.show();
+			return true;
+		} else if (KEY_STYLE_BG_PATH.equals(key)) {
+			pickImage(context, ACTION_PICK_BG_PATH);
+			return true;
+		} else if (KEY_STYLE_BG_WOUNDS_PATH.equals(key)) {
+			pickImage(context, ACTION_PICK_BG_WOUNDS_PATH);
+			return true;
+		} else if (KEY_STYLE_BG_WOUNDS_DELETE.equals(key)) {
 			Editor edit = preferences.edit();
 			edit.remove(KEY_STYLE_BG_WOUNDS_PATH);
 			edit.commit();
@@ -634,101 +650,6 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 		}
 	}
 
-	protected static boolean handlePreferenceTreeClick(Activity context, PreferenceScreen screen, Preference preference) {
-
-		AbstractDownloader downloader;
-		if (KEY_DOWNLOAD_ALL.equals(preference.getKey())) {
-			cleanOldFiles();
-			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath(), context);
-			downloader.addPath(context.getString(R.string.path_items));
-			downloader.addPath(PATH_WESNOTH_PORTRAITS);
-			downloader.downloadZip();
-			return true;
-		} else if (KEY_DOWNLOAD_MAPS.equals(preference.getKey())) {
-			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath() + DsaTabApplication.DIR_MAPS,
-					context);
-			downloader.addPath(PATH_OFFICIAL_MAP_PACK);
-			downloader.downloadZip();
-			return true;
-		} else if (KEY_DOWNLOAD_ITEMS.equals(preference.getKey())) {
-			cleanOldFiles();
-			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath(), context);
-			downloader.addPath(context.getString(R.string.path_items));
-			downloader.downloadZip();
-			return true;
-		} else if (KEY_DOWNLOAD_WESNOTH_PORTRAITS.equals(preference.getKey())) {
-			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath(), context);
-			downloader.addPath(PATH_WESNOTH_PORTRAITS);
-			downloader.downloadZip();
-			return true;
-		} else if (KEY_DOWNLOAD_BACKGROUNDS.equals(preference.getKey())) {
-			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath(), context);
-			downloader.addPath(PATH_BACKGROUNDS);
-			downloader.downloadZip();
-			return true;
-		} else if (KEY_DOWNLOAD_OSMMAPS.equals(preference.getKey())) {
-			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath(), context);
-			downloader.addPath(PATH_OSM_MAP_PACK);
-			downloader.downloadZip();
-			return true;
-		} else if (KEY_CREDITS.equals(preference.getKey())) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(context);
-			builder.setTitle(R.string.title_credits);
-			builder.setCancelable(true);
-			WebView webView = new WebView(context);
-			webView.getSettings().setDefaultTextEncodingName("utf-8");
-
-			String summary = ResUtil.loadResToString(R.raw.credits, context);
-			webView.loadDataWithBaseURL(null, summary, "text/html", "utf-8", null);
-			builder.setView(webView);
-			builder.setNeutralButton(R.string.label_ok, new DialogInterface.OnClickListener() {
-
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					dialog.dismiss();
-				}
-			});
-			builder.show();
-			return true;
-		} else if (KEY_INFOS.equals(preference.getKey())) {
-			ChangeLogDialog logDialog = new ChangeLogDialog(context);
-			logDialog.show(true);
-			return true;
-		} else if (KEY_DONATE.equals(preference.getKey())) {
-			Uri uriUrl = Uri.parse(DsaTabApplication.PAYPAL_DONATION_URL);
-			final Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-			context.startActivity(launchBrowser);
-			return true;
-		} else if (KEY_DSA_LICENSE.equals(preference.getKey())) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(context);
-			builder.setTitle(R.string.title_credits);
-			builder.setCancelable(true);
-			WebView webView = new WebView(context);
-			webView.getSettings().setDefaultTextEncodingName("utf-8");
-			String summary = ResUtil.loadResToString(R.raw.ulisses_license, context);
-			webView.loadDataWithBaseURL(null, summary, "text/html", "utf-8", null);
-			builder.setView(webView);
-			builder.setNeutralButton(R.string.label_ok, new DialogInterface.OnClickListener() {
-
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					dialog.dismiss();
-				}
-			});
-			builder.show();
-			return true;
-		} else if (KEY_STYLE_BG_PATH.equals(preference.getKey())) {
-			pickImage(context, ACTION_PICK_BG_PATH);
-			return true;
-		} else if (KEY_STYLE_BG_WOUNDS_PATH.equals(preference.getKey())) {
-			pickImage(context, ACTION_PICK_BG_WOUNDS_PATH);
-			return true;
-		} else {
-			return handlePreferenceClick(context, preference.getKey(),
-					PreferenceManager.getDefaultSharedPreferences(context));
-		}
-	}
-
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public static abstract class BasePreferenceFragment extends UnifiedPreferenceFragment implements
 			OnSharedPreferenceChangeListener {
@@ -821,7 +742,8 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 				}
 				return false;
 			} else {
-				return handlePreferenceTreeClick(getActivity(), preferenceScreen, preference);
+				return handlePreferenceClick(getActivity(), preference.getKey(),
+						PreferenceManager.getDefaultSharedPreferences(getActivity()));
 			}
 		}
 	}
@@ -862,7 +784,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 		}
 	}
 
-	public static class PrefsDisplayHeaderFragment extends BasePreferenceFragment {
+	public static class PrefsHeaderFragment extends BasePreferenceFragment {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
@@ -875,11 +797,11 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 		 */
 		@Override
 		public int getPreferenceResourceId() {
-			return R.xml.preferences_hc_display_header;
+			return R.xml.preferences_hc_header;
 		}
 	}
 
-	public static class PrefsDisplayDiceSliderFragment extends BasePreferenceFragment {
+	public static class PrefsDiceSliderFragment extends BasePreferenceFragment {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
@@ -892,42 +814,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 		 */
 		@Override
 		public int getPreferenceResourceId() {
-			return R.xml.preferences_hc_display_diceslider;
-		}
-	}
-
-	public static class PrefsDownloadFragment extends BasePreferenceFragment {
-		@Override
-		public void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see com.dsatab.activity.DsaTabPreferenceActivity.BasePreferenceFragment #getPreferenceResourceId()
-		 */
-		@Override
-		public int getPreferenceResourceId() {
-			return R.xml.preferences_hc_setup_download;
-		}
-
-	}
-
-	public static class PrefsHouseRulesFragment extends BasePreferenceFragment {
-		@Override
-		public void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see com.dsatab.activity.DsaTabPreferenceActivity.BasePreferenceFragment #getPreferenceResourceId()
-		 */
-		@Override
-		public int getPreferenceResourceId() {
-			return R.xml.preferences_hc_rules_houserules;
+			return R.xml.preferences_hc_diceslider;
 		}
 	}
 

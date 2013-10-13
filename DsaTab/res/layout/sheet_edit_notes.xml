@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:guilib="http://schemas.android.com/apk/com.gandulf.guilib"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -9,22 +9,22 @@
     <android.support.v7.widget.GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:columnCount="2"
-        app:orientation="vertical"
-        app:useDefaultMargins="true" >
+        guilib:columnCount="2"
+        guilib:orientation="vertical"
+        guilib:useDefaultMargins="true" >
 
         <TextView
                 android:id="@+id/popup_notes_spn_category_label"
                 style="?android:attr/listSeparatorTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"                
-                app:layout_gravity="fill_horizontal"                
+                guilib:layout_gravity="fill_horizontal"                
                 android:text="Kategorie" />
         <Spinner
             android:id="@+id/popup_notes_spn_category"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" 
-            app:layout_gravity="fill_horizontal">
+            guilib:layout_gravity="fill_horizontal">
         </Spinner>
 
         <TextView
@@ -32,14 +32,14 @@
                 style="?android:attr/listSeparatorTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"                
-                app:layout_gravity="fill_horizontal"                
+                guilib:layout_gravity="fill_horizontal"                
                 android:text="Name" />
         
         <EditText
             android:id="@+id/popup_notes_edit_name"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            app:layout_gravity="fill_horizontal"
+            guilib:layout_gravity="fill_horizontal"
             android:hint="@string/label_name"
             android:inputType="textPersonName" >
         </EditText>
@@ -49,14 +49,14 @@
                 style="?android:attr/listSeparatorTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"                
-                app:layout_gravity="fill_horizontal"                
+                guilib:layout_gravity="fill_horizontal"                
                 android:text="@string/label_social_state" />
         
         <EditText
             android:id="@+id/popup_notes_edit_so"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_gravity="fill_horizontal"
+            guilib:layout_gravity="fill_horizontal"
             android:hint="@string/label_social_state" >
         </EditText>
 
@@ -65,7 +65,7 @@
                 style="?android:attr/listSeparatorTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"                
-                app:layout_gravity="fill_horizontal"                
+                guilib:layout_gravity="fill_horizontal"                
                 android:text="@string/label_note" />
         
         <EditText
@@ -73,7 +73,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:layout_gravity="fill"
+            guilib:layout_gravity="fill"
             android:gravity="top"
             android:hint="@string/label_note"
             android:inputType="text|textMultiLine"

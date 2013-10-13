@@ -76,7 +76,8 @@ public class ItemChooserFragment extends BaseFragment implements View.OnClickLis
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+	 * android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -158,34 +159,25 @@ public class ItemChooserFragment extends BaseFragment implements View.OnClickLis
 
 		imageAdapter.registerDataSetObserver(dataSetObserver);
 
-		categoryButtons = new ImageButton[8];
+		categoryButtons = new ImageButton[5];
 		// imagebuttons
 		ImageButton weaponButton = (ImageButton) findViewById(R.id.body_attack_button);
 		ImageButton shieldButton = (ImageButton) findViewById(R.id.body_defense_button);
 		ImageButton distanceButton = (ImageButton) findViewById(R.id.body_distance_button);
 		ImageButton armorButton = (ImageButton) findViewById(R.id.body_armor_button);
 		ImageButton itemsButton = (ImageButton) findViewById(R.id.body_items_button);
-		ImageButton clothButton = (ImageButton) findViewById(R.id.body_cloth_button);
-		ImageButton specialButton = (ImageButton) findViewById(R.id.body_special_button);
-		ImageButton bagsButton = (ImageButton) findViewById(R.id.body_bags_button);
 
 		categoryButtons[0] = weaponButton;
 		categoryButtons[1] = shieldButton;
 		categoryButtons[2] = distanceButton;
 		categoryButtons[3] = armorButton;
 		categoryButtons[4] = itemsButton;
-		categoryButtons[5] = clothButton;
-		categoryButtons[6] = specialButton;
-		categoryButtons[7] = bagsButton;
 
 		weaponButton.setTag(ItemType.Waffen);
 		shieldButton.setTag(ItemType.Schilde);
 		distanceButton.setTag(ItemType.Fernwaffen);
 		armorButton.setTag(ItemType.Rüstung);
 		itemsButton.setTag(ItemType.Sonstiges);
-		clothButton.setTag(ItemType.Kleidung);
-		specialButton.setTag(ItemType.Schmuck);
-		bagsButton.setTag(ItemType.Behälter);
 
 		for (ImageButton button : categoryButtons) {
 			button.setOnClickListener(this);
@@ -296,7 +288,8 @@ public class ItemChooserFragment extends BaseFragment implements View.OnClickLis
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu, com.actionbarsherlock.view.MenuInflater)
+	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu,
+	 * com.actionbarsherlock.view.MenuInflater)
 	 */
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -483,7 +476,8 @@ public class ItemChooserFragment extends BaseFragment implements View.OnClickLis
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.content.DialogInterface.OnMultiChoiceClickListener#onClick(android .content.DialogInterface, int, boolean)
+	 * @see android.content.DialogInterface.OnMultiChoiceClickListener#onClick(android .content.DialogInterface, int,
+	 * boolean)
 	 */
 	@Override
 	public void onClick(DialogInterface dialog, int which, boolean isChecked) {

@@ -1,5 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:dsatab="http://schemas.android.com/apk/res/com.dsatab"
+    xmlns:guilib="http://schemas.android.com/apk/com.gandulf.guilib"
     android:id="@+id/sheet_fight"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -28,8 +28,8 @@
             android:id="@+id/fight_picker"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/icon_button_size"
-            dsatab:orientation="vertical"
-            dsatab:visibleItems="@integer/fight_wheel_items" />
+            guilib:orientation="vertical"
+            guilib:visibleItems="@integer/fight_wheel_items" />
     </LinearLayout>
 
     <ListView

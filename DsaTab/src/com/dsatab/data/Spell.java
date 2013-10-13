@@ -27,7 +27,6 @@ public class Spell extends MarkableElement implements Value {
 	};
 
 	private Hero hero;
-	private String name;
 	private Integer value;
 	private SpellInfo info;
 
@@ -50,11 +49,11 @@ public class Spell extends MarkableElement implements Value {
 
 	@Override
 	public String getName() {
-		return name;
+		return info.getName();
 	}
 
 	public void setName(String name) {
-		this.name = name.trim();
+		name = name.trim();
 
 		this.info = DataManager.getSpellByName(name);
 		if (info == null) {

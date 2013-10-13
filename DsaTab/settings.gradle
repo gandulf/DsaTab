@@ -1,0 +1,2 @@
+include ':guiLib'
+project(':guiLib').projectDir = new File(settingsDir, '../../GuiLib')

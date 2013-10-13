@@ -1,6 +1,5 @@
 package com.dsatab.xml;
 
-import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,12 +10,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import android.app.ActivityManager;
-import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.support.v4.util.LruCache;
 import android.text.TextUtils;
 
 import com.bugsense.trace.BugSenseHandler;
@@ -27,7 +21,6 @@ import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemSpecification;
 import com.dsatab.util.Debug;
-import com.dsatab.util.Util;
 import com.j256.ormlite.android.AndroidCompiledStatement;
 import com.j256.ormlite.dao.GenericRawResults;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
@@ -44,8 +37,6 @@ import com.j256.ormlite.support.DatabaseConnection;
  */
 public class DataManager {
 
-	private static LruCache<String, Bitmap> mMemoryCache;
-
 	private static SelectArg artNameArg, artGradeArg;
 	private static PreparedQuery<ArtInfo> artNameQuery, artNameGradeQuery;
 
@@ -54,26 +45,6 @@ public class DataManager {
 
 	private static SelectArg itemNameArg;
 	private static PreparedQuery<Item> itemNameQuery;
-
-	public static void init(Context context) {
-
-		// Get memory class of this device, exceeding this amount will throw an
-		// OutOfMemory exception.
-		final int memClass = ((ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE)).getMemoryClass();
-
-		// Use 1/8th of the available memory for this memory cache.
-		final int cacheSize = 1024 * 1024 * memClass / 8;
-
-		mMemoryCache = new LruCache<String, Bitmap>(cacheSize) {
-			@Override
-			protected int sizeOf(String key, Bitmap bitmap) {
-				// The cache size will be measured in bytes rather than number
-				// of items.
-				return bitmap.getRowBytes() * bitmap.getHeight();
-			}
-		};
-
-	}
 
 	private static void initArtQueries() {
 		try {
@@ -126,40 +97,6 @@ public class DataManager {
 			Debug.error(e);
 			BugSenseHandler.sendException(e);
 		}
-
-	}
-
-	private static void addBitmapToMemoryCache(String key, Bitmap bitmap) {
-		if (getBitmapFromMemCache(key) == null) {
-			mMemoryCache.put(key, bitmap);
-		}
-	}
-
-	private static Bitmap getBitmapFromMemCache(String key) {
-		return mMemoryCache.get(key);
-	}
-
-	public static List<String> getItemTypes() {
-		RuntimeExceptionDao<Item, UUID> itemDao = DsaTabApplication.getInstance().getDBHelper().getItemDao();
-		GenericRawResults<String[]> results = itemDao.queryRaw("select distinct(itemTypes) from Item;");
-		Iterator<String[]> rowIter = results.iterator();
-
-		Set<String> itemTypes = new HashSet<String>();
-
-		while (rowIter.hasNext()) {
-			String[] row = rowIter.next();
-			String types = row[0];
-			if (!TextUtils.isEmpty(types)) {
-				for (String type : types.split(Item.ITEM_TYPES_SEP)) {
-					if (!TextUtils.isEmpty(type))
-						itemTypes.add(type);
-				}
-			}
-		}
-
-		List<String> result = new ArrayList<String>(itemTypes);
-		Collections.sort(result);
-		return result;
 
 	}
 
@@ -231,7 +168,7 @@ public class DataManager {
 
 	}
 
-	public static Cursor getCursor(PreparedQuery<?> query) {
+	private static Cursor getCursor(PreparedQuery<?> query) {
 		Cursor cursor = null;
 		try {
 			DatabaseConnection databaseConnection = DsaTabApplication.getInstance().getDBHelper().getConnectionSource()
@@ -284,22 +221,6 @@ public class DataManager {
 		itemDao.update(item);
 
 		return result;
-	}
-
-	public static Bitmap getBitmap(File file, int suggestedSize) {
-		if (file != null)
-			return getBitmap(Uri.fromFile(file), suggestedSize);
-		else
-			return null;
-	}
-
-	public static Bitmap getBitmap(Uri uri, int suggestedSize) {
-		Bitmap bitmap = getBitmapFromMemCache(uri.toString() + "x" + suggestedSize);
-		if (bitmap == null) {
-			bitmap = Util.decodeBitmap(uri, suggestedSize);
-			addBitmapToMemoryCache(uri.toString() + "x" + suggestedSize, bitmap);
-		}
-		return bitmap;
 	}
 
 	public static Item getItemByCursor(Cursor cursor) {

@@ -7,7 +7,7 @@
     </plurals>
     <string name="label_capacity">%1$s von %2$s Unzen</string>
     
-    <string name="path_items">http://dsa-tab.googlecode.com/files/dsatab-items3.zip</string>
+    <string name="path_items">https://dl.dropboxusercontent.com/u/15750588/dsatab-items3.zip</string>
     <string name="app_name">DsaTab</string>
     <string name="label_haar_augen_farbe">Haar,Augen</string>
     <string name="label_alter">Alter</string>

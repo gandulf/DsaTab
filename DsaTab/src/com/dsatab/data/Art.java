@@ -58,11 +58,10 @@ public class Art extends MarkableElement implements Value {
 
 	};
 
-	private ArtGroupType groupType;
-
 	private Hero hero;
 
-	private String name;
+	private ArtGroupType groupType;
+
 	private FeatureType type;
 
 	private ArtInfo info;
@@ -148,8 +147,7 @@ public class Art extends MarkableElement implements Value {
 		if (info != null)
 			return info.getFullName();
 		else
-			return name;
-
+			return null;
 	}
 
 	public boolean hasFlag(Flags flag) {
@@ -162,15 +160,14 @@ public class Art extends MarkableElement implements Value {
 
 	@Override
 	public String getName() {
-		if (info != null) {
+		if (info != null)
 			return info.getName();
-		} else {
-			return name;
-		}
+		else
+			return null;
 	}
 
-	public void setName(String nameValue) {
-		this.name = nameValue.trim();
+	public void setName(String name) {
+		name = name.trim();
 
 		try {
 			this.type = FeatureType.byXmlName(name);

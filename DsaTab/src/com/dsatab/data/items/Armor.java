@@ -1,15 +1,10 @@
 package com.dsatab.data.items;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map.Entry;
-
-import android.text.TextUtils;
+import java.util.Locale;
 
 import com.dsatab.R;
+import com.dsatab.data.enums.ArmorPosition;
 import com.dsatab.data.enums.ItemType;
-import com.dsatab.data.enums.Position;
-import com.dsatab.util.Util;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -26,27 +21,35 @@ public class Armor extends ItemSpecification {
 	protected int id;
 
 	@DatabaseField
+	private int rsKopf;
+	@DatabaseField
+	private int rsRuecken;
+	@DatabaseField
+	private int rsBrust;
+	@DatabaseField
+	private int rsBauch;
+	@DatabaseField
+	private int rsLinkerArm;
+	@DatabaseField
+	private int rsRechterArm;
+	@DatabaseField
+	private int rsLinkesBein;
+	@DatabaseField
+	private int rsRechtesBein;
+
+	@DatabaseField
 	private int stars;
 	@DatabaseField
 	private boolean zonenHalfBe;
-	@DatabaseField
-	private int zonenRs = 0;
 	@DatabaseField
 	private int totalRs = 0;
 	@DatabaseField
 	private float totalBe;
 	@DatabaseField
-	private String rsHelper;
-	@DatabaseField
 	private int totalPieces = 1;
-
-	private HashMap<Position, Integer> rs;
 
 	// cache for max value of rs
 	private int maxRs = 0;
-
-	// cache for info string
-	private String info = null;
 
 	/**
 	 * no arg constructor for ormlite
@@ -92,36 +95,9 @@ public class Armor extends ItemSpecification {
 
 	@Override
 	public String getInfo() {
-
-		if (info == null) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("Be ");
-			sb.append(Util.toString(getTotalBe()));
-
-			int[] kopf = new int[] { getRs(Position.Head_Face), getRs(Position.Head_Side), getRs(Position.Head_Up),
-					getRs(Position.Kopf), getRs(Position.Neck) };
-			int[] rumpf = new int[] { getRs(Position.Bauch), getRs(Position.Brust), getRs(Position.Pelvis),
-					getRs(Position.Ruecken), getRs(Position.LeftShoulder), getRs(Position.RightShoulder) };
-			int[] arms = new int[] { getRs(Position.LeftLowerArm), getRs(Position.LeftUpperArm),
-					getRs(Position.RightLowerArm), getRs(Position.RightUpperArm), getRs(Position.LinkerArm),
-					getRs(Position.RechterArm) };
-			int[] legs = new int[] { getRs(Position.UpperLeg), getRs(Position.LowerLeg), getRs(Position.LinkesBein),
-					getRs(Position.RechtesBein) };
-
-			Arrays.sort(kopf);
-			Arrays.sort(rumpf);
-			Arrays.sort(arms);
-			Arrays.sort(legs);
-
-			sb.append(";Ko " + kopf[kopf.length - 1]);
-			sb.append(" Ru " + rumpf[kopf.length - 1]);
-			sb.append(" Arm " + arms[arms.length - 1]);
-			sb.append(" Bein " + legs[legs.length - 1]);
-
-			info = sb.toString();
-		}
-		return info;
+		return String.format(Locale.getDefault(), "Be %1$.0f;Ko %2$s Ru %3$s Arm %4$s Bein %4$s", totalBe, rsKopf,
+				Math.max(Math.max(rsBauch, rsBrust), rsRuecken), Math.max(rsLinkerArm, rsRechterArm),
+				Math.max(rsLinkesBein, rsRechtesBein));
 	}
 
 	public int getStars() {
@@ -147,62 +123,61 @@ public class Armor extends ItemSpecification {
 		this.totalPieces = totalPieces;
 	}
 
-	public int getRs(Position pos) {
-		initRs();
-
-		Integer i = rs.get(pos);
-
-		if (i == null)
+	public int getRs(ArmorPosition pos) {
+		switch (pos) {
+		case Bauch:
+			return rsBauch;
+		case Kopf:
+			return rsKopf;
+		case Brust:
+			return rsBrust;
+		case Ruecken:
+			return rsRuecken;
+		case LinkerArm:
+			return rsLinkerArm;
+		case RechterArm:
+			return rsRechterArm;
+		case RechtesBein:
+			return rsRechtesBein;
+		case LinkesBein:
+			return rsLinkesBein;
+		default:
 			return 0;
-		else
-			return i;
+		}
+
 	}
 
-	public void setRs(Position pos, int rs) {
-		initRs();
+	public void setRs(ArmorPosition pos, int rs) {
 
-		this.rs.put(pos, rs);
+		switch (pos) {
+		case Bauch:
+			rsBauch = rs;
+			break;
+		case Kopf:
+			rsKopf = rs;
+			break;
+		case Brust:
+			rsBrust = rs;
+			break;
+		case Ruecken:
+			rsRuecken = rs;
+			break;
+		case LinkerArm:
+			rsLinkerArm = rs;
+			break;
+		case RechterArm:
+			rsRechterArm = rs;
+			break;
+		case RechtesBein:
+			rsRechtesBein = rs;
+			break;
+		case LinkesBein:
+			rsLinkesBein = rs;
+			break;
+		default:
 
-		fillRsHelper();
-
+		}
 		maxRs = Math.max(maxRs, rs);
-	}
-
-	private void fillRsHelper() {
-		StringBuilder sb = new StringBuilder();
-		for (Entry<Position, Integer> entry : this.rs.entrySet()) {
-			sb.append(",");
-			sb.append(entry.getKey().name());
-			sb.append(":");
-			sb.append(Integer.toString(entry.getValue()));
-		}
-		if (sb.length() > 0)
-			rsHelper = sb.substring(1);
-		else
-			rsHelper = null;
-	}
-
-	private void initRs() {
-		if (rs == null) {
-			rs = new HashMap<Position, Integer>(Position.values().length);
-			if (!TextUtils.isEmpty(rsHelper)) {
-				String[] rsHelperArray = rsHelper.split(",");
-
-				for (String item : rsHelperArray) {
-					String[] pair = item.split(":");
-
-					this.rs.put(Position.valueOf(pair[0]), Integer.parseInt(pair[1]));
-				}
-			}
-		}
-	}
-
-	public int getZonenRs() {
-		return zonenRs;
-	}
-
-	public void setZonenRs(int zonenRs) {
-		this.zonenRs = zonenRs;
 	}
 
 	public int getTotalRs() {
@@ -216,9 +191,9 @@ public class Armor extends ItemSpecification {
 	@Override
 	public int getResourceId() {
 		if (CATEGORY_HELM.equalsIgnoreCase(item.getCategory())) {
-			if (getRs(Position.Head_Face) > 5)
+			if (getRs(ArmorPosition.Kopf) > 5)
 				return R.drawable.icon_helm_full;
-			else if (getRs(Position.Head_Face) > 0)
+			else if (getRs(ArmorPosition.Kopf) > 0)
 				return R.drawable.icon_helm_half;
 			else
 				return R.drawable.icon_helm;
