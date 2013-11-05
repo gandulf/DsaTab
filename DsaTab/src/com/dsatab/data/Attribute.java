@@ -12,7 +12,7 @@ public class Attribute extends BaseProbe implements Value, Cloneable {
 
 	protected AttributeType type;
 
-	protected Hero hero;
+	protected AbstractBeing being;
 
 	protected Integer referenceValue;
 
@@ -23,10 +23,11 @@ public class Attribute extends BaseProbe implements Value, Cloneable {
 	protected Integer coreValue;
 	protected String name;
 
+	private boolean absolute = false;
 	private boolean lazyInit = false;
 
-	public Attribute(Hero hero) {
-		this.hero = hero;
+	public Attribute(AbstractBeing hero) {
+		this.being = hero;
 	}
 
 	public AttributeType getType() {
@@ -59,8 +60,8 @@ public class Attribute extends BaseProbe implements Value, Cloneable {
 		}
 	}
 
-	public Hero getHero() {
-		return hero;
+	public AbstractBeing getHero() {
+		return being;
 	}
 
 	@Override
@@ -92,6 +93,14 @@ public class Attribute extends BaseProbe implements Value, Cloneable {
 		this.name = name;
 	}
 
+	public boolean isAbsolute() {
+		return absolute;
+	}
+
+	public void setAbsolute(boolean absolute) {
+		this.absolute = absolute;
+	}
+
 	private void lazyInit() {
 		if (lazyInit)
 			return;
@@ -120,7 +129,7 @@ public class Attribute extends BaseProbe implements Value, Cloneable {
 
 	@Override
 	public Integer getProbeValue(int i) {
-		return hero.getAttributeValue(type);
+		return being.getAttributeValue(type);
 	}
 
 	@Override
@@ -142,7 +151,7 @@ public class Attribute extends BaseProbe implements Value, Cloneable {
 	public void setValue(Integer value) {
 		if (!Util.equalsOrNull(this.value, value)) {
 			this.value = value;
-			hero.fireValueChangedEvent(this);
+			being.fireValueChangedEvent(this);
 		}
 	}
 
@@ -152,13 +161,16 @@ public class Attribute extends BaseProbe implements Value, Cloneable {
 	 * @return
 	 */
 	public boolean checkBaseValue() {
+		if (absolute)
+			return false;
+
 		currentBaseValue = null;
 
 		int currentBaseValue = getBaseValue();
 
 		if (currentBaseValue != this.originalBaseValue) {
 			this.originalBaseValue = currentBaseValue;
-			hero.fireValueChangedEvent(this);
+			being.fireValueChangedEvent(this);
 			return true;
 		} else {
 			return false;
@@ -188,45 +200,48 @@ public class Attribute extends BaseProbe implements Value, Cloneable {
 	}
 
 	public int getBaseValue() {
+		if (absolute)
+			return 0;
 
 		if (currentBaseValue == null) {
 			currentBaseValue = 0;
-			if (hero != null) {
+			if (being != null) {
 
 				switch (type) {
 				case Lebensenergie_Aktuell:
 				case Lebensenergie:
-					currentBaseValue = (int) Math.round((hero.getAttributeValue(AttributeType.Konstitution) * 2 + hero
-							.getAttributeValue(AttributeType.Körperkraft)) / 2.0);
+					currentBaseValue = (int) Math
+							.round((being.getAttributeValue(AttributeType.Konstitution) * 2 + being
+									.getAttributeValue(AttributeType.Körperkraft)) / 2.0);
 					break;
 				case Astralenergie_Aktuell:
 				case Astralenergie:
-					if (hero.hasFeature(FeatureType.GefäßDerSterne)) {
-						currentBaseValue = (int) Math.round((hero.getAttributeValue(AttributeType.Mut)
-								+ hero.getAttributeValue(AttributeType.Intuition)
-								+ hero.getAttributeValue(AttributeType.Charisma) + hero
+					if (being.hasFeature(FeatureType.GefäßDerSterne)) {
+						currentBaseValue = (int) Math.round((being.getAttributeValue(AttributeType.Mut)
+								+ being.getAttributeValue(AttributeType.Intuition)
+								+ being.getAttributeValue(AttributeType.Charisma) + being
 								.getAttributeValue(AttributeType.Charisma)) / 2.0);
-					} else if (hero.hasFeature(FeatureType.Vollzauberer) || hero.hasFeature(FeatureType.Halbzauberer)
-							|| hero.hasFeature(FeatureType.Viertelzauberer)
-							|| hero.hasFeature(FeatureType.UnbewussterViertelzauberer)) {
-						currentBaseValue = (int) Math.round((hero.getAttributeValue(AttributeType.Mut)
-								+ hero.getAttributeValue(AttributeType.Intuition) + hero
+					} else if (being.hasFeature(FeatureType.Vollzauberer) || being.hasFeature(FeatureType.Halbzauberer)
+							|| being.hasFeature(FeatureType.Viertelzauberer)
+							|| being.hasFeature(FeatureType.UnbewussterViertelzauberer)) {
+						currentBaseValue = (int) Math.round((being.getAttributeValue(AttributeType.Mut)
+								+ being.getAttributeValue(AttributeType.Intuition) + being
 								.getAttributeValue(AttributeType.Charisma)) / 2.0);
 					}
 					break;
 				case Ausdauer_Aktuell:
 				case Ausdauer:
-					currentBaseValue = (int) Math.round((hero.getAttributeValue(AttributeType.Mut)
-							+ hero.getAttributeValue(AttributeType.Konstitution) + hero
+					currentBaseValue = (int) Math.round((being.getAttributeValue(AttributeType.Mut)
+							+ being.getAttributeValue(AttributeType.Konstitution) + being
 							.getAttributeValue(AttributeType.Gewandtheit)) / 2.0);
 					break;
 				case Magieresistenz:
-					currentBaseValue = (int) Math.round((hero.getAttributeValue(AttributeType.Mut)
-							+ hero.getAttributeValue(AttributeType.Klugheit) + hero
+					currentBaseValue = (int) Math.round((being.getAttributeValue(AttributeType.Mut)
+							+ being.getAttributeValue(AttributeType.Klugheit) + being
 							.getAttributeValue(AttributeType.Konstitution)) / 5.0);
 					break;
 				case Ausweichen:
-					currentBaseValue = (int) hero.getAttributeValue(AttributeType.pa);
+					currentBaseValue = (int) being.getAttributeValue(AttributeType.pa);
 					break;
 				default:
 					// do nothing
@@ -260,27 +275,27 @@ public class Attribute extends BaseProbe implements Value, Cloneable {
 
 		switch (type) {
 		case at: {
-			int mu = hero.getAttributeValue(AttributeType.Mut);
-			int ge = hero.getAttributeValue(AttributeType.Gewandtheit);
-			int kk = hero.getAttributeValue(AttributeType.Körperkraft);
+			int mu = being.getAttributeValue(AttributeType.Mut);
+			int ge = being.getAttributeValue(AttributeType.Gewandtheit);
+			int kk = being.getAttributeValue(AttributeType.Körperkraft);
 			return (int) Math.round((mu + ge + kk) / 5.0);
 		}
 		case pa: {
-			int in = hero.getAttributeValue(AttributeType.Intuition);
-			int ge = hero.getAttributeValue(AttributeType.Gewandtheit);
-			int kk = hero.getAttributeValue(AttributeType.Körperkraft);
+			int in = being.getAttributeValue(AttributeType.Intuition);
+			int ge = being.getAttributeValue(AttributeType.Gewandtheit);
+			int kk = being.getAttributeValue(AttributeType.Körperkraft);
 			return (int) Math.round((in + ge + kk) / 5.0);
 		}
 		case fk: {
-			int in = hero.getAttributeValue(AttributeType.Intuition);
-			int ff = hero.getAttributeValue(AttributeType.Fingerfertigkeit);
-			int kk = hero.getAttributeValue(AttributeType.Körperkraft);
+			int in = being.getAttributeValue(AttributeType.Intuition);
+			int ff = being.getAttributeValue(AttributeType.Fingerfertigkeit);
+			int kk = being.getAttributeValue(AttributeType.Körperkraft);
 			return (int) Math.round((in + ff + kk) / 5.0);
 		}
 		case ini: {
-			int mu = hero.getAttributeValue(AttributeType.Mut);
-			int in = hero.getAttributeValue(AttributeType.Intuition);
-			int ge = hero.getAttributeValue(AttributeType.Gewandtheit);
+			int mu = being.getAttributeValue(AttributeType.Mut);
+			int in = being.getAttributeValue(AttributeType.Intuition);
+			int ge = being.getAttributeValue(AttributeType.Gewandtheit);
 			return (int) Math.round((mu + mu + in + ge) / 5.0);
 		}
 
@@ -290,7 +305,7 @@ public class Attribute extends BaseProbe implements Value, Cloneable {
 		case Lebensenergie:
 			return null;
 		case Behinderung:
-			return hero.getArmorBe();
+			return being.getArmorBe();
 		default:
 			return referenceValue;
 		}
@@ -312,16 +327,16 @@ public class Attribute extends BaseProbe implements Value, Cloneable {
 
 		switch (type) {
 		case Lebensenergie_Aktuell:
-			max = hero.getModifiedValue(AttributeType.Lebensenergie, false, false);
+			max = being.getModifiedValue(AttributeType.Lebensenergie, false, false);
 			break;
 		case Astralenergie_Aktuell:
-			max = hero.getModifiedValue(AttributeType.Astralenergie, false, false);
+			max = being.getModifiedValue(AttributeType.Astralenergie, false, false);
 			break;
 		case Ausdauer_Aktuell:
-			max = hero.getModifiedValue(AttributeType.Ausdauer, false, false);
+			max = being.getModifiedValue(AttributeType.Ausdauer, false, false);
 			break;
 		case Karmaenergie_Aktuell:
-			max = hero.getModifiedValue(AttributeType.Karmaenergie, false, false);
+			max = being.getModifiedValue(AttributeType.Karmaenergie, false, false);
 			break;
 		case Behinderung:
 			max = 15;

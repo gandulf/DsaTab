@@ -52,6 +52,17 @@ public class Debug {
 	}
 
 	/**
+	 * Prints a warning to LogCat with information
+	 * 
+	 * @param message
+	 *            The message to be passed on
+	 */
+	public static void warning(String message, Throwable throwable) {
+		if (debugMode)
+			Log.w(tag, message, throwable);
+	}
+
+	/**
 	 * Prints to the verbose stream of LogCat with information
 	 * 
 	 * @param message

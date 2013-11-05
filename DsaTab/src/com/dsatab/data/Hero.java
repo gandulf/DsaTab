@@ -3,7 +3,6 @@ package com.dsatab.data;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -15,7 +14,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.UUID;
 
 import org.json.JSONException;
@@ -23,12 +21,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.SystemClock;
 import android.text.TextUtils;
-import android.view.Display;
-import android.view.WindowManager;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
@@ -59,11 +52,10 @@ import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 import com.dsatab.exception.TalentTypeUnknownException;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
-import com.dsatab.view.listener.HeroChangedListener;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
 import com.dsatab.xml.RulesParser;
 
-public class Hero {
+public class Hero extends AbstractBeing {
 
 	public static final String JAGTWAFFE = "jagtwaffe";
 	public static final String PREFIX_NKWAFFE = "nkwaffe";
@@ -77,26 +69,19 @@ public class Hero {
 		Offensive, Defensive
 	}
 
-	private String path, key, name;
-
-	private Uri profileUri;
+	private String path, key;
 
 	private EditableValue experience, freeExperience;
 
-	private Map<AttributeType, Attribute> attributes;
-	private Map<FeatureType, Feature> featuresByType;
-
-	private Map<TalentGroupType, TalentGroup> talentGroups;
-	private Map<TalentType, Talent> talentByType;
 	private Map<String, Spell> spellsByName;
-	private Map<String, Art> artsByName;
-	private Map<FeatureType, Art> artsByType;
 
 	private Map<ArmorPosition, ArmorAttribute>[] armorAttributes;
 	private Map<Position, WoundAttribute> wounds;
 
 	private List<EquippedItem>[] equippedItems = null;
 	private List<Connection> connections = null;
+
+	private List<Animal> animals = null;
 
 	private HuntingWeapon[] huntingWeapons;
 
@@ -122,7 +107,6 @@ public class Hero {
 
 	// event listener
 
-	private Set<HeroChangedListener> listener = new HashSet<HeroChangedListener>();
 	private Set<HeroInventoryChangedListener> itemListener = new HashSet<HeroInventoryChangedListener>();
 
 	@SuppressWarnings("unchecked")
@@ -133,6 +117,7 @@ public class Hero {
 		this.huntingWeapons = new HuntingWeapon[MAXIMUM_SET_NUMBER];
 
 		this.changeEvents = new ArrayList<ChangeEvent>();
+		this.animals = new ArrayList<Animal>();
 
 		// load modifiers
 		this.leModificator = new LeModificator(this);
@@ -148,13 +133,7 @@ public class Hero {
 		this.freeExperience = new EditableValue(this, "Freie Abenteuerpunkte");
 		this.freeExperience.setMaximum(100000);
 
-		this.attributes = new EnumMap<AttributeType, Attribute>(AttributeType.class);
-		this.talentGroups = new EnumMap<TalentGroupType, TalentGroup>(TalentGroupType.class);
-		this.talentByType = new EnumMap<TalentType, Talent>(TalentType.class);
 		this.spellsByName = new HashMap<String, Spell>();
-		this.artsByName = new TreeMap<String, Art>();
-		this.artsByType = new EnumMap<FeatureType, Art>(FeatureType.class);
-		this.featuresByType = new EnumMap<FeatureType, Feature>(FeatureType.class);
 
 		for (int i = 0; i < equippedItems.length; i++) {
 			this.equippedItems[i] = new LinkedList<EquippedItem>();
@@ -238,52 +217,8 @@ public class Hero {
 		this.key = key;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public HeroBaseInfo getBaseInfo() {
 		return baseInfo;
-	}
-
-	public void setPortraitUri(Uri uri) {
-		this.profileUri = uri;
-
-		for (HeroChangedListener l : listener) {
-			l.onPortraitChanged();
-		}
-	}
-
-	public void setPortraitUri(URI uri) {
-		this.profileUri = Uri.parse(uri.toString());
-
-		for (HeroChangedListener l : listener) {
-			l.onPortraitChanged();
-		}
-	}
-
-	public Uri getPortraitUri() {
-		return profileUri;
-	}
-
-	public Bitmap getPortrait() {
-		Bitmap portraitBitmap = null;
-		if (getPortraitUri() != null) {
-
-			WindowManager wm = (WindowManager) DsaTabApplication.getInstance().getSystemService(Context.WINDOW_SERVICE);
-			Display display = wm.getDefaultDisplay();
-
-			portraitBitmap = Util.decodeBitmap(getPortraitUri(), display.getWidth());
-		}
-		return portraitBitmap;
-	}
-
-	public void addHeroChangedListener(HeroChangedListener v) {
-		listener.add(v);
-	}
-
-	public void removeHeroChangedListener(HeroChangedListener v) {
-		listener.remove(v);
 	}
 
 	public void addHeroInventoryChangedListener(HeroInventoryChangedListener v) {
@@ -504,9 +439,7 @@ public class Hero {
 			fireModifierChangedEvent(woundAttribute.getModificator());
 		}
 
-		for (HeroChangedListener l : listener) {
-			l.onValueChanged(value);
-		}
+		super.fireValueChangedEvent(value);
 
 	}
 
@@ -523,11 +456,7 @@ public class Hero {
 			}
 		}
 
-		Debug.trace("ON Modifier changed " + modifier);
-		clearModifiersCache();
-		for (HeroChangedListener l : listener) {
-			l.onModifierChanged(modifier);
-		}
+		super.fireModifierChangedEvent(modifier);
 
 		Attribute le = getAttribute(AttributeType.Lebensenergie);
 		if (modifier.affects(le)) {
@@ -839,12 +768,7 @@ public class Hero {
 	}
 
 	void fireModifierAddedEvent(Modificator modifier) {
-		Debug.trace("ON modifier added " + modifier);
-		clearModifiersCache();
-
-		for (HeroChangedListener l : listener) {
-			l.onModifierAdded(modifier);
-		}
+		super.fireModifierAddedEvent(modifier);
 
 		Attribute le = getAttribute(AttributeType.Lebensenergie);
 		if (modifier.affects(le)) {
@@ -856,24 +780,12 @@ public class Hero {
 		}
 	}
 
-	/**
-	 * 
-	 */
-	private void clearModifiersCache() {
-		BaseProbe.cacheValidationDate = SystemClock.uptimeMillis();
-	}
-
 	public void clearModifiersCache(Probe probe) {
 		probe.clearCache();
 	}
 
 	void fireModifierRemovedEvent(Modificator modifier) {
-		Debug.trace("ON modifier removed " + modifier);
-		clearModifiersCache();
-
-		for (HeroChangedListener l : listener) {
-			l.onModifierRemoved(modifier);
-		}
+		super.fireModifierRemovedEvent(modifier);
 
 		Attribute le = getAttribute(AttributeType.Lebensenergie);
 		if (modifier.affects(le)) {
@@ -1049,20 +961,11 @@ public class Hero {
 		return getHeroConfiguration().isBeCalculation();
 	}
 
-	public Attribute getAttribute(AttributeType type) {
-		Attribute attribute = attributes.get(type);
-		return attribute;
-	}
-
 	public void addAttribute(Attribute attr) {
-		this.attributes.put(attr.getType(), attr);
+		super.addAttribute(attr);
 		if (attr instanceof CustomAttribute) {
 			getHeroConfiguration().addAttribute((CustomAttribute) attr);
 		}
-	}
-
-	public boolean hasAttribute(AttributeType type) {
-		return attributes.containsKey(type);
 	}
 
 	public Map<ArmorPosition, ArmorAttribute> getArmorAttributes() {
@@ -1111,10 +1014,6 @@ public class Hero {
 
 	public Map<Position, WoundAttribute> getWounds() {
 		return wounds;
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	public EditableValue getExperience() {
@@ -1199,10 +1098,6 @@ public class Hero {
 		} else {
 			return 1.0f;
 		}
-	}
-
-	public int getModifier(Probe probe) {
-		return getModifier(probe, true, true);
 	}
 
 	public int getModifier(Probe probe, boolean includeBe, boolean includeLeAu) {
@@ -1526,19 +1421,6 @@ public class Hero {
 		return attr.getValue() + getModifier(attr, includeBe, includeLeAu);
 	}
 
-	public Integer getAttributeValue(AttributeType type) {
-		Attribute attribute = getAttribute(type);
-
-		if (attribute != null)
-			return attribute.getValue();
-		else
-			return null;
-	}
-
-	public Map<FeatureType, Feature> getSpecialFeatures() {
-		return featuresByType;
-	}
-
 	public void addConnection(Connection connection) {
 		getConnections().add(connection);
 		Collections.sort(getConnections(), Connection.NAME_COMPARATOR);
@@ -1550,27 +1432,6 @@ public class Hero {
 
 	public List<Connection> getConnections() {
 		return connections;
-	}
-
-	/**
-	 * Used in rules.xml by code
-	 * 
-	 * @param type
-	 * @return
-	 */
-	public Feature getFeature(String type) {
-		Debug.trace("getFeature " + type);
-		return getFeature(FeatureType.byXmlName(type));
-	}
-
-	public Feature getFeature(FeatureType type) {
-		Debug.trace("getFeature " + type);
-		return featuresByType.get(type);
-	}
-
-	public boolean hasFeature(FeatureType type) {
-		Debug.trace("hasFeature " + type);
-		return featuresByType.containsKey(type);
 	}
 
 	public void addChangeEvent(ChangeEvent event) {
@@ -1868,19 +1729,6 @@ public class Hero {
 			return Collections.emptyList();
 	}
 
-	public Talent getTalent(TalentType talentName) {
-		return talentByType.get(talentName);
-	}
-
-	public Talent getTalent(String talentName) {
-		Debug.trace("getTalent " + talentName);
-		TalentType type = null;
-
-		type = TalentType.byXmlName(talentName);
-		return talentByType.get(type);
-
-	}
-
 	public Spell getSpell(String spellName) {
 		Debug.trace("getSpell " + spellName);
 		return spellsByName.get(spellName);
@@ -1890,33 +1738,12 @@ public class Hero {
 		spellsByName.put(spell.getName(), spell);
 	}
 
-	public Map<TalentGroupType, TalentGroup> getTalentGroups() {
-		return talentGroups;
-	}
-
-	public TalentGroup getTalentGroup(TalentGroupType groupType) {
-		return talentGroups.get(groupType);
-	}
-
 	public CombatStyle getCombatStyle() {
 		return getHeroConfiguration().getCombatStyle();
 	}
 
 	public void setCombatStyle(CombatStyle style) {
 		getHeroConfiguration().setCombatStyle(style);
-	}
-
-	public Art getArt(String name) {
-		Debug.trace("getArt " + name);
-		return artsByName.get(name);
-	}
-
-	public Art getArt(FeatureType type) {
-		return artsByType.get(type);
-	}
-
-	public Map<String, Art> getArts() {
-		return artsByName;
 	}
 
 	public Map<String, Spell> getSpells() {
@@ -1959,7 +1786,7 @@ public class Hero {
 	}
 
 	public BaseCombatTalent getCombatTalent(TalentType talentType) {
-		Talent talent = talentByType.get(talentType);
+		Talent talent = getTalent(talentType);
 		if (talent == null) {
 			// add missing combat talents with a value of base.
 			if (talentType != null) {
@@ -1969,12 +1796,10 @@ public class Hero {
 					distanceTalent.setType(talentType);
 					talent = distanceTalent;
 				} else {
-					CombatMeleeAttribute at = new CombatMeleeAttribute(this);
-					at.setName(CombatMeleeAttribute.ATTACKE);
+					CombatMeleeAttribute at = new CombatMeleeAttribute(this, CombatMeleeAttribute.ATTACKE);
 					at.setValue(getAttributeValue(AttributeType.at));
 
-					CombatMeleeAttribute pa = new CombatMeleeAttribute(this);
-					pa.setName(CombatMeleeAttribute.PARADE);
+					CombatMeleeAttribute pa = new CombatMeleeAttribute(this, CombatMeleeAttribute.PARADE);
 					pa.setValue(getAttributeValue(AttributeType.pa));
 
 					talent = new CombatMeleeTalent(this, at, pa);
@@ -2180,68 +2005,37 @@ public class Hero {
 		return modifierTP;
 	}
 
-	/**
-	 * @param uri
-	 */
-	public void setProfileUri(Uri uri) {
-		this.profileUri = uri;
-	}
-
-	/**
-	 * @param talent
-	 */
-	public void addTalent(Talent talent) {
-		addTalent(talent, true);
-	}
-
 	public void addTalent(Talent talent, boolean visible) {
-
-		if (visible) {
-			TalentGroup tg = talentGroups.get(talent.type.type());
-			if (tg != null) {
-				tg.getTalents().add(talent);
-			} else {
-				tg = new TalentGroup(talent.type.type());
-				tg.getTalents().add(talent);
-				talentGroups.put(talent.type.type(), tg);
-			}
-		}
-
-		talentByType.put(talent.getType(), talent);
+		super.addTalent(talent, visible);
 
 		if (talent instanceof MetaTalent) {
 			getHeroConfiguration().addMetaTalent((MetaTalent) talent);
 		}
 	}
 
-	/**
-	 * @param art
-	 */
-	public void addArt(Art art) {
-		artsByName.put(art.getName(), art);
-		if (art.getType() != null) {
-			artsByType.put(art.getType(), art);
-		}
+	public void addAnimal(Animal animal) {
+		this.animals.add(animal);
 	}
 
-	/**
-	 * @param adv
-	 */
-	public void addFeature(Feature adv) {
-		if (adv != null) {
-			Feature existingAdv = featuresByType.get(adv.getType());
-			if (existingAdv == null) {
-				featuresByType.put(adv.getType(), adv);
-			} else {
-				existingAdv.addAllValues(adv.getValues());
+	public List<Animal> getAnimals() {
+		return animals;
+	}
+
+	public Animal getAnimal(String name, String slot) {
+		Debug.trace("getAnimal " + name + ", slot=" + slot);
+
+		for (Animal animal : getAnimals()) {
+			if (animal.getName().equals(name)) {
+				if (slot != null) {
+					if (slot.equals(animal.getSlot()))
+						return animal;
+				} else {
+					return animal;
+				}
 			}
-		}
-	}
 
-	public void removeFeature(Feature adv) {
-		if (adv != null) {
-			featuresByType.remove(adv.getType());
 		}
+		return null;
 	}
 
 	/**

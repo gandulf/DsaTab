@@ -169,9 +169,9 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 
 		this.id = UUID.randomUUID();
 
-		if (in.has(FIELD_ATTRIBUTE_LIST))
+		if (in.has(FIELD_ATTRIBUTE_LIST)) {
 			attributeList = in.optBoolean(FIELD_ATTRIBUTE_LIST, true);
-
+		}
 		if (!in.isNull(FIELD_FILTER_SETTINGS)) {
 			JSONArray jsonArray = in.getJSONArray(FIELD_FILTER_SETTINGS);
 			filterSettings = new FilterSettings[MAX_TABS_PER_PAGE];
@@ -393,6 +393,9 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		}
 
 		out.put(FIELD_DICE_SLIDER, diceSlider);
+
+		out.put(FIELD_ATTRIBUTE_LIST, attributeList);
+
 		if (filterSettings != null) {
 
 			JSONArray jsonArray = new JSONArray();

@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sheet_animal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_margin="@dimen/page_margin"
+    android:layout_weight="1"
+    android:fillViewport="true"
+    android:scrollbarStyle="outsideOverlay" >
+
+    <RelativeLayout
+        android:id="@+id/gen_char_sheet"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/gen_portrait"
+            android:layout_width="@dimen/portrait_width_small"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/gen_description"
+            android:layout_alignTop="@+id/gen_description"
+            android:layout_marginRight="5dp"
+            android:cropToPadding="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/profile_picture" >
+        </ImageView>
+
+        <TableLayout
+            android:id="@+id/gen_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="4dp"
+            android:layout_toRightOf="@+id/gen_portrait"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:shrinkColumns="1,3"
+            android:stretchColumns="1,3" >
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/gen_name"
+                    style="@style/TextValue.Small.NoTouch"
+                    android:layout_span="4"
+                    android:ellipsize="middle"
+                    android:gravity="left|center_vertical"
+                    android:text="Name" >
+                </TextView>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    style="@style/TextLabel.Mini"
+                    android:text="Familie" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/gen_family"
+                    style="@style/TextValue.Small.NoTouch"
+                    android:layout_span="3"
+                    android:ellipsize="middle"
+                    android:gravity="left"
+                    android:paddingLeft="4dip"
+                    android:singleLine="true" >
+                </TextView>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    style="@style/TextLabel.Mini"
+                    android:text="Gattung" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/gen_species"
+                    style="@style/TextValue.Small.NoTouch"
+                    android:layout_span="3"
+                    android:ellipsize="middle"
+                    android:gravity="left"
+                    android:paddingLeft="4dip"
+                    android:singleLine="true" >
+                </TextView>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    style="@style/TextLabel.Mini"
+                    android:text="@string/label_gewicht" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/gen_gewicht"
+                    style="@style/TextValue.Small.NoTouch"
+                    android:gravity="left"
+                    android:paddingLeft="4dip"
+                    android:singleLine="true" >
+                </TextView>
+
+                <TextView
+                    style="@style/TextLabel.Mini"
+                    android:text="@string/label_groesse" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/gen_groesse"
+                    style="@style/TextValue.Small.NoTouch"
+                    android:gravity="left"
+                    android:paddingLeft="4dip"
+                    android:singleLine="true" >
+                </TextView>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/attr_gs_label"
+                    style="@style/TextLabel.Mini"
+                    android:layout_span="3"
+                    android:text="@string/label_gs" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/attr_gs"
+                    style="@style/TextValue.Small.NoTouch"
+                    android:ellipsize="none"
+                    android:gravity="left"
+                    android:paddingLeft="4dip"
+                    android:singleLine="true"
+                    android:text="1" >
+                </TextView>
+            </TableRow>
+        </TableLayout>
+
+        <LinearLayout
+            android:id="@+id/gen_attributes_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/gen_portrait"
+            android:layout_marginTop="4dp"
+            android:baselineAligned="false" >
+
+            <TableLayout
+                android:id="@+id/gen_attributes"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                android:paddingRight="4dp"
+                android:shrinkColumns="0"
+                android:stretchColumns="0" >
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/attr_mu_label"
+                        style="@style/TextLabel"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="@string/label_mu" >
+                    </TextView>
+
+                    <Button
+                        android:id="@+id/attr_mu"
+                        style="@style/TextValue"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="4dp" >
+                    </Button>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/attr_kl_label"
+                        style="@style/TextLabel"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="@string/label_kl" >
+                    </TextView>
+
+                    <Button
+                        android:id="@+id/attr_kl"
+                        style="@style/TextValue"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="8dp" >
+                    </Button>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/attr_in_label"
+                        style="@style/TextLabel"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="@string/label_in" >
+                    </TextView>
+
+                    <Button
+                        android:id="@+id/attr_in"
+                        style="@style/TextValue"
+                        android:layout_gravity="center" >
+                    </Button>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/attr_ch_label"
+                        style="@style/TextLabel"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="@string/label_ch" >
+                    </TextView>
+
+                    <Button
+                        android:id="@+id/attr_ch"
+                        style="@style/TextValue"
+                        android:layout_gravity="center" >
+                    </Button>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/attr_ff_label"
+                        style="@style/TextLabel"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="@string/label_ff" >
+                    </TextView>
+
+                    <Button
+                        android:id="@+id/attr_ff"
+                        style="@style/TextValue"
+                        android:layout_gravity="center" >
+                    </Button>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/attr_ge_label"
+                        style="@style/TextLabel"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="@string/label_ge" >
+                    </TextView>
+
+                    <Button
+                        android:id="@+id/attr_ge"
+                        style="@style/TextValue"
+                        android:layout_gravity="center" >
+                    </Button>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/attr_ko_label"
+                        style="@style/TextLabel"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="@string/label_ko" >
+                    </TextView>
+
+                    <Button
+                        android:id="@+id/attr_ko"
+                        style="@style/TextValue"
+                        android:layout_gravity="center" >
+                    </Button>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/attr_kk_label"
+                        style="@style/TextLabel"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="@string/label_kk" >
+                    </TextView>
+
+                    <Button
+                        android:id="@+id/attr_kk"
+                        style="@style/TextValue"
+                        android:layout_gravity="center" >
+                    </Button>
+                </TableRow>
+            </TableLayout>
+
+            <TableLayout
+                android:id="@+id/gen_attributes2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:paddingLeft="4dp"
+                android:paddingRight="8dp"
+                android:shrinkColumns="0"
+                android:stretchColumns="0" >
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        style="@style/TextLabel"
+                        android:layout_gravity="center_vertical"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:text="@string/label_le" >
+                    </TextView>
+
+                    <Button
+                        android:id="@+id/attr_le"
+                        style="@style/TextValue.Left" >
+                    </Button>
+
+                    <Button
+                        android:id="@+id/attr_total_le"
+                        style="@style/TextValue.Right"
+                        android:layout_marginRight="4dp" >
+                    </Button>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        style="@style/TextLabel"
+                        android:layout_gravity="center_vertical"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:text="@string/label_au" >
+                    </TextView>
+
+                    <Button
+                        android:id="@+id/attr_au"
+                        style="@style/TextValue.Left" >
+                    </Button>
+
+                    <Button
+                        android:id="@+id/attr_total_au"
+                        style="@style/TextValue.Right" >
+                    </Button>
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/row_ae"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/attr_ae_label"
+                        style="@style/TextLabel"
+                        android:layout_gravity="center_vertical"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:text="@string/label_ae" >
+                    </TextView>
+
+                    <Button
+                        android:id="@+id/attr_ae"
+                        style="@style/TextValue.Left" >
+                    </Button>
+
+                    <Button
+                        android:id="@+id/attr_total_ae"
+                        style="@style/TextValue.Right" >
+                    </Button>
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/row_ke"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/attr_ke_label"
+                        style="@style/TextLabel"
+                        android:layout_gravity="center_vertical"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:text="@string/label_ke">
+                    </TextView>
+
+                    <Button
+                        android:id="@+id/attr_ke"
+                        style="@style/TextValue.Left">
+                    </Button>
+
+                    <Button
+                        android:id="@+id/attr_total_ke"
+                        style="@style/TextValue.Right">
+                    </Button>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/attr_mr_label"
+                        style="@style/TextLabel"
+                        android:layout_gravity="center_vertical"                        
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:text="@string/label_mr" >
+                    </TextView>
+
+                    <Button
+                        android:id="@+id/attr_mr"
+                        style="@style/TextValue.Left" >
+                    </Button>
+
+                    <Button
+                        android:id="@+id/attr_mr2"
+                        style="@style/TextValue.Right" >
+                    </Button>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/attr_lo_label"
+                        style="@style/TextLabel"
+                        android:layout_gravity="center_vertical"
+                        android:layout_span="2"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:text="@string/label_lo" />
+
+                    <Button
+                        android:id="@+id/attr_lo"
+                        style="@style/TextValue" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/attr_rs_label"
+                        style="@style/TextLabel"
+                        android:layout_gravity="center_vertical"
+                        android:layout_span="2"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:text="@string/label_rs" />
+
+                    <Button
+                        android:id="@+id/attr_rs"
+                        style="@style/TextValue" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/attr_ini_label"
+                        style="@style/TextLabel"
+                        android:layout_gravity="center_vertical"                        
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:text="@string/label_ini" />
+
+                    <Button
+                        android:id="@+id/attr_ini"
+                        android:layout_span="2"
+                        style="@style/TextValue" />
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/gen_attributes_layout"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/gen_specialfeatures_title"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Sonderfertigkeiten" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/gen_specialfeatures"
+                style="@style/TextLabel.Small"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="none"
+                android:lineSpacingExtra="4dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/gen_advantages_title"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Vorteile" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/gen_advantages"
+                style="@style/TextLabel.Small"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="none"
+                android:lineSpacingExtra="4dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp" />
+
+            <TextView
+                android:id="@+id/gen_disadvantages_title"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Nachteile" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/gen_disadvantages"
+                style="@style/TextLabel.Small"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="none"
+                android:lineSpacingExtra="4dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/gen_attacks_title"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Angriffe" />
+
+            <LinearLayout
+                android:id="@+id/animal_attacks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</ScrollView>

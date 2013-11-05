@@ -59,7 +59,8 @@ public class BodyFragment extends BaseFragment implements OnClickListener, HeroI
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu, com.actionbarsherlock.view.MenuInflater)
+	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu,
+	 * com.actionbarsherlock.view.MenuInflater)
 	 */
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -71,7 +72,8 @@ public class BodyFragment extends BaseFragment implements OnClickListener, HeroI
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+	 * android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -95,7 +97,7 @@ public class BodyFragment extends BaseFragment implements OnClickListener, HeroI
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		bodyLayout.setOnArmorClickListener(this);
-		bodyLayout.setOnArmorLongClickListener(getBaseActivity().getEditListener());
+		bodyLayout.setOnArmorLongClickListener(getEditListener());
 		bodyLayout.setOnWoundClickListener(this);
 
 		updateBackground();
@@ -106,7 +108,8 @@ public class BodyFragment extends BaseFragment implements OnClickListener, HeroI
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.fragment.BaseFragment#onSharedPreferenceChanged(android.content .SharedPreferences, java.lang.String)
+	 * @see com.dsatab.fragment.BaseFragment#onSharedPreferenceChanged(android.content .SharedPreferences,
+	 * java.lang.String)
 	 */
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -327,7 +330,8 @@ public class BodyFragment extends BaseFragment implements OnClickListener, HeroI
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerAdded (com.dsatab.data.items.ItemContainer)
+	 * @see com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerAdded
+	 * (com.dsatab.data.items.ItemContainer)
 	 */
 	@Override
 	public void onItemContainerAdded(ItemContainer itemContainer) {
@@ -338,7 +342,8 @@ public class BodyFragment extends BaseFragment implements OnClickListener, HeroI
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerRemoved (com.dsatab.data.items.ItemContainer)
+	 * @see com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerRemoved
+	 * (com.dsatab.data.items.ItemContainer)
 	 */
 	@Override
 	public void onItemContainerRemoved(ItemContainer itemContainer) {
@@ -349,7 +354,8 @@ public class BodyFragment extends BaseFragment implements OnClickListener, HeroI
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerChanged (com.dsatab.data.items.ItemContainer)
+	 * @see com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerChanged
+	 * (com.dsatab.data.items.ItemContainer)
 	 */
 	@Override
 	public void onItemContainerChanged(ItemContainer itemContainer) {

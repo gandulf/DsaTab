@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -34,6 +35,7 @@ import android.text.Html;
 import android.text.Spanned;
 import android.text.SpannedString;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -50,9 +52,9 @@ import com.actionbarsherlock.view.MenuItem;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.common.StyleableSpannableStringBuilder;
+import com.dsatab.data.AbstractBeing;
 import com.dsatab.data.Attribute;
 import com.dsatab.data.CombatTalent;
-import com.dsatab.data.Hero;
 import com.dsatab.data.Markable;
 import com.dsatab.data.Probe;
 import com.dsatab.data.Value;
@@ -404,7 +406,11 @@ public class Util {
 
 		if (s.length() == 0 || MINUS.equals(s) || NULL.equals(s))
 			return null;
-
+		// gracefull fallback frm float to int
+		if (s.contains(".")) {
+			Debug.warning("Parsing float as integer: " + s);
+			s = s.substring(0, s.indexOf('.'));
+		}
 		Integer i;
 		if (s.startsWith(PLUS))
 			i = Integer.valueOf(s.substring(1));
@@ -664,11 +670,11 @@ public class Util {
 		}
 	}
 
-	public static void appendValue(Hero hero, StyleableSpannableStringBuilder title, AttributeType type) {
+	public static void appendValue(AbstractBeing being, StyleableSpannableStringBuilder title, AttributeType type) {
 
-		Attribute attr = hero.getAttribute(type);
+		Attribute attr = being.getAttribute(type);
 		if (attr != null && attr.getValue() != null) {
-			int modifier = hero.getModifier(attr);
+			int modifier = being.getModifier(attr);
 
 			int color;
 			if (modifier < 0)
@@ -686,8 +692,8 @@ public class Util {
 
 	}
 
-	public static void appendValue(Hero hero, StyleableSpannableStringBuilder title, Probe probe1, Probe probe2,
-			boolean includeModifiers) {
+	public static void appendValue(AbstractBeing being, StyleableSpannableStringBuilder title, Probe probe1,
+			Probe probe2, boolean includeModifiers) {
 
 		Integer value1 = null, value2 = null;
 
@@ -704,7 +710,7 @@ public class Util {
 			int modifier = 0;
 			int color = Color.TRANSPARENT;
 			if (includeModifiers) {
-				modifier = hero.getModifier(probe1);
+				modifier = being.getModifier(probe1);
 
 				if (modifier < 0)
 					color = DsaTabApplication.getInstance().getResources().getColor(R.color.ValueRed);
@@ -725,7 +731,7 @@ public class Util {
 			int modifier = 0;
 			int color = Color.TRANSPARENT;
 			if (includeModifiers) {
-				modifier = hero.getModifier(probe2);
+				modifier = being.getModifier(probe2);
 
 				if (modifier < 0)
 					color = DsaTabApplication.getInstance().getResources().getColor(R.color.ValueRed);
@@ -1088,5 +1094,27 @@ public class Util {
 		else
 			return Boolean.parseBoolean(value);
 
+	}
+
+	public static int getWidth(Activity activity) {
+		// initialize the DisplayMetrics object
+		DisplayMetrics deviceDisplayMetrics = new DisplayMetrics();
+
+		// populate the DisplayMetrics object with the display characteristics
+		activity.getWindowManager().getDefaultDisplay().getMetrics(deviceDisplayMetrics);
+
+		// get the width and height
+		return deviceDisplayMetrics.widthPixels;
+	}
+
+	public static int getHeight(Activity activity) {
+		// initialize the DisplayMetrics object
+		DisplayMetrics deviceDisplayMetrics = new DisplayMetrics();
+
+		// populate the DisplayMetrics object with the display characteristics
+		activity.getWindowManager().getDefaultDisplay().getMetrics(deviceDisplayMetrics);
+
+		// get the width and height
+		return deviceDisplayMetrics.heightPixels;
 	}
 }

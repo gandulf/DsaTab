@@ -10,6 +10,10 @@ public enum AttributeType {
 			"KE Total"), Magieresistenz("MR"), ini("INI", true, true), at("AT", true, true, false), pa("PA", true,
 			true, false), fk("FK", true, true, false),
 
+	// Animal Attribute Types
+	Loyalität("LO", false, true), Magieresistenz2("MR 2"), Rüstungsschutz("RS"), Gefahrenwert("Gefahrenwert"), Geschwindigkeit2(
+			"GS 2"), Geschwindigkeit3("GS 3"), Fährtensuche("Fährtensuche"),
+
 	// CUSTOM Attribute Types
 	Lebensenergie_Aktuell("LE"), Karmaenergie_Aktuell("KE"), Astralenergie_Aktuell("AE"), Initiative_Aktuell("INI",
 			true, false), Ausdauer_Aktuell("AU"), Geschwindigkeit("GS", true, false, false), Behinderung("BE", false), Ausweichen(
@@ -83,6 +87,10 @@ public enum AttributeType {
 
 	public boolean hasBe() {
 		return be;
+	}
+
+	public static AttributeType valueOfTrim(String value) {
+		return AttributeType.valueOf(value.replace(" ", ""));
 	}
 
 	public static AttributeType byCode(String code) {

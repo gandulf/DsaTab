@@ -20,7 +20,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AnimationUtils;
@@ -89,17 +88,20 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 
 	public static class EditListener implements View.OnClickListener, View.OnLongClickListener {
 
-		private WeakReference<DsaTabActivity> mActivity;
+		private WeakReference<BaseFragment> mFragment;
 
 		/**
 		 * 
 		 */
-		public EditListener(DsaTabActivity context) {
-			this.mActivity = new WeakReference<DsaTabActivity>(context);
+		public EditListener(BaseFragment context) {
+			this.mFragment = new WeakReference<BaseFragment>(context);
 		}
 
 		@Override
 		public void onClick(View v) {
+			BaseFragment baseFragment = mFragment.get();
+			if (baseFragment == null)
+				return;
 
 			Value value = null;
 			if (v.getTag(R.id.TAG_KEY_VALUE) instanceof Value) {
@@ -108,12 +110,12 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 				value = (Value) v.getTag();
 			} else if (v.getTag(R.id.TAG_KEY_VALUE) instanceof AttributeType) {
 				AttributeType type = (AttributeType) v.getTag(R.id.TAG_KEY_VALUE);
-				if (DsaTabApplication.getInstance().getHero() != null)
-					value = DsaTabApplication.getInstance().getHero().getAttribute(type);
+				if (baseFragment.getBeing() != null)
+					value = baseFragment.getBeing().getAttribute(type);
 			} else if (v.getTag() instanceof AttributeType) {
 				AttributeType type = (AttributeType) v.getTag();
-				if (DsaTabApplication.getInstance().getHero() != null)
-					value = DsaTabApplication.getInstance().getHero().getAttribute(type);
+				if (baseFragment.getBeing() != null)
+					value = baseFragment.getBeing().getAttribute(type);
 			}
 
 			if (value != null) {
@@ -124,6 +126,10 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 
 		@Override
 		public boolean onLongClick(View v) {
+			BaseFragment baseFragment = mFragment.get();
+			if (baseFragment == null)
+				return false;
+
 			Value value = null;
 			if (v.getTag(R.id.TAG_KEY_VALUE) instanceof Value) {
 				value = (Value) v.getTag(R.id.TAG_KEY_VALUE);
@@ -131,16 +137,16 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 				value = (Value) v.getTag();
 			} else if (v.getTag(R.id.TAG_KEY_VALUE) instanceof AttributeType) {
 				AttributeType type = (AttributeType) v.getTag(R.id.TAG_KEY_VALUE);
-				if (DsaTabApplication.getInstance().getHero() != null)
-					value = DsaTabApplication.getInstance().getHero().getAttribute(type);
+				if (baseFragment.getBeing() != null)
+					value = baseFragment.getBeing().getAttribute(type);
 			} else if (v.getTag() instanceof AttributeType) {
 				AttributeType type = (AttributeType) v.getTag();
-				if (DsaTabApplication.getInstance().getHero() != null)
-					value = DsaTabApplication.getInstance().getHero().getAttribute(type);
+				if (baseFragment.getBeing() != null)
+					value = baseFragment.getBeing().getAttribute(type);
 			}
 
-			if (value != null && mActivity.get() != null) {
-				showEditPopup(mActivity.get(), value);
+			if (value != null) {
+				showEditPopup(v.getContext(), value);
 				return true;
 			}
 			return false;
@@ -151,17 +157,20 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 
 	public static class ProbeListener implements View.OnClickListener, View.OnLongClickListener {
 
-		private WeakReference<DsaTabActivity> mActivity;
+		private WeakReference<BaseFragment> mFragment;
 
 		/**
 		 * 
 		 */
-		public ProbeListener(DsaTabActivity context) {
-			this.mActivity = new WeakReference<DsaTabActivity>(context);
+		public ProbeListener(BaseFragment context) {
+			this.mFragment = new WeakReference<BaseFragment>(context);
 		}
 
 		@Override
 		public void onClick(View v) {
+			BaseFragment baseFragment = mFragment.get();
+			if (baseFragment == null)
+				return;
 
 			Probe probe = null;
 
@@ -171,22 +180,26 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 				probe = (Probe) v.getTag();
 			} else if (v.getTag(R.id.TAG_KEY_PROBE) instanceof AttributeType) {
 				AttributeType type = (AttributeType) v.getTag(R.id.TAG_KEY_PROBE);
-				if (DsaTabApplication.getInstance().getHero() != null)
-					probe = DsaTabApplication.getInstance().getHero().getAttribute(type);
+				if (baseFragment.getBeing() != null)
+					probe = baseFragment.getBeing().getAttribute(type);
 			} else if (v.getTag() instanceof AttributeType) {
 				AttributeType type = (AttributeType) v.getTag();
-				if (DsaTabApplication.getInstance().getHero() != null)
-					probe = DsaTabApplication.getInstance().getHero().getAttribute(type);
+				if (baseFragment.getBeing() != null)
+					probe = baseFragment.getBeing().getAttribute(type);
 			}
 
-			if (probe != null && mActivity.get() != null) {
-				mActivity.get().checkProbe(probe);
+			if (probe != null) {
+				baseFragment.checkProbe(probe);
 			}
 
 		}
 
 		@Override
 		public boolean onLongClick(View v) {
+			BaseFragment baseFragment = mFragment.get();
+			if (baseFragment == null)
+				return false;
+
 			Probe probe = null;
 
 			if (v.getTag(R.id.TAG_KEY_PROBE) instanceof Probe) {
@@ -195,26 +208,22 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 				probe = (Probe) v.getTag();
 			} else if (v.getTag(R.id.TAG_KEY_PROBE) instanceof AttributeType) {
 				AttributeType type = (AttributeType) v.getTag(R.id.TAG_KEY_PROBE);
-				if (DsaTabApplication.getInstance().getHero() != null)
-					probe = DsaTabApplication.getInstance().getHero().getAttribute(type);
+				if (baseFragment.getBeing() != null)
+					probe = baseFragment.getBeing().getAttribute(type);
 			} else if (v.getTag() instanceof AttributeType) {
 				AttributeType type = (AttributeType) v.getTag();
-				if (DsaTabApplication.getInstance().getHero() != null)
-					probe = DsaTabApplication.getInstance().getHero().getAttribute(type);
+				if (baseFragment.getBeing() != null)
+					probe = baseFragment.getBeing().getAttribute(type);
 			}
 
-			if (probe != null && mActivity.get() != null) {
-				mActivity.get().checkProbe(probe);
+			if (probe != null) {
+				baseFragment.checkProbe(probe);
 				return true;
 			}
 			return false;
 		}
 
 	}
-
-	protected ProbeListener probeListener;
-
-	protected EditListener editListener;
 
 	private TabPagerAdapter viewPagerAdapter;
 
@@ -416,14 +425,6 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
-	public ProbeListener getProbeListener() {
-		return probeListener;
-	}
-
-	public EditListener getEditListener() {
-		return editListener;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -454,9 +455,6 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 				DsaTabPreferenceActivity.DEFAULT_SCREEN_ORIENTATION);
 
 		Configuration configuration = getResources().getConfiguration();
-
-		probeListener = new ProbeListener(this);
-		editListener = new EditListener(this);
 
 		if (savedInstanceState != null) {
 			tabInfo = savedInstanceState.getParcelable(KEY_TAB_INFO);
@@ -494,17 +492,6 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		showNewsInfoPopup();
 	}
 
-	protected int getWidth() {
-		// initialize the DisplayMetrics object
-		DisplayMetrics deviceDisplayMetrics = new DisplayMetrics();
-
-		// populate the DisplayMetrics object with the display characteristics
-		getWindowManager().getDefaultDisplay().getMetrics(deviceDisplayMetrics);
-
-		// get the width and height
-		return deviceDisplayMetrics.widthPixels;
-	}
-
 	/**
 	 * 
 	 */
@@ -525,7 +512,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		else
 			tabs = Collections.emptyList();
 
-		if (getWidth() > 900) {
+		if (Util.getWidth(this) > 900) {
 			// TABS INIT
 			bar.removeAllTabs();
 			for (int i = 0; i < tabs.size(); i++) {
@@ -747,29 +734,39 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	}
 
 	private void unregisterShakeDice() {
-		if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_SENSOR_ACCELEROMETER)) {
-			if (mShaker != null) {
-				mShaker.setOnShakeListener(null);
-				mShaker = null;
+		try {
+			if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_SENSOR_ACCELEROMETER)) {
+				if (mShaker != null) {
+					mShaker.setOnShakeListener(null);
+					mShaker = null;
+				}
 			}
+		} catch (UnsupportedOperationException e) {
+			mShaker = null;
+			Debug.warning(e);
 		}
 	}
 
 	private void registerShakeDice() {
-		if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_SENSOR_ACCELEROMETER)) {
-			if (mShaker == null) {
-				final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-				mShaker = new ShakeListener(this);
-				mShaker.setOnShakeListener(new ShakeListener.OnShakeListener() {
-					@Override
-					public void onShake() {
-						vibe.vibrate(100);
-						if (diceSlider != null)
-							diceSlider.rollDice20();
-					}
-				});
+		try {
+			if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_SENSOR_ACCELEROMETER)) {
+				if (mShaker == null) {
+					final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+					mShaker = new ShakeListener(this);
+					mShaker.setOnShakeListener(new ShakeListener.OnShakeListener() {
+						@Override
+						public void onShake() {
+							vibe.vibrate(100);
+							if (diceSlider != null)
+								diceSlider.rollDice20();
+						}
+					});
 
+				}
 			}
+		} catch (UnsupportedOperationException e) {
+			mShaker = null;
+			Debug.warning(e);
 		}
 	}
 
@@ -799,19 +796,33 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 
 	@Override
 	protected void onPause() {
-		if (mShaker != null)
-			mShaker.pause();
+		try {
+			if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_SENSOR_ACCELEROMETER)) {
+				if (mShaker != null)
+					mShaker.pause();
+			}
+		} catch (UnsupportedOperationException e) {
+			mShaker = null;
+			Debug.warning(e);
+		}
 
 		super.onPause();
 	}
 
 	@Override
 	protected void onResume() {
-		if (preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_SHAKE_ROLL_DICE, false)) {
-			if (mShaker == null)
-				registerShakeDice();
-			else
-				mShaker.resume();
+		try {
+			if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_SENSOR_ACCELEROMETER)) {
+				if (preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_SHAKE_ROLL_DICE, false)) {
+					if (mShaker == null)
+						registerShakeDice();
+					else
+						mShaker.resume();
+				}
+			}
+		} catch (UnsupportedOperationException e) {
+			mShaker = null;
+			Debug.warning(e);
 		}
 		super.onResume();
 	}

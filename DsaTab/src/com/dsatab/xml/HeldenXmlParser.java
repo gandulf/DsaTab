@@ -26,6 +26,9 @@ import android.os.Build;
 import android.text.TextUtils;
 
 import com.bugsense.trace.BugSenseHandler;
+import com.dsatab.data.AbstractBeing;
+import com.dsatab.data.Animal;
+import com.dsatab.data.AnimalAttack;
 import com.dsatab.data.Art;
 import com.dsatab.data.ArtInfo;
 import com.dsatab.data.Attribute;
@@ -38,6 +41,7 @@ import com.dsatab.data.CombatShieldTalent;
 import com.dsatab.data.CombatTalent;
 import com.dsatab.data.Connection;
 import com.dsatab.data.CustomAttribute;
+import com.dsatab.data.Dice;
 import com.dsatab.data.Event;
 import com.dsatab.data.Feature;
 import com.dsatab.data.Hero;
@@ -177,11 +181,15 @@ public class HeldenXmlParser {
 	/**
 	 * @param heldElement
 	 */
-	private static void fillAdvantages(Hero hero, Element heldElement) {
+	private static void fillAdvantages(AbstractBeing being, Element heldElement) {
 
-		List<Element> sfs = DomUtil.getChildrenByTagName(heldElement, Xml.KEY_VORTEILE, Xml.KEY_VORTEIL);
+		List<Element> list = new ArrayList<Element>();
 
-		for (Element element : sfs) {
+		list.addAll(DomUtil.getChildrenByTagName(heldElement, Xml.KEY_VT, Xml.KEY_VORTEIL));
+
+		list.addAll(DomUtil.getChildrenByTagName(heldElement, Xml.KEY_VORTEILE, Xml.KEY_VORTEIL));
+
+		for (Element element : list) {
 			FeatureType featureType;
 			try {
 				featureType = FeatureType.byXmlName(element.getAttributeValue(Xml.KEY_NAME).trim());
@@ -203,7 +211,7 @@ public class HeldenXmlParser {
 				}
 			}
 
-			hero.addFeature(adv);
+			being.addFeature(adv);
 		}
 	}
 
@@ -212,12 +220,15 @@ public class HeldenXmlParser {
 	 * @param hero
 	 * @param heldElement
 	 */
-	private static void fillArtsAndSpecialFeatures(Hero hero, Element heldElement) {
+	private static void fillArtsAndSpecialFeatures(AbstractBeing hero, Element heldElement) {
 
-		List<Element> sf = DomUtil.getChildrenByTagName(heldElement, Xml.KEY_SONDERFERTIGKEITEN,
-				Xml.KEY_SONDERFERTIGKEIT);
+		List<Element> list = new ArrayList<Element>();
 
-		for (Element element : sf) {
+		list.addAll(DomUtil.getChildrenByTagName(heldElement, Xml.KEY_SF, Xml.KEY_SONDERFERTIGKEIT));
+
+		list.addAll(DomUtil.getChildrenByTagName(heldElement, Xml.KEY_SONDERFERTIGKEITEN, Xml.KEY_SONDERFERTIGKEIT));
+
+		for (Element element : list) {
 
 			String name = element.getAttributeValue(Xml.KEY_NAME).trim();
 			ArtGroupType type = ArtGroupType.getTypeOfArt(name);
@@ -245,6 +256,13 @@ public class HeldenXmlParser {
 				if (auswahlChildren != null) {
 					for (Element child : auswahlChildren) {
 						specialFeature.addValue(child.getAttributeValue(Xml.KEY_NAME));
+
+						// in some cases we have a subelement with value in it (e.g. Trick)
+						if (child.getChildren() != null) {
+							for (Element subchild : child.getChildren()) {
+								specialFeature.addValue(subchild.getAttributeValue(Xml.KEY_VALUE));
+							}
+						}
 					}
 				}
 
@@ -517,6 +535,147 @@ public class HeldenXmlParser {
 
 	}
 
+	protected static void fillAnimal(Hero hero, Element animalItemElement) {
+		Element animalElement = animalItemElement.getChild(Xml.KEY_TIER);
+
+		Animal animal = new Animal(hero);
+
+		animal.setName(animalItemElement.getAttributeValue(Xml.KEY_NAME));
+		animal.setSlot(animalItemElement.getAttributeValue(Xml.KEY_SLOT));
+		animal.setCount(Util.parseInt(animalItemElement.getAttributeValue(Xml.KEY_ANZAHL), 1));
+
+		Element mod = animalItemElement.getChild(Xml.KEY_MOD_ALLGEMEIN);
+		if (mod != null) {
+			Element weightElement = mod.getChild(Xml.KEY_GEWICHT);
+			Element priceElement = mod.getChild(Xml.KEY_PREIS);
+			Element nameElement = mod.getChild(Xml.KEY_NAME);
+			if (weightElement != null) {
+				animal.setWeight(Util.parseFloat(weightElement.getAttributeValue(Xml.KEY_VALUE)));
+			}
+			if (priceElement != null) {
+				animal.setPrice(Util.parseInt(priceElement.getAttributeValue(Xml.KEY_VALUE)));
+			}
+			if (nameElement != null) {
+				animal.setTitle(nameElement.getAttributeValue(Xml.KEY_VALUE));
+			}
+		}
+
+		Element groesse = animalElement.getChild(Xml.KEY_GROESSE);
+		if (groesse != null) {
+			animal.setHeight(Util.parseInteger(groesse.getAttributeValue(Xml.KEY_VALUE)));
+		}
+		Element species = animalElement.getChild(Xml.KEY_GATTUNG);
+		if (species != null) {
+			animal.setSpecies(species.getAttributeValue(Xml.KEY_VALUE));
+		}
+		Element family = animalElement.getChild(Xml.KEY_FAMILIE);
+		if (family != null) {
+			animal.setFamily(family.getAttributeValue(Xml.KEY_VALUE));
+		}
+
+		Element ini = animalElement.getChild(Xml.KEY_INI);
+		if (ini != null) {
+			Dice inidice = new Dice();
+			inidice.diceType = Util.parseInt(ini.getAttributeValue(Xml.KEY_INI_W), 6);
+			inidice.constant = Util.parseInt(ini.getAttributeValue(Xml.KEY_INI_SUM), 0);
+			inidice.diceCount = Util.parseInt(ini.getAttributeValue(Xml.KEY_INI_MUL), 1);
+			animal.setIniDice(inidice);
+		}
+
+		// fill attributes
+		List<Element> domAttributes = DomUtil.getChildrenByTagName(animalElement, Xml.KEY_EIGENSCHAFTEN,
+				Xml.KEY_EIGENSCHAFT);
+
+		for (Element attributeElement : domAttributes) {
+			Attribute attr = new Attribute(animal);
+			attr.setName(attributeElement.getAttributeValue(Xml.KEY_NAME));
+			attr.setType(AttributeType.valueOfTrim(attributeElement.getAttributeValue(Xml.KEY_NAME)));
+			attr.setValue(Util.parseInteger(attributeElement.getAttributeValue(Xml.KEY_VALUE)));
+			attr.setMod(Util.parseInteger(attributeElement.getAttributeValue(Xml.KEY_MOD)));
+			// all animal attributes are absolte
+			attr.setAbsolute(true);
+			animal.addAttribute(attr);
+		}
+
+		if (!animal.hasAttribute(AttributeType.Lebensenergie_Aktuell)) {
+			CustomAttribute le = new CustomAttribute(animal, AttributeType.Lebensenergie_Aktuell);
+			le.setValue(animal.getAttributeValue(AttributeType.Lebensenergie));
+			le.setReferenceValue(le.getValue());
+			le.setAbsolute(true);
+			animal.addAttribute(le);
+		}
+
+		if (!animal.hasAttribute(AttributeType.Ausdauer_Aktuell)) {
+			CustomAttribute le = new CustomAttribute(animal, AttributeType.Ausdauer_Aktuell);
+			le.setValue(animal.getAttributeValue(AttributeType.Ausdauer));
+			le.setReferenceValue(le.getValue());
+			le.setAbsolute(true);
+			animal.addAttribute(le);
+		}
+
+		if (!animal.hasAttribute(AttributeType.Karmaenergie_Aktuell)) {
+			CustomAttribute le = new CustomAttribute(animal, AttributeType.Karmaenergie_Aktuell);
+			le.setValue(animal.getAttributeValue(AttributeType.Karmaenergie));
+			le.setReferenceValue(le.getValue());
+			le.setAbsolute(true);
+			animal.addAttribute(le);
+		}
+
+		if (!animal.hasAttribute(AttributeType.Astralenergie_Aktuell)) {
+			CustomAttribute le = new CustomAttribute(animal, AttributeType.Astralenergie_Aktuell);
+			le.setValue(animal.getAttributeValue(AttributeType.Astralenergie));
+			le.setReferenceValue(le.getValue());
+			le.setAbsolute(true);
+			animal.addAttribute(le);
+		}
+
+		// ---
+
+		fillAdvantages(animal, animalElement);
+		fillArtsAndSpecialFeatures(animal, animalElement);
+
+		// fill attacks
+		List<Element> domAttacks = DomUtil.getChildrenByTagName(animalElement, Xml.KEY_ANGRIFFE, Xml.KEY_ANGRIFF);
+
+		for (Element attackElement : domAttacks) {
+			String attackName = attackElement.getAttributeValue(Xml.KEY_NAME);
+
+			Element at = attackElement.getChild(Xml.KEY_AT);
+			Element pa = attackElement.getChild(Xml.KEY_PA);
+			Element tp = attackElement.getChild(Xml.KEY_TP);
+			Integer atValue = null, paValue = null;
+			CombatMeleeAttribute atAttribute = null, paAttribute = null;
+			Dice tpDice = null;
+			String distance = null;
+
+			if (at != null) {
+				atValue = Util.parseInteger(at.getAttributeValue(Xml.KEY_VALUE));
+				atAttribute = new CombatMeleeAttribute(animal, CombatMeleeAttribute.ATTACKE);
+				atAttribute.setValue(atValue);
+			}
+			if (pa != null) {
+				paValue = Util.parseInteger(pa.getAttributeValue(Xml.KEY_VALUE));
+				paAttribute = new CombatMeleeAttribute(animal, CombatMeleeAttribute.PARADE);
+				paAttribute.setValue(paValue);
+			}
+			if (tp != null) {
+				tpDice = new Dice();
+				tpDice.constant = Util.parseInt(tp.getAttributeValue(Xml.KEY_INI_SUM), 0);
+				tpDice.diceType = Util.parseInt(tp.getAttributeValue(Xml.KEY_INI_W), 6);
+				tpDice.diceCount = Util.parseInt(tp.getAttributeValue(Xml.KEY_INI_MUL), 1);
+			}
+
+			Element dk = attackElement.getChild(Xml.KEY_DK);
+			if (dk != null) {
+				distance = dk.getAttributeValue(Xml.KEY_VALUE);
+			}
+			AnimalAttack animalAttack = new AnimalAttack(animal, attackName, atAttribute, paAttribute, tpDice, distance);
+			animal.addAnimalAttack(animalAttack);
+		}
+
+		hero.addAnimal(animal);
+	}
+
 	protected static void fillComments(Hero hero, Element heroElement) {
 		Element kommentareElement = heroElement.getChild(Xml.KEY_KOMMENTARE);
 		if (kommentareElement != null) {
@@ -745,12 +904,21 @@ public class HeldenXmlParser {
 
 	}
 
+	private static boolean isAnimalItemElement(Element element) {
+		return element.getChild(Xml.KEY_TIER) != null;
+	}
+
 	private static void fillItems(Hero hero, Element heroElement) {
 
 		List<Element> itemsElements = DomUtil.getChildrenByTagName(heroElement, Xml.KEY_GEGENSTAENDE,
 				Xml.KEY_GEGENSTAND);
 
 		for (Element element : itemsElements) {
+
+			if (isAnimalItemElement(element)) {
+				fillAnimal(hero, element);
+				continue;
+			}
 
 			if (element.getAttribute(Xml.KEY_NAME) != null) {
 
@@ -1020,8 +1188,7 @@ public class HeldenXmlParser {
 				// add Peitsche as CombatTalent although
 				// Heldensoftware doesn't treat is as one
 				if (TalentType.Peitsche == talentType) {
-					CombatMeleeAttribute at = new CombatMeleeAttribute(hero);
-					at.setName(CombatMeleeAttribute.ATTACKE);
+					CombatMeleeAttribute at = new CombatMeleeAttribute(hero, CombatMeleeAttribute.ATTACKE);
 					at.setValue(hero.getAttributeValue(AttributeType.at) + talentValue);
 
 					talent = new CombatMeleeTalent(hero, at, null);
@@ -1040,12 +1207,10 @@ public class HeldenXmlParser {
 							for (Element node : nodes) {
 								Element item = node;
 								if (Xml.KEY_ATTACKE.equals(item.getName())) {
-									at = new CombatMeleeAttribute(hero);
-									at.setName(CombatMeleeAttribute.ATTACKE);
+									at = new CombatMeleeAttribute(hero, CombatMeleeAttribute.ATTACKE);
 									at.setValue(Util.parseInteger(item.getAttributeValue(Xml.KEY_VALUE)));
 								} else if (Xml.KEY_PARADE.equals(item.getName())) {
-									pa = new CombatMeleeAttribute(hero);
-									pa.setName(CombatMeleeAttribute.PARADE);
+									pa = new CombatMeleeAttribute(hero, CombatMeleeAttribute.PARADE);
 									pa.setValue(Util.parseInteger(item.getAttributeValue(Xml.KEY_VALUE)));
 								}
 							}
@@ -1082,12 +1247,10 @@ public class HeldenXmlParser {
 			for (Element node : nodes) {
 				Element item = node;
 				if (Xml.KEY_ATTACKE.equals(item.getName())) {
-					at = new CombatMeleeAttribute(hero);
-					at.setName(CombatMeleeAttribute.ATTACKE);
+					at = new CombatMeleeAttribute(hero, CombatMeleeAttribute.ATTACKE);
 					at.setValue(Util.parseInteger(item.getAttributeValue(Xml.KEY_VALUE)));
 				} else if (Xml.KEY_PARADE.equals(item.getName())) {
-					pa = new CombatMeleeAttribute(hero);
-					pa.setName(CombatMeleeAttribute.PARADE);
+					pa = new CombatMeleeAttribute(hero, CombatMeleeAttribute.PARADE);
 					pa.setValue(Util.parseInteger(item.getAttributeValue(Xml.KEY_VALUE)));
 				}
 			}
@@ -1105,7 +1268,7 @@ public class HeldenXmlParser {
 		output.output(dom, out);
 	}
 
-	private static void writeAttribute(Hero hero, Attribute attr, Element element) {
+	private static void writeAttribute(Hero hero, AbstractBeing being, Attribute attr, Element element) {
 		if (element != null) {
 			if (attr.getValue() != null) {
 				Integer newValue = attr.getValue();
@@ -1280,8 +1443,8 @@ public class HeldenXmlParser {
 		List<Element> domAttributes = DomUtil.getChildrenByTagName(heldElement, Xml.KEY_EIGENSCHAFTEN,
 				Xml.KEY_EIGENSCHAFT);
 		for (Element attribute : domAttributes) {
-			writeAttribute(hero, hero.getAttribute(AttributeType.valueOf(attribute.getAttributeValue(Xml.KEY_NAME))),
-					attribute);
+			writeAttribute(hero, hero,
+					hero.getAttribute(AttributeType.valueOf(attribute.getAttributeValue(Xml.KEY_NAME))), attribute);
 			Debug.verbose("Xml popuplate attr " + attribute);
 		}
 
@@ -1307,8 +1470,7 @@ public class HeldenXmlParser {
 			Debug.verbose("Xml popuplate spell " + spell);
 		}
 
-		List<Element> sfs = DomUtil.getChildrenByTagName(heldElement, Xml.KEY_SONDERFERTIGKEITEN,
-				Xml.KEY_SONDERFERTIGKEIT);
+		List<Element> sfs = DomUtil.getChildrenByTagName(heldElement, Xml.KEY_SF, Xml.KEY_SONDERFERTIGKEIT);
 
 		for (Element sf : sfs) {
 			Art art = hero.getArt(Art.normalizeName(sf.getAttributeValue(Xml.KEY_NAME)));
@@ -1430,9 +1592,11 @@ public class HeldenXmlParser {
 			}
 		}
 
-		// items
+		// items and animals
 
 		List<Element> itemsElements = itemsNode.getChildren(Xml.KEY_GEGENSTAND);
+
+		List<Animal> allAnimals = new ArrayList<Animal>(hero.getAnimals());
 
 		List<Item> allItems = new ArrayList<Item>();
 		for (ItemContainer itemContainer : hero.getItemContainers()) {
@@ -1441,16 +1605,32 @@ public class HeldenXmlParser {
 
 		for (Iterator<Element> iter = itemsElements.iterator(); iter.hasNext();) {
 			Element itemElement = iter.next();
-			Item item = hero.getItem(itemElement.getAttributeValue(Xml.KEY_NAME),
-					itemElement.getAttributeValue(Xml.KEY_SLOT));
 
-			if (item != null) {
-				allItems.remove(item);
-				writeItem(item, itemElement);
-				Debug.verbose("Xml popuplate item " + itemElement);
+			if (isAnimalItemElement(itemElement)) {
+				Animal animal = hero.getAnimal(itemElement.getAttributeValue(Xml.KEY_NAME),
+						itemElement.getAttributeValue(Xml.KEY_SLOT));
+
+				if (animal != null) {
+					allAnimals.remove(animal);
+					writeAnimal(hero, animal, itemElement);
+					Debug.verbose("Xml popuplate animal " + itemElement);
+				} else {
+					Debug.verbose("Xml popuplate NO ANIMAL found remove it " + itemElement);
+					iter.remove();
+				}
 			} else {
-				Debug.verbose("Xml popuplate NO ITEM found remove it " + itemElement);
-				iter.remove();
+
+				Item item = hero.getItem(itemElement.getAttributeValue(Xml.KEY_NAME),
+						itemElement.getAttributeValue(Xml.KEY_SLOT));
+
+				if (item != null) {
+					allItems.remove(item);
+					writeItem(item, itemElement);
+					Debug.verbose("Xml popuplate item " + itemElement);
+				} else {
+					Debug.verbose("Xml popuplate NO ITEM found remove it " + itemElement);
+					iter.remove();
+				}
 			}
 
 		}
@@ -1458,6 +1638,12 @@ public class HeldenXmlParser {
 		for (Item newItem : allItems) {
 			Element element = new Element(Xml.KEY_GEGENSTAND);
 			writeItem(newItem, element);
+			itemsNode.addContent(element);
+		}
+
+		for (Animal newAnimal : allAnimals) {
+			Element element = new Element(Xml.KEY_GEGENSTAND);
+			writeAnimal(hero, newAnimal, element);
 			itemsNode.addContent(element);
 		}
 
@@ -1630,6 +1816,42 @@ public class HeldenXmlParser {
 			element.setAttribute(Xml.KEY_NAME, Hero.PREFIX_BK + item1.getNameId() + item2.getNameId());
 		else
 			element.setAttribute(Xml.KEY_NAME, Hero.PREFIX_BK + item2.getNameId() + item1.getNameId());
+
+	}
+
+	/**
+	 * @param newItem
+	 * @param element
+	 */
+	private static void writeAnimal(Hero hero, Animal animal, Element element) {
+		element.setAttribute(Xml.KEY_NAME, animal.getName());
+		element.setAttribute(Xml.KEY_ANZAHL, Integer.toString(animal.getCount()));
+		if (!TextUtils.isEmpty(animal.getSlot()))
+			element.setAttribute(Xml.KEY_SLOT, animal.getSlot());
+
+		if (!animal.getTitle().equals(animal.getName())) {
+			Element modallgemein = Xml.getOrCreateElement(element, Xml.KEY_MOD_ALLGEMEIN);
+
+			Element name = Xml.getOrCreateElement(modallgemein, Xml.KEY_NAME);
+			name.setAttribute(Xml.KEY_VALUE, animal.getTitle());
+
+			Element price = Xml.getOrCreateElement(modallgemein, Xml.KEY_PREIS);
+			price.setAttribute(Xml.KEY_VALUE, Xml.toString(animal.getPrice()));
+
+			Element weight = Xml.getOrCreateElement(modallgemein, Xml.KEY_GEWICHT);
+			weight.setAttribute(Xml.KEY_VALUE, Xml.toString(animal.getWeight()));
+
+		}
+
+		Element tierElement = Xml.getOrCreateElement(element, Xml.KEY_TIER);
+		List<Element> domAttributes = DomUtil.getChildrenByTagName(tierElement, Xml.KEY_EIGENSCHAFTEN,
+				Xml.KEY_EIGENSCHAFT);
+		for (Element attribute : domAttributes) {
+			writeAttribute(hero, animal,
+					animal.getAttribute(AttributeType.valueOfTrim(attribute.getAttributeValue(Xml.KEY_NAME))),
+					attribute);
+			Debug.verbose("Xml popuplate animal attr " + attribute);
+		}
 
 	}
 

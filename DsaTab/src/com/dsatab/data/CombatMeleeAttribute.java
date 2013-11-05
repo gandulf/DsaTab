@@ -15,25 +15,26 @@ public class CombatMeleeAttribute extends BaseProbe implements Value {
 
 	private String name;
 
-	private Hero hero;
+	private AbstractBeing being;
 
-	public CombatMeleeAttribute(Hero hero) {
-		this.hero = hero;
+	public CombatMeleeAttribute(AbstractBeing being, String name) {
+		this.being = being;
+		this.name = name;
 	}
 
 	public Integer getBaseValue() {
 		int base = 0;
 		if (isAttack()) {
-			base = hero.getAttributeValue(AttributeType.at);
+			base = being.getAttributeValue(AttributeType.at);
 		} else {
-			base = hero.getAttributeValue(AttributeType.pa);
+			base = being.getAttributeValue(AttributeType.pa);
 		}
 		return base;
 	}
 
 	public void setCombatMeleeTalent(CombatMeleeTalent talent) {
 		this.talent = talent;
-		if (talent.getType() != null) {
+		if (talent != null && talent.getType() != null) {
 			probeInfo.applyBePattern(talent.getType().getBe());
 		}
 	}
@@ -126,7 +127,7 @@ public class CombatMeleeAttribute extends BaseProbe implements Value {
 	public void setValue(Integer value) {
 		if (this.value != value) {
 			this.value = value;
-			hero.fireValueChangedEvent(this);
+			being.fireValueChangedEvent(this);
 		}
 	}
 

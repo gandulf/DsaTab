@@ -28,7 +28,7 @@ public class CustomAttribute extends Attribute implements JSONable {
 	 * @param element
 	 * @param hero
 	 */
-	public CustomAttribute(Hero hero) {
+	public CustomAttribute(AbstractBeing hero) {
 		super(hero);
 	}
 
@@ -36,7 +36,7 @@ public class CustomAttribute extends Attribute implements JSONable {
 	 * @param element
 	 * @param hero
 	 */
-	public CustomAttribute(Hero hero, JSONObject json) throws JSONException {
+	public CustomAttribute(AbstractBeing hero, JSONObject json) throws JSONException {
 		super(hero);
 
 		setType(AttributeType.valueOf(json.getString(FIELD_TYPE)));
@@ -54,7 +54,7 @@ public class CustomAttribute extends Attribute implements JSONable {
 	 * @param type
 	 * @param hero
 	 */
-	public CustomAttribute(Hero hero, AttributeType type) {
+	public CustomAttribute(AbstractBeing hero, AttributeType type) {
 		super(hero);
 		setType(type);
 		setName(type.name());
@@ -97,7 +97,7 @@ public class CustomAttribute extends Attribute implements JSONable {
 		this.value = value;
 
 		if (!Util.equalsOrNull(oldValue, value))
-			hero.fireValueChangedEvent(this);
+			being.fireValueChangedEvent(this);
 	}
 
 	/*
@@ -118,20 +118,20 @@ public class CustomAttribute extends Attribute implements JSONable {
 
 		switch (type) {
 		case Behinderung:
-			value = hero.getArmorBe();
+			value = being.getArmorBe();
 			break;
 		case Ausweichen:
 			value = 0;
-			if (hero.hasFeature(FeatureType.AusweichenI))
+			if (being.hasFeature(FeatureType.AusweichenI))
 				value += 3;
-			if (hero.hasFeature(FeatureType.AusweichenII))
+			if (being.hasFeature(FeatureType.AusweichenII))
 				value += 3;
-			if (hero.hasFeature(FeatureType.AusweichenIII))
+			if (being.hasFeature(FeatureType.AusweichenIII))
 				value += 3;
-			if (hero.hasFeature(FeatureType.Zwergenwuchs))
+			if (being.hasFeature(FeatureType.Zwergenwuchs))
 				value += 1;
 
-			Talent athletik = hero.getTalent(TalentType.Athletik);
+			Talent athletik = being.getTalent(TalentType.Athletik);
 			if (athletik != null && athletik.getValue() >= 9) {
 				value += (athletik.getValue() - 9) / 3;
 			}
@@ -159,23 +159,23 @@ public class CustomAttribute extends Attribute implements JSONable {
 		if (type == AttributeType.Geschwindigkeit) {
 			int value = 7;
 
-			int ge = hero.getAttributeValue(AttributeType.Gewandtheit);
+			int ge = being.getAttributeValue(AttributeType.Gewandtheit);
 			if (ge >= 16)
 				value += 2;
 			else if (ge >= 11)
 				value += 1;
 
-			if (hero.hasFeature(FeatureType.Flink))
+			if (being.hasFeature(FeatureType.Flink))
 				value += 1;
-			if (hero.hasFeature(FeatureType.Behäbig))
+			if (being.hasFeature(FeatureType.Behäbig))
 				value -= 1;
-			if (hero.hasFeature(FeatureType.Einbeinig))
+			if (being.hasFeature(FeatureType.Einbeinig))
 				value -= 3;
-			if (hero.hasFeature(FeatureType.Kleinwüchsig))
+			if (being.hasFeature(FeatureType.Kleinwüchsig))
 				value -= 1;
-			if (hero.hasFeature(FeatureType.Lahm))
+			if (being.hasFeature(FeatureType.Lahm))
 				value -= 1;
-			if (hero.hasFeature(FeatureType.Zwergenwuchs))
+			if (being.hasFeature(FeatureType.Zwergenwuchs))
 				value -= 2;
 
 			if (this.originalBaseValue == null)

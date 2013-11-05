@@ -1,4 +1,11 @@
 <changelog>    
+<release version="4.1.6-beta" versioncode="72">    
+    <fix>Tiere/Begleiter Support mit eigenem Tab</fix>
+</release>
+<release version="4.1.5" versioncode="71">    
+    <fix>Herunterladen von Zusatzpaketen vor ICS</fix>
+    <fix>Gridlayout wird wieder korrekt angezeigt</fix>
+</release>
 <release version="4.1.4" versioncode="70">    
     <fix>Einstellung sind nun mit allen Devices kompatibel</fix>
 </release>

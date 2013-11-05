@@ -52,7 +52,7 @@ public class FightEquippedItemAdapter extends OpenArrayAdapter<EquippedItem> {
 		this.hero = hero;
 		inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		if (!getFilter().getSettings().isAllVisible())
+		if (settings != null && !settings.isAllVisible())
 			filter(settings);
 	}
 

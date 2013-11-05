@@ -77,10 +77,15 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 
 						switch (item.getItemId()) {
 						case R.id.option_delete:
-							Debug.verbose("Deleting " + heroInfo.getName());
-							heroInfo.getFile().delete();
-							adapter.remove(heroInfo);
-							notifyChanged = true;
+
+							if (heroInfo.getFile() != null) {
+								Debug.verbose("Deleting " + heroInfo.getName());
+								heroInfo.getFile().delete();
+								adapter.remove(heroInfo);
+								notifyChanged = true;
+							} else {
+								Debug.verbose("Cannot delete online hero: " + heroInfo.getName());
+							}
 							break;
 						case R.id.option_download:
 							if (heroInfo.isOnline()) {
@@ -145,6 +150,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
 			int selected = 0;
 			boolean online = false;
+			boolean deletable = false;
 			SparseBooleanArray checkedPositions = list.getCheckedItemPositionsC();
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
@@ -152,6 +158,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 						selected++;
 						HeroFileInfo heroInfo = adapter.getItem(checkedPositions.keyAt(i));
 						online |= heroInfo.isOnline();
+						deletable |= heroInfo.getFile() != null;
 					}
 				}
 			}
@@ -163,6 +170,12 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 			MenuItem download = menu.findItem(R.id.option_download);
 			if (download != null && online != download.isEnabled()) {
 				download.setEnabled(online);
+				changed = true;
+			}
+
+			MenuItem delete = menu.findItem(R.id.option_delete);
+			if (delete != null && deletable != delete.isEnabled()) {
+				delete.setEnabled(deletable);
 				changed = true;
 			}
 

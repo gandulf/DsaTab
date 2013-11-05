@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.data.enums.ArmorPosition;
 import com.dsatab.data.enums.Position;
+import com.dsatab.fragment.AnimalFragment;
 import com.dsatab.fragment.ArtFragment;
 import com.dsatab.fragment.BaseFragment;
 import com.dsatab.fragment.BodyFragment;
@@ -86,13 +87,14 @@ public class DsaTabConfiguration {
 		tabResourceIds.put(PurseFragment.class, R.drawable.tab_coins);
 		tabResourceIds.put(MapFragment.class, R.drawable.tab_map);
 		tabResourceIds.put(DocumentsFragment.class, R.drawable.tab_pdf);
+		tabResourceIds.put(AnimalFragment.class, R.drawable.tab_animal);
 
 		// DO NOT CHANGE ORDER OF ICONS BECAUSE IT IS stored in tabconfiguration
 		// as tabResourceIndex, ALWAYS ADD AT THE LASt POSITION!!!
 		tabIcons = Arrays.asList(R.drawable.tab_character, R.drawable.tab_coins, R.drawable.tab_fight,
 				R.drawable.tab_items, R.drawable.tab_magic, R.drawable.tab_liturige, R.drawable.tab_map,
 				R.drawable.tab_notes, R.drawable.tab_talents, R.drawable.tab_wound, R.drawable.tab_pdf,
-				R.drawable.tab_art);
+				R.drawable.tab_art, R.drawable.tab_animal);
 
 		// DO NOT CHANGE ORDER OF ICONS BECAUSE IT IS stored in tabconfiguration
 		// as tabResourceIndex, ALWAYS ADD AT THE LASt POSITION!!!

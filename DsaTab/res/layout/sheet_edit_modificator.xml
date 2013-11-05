@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView 
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
     xmlns:guilib="http://schemas.android.com/apk/com.gandulf.guilib"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,16 +12,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start|end"
-        guilib:columnCount="2"
-        guilib:orientation="vertical"
-        guilib:useDefaultMargins="true">
+        auto:columnCount="2"
+        auto:orientation="vertical"
+        auto:useDefaultMargins="true">
         
         <TextView
             android:id="@+id/popup_edit_name_label"
             style="?android:attr/listSeparatorTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            guilib:layout_gravity="fill_horizontal"
+            auto:layout_gravity="fill_horizontal"
             android:text="Name" >
 
         </TextView>
@@ -29,7 +30,7 @@
             android:id="@+id/popup_edit_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            guilib:layout_gravity="fill_horizontal"
+            auto:layout_gravity="fill_horizontal"
             android:inputType="textPersonName" >
 
             <requestFocus>
@@ -41,7 +42,7 @@
             style="?android:attr/listSeparatorTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            guilib:layout_gravity="fill_horizontal"
+            auto:layout_gravity="fill_horizontal"
             android:text="Regeln" >
         </TextView>
 
@@ -49,7 +50,7 @@
             android:id="@+id/popup_edit_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            guilib:layout_gravity="fill_horizontal"
+            auto:layout_gravity="fill_horizontal"
             android:hint="z.B.: MU+2, KL-1"
             android:inputType="textMultiLine"
             android:lines="3" >
@@ -59,7 +60,7 @@
             android:id="@+id/popup_edit_info_help"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            guilib:layout_gravity="fill_horizontal"
+            auto:layout_gravity="fill_horizontal"
             android:text="Regeln im Format &quot;MU+2, KL-1, Zauber+1, Talente+2, Eigenschaften+1, AT+1, PA+1, INI+2, AW+2, MR+1&quot; eingeben. Kein Leerzeichen zwischen Eigenschaft und +/-. Um TP anzupassen entweder den Namen der Waffe, des Talentes, des Zaubers, ... oder AT/FK gefolgt von TP eingeben z.B.: AT TP+2, Langdolch TP+1, Dolche TP-1."
             android:textAppearance="?android:attr/textAppearanceSmall" >
         </TextView>
@@ -69,7 +70,7 @@
             style="?android:attr/listSeparatorTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            guilib:layout_gravity="fill_horizontal"
+            auto:layout_gravity="fill_horizontal"
             android:text="Info" >
         </TextView>
         
@@ -77,7 +78,7 @@
             android:id="@+id/popup_edit_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            guilib:layout_gravity="fill_horizontal"
+            auto:layout_gravity="fill_horizontal"
             android:inputType="textShortMessage" >
         </EditText>
 
@@ -87,7 +88,7 @@
             android:id="@+id/popup_edit_active"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            guilib:layout_gravity="fill_horizontal"
+            auto:layout_gravity="fill_horizontal"
             android:text="Aktiv" >
         </CheckBox>
         

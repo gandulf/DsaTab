@@ -58,7 +58,7 @@ public class Art extends MarkableElement implements Value {
 
 	};
 
-	private Hero hero;
+	private AbstractBeing being;
 
 	private ArtGroupType groupType;
 
@@ -76,9 +76,9 @@ public class Art extends MarkableElement implements Value {
 
 	private boolean customProbe;
 
-	public Art(Hero hero, String name) {
+	public Art(AbstractBeing being, String name) {
 		super();
-		this.hero = hero;
+		this.being = being;
 		setName(name);
 	}
 
@@ -129,11 +129,11 @@ public class Art extends MarkableElement implements Value {
 		if (groupType != null) {
 			switch (groupType) {
 			case Ritual:
-				kenntnis = hero.getTalent(TalentType.GeisterRufen);
+				kenntnis = being.getTalent(TalentType.GeisterRufen);
 				break;
 			default:
 				if (groupType.talentType() != null)
-					kenntnis = hero.getTalent(groupType.talentType());
+					kenntnis = being.getTalent(groupType.talentType());
 				break;
 			}
 		}
@@ -273,7 +273,7 @@ public class Art extends MarkableElement implements Value {
 	public Integer getProbeValue(int i) {
 		if (probeInfo.getAttributeTypes() != null) {
 			AttributeType type = probeInfo.getAttributeTypes()[i];
-			return hero.getModifiedValue(type, false, false);
+			return being.getModifiedValue(type, false, false);
 		} else if (getArtTalent() != null) {
 			return getArtTalent().getProbeValue(i);
 		} else {

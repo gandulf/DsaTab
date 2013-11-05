@@ -51,6 +51,7 @@ import com.dsatab.data.modifier.Modificator;
 import com.dsatab.util.ClickSpan;
 import com.dsatab.util.ClickSpan.OnSpanClickListener;
 import com.dsatab.util.Debug;
+import com.dsatab.util.Hint;
 import com.dsatab.util.Util;
 import com.dsatab.view.PortraitChooserDialog;
 import com.dsatab.view.PortraitViewDialog;
@@ -236,8 +237,8 @@ public class CharacterFragment extends BaseAttributesFragment implements OnClick
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		detailsSwitch.setOnClickListener(this);
-		tfExperience.setOnClickListener(getBaseActivity().getEditListener());
-		tfExperience.setOnLongClickListener(getBaseActivity().getEditListener());
+		tfExperience.setOnClickListener(getEditListener());
+		tfExperience.setOnLongClickListener(getEditListener());
 		findViewById(R.id.gen_description).setOnClickListener(this);
 
 		tfSpecialFeatures.setOnLongClickListener(this);
@@ -567,8 +568,8 @@ public class CharacterFragment extends BaseAttributesFragment implements OnClick
 
 		View xpRow = (View) tfLabelExperience.getParent();
 		xpRow.setTag(hero.getExperience());
-		xpRow.setOnLongClickListener(getBaseActivity().getEditListener());
-		xpRow.setOnClickListener(getBaseActivity().getEditListener());
+		xpRow.setOnLongClickListener(getEditListener());
+		xpRow.setOnClickListener(getEditListener());
 
 		fillAttributeValue(tfAE, AttributeType.Astralenergie_Aktuell);
 		fillAttributeValue(tfAU, AttributeType.Ausdauer_Aktuell);
@@ -615,6 +616,9 @@ public class CharacterFragment extends BaseAttributesFragment implements OnClick
 		TableLayout attribute2 = (TableLayout) findViewById(R.id.gen_attributes2);
 		Util.applyRowStyle(attribute2);
 
+		if (!getHero().getAnimals().isEmpty()) {
+			Hint.showHint("CharacterFragment", "ANIMAL_FRAGMENT", getActivity());
+		}
 	}
 
 	protected void updateValues() {

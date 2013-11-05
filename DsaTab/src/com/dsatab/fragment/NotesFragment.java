@@ -132,7 +132,8 @@ public class NotesFragment extends BaseListFragment implements OnItemClickListen
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see com.actionbarsherlock.view.ActionMode.Callback#onPrepareActionMode (com.actionbarsherlock.view.ActionMode, com.actionbarsherlock.view.Menu)
+		 * @see com.actionbarsherlock.view.ActionMode.Callback#onPrepareActionMode
+		 * (com.actionbarsherlock.view.ActionMode, com.actionbarsherlock.view.Menu)
 		 */
 		@Override
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
@@ -181,7 +182,8 @@ public class NotesFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu, com.actionbarsherlock.view.MenuInflater)
+	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu,
+	 * com.actionbarsherlock.view.MenuInflater)
 	 */
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -239,7 +241,8 @@ public class NotesFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+	 * android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -302,7 +305,8 @@ public class NotesFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget .AdapterView, android.view.View, int, long)
+	 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget .AdapterView, android.view.View,
+	 * int, long)
 	 */
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -362,14 +366,18 @@ public class NotesFragment extends BaseListFragment implements OnItemClickListen
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle(R.string.recording);
 			builder.setMessage(R.string.recording_message);
-
 			builder.setPositiveButton(R.string.label_save, new DialogInterface.OnClickListener() {
 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					if (mediaRecorder != null) {
-						mediaRecorder.stop();
-						mediaRecorder.reset();
+						try {
+							mediaRecorder.stop();
+						} catch (IllegalStateException e) {
+							Debug.warning("Couldn't stop mediaRecorder something went wrong.", e);
+						} finally {
+							mediaRecorder.reset();
+						}
 					}
 
 					File nowAudio = new File(recordingsDir, System.currentTimeMillis() + ".3gp");
@@ -384,8 +392,13 @@ public class NotesFragment extends BaseListFragment implements OnItemClickListen
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					if (mediaRecorder != null) {
-						mediaRecorder.stop();
-						mediaRecorder.reset();
+						try {
+							mediaRecorder.stop();
+						} catch (IllegalStateException e) {
+							Debug.warning("Couldn't stop mediaRecorder something went wrong.", e);
+						} finally {
+							mediaRecorder.reset();
+						}
 					}
 					currentAudio.delete();
 				}
@@ -402,7 +415,8 @@ public class NotesFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.content.DialogInterface.OnMultiChoiceClickListener#onClick(android .content.DialogInterface, int, boolean)
+	 * @see android.content.DialogInterface.OnMultiChoiceClickListener#onClick(android .content.DialogInterface, int,
+	 * boolean)
 	 */
 	@Override
 	public void onClick(DialogInterface dialog, int which, boolean isChecked) {

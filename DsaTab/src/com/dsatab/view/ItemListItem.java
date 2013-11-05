@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dsatab.R;
 import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemSpecification;
 import com.dsatab.util.Debug;
@@ -19,7 +20,7 @@ public class ItemListItem extends CheckableRelativeLayout {
 
 	private int textColor = 0;
 
-	public TextView text1, text2;
+	public TextView text1, text2, text3;
 	public ImageView icon1, icon2;
 
 	public ItemListItem(Context context, AttributeSet attrs, int defStyle) {
@@ -70,12 +71,16 @@ public class ItemListItem extends CheckableRelativeLayout {
 		text2 = (TextView) findViewById(android.R.id.text2);
 		icon1 = (ImageView) findViewById(android.R.id.icon1);
 		icon2 = (ImageView) findViewById(android.R.id.icon2);
+		text3 = (TextView) findViewById(R.id.text3);
 
 		if (text1 != null && (textColor != Color.TRANSPARENT)) {
 			text1.setTextColor(textColor);
 		}
 		if (text2 != null && (textColor != Color.TRANSPARENT)) {
 			text2.setTextColor(textColor);
+		}
+		if (text3 != null && (textColor != Color.TRANSPARENT)) {
+			text3.setTextColor(textColor);
 		}
 
 		if (icon1 != null) {

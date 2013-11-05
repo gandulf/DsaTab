@@ -20,7 +20,11 @@ import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.TabInfo;
 import com.dsatab.activity.DsaTabActivity;
+import com.dsatab.activity.DsaTabActivity.EditListener;
+import com.dsatab.activity.DsaTabActivity.ProbeListener;
+import com.dsatab.data.AbstractBeing;
 import com.dsatab.data.Hero;
+import com.dsatab.data.Probe;
 import com.dsatab.data.Value;
 import com.dsatab.data.modifier.Modificator;
 import com.dsatab.util.Debug;
@@ -44,12 +48,12 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 
 	static {
 		activities = Arrays.asList("Keine", "Charakter", "Talente", "Zauber", "Künste", "Wunden", "Kampf",
-				"Ausrüstung (Bilder)", "Ausrüstung (Liste)", "Notizen", "Geldbörse", "Karte", "Dokumente");
+				"Ausrüstung (Bilder)", "Ausrüstung (Liste)", "Notizen", "Geldbörse", "Karte", "Dokumente", "Tiere");
 
 		activityValues = Arrays.asList(null, CharacterFragment.class, TalentFragment.class, SpellFragment.class,
 				ArtFragment.class, BodyFragment.class, FightFragment.class, ItemsFragment.class,
 				ItemsListFragment.class, NotesFragment.class, PurseFragment.class, MapFragment.class,
-				DocumentsFragment.class);
+				DocumentsFragment.class, AnimalFragment.class);
 	}
 
 	public static String getFragmentTitle(Class<? extends BaseFragment> fragmentClass) {
@@ -64,11 +68,16 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 
 	protected FilterSettings filterSettings;
 
+	protected ProbeListener probeListener;
+
+	protected EditListener editListener;
+
 	/**
 	 * 
 	 */
 	public BaseFragment() {
-
+		probeListener = new ProbeListener(this);
+		editListener = new EditListener(this);
 	}
 
 	protected void customizeActionModeCloseButton() {
@@ -169,7 +178,8 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.fragment.FilterChangedListener#onFilterChanged(com.dsatab. view.FilterSettings.FilterType, com.dsatab.view.FilterSettings)
+	 * @see com.dsatab.fragment.FilterChangedListener#onFilterChanged(com.dsatab. view.FilterSettings.FilterType,
+	 * com.dsatab.view.FilterSettings)
 	 */
 	@Override
 	public void onFilterChanged(FilterType type, FilterSettings settings) {
@@ -201,7 +211,8 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+	 * android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -272,6 +283,10 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 		return DsaTabApplication.getInstance().getHero();
 	}
 
+	public AbstractBeing getBeing() {
+		return getHero();
+	}
+
 	@Override
 	public final void loadHero(Hero hero) {
 		onHeroLoaded(hero);
@@ -281,6 +296,14 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 	@Override
 	public final void unloadHero(Hero hero) {
 		onDetachListener(hero);
+	}
+
+	public boolean checkProbe(Probe probe) {
+		if (getBaseActivity() != null)
+			return getBaseActivity().checkProbe(probe);
+		else
+			return false;
+
 	}
 
 	public abstract void onHeroLoaded(Hero hero);
@@ -332,7 +355,8 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.content.SharedPreferences.OnSharedPreferenceChangeListener# onSharedPreferenceChanged(android.content.SharedPreferences, java.lang.String)
+	 * @see android.content.SharedPreferences.OnSharedPreferenceChangeListener#
+	 * onSharedPreferenceChanged(android.content.SharedPreferences, java.lang.String)
 	 */
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -342,4 +366,13 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 	protected FilterSettings getFilterSettings() {
 		return filterSettings;
 	}
+
+	public ProbeListener getProbeListener() {
+		return probeListener;
+	}
+
+	public EditListener getEditListener() {
+		return editListener;
+	}
+
 }

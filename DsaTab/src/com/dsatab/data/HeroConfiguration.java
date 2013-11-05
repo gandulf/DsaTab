@@ -17,6 +17,7 @@ import com.dsatab.DsaTabApplication;
 import com.dsatab.TabInfo;
 import com.dsatab.data.Hero.CombatStyle;
 import com.dsatab.data.items.ItemContainer;
+import com.dsatab.fragment.AnimalFragment;
 import com.dsatab.fragment.ArtFragment;
 import com.dsatab.fragment.BaseFragment;
 import com.dsatab.fragment.BodyFragment;
@@ -384,6 +385,7 @@ public class HeroConfiguration {
 			tabInfos.add(new TabInfo(NotesFragment.class, PurseFragment.class, getTabResourceId(NotesFragment.class),
 					false));
 			tabInfos.add(new TabInfo(DocumentsFragment.class, getTabResourceId(DocumentsFragment.class), false));
+			tabInfos.add(new TabInfo(AnimalFragment.class, getTabResourceId(AnimalFragment.class), false));
 			tabInfos.add(new TabInfo(MapFragment.class, getTabResourceId(MapFragment.class), false));
 		} else {
 			tabInfos.add(new TabInfo(CharacterFragment.class, getTabResourceId(CharacterFragment.class)));
@@ -396,6 +398,7 @@ public class HeroConfiguration {
 			tabInfos.add(new TabInfo(NotesFragment.class, getTabResourceId(NotesFragment.class)));
 			tabInfos.add(new TabInfo(PurseFragment.class, getTabResourceId(PurseFragment.class)));
 			tabInfos.add(new TabInfo(DocumentsFragment.class, getTabResourceId(DocumentsFragment.class), false));
+			tabInfos.add(new TabInfo(AnimalFragment.class, getTabResourceId(AnimalFragment.class), false));
 			tabInfos.add(new TabInfo(MapFragment.class, getTabResourceId(MapFragment.class), false));
 		}
 
@@ -447,6 +450,17 @@ public class HeroConfiguration {
 			if (jsonObject != null) {
 				jsonArray.put(index++, jsonObject);
 			}
+		}
+		out.put(name, jsonArray);
+
+	}
+
+	private void putStringArray(JSONObject out, List<String> list, String name) throws JSONException {
+		JSONArray jsonArray = new JSONArray();
+		int index = 0;
+		final int count = list.size();
+		for (int i = 0; i < count; i++) {
+			jsonArray.put(index++, list.get(i));
 		}
 		out.put(name, jsonArray);
 

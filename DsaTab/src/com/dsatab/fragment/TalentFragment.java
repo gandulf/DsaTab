@@ -157,7 +157,8 @@ public class TalentFragment extends BaseListFragment implements HeroChangedListe
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+	 * android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -294,8 +295,8 @@ public class TalentFragment extends BaseListFragment implements HeroChangedListe
 
 		talentAdapter = new ExpandableTalentAdapter(getActivity(), hero, getFilterSettings());
 
-		talentAdapter.setProbeListener(getBaseActivity().getProbeListener());
-		talentAdapter.setEditListener(getBaseActivity().getEditListener());
+		talentAdapter.setProbeListener(getProbeListener());
+		talentAdapter.setEditListener(getEditListener());
 		talentList.setAdapter(talentAdapter);
 
 		for (int i = 0; i < talentAdapter.getGroupCount(); i++) {
@@ -310,7 +311,8 @@ public class TalentFragment extends BaseListFragment implements HeroChangedListe
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.fragment.BaseFragment#onFilterChanged(com.dsatab.view. FilterSettings.FilterType, com.dsatab.view.FilterSettings)
+	 * @see com.dsatab.fragment.BaseFragment#onFilterChanged(com.dsatab.view. FilterSettings.FilterType,
+	 * com.dsatab.view.FilterSettings)
 	 */
 	@Override
 	public void onFilterChanged(FilterType type, FilterSettings settings) {

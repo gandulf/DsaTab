@@ -26,9 +26,22 @@ public class Hint {
 	public static final String VIEW_ID_PREFIX = "@id/";
 
 	public String id, viewId, description, title;
+	public float x, y;
 
 	private static Map<String, List<Hint>> hints;
 	private static Random rnd = new Random();
+
+	public static boolean showHint(String fragmentName, String hintId, Activity activity) {
+		if (DsaTabApplication.getPreferences().getBoolean(DsaTabPreferenceActivity.KEY_TIP_TODAY, true)) {
+			Hint hint = getHint(fragmentName, hintId);
+			if (hint != null)
+				return hint.show(activity);
+			else
+				return false;
+		} else
+			return false;
+
+	}
 
 	public static boolean showRandomHint(String fragmentName, Activity activity) {
 
@@ -62,6 +75,24 @@ public class Hint {
 		return null;
 	}
 
+	public static Hint getHint(String fragmentName, String hintId) {
+		if (hints == null)
+			loadHints();
+
+		if (hints.containsKey(fragmentName)) {
+			SharedPreferences pref = DsaTabApplication.getPreferences();
+			List<Hint> hintList = new ArrayList<Hint>(hints.get(fragmentName));
+			for (Hint hint : hintList) {
+				if (hint.id.equals(hintId)) {
+					if (!pref.getBoolean(Hint.PREF_PREFIX_HINT_STORAGE + hint.id, false)) {
+						return hint;
+					}
+				}
+			}
+		}
+		return null;
+	}
+
 	protected static void loadHints() {
 		hints = new HashMap<String, List<Hint>>();
 		XmlResourceParser xpp = DsaTabApplication.getInstance().getResources().getXml(R.xml.showcase_hints);
@@ -84,9 +115,13 @@ public class Hint {
 					Hint hint = new Hint();
 					hint.id = id;
 					hint.viewId = xpp.getAttributeValue(null, "viewId");
-					if (hint.viewId.startsWith(Hint.VIEW_ID_PREFIX)) {
+					if (hint.viewId != null && hint.viewId.startsWith(Hint.VIEW_ID_PREFIX)) {
 						hint.viewId = hint.viewId.substring(Hint.VIEW_ID_PREFIX.length());
 					}
+
+					hint.x = xpp.getAttributeFloatValue(null, "x", -1.0f);
+					hint.y = xpp.getAttributeFloatValue(null, "y", -1.0f);
+
 					hint.title = xpp.getAttributeValue(null, "title");
 					hint.description = xpp.getAttributeValue(null, "description");
 					hintList.add(hint);
@@ -109,11 +144,23 @@ public class Hint {
 	 * 
 	 */
 	public boolean show(Activity activity) {
-		int viewIdInt = activity.getResources().getIdentifier(this.viewId, "id",
-				DsaTabApplication.getInstance().getPackageName());
-		if (viewIdInt != 0) {
-			ShowcaseView.insertShowcaseView(viewIdInt, activity, title, description, null);
+		boolean shown = false;
+		if (this.viewId != null) {
+			int viewIdInt = activity.getResources().getIdentifier(this.viewId, "id",
+					DsaTabApplication.getInstance().getPackageName());
+			if (viewIdInt != 0) {
+				ShowcaseView.insertShowcaseView(viewIdInt, activity, title, description, null);
+				shown = true;
+			}
+		} else if (this.x >= 0 && this.y >= 0) {
+			float x = Util.getWidth(activity) * (this.x / 100.0f);
+			float y = Util.getHeight(activity) * (this.y / 100.0f);
 
+			ShowcaseView.insertShowcaseView(x, y, activity, title, description, null);
+			shown = true;
+		}
+
+		if (shown) {
 			Editor edit = DsaTabApplication.getPreferences().edit();
 			edit.putBoolean(Hint.PREF_PREFIX_HINT_STORAGE + id, true);
 			edit.commit();

@@ -1,11 +1,18 @@
 <hints>
 
+    
     <fragment name="CharacterFragment">
         <hint
             id="PROBE_DICE_MU"
             description="Um eine Probe zu würfeln, klicke einfach auf diese mit Kreisen markierten Werte.\n\n Zum Editieren, klicke lange auf den Wert (manche Werte sind nicht editierbar)."
             title="Probe würfeln"
-            viewId="@id/attr_mu"/>        
+            viewId="@id/attr_mu"/>
+        <hint
+            id="ANIMAL_FRAGMENT"
+            description="Es gibt nun einen neuen Tab mit dem die Werte seiner Begleittiere angezeigt werden können."
+            title="Tiere/Begleiter verwalten"
+            x="95.0"
+            y="5.0"/>        
     </fragment>
     
     <fragment name="FightFragment">

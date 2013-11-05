@@ -3,1396 +3,1261 @@ package com.dsatab.data.enums;
 import com.dsatab.exception.FeatureTypeUnknownException;
 
 public enum FeatureType {
-	Amtsadel("Amtsadel",1),
-	AdligeAbstammung("Adlige Abstammung",1),
-	AdligesErbe("Adliges Erbe",1),
-	AffinitätZu("Affinität zu",1),
-	AkademischeAusbildungGelehrter("Akademische Ausbildung (Gelehrter)",1),
-	AkademischeAusbildungKrieger("Akademische Ausbildung (Krieger)",1),
-	AkademischeAusbildungMagier("Akademische Ausbildung (Magier)",1),
-	Altersresistenz("Altersresistenz",1),
-	AstraleRegeneration("Astrale Regeneration",1),
-	Astralmacht("Astralmacht",1),
-	Ausdauernd("Ausdauernd",1),
-	AusdauernderZauberer("Ausdauernder Zauberer",1),
-	Ausrüstungsvorteil("Ausrüstungsvorteil",1),
-	Balance("Balance",1),
-	BegabungFürMerkmal("Begabung für [Merkmal]",1),
-	BegabungFürRitual("Begabung für [Ritual]",1),
-	BegabungFürTalent("Begabung für [Talent]",1),
-	BegabungFürTalentgruppe("Begabung für [Talentgruppe]",1),
-	BegabungFürZauber("Begabung für [Zauber]",1),
-	Beidhändig("Beidhändig",1),
-	BeseelteKnochenkeule("Beseelte Knochenkeule",1),
-	BesondererBesitz("Besonderer Besitz",1),
-	BreitgefächerteBildung("Breitgefächerte Bildung",1),
-	Dämmerungssicht("Dämmerungssicht",1),
-	EidetischesGedächtnis("Eidetisches Gedächtnis",1),
-	Eigeboren("Eigeboren",1),
-	EisenaffineAura("Eisenaffine Aura",1),
-	Eisern("Eisern",1),
-	Empathie("Empathie",1),
-	Entfernungssinn("Entfernungssinn",1),
-	ErerbteKnochenkeule("Ererbte Knochenkeule",1),
-	Feenfreund("Feenfreund",1),
-	FesteMatrix("Feste Matrix",1),
-	FrüherVertrauter("Früher Vertrauter",1),
-	Flink("Flink",1),
-	Gebildet("Gebildet",1),
-	Gefahreninstinkt("Gefahreninstinkt",1),
-	Geräuschhexerei("Geräuschhexerei",1),
-	GeweihtAngrosch("Geweiht [Angrosch]",1),
-	GeweihtGravesh("Geweiht [Gravesh]",1),
-	GeweihtnichtalveranischeGottheit("Geweiht [nicht-alveranische Gottheit]",1),
-	GeweihtHRanga("Geweiht [H'Ranga]",1),
-	GeweihtzwölfgöttlicheKirche("Geweiht [zwölfgöttliche Kirche]",1),
-	GöttergeschenkFuchs("Göttergeschenk: Fuchs",1),
-	Glück("Glück",1),
-	GlückImSpiel("Glück im Spiel",1),
-	Gutaussehend("Gutaussehend",1),
-	GuterRuf("Guter Ruf",1),
-	GutesGedächtnis("Gutes Gedächtnis",1),
-	Halbzauberer("Halbzauberer",1),
-	HerausragendeBalance("Herausragende Balance",1),
-	HerausragendeEigenschaft("Herausragende Eigenschaft",1),
-	HerausragendeEigenschaftCharisma("Herausragende Eigenschaft: Charisma",1),
-	HerausragendeEigenschaftFingerfertigkeit("Herausragende Eigenschaft: Fingerfertigkeit",1),
-	HerausragendeEigenschaftGewandtheit("Herausragende Eigenschaft: Gewandtheit",1),
-	HerausragendeEigenschaftIntuition("Herausragende Eigenschaft: Intuition",1),
-	HerausragendeEigenschaftKlugheit("Herausragende Eigenschaft: Klugheit",1),
-	HerausragendeEigenschaftKörperkraft("Herausragende Eigenschaft: Körperkraft",1),
-	HerausragendeEigenschaftKonstitution("Herausragende Eigenschaft: Konstitution",1),
-	HerausragendeEigenschaftMut("Herausragende Eigenschaft: Mut",1),
-	HerausragenderSechsterSinn("Herausragender Sechster Sinn",1),
-	HerausragenderSinn("Herausragender Sinn",1),
-	HerausragendesAussehen("Herausragendes Aussehen",1),
-	Hitzeresistenz("Hitzeresistenz",1),
-	HoheLebenskraft("Hohe Lebenskraft",1),
-	HoheMagieresistenz("Hohe Magieresistenz",1),
-	ImmunitätGegenGift("Immunität gegen Gift",1),
-	ImmunitätGegenKrankheiten("Immunität gegen Krankheiten",1),
-	InnererKompass("Innerer Kompass",1),
-	Kälteresistenz("Kälteresistenz",1),
-	Kampfrausch("Kampfrausch",1),
-	Koboldfreund("Koboldfreund",1),
-	Kräfteschub("Kräfteschub",1),
-	Talentschub("Talentschub",1),
-	Linkshänder("Linkshänder",1),
-	MachtvollerVertrauter("Machtvoller Vertrauter",1),
-	Magiedilletant("Magiedilletant",1),
-	Magiegespür("Magiegespür",1),
-	Meisterhandwerk("Meisterhandwerk",1),
-	Nachtsicht("Nachtsicht",1),
-	NatürlicherRüstungsschutz("Natürlicher Rüstungsschutz",1),
-	NatürlicheWaffen("Natürliche Waffen",1),
-	NiedrigeSchlechteEigenschaft("Niedrige Schlechte Eigenschaft",1),
-	Prophezeien("Prophezeien",1),
-	ResistenzGegenGift("Resistenz gegen Gift",1),
-	ResistenzGegenKrankheiten("Resistenz gegen Krankheiten",1),
-	Richtungssinn("Richtungssinn",1),
-	Schlangenmensch("Schlangenmensch",1),
-	SchnelleHeilung("Schnelle Heilung",1),
-	Schutzgeist("Schutzgeist",1),
-	SchwerZuVerzaubern("Schwer zu verzaubern",1),
-	SozialeAnpassungsfähigkeit("Soziale Anpassungsfähigkeit",1),
-	Sprachgefühl("Sprachgefühl",1),
-	Tierfreund("Tierfreund",1),
-	Tierempathiealle("Tierempathie (alle)",1),
-	Tierempathiespeziell("Tierempathie (speziell)",1),
-	Titularadel("Titularadel",1),
-	ÜbernatürlicheBegabung("Übernatürliche Begabung",1),
-	UnbeschwertesZaubern("Unbeschwertes Zaubern",1),
-	Verbindungen("Verbindungen",1),
-	VerhüllteAura("Verhüllte Aura",1),
-	Veteran("Veteran",1),
-	Viertelzauberer("Viertelzauberer",1),
-	UnbewussterViertelzauberer("Unbewusster Viertelzauberer",1),
-	Vollzauberer("Vollzauberer",1),
-	VomSchicksalBegünstigt("Vom Schicksal begünstigt",1),
-	WesenDerNacht("Wesen der Nacht",1),
-	Wolfskind("Wolfskind",1),
-	Wohlklang("Wohlklang",1),
-	ZäherHund("Zäher Hund",1),
-	Zauberhaar("Zauberhaar",1),
-	Zeitgefühl("Zeitgefühl",1),
-	ZusätzlicheGliedmaßen("Zusätzliche Gliedmaßen",1),
-	ZweistimmigerGesang("Zweistimmiger Gesang",1),
-	Zwergennase("Zwergennase",1),
-	Aberglaube("Aberglaube",2),
-	Agrimothwahn("Agrimothwahn",2),
-	Albino("Albino",2),
-	AngstVorInsekten("Angst vor Insekten",2),
-	AngstVorMenschenmassen("Angst vor Menschenmassen",2),
-	AngstVorSpinnen("Angst vor Spinnen",2),
-	AngstVorReptilien("Angst vor Reptilien",2),
-	AngstVorPelztieren("Angst vor Pelztieren",2),
-	AngstVorWasser("Angst vor Wasser",2),
-	AngstVorFeuer("Angst vor Feuer",2),
-	AngstVorNagetieren("Angst vor Nagetieren",2),
-	AnimalischeMagie("Animalische Magie",2),
-	Arkanophobie("Arkanophobie",2),
-	Arroganz("Arroganz",2),
-	Artefaktgebunden("Artefaktgebunden",2),
-	AstralerBlock("Astraler Block",2),
-	Autoritätsgläubig("Autoritätsgläubig",2),
-	Behäbig("Behäbig",2),
-	Blutdurst("Blutdurst",2),
-	Grausamkeit("Grausamkeit",2),
-	Blutrausch("Blutrausch",2),
-	Brünstigkeit("Brünstigkeit",2),
-	Charyptophilie("Charyptophilie",2),
-	Comes("Comes",2),
-	Dunkelangst("Dunkelangst",2),
-	Einarmig("Einarmig",2),
-	Einäugig("Einäugig",2),
-	Einbeinig("Einbeinig",2),
-	Einbildungen("Einbildungen",2),
-	EingeschränkteElementarnähe("Eingeschränkte Elementarnähe",2),
-	EingeschränkterSinn("Eingeschränkter Sinn",2),
-	Einhändig("Einhändig",2),
-	Eitelkeit("Eitelkeit",2),
-	ElfischeWeltsicht("Elfische Weltsicht",2),
-	ErstgeborenerComes("Erstgeborener Comes",2),
-	Farbenblind("Farbenblind",2),
-	Feind("Feind",2),
-	FesteGewohnheit("Feste Gewohnheit",2),
-	FestgefügtesDenken("Festgefügtes Denken",2),
-	Fettleibig("Fettleibig",2),
-	FluchDerFinsternis("Fluch der Finsternis",2),
-	Geiz("Geiz",2),
-	Gesucht("Gesucht",2),
-	Gerechtigkeitswahn("Gerechtigkeitswahn",2),
-	Glasknochen("Glasknochen",2),
-	Goldgier("Goldgier",2),
-	Größenwahn("Größenwahn",2),
-	Herrschsucht("Herrschsucht",2),
-	Heimwehkrank("Heimwehkrank",2),
-	Hitzeempfindlichkeit("Hitzeempfindlichkeit",2),
-	HoherAmtsadel("Hoher Amtsadel",2),
-	Höhenangst("Höhenangst",2),
-	Impulsiv("Impulsiv",2),
-	Jagdfieber("Jagdfieber",2),
-	Jähzorn("Jähzorn",2),
-	Streitsucht("Streitsucht",2),
-	Kälteempfindlichkeit("Kälteempfindlichkeit",2),
-	Kältestarre("Kältestarre",2),
-	KeinVertrauter("Kein Vertrauter",2),
-	Kleinwüchsig("Kleinwüchsig",2),
-	KörpergebundeneKraft("Körpergebundene Kraft",2),
-	Konstruktionswahn("Konstruktionswahn",2),
-	KrankhafteNekromantie("Krankhafte Nekromantie",2),
-	KrankhafteReinlichkeit("Krankhafte Reinlichkeit",2),
-	KrankhaftesEhrgefühl("Krankhaftes Ehrgefühl",2),
-	Krankheitsanfällig("Krankheitsanfällig",2),
-	Kristallgebunden("Kristallgebunden",2),
-	Kurzatmig("Kurzatmig",2),
-	Lahm("Lahm",2),
-	Landangst("Landangst",2),
-	LästigeMindergeister("Lästige Mindergeister",2),
-	Lichtempfindlich("Lichtempfindlich",2),
-	Lichtscheu("Lichtscheu",2),
-	MadasFluch("Madas Fluch",2),
-	Medium("Medium",2),
-	Meeresangst("Meeresangst",2),
-	MiserableEigenschaft("Miserable Eigenschaft",2),
-	MiserableEigenschaftCharisma("Miserable Eigenschaft: Charisma",2),
-	MiserableEigenschaftFingerfertigkeit("Miserable Eigenschaft: Fingerfertigkeit",2),
-	MiserableEigenschaftGewandtheit("Miserable Eigenschaft: Gewandtheit",2),
-	MiserableEigenschaftIntuition("Miserable Eigenschaft: Intuition",2),
-	MiserableEigenschaftKlugheit("Miserable Eigenschaft: Klugheit",2),
-	MiserableEigenschaftKörperkraft("Miserable Eigenschaft: Körperkraft",2),
-	MiserableEigenschaftKonstitution("Miserable Eigenschaft: Konstitution",2),
-	MiserableEigenschaftMut("Miserable Eigenschaft: Mut",2),
-	Mondsüchtig("Mondsüchtig",2),
-	MoralkodexAngroschKult("Moralkodex [Angrosch-Kult]",2),
-	MoralkodexBadalikaner("Moralkodex [Badalikaner]",2),
-	MoralkodexBoronKirche("Moralkodex [Boron-Kirche]",2),
-	MoralkodexBundDesWahrenGlaubens("Moralkodex [Bund des wahren Glaubens]",2),
-	MoralkodexDreischwesternorden("Moralkodex [Dreischwesternorden]",2),
-	MoralkodexEfferdKirche("Moralkodex [Efferd-Kirche]",2),
-	MoralkodexFirunKirche("Moralkodex [Firun-Kirche]",2),
-	MoralkodexHesindeKirche("Moralkodex [Hesinde-Kirche]",2),
-	MoralkodexHSzintKult("Moralkodex [H'Szint-Kult]",2),
-	MoralkodexIfirnKirche("Moralkodex [Ifirn-Kirche]",2),
-	MoralkodexIngerimmKirche("Moralkodex [Ingerimm-Kirche]",2),
-	MoralkodexKorKirche("Moralkodex [Kor-Kirche]",2),
-	MoralkodexNandusKirche("Moralkodex [Nandus-Kirche]",2),
-	MoralkodexPeraineKirche("Moralkodex [Peraine-Kirche]",2),
-	MoralkodexPhexKirche("Moralkodex [Phex-Kirche]",2),
-	MoralkodexPraiosKirche("Moralkodex [Praios-Kirche]",2),
-	MoralkodexRahjaKirche("Moralkodex [Rahja-Kirche]",2),
-	MoralkodexRondraKirche("Moralkodex [Rondra-Kirche]",2),
-	MoralkodexSwafnirKult("Moralkodex [Swafnir-Kult]",2),
-	MoralkodexTraviaKirche("Moralkodex [Travia-Kirche]",2),
-	MoralkodexHeshinja("Moralkodex [Heshinja]",2),
-	MoralkodexTsaKirche("Moralkodex [Tsa-Kirche]",2),
-	MoralkodexZsahhKult("Moralkodex [Zsahh-Kult]",2),
-	MoralkodexDDZ("Moralkodex [DDZ]",2),
-	Morbidität("Morbidität",2),
-	Nachtblind("Nachtblind",2),
-	Nagrachwahn("Nagrachwahn",2),
-	Nahrungsrestriktion("Nahrungsrestriktion",2),
-	Neid("Neid",2),
-	Neugier("Neugier",2),
-	NiedrigeAstralkraft("Niedrige Astralkraft",2),
-	NiedrigeLebenskraft("Niedrige Lebenskraft",2),
-	NiedrigeMagieresistenz("Niedrige Magieresistenz",2),
-	Pechmagnet("Pechmagnet",2),
-	Platzangst("Platzangst",2),
-	Prinzipientreue("Prinzipientreue",2),
-	Rachsucht("Rachsucht",2),
-	Randgruppe("Randgruppe",2),
-	Raubtiergeruch("Raubtiergeruch",2),
-	Raumangst("Raumangst",2),
-	Rückschlag("Rückschlag",2),
-	Ruhelosigkeit("Ruhelosigkeit",2),
-	Sacerdos("Sacerdos",2),
-	Schlaflosigkeit("Schlaflosigkeit",2),
-	Schlafstörungen("Schlafstörungen",2),
-	Schlafwandler("Schlafwandler",2),
-	SensiblerGeruchssinn("Sensibler Geruchssinn",2),
-	SchlechteRegeneration("Schlechte Regeneration",2),
-	SchlechterRuf("Schlechter Ruf",2),
-	SchnellerAlternd("Schneller alternd",2),
-	Schöpferwahn("Schöpferwahn",2),
-	Schulden("Schulden",2),
-	SchwacheAusstrahlung("Schwache Ausstrahlung",2),
-	SchwacherAstralkörper("Schwacher Astralkörper",2),
-	SchwacherWille("Schwacher Wille",2),
-	Schwanzlos("Schwanzlos",2),
-	SefferManich("Seffer Manich",2),
-	Selbstgespräche("Selbstgespräche",2),
-	Sippenlosigkeit("Sippenlosigkeit",2),
-	Sonnensucht("Sonnensucht",2),
-	Speisegebote("Speisegebote",2),
-	Sprachfehler("Sprachfehler",2),
-	Spielsucht("Spielsucht",2),
-	Spruchhemmung("Spruchhemmung",2),
-	Stigma("Stigma",2),
-	Stubenhocker("Stubenhocker",2),
-	Sucht("Sucht",2),
-	Thesisgebunden("Thesisgebunden",2),
-	Tollpatsch("Tollpatsch",2),
-	Totenangst("Totenangst",2),
-	Trägheit("Trägheit",2),
-	Treulosigkeit("Treulosigkeit",2),
-	ÜblerGeruch("Übler Geruch",2),
-	UnangenehmeStimme("Unangenehme Stimme",2),
-	Unansehnlich("Unansehnlich",2),
-	UnangenehmeÄußerlichkeit("Unangenehme Äußerlichkeit",2),
-	UnfähigkeitFürMerkmal("Unfähigkeit für [Merkmal]",2),
-	UnfähigkeitFürTalent("Unfähigkeit für [Talent]",2),
-	UnfähigkeitFürTalentgruppe("Unfähigkeit für [Talentgruppe]",2),
-	Unfrei("Unfrei",2),
-	Ungebildet("Ungebildet",2),
-	Unstet("Unstet",2),
-	UnverträglichkeitMitVerarbeitetemMetall("Unverträglichkeit mit verarbeitetem Metall",2),
-	Vergesslichkeit("Vergesslichkeit",2),
-	Verpflichtungen("Verpflichtungen",2),
-	Verschwendungssucht("Verschwendungssucht",2),
-	Verwöhnt("Verwöhnt",2),
-	Vorurteile("Vorurteile",2),
-	Vorurteilestark("Vorurteile (stark)",2),
-	VorurteileGegen("Vorurteile gegen",2),
-	VorurteileGegenstark("Vorurteile gegen (stark)",2),
-	WahrerName("Wahrer Name",2),
-	WahrerNameDschinn("Wahrer Name: Dschinn",2),
-	Wahnvorstellungen("Wahnvorstellungen",2),
-	Weltfremd("Weltfremd",2),
-	WiderwärtigesAussehen("Widerwärtiges Aussehen",2),
-	WildeMagie("Wilde Magie",2),
-	Zielschwierigkeiten("Zielschwierigkeiten",2),
-	ZögerlicherZauberer("Zögerlicher Zauberer",2),
-	Zwergenwuchs("Zwergenwuchs",2),
-	Ritualspezialisierung("Ritualspezialisierung",3),
-	Akoluth("Akoluth",3),
-	Apport("Apport",3),
-	AstraleMeditation("Astrale Meditation",3),
-	Aufmerksamkeit("Aufmerksamkeit",3),
-	AuraDerHeiligkeit("Aura der Heiligkeit",3),
-	AuraVerhüllen("Aura verhüllen",3),
-	Aurapanzer("Aurapanzer",3),
-	Ausfall("Ausfall",3),
-	Auspendeln("Auspendeln",3),
-	AusweichenI("Ausweichen I",3),
-	AusweichenII("Ausweichen II",3),
-	AusweichenIII("Ausweichen III",3),
-	Bannschwert("Bannschwert",3),
-	Befreiungsschlag("Befreiungsschlag",3),
-	BeidhändigerKampfI("Beidhändiger Kampf I",3),
-	BeidhändigerKampfII("Beidhändiger Kampf II",3),
-	Beinarbeit("Beinarbeit",3),
-	BerittenerSchütze("Berittener Schütze",3),
-	Betäubungsschlag("Betäubungsschlag",3),
-	Binden("Binden",3),
-	Biss("Biss",3),
-	Blindkampf("Blindkampf",3),
-	Block("Block",3),
-	Blutmagie("Blutmagie",3),
-	DämonenbindungI("Dämonenbindung I",3),
-	DämonenbindungII("Dämonenbindung II",3),
-	DefensiverKampfstil("Defensiver Kampfstil",3),
-	Doppelangriff("Doppelangriff",3),
-	Doppelschlag("Doppelschlag",3),
-	Druidenrache("Druidenrache",3),
-	DruidischesDolchritualWeihe("Druidisches Dolchritual: Weihe",3),
-	DruidischesDolchritualGespür("Druidisches Dolchritual: Gespür",3),
-	DruidischesDolchritualLicht("Druidisches Dolchritual: Licht",3),
-	DruidischesDolchritualBann("Druidisches Dolchritual: Bann",3),
-	DruidischesDolchritualLeib("Druidisches Dolchritual: Leib",3),
-	DruidischesDolchritualSchutz("Druidisches Dolchritual: Schutz",3),
-	DruidischesDolchritualWeg("Druidisches Dolchritual: Weg",3),
-	DruidischesDolchritualErnte("Druidisches Dolchritual: Ernte",3),
-	DruidischesDolchritualLebenskraft("Druidisches Dolchritual: Lebenskraft",3),
-	DruidischesDolchritualOpferdolch("Druidisches Dolchritual: Opferdolch",3),
-	DruidischesDolchritualSchneide("Druidisches Dolchritual: Schneide",3),
-	DruidischesDolchritualWeisung("Druidisches Dolchritual: Weisung",3),
-	DruidischesHerrschaftsritualWachsDerHerrschaft("Druidisches Herrschaftsritual: Wachs der Herrschaft",3),
-	DruidischesHerrschaftsritualMiniaturDerHerrschaft("Druidisches Herrschaftsritual: Miniatur der Herrschaft",3),
-	DruidischesHerrschaftsritualKristallDerHerrschaft("Druidisches Herrschaftsritual: Kristall der Herrschaft",3),
-	DruidischesHerrschaftsritualAmulettDerHerrschaft("Druidisches Herrschaftsritual: Amulett der Herrschaft",3),
-	DruidischesHerrschaftsritualWurzelDesBlutes("Druidisches Herrschaftsritual: Wurzel des Blutes",3),
-	Dschungelkundig("Dschungelkundig",3),
-	Eisenarm("Eisenarm",3),
-	Eisenhagel("Eisenhagel",3),
-	EisernerWilleI("Eiserner Wille I",3),
-	EisernerWilleII("Eiserner Wille II",3),
-	Eiskundig("Eiskundig",3),
-	ElementarharmonisierteAura("Elementarharmonisierte Aura",3),
-	ElfenliedSorgenlied("Elfenlied: Sorgenlied",3),
-	ElfenliedZaubermelodie("Elfenlied: Zaubermelodie",3),
-	ElfenliedFriedenslied("Elfenlied: Friedenslied",3),
-	ElfenliedWindgeflüster("Elfenlied: Windgeflüster",3),
-	ElfenliedLiedDerLieder("Elfenlied: Lied der Lieder",3),
-	ElfenliedFreundschaftslied("Elfenlied: Freundschaftslied",3),
-	ElfenliedErinnerungsmelodie("Elfenlied: Erinnerungsmelodie",3),
-	ElfenliedMelodieDerKunstfertigkeit("Elfenlied: Melodie der Kunstfertigkeit",3),
-	ElfenliedLiedDesTrostes("Elfenlied: Lied des Trostes",3),
-	ElfenliedLiedDerReinheit("Elfenlied: Lied der Reinheit",3),
-	Entwaffnen("Entwaffnen",3),
-	Exorzist("Exorzist",3),
-	Fernzauberei("Fernzauberei",3),
-	Festnageln("Festnageln",3),
-	Finte("Finte",3),
-	Formation("Formation",3),
-	FormDerFormlosigkeit("Form der Formlosigkeit",3),
-	Fußfeger("Fußfeger",3),
-	GeberDerGestalt("Geber der Gestalt",3),
-	Gebirgskundig("Gebirgskundig",3),
-	Gedankenschutz("Gedankenschutz",3),
-	GefäßDerSterne("Gefäß der Sterne",3),
-	Gegenhalten("Gegenhalten",3),
-	Gerade("Gerade",3),
-	GezielterStich("Gezielter Stich",3),
-	Griff("Griff",3),
-	GroßeMeditation("Große Meditation",3),
-	Golembauer("Golembauer",3),
-	Halten("Halten",3),
-	Hammerschlag("Hammerschlag",3),
-	Handkante("Handkante",3),
-	HexenfluchÄngsteMehren("Hexenfluch: Ängste mehren",3),
-	HexenfluchBeißAufGranit("Hexenfluch: Beiß auf Granit",3),
-	HexenfluchBeute("Hexenfluch: Beute",3),
-	HexenfluchHagelschlag("Hexenfluch: Hagelschlag",3),
-	HexenfluchHexenschuss("Hexenfluch: Hexenschuss",3),
-	HexenfluchKornfäule("Hexenfluch: Kornfäule",3),
-	HexenfluchKrötenkuss("Hexenfluch: Krötenkuss",3),
-	HexenfluchMitBlindheitSchlagen("Hexenfluch: Mit Blindheit schlagen",3),
-	HexenfluchPechAnDenHals("Hexenfluch: Pech an den Hals",3),
-	HexenfluchPestilenz("Hexenfluch: Pestilenz",3),
-	HexenfluchSchlafRauben("Hexenfluch: Schlaf rauben",3),
-	HexenfluchTodesfluch("Hexenfluch: Todesfluch",3),
-	HexenfluchUnfruchtbarkeit("Hexenfluch: Unfruchtbarkeit",3),
-	HexenfluchViehverstümmelung("Hexenfluch: Viehverstümmelung",3),
-	HexenfluchWarzenSprießen("Hexenfluch: Warzen sprießen",3),
-	HexenfluchZungeLähmen("Hexenfluch: Zunge lähmen",3),
-	Höhlenkundig("Höhlenkundig",3),
-	HöhereDämonenbindung("Höhere Dämonenbindung",3),
-	HoherTritt("Hoher Tritt",3),
-	HexenritualHexensalbe("Hexenritual: Hexensalbe",3),
-	Hypervehemenz("Hypervehemenz",3),
-	ImprovisierteWaffen("Improvisierte Waffen",3),
-	InvocatioIntegra("Invocatio Integra",3),
-	KampfImWasser("Kampf im Wasser",3),
-	Kampfgespür("Kampfgespür",3),
-	Kampfreflexe("Kampfreflexe",3),
-	Karmalqueste("Karmalqueste",3),
-	KeulenritualWeiheDerKeule("Keulenritual: Weihe der Keule",3),
-	KeulenritualHärteDerKeule("Keulenritual: Härte der Keule",3),
-	KeulenritualOpferkeule("Keulenritual: Opferkeule",3),
-	KeulenritualGespürDerKeule("Keulenritual: Gespür der Keule",3),
-	KeulenritualKraftDerKeule("Keulenritual: Kraft der Keule",3),
-	KeulenritualHilfeDerKeule("Keulenritual: Hilfe der Keule",3),
-	KeulenritualNäheZurNatur("Keulenritual: Nähe zur Natur",3),
-	KeulenritualZauberDerKeule("Keulenritual: Zauber der Keule",3),
-	KeulenritualBannDerKeule("Keulenritual: Bann der Keule",3),
-	KeulenritualGeistDerKeule("Keulenritual: Geist der Keule",3),
-	KeulenritualApportDerKeule("Keulenritual: Apport der Keule",3),
-	Klammer("Klammer",3),
-	Klingensturm("Klingensturm",3),
-	Klingenwand("Klingenwand",3),
-	Knaufschlag("Knaufschlag",3),
-	Knie("Knie",3),
-	KontaktZumGroßenGeist("Kontakt zum Großen Geist",3),
-	Konzentrationsstärke("Konzentrationsstärke",3),
-	Kopfstoß("Kopfstoß",3),
-	Kraftkontrolle("Kraftkontrolle",3),
-	KraftlinienmagieI("Kraftlinienmagie I",3),
-	KraftlinienmagieII("Kraftlinienmagie II",3),
-	Kraftspeicher("Kraftspeicher",3),
-	Kreuzblock("Kreuzblock",3),
-	Kriegsreiterei("Kriegsreiterei",3),
-	KristallkraftBündeln("Kristallkraft bündeln",3),
-	KristallomantischesRitualKristallbindung("Kristallomantisches Ritual: Kristallbindung",3),
-	KristallomantischesRitualKristallformung("Kristallomantisches Ritual: Kristallformung",3),
-	KristallomantischesRitualThesiskristall("Kristallomantisches Ritual: Thesiskristall",3),
-	KristallomantischesRitualMadakristall("Kristallomantisches Ritual: Madakristall",3),
-	KristallomantischesRitualMatrixkristall("Kristallomantisches Ritual: Matrixkristall",3),
-	KugelzauberBindung("Kugelzauber: Bindung",3),
-	KugelzauberBrennglasUndPrisma("Kugelzauber: Brennglas und Prisma",3),
-	KugelzauberSchutzGegenUntote("Kugelzauber: Schutz gegen Untote",3),
-	KugelzauberWarnendesLeuchten("Kugelzauber: Warnendes Leuchten",3),
-	KugelzauberKugelDesHellsehers("Kugelzauber: Kugel des Hellsehers",3),
-	KugelzauberKugelDesIllusionisten("Kugelzauber: Kugel des Illusionisten",3),
-	KugelzauberOrbitarium("Kugelzauber: Orbitarium",3),
-	KugelzauberBilderspiel("Kugelzauber: Bilderspiel",3),
-	KugelzauberFernbild("Kugelzauber: Fernbild",3),
-	KugelzauberBildergalerie("Kugelzauber: Bildergalerie",3),
-	KugelzauberHSzintsAuge("Kugelzauber: H'Szints Auge",3),
-	KugelzauberFarbenDesGeistes("Kugelzauber: Farben des Geistes",3),
-	KugelzauberWachendesAuge("Kugelzauber: Wachendes Auge",3),
-	Kulturkunde("Kulturkunde",3),
-	Linkhand("Linkhand",3),
-	LiturgiekenntnisAngrosch("Liturgiekenntnis (Angrosch)",3),
-	LiturgiekenntnisAves("Liturgiekenntnis (Aves)",3),
-	LiturgiekenntnisBoron("Liturgiekenntnis (Boron)",3),
-	LiturgiekenntnisEfferd("Liturgiekenntnis (Efferd)",3),
-	LiturgiekenntnisFirun("Liturgiekenntnis (Firun)",3),
-	LiturgiekenntnisGravesh("Liturgiekenntnis (Gravesh)",3),
-	LiturgiekenntnisHesinde("Liturgiekenntnis (Hesinde)",3),
-	LiturgiekenntnisHimmelswölfe("Liturgiekenntnis (Himmelswölfe)",3),
-	LiturgiekenntnisHRanga("Liturgiekenntnis (H'Ranga)",3),
-	LiturgiekenntnisHSzint("Liturgiekenntnis (H'Szint)",3),
-	LiturgiekenntnisIfirn("Liturgiekenntnis (Ifirn)",3),
-	LiturgiekenntnisIngerimm("Liturgiekenntnis (Ingerimm)",3),
-	LiturgiekenntnisKamaluq("Liturgiekenntnis (Kamaluq)",3),
-	LiturgiekenntnisKor("Liturgiekenntnis (Kor)",3),
-	LiturgiekenntnisNandus("Liturgiekenntnis (Nandus)",3),
-	LiturgiekenntnisNamenloser("Liturgiekenntnis (Namenloser)",3),
-	LiturgiekenntnisPeraine("Liturgiekenntnis (Peraine)",3),
-	LiturgiekenntnisPhex("Liturgiekenntnis (Phex)",3),
-	LiturgiekenntnisPraios("Liturgiekenntnis (Praios)",3),
-	LiturgiekenntnisRahja("Liturgiekenntnis (Rahja)",3),
-	LiturgiekenntnisRondra("Liturgiekenntnis (Rondra)",3),
-	LiturgiekenntnisSwafnir("Liturgiekenntnis (Swafnir)",3),
-	LiturgiekenntnisTairach("Liturgiekenntnis (Tairach)",3),
-	LiturgiekenntnisTravia("Liturgiekenntnis (Travia)",3),
-	LiturgiekenntnisTsa("Liturgiekenntnis (Tsa)",3),
-	LiturgiekenntnisZsahh("Liturgiekenntnis (Zsahh)",3),
-	LiturgieAchmadayanAnkhrellaAlnurachShaitanim("Liturgie: Achmad'ayan ankhrella al'nurach Shaitanim",3),
-	LiturgieAllerWeltFreund("Liturgie: Aller Welt Freund",3),
-	LiturgieAllmachtDerLohe("Liturgie: Allmacht der Lohe",3),
-	LiturgieAlteSchuppen("Liturgie: Alte Schuppen",3),
-	LiturgieAmBusenDerNaturZufluchtFinden("Liturgie: Am Busen der Natur (Zuflucht finden)",3),
-	LiturgieAnathema("Liturgie: Anathema",3),
-	LiturgieAngroschsOpfergabe("Liturgie: Angroschs Opfergabe",3),
-	LiturgieAngroschsZornWaliburiasWehr("Liturgie: Angroschs Zorn (Waliburias Wehr)",3),
-	LiturgieAnrufugDerErdkraft("Liturgie: Anrufug der Erdkraft",3),
-	LiturgieAnrufungDerWinde("Liturgie: Anrufung der Winde",3),
-	LiturgieAnrufungDerWindeIII("Liturgie: Anrufung der Winde (III)",3),
-	LiturgieAnrufungNuiannas("Liturgie: Anrufung Nuiannas",3),
-	LiturgieArcanumInterdictum("Liturgie: Arcanum Interdictum",3),
-	LiturgieArgelionsBannendeHand("Liturgie: Argelions bannende Hand",3),
-	LiturgieArgelionsMantel("Liturgie: Argelions Mantel",3),
-	LiturgieArgelionsSpiegel("Liturgie: Argelions Spiegel",3),
-	LiturgieAscandearsHingabe("Liturgie: Ascandears Hingabe",3),
-	LiturgieAugeDerWartendenSeelenNemekathsGeisterblick("Liturgie: Auge der wartenden Seelen (Nemekaths Geisterblick)",3),
-	LiturgieAugeDesHändlers("Liturgie: Auge des Händlers",3),
-	LiturgieAugeDesMondes("Liturgie: Auge des Mondes",3),
-	LiturgieAuraDerForm("Liturgie: Aura der Form",3),
-	LiturgieAuraDesRegenbogens("Liturgie: Aura des Regenbogens",3),
-	LiturgieAzilasQuellgesang("Liturgie: Azilas Quellgesang",3),
-	LiturgieBannDerGeisterkräftePraiosMagiebann("Liturgie: Bann der Geisterkräfte (Praios' Magiebann)",3),
-	LiturgieBannfluchDesHeiligenKhalid("Liturgie: Bannfluch des Heiligen Khalid",3),
-	LiturgieBegehenDerHeiligenWasser("Liturgie: Begehen der Heiligen Wasser",3),
-	LiturgieBindungDerSchlange("Liturgie: Bindung der Schlange",3),
-	LiturgieBelemansHochzeit("Liturgie: Belemans Hochzeit",3),
-	LiturgieBishdarielsAngesichtKleineLiturgieDesHlNemekath("Liturgie: Bishdariels Angesicht (Kleine Liturgie des Hl. Nemekath)",3),
-	LiturgieBishdarielsAuge("Liturgie: Bishdariels Auge",3),
-	LiturgieBishdarielsAugeIII("Liturgie: Bishdariels Auge (III)",3),
-	LiturgieBishdarielsAugeIV("Liturgie: Bishdariels Auge (IV)",3),
-	LiturgieBishdarielsWarnung("Liturgie: Bishdariels Warnung",3),
-	LiturgieBlendstrahlAusAlveran("Liturgie: Blendstrahl aus Alveran",3),
-	LiturgieBlickAnDenKlarenHimmelSterneFunkelnImmerfort("Liturgie: Blick an den klaren Himmel (Sterne funkeln immerfort)",3),
-	LiturgieBlickAufDasGeisterwirkenSichtAufMadasWelt("Liturgie: Blick auf das Geisterwirken (Sicht auf Madas Welt)",3),
-	LiturgieBlickDerWeberin("Liturgie: Blick der Weberin",3),
-	LiturgieBlickDurchTairachsAugenBlickDerWeberin("Liturgie: Blick durch Tairachs Augen (Blick der Weberin)",3),
-	LiturgieBlickFürDasHandwerk("Liturgie: Blick für das Handwerk",3),
-	LiturgieBlickInDieErinnerungKleineLiturgieDesHeiligenNemekath("Liturgie: Blick in die Erinnerung (Kleine Liturgie des Heiligen Nemekath)",3),
-	LiturgieBlickInDieFlammen("Liturgie: Blick in die Flammen",3),
-	LiturgieBlutschwurGroßerEidsegen("Liturgie: Blutschwur (Großer Eidsegen)",3),
-	LiturgieBootssegen("Liturgie: Bootssegen",3),
-	LiturgieBoronsSüßeGnade("Liturgie: Borons süße Gnade",3),
-	LiturgieBoronsSüßeGnadeV("Liturgie: Borons süße Gnade (V)",3),
-	LiturgieBuchprüfung("Liturgie: Buchprüfung",3),
-	LiturgieCanyzethsWeisheit("Liturgie: Canyzeths Weisheit",3),
-	LiturgieCerebornsHandreichungHandwerkssegen("Liturgie: Cereborns Handreichung (Handwerkssegen)",3),
-	LiturgieDaradorsBannDerSchatten("Liturgie: Daradors Bann der Schatten",3),
-	LiturgieDaradorsPrüfenderBlickUnverstellterBlick("Liturgie: Daradors prüfender Blick (Unverstellter Blick)",3),
-	LiturgieDasSchwarzeFellDurchDasRoteBlut("Liturgie: Das Schwarze Fell durch das Rote Blut",3),
-	LiturgieDerGänsemutterWarmesNestZufluchtFinden("Liturgie: Der Gänsemutter warmes Nest (Zuflucht finden)",3),
-	LiturgieDesHerrenGoldenerMittagWeisungDesHimmels("Liturgie: Des Herren Goldener Mittag (Weisung des Himmels)",3),
-	LiturgieDorlensVerbrüderung("Liturgie: Dorlens Verbrüderung",3),
-	LiturgieDreifacherSaatsegen("Liturgie: Dreifacher Saatsegen",3),
-	LiturgieDythlindsWandelnImFeuerVertrauterDerFlamme("Liturgie: Dythlinds Wandeln im Feuer (Vertrauter der Flamme)",3),
-	LiturgieEfferdsegen("Liturgie: Efferdsegen",3),
-	LiturgieEherneKraftLodernderZorn("Liturgie: Eherne Kraft - lodernder Zorn",3),
-	LiturgieEhrenhafterZweikampf("Liturgie: Ehrenhafter Zweikampf",3),
-	LiturgieEidechsenhaut("Liturgie: Eidechsenhaut",3),
-	LiturgieEidsegen("Liturgie: Eidsegen",3),
-	LiturgieEinBildFürDieEwigkeit("Liturgie: Ein Bild für die Ewigkeit",3),
-	LiturgieEinFreundInZeitenDerNot("Liturgie: Ein Freund in Zeiten der Not",3),
-	LiturgieElementwandlung("Liturgie: Elementwandlung",3),
-	LiturgieEntzugDesWissensEntzugVonNandusGaben("Liturgie: Entzug des Wissens (Entzug von Nandus' Gaben)",3),
-	LiturgieEntzugVonNandusGaben("Liturgie: Entzug von Nandus' Gaben",3),
-	LiturgieErlösungDesTapamsBoronsSüßeGnade("Liturgie: Erlösung des Tapams (Borons süße Gnade)",3),
-	LiturgieErlösungDesTapamsBoronsSüßeGnadeV("Liturgie: Erlösung des Tapams (Borons süße Gnade (V))",3),
-	LiturgieErneuerungDesGeborstenen("Liturgie: Erneuerung des Geborstenen",3),
-	LiturgieEtiliasGnade("Liturgie: Etilias Gnade",3),
-	LiturgieEtiliasZeitDerMeditationRufZurRuhe("Liturgie: Etilias Zeit der Meditation (Ruf zur Ruhe)",3),
-	LiturgieEwigerWächter("Liturgie: Ewiger Wächter",3),
-	LiturgieEwigesWissen("Liturgie: Ewiges Wissen",3),
-	LiturgieExkommunikation("Liturgie: Exkommunikation",3),
-	LiturgieExkommunikationIV("Liturgie: Exkommunikation (IV)",3),
-	LiturgieExkommunikationV("Liturgie: Exkommunikation (V)",3),
-	LiturgieExorzismus("Liturgie: Exorzismus",3),
-	LiturgieExorzismusIV("Liturgie: Exorzismus (IV)",3),
-	LiturgieExorzismusV("Liturgie: Exorzismus (V)",3),
-	LiturgieExorzismusVI("Liturgie: Exorzismus (VI)",3),
-	LiturgieFeuersegen("Liturgie: Feuersegen",3),
-	LiturgieFeuertaufeInitiation("Liturgie: Feuertaufe (Initiation)",3),
-	LiturgieFirunsEinsicht("Liturgie: Firuns Einsicht",3),
-	LiturgieFlaggeDesRegenbogens("Liturgie: Flagge des Regenbogens",3),
-	LiturgieFreundlicheAufnahme("Liturgie: Freundliche Aufnahme",3),
-	LiturgieFriedenDerMelodie("Liturgie: Frieden der Melodie",3),
-	LiturgieFünfteLobpreisungDesFrühlings("Liturgie: Fünfte Lobpreisung des Frühlings",3),
-	LiturgieFürbittenDesHeiligenTherbun("Liturgie: Fürbitten des Heiligen Therbun",3),
-	LiturgieGarafansGleißendeSchwingen("Liturgie: Garafans Gleißende Schwingen",3),
-	LiturgieGebieterDerLava("Liturgie: Gebieter der Lava",3),
-	LiturgieGeburtssegen("Liturgie: Geburtssegen",3),
-	LiturgieGeistermantelArgelionsMantel("Liturgie: Geistermantel (Argelions Mantel)",3),
-	LiturgieGeläutertSeiErzUndGoldgestein("Liturgie: Geläutert sei Erz und Goldgestein",3),
-	LiturgieGemeinschaftDerTreuenGefährten("Liturgie: Gemeinschaft der treuen Gefährten",3),
-	LiturgieGesangDerDelphine("Liturgie: Gesang der Delphine",3),
-	LiturgieGesangDerWaleRufDerGefährten("Liturgie: Gesang der Wale (Ruf der Gefährten)",3),
-	LiturgieGesangDerWaleRufDerGefährtenIV("Liturgie: Gesang der Wale (Ruf der Gefährten) (IV)",3),
-	LiturgieGesegneterFang("Liturgie: Gesegneter Fang",3),
-	LiturgieGeteiltesLeid("Liturgie: Geteiltes Leid",3),
-	LiturgieGiftDerErkenntnis("Liturgie: Gift der Erkenntnis",3),
-	LiturgieGilbornsHeiligeAuraArgelionsMantel("Liturgie: Gilborns heilige Aura (Argelions Mantel)",3),
-	LiturgieGleichklangDesGeistes("Liturgie: Gleichklang des Geistes",3),
-	LiturgieGlückssegen("Liturgie: Glückssegen",3),
-	LiturgieGoldeneRüstung("Liturgie: Goldene Rüstung",3),
-	LiturgieGoldenerBlick("Liturgie: Goldener Blick",3),
-	LiturgieGorfangsFluch("Liturgie: Gorfangs Fluch",3),
-	LiturgieGorfangsFluchV("Liturgie: Gorfangs Fluch (V)",3),
-	LiturgieGorfangsFluchVI("Liturgie: Gorfangs Fluch (VI)",3),
-	LiturgieGöttlicheVerständigung("Liturgie: Göttliche Verständigung",3),
-	LiturgieGöttlicheVerständigungIII("Liturgie: Göttliche Verständigung (III)",3),
-	LiturgieGöttlicheVerständigungIV("Liturgie: Göttliche Verständigung (IV)",3),
-	LiturgieGöttlichesZeichen("Liturgie: Göttliches Zeichen",3),
-	LiturgieGöttlichesZeichenIII("Liturgie: Göttliches Zeichen (III)",3),
-	LiturgieGrabsegen("Liturgie: Grabsegen",3),
-	LiturgieGrauesSiegel("Liturgie: Graues Siegel",3),
-	LiturgieGrauesSiegelIV("Liturgie: Graues Siegel (IV)",3),
-	LiturgieGrispelzAckersegenDreifacherSaatsegen("Liturgie: Grispelz' Ackersegen (Dreifacher Saatsegen)",3),
-	LiturgieGrispelzFruchtbarkeitTsasWundersameFruchtbarkeit("Liturgie: Grispelz' Fruchtbarkeit (Tsas Wundersame Fruchtbarkeit",3),
-	LiturgieGroßeSeelenwaschungExorzismus("Liturgie: Große Seelenwaschung (Exorzismus)",3),
-	LiturgieGroßeSeelenwaschungExorzismusIV("Liturgie: Große Seelenwaschung (Exorzismus) (IV)",3),
-	LiturgieGroßeSeelenwaschungExorzismusV("Liturgie: Große Seelenwaschung (Exorzismus) (V)",3),
-	LiturgieGroßeSeelenwaschungExorzismusVI("Liturgie: Große Seelenwaschung (Exorzismus) (VI)",3),
-	LiturgieGroßeWeiheDesHeimsteins("Liturgie: Große Weihe des Heimsteins",3),
-	LiturgieGroßerEidsegen("Liturgie: Großer Eidsegen",3),
-	LiturgieGroßerGiftbannGroßerSpeisesegen("Liturgie: Großer Giftbann (Großer Speisesegen)",3),
-	LiturgieGroßerReisesegen("Liturgie: Großer Reisesegen",3),
-	LiturgieGroßerSpeisesegen("Liturgie: Großer Speisesegen",3),
-	LiturgieGroßerWeihesegenDerWaffe("Liturgie: Großer Weihesegen der Waffe",3),
-	LiturgieGroßesTabuSiegelBorons("Liturgie: Großes Tabu (Siegel Borons)",3),
-	LiturgieGrußDesVersunkenen("Liturgie: Gruß des Versunkenen",3),
-	LiturgieHändlersegen("Liturgie: Händlersegen",3),
-	LiturgieHandwerkssegen("Liturgie: Handwerkssegen",3),
-	LiturgieHarmoniesegen("Liturgie: Harmoniesegen",3),
-	LiturgieHashnabithsFlehen("Liturgie: Hashnabiths Flehen",3),
-	LiturgieHauchBorons("Liturgie: Hauch Borons",3),
-	LiturgieHauchDerLeidenschaftHandwerkssegen("Liturgie: Hauch der Leidenschaft (Handwerkssegen)",3),
-	LiturgieHausfrieden("Liturgie: Hausfrieden",3),
-	LiturgieHautDesChamäleonsVerborgenWieDerNeumond("Liturgie: Haut des Chamäleons (Verborgen wie der Neumond)",3),
-	LiturgieHeiligeSalbungDerPeraineTsasHeiligesLebensgeschenk("Liturgie: Heilige Salbung der Peraine (Tsas Heiliges Lebensgeschenk)",3),
-	LiturgieHeiligeSchmiedeglut("Liturgie: Heilige Schmiedeglut",3),
-	LiturgieHeiligerBefehl("Liturgie: Heiliger Befehl",3),
-	LiturgieHeiligerLehnseid("Liturgie: Heiliger Lehnseid",3),
-	LiturgieHeiligesLiebesspiel("Liturgie: Heiliges Liebesspiel",3),
-	LiturgieHeilungDesTapamsSegenDerHeiligenNoiona("Liturgie: Heilung des Tapams (Segen der Heiligen Noiona)",3),
-	LiturgieHeilungDesTapamsSegenDerHeiligenNoionaIV("Liturgie: Heilung des Tapams (Segen der Heiligen Noiona (IV))",3),
-	LiturgieHeilungssegen("Liturgie: Heilungssegen",3),
-	LiturgieHerrÜberFeuerUndGlut("Liturgie: Herr über Feuer und Glut",3),
-	LiturgieHesindesFingerzeigBuchprüfung("Liturgie: Hesindes Fingerzeig (Buchprüfung)",3),
-	LiturgieHilfeInDerNot("Liturgie: Hilfe in der Not",3),
-	LiturgieHoftagDerSprachen("Liturgie: Hoftag der Sprachen",3),
-	LiturgieIndoktrination("Liturgie: Indoktrination",3),
-	LiturgieIngalfsAlchimie("Liturgie: Ingalfs Alchimie",3),
-	LiturgieIngerimmsZornVerschoneUns("Liturgie: Ingerimms Zorn verschone uns",3),
-	LiturgieInitiation("Liturgie: Initiation",3),
-	LiturgieInnereRuhe("Liturgie: Innere Ruhe",3),
-	LiturgieJagdglück("Liturgie: Jagdglück",3),
-	LiturgieKälbchensegen("Liturgie: Kälbchensegen",3),
-	LiturgieKamaluqsUnerbittlicherSpeerBannfluchDesHeiligenKhalid("Liturgie: Kamaluqs unerbittlicher Speer (Bannfluch des Heiligen Khalid)",3),
-	LiturgieKamaluqsFluch("Liturgie: Kamaluqs Fluch",3),
-	LiturgieKamaluqsFluchV("Liturgie: Kamaluqs Fluch (V)",3),
-	LiturgieKamaluqsFluchVI("Liturgie: Kamaluqs Fluch (VI)",3),
-	LiturgieKetaAjabanKudaWundersamesTeilenDesMartyriums("Liturgie: Keta ajaban kud'a - Wundersames Teilen des Martyriums",3),
-	LiturgieKetaAjabanKudaWundersamesTeilenDesMartyriumsV("Liturgie: Keta ajaban kud'a - Wundersames Teilen des Martyriums (V)",3),
-	LiturgieKetaAjabanKudaWundersamesTeilenDesMartyriumsVI("Liturgie: Keta ajaban kud'a - Wundersames Teilen des Martyriums (VI)",3),
-	LiturgieKhablasJugend("Liturgie: Khablas Jugend",3),
-	LiturgieKhablasJugendIV("Liturgie: Khablas Jugend (IV)",3),
-	LiturgieKhablasMakelloserLeib("Liturgie: Khablas makelloser Leib",3),
-	LiturgieKhablasMakelloserLeibVI("Liturgie: Khablas makelloser Leib (VI)",3),
-	LiturgieKirschblütenregen("Liturgie: Kirschblütenregen",3),
-	LiturgieKleineLiturgieDesHeiligenNemekath("Liturgie: Kleine Liturgie des Heiligen Nemekath",3),
-	LiturgieKleineSegnungDesHeimsteins("Liturgie: Kleine Segnung des Heimsteins",3),
-	LiturgieKleinerGiftbann("Liturgie: Kleiner Giftbann",3),
-	LiturgieKleinesTabuRufZurRuhe("Liturgie: Kleines Tabu (Ruf zur Ruhe)",3),
-	LiturgieKonsekration("Liturgie: Konsekration",3),
-	LiturgieKräftigungDerSchwachenUndVersehrten("Liturgie: Kräftigung der Schwachen und Versehrten",3),
-	LiturgieKräutersegenDesHeiligenNemekathRahjasRauschsegen("Liturgie: Kräutersegen des Heiligen Nemekath (Rahjas Rauschsegen)",3),
-	LiturgieLagoraxHammerRufen("Liturgie: Lagorax' Hammer rufen",3),
-	LiturgieLevthansFesseln("Liturgie: Levthans Fesseln",3),
-	LiturgieLichtDesHerrn("Liturgie: Licht des Herrn",3),
-	LiturgieLichtDesVerborgenenPfades("Liturgie: Licht des verborgenen Pfades",3),
-	LiturgieLohnDerUnverzagten("Liturgie: Lohn der Unverzagten",3),
-	LiturgieLugUndTrugUnverstellterBlick("Liturgie: Lug und Trug (Unverstellter Blick)",3),
-	LiturgieMannschaftssegen("Liturgie: Mannschaftssegen",3),
-	LiturgieMarbosGeisterblickNemekathsGeisterblick("Liturgie: Marbos Geisterblick (Nemekaths Geisterblick)",3),
-	LiturgieMarbosGeleit("Liturgie: Marbos Geleit",3),
-	LiturgieMärtyrersegen("Liturgie: Märtyrersegen",3),
-	LiturgieMeisterstückWandelnInHesindesHain("Liturgie: Meisterstück (Wandeln in Hesindes Hain)",3),
-	LiturgieMondsilberzunge("Liturgie: Mondsilberzunge",3),
-	LiturgieNandusSchriftkenntnisSchrifttumFernerLande("Liturgie: Nandus Schriftkenntnis (Schrifttum ferner Lande)",3),
-	LiturgieNemekathsBannfluchBishdarielsWarnung("Liturgie: Nemekaths Bannfluch (Bishdariels Warnung)",3),
-	LiturgieNemekathsGeisterblick("Liturgie: Nemekaths Geisterblick",3),
-	LiturgieNemekathsZwiesprache("Liturgie: Nemekaths Zwiesprache",3),
-	LiturgieNeunStreicheInEinem("Liturgie: Neun Streiche in Einem",3),
-	LiturgieNimmermüdeWanderschaft("Liturgie: Nimmermüde Wanderschaft",3),
-	LiturgieNoionasZuspruchSegenDerHlVelvenya("Liturgie: Noionas Zuspruch (Segen der Hl. Velvenya)",3),
-	LiturgieObaransBannstrahlZerschmetternderBannstrahl("Liturgie: Obarans Bannstrahl (Zerschmetternder Bannstrahl)",3),
-	LiturgieObjektsegen("Liturgie: Objektsegen",3),
-	LiturgieObjektsegenII("Liturgie: Objektsegen (II)",3),
-	LiturgieObjektsegenIV("Liturgie: Objektsegen (IV)",3),
-	LiturgieObjektsegenV("Liturgie: Objektsegen (V)",3),
-	LiturgieObjektweihe("Liturgie: Objektweihe",3),
-	LiturgieObjektweiheIII("Liturgie: Objektweihe (III)",3),
-	LiturgieObjektweiheIV("Liturgie: Objektweihe (IV)",3),
-	LiturgieObjektweiheV("Liturgie: Objektweihe (V)",3),
-	LiturgieObjektweiheVI("Liturgie: Objektweihe (VI)",3),
-	LiturgieOrdination("Liturgie: Ordination",3),
-	LiturgieParinorsVermächtnis("Liturgie: Parinors Vermächtnis",3),
-	LiturgiePerainesPflanzengespür("Liturgie: Peraines Pflanzengespür",3),
-	LiturgiePhexensAugenzwinkern("Liturgie: Phexens Augenzwinkern",3),
-	LiturgiePhexensElsterflug("Liturgie: Phexens Elsterflug",3),
-	LiturgiePhexensKunstverstandBlickFürDasHandwerk("Liturgie: Phexens Kunstverstand (Blick für das Handwerk)",3),
-	LiturgiePhexensMeisterschlüssel("Liturgie: Phexens Meisterschlüssel",3),
-	LiturgiePhexensNebelleib("Liturgie: Phexens Nebelleib",3),
-	LiturgiePhexensSchatten("Liturgie: Phexens Schatten",3),
-	LiturgiePhexensSternenwurf("Liturgie: Phexens Sternenwurf",3),
-	LiturgiePhexensWunderbareVerständigung("Liturgie: Phexens wunderbare Verständigung",3),
-	LiturgiePraiosMagiebann("Liturgie: Praios' Magiebann",3),
-	LiturgiePraiosMahnung("Liturgie: Praios Mahnung",3),
-	LiturgieProphezeiung("Liturgie: Prophezeiung",3),
-	LiturgiePurgation("Liturgie: Purgation",3),
-	LiturgieQuellsegen("Liturgie: Quellsegen",3),
-	LiturgieRahjalinasKuss("Liturgie: Rahjalinas Kuss",3),
-	LiturgieRahjalinasWeinrankeParinorsVermächtnis("Liturgie: Rahjalinas Weinranke (Parinors Vermächtnis)",3),
-	LiturgieRahjasErquickungSchlafDesGesegneten("Liturgie: Rahjas Erquickung (Schlaf des Gesegneten)",3),
-	LiturgieRahjasFestDerFreude("Liturgie: Rahjas Fest der Freude",3),
-	LiturgieRahjasFreiheit("Liturgie: Rahjas Freiheit",3),
-	LiturgieRahjasGeheiligterWein("Liturgie: Rahjas geheiligter Wein",3),
-	LiturgieRahjasHeitereGelassenheitSegenDerHeiligenNoiona("Liturgie: Rahjas heitere Gelassenheit (Segen der Heiligen Noiona)",3),
-	LiturgieRahjasHeitereGelassenheitSegenDerHeiligenNoionaIV("Liturgie: Rahjas heitere Gelassenheit (Segen der Heiligen Noiona (IV))",3),
-	LiturgieRahjasRauschsegen("Liturgie: Rahjas Rauschsegen",3),
-	LiturgieRahjasSchoß("Liturgie: Rahjas Schoß",3),
-	LiturgieRahjasSinnlichkeit("Liturgie: Rahjas Sinnlichkeit",3),
-	LiturgieReichungDesAmethyst("Liturgie: Reichung des Amethyst",3),
-	LiturgieReichungDesAmethystII("Liturgie: Reichung des Amethyst (II)",3),
-	LiturgieReichungDesAmethystIII("Liturgie: Reichung des Amethyst (III)",3),
-	LiturgieReichungDesAmethystV("Liturgie: Reichung des Amethyst (V)",3),
-	LiturgieReisesegen("Liturgie: Reisesegen",3),
-	LiturgieRondrasHochzeit("Liturgie: Rondras Hochzeit",3),
-	LiturgieRondrasWundersameRüstung("Liturgie: Rondras wundersame Rüstung",3),
-	LiturgieRufDerGefährten("Liturgie: Ruf der Gefährten",3),
-	LiturgieRufDerGefährtenIV("Liturgie: Ruf der Gefährten (IV)",3),
-	LiturgieRufInBoronsArme("Liturgie: Ruf in Borons Arme",3),
-	LiturgieRufInBoronsArmeIII("Liturgie: Ruf in Borons Arme (III)",3),
-	LiturgieRufZurRuhe("Liturgie: Ruf zur Ruhe",3),
-	LiturgieSalbungDerHeiligenNoionaExorzismus("Liturgie: Salbung der Heiligen Noiona (Exorzismus)",3),
-	LiturgieSalbungDerHeiligenNoionaExorzismusIV("Liturgie: Salbung der Heiligen Noiona (Exorzismus) (IV)",3),
-	LiturgieSalbungDerHeiligenNoionaExorzismusV("Liturgie: Salbung der Heiligen Noiona (Exorzismus) (V)",3),
-	LiturgieSalbungDerHeiligenNoionaExorzismusVI("Liturgie: Salbung der Heiligen Noiona (Exorzismus) (VI)",3),
-	LiturgieSanktGilbornsBannfluchArgelionsBannendeHand("Liturgie: Sankt Gilborns Bannfluch (Argelions bannende Hand)",3),
-	LiturgieSchattenlarve("Liturgie: Schattenlarve",3),
-	LiturgieSchiffssegen("Liturgie: Schiffssegen",3),
-	LiturgieSchlafDesGesegneten("Liturgie: Schlaf des Gesegneten",3),
-	LiturgieSchlangenstab("Liturgie: Schlangenstab",3),
-	LiturgieSchneesturmEissturm("Liturgie: Schneesturm/Eissturm",3),
-	LiturgieSchrifttumFernerLande("Liturgie: Schrifttum ferner Lande",3),
-	LiturgieSchutzDesGeleges("Liturgie: Schutz des Geleges",3),
-	LiturgieSchutzsegen("Liturgie: Schutzsegen",3),
-	LiturgieSchutzsegenII("Liturgie: Schutzsegen (II)",3),
-	LiturgieSchutzsegenIII("Liturgie: Schutzsegen (III)",3),
-	LiturgieSchwitzhütteFünfteLobpreisungDesFrühlings("Liturgie: Schwitzhütte (Fünfte Lobpreisung des Frühlings)",3),
-	LiturgieSeelenprüfung("Liturgie: Seelenprüfung",3),
-	LiturgieAuraprüfung("Liturgie: Auraprüfung",3),
-	LiturgieGroßeSeelenprüfung("Liturgie: Große Seelenprüfung",3),
-	LiturgieSegenDerGabetajParinorsVermächtnis("Liturgie: Segen der Gabetaj (Parinors Vermächtnis)",3),
-	LiturgieSegenDerHeiligenArdare("Liturgie: Segen der Heiligen Ardare",3),
-	LiturgieSegenDerHeiligenNoiona("Liturgie: Segen der Heiligen Noiona",3),
-	LiturgieSegenDerHeiligenNoionaIV("Liturgie: Segen der Heiligen Noiona (IV)",3),
-	LiturgieSegenDerHeiligenTheria("Liturgie: Segen der Heiligen Theria",3),
-	LiturgieSegenDerHeiligenVelvenya("Liturgie: Segen der Heiligen Velvenya",3),
-	LiturgieSegenDesHeiligenBadilakSegenDerHeiligenNoiona("Liturgie: Segen des Heiligen Badilak (Segen der Heiligen Noiona)",3),
-	LiturgieSegenDesHeiligenBadilakSegenDerHeiligenNoionaIV("Liturgie: Segen des Heiligen Badilak (Segen der Heiligen Noiona (IV))",3),
-	LiturgieSegenDesHeiligenHlûthar("Liturgie: Segen des Heiligen Hlûthar",3),
-	LiturgieSegenDesPlättlings("Liturgie: Segen des Plättlings",3),
-	LiturgieSegensreichesWasser("Liturgie: Segensreiches Wasser",3),
-	LiturgieSegnungDerSchlacht("Liturgie: Segnung der Schlacht",3),
-	LiturgieSegnungDerStählernenStirn("Liturgie: Segnung der Stählernen Stirn",3),
-	LiturgieSegnungDesHeimes("Liturgie: Segnung des Heimes",3),
-	LiturgieSichereWanderungImSchnee("Liturgie: Sichere Wanderung im Schnee",3),
-	LiturgieSichererWegDurchFels("Liturgie: Sicherer Weg durch Fels",3),
-	LiturgieSichtAufMadasWelt("Liturgie: Sicht auf Madas Welt",3),
-	LiturgieSiegelBorons("Liturgie: Siegel Borons",3),
-	LiturgieSimiasKelchTsasSegensreicherNeuanfang("Liturgie: Simias Kelch (Tsas Segensreicher Neuanfang)",3),
-	LiturgieSippenfluch("Liturgie: Sippenfluch",3),
-	LiturgieSpeisesegen("Liturgie: Speisesegen",3),
-	LiturgieSpeisungDerBedürftigen("Liturgie: Speisung der Bedürftigen",3),
-	LiturgieSpeisungDerBedürftigenIV("Liturgie: Speisung der Bedürftigen (IV)",3),
-	LiturgieSpeisungDerHungerndenSeele("Liturgie: Speisung der hungernden Seele",3),
-	LiturgieSprechendeSymbole("Liturgie: Sprechende Symbole",3),
-	LiturgieSterneFunkelnImmerfort("Liturgie: Sterne funkeln immerfort",3),
-	LiturgieSternenglanz("Liturgie: Sternenglanz",3),
-	LiturgieSternenspur("Liturgie: Sternenspur",3),
-	LiturgieSternenstaub("Liturgie: Sternenstaub",3),
-	LiturgieSulvasGnade("Liturgie: Sulvas Gnade",3),
-	LiturgieSwafnirsFluke("Liturgie: Swafnirs Fluke",3),
-	LiturgieSwafnirsRuhelied("Liturgie: Swafnirs Ruhelied",3),
-	LiturgieTabuSiegelBorons("Liturgie: Tabu (Siegel Borons)",3),
-	LiturgieTairachsFluch("Liturgie: Tairachs Fluch",3),
-	LiturgieTairachsFluchV("Liturgie: Tairachs Fluch (V)",3),
-	LiturgieTairachsFluchVI("Liturgie: Tairachs Fluch (VI)",3),
-	LiturgieThalionmelsSchlachtgesang("Liturgie: Thalionmels Schlachtgesang",3),
-	LiturgieTherbûnsErkenntnis("Liturgie: Therbûns Erkenntnis",3),
-	LiturgieTierempathie("Liturgie: Tierempathie",3),
-	LiturgieTiergestalt("Liturgie: Tiergestalt",3),
-	LiturgieTiersprache("Liturgie: Tiersprache",3),
-	LiturgieTranksegen("Liturgie: Tranksegen",3),
-	LiturgieTraviabundGroßerEidsegen("Liturgie: Traviabund (Großer Eidsegen)",3),
-	LiturgieTraviasGebetDerSicherenZuflucht("Liturgie: Travias Gebet der sicheren Zuflucht",3),
-	LiturgieTraviasGebetDerVerborgenenHalle("Liturgie: Travias Gebet der verborgenen Halle",3),
-	LiturgieTraviniansSegenDerSchwelle("Liturgie: Travinians Segen der Schwelle",3),
-	LiturgieTrophäeErhalten("Liturgie: Trophäe erhalten",3),
-	LiturgieTsasEwigeJugend("Liturgie: Tsas ewige Jugend",3),
-	LiturgieTsasHeiligesLebensgeschenk("Liturgie: Tsas Heiliges Lebensgeschenk",3),
-	LiturgieTsasLebensschutz("Liturgie: Tsas Lebensschutz",3),
-	LiturgieTsasSegensreicherNeuanfang("Liturgie: Tsas Segensreicher Neuanfang",3),
-	LiturgieTsasWunderbareErneuerung("Liturgie: Tsas Wunderbare Erneuerung",3),
-	LiturgieTsasWundersameFruchtbarkeit("Liturgie: Tsas Wundersame Fruchtbarkeit",3),
-	LiturgieÜberDieWolken("Liturgie: Über die Wolken",3),
-	LiturgieÜberDieWolkenVI("Liturgie: Über die Wolken (VI)",3),
-	LiturgieUcurisGeleit("Liturgie: Ucuris Geleit",3),
-	LiturgieUnterpfandDesHeiligenRhys("Liturgie: Unterpfand des Heiligen Rhys",3),
-	LiturgieUnverstellterBlick("Liturgie: Unverstellter Blick",3),
-	LiturgieUrischarsOrdnenderBlick("Liturgie: Urischars ordnender Blick",3),
-	LiturgieVaêsTränen("Liturgie: Vaês Tränen",3),
-	LiturgieVerborgenWieDerNeumond("Liturgie: Verborgen wie der Neumond",3),
-	LiturgieVersiegeltesWissenGrauesSiegel("Liturgie: Versiegeltes Wissen (Graues Siegel)",3),
-	LiturgieVersiegeltesWissenGrauesSiegelIV("Liturgie: Versiegeltes Wissen (Graues Siegel) (IV)",3),
-	LiturgieVertrauterDerFlamme("Liturgie: Vertrauter der Flamme",3),
-	LiturgieVertrauterDesFelsens("Liturgie: Vertrauter des Felsens",3),
-	LiturgieVertreibungDesDunkelsinns("Liturgie: Vertreibung des Dunkelsinns",3),
-	LiturgieVisionssuche("Liturgie: Visionssuche",3),
-	LiturgieWaliburiasWehr("Liturgie: Waliburias Wehr",3),
-	LiturgieWandelnInHesindesHain("Liturgie: Wandeln in Hesindes Hain",3),
-	LiturgieWegDesFuchses("Liturgie: Weg des Fuchses",3),
-	LiturgieWeiheDerEwigenFlamme("Liturgie: Weihe der Ewigen Flamme",3),
-	LiturgieWeiheDerLetztenRuhestatt("Liturgie: Weihe der letzten Ruhestatt",3),
-	LiturgieWeihegesangDerHeiligenElidaVonSalza("Liturgie: Weihegesang der Heiligen Elida von Salza",3),
-	LiturgieWeisheitssegen("Liturgie: Weisheitssegen",3),
-	LiturgieWeisungDesHimmels("Liturgie: Weisung des Himmels",3),
-	LiturgieWilleZurWahrheit("Liturgie: Wille zur Wahrheit",3),
-	LiturgieWinterschlaf("Liturgie: Winterschlaf",3),
-	LiturgieWortDerWahrheitHeiligerBefehl("Liturgie: Wort der Wahrheit (Heiliger Befehl)",3),
-	LiturgieWunderbarerGeschlechterwandel("Liturgie: Wunderbarer Geschlechterwandel",3),
-	LiturgieWundersameBlütenpracht("Liturgie: Wundersame Blütenpracht",3),
-	LiturgieWundsegen("Liturgie: Wundsegen",3),
-	LiturgieWundsegenIII("Liturgie: Wundsegen (III)",3),
-	LiturgieWundsegenIV("Liturgie: Wundsegen (IV)",3),
-	LiturgieZerschmetternderBannstrahl("Liturgie: Zerschmetternder Bannstrahl",3),
-	LiturgieZufluchtFinden("Liturgie: Zuflucht finden",3),
-	LiturgieNamenlosesVergessen("Liturgie: Namenloses Vergessen",3),
-	LiturgieHerbeirufungDerDienerDesHerren("Liturgie: Herbeirufung der Diener des Herren",3),
-	LiturgieNamenloseKälte("Liturgie: Namenlose Kälte",3),
-	LiturgieDesEinenBezaubernderSphärenklang("Liturgie: Des Einen bezaubernder Sphärenklang",3),
-	LiturgieNamenloserZweifelNamenloseErleuchtung("Liturgie: Namenloser Zweifel - Namenlose Erleuchtung",3),
-	LiturgieSeelenschatten("Liturgie: Seelenschatten",3),
-	LiturgieSchwindendeZauberkraft("Liturgie: Schwindende Zauberkraft",3),
-	LiturgieFluchWiderDieUngläubigen("Liturgie: Fluch wider die Ungläubigen",3),
-	LiturgieGoldeneHand("Liturgie: Goldene Hand",3),
-	LiturgieNamenloseRaserei("Liturgie: Namenlose Raserei",3),
-	LiturgiePechUndSchwefel("Liturgie: Pech und Schwefel",3),
-	LiturgieGottDerGötter("Liturgie: Gott der Götter",3),
-	LiturgieGottDerGötterIII("Liturgie: Gott der Götter (III)",3),
-	LiturgieGottDerGötterIV("Liturgie: Gott der Götter (IV)",3),
-	LiturgieGottDerGötterV("Liturgie: Gott der Götter (V)",3),
-	LiturgieGottDerGötterVI("Liturgie: Gott der Götter (VI)",3),
-	LiturgieHerbeirufungDerHeerscharenDesRattenkindes("Liturgie: Herbeirufung der Heerscharen des Rattenkindes",3),
-	LiturgieWaffenfluch("Liturgie: Waffenfluch",3),
-	LiturgieSchleichendeFäulnis("Liturgie: Schleichende Fäulnis",3),
-	LiturgieEwigeJugend("Liturgie: Ewige Jugend",3),
-	LiturgieSeelenbannung("Liturgie: Seelenbannung",3),
-	LockeresZaubern("Lockeres Zaubern",3),
-	Maraskankundig("Maraskankundig",3),
-	Matrixgeber("Matrixgeber",3),
-	Matrixkontrolle("Matrixkontrolle",3),
-	MatrixregenerationI("Matrixregeneration I",3),
-	MatrixregenerationII("Matrixregeneration II",3),
-	Matrixverständnis("Matrixverständnis",3),
-	Meereskundig("Meereskundig",3),
-	MeisterDerImprovisation("Meister der Improvisation",3),
-	MeisterlicheRegeneration("Meisterliche Regeneration",3),
-	MeisterlicheZauberkontrolle("Meisterliche Zauberkontrolle",3),
-	MeisterlicheZauberkontrolleI("Meisterliche Zauberkontrolle I",3),
-	MeisterlicheZauberkontrolleII("Meisterliche Zauberkontrolle II",3),
-	MeisterlichesEntwaffnen("Meisterliches Entwaffnen",3),
-	Meisterparade("Meisterparade",3),
-	Meisterschütze("Meisterschütze",3),
-	MerkmalskenntnisAntimagie("Merkmalskenntnis: Antimagie",3),
-	MerkmalskenntnisBeschwörung("Merkmalskenntnis: Beschwörung",3),
-	MerkmalskenntnisDämonisch("Merkmalskenntnis: Dämonisch",3),
-	MerkmalskenntnisDämonischAgrimoth("Merkmalskenntnis: Dämonisch (Agrimoth)",3),
-	MerkmalskenntnisDämonischAmazeroth("Merkmalskenntnis: Dämonisch (Amazeroth)",3),
-	MerkmalskenntnisDämonischAsfaloth("Merkmalskenntnis: Dämonisch (Asfaloth)",3),
-	MerkmalskenntnisDämonischBelhalhar("Merkmalskenntnis: Dämonisch (Belhalhar)",3),
-	MerkmalskenntnisDämonischBelzhorash("Merkmalskenntnis: Dämonisch (Belzhorash)",3),
-	MerkmalskenntnisDämonischBlakharaz("Merkmalskenntnis: Dämonisch (Blakharaz)",3),
-	MerkmalskenntnisDämonischLolgramoth("Merkmalskenntnis: Dämonisch (Lolgramoth)",3),
-	MerkmalskenntnisDämonischThargunitoth("Merkmalskenntnis: Dämonisch (Thargunitoth)",3),
-	MerkmalskenntnisEigenschaften("Merkmalskenntnis: Eigenschaften",3),
-	MerkmalskenntnisEinfluss("Merkmalskenntnis: Einfluss",3),
-	MerkmalskenntnisElementar("Merkmalskenntnis: Elementar",3),
-	MerkmalskenntnisElementarEis("Merkmalskenntnis: Elementar (Eis)",3),
-	MerkmalskenntnisElementarErz("Merkmalskenntnis: Elementar (Erz)",3),
-	MerkmalskenntnisElementarFeuer("Merkmalskenntnis: Elementar (Feuer)",3),
-	MerkmalskenntnisElementarHumus("Merkmalskenntnis: Elementar (Humus)",3),
-	MerkmalskenntnisElementarLuft("Merkmalskenntnis: Elementar (Luft)",3),
-	MerkmalskenntnisElementarWasser("Merkmalskenntnis: Elementar (Wasser)",3),
-	MerkmalskenntnisForm("Merkmalskenntnis: Form",3),
-	MerkmalskenntnisGeisterwesen("Merkmalskenntnis: Geisterwesen",3),
-	MerkmalskenntnisHeilung("Merkmalskenntnis: Heilung",3),
-	MerkmalskenntnisHellsicht("Merkmalskenntnis: Hellsicht",3),
-	MerkmalskenntnisHerbeirufung("Merkmalskenntnis: Herbeirufung",3),
-	MerkmalskenntnisHerrschaft("Merkmalskenntnis: Herrschaft",3),
-	MerkmalskenntnisIllusion("Merkmalskenntnis: Illusion",3),
-	MerkmalskenntnisKraft("Merkmalskenntnis: Kraft",3),
-	MerkmalskenntnisLimbus("Merkmalskenntnis: Limbus",3),
-	MerkmalskenntnisMetamagie("Merkmalskenntnis: Metamagie",3),
-	MerkmalskenntnisObjekt("Merkmalskenntnis: Objekt",3),
-	MerkmalskenntnisSchaden("Merkmalskenntnis: Schaden",3),
-	MerkmalskenntnisTelekinese("Merkmalskenntnis: Telekinese",3),
-	MerkmalskenntnisTemporal("Merkmalskenntnis: Temporal",3),
-	MerkmalskenntnisUmwelt("Merkmalskenntnis: Umwelt",3),
-	MerkmalskenntnisVerständigung("Merkmalskenntnis: Verständigung",3),
-	NandusgefälligesWissen("Nandusgefälliges Wissen",3),
-	Nekromant("Nekromant",3),
-	Niederringen("Niederringen",3),
-	Niederwerfen("Niederwerfen",3),
-	GabeDesOdûnHauchDesOdûn("Gabe des Odûn: Hauch des Odûn",3),
-	GabeDesOdûnHautDesOdûn("Gabe des Odûn: Haut des Odûn",3),
-	GabeDesOdûnBlutDesOdûn("Gabe des Odûn: Blut des Odûn",3),
-	GabeDesOdûnRufDesOdûn("Gabe des Odûn: Ruf des Odûn",3),
-	GabeDesOdûnSeeleDesOdûn("Gabe des Odûn: Seele des Odûn",3),
-	Ortskenntnis("Ortskenntnis",3),
-	OrtskenntnisÖrtlichkeit1("Ortskenntnis (Örtlichkeit 1)",3),
-	OrtskenntnisÖrtlichkeit2("Ortskenntnis (Örtlichkeit 2)",3),
-	OrtskenntnisStrecke1("Ortskenntnis (Strecke 1)",3),
-	OrtskenntnisStrecke2("Ortskenntnis (Strecke 2)",3),
-	Ottagaldr("Ottagaldr",3),
-	ParierwaffenI("Parierwaffen I",3),
-	ParierwaffenII("Parierwaffen II",3),
-	RegenerationI("Regeneration I",3),
-	RegenerationII("Regeneration II",3),
-	Reiterkampf("Reiterkampf",3),
-	ReiterkampfStreitwagen("Reiterkampf (Streitwagen)",3),
-	RepräsentationAchaz("Repräsentation: Achaz",3),
-	RepräsentationBorbaradianer("Repräsentation: Borbaradianer",3),
-	RepräsentationDruide("Repräsentation: Druide",3),
-	RepräsentationElf("Repräsentation: Elf",3),
-	RepräsentationGeode("Repräsentation: Geode",3),
-	RepräsentationHexe("Repräsentation: Hexe",3),
-	RepräsentationMagier("Repräsentation: Magier",3),
-	RepräsentationScharlatan("Repräsentation: Scharlatan",3),
-	RepräsentationSchelm("Repräsentation: Schelm",3),
-	RitualArngrimsHöhle("Ritual: Arngrims Höhle",3),
-	RitualAufmerksamerWächter("Ritual: Aufmerksamer Wächter",3),
-	RitualBlickInLiskasAuge("Ritual: Blick in Liskas Auge",3),
-	RitualBlickInsGeisterreich("Ritual: Blick ins Geisterreich",3),
-	RitualBlickInsGeisterreichII("Ritual: Blick ins Geisterreich (II)",3),
-	RitualBlickInsGeisterreichIII("Ritual: Blick ins Geisterreich (III)",3),
-	RitualBlutsbund("Ritual: Blutsbund",3),
-	RitualBrazoraghGhorkai("Ritual: Brazoragh Ghorkai",3),
-	RitualErgochaiTairachi("Ritual: Ergochai Tairachi",3),
-	RitualExorzismus("Ritual: Exorzismus",3),
-	RitualExorzismusIII("Ritual: Exorzismus (III)",3),
-	RitualExorzismusIV("Ritual: Exorzismus (IV)",3),
-	RitualExorzismusV("Ritual: Exorzismus (V)",3),
-	RitualFarbenDesKrieges("Ritual: Farben des Krieges",3),
-	RitualFluchDerVerwirrung("Ritual: Fluch der Verwirrung",3),
-	RitualFreieSeelenfahrt("Ritual: Freie Seelenfahrt",3),
-	RitualGabenDerErde("Ritual: Gaben der Erde",3),
-	RitualGeisterbote("Ritual: Geisterbote",3),
-	RitualGeisterkerker("Ritual: Geisterkerker",3),
-	RitualGeistheilung("Ritual: Geistheilung",3),
-	RitualGeleitDesNipakau("Ritual: Geleit des Nipakau",3),
-	RitualGesangDerWölfe("Ritual: Gesang der Wölfe",3),
-	RitualGharyakMaruki("Ritual: Gharyak Maruki",3),
-	RitualGroßerGeisterbann("Ritual: Großer Geisterbann",3),
-	RitualHairuf("Ritual: Hairuf",3),
-	RitualHauchDesElements("Ritual: Hauch des Elements",3),
-	RitualHeimführungDerHerde("Ritual: Heimführung der Herde",3),
-	RitualHerzDesTieres("Ritual: Herz des Tieres",3),
-	RitualHilferuf("Ritual: Hilferuf",3),
-	RitualJagdfieber("Ritual: Jagdfieber",3),
-	RitualKhurkachaiTairachi("Ritual: Khurkachai Tairachi",3),
-	RitualKraftDerTayas("Ritual: Kraft der Tayas",3),
-	RitualKraftDesTieres("Ritual: Kraft des Tieres",3),
-	RitualMcharUtrakRikaii("Ritual: M´char Utrak Rikaii",3),
-	RitualMachtDerElemente("Ritual: Macht der Elemente",3),
-	RitualMachtDesBlutes("Ritual: Macht des Blutes",3),
-	RitualMailamRekdaisSegen("Ritual: Mailam Rekdais Segen",3),
-	RitualMammutruf("Ritual: Mammutruf",3),
-	RitualOgerruf("Ritual: Ogerruf",3),
-	RitualPfadDerBlutrache("Ritual: Pfad der Blutrache",3),
-	RitualRangildUndRissasHochzeit("Ritual: Rangild und Rissas Hochzeit",3),
-	RitualRatDerAhnen("Ritual: Rat der Ahnen",3),
-	RitualRegentanz("Ritual: Regentanz",3),
-	RitualReinigenDesWassers("Ritual: Reinigen des Wassers",3),
-	RitualReißgramsFährte("Ritual: Reißgrams Fährte",3),
-	RitualReitenderGeist("Ritual: Reitender Geist",3),
-	RitualRikaisVerderben("Ritual: Rikais Verderben",3),
-	RitualRinderruf("Ritual: Rinderruf",3),
-	RitualRufDesSchamanen("Ritual: Ruf des Schamanen",3),
-	RitualSchlangenfluch("Ritual: Schlangenfluch",3),
-	RitualSchlangenfluchV("Ritual: Schlangenfluch (V)",3),
-	RitualSchlangengeist("Ritual: Schlangengeist",3),
-	RitualSchlingerruf("Ritual: Schlingerruf",3),
-	RitualSchomasKraft("Ritual: Schomas Kraft",3),
-	RitualSchutzDerJurte("Ritual: Schutz der Jurte",3),
-	RitualSchützendeRotte("Ritual: Schützende Rotte",3),
-	RitualSeeschlangenruf("Ritual: Seeschlangenruf",3),
-	RitualStimmeDesNipakau("Ritual: Stimme des Nipakau",3),
-	RitualTabuzone("Ritual: Tabuzone",3),
-	RitualTauschplatz("Ritual: Tauschplatz",3),
-	RitualTiereAusFarben("Ritual: Tiere aus Farben",3),
-	RitualTränkeMeineHerde("Ritual: Tränke meine Herde",3),
-	RitualWeckruf("Ritual: Weckruf",3),
-	RitualWegDesWindes("Ritual: Weg des Windes",3),
-	RitualWegzeichen("Ritual: Wegzeichen",3),
-	RitualWeidegründeFinden("Ritual: Weidegründe finden",3),
-	RitualWildFinden("Ritual: Wild finden",3),
-	RitualWildschweinruf("Ritual: Wildschweinruf",3),
-	RitualWolfsfluch("Ritual: Wolfsfluch",3),
-	RitualWolfsfluchV("Ritual: Wolfsfluch (V)",3),
-	RitualWolfsruf("Ritual: Wolfsruf",3),
-	RitualZeichenSetzen("Ritual: Zeichen setzen",3),
-	RitualZornDesBerglöwen("Ritual: Zorn des Berglöwen",3),
-	RitualZornDesSchneelaurers("Ritual: Zorn des Schneelaurers",3),
-	RitualZornDerKhoramsbestie("Ritual: Zorn der Khoramsbestie",3),
-	RitualZornDesFirunsbären("Ritual: Zorn des Firunsbären",3),
-	RitualkenntnisAchazSchamane("Ritualkenntnis: Achaz-Schamane",3),
-	RitualkenntnisAlchimist("Ritualkenntnis: Alchimist",3),
-	RitualkenntnisDerwisch("Ritualkenntnis: Derwisch",3),
-	RitualkenntnisDruide("Ritualkenntnis: Druide",3),
-	RitualkenntnisDurroDûn("Ritualkenntnis: Durro-Dûn",3),
-	RitualkenntnisFerkinaSchamane("Ritualkenntnis: Ferkina-Schamane",3),
-	RitualkenntnisGeode("Ritualkenntnis: Geode",3),
-	RitualkenntnisGjalskerSchamane("Ritualkenntnis: Gjalsker-Schamane",3),
-	RitualkenntnisGoblinSchamanin("Ritualkenntnis: Goblin-Schamanin",3),
-	RitualkenntnisHexe("Ritualkenntnis: Hexe",3),
-	RitualkenntnisKristallomantie("Ritualkenntnis: Kristallomantie",3),
-	RitualkenntnisGildenmagie("Ritualkenntnis: Gildenmagie",3),
-	RitualkenntnisNivesenSchamane("Ritualkenntnis: Nivesen-Schamane",3),
-	RitualkenntnisOrkSchamane("Ritualkenntnis: Ork-Schamane",3),
-	RitualkenntnisScharlatan("Ritualkenntnis: Scharlatan",3),
-	RitualkenntnisRunenzauberei("Ritualkenntnis: Runenzauberei",3),
-	RitualkenntnisTrollzackerSchamane("Ritualkenntnis: Trollzacker-Schamane",3),
-	RitualkenntnisWaldmenschenSchamane("Ritualkenntnis: Waldmenschen-Schamane",3),
-	RitualkenntnisWaldmenschenSchamaneUtulus("Ritualkenntnis: Waldmenschen-Schamane (Utulus)",3),
-	RitualkenntnisWaldmenschenSchamaneTocamuyac("Ritualkenntnis: Waldmenschen-Schamane (Tocamuyac)",3),
-	RitualkenntnisZaubertänzer("Ritualkenntnis: Zaubertänzer",3),
-	RitualkenntnisZaubertänzertulamidischeSharisad("Ritualkenntnis: Zaubertänzer (tulamidische Sharisad)",3),
-	RitualkenntnisZaubertänzernovadischeSharisad("Ritualkenntnis: Zaubertänzer (novadische Sharisad)",3),
-	RitualkenntnisZaubertänzerMajuna("Ritualkenntnis: Zaubertänzer (Majuna)",3),
-	RitualkenntnisZaubertänzerHazaqi("Ritualkenntnis: Zaubertänzer (Hazaqi)",3),
-	RitualkenntnisZibilja("Ritualkenntnis: Zibilja",3),
-	RitualkenntnisAlhanisch("Ritualkenntnis: Alhanisch",3),
-	RitualkenntnisDruidischGeodisch("Ritualkenntnis: Druidisch-Geodisch",3),
-	RitualkenntnisGüldenländisch("Ritualkenntnis: Güldenländisch",3),
-	RitualkenntnisGrolmisch("Ritualkenntnis: Grolmisch",3),
-	RitualkenntnisKophtanisch("Ritualkenntnis: Kophtanisch",3),
-	RitualkenntnisMudramulisch("Ritualkenntnis: Mudramulisch",3),
-	RitualkenntnisSatuarisch("Ritualkenntnis: Satuarisch",3),
-	RitualkenntnisTapasuul("Ritualkenntnis: Tapasuul",3),
-	RüstungsgewöhnungI("Rüstungsgewöhnung I",3),
-	RüstungsgewöhnungII("Rüstungsgewöhnung II",3),
-	RüstungsgewöhnungIII("Rüstungsgewöhnung III",3),
-	Runenkunde("Runenkunde",3),
-	RunenRauschrune("Runen: Rauschrune",3),
-	RunenFriedensrune("Runen: Friedensrune",3),
-	RunenOttarune("Runen: Ottarune",3),
-	RunenFinsterrune("Runen: Finsterrune",3),
-	RunenWogensturmrune("Runen: Wogensturmrune",3),
-	RunenFelsenrune("Runen: Felsenrune",3),
-	RunenSchicksalsrune("Runen: Schicksalsrune",3),
-	RunenPfeilrune("Runen: Pfeilrune",3),
-	RunenWaffenrune("Runen: Waffenrune",3),
-	RunenDrachenrune("Runen: Drachenrune",3),
-	RunenFurchtrune("Runen: Furchtrune",3),
-	RunenBlutrune("Runen: Blutrune",3),
-	Salasandra("Salasandra",3),
-	Schmetterschlag("Schmetterschlag",3),
-	SchmutzigeTricks("Schmutzige Tricks",3),
-	Schwanzschlag("Schwanzschlag",3),
-	Schwanzfeger("Schwanzfeger",3),
-	Schwinger("Schwinger",3),
-	Schwitzkasten("Schwitzkasten",3),
-	SchalenzauberWeiheDerSchale("Schalenzauber: Weihe der Schale",3),
-	SchalenzauberAllegorischeAnalyse("Schalenzauber: Allegorische Analyse",3),
-	SchalenzauberChymischeHochzeit("Schalenzauber: Chymische Hochzeit",3),
-	SchalenzauberMandriconsBindung("Schalenzauber: Mandricons Bindung",3),
-	SchalenzauberFeuerUndEis("Schalenzauber: Feuer und Eis",3),
-	SchalenzauberTransmutationDerElemente("Schalenzauber: Transmutation der Elemente",3),
-	Scharfschütze("Scharfschütze",3),
-	Sprung("Sprung",3),
-	Sprungtritt("Sprungtritt",3),
-	SchlangenringZauberWeiheDerSchlange("Schlangenring-Zauber: Weihe der Schlange",3),
-	SchlangenringZauberMagnetismus("Schlangenring-Zauber: Magnetismus",3),
-	SchlangenringZauberWasserbann("Schlangenring-Zauber: Wasserbann",3),
-	SchlangenringZauberMachtÜberDenRegen("Schlangenring-Zauber: Macht über den Regen",3),
-	SchlangenringZauberSeelenfeuer("Schlangenring-Zauber: Seelenfeuer",3),
-	SchlangenringZauberHerrDerFlammen("Schlangenring-Zauber: Herr der Flammen",3),
-	SchlangenringZauberMachtDesLebens("Schlangenring-Zauber: Macht des Lebens",3),
-	SchlangenringZauberKräfteDerNatur("Schlangenring-Zauber: Kräfte der Natur",3),
-	SchlangenringZauberWirbelnderLuftschild("Schlangenring-Zauber: Wirbelnder Luftschild",3),
-	SchlangenringZauberLaunenDesWindes("Schlangenring-Zauber: Launen des Windes",3),
-	SchlangenringZauberWegDurchSumusLeib("Schlangenring-Zauber: Weg durch Sumus Leib",3),
-	DieGestaltAusRauch("Die Gestalt aus Rauch",3),
-	SchuppenbeutelBindungDesSchuppenbeutels("Schuppenbeutel: Bindung des Schuppenbeutels",3),
-	SchuppenbeutelSuchendeFinger("Schuppenbeutel: Suchende Finger",3),
-	SchuppenbeutelEwigeWegzehrung("Schuppenbeutel: Ewige Wegzehrung",3),
-	SchildkampfI("Schildkampf I",3),
-	SchildkampfII("Schildkampf II",3),
-	Schildspalter("Schildspalter",3),
-	Signaturkenntnis("Signaturkenntnis",3),
-	Schnellladen("Schnellladen",3),
-	Schnellziehen("Schnellziehen",3),
-	SemipermanenzI("Semipermanenz I",3),
-	SemipermanenzII("Semipermanenz II",3),
-	Simultanzaubern("Simultanzaubern",3),
-	SpätweiheAlveranischeGottheit("Spätweihe Alveranische Gottheit",3),
-	SpätweiheNamenloser("Spätweihe Namenloser",3),
-	SpätweiheNichtalveranischeGottheit("Spätweihe Nichtalveranische Gottheit",3),
-	Spießgespann("Spießgespann",3),
-	StabzauberBindung("Stabzauber: Bindung",3),
-	StabzauberFackel("Stabzauber: Fackel",3),
-	StabzauberSeil("Stabzauber: Seil",3),
-	StabzauberStabverlängerung("Stabzauber: Stabverlängerung",3),
-	StabzauberHammerDesMagus("Stabzauber: Hammer des Magus",3),
-	StabzauberKraftfokus("Stabzauber: Kraftfokus",3),
-	StabzauberModifikationsfokus("Stabzauber: Modifikationsfokus",3),
-	StabzauberZauberspeicher("Stabzauber: Zauberspeicher",3),
-	StabzauberMerkmalsfokus("Stabzauber: Merkmalsfokus",3),
-	StabzauberFlammenschwert("Stabzauber: Flammenschwert",3),
-	StabzauberSchuppenhaut("Stabzauber: Schuppenhaut",3),
-	StabzauberAstralschild("Stabzauber: Astralschild",3),
-	StabzauberLangerArm("Stabzauber: Langer Arm",3),
-	StabzauberSchutzGegenUntote("Stabzauber: Schutz gegen Untote",3),
-	Stapeleffekt("Stapeleffekt",3),
-	Steppenkundig("Steppenkundig",3),
-	Sturmangriff("Sturmangriff",3),
-	Sumpfkundig("Sumpfkundig",3),
-	TrankDesUngehindertenWeges("Trank des ungehinderten Weges",3),
-	TanzDerMada("Tanz der Mada",3),
-	TierischerBegleiter("Tierischer Begleiter",3),
-	TodVonLinks("Tod von links",3),
-	Todesstoß("Todesstoß",3),
-	Traumgänger("Traumgänger",3),
-	Tritt("Tritt",3),
-	TrommelzauberRufDesKrieges("Trommelzauber: Ruf des Krieges",3),
-	TrommelzauberSturmDerWüste("Trommelzauber: Sturm der Wüste",3),
-	TrommelzauberSchutzRastullahs("Trommelzauber: Schutz Rastullahs",3),
-	TrommelzauberRastullahsGüte("Trommelzauber: Rastullahs Güte",3),
-	TrommelzauberZornDesGottgefälligen("Trommelzauber: Zorn des Gottgefälligen",3),
-	Turnierreiterei("Turnierreiterei",3),
-	Umreißen("Umreißen",3),
-	Unterwasserkampf("Unterwasserkampf",3),
-	VerbotenePforten("Verbotene Pforten",3),
-	VersteckteKlinge("Versteckte Klinge",3),
-	Vertrautenbindung("Vertrautenbindung",3),
-	WaffeZerbrechen("Waffe zerbrechen",3),
-	Waffenmeister("Waffenmeister",3),
-	Würgegriff("Würgegriff",3),
-	Wurf("Wurf",3),
-	WaffenloserKampfstilBornländisch("Waffenloser Kampfstil: Bornländisch",3),
-	WaffenloserKampfstilGladiatorenstil("Waffenloser Kampfstil: Gladiatorenstil",3),
-	WaffenloserKampfstilHammerfaust("Waffenloser Kampfstil: Hammerfaust",3),
-	WaffenloserKampfstilHruruzat("Waffenloser Kampfstil: Hruruzat",3),
-	WaffenloserKampfstilMercenario("Waffenloser Kampfstil: Mercenario",3),
-	WaffenloserKampfstilUnauerSchule("Waffenloser Kampfstil: Unauer Schule",3),
-	WaffenloserKampfstilGladiatorenstilDDZ("Waffenloser Kampfstil: Gladiatorenstil (DDZ)",3),
-	VielfacheLadungen("Vielfache Ladungen",3),
-	Waldkundig("Waldkundig",3),
-	Windmühle("Windmühle",3),
-	Wuchtschlag("Wuchtschlag",3),
-	Wüstenkundig("Wüstenkundig",3),
-	ZauberBereithalten("Zauber bereithalten",3),
-	Zauberkontrolle("Zauberkontrolle",3),
-	Zauberroutine("Zauberroutine",3),
-	ZauberUnterbrechen("Zauber unterbrechen",3),
-	ZauberVereinigen("Zauber vereinigen",3),
-	ZauberzeichenLeuchtendesZeichen("Zauberzeichen: Leuchtendes Zeichen",3),
-	ZauberzeichenSingendesZeichen("Zauberzeichen: Singendes Zeichen",3),
-	ZauberzeichenSiegelDerSeelenruhe("Zauberzeichen: Siegel der Seelenruhe",3),
-	ZauberzeichenHermetischesSiegel("Zauberzeichen: Hermetisches Siegel",3),
-	ZauberzeichenGlypheDerElementarenAttraktion("Zauberzeichen: Glyphe der Elementaren Attraktion",3),
-	ZauberzeichenUngesehenesZeichen("Zauberzeichen: Ungesehenes Zeichen",3),
-	ZauberzeichenGlypheDerElementarenBannung("Zauberzeichen: Glyphe der Elementaren Bannung",3),
-	ZauberzeichenZähneDesFeuers("Zauberzeichen: Zähne des Feuers",3),
-	ZauberzeichenZeichenDerZauberschmiede("Zauberzeichen: Zeichen der Zauberschmiede",3),
-	ZauberzeichenMarkierungDesTodes("Zauberzeichen: Markierung des Todes",3),
-	ZauberzeichenFanalDerHerrschaft("Zauberzeichen: Fanal der Herrschaft",3),
-	ZauberzeichenGlypheDesVerfluchtenGoldes("Zauberzeichen: Glyphe des verfluchten Goldes",3),
-	ZauberzeichenAugeDerEwigenWacht("Zauberzeichen: Auge der Ewigen Wacht",3),
-	ZauberzeichenAugeDesBasilisken("Zauberzeichen: Auge des Basilisken",3),
-	ZauberzeichenSatinavsSiegel("Zauberzeichen: Satinavs Siegel",3),
-	ZauberzeichenSchutzsiegel("Zauberzeichen: Schutzsiegel",3),
-	ZauberzeichenSchutzkreisGegenTraumgänger("Zauberzeichen: Schutzkreis gegen Traumgänger",3),
-	ZaubertanzTanzDerLiebe("Zaubertanz: Tanz der Liebe",3),
-	ZaubertanzKhablasVerlockungTanzDerLiebe("Zaubertanz: Khablas Verlockung (Tanz der Liebe)",3),
-	ZaubertanzRahjarraTanzDerLiebe("Zaubertanz: Rahjarra (Tanz der Liebe)",3),
-	ZaubertanzTanzDerFreude("Zaubertanz: Tanz der Freude",3),
-	ZaubertanzPerhinasSegenTanzDerFreude("Zaubertanz: Perhinas Segen (Tanz der Freude)",3),
-	ZaubertanzPerainesLiebeTanzDerFreude("Zaubertanz: Peraines Liebe (Tanz der Freude)",3),
-	ZaubertanzTanzDerErmutigung("Zaubertanz: Tanz der Ermutigung",3),
-	ZaubertanzRhondarasForderungTanzDerErmutigung("Zaubertanz: Rhondaras Forderung (Tanz der Ermutigung)",3),
-	ZaubertanzRondrasMutTanzDerErmutigung("Zaubertanz: Rondras Mut (Tanz der Ermutigung)",3),
-	ZaubertanzPavonearseTanzDerErmutigung("Zaubertanz: Pavonearse (Tanz der Ermutigung)",3),
-	ZaubertanzTanzDerWahrheit("Zaubertanz: Tanz der Wahrheit",3),
-	ZaubertanzHeschinjasBlickTanzDerWahrheit("Zaubertanz: Heschinjas Blick (Tanz der Wahrheit)",3),
-	ZaubertanzTanzDerErlösung("Zaubertanz: Tanz der Erlösung",3),
-	ZaubertanzMarhibosHandTanzDerErlösung("Zaubertanz: Marhibos Hand (Tanz der Erlösung)",3),
-	ZaubertanzHesindesMachtTanzDerErlösung("Zaubertanz: Hesindes Macht (Tanz der Erlösung)",3),
-	ZaubertanzZarpadaTanzDerErlösung("Zaubertanz: Zarpada (Tanz der Erlösung)",3),
-	ZaubertanzTanzDerBilder("Zaubertanz: Tanz der Bilder",3),
-	ZaubertanzShimijasRauschTanzDerBilder("Zaubertanz: Shimijas Rausch (Tanz der Bilder)",3),
-	ZaubertanzPhexensGeschmeideTanzDerBilder("Zaubertanz: Phexens Geschmeide (Tanz der Bilder)",3),
-	ZaubertanzElVanidadTanzDerBilder("Zaubertanz: El Vanidad (Tanz der Bilder)",3),
-	ZaubertanzTanzOhneEnde("Zaubertanz: Tanz ohne Ende",3),
-	ZaubertanzNahemasTraumTanzOhneEnde("Zaubertanz: Nahemas Traum (Tanz ohne Ende)",3),
-	ZaubertanzSatinavsGabeTanzOhneEnde("Zaubertanz: Satinavs Gabe (Tanz ohne Ende)",3),
-	ZaubertanzSuenyoTanzOhneEnde("Zaubertanz: Suenyo (Tanz ohne Ende)",3),
-	ZaubertanzTanzDesUngehorsams("Zaubertanz: Tanz des Ungehorsams",3),
-	ZaubertanzTanzDerGemeinschaft("Zaubertanz: Tanz der Gemeinschaft",3),
-	ZaubertanzOrhimasTanzTanzDerWeisheit("Zaubertanz: Orhimas Tanz (Tanz der Weisheit)",3),
-	ZaubertanzTanzFürRastullahTanzDerUnantastbarkeit("Zaubertanz: Tanz für Rastullah (Tanz der Unantastbarkeit)",3),
-	ZaubertanzSelinata("Zaubertanz: Selinata",3),
-	ZaubertanzMadayana("Zaubertanz: Madayana",3),
-	ZaubertanzFirunsJagd("Zaubertanz: Firuns Jagd",3),
-	ZaubertanzRahjasBegehren("Zaubertanz: Rahjas Begehren",3),
-	Zauberzeichen("Zauberzeichen",3),
-	ZibiljaRitualSchwarmseele("Zibilja-Ritual: Schwarmseele",3),
-	ZibiljaRitualMackestopp("Zibilja-Ritual: Mackestopp",3),
-	ZibiljaRitualTraumseherin("Zibilja-Ritual: Traumseherin",3),
-	ZibiljaRitualWeisheitDerSchrift("Zibilja-Ritual: Weisheit der Schrift",3),
-	ZibiljaRitualSiegelDerEwigenRuhe("Zibilja-Ritual: Siegel der Ewigen Ruhe",3),
-	ZibiljaRitualUnsichtbareChronik("Zibilja-Ritual: Unsichtbare Chronik",3),
-	ZibiljaRitualRufDesBienenstocks("Zibilja-Ritual: Ruf des Bienenstocks",3),
-	ZibiljaRitualWinterlager("Zibilja-Ritual: Winterlager",3),
-	ZibiljaRitualBienenschwarm("Zibilja-Ritual: Bienenschwarm",3),
-	ZibiljaRitualWachshaut("Zibilja-Ritual: Wachshaut",3),
-	ZibiljaRitualBienenkönigin("Zibilja-Ritual: Bienenkönigin",3),
-	ZibiljaRitualBienenfleiß("Zibilja-Ritual: Bienenfleiß",3),
-	ZibiljaRitualBienentanz("Zibilja-Ritual: Bienentanz",3),
-	ZibiljaRitualTraumwissen("Zibilja-Ritual: Traumwissen",3),
-	AkklimatisierungHitze("Akklimatisierung: Hitze",3),
-	AkklimatisierungKälte("Akklimatisierung: Kälte",3),
-	Fälscher("Fälscher",3),
-	Rosstäuscher("Rosstäuscher",3),
-	Standfest("Standfest",3),
-	Geschützmeister("Geschützmeister",3),
-	Halbschwert("Halbschwert",3),
-	Klingentänzer("Klingentänzer",3),
-	Chimärenmeister("Chimärenmeister",3),
-	RitualkenntnisSeher("Ritualkenntnis Seher",3),
-	SeherRunenbindung("Seher: Runenbindung",3),
-	SeherTraumseher("Seher: Traumseher",3),
-	SeherRunenDerWeissagung("Seher: Runen der Weissagung",3),
-	SeherRatDerAhnen("Seher: Rat der Ahnen",3),
-	SeherRufDerRunjas("Seher: Ruf der Runjas",3),
-	Talentspezialisierung("Talentspezialisierung",3),
-	Zauberspezialisierung("Zauberspezialisierung",3),
-	RepräsentationAlhanisch("Repräsentation: Alhanisch",3),
-	RepräsentationDruidischGeodisch("Repräsentation: Druidisch-Geodisch",3),
-	RepräsentationGüldenländisch("Repräsentation: Güldenländisch",3),
-	RepräsentationGrolmisch("Repräsentation: Grolmisch",3),
-	RepräsentationKophtanisch("Repräsentation: Kophtanisch",3),
-	RepräsentationMudramulisch("Repräsentation: Mudramulisch",3),
-	RepräsentationSatuarisch("Repräsentation: Satuarisch",3),
-	SchlangenszeptersBindung("Schlangenszepters: Bindung",3),
-	SchlangenszeptersRufDerFliegendenSchlange("Schlangenszepters: Ruf der fliegenden Schlange",3),
-	SzepterBindung("Szepter: Bindung",3),
-	SzepterFliegenleib("Szepter: Fliegenleib",3),
-	SzepterGolemdiener("Szepter: Golemdiener",3),
-	SzepterHerrscherDerDjinnim("Szepter: Herrscher der Djinnim",3),
-	SzepterHerrscherDerIfriitim("Szepter: Herrscher der Ifriitim",3),
-	SzepterKraftDerKophtanim("Szepter: Kraft der Kophtanim",3),
-	SzepterSchutzDerAhnen("Szepter: Schutz der Ahnen",3),
-	SzepterStimmeDerMacht("Szepter: Stimme der Macht",3),
-	SzepterVermächtnisDerKophtanim("Szepter: Vermächtnis der Kophtanim",3),
-	SzepterWaffeDesGeistes("Szepter: Waffe des Geistes",3),
-	RituelleStrafeÄngsteMehren("Rituelle Strafe: Ängste mehren",3),
-	RituelleStrafeBeißAufGranit("Rituelle Strafe: Beiß auf Granit",3),
-	RituelleStrafeBeute("Rituelle Strafe: Beute",3),
-	RituelleStrafeHexenschuss("Rituelle Strafe: Hexenschuss",3),
-	RituelleStrafeKrötenkuss("Rituelle Strafe: Krötenkuss",3),
-	RituelleStrafeMitBlindheitSchlagen("Rituelle Strafe: Mit Blindheit schlagen",3),
-	RituelleStrafePechAnDenHals("Rituelle Strafe: Pech an den Hals",3),
-	RituelleStrafePestilenz("Rituelle Strafe: Pestilenz",3),
-	RituelleStrafeSchlafRauben("Rituelle Strafe: Schlaf rauben",3),
-	RituelleStrafeTodesfluch("Rituelle Strafe: Todesfluch",3),
-	RituelleStrafeUnfruchtbarkeit("Rituelle Strafe: Unfruchtbarkeit",3),
-	RituelleStrafeWarzenSprießen("Rituelle Strafe: Warzen sprießen",3),
-	RituelleStrafeZungeLähmen("Rituelle Strafe: Zunge lähmen",3),
-	KristallpendelAstralesZeichen("Kristallpendel: Astrales Zeichen",3),
-	KristallpendelAuraDesFriedens("Kristallpendel: Aura des Friedens",3),
-	KristallpendelBlutDerSippe("Kristallpendel: Blut der Sippe",3),
-	KristallpendelGebetDerFürsorge("Kristallpendel: Gebet der Fürsorge",3),
-	KristallpendelHilfeDesPendels("Kristallpendel: Hilfe des Pendels",3),
-	KristallpendelLichtDerHoffnung("Kristallpendel: Licht der Hoffnung",3),
-	KristallpendelPendelDerHellsicht("Kristallpendel: Pendel der Hellsicht",3),
-	KristallpendelSeelengespür("Kristallpendel: Seelengespür",3),
-	KristallpendelSteinDerWeisen("Kristallpendel: Stein der Weisen",3),
-	KristallpendelTraumgespinste("Kristallpendel: Traumgespinste",3),
-	KristallpendelWeiheDesPendels("Kristallpendel: Weihe des Pendels",3),
-	ZauberzeichenFixierungszeichen("Zauberzeichen: Fixierungszeichen",3),
-	ZauberzeichenHypnotischesZeichen("Zauberzeichen: Hypnotisches Zeichen",3),
-	ZauberzeichenSiegelDerStille("Zauberzeichen: Siegel der Stille",3),
-	ZauberzeichenSigilleDesUnsichtbarenWeges("Zauberzeichen: Sigille des unsichtbaren Weges",3),
-	ZauberzeichenVerständigungszeichen("Zauberzeichen: Verständigungszeichen",3),
-	ZauberzeichenZeichenDesStillstands("Zauberzeichen: Zeichen des Stillstands",3),
-	ZauberzeichenZeichenGegenMagie("Zauberzeichen: Zeichen gegen Magie",3),
-	ZauberzeichenZusatzzeichenTarnung("Zauberzeichen: Zusatzzeichen Tarnung",3),
-	ZauberzeichenZusatzzeichenKraftquellenspeisung("Zauberzeichen: Zusatzzeichen Kraftquellenspeisung",3),
-	TapasuulBlutFürVisar("Tapasuul: Blut für Visar",3),
-	TapasuulEinHerzFürVisar("Tapasuul: Ein Herz für Visar",3),
-	TapasuulGestaltDesTapam("Tapasuul: Gestalt des Tapam",3),
-	TapasuulKerkerDesSatuul("Tapasuul: Kerker des Satuul",3),
-	TapasuulKraftDesTapam("Tapasuul: Kraft des Tapam",3),
-	LiturgiekenntnisDunkleZeiten("Liturgiekenntnis (Dunkle Zeiten)",3),
-	GöttlicheEssenzKanalisierenI("Göttliche Essenz kanalisieren (I)",3),
-	GöttlichesPrinzipStärkenI("Göttliches Prinzip stärken (I)",3),
-	GöttlichenWillenErzwingenI("Göttlichen Willen erzwingen (I)",3),
-	GöttlicheMachtBindenI("Göttliche Macht binden (I)",3),
-	GöttlicheBeseelungRufenI("Göttliche Beseelung rufen (I)",3),
-	GöttlichenSchutzErflehenI("Göttlichen Schutz erflehen (I)",3),
-	GöttlicheEssenzKanalisierenII("Göttliche Essenz kanalisieren (II)",3),
-	GöttlichesPrinzipStärkenII("Göttliches Prinzip stärken (II)",3),
-	GöttlichenWillenErzwingenII("Göttlichen Willen erzwingen (II)",3),
-	GöttlicheMachtBindenII("Göttliche Macht binden (II)",3),
-	GöttlicheBeseelungRufenII("Göttliche Beseelung rufen (II)",3),
-	GöttlichenSchutzErflehenII("Göttlichen Schutz erflehen (II)",3),
-	GöttlicheEssenzKanalisierenIII("Göttliche Essenz kanalisieren (III)",3),
-	GöttlichesPrinzipStärkenIII("Göttliches Prinzip stärken (III)",3),
-	GöttlichenWillenErzwingenIII("Göttlichen Willen erzwingen (III)",3),
-	GöttlicheMachtBindenIII("Göttliche Macht binden (III)",3),
-	GöttlicheBeseelungRufenIII("Göttliche Beseelung rufen (III)",3),
-	GöttlichenSchutzErflehenIII("Göttlichen Schutz erflehen (III)",3),
-	GöttlicheEssenzKanalisierenIV("Göttliche Essenz kanalisieren (IV)",3),
-	GöttlichesPrinzipStärkenIV("Göttliches Prinzip stärken (IV)",3),
-	GöttlichenWillenErzwingenIV("Göttlichen Willen erzwingen (IV)",3),
-	GöttlicheMachtBindenIV("Göttliche Macht binden (IV)",3),
-	GöttlicheBeseelungRufenIV("Göttliche Beseelung rufen (IV)",3),
-	GöttlichenSchutzErflehenIV("Göttlichen Schutz erflehen (IV)",3),
-	GöttlicheEssenzKanalisierenV("Göttliche Essenz kanalisieren (V)",3),
-	GöttlichesPrinzipStärkenV("Göttliches Prinzip stärken (V)",3),
-	GöttlichenWillenErzwingenV("Göttlichen Willen erzwingen (V)",3),
-	GöttlicheMachtBindenV("Göttliche Macht binden (V)",3),
-	GöttlicheBeseelungRufenV("Göttliche Beseelung rufen (V)",3),
-	GöttlichenSchutzErflehenV("Göttlichen Schutz erflehen (V)",3),
-	WaffenloserKampfstilCyclopeischesRingen("Waffenloser Kampfstil: Cyclopeisches Ringen",3),
-	WaffenloserKampfstilEchsenzwinger("Waffenloser Kampfstil: Echsenzwinger",3),
-	WaffenloserKampfstilLegionärsstil("Waffenloser Kampfstil: Legionärsstil",3),
-	WaffenloserKampfstilGossenstil("Waffenloser Kampfstil: Gossenstil",3),
-	SchalenzauberSatinavsBannung("Schalenzauber: Satinavs Bannung",3),
-	KugelzauberGeschenkDesSsadNavv("Kugelzauber: Geschenk des Ssad'Navv",3),
-	KugelzauberAlMahmoud("Kugelzauber: Al'Mahmoud",3),
-	KugelzauberSiegelDerSechsfachenEhre("Kugelzauber: Siegel der Sechsfachen Ehre",3),
-	KugelzauberUntrüglicherBlickDesFalken("Kugelzauber: Untrüglicher Blick des Falken",3),
-	KugelzauberZauberspeicher("Kugelzauber: Zauberspeicher",3),
-	ZauberzeichenSchutzkreisGegenChimären("Zauberzeichen: Schutzkreis gegen Chimären",3),
-	SeeleDerGemeinschaft("Seele der Gemeinschaft",3),
-	ZauberzeichenBannUndSchutzkreisGegenElementare("Zauberzeichen: Bann- und Schutzkreis gegen Elementare",3),
-	ZauberzeichenBannUndSchutzkreisGegenGehörnteDämonen("Zauberzeichen: Bann- und Schutzkreis gegen gehörnte Dämonen",3),
-	ZauberzeichenBannUndSchutzkreisGegenGeisterwesen("Zauberzeichen: Bann- und Schutzkreis gegen Geisterwesen",3),
-	ZauberzeichenBannUndSchutzkreisGegenNiedereDämonen("Zauberzeichen: Bann- und Schutzkreis gegen niedere Dämonen",3),
-	ZauberzeichenSchutzkreisGegenReptilien("Zauberzeichen: Schutzkreis gegen Reptilien",3),
-	ZauberzeichenSchutzkreisGegenUngeziefer("Zauberzeichen: Schutzkreis gegen Ungeziefer",3),
-	ZauberzeichenBannkreisGegenChimären("Zauberzeichen: Bannkreis gegen Chimären",3),
-	ZauberzeichenBannkreisGegenTraumgänger("Zauberzeichen: Bannkreis gegen Traumgänger",3)
-;
-
-	private static final int TYPE_ADVANTAGE =1;
-	private static final int TYPE_DISADVANTAGE =2;
-	private static final int TYPE_SPECIAL_FEATURE =3;
+	Amtsadel("Amtsadel", FeatureGroupType.Advantage), AdligeAbstammung("Adlige Abstammung", FeatureGroupType.Advantage), AdligesErbe(
+			"Adliges Erbe", FeatureGroupType.Advantage), AffinitätZu("Affinität zu", FeatureGroupType.Advantage), AkademischeAusbildungGelehrter(
+			"Akademische Ausbildung (Gelehrter)", FeatureGroupType.Advantage), AkademischeAusbildungKrieger(
+			"Akademische Ausbildung (Krieger)", FeatureGroupType.Advantage), AkademischeAusbildungMagier(
+			"Akademische Ausbildung (Magier)", FeatureGroupType.Advantage), Altersresistenz("Altersresistenz",
+			FeatureGroupType.Advantage), AstraleRegeneration("Astrale Regeneration", FeatureGroupType.Advantage), Astralmacht(
+			"Astralmacht", FeatureGroupType.Advantage), Ausdauernd("Ausdauernd", FeatureGroupType.Advantage), AusdauernderZauberer(
+			"Ausdauernder Zauberer", FeatureGroupType.Advantage), Ausrüstungsvorteil("Ausrüstungsvorteil",
+			FeatureGroupType.Advantage), Balance("Balance", FeatureGroupType.Advantage), BegabungFürMerkmal(
+			"Begabung für [Merkmal]", FeatureGroupType.Advantage), BegabungFürRitual("Begabung für [Ritual]",
+			FeatureGroupType.Advantage), BegabungFürTalent("Begabung für [Talent]", FeatureGroupType.Advantage), BegabungFürTalentgruppe(
+			"Begabung für [Talentgruppe]", FeatureGroupType.Advantage), BegabungFürZauber("Begabung für [Zauber]",
+			FeatureGroupType.Advantage), Beidhändig("Beidhändig", FeatureGroupType.Advantage), BeseelteKnochenkeule(
+			"Beseelte Knochenkeule", FeatureGroupType.Advantage), BesondererBesitz("Besonderer Besitz",
+			FeatureGroupType.Advantage), BreitgefächerteBildung("Breitgefächerte Bildung", FeatureGroupType.Advantage), Dämmerungssicht(
+			"Dämmerungssicht", FeatureGroupType.Advantage), EidetischesGedächtnis("Eidetisches Gedächtnis",
+			FeatureGroupType.Advantage), Eigeboren("Eigeboren", FeatureGroupType.Advantage), EisenaffineAura(
+			"Eisenaffine Aura", FeatureGroupType.Advantage), Eisern("Eisern", FeatureGroupType.Advantage), Empathie(
+			"Empathie", FeatureGroupType.Advantage), Entfernungssinn("Entfernungssinn", FeatureGroupType.Advantage), ErerbteKnochenkeule(
+			"Ererbte Knochenkeule", FeatureGroupType.Advantage), Feenfreund("Feenfreund", FeatureGroupType.Advantage), FesteMatrix(
+			"Feste Matrix", FeatureGroupType.Advantage), FrüherVertrauter("Früher Vertrauter",
+			FeatureGroupType.Advantage), Flink("Flink", FeatureGroupType.Advantage), Gebildet("Gebildet",
+			FeatureGroupType.Advantage), Gefahreninstinkt("Gefahreninstinkt", FeatureGroupType.Advantage), Geräuschhexerei(
+			"Geräuschhexerei", FeatureGroupType.Advantage), GeweihtAngrosch("Geweiht [Angrosch]",
+			FeatureGroupType.Advantage), GeweihtGravesh("Geweiht [Gravesh]", FeatureGroupType.Advantage), GeweihtnichtalveranischeGottheit(
+			"Geweiht [nicht-alveranische Gottheit]", FeatureGroupType.Advantage), GeweihtHRanga("Geweiht [H'Ranga]",
+			FeatureGroupType.Advantage), GeweihtzwölfgöttlicheKirche("Geweiht [zwölfgöttliche Kirche]",
+			FeatureGroupType.Advantage), GöttergeschenkFuchs("Göttergeschenk: Fuchs", FeatureGroupType.Advantage), Glück(
+			"Glück", FeatureGroupType.Advantage), GlückImSpiel("Glück im Spiel", FeatureGroupType.Advantage), Gutaussehend(
+			"Gutaussehend", FeatureGroupType.Advantage), GuterRuf("Guter Ruf", FeatureGroupType.Advantage), GutesGedächtnis(
+			"Gutes Gedächtnis", FeatureGroupType.Advantage), Halbzauberer("Halbzauberer", FeatureGroupType.Advantage), HerausragendeBalance(
+			"Herausragende Balance", FeatureGroupType.Advantage), HerausragendeEigenschaft("Herausragende Eigenschaft",
+			FeatureGroupType.Advantage), HerausragendeEigenschaftCharisma("Herausragende Eigenschaft: Charisma",
+			FeatureGroupType.Advantage), HerausragendeEigenschaftFingerfertigkeit(
+			"Herausragende Eigenschaft: Fingerfertigkeit", FeatureGroupType.Advantage), HerausragendeEigenschaftGewandtheit(
+			"Herausragende Eigenschaft: Gewandtheit", FeatureGroupType.Advantage), HerausragendeEigenschaftIntuition(
+			"Herausragende Eigenschaft: Intuition", FeatureGroupType.Advantage), HerausragendeEigenschaftKlugheit(
+			"Herausragende Eigenschaft: Klugheit", FeatureGroupType.Advantage), HerausragendeEigenschaftKörperkraft(
+			"Herausragende Eigenschaft: Körperkraft", FeatureGroupType.Advantage), HerausragendeEigenschaftKonstitution(
+			"Herausragende Eigenschaft: Konstitution", FeatureGroupType.Advantage), HerausragendeEigenschaftMut(
+			"Herausragende Eigenschaft: Mut", FeatureGroupType.Advantage), HerausragenderSechsterSinn(
+			"Herausragender Sechster Sinn", FeatureGroupType.Advantage), HerausragenderSinn("Herausragender Sinn",
+			FeatureGroupType.Advantage), HerausragendesAussehen("Herausragendes Aussehen", FeatureGroupType.Advantage), Hitzeresistenz(
+			"Hitzeresistenz", FeatureGroupType.Advantage), HoheLebenskraft("Hohe Lebenskraft",
+			FeatureGroupType.Advantage), HoheMagieresistenz("Hohe Magieresistenz", FeatureGroupType.Advantage), ImmunitätGegenGift(
+			"Immunität gegen Gift", FeatureGroupType.Advantage), ImmunitätGegenKrankheiten(
+			"Immunität gegen Krankheiten", FeatureGroupType.Advantage), InnererKompass("Innerer Kompass",
+			FeatureGroupType.Advantage), Kälteresistenz("Kälteresistenz", FeatureGroupType.Advantage), Kampfrausch(
+			"Kampfrausch", FeatureGroupType.Advantage), Koboldfreund("Koboldfreund", FeatureGroupType.Advantage), Kräfteschub(
+			"Kräfteschub", FeatureGroupType.Advantage), Talentschub("Talentschub", FeatureGroupType.Advantage), Linkshänder(
+			"Linkshänder", FeatureGroupType.Advantage), MachtvollerVertrauter("Machtvoller Vertrauter",
+			FeatureGroupType.Advantage), Magiedilletant("Magiedilletant", FeatureGroupType.Advantage), Magiegespür(
+			"Magiegespür", FeatureGroupType.Advantage), Meisterhandwerk("Meisterhandwerk", FeatureGroupType.Advantage), Nachtsicht(
+			"Nachtsicht", FeatureGroupType.Advantage), NatürlicherRüstungsschutz("Natürlicher Rüstungsschutz",
+			FeatureGroupType.Advantage), NatürlicheWaffen("Natürliche Waffen", FeatureGroupType.Advantage), NiedrigeSchlechteEigenschaft(
+			"Niedrige Schlechte Eigenschaft", FeatureGroupType.Advantage), Prophezeien("Prophezeien",
+			FeatureGroupType.Advantage), ResistenzGegenGift("Resistenz gegen Gift", FeatureGroupType.Advantage), ResistenzGegenKrankheiten(
+			"Resistenz gegen Krankheiten", FeatureGroupType.Advantage), Richtungssinn("Richtungssinn",
+			FeatureGroupType.Advantage), Schlangenmensch("Schlangenmensch", FeatureGroupType.Advantage), SchnelleHeilung(
+			"Schnelle Heilung", FeatureGroupType.Advantage), Schutzgeist("Schutzgeist", FeatureGroupType.Advantage), SchwerZuVerzaubern(
+			"Schwer zu verzaubern", FeatureGroupType.Advantage), SozialeAnpassungsfähigkeit(
+			"Soziale Anpassungsfähigkeit", FeatureGroupType.Advantage), Sprachgefühl("Sprachgefühl",
+			FeatureGroupType.Advantage), Tierfreund("Tierfreund", FeatureGroupType.Advantage), Tierempathiealle(
+			"Tierempathie (alle)", FeatureGroupType.Advantage), Tierempathiespeziell("Tierempathie (speziell)",
+			FeatureGroupType.Advantage), Titularadel("Titularadel", FeatureGroupType.Advantage), ÜbernatürlicheBegabung(
+			"Übernatürliche Begabung", FeatureGroupType.Advantage), UnbeschwertesZaubern("Unbeschwertes Zaubern",
+			FeatureGroupType.Advantage), Verbindungen("Verbindungen", FeatureGroupType.Advantage), VerhüllteAura(
+			"Verhüllte Aura", FeatureGroupType.Advantage), Veteran("Veteran", FeatureGroupType.Advantage), Viertelzauberer(
+			"Viertelzauberer", FeatureGroupType.Advantage), UnbewussterViertelzauberer("Unbewusster Viertelzauberer",
+			FeatureGroupType.Advantage), Vollzauberer("Vollzauberer", FeatureGroupType.Advantage), VomSchicksalBegünstigt(
+			"Vom Schicksal begünstigt", FeatureGroupType.Advantage), WesenDerNacht("Wesen der Nacht",
+			FeatureGroupType.Advantage), Wolfskind("Wolfskind", FeatureGroupType.Advantage), Wohlklang("Wohlklang",
+			FeatureGroupType.Advantage), ZäherHund("Zäher Hund", FeatureGroupType.Advantage), Zauberhaar("Zauberhaar",
+			FeatureGroupType.Advantage), Zeitgefühl("Zeitgefühl", FeatureGroupType.Advantage), ZusätzlicheGliedmaßen(
+			"Zusätzliche Gliedmaßen", FeatureGroupType.Advantage), ZweistimmigerGesang("Zweistimmiger Gesang",
+			FeatureGroupType.Advantage), Zwergennase("Zwergennase", FeatureGroupType.Advantage), AbneigungGegenOrks(
+			"Abneigung gegen Orks", FeatureGroupType.Advantage), AusdauerndTier1("Ausdauernd (Tier) 1",
+			FeatureGroupType.Advantage), AusdauerndTier2("Ausdauernd (Tier) 2", FeatureGroupType.Advantage), Eigenwillig(
+			"Eigenwillig", FeatureGroupType.Advantage), Einzelgänger("Einzelgänger", FeatureGroupType.Advantage), EleganteErscheinung(
+			"Elegante Erscheinung", FeatureGroupType.Advantage), Feurig("Feurig", FeatureGroupType.Advantage), Flinkheit(
+			"Flinkheit", FeatureGroupType.Advantage), Friedliebend("Friedliebend", FeatureGroupType.Advantage), Geduldig(
+			"Geduldig", FeatureGroupType.Advantage), Genügsam("Genügsam", FeatureGroupType.Advantage), GuterOrientierungssinn(
+			"Guter Orientierungssinn", FeatureGroupType.Advantage), Gutmütig("Gutmütig", FeatureGroupType.Advantage), Halbwild(
+			"Halbwild", FeatureGroupType.Advantage), Intelligent("Intelligent", FeatureGroupType.Advantage), Kehlenbiss(
+			"Kehlenbiss", FeatureGroupType.Advantage), Kläffer("Kläffer", FeatureGroupType.Advantage), Lernfähig(
+			"Lernfähig", FeatureGroupType.Advantage), Nervosität("Nervosität", FeatureGroupType.Advantage), RuhigesTemperament(
+			"Ruhiges Temperament", FeatureGroupType.Advantage), Schnell("Schnell", FeatureGroupType.Advantage), Schnelligkeit(
+			"Schnelligkeit", FeatureGroupType.Advantage), SchwerZuErziehen("Schwer zu erziehen",
+			FeatureGroupType.Advantage), SehrLernfähig("Sehr lernfähig", FeatureGroupType.Advantage), Spieltrieb(
+			"Spieltrieb", FeatureGroupType.Advantage), Stark("Stark", FeatureGroupType.Advantage), Störrisch(
+			"Störrisch", FeatureGroupType.Advantage), Tragkraft1("Tragkraft 1", FeatureGroupType.Advantage), Tragkraft2(
+			"Tragkraft 2", FeatureGroupType.Advantage), Trendeln("Trendeln", FeatureGroupType.Advantage), Trittsicherheit(
+			"Trittsicherheit", FeatureGroupType.Advantage), Wasserliebend("Wasserliebend", FeatureGroupType.Advantage), WeicheGänge(
+			"Weiche Gänge", FeatureGroupType.Advantage), Zäh("Zäh", FeatureGroupType.Advantage), Zugkraft1(
+			"Zugkraft 1", FeatureGroupType.Advantage), Zugkraft2("Zugkraft 2", FeatureGroupType.Advantage), Aberglaube(
+			"Aberglaube", FeatureGroupType.Disadvantage), Agrimothwahn("Agrimothwahn", FeatureGroupType.Disadvantage), Albino(
+			"Albino", FeatureGroupType.Disadvantage), AngstVorInsekten("Angst vor Insekten",
+			FeatureGroupType.Disadvantage), AngstVorMenschenmassen("Angst vor Menschenmassen",
+			FeatureGroupType.Disadvantage), AngstVorSpinnen("Angst vor Spinnen", FeatureGroupType.Disadvantage), AngstVorReptilien(
+			"Angst vor Reptilien", FeatureGroupType.Disadvantage), AngstVorPelztieren("Angst vor Pelztieren",
+			FeatureGroupType.Disadvantage), AngstVorWasser("Angst vor Wasser", FeatureGroupType.Disadvantage), AngstVorFeuer(
+			"Angst vor Feuer", FeatureGroupType.Disadvantage), AngstVorNagetieren("Angst vor Nagetieren",
+			FeatureGroupType.Disadvantage), AnimalischeMagie("Animalische Magie", FeatureGroupType.Disadvantage), Arkanophobie(
+			"Arkanophobie", FeatureGroupType.Disadvantage), Arroganz("Arroganz", FeatureGroupType.Disadvantage), Artefaktgebunden(
+			"Artefaktgebunden", FeatureGroupType.Disadvantage), AstralerBlock("Astraler Block",
+			FeatureGroupType.Disadvantage), Autoritätsgläubig("Autoritätsgläubig", FeatureGroupType.Disadvantage), Behäbig(
+			"Behäbig", FeatureGroupType.Disadvantage), Blutdurst("Blutdurst", FeatureGroupType.Disadvantage), Grausamkeit(
+			"Grausamkeit", FeatureGroupType.Disadvantage), Blutrausch("Blutrausch", FeatureGroupType.Disadvantage), Brünstigkeit(
+			"Brünstigkeit", FeatureGroupType.Disadvantage), Charyptophilie("Charyptophilie",
+			FeatureGroupType.Disadvantage), Comes("Comes", FeatureGroupType.Disadvantage), Dunkelangst("Dunkelangst",
+			FeatureGroupType.Disadvantage), Einarmig("Einarmig", FeatureGroupType.Disadvantage), Einäugig("Einäugig",
+			FeatureGroupType.Disadvantage), Einbeinig("Einbeinig", FeatureGroupType.Disadvantage), Einbildungen(
+			"Einbildungen", FeatureGroupType.Disadvantage), EingeschränkteElementarnähe("Eingeschränkte Elementarnähe",
+			FeatureGroupType.Disadvantage), EingeschränkterSinn("Eingeschränkter Sinn", FeatureGroupType.Disadvantage), Einhändig(
+			"Einhändig", FeatureGroupType.Disadvantage), Eitelkeit("Eitelkeit", FeatureGroupType.Disadvantage), ElfischeWeltsicht(
+			"Elfische Weltsicht", FeatureGroupType.Disadvantage), ErstgeborenerComes("Erstgeborener Comes",
+			FeatureGroupType.Disadvantage), Farbenblind("Farbenblind", FeatureGroupType.Disadvantage), Feind("Feind",
+			FeatureGroupType.Disadvantage), FesteGewohnheit("Feste Gewohnheit", FeatureGroupType.Disadvantage), FestgefügtesDenken(
+			"Festgefügtes Denken", FeatureGroupType.Disadvantage), Fettleibig("Fettleibig",
+			FeatureGroupType.Disadvantage), FluchDerFinsternis("Fluch der Finsternis", FeatureGroupType.Disadvantage), Geiz(
+			"Geiz", FeatureGroupType.Disadvantage), Gesucht("Gesucht", FeatureGroupType.Disadvantage), Gerechtigkeitswahn(
+			"Gerechtigkeitswahn", FeatureGroupType.Disadvantage), Glasknochen("Glasknochen",
+			FeatureGroupType.Disadvantage), Goldgier("Goldgier", FeatureGroupType.Disadvantage), Größenwahn(
+			"Größenwahn", FeatureGroupType.Disadvantage), Herrschsucht("Herrschsucht", FeatureGroupType.Disadvantage), Heimwehkrank(
+			"Heimwehkrank", FeatureGroupType.Disadvantage), Hitzeempfindlichkeit("Hitzeempfindlichkeit",
+			FeatureGroupType.Disadvantage), HoherAmtsadel("Hoher Amtsadel", FeatureGroupType.Disadvantage), Höhenangst(
+			"Höhenangst", FeatureGroupType.Disadvantage), Impulsiv("Impulsiv", FeatureGroupType.Disadvantage), Jagdfieber(
+			"Jagdfieber", FeatureGroupType.Disadvantage), Jähzorn("Jähzorn", FeatureGroupType.Disadvantage), Streitsucht(
+			"Streitsucht", FeatureGroupType.Disadvantage), Kälteempfindlichkeit("Kälteempfindlichkeit",
+			FeatureGroupType.Disadvantage), Kältestarre("Kältestarre", FeatureGroupType.Disadvantage), KeinVertrauter(
+			"Kein Vertrauter", FeatureGroupType.Disadvantage), Kleinwüchsig("Kleinwüchsig",
+			FeatureGroupType.Disadvantage), KörpergebundeneKraft("Körpergebundene Kraft", FeatureGroupType.Disadvantage), Konstruktionswahn(
+			"Konstruktionswahn", FeatureGroupType.Disadvantage), KrankhafteNekromantie("Krankhafte Nekromantie",
+			FeatureGroupType.Disadvantage), KrankhafteReinlichkeit("Krankhafte Reinlichkeit",
+			FeatureGroupType.Disadvantage), KrankhaftesEhrgefühl("Krankhaftes Ehrgefühl", FeatureGroupType.Disadvantage), Krankheitsanfällig(
+			"Krankheitsanfällig", FeatureGroupType.Disadvantage), Kristallgebunden("Kristallgebunden",
+			FeatureGroupType.Disadvantage), Kurzatmig("Kurzatmig", FeatureGroupType.Disadvantage), Lahm("Lahm",
+			FeatureGroupType.Disadvantage), Landangst("Landangst", FeatureGroupType.Disadvantage), LästigeMindergeister(
+			"Lästige Mindergeister", FeatureGroupType.Disadvantage), Lichtempfindlich("Lichtempfindlich",
+			FeatureGroupType.Disadvantage), Lichtscheu("Lichtscheu", FeatureGroupType.Disadvantage), MadasFluch(
+			"Madas Fluch", FeatureGroupType.Disadvantage), Medium("Medium", FeatureGroupType.Disadvantage), Meeresangst(
+			"Meeresangst", FeatureGroupType.Disadvantage), MiserableEigenschaft("Miserable Eigenschaft",
+			FeatureGroupType.Disadvantage), MiserableEigenschaftCharisma("Miserable Eigenschaft: Charisma",
+			FeatureGroupType.Disadvantage), MiserableEigenschaftFingerfertigkeit(
+			"Miserable Eigenschaft: Fingerfertigkeit", FeatureGroupType.Disadvantage), MiserableEigenschaftGewandtheit(
+			"Miserable Eigenschaft: Gewandtheit", FeatureGroupType.Disadvantage), MiserableEigenschaftIntuition(
+			"Miserable Eigenschaft: Intuition", FeatureGroupType.Disadvantage), MiserableEigenschaftKlugheit(
+			"Miserable Eigenschaft: Klugheit", FeatureGroupType.Disadvantage), MiserableEigenschaftKörperkraft(
+			"Miserable Eigenschaft: Körperkraft", FeatureGroupType.Disadvantage), MiserableEigenschaftKonstitution(
+			"Miserable Eigenschaft: Konstitution", FeatureGroupType.Disadvantage), MiserableEigenschaftMut(
+			"Miserable Eigenschaft: Mut", FeatureGroupType.Disadvantage), Mondsüchtig("Mondsüchtig",
+			FeatureGroupType.Disadvantage), MoralkodexAngroschKult("Moralkodex [Angrosch-Kult]",
+			FeatureGroupType.Disadvantage), MoralkodexBadalikaner("Moralkodex [Badalikaner]",
+			FeatureGroupType.Disadvantage), MoralkodexBoronKirche("Moralkodex [Boron-Kirche]",
+			FeatureGroupType.Disadvantage), MoralkodexBundDesWahrenGlaubens("Moralkodex [Bund des wahren Glaubens]",
+			FeatureGroupType.Disadvantage), MoralkodexDreischwesternorden("Moralkodex [Dreischwesternorden]",
+			FeatureGroupType.Disadvantage), MoralkodexEfferdKirche("Moralkodex [Efferd-Kirche]",
+			FeatureGroupType.Disadvantage), MoralkodexFirunKirche("Moralkodex [Firun-Kirche]",
+			FeatureGroupType.Disadvantage), MoralkodexHesindeKirche("Moralkodex [Hesinde-Kirche]",
+			FeatureGroupType.Disadvantage), MoralkodexHSzintKult("Moralkodex [H'Szint-Kult]",
+			FeatureGroupType.Disadvantage), MoralkodexIfirnKirche("Moralkodex [Ifirn-Kirche]",
+			FeatureGroupType.Disadvantage), MoralkodexIngerimmKirche("Moralkodex [Ingerimm-Kirche]",
+			FeatureGroupType.Disadvantage), MoralkodexKorKirche("Moralkodex [Kor-Kirche]",
+			FeatureGroupType.Disadvantage), MoralkodexNandusKirche("Moralkodex [Nandus-Kirche]",
+			FeatureGroupType.Disadvantage), MoralkodexPeraineKirche("Moralkodex [Peraine-Kirche]",
+			FeatureGroupType.Disadvantage), MoralkodexPhexKirche("Moralkodex [Phex-Kirche]",
+			FeatureGroupType.Disadvantage), MoralkodexPraiosKirche("Moralkodex [Praios-Kirche]",
+			FeatureGroupType.Disadvantage), MoralkodexRahjaKirche("Moralkodex [Rahja-Kirche]",
+			FeatureGroupType.Disadvantage), MoralkodexRondraKirche("Moralkodex [Rondra-Kirche]",
+			FeatureGroupType.Disadvantage), MoralkodexSwafnirKult("Moralkodex [Swafnir-Kult]",
+			FeatureGroupType.Disadvantage), MoralkodexTraviaKirche("Moralkodex [Travia-Kirche]",
+			FeatureGroupType.Disadvantage), MoralkodexHeshinja("Moralkodex [Heshinja]", FeatureGroupType.Disadvantage), MoralkodexTsaKirche(
+			"Moralkodex [Tsa-Kirche]", FeatureGroupType.Disadvantage), MoralkodexZsahhKult("Moralkodex [Zsahh-Kult]",
+			FeatureGroupType.Disadvantage), MoralkodexDDZ("Moralkodex [DDZ]", FeatureGroupType.Disadvantage), Morbidität(
+			"Morbidität", FeatureGroupType.Disadvantage), Nachtblind("Nachtblind", FeatureGroupType.Disadvantage), Nagrachwahn(
+			"Nagrachwahn", FeatureGroupType.Disadvantage), Nahrungsrestriktion("Nahrungsrestriktion",
+			FeatureGroupType.Disadvantage), Neid("Neid", FeatureGroupType.Disadvantage), Neugier("Neugier",
+			FeatureGroupType.Disadvantage), NiedrigeAstralkraft("Niedrige Astralkraft", FeatureGroupType.Disadvantage), NiedrigeLebenskraft(
+			"Niedrige Lebenskraft", FeatureGroupType.Disadvantage), NiedrigeMagieresistenz("Niedrige Magieresistenz",
+			FeatureGroupType.Disadvantage), Pechmagnet("Pechmagnet", FeatureGroupType.Disadvantage), Platzangst(
+			"Platzangst", FeatureGroupType.Disadvantage), Prinzipientreue("Prinzipientreue",
+			FeatureGroupType.Disadvantage), Rachsucht("Rachsucht", FeatureGroupType.Disadvantage), Randgruppe(
+			"Randgruppe", FeatureGroupType.Disadvantage), Raubtiergeruch("Raubtiergeruch",
+			FeatureGroupType.Disadvantage), Raumangst("Raumangst", FeatureGroupType.Disadvantage), Rückschlag(
+			"Rückschlag", FeatureGroupType.Disadvantage), Ruhelosigkeit("Ruhelosigkeit", FeatureGroupType.Disadvantage), Sacerdos(
+			"Sacerdos", FeatureGroupType.Disadvantage), Schlaflosigkeit("Schlaflosigkeit",
+			FeatureGroupType.Disadvantage), Schlafstörungen("Schlafstörungen", FeatureGroupType.Disadvantage), Schlafwandler(
+			"Schlafwandler", FeatureGroupType.Disadvantage), SensiblerGeruchssinn("Sensibler Geruchssinn",
+			FeatureGroupType.Disadvantage), SchlechteRegeneration("Schlechte Regeneration",
+			FeatureGroupType.Disadvantage), SchlechterRuf("Schlechter Ruf", FeatureGroupType.Disadvantage), SchnellerAlternd(
+			"Schneller alternd", FeatureGroupType.Disadvantage), Schöpferwahn("Schöpferwahn",
+			FeatureGroupType.Disadvantage), Schulden("Schulden", FeatureGroupType.Disadvantage), SchwacheAusstrahlung(
+			"Schwache Ausstrahlung", FeatureGroupType.Disadvantage), SchwacherAstralkörper("Schwacher Astralkörper",
+			FeatureGroupType.Disadvantage), SchwacherWille("Schwacher Wille", FeatureGroupType.Disadvantage), Schwanzlos(
+			"Schwanzlos", FeatureGroupType.Disadvantage), SefferManich("Seffer Manich", FeatureGroupType.Disadvantage), Selbstgespräche(
+			"Selbstgespräche", FeatureGroupType.Disadvantage), Sippenlosigkeit("Sippenlosigkeit",
+			FeatureGroupType.Disadvantage), Sonnensucht("Sonnensucht", FeatureGroupType.Disadvantage), Speisegebote(
+			"Speisegebote", FeatureGroupType.Disadvantage), Sprachfehler("Sprachfehler", FeatureGroupType.Disadvantage), Spielsucht(
+			"Spielsucht", FeatureGroupType.Disadvantage), Spruchhemmung("Spruchhemmung", FeatureGroupType.Disadvantage), Stigma(
+			"Stigma", FeatureGroupType.Disadvantage), Stubenhocker("Stubenhocker", FeatureGroupType.Disadvantage), Sucht(
+			"Sucht", FeatureGroupType.Disadvantage), Thesisgebunden("Thesisgebunden", FeatureGroupType.Disadvantage), Tollpatsch(
+			"Tollpatsch", FeatureGroupType.Disadvantage), Totenangst("Totenangst", FeatureGroupType.Disadvantage), Trägheit(
+			"Trägheit", FeatureGroupType.Disadvantage), Treulosigkeit("Treulosigkeit", FeatureGroupType.Disadvantage), ÜblerGeruch(
+			"Übler Geruch", FeatureGroupType.Disadvantage), UnangenehmeStimme("Unangenehme Stimme",
+			FeatureGroupType.Disadvantage), Unansehnlich("Unansehnlich", FeatureGroupType.Disadvantage), UnangenehmeÄußerlichkeit(
+			"Unangenehme Äußerlichkeit", FeatureGroupType.Disadvantage), UnfähigkeitFürMerkmal(
+			"Unfähigkeit für [Merkmal]", FeatureGroupType.Disadvantage), UnfähigkeitFürTalent(
+			"Unfähigkeit für [Talent]", FeatureGroupType.Disadvantage), UnfähigkeitFürTalentgruppe(
+			"Unfähigkeit für [Talentgruppe]", FeatureGroupType.Disadvantage), Unfrei("Unfrei",
+			FeatureGroupType.Disadvantage), Ungebildet("Ungebildet", FeatureGroupType.Disadvantage), Unstet("Unstet",
+			FeatureGroupType.Disadvantage), UnverträglichkeitMitVerarbeitetemMetall(
+			"Unverträglichkeit mit verarbeitetem Metall", FeatureGroupType.Disadvantage), Vergesslichkeit(
+			"Vergesslichkeit", FeatureGroupType.Disadvantage), Verpflichtungen("Verpflichtungen",
+			FeatureGroupType.Disadvantage), Verschwendungssucht("Verschwendungssucht", FeatureGroupType.Disadvantage), Verwöhnt(
+			"Verwöhnt", FeatureGroupType.Disadvantage), Vorurteile("Vorurteile", FeatureGroupType.Disadvantage), Vorurteilestark(
+			"Vorurteile (stark)", FeatureGroupType.Disadvantage), VorurteileGegen("Vorurteile gegen",
+			FeatureGroupType.Disadvantage), VorurteileGegenstark("Vorurteile gegen (stark)",
+			FeatureGroupType.Disadvantage), WahrerName("Wahrer Name", FeatureGroupType.Disadvantage), WahrerNameDschinn(
+			"Wahrer Name: Dschinn", FeatureGroupType.Disadvantage), WahrerNameDämon("Wahrer Name: Dämon",
+			FeatureGroupType.Disadvantage), Wahnvorstellungen("Wahnvorstellungen", FeatureGroupType.Disadvantage), Weltfremd(
+			"Weltfremd", FeatureGroupType.Disadvantage), WiderwärtigesAussehen("Widerwärtiges Aussehen",
+			FeatureGroupType.Disadvantage), WildeMagie("Wilde Magie", FeatureGroupType.Disadvantage), Zielschwierigkeiten(
+			"Zielschwierigkeiten", FeatureGroupType.Disadvantage), ZögerlicherZauberer("Zögerlicher Zauberer",
+			FeatureGroupType.Disadvantage), Zwergenwuchs("Zwergenwuchs", FeatureGroupType.Disadvantage), Ritualspezialisierung(
+			"Ritualspezialisierung", FeatureGroupType.SpecialFeature), Akoluth("Akoluth",
+			FeatureGroupType.SpecialFeature), Apport("Apport", FeatureGroupType.SpecialFeature), AstraleMeditation(
+			"Astrale Meditation", FeatureGroupType.SpecialFeature), Aufmerksamkeit("Aufmerksamkeit",
+			FeatureGroupType.SpecialFeature), AuraDerHeiligkeit("Aura der Heiligkeit", FeatureGroupType.SpecialFeature), AuraVerhüllen(
+			"Aura verhüllen", FeatureGroupType.SpecialFeature), Aurapanzer("Aurapanzer",
+			FeatureGroupType.SpecialFeature), Ausfall("Ausfall", FeatureGroupType.SpecialFeature), Auspendeln(
+			"Auspendeln", FeatureGroupType.SpecialFeature), AusweichenI("Ausweichen I", FeatureGroupType.SpecialFeature), AusweichenII(
+			"Ausweichen II", FeatureGroupType.SpecialFeature), AusweichenIII("Ausweichen III",
+			FeatureGroupType.SpecialFeature), Bannschwert("Bannschwert", FeatureGroupType.SpecialFeature), Befreiungsschlag(
+			"Befreiungsschlag", FeatureGroupType.SpecialFeature), BeidhändigerKampfI("Beidhändiger Kampf I",
+			FeatureGroupType.SpecialFeature), BeidhändigerKampfII("Beidhändiger Kampf II",
+			FeatureGroupType.SpecialFeature), Beinarbeit("Beinarbeit", FeatureGroupType.SpecialFeature), BerittenerSchütze(
+			"Berittener Schütze", FeatureGroupType.SpecialFeature), Betäubungsschlag("Betäubungsschlag",
+			FeatureGroupType.SpecialFeature), Binden("Binden", FeatureGroupType.SpecialFeature), Biss("Biss",
+			FeatureGroupType.SpecialFeature), Blindkampf("Blindkampf", FeatureGroupType.SpecialFeature), Block("Block",
+			FeatureGroupType.SpecialFeature), Blutmagie("Blutmagie", FeatureGroupType.SpecialFeature), DämonenbindungI(
+			"Dämonenbindung I", FeatureGroupType.SpecialFeature), DämonenbindungII("Dämonenbindung II",
+			FeatureGroupType.SpecialFeature), DefensiverKampfstil("Defensiver Kampfstil",
+			FeatureGroupType.SpecialFeature), Doppelangriff("Doppelangriff", FeatureGroupType.SpecialFeature), Doppelschlag(
+			"Doppelschlag", FeatureGroupType.SpecialFeature), Druidenrache("Druidenrache",
+			FeatureGroupType.SpecialFeature), DruidischesDolchritualWeihe("Druidisches Dolchritual: Weihe",
+			FeatureGroupType.SpecialFeature), DruidischesDolchritualGespür("Druidisches Dolchritual: Gespür",
+			FeatureGroupType.SpecialFeature), DruidischesDolchritualLicht("Druidisches Dolchritual: Licht",
+			FeatureGroupType.SpecialFeature), DruidischesDolchritualBann("Druidisches Dolchritual: Bann",
+			FeatureGroupType.SpecialFeature), DruidischesDolchritualLeib("Druidisches Dolchritual: Leib",
+			FeatureGroupType.SpecialFeature), DruidischesDolchritualSchutz("Druidisches Dolchritual: Schutz",
+			FeatureGroupType.SpecialFeature), DruidischesDolchritualWeg("Druidisches Dolchritual: Weg",
+			FeatureGroupType.SpecialFeature), DruidischesDolchritualErnte("Druidisches Dolchritual: Ernte",
+			FeatureGroupType.SpecialFeature), DruidischesDolchritualLebenskraft("Druidisches Dolchritual: Lebenskraft",
+			FeatureGroupType.SpecialFeature), DruidischesDolchritualOpferdolch("Druidisches Dolchritual: Opferdolch",
+			FeatureGroupType.SpecialFeature), DruidischesDolchritualSchneide("Druidisches Dolchritual: Schneide",
+			FeatureGroupType.SpecialFeature), DruidischesDolchritualWeisung("Druidisches Dolchritual: Weisung",
+			FeatureGroupType.SpecialFeature), DruidischesHerrschaftsritualWachsDerHerrschaft(
+			"Druidisches Herrschaftsritual: Wachs der Herrschaft", FeatureGroupType.SpecialFeature), DruidischesHerrschaftsritualMiniaturDerHerrschaft(
+			"Druidisches Herrschaftsritual: Miniatur der Herrschaft", FeatureGroupType.SpecialFeature), DruidischesHerrschaftsritualKristallDerHerrschaft(
+			"Druidisches Herrschaftsritual: Kristall der Herrschaft", FeatureGroupType.SpecialFeature), DruidischesHerrschaftsritualAmulettDerHerrschaft(
+			"Druidisches Herrschaftsritual: Amulett der Herrschaft", FeatureGroupType.SpecialFeature), DruidischesHerrschaftsritualWurzelDesBlutes(
+			"Druidisches Herrschaftsritual: Wurzel des Blutes", FeatureGroupType.SpecialFeature), Dschungelkundig(
+			"Dschungelkundig", FeatureGroupType.SpecialFeature), Eisenarm("Eisenarm", FeatureGroupType.SpecialFeature), Eisenhagel(
+			"Eisenhagel", FeatureGroupType.SpecialFeature), EisernerWilleI("Eiserner Wille I",
+			FeatureGroupType.SpecialFeature), EisernerWilleII("Eiserner Wille II", FeatureGroupType.SpecialFeature), Eiskundig(
+			"Eiskundig", FeatureGroupType.SpecialFeature), ElementarharmonisierteAura("Elementarharmonisierte Aura",
+			FeatureGroupType.SpecialFeature), ElfenliedSorgenlied("Elfenlied: Sorgenlied",
+			FeatureGroupType.SpecialFeature), ElfenliedZaubermelodie("Elfenlied: Zaubermelodie",
+			FeatureGroupType.SpecialFeature), ElfenliedFriedenslied("Elfenlied: Friedenslied",
+			FeatureGroupType.SpecialFeature), ElfenliedWindgeflüster("Elfenlied: Windgeflüster",
+			FeatureGroupType.SpecialFeature), ElfenliedLiedDerLieder("Elfenlied: Lied der Lieder",
+			FeatureGroupType.SpecialFeature), ElfenliedFreundschaftslied("Elfenlied: Freundschaftslied",
+			FeatureGroupType.SpecialFeature), ElfenliedErinnerungsmelodie("Elfenlied: Erinnerungsmelodie",
+			FeatureGroupType.SpecialFeature), ElfenliedMelodieDerKunstfertigkeit(
+			"Elfenlied: Melodie der Kunstfertigkeit", FeatureGroupType.SpecialFeature), ElfenliedLiedDesTrostes(
+			"Elfenlied: Lied des Trostes", FeatureGroupType.SpecialFeature), ElfenliedLiedDerReinheit(
+			"Elfenlied: Lied der Reinheit", FeatureGroupType.SpecialFeature), Entwaffnen("Entwaffnen",
+			FeatureGroupType.SpecialFeature), Exorzist("Exorzist", FeatureGroupType.SpecialFeature), Fernzauberei(
+			"Fernzauberei", FeatureGroupType.SpecialFeature), Festnageln("Festnageln", FeatureGroupType.SpecialFeature), Finte(
+			"Finte", FeatureGroupType.SpecialFeature), Formation("Formation", FeatureGroupType.SpecialFeature), FormDerFormlosigkeit(
+			"Form der Formlosigkeit", FeatureGroupType.SpecialFeature), Fußfeger("Fußfeger",
+			FeatureGroupType.SpecialFeature), GeberDerGestalt("Geber der Gestalt", FeatureGroupType.SpecialFeature), Gebirgskundig(
+			"Gebirgskundig", FeatureGroupType.SpecialFeature), Gedankenschutz("Gedankenschutz",
+			FeatureGroupType.SpecialFeature), GefäßDerSterne("Gefäß der Sterne", FeatureGroupType.SpecialFeature), Gegenhalten(
+			"Gegenhalten", FeatureGroupType.SpecialFeature), Gerade("Gerade", FeatureGroupType.SpecialFeature), GezielterStich(
+			"Gezielter Stich", FeatureGroupType.SpecialFeature), Griff("Griff", FeatureGroupType.SpecialFeature), GroßeMeditation(
+			"Große Meditation", FeatureGroupType.SpecialFeature), Golembauer("Golembauer",
+			FeatureGroupType.SpecialFeature), Halten("Halten", FeatureGroupType.SpecialFeature), Hammerschlag(
+			"Hammerschlag", FeatureGroupType.SpecialFeature), Handkante("Handkante", FeatureGroupType.SpecialFeature), HexenfluchÄngsteMehren(
+			"Hexenfluch: Ängste mehren", FeatureGroupType.SpecialFeature), HexenfluchBeißAufGranit(
+			"Hexenfluch: Beiß auf Granit", FeatureGroupType.SpecialFeature), HexenfluchBeute("Hexenfluch: Beute",
+			FeatureGroupType.SpecialFeature), HexenfluchHagelschlag("Hexenfluch: Hagelschlag",
+			FeatureGroupType.SpecialFeature), HexenfluchHexenschuss("Hexenfluch: Hexenschuss",
+			FeatureGroupType.SpecialFeature), HexenfluchKornfäule("Hexenfluch: Kornfäule",
+			FeatureGroupType.SpecialFeature), HexenfluchKrötenkuss("Hexenfluch: Krötenkuss",
+			FeatureGroupType.SpecialFeature), HexenfluchMitBlindheitSchlagen("Hexenfluch: Mit Blindheit schlagen",
+			FeatureGroupType.SpecialFeature), HexenfluchPechAnDenHals("Hexenfluch: Pech an den Hals",
+			FeatureGroupType.SpecialFeature), HexenfluchPestilenz("Hexenfluch: Pestilenz",
+			FeatureGroupType.SpecialFeature), HexenfluchSchlafRauben("Hexenfluch: Schlaf rauben",
+			FeatureGroupType.SpecialFeature), HexenfluchTodesfluch("Hexenfluch: Todesfluch",
+			FeatureGroupType.SpecialFeature), HexenfluchUnfruchtbarkeit("Hexenfluch: Unfruchtbarkeit",
+			FeatureGroupType.SpecialFeature), HexenfluchViehverstümmelung("Hexenfluch: Viehverstümmelung",
+			FeatureGroupType.SpecialFeature), HexenfluchWarzenSprießen("Hexenfluch: Warzen sprießen",
+			FeatureGroupType.SpecialFeature), HexenfluchZungeLähmen("Hexenfluch: Zunge lähmen",
+			FeatureGroupType.SpecialFeature), Höhlenkundig("Höhlenkundig", FeatureGroupType.SpecialFeature), HöhereDämonenbindung(
+			"Höhere Dämonenbindung", FeatureGroupType.SpecialFeature), HoherTritt("Hoher Tritt",
+			FeatureGroupType.SpecialFeature), HexenritualHexensalbe("Hexenritual: Hexensalbe",
+			FeatureGroupType.SpecialFeature), Hypervehemenz("Hypervehemenz", FeatureGroupType.SpecialFeature), ImprovisierteWaffen(
+			"Improvisierte Waffen", FeatureGroupType.SpecialFeature), InvocatioIntegra("Invocatio Integra",
+			FeatureGroupType.SpecialFeature), KampfImWasser("Kampf im Wasser", FeatureGroupType.SpecialFeature), Kampfgespür(
+			"Kampfgespür", FeatureGroupType.SpecialFeature), Kampfreflexe("Kampfreflexe",
+			FeatureGroupType.SpecialFeature), Karmalqueste("Karmalqueste", FeatureGroupType.SpecialFeature), KeulenritualWeiheDerKeule(
+			"Keulenritual: Weihe der Keule", FeatureGroupType.SpecialFeature), KeulenritualHärteDerKeule(
+			"Keulenritual: Härte der Keule", FeatureGroupType.SpecialFeature), KeulenritualOpferkeule(
+			"Keulenritual: Opferkeule", FeatureGroupType.SpecialFeature), KeulenritualGespürDerKeule(
+			"Keulenritual: Gespür der Keule", FeatureGroupType.SpecialFeature), KeulenritualKraftDerKeule(
+			"Keulenritual: Kraft der Keule", FeatureGroupType.SpecialFeature), KeulenritualHilfeDerKeule(
+			"Keulenritual: Hilfe der Keule", FeatureGroupType.SpecialFeature), KeulenritualNäheZurNatur(
+			"Keulenritual: Nähe zur Natur", FeatureGroupType.SpecialFeature), KeulenritualZauberDerKeule(
+			"Keulenritual: Zauber der Keule", FeatureGroupType.SpecialFeature), KeulenritualBannDerKeule(
+			"Keulenritual: Bann der Keule", FeatureGroupType.SpecialFeature), KeulenritualGeistDerKeule(
+			"Keulenritual: Geist der Keule", FeatureGroupType.SpecialFeature), KeulenritualApportDerKeule(
+			"Keulenritual: Apport der Keule", FeatureGroupType.SpecialFeature), Klammer("Klammer",
+			FeatureGroupType.SpecialFeature), Klingensturm("Klingensturm", FeatureGroupType.SpecialFeature), Klingenwand(
+			"Klingenwand", FeatureGroupType.SpecialFeature), Knaufschlag("Knaufschlag", FeatureGroupType.SpecialFeature), Knie(
+			"Knie", FeatureGroupType.SpecialFeature), KontaktZumGroßenGeist("Kontakt zum Großen Geist",
+			FeatureGroupType.SpecialFeature), Konzentrationsstärke("Konzentrationsstärke",
+			FeatureGroupType.SpecialFeature), Kopfstoß("Kopfstoß", FeatureGroupType.SpecialFeature), Kraftkontrolle(
+			"Kraftkontrolle", FeatureGroupType.SpecialFeature), KraftlinienmagieI("Kraftlinienmagie I",
+			FeatureGroupType.SpecialFeature), KraftlinienmagieII("Kraftlinienmagie II", FeatureGroupType.SpecialFeature), Kraftspeicher(
+			"Kraftspeicher", FeatureGroupType.SpecialFeature), Kreuzblock("Kreuzblock", FeatureGroupType.SpecialFeature), Kriegsreiterei(
+			"Kriegsreiterei", FeatureGroupType.SpecialFeature), KristallkraftBündeln("Kristallkraft bündeln",
+			FeatureGroupType.SpecialFeature), KristallomantischesRitualKristallbindung(
+			"Kristallomantisches Ritual: Kristallbindung", FeatureGroupType.SpecialFeature), KristallomantischesRitualKristallformung(
+			"Kristallomantisches Ritual: Kristallformung", FeatureGroupType.SpecialFeature), KristallomantischesRitualThesiskristall(
+			"Kristallomantisches Ritual: Thesiskristall", FeatureGroupType.SpecialFeature), KristallomantischesRitualMadakristall(
+			"Kristallomantisches Ritual: Madakristall", FeatureGroupType.SpecialFeature), KristallomantischesRitualMatrixkristall(
+			"Kristallomantisches Ritual: Matrixkristall", FeatureGroupType.SpecialFeature), KugelzauberBindung(
+			"Kugelzauber: Bindung", FeatureGroupType.SpecialFeature), KugelzauberBrennglasUndPrisma(
+			"Kugelzauber: Brennglas und Prisma", FeatureGroupType.SpecialFeature), KugelzauberSchutzGegenUntote(
+			"Kugelzauber: Schutz gegen Untote", FeatureGroupType.SpecialFeature), KugelzauberWarnendesLeuchten(
+			"Kugelzauber: Warnendes Leuchten", FeatureGroupType.SpecialFeature), KugelzauberKugelDesHellsehers(
+			"Kugelzauber: Kugel des Hellsehers", FeatureGroupType.SpecialFeature), KugelzauberKugelDesIllusionisten(
+			"Kugelzauber: Kugel des Illusionisten", FeatureGroupType.SpecialFeature), KugelzauberOrbitarium(
+			"Kugelzauber: Orbitarium", FeatureGroupType.SpecialFeature), KugelzauberBilderspiel(
+			"Kugelzauber: Bilderspiel", FeatureGroupType.SpecialFeature), KugelzauberFernbild("Kugelzauber: Fernbild",
+			FeatureGroupType.SpecialFeature), KugelzauberBildergalerie("Kugelzauber: Bildergalerie",
+			FeatureGroupType.SpecialFeature), KugelzauberHSzintsAuge("Kugelzauber: H'Szints Auge",
+			FeatureGroupType.SpecialFeature), KugelzauberFarbenDesGeistes("Kugelzauber: Farben des Geistes",
+			FeatureGroupType.SpecialFeature), KugelzauberWachendesAuge("Kugelzauber: Wachendes Auge",
+			FeatureGroupType.SpecialFeature), Kulturkunde("Kulturkunde", FeatureGroupType.SpecialFeature), Linkhand(
+			"Linkhand", FeatureGroupType.SpecialFeature), LiturgiekenntnisAngrosch("Liturgiekenntnis (Angrosch)",
+			FeatureGroupType.SpecialFeature), LiturgiekenntnisAves("Liturgiekenntnis (Aves)",
+			FeatureGroupType.SpecialFeature), LiturgiekenntnisBoron("Liturgiekenntnis (Boron)",
+			FeatureGroupType.SpecialFeature), LiturgiekenntnisEfferd("Liturgiekenntnis (Efferd)",
+			FeatureGroupType.SpecialFeature), LiturgiekenntnisFirun("Liturgiekenntnis (Firun)",
+			FeatureGroupType.SpecialFeature), LiturgiekenntnisGravesh("Liturgiekenntnis (Gravesh)",
+			FeatureGroupType.SpecialFeature), LiturgiekenntnisHesinde("Liturgiekenntnis (Hesinde)",
+			FeatureGroupType.SpecialFeature), LiturgiekenntnisHimmelswölfe("Liturgiekenntnis (Himmelswölfe)",
+			FeatureGroupType.SpecialFeature), LiturgiekenntnisHRanga("Liturgiekenntnis (H'Ranga)",
+			FeatureGroupType.SpecialFeature), LiturgiekenntnisHSzint("Liturgiekenntnis (H'Szint)",
+			FeatureGroupType.SpecialFeature), LiturgiekenntnisIfirn("Liturgiekenntnis (Ifirn)",
+			FeatureGroupType.SpecialFeature), LiturgiekenntnisIngerimm("Liturgiekenntnis (Ingerimm)",
+			FeatureGroupType.SpecialFeature), LiturgiekenntnisKamaluq("Liturgiekenntnis (Kamaluq)",
+			FeatureGroupType.SpecialFeature), LiturgiekenntnisKor("Liturgiekenntnis (Kor)",
+			FeatureGroupType.SpecialFeature), LiturgiekenntnisNandus("Liturgiekenntnis (Nandus)",
+			FeatureGroupType.SpecialFeature), LiturgiekenntnisNamenloser("Liturgiekenntnis (Namenloser)",
+			FeatureGroupType.SpecialFeature), LiturgiekenntnisPeraine("Liturgiekenntnis (Peraine)",
+			FeatureGroupType.SpecialFeature), LiturgiekenntnisPhex("Liturgiekenntnis (Phex)",
+			FeatureGroupType.SpecialFeature), LiturgiekenntnisPraios("Liturgiekenntnis (Praios)",
+			FeatureGroupType.SpecialFeature), LiturgiekenntnisRahja("Liturgiekenntnis (Rahja)",
+			FeatureGroupType.SpecialFeature), LiturgiekenntnisRondra("Liturgiekenntnis (Rondra)",
+			FeatureGroupType.SpecialFeature), LiturgiekenntnisSwafnir("Liturgiekenntnis (Swafnir)",
+			FeatureGroupType.SpecialFeature), LiturgiekenntnisTairach("Liturgiekenntnis (Tairach)",
+			FeatureGroupType.SpecialFeature), LiturgiekenntnisTravia("Liturgiekenntnis (Travia)",
+			FeatureGroupType.SpecialFeature), LiturgiekenntnisTsa("Liturgiekenntnis (Tsa)",
+			FeatureGroupType.SpecialFeature), LiturgiekenntnisZsahh("Liturgiekenntnis (Zsahh)",
+			FeatureGroupType.SpecialFeature), LiturgieAchmadayanAnkhrellaAlnurachShaitanim(
+			"Liturgie: Achmad'ayan ankhrella al'nurach Shaitanim", FeatureGroupType.SpecialFeature), LiturgieAllerWeltFreund(
+			"Liturgie: Aller Welt Freund", FeatureGroupType.SpecialFeature), LiturgieAllmachtDerLohe(
+			"Liturgie: Allmacht der Lohe", FeatureGroupType.SpecialFeature), LiturgieAlteSchuppen(
+			"Liturgie: Alte Schuppen", FeatureGroupType.SpecialFeature), LiturgieAmBusenDerNaturZufluchtFinden(
+			"Liturgie: Am Busen der Natur (Zuflucht finden)", FeatureGroupType.SpecialFeature), LiturgieAnathema(
+			"Liturgie: Anathema", FeatureGroupType.SpecialFeature), LiturgieAngroschsOpfergabe(
+			"Liturgie: Angroschs Opfergabe", FeatureGroupType.SpecialFeature), LiturgieAngroschsZornWaliburiasWehr(
+			"Liturgie: Angroschs Zorn (Waliburias Wehr)", FeatureGroupType.SpecialFeature), LiturgieAnrufugDerErdkraft(
+			"Liturgie: Anrufug der Erdkraft", FeatureGroupType.SpecialFeature), LiturgieAnrufungDerWinde(
+			"Liturgie: Anrufung der Winde", FeatureGroupType.SpecialFeature), LiturgieAnrufungDerWindeIII(
+			"Liturgie: Anrufung der Winde (III)", FeatureGroupType.SpecialFeature), LiturgieAnrufungNuiannas(
+			"Liturgie: Anrufung Nuiannas", FeatureGroupType.SpecialFeature), LiturgieArcanumInterdictum(
+			"Liturgie: Arcanum Interdictum", FeatureGroupType.SpecialFeature), LiturgieArgelionsBannendeHand(
+			"Liturgie: Argelions bannende Hand", FeatureGroupType.SpecialFeature), LiturgieArgelionsMantel(
+			"Liturgie: Argelions Mantel", FeatureGroupType.SpecialFeature), LiturgieArgelionsSpiegel(
+			"Liturgie: Argelions Spiegel", FeatureGroupType.SpecialFeature), LiturgieAscandearsHingabe(
+			"Liturgie: Ascandears Hingabe", FeatureGroupType.SpecialFeature), LiturgieAugeDerWartendenSeelenNemekathsGeisterblick(
+			"Liturgie: Auge der wartenden Seelen (Nemekaths Geisterblick)", FeatureGroupType.SpecialFeature), LiturgieAugeDesHändlers(
+			"Liturgie: Auge des Händlers", FeatureGroupType.SpecialFeature), LiturgieAugeDesMondes(
+			"Liturgie: Auge des Mondes", FeatureGroupType.SpecialFeature), LiturgieAuraDerForm(
+			"Liturgie: Aura der Form", FeatureGroupType.SpecialFeature), LiturgieAuraDesRegenbogens(
+			"Liturgie: Aura des Regenbogens", FeatureGroupType.SpecialFeature), LiturgieAzilasQuellgesang(
+			"Liturgie: Azilas Quellgesang", FeatureGroupType.SpecialFeature), LiturgieBannDerGeisterkräftePraiosMagiebann(
+			"Liturgie: Bann der Geisterkräfte (Praios' Magiebann)", FeatureGroupType.SpecialFeature), LiturgieBannfluchDesHeiligenKhalid(
+			"Liturgie: Bannfluch des Heiligen Khalid", FeatureGroupType.SpecialFeature), LiturgieBegehenDerHeiligenWasser(
+			"Liturgie: Begehen der Heiligen Wasser", FeatureGroupType.SpecialFeature), LiturgieBindungDerSchlange(
+			"Liturgie: Bindung der Schlange", FeatureGroupType.SpecialFeature), LiturgieBelemansHochzeit(
+			"Liturgie: Belemans Hochzeit", FeatureGroupType.SpecialFeature), LiturgieBishdarielsAngesichtKleineLiturgieDesHlNemekath(
+			"Liturgie: Bishdariels Angesicht (Kleine Liturgie des Hl. Nemekath)", FeatureGroupType.SpecialFeature), LiturgieBishdarielsAuge(
+			"Liturgie: Bishdariels Auge", FeatureGroupType.SpecialFeature), LiturgieBishdarielsAugeIII(
+			"Liturgie: Bishdariels Auge (III)", FeatureGroupType.SpecialFeature), LiturgieBishdarielsAugeIV(
+			"Liturgie: Bishdariels Auge (IV)", FeatureGroupType.SpecialFeature), LiturgieBishdarielsWarnung(
+			"Liturgie: Bishdariels Warnung", FeatureGroupType.SpecialFeature), LiturgieBlendstrahlAusAlveran(
+			"Liturgie: Blendstrahl aus Alveran", FeatureGroupType.SpecialFeature), LiturgieBlickAnDenKlarenHimmelSterneFunkelnImmerfort(
+			"Liturgie: Blick an den klaren Himmel (Sterne funkeln immerfort)", FeatureGroupType.SpecialFeature), LiturgieBlickAufDasGeisterwirkenSichtAufMadasWelt(
+			"Liturgie: Blick auf das Geisterwirken (Sicht auf Madas Welt)", FeatureGroupType.SpecialFeature), LiturgieBlickDerWeberin(
+			"Liturgie: Blick der Weberin", FeatureGroupType.SpecialFeature), LiturgieBlickDurchTairachsAugenBlickDerWeberin(
+			"Liturgie: Blick durch Tairachs Augen (Blick der Weberin)", FeatureGroupType.SpecialFeature), LiturgieBlickFürDasHandwerk(
+			"Liturgie: Blick für das Handwerk", FeatureGroupType.SpecialFeature), LiturgieBlickInDieErinnerungKleineLiturgieDesHeiligenNemekath(
+			"Liturgie: Blick in die Erinnerung (Kleine Liturgie des Heiligen Nemekath)",
+			FeatureGroupType.SpecialFeature), LiturgieBlickInDieFlammen("Liturgie: Blick in die Flammen",
+			FeatureGroupType.SpecialFeature), LiturgieBlutschwurGroßerEidsegen(
+			"Liturgie: Blutschwur (Großer Eidsegen)", FeatureGroupType.SpecialFeature), LiturgieBootssegen(
+			"Liturgie: Bootssegen", FeatureGroupType.SpecialFeature), LiturgieBoronsSüßeGnade(
+			"Liturgie: Borons süße Gnade", FeatureGroupType.SpecialFeature), LiturgieBoronsSüßeGnadeV(
+			"Liturgie: Borons süße Gnade (V)", FeatureGroupType.SpecialFeature), LiturgieBuchprüfung(
+			"Liturgie: Buchprüfung", FeatureGroupType.SpecialFeature), LiturgieCanyzethsWeisheit(
+			"Liturgie: Canyzeths Weisheit", FeatureGroupType.SpecialFeature), LiturgieCerebornsHandreichungHandwerkssegen(
+			"Liturgie: Cereborns Handreichung (Handwerkssegen)", FeatureGroupType.SpecialFeature), LiturgieDaradorsBannDerSchatten(
+			"Liturgie: Daradors Bann der Schatten", FeatureGroupType.SpecialFeature), LiturgieDaradorsPrüfenderBlickUnverstellterBlick(
+			"Liturgie: Daradors prüfender Blick (Unverstellter Blick)", FeatureGroupType.SpecialFeature), LiturgieDasSchwarzeFellDurchDasRoteBlut(
+			"Liturgie: Das Schwarze Fell durch das Rote Blut", FeatureGroupType.SpecialFeature), LiturgieDerGänsemutterWarmesNestZufluchtFinden(
+			"Liturgie: Der Gänsemutter warmes Nest (Zuflucht finden)", FeatureGroupType.SpecialFeature), LiturgieDesHerrenGoldenerMittagWeisungDesHimmels(
+			"Liturgie: Des Herren Goldener Mittag (Weisung des Himmels)", FeatureGroupType.SpecialFeature), LiturgieDorlensVerbrüderung(
+			"Liturgie: Dorlens Verbrüderung", FeatureGroupType.SpecialFeature), LiturgieDreifacherSaatsegen(
+			"Liturgie: Dreifacher Saatsegen", FeatureGroupType.SpecialFeature), LiturgieDythlindsWandelnImFeuerVertrauterDerFlamme(
+			"Liturgie: Dythlinds Wandeln im Feuer (Vertrauter der Flamme)", FeatureGroupType.SpecialFeature), LiturgieEfferdsegen(
+			"Liturgie: Efferdsegen", FeatureGroupType.SpecialFeature), LiturgieEherneKraftLodernderZorn(
+			"Liturgie: Eherne Kraft - lodernder Zorn", FeatureGroupType.SpecialFeature), LiturgieEhrenhafterZweikampf(
+			"Liturgie: Ehrenhafter Zweikampf", FeatureGroupType.SpecialFeature), LiturgieEidechsenhaut(
+			"Liturgie: Eidechsenhaut", FeatureGroupType.SpecialFeature), LiturgieEidsegen("Liturgie: Eidsegen",
+			FeatureGroupType.SpecialFeature), LiturgieEinBildFürDieEwigkeit("Liturgie: Ein Bild für die Ewigkeit",
+			FeatureGroupType.SpecialFeature), LiturgieEinFreundInZeitenDerNot("Liturgie: Ein Freund in Zeiten der Not",
+			FeatureGroupType.SpecialFeature), LiturgieElementwandlung("Liturgie: Elementwandlung",
+			FeatureGroupType.SpecialFeature), LiturgieEntzugDesWissensEntzugVonNandusGaben(
+			"Liturgie: Entzug des Wissens (Entzug von Nandus' Gaben)", FeatureGroupType.SpecialFeature), LiturgieEntzugVonNandusGaben(
+			"Liturgie: Entzug von Nandus' Gaben", FeatureGroupType.SpecialFeature), LiturgieErlösungDesTapamsBoronsSüßeGnade(
+			"Liturgie: Erlösung des Tapams (Borons süße Gnade)", FeatureGroupType.SpecialFeature), LiturgieErlösungDesTapamsBoronsSüßeGnadeV(
+			"Liturgie: Erlösung des Tapams (Borons süße Gnade (V))", FeatureGroupType.SpecialFeature), LiturgieErneuerungDesGeborstenen(
+			"Liturgie: Erneuerung des Geborstenen", FeatureGroupType.SpecialFeature), LiturgieEtiliasGnade(
+			"Liturgie: Etilias Gnade", FeatureGroupType.SpecialFeature), LiturgieEtiliasZeitDerMeditationRufZurRuhe(
+			"Liturgie: Etilias Zeit der Meditation (Ruf zur Ruhe)", FeatureGroupType.SpecialFeature), LiturgieEwigerWächter(
+			"Liturgie: Ewiger Wächter", FeatureGroupType.SpecialFeature), LiturgieEwigesWissen(
+			"Liturgie: Ewiges Wissen", FeatureGroupType.SpecialFeature), LiturgieExkommunikation(
+			"Liturgie: Exkommunikation", FeatureGroupType.SpecialFeature), LiturgieExkommunikationIV(
+			"Liturgie: Exkommunikation (IV)", FeatureGroupType.SpecialFeature), LiturgieExkommunikationV(
+			"Liturgie: Exkommunikation (V)", FeatureGroupType.SpecialFeature), LiturgieExorzismus(
+			"Liturgie: Exorzismus", FeatureGroupType.SpecialFeature), LiturgieExorzismusIV("Liturgie: Exorzismus (IV)",
+			FeatureGroupType.SpecialFeature), LiturgieExorzismusV("Liturgie: Exorzismus (V)",
+			FeatureGroupType.SpecialFeature), LiturgieExorzismusVI("Liturgie: Exorzismus (VI)",
+			FeatureGroupType.SpecialFeature), LiturgieFeuersegen("Liturgie: Feuersegen",
+			FeatureGroupType.SpecialFeature), LiturgieFeuertaufeInitiation("Liturgie: Feuertaufe (Initiation)",
+			FeatureGroupType.SpecialFeature), LiturgieFirunsEinsicht("Liturgie: Firuns Einsicht",
+			FeatureGroupType.SpecialFeature), LiturgieFlaggeDesRegenbogens("Liturgie: Flagge des Regenbogens",
+			FeatureGroupType.SpecialFeature), LiturgieFreundlicheAufnahme("Liturgie: Freundliche Aufnahme",
+			FeatureGroupType.SpecialFeature), LiturgieFriedenDerMelodie("Liturgie: Frieden der Melodie",
+			FeatureGroupType.SpecialFeature), LiturgieFünfteLobpreisungDesFrühlings(
+			"Liturgie: Fünfte Lobpreisung des Frühlings", FeatureGroupType.SpecialFeature), LiturgieFürbittenDesHeiligenTherbun(
+			"Liturgie: Fürbitten des Heiligen Therbun", FeatureGroupType.SpecialFeature), LiturgieGarafansGleißendeSchwingen(
+			"Liturgie: Garafans Gleißende Schwingen", FeatureGroupType.SpecialFeature), LiturgieGebieterDerLava(
+			"Liturgie: Gebieter der Lava", FeatureGroupType.SpecialFeature), LiturgieGeburtssegen(
+			"Liturgie: Geburtssegen", FeatureGroupType.SpecialFeature), LiturgieGeistermantelArgelionsMantel(
+			"Liturgie: Geistermantel (Argelions Mantel)", FeatureGroupType.SpecialFeature), LiturgieGeläutertSeiErzUndGoldgestein(
+			"Liturgie: Geläutert sei Erz und Goldgestein", FeatureGroupType.SpecialFeature), LiturgieGemeinschaftDerTreuenGefährten(
+			"Liturgie: Gemeinschaft der treuen Gefährten", FeatureGroupType.SpecialFeature), LiturgieGesangDerDelphine(
+			"Liturgie: Gesang der Delphine", FeatureGroupType.SpecialFeature), LiturgieGesangDerWaleRufDerGefährten(
+			"Liturgie: Gesang der Wale (Ruf der Gefährten)", FeatureGroupType.SpecialFeature), LiturgieGesangDerWaleRufDerGefährtenIV(
+			"Liturgie: Gesang der Wale (Ruf der Gefährten) (IV)", FeatureGroupType.SpecialFeature), LiturgieGesegneterFang(
+			"Liturgie: Gesegneter Fang", FeatureGroupType.SpecialFeature), LiturgieGeteiltesLeid(
+			"Liturgie: Geteiltes Leid", FeatureGroupType.SpecialFeature), LiturgieGiftDerErkenntnis(
+			"Liturgie: Gift der Erkenntnis", FeatureGroupType.SpecialFeature), LiturgieGilbornsHeiligeAuraArgelionsMantel(
+			"Liturgie: Gilborns heilige Aura (Argelions Mantel)", FeatureGroupType.SpecialFeature), LiturgieGleichklangDesGeistes(
+			"Liturgie: Gleichklang des Geistes", FeatureGroupType.SpecialFeature), LiturgieGlückssegen(
+			"Liturgie: Glückssegen", FeatureGroupType.SpecialFeature), LiturgieGoldeneRüstung(
+			"Liturgie: Goldene Rüstung", FeatureGroupType.SpecialFeature), LiturgieGoldenerBlick(
+			"Liturgie: Goldener Blick", FeatureGroupType.SpecialFeature), LiturgieGorfangsFluch(
+			"Liturgie: Gorfangs Fluch", FeatureGroupType.SpecialFeature), LiturgieGorfangsFluchV(
+			"Liturgie: Gorfangs Fluch (V)", FeatureGroupType.SpecialFeature), LiturgieGorfangsFluchVI(
+			"Liturgie: Gorfangs Fluch (VI)", FeatureGroupType.SpecialFeature), LiturgieGöttlicheVerständigung(
+			"Liturgie: Göttliche Verständigung", FeatureGroupType.SpecialFeature), LiturgieGöttlicheVerständigungIII(
+			"Liturgie: Göttliche Verständigung (III)", FeatureGroupType.SpecialFeature), LiturgieGöttlicheVerständigungIV(
+			"Liturgie: Göttliche Verständigung (IV)", FeatureGroupType.SpecialFeature), LiturgieGöttlichesZeichen(
+			"Liturgie: Göttliches Zeichen", FeatureGroupType.SpecialFeature), LiturgieGöttlichesZeichenIII(
+			"Liturgie: Göttliches Zeichen (III)", FeatureGroupType.SpecialFeature), LiturgieGrabsegen(
+			"Liturgie: Grabsegen", FeatureGroupType.SpecialFeature), LiturgieGrauesSiegel("Liturgie: Graues Siegel",
+			FeatureGroupType.SpecialFeature), LiturgieGrauesSiegelIV("Liturgie: Graues Siegel (IV)",
+			FeatureGroupType.SpecialFeature), LiturgieGrispelzAckersegenDreifacherSaatsegen(
+			"Liturgie: Grispelz' Ackersegen (Dreifacher Saatsegen)", FeatureGroupType.SpecialFeature), LiturgieGrispelzFruchtbarkeitTsasWundersameFruchtbarkeit(
+			"Liturgie: Grispelz' Fruchtbarkeit (Tsas Wundersame Fruchtbarkeit", FeatureGroupType.SpecialFeature), LiturgieGroßeSeelenwaschungExorzismus(
+			"Liturgie: Große Seelenwaschung (Exorzismus)", FeatureGroupType.SpecialFeature), LiturgieGroßeSeelenwaschungExorzismusIV(
+			"Liturgie: Große Seelenwaschung (Exorzismus) (IV)", FeatureGroupType.SpecialFeature), LiturgieGroßeSeelenwaschungExorzismusV(
+			"Liturgie: Große Seelenwaschung (Exorzismus) (V)", FeatureGroupType.SpecialFeature), LiturgieGroßeSeelenwaschungExorzismusVI(
+			"Liturgie: Große Seelenwaschung (Exorzismus) (VI)", FeatureGroupType.SpecialFeature), LiturgieGroßeWeiheDesHeimsteins(
+			"Liturgie: Große Weihe des Heimsteins", FeatureGroupType.SpecialFeature), LiturgieGroßerEidsegen(
+			"Liturgie: Großer Eidsegen", FeatureGroupType.SpecialFeature), LiturgieGroßerGiftbannGroßerSpeisesegen(
+			"Liturgie: Großer Giftbann (Großer Speisesegen)", FeatureGroupType.SpecialFeature), LiturgieGroßerReisesegen(
+			"Liturgie: Großer Reisesegen", FeatureGroupType.SpecialFeature), LiturgieGroßerSpeisesegen(
+			"Liturgie: Großer Speisesegen", FeatureGroupType.SpecialFeature), LiturgieGroßerWeihesegenDerWaffe(
+			"Liturgie: Großer Weihesegen der Waffe", FeatureGroupType.SpecialFeature), LiturgieGroßesTabuSiegelBorons(
+			"Liturgie: Großes Tabu (Siegel Borons)", FeatureGroupType.SpecialFeature), LiturgieGrußDesVersunkenen(
+			"Liturgie: Gruß des Versunkenen", FeatureGroupType.SpecialFeature), LiturgieHändlersegen(
+			"Liturgie: Händlersegen", FeatureGroupType.SpecialFeature), LiturgieHandwerkssegen(
+			"Liturgie: Handwerkssegen", FeatureGroupType.SpecialFeature), LiturgieHarmoniesegen(
+			"Liturgie: Harmoniesegen", FeatureGroupType.SpecialFeature), LiturgieHashnabithsFlehen(
+			"Liturgie: Hashnabiths Flehen", FeatureGroupType.SpecialFeature), LiturgieHauchBorons(
+			"Liturgie: Hauch Borons", FeatureGroupType.SpecialFeature), LiturgieHauchDerLeidenschaftHandwerkssegen(
+			"Liturgie: Hauch der Leidenschaft (Handwerkssegen)", FeatureGroupType.SpecialFeature), LiturgieHausfrieden(
+			"Liturgie: Hausfrieden", FeatureGroupType.SpecialFeature), LiturgieHautDesChamäleonsVerborgenWieDerNeumond(
+			"Liturgie: Haut des Chamäleons (Verborgen wie der Neumond)", FeatureGroupType.SpecialFeature), LiturgieHeiligeSalbungDerPeraineTsasHeiligesLebensgeschenk(
+			"Liturgie: Heilige Salbung der Peraine (Tsas Heiliges Lebensgeschenk)", FeatureGroupType.SpecialFeature), LiturgieHeiligeSchmiedeglut(
+			"Liturgie: Heilige Schmiedeglut", FeatureGroupType.SpecialFeature), LiturgieHeiligerBefehl(
+			"Liturgie: Heiliger Befehl", FeatureGroupType.SpecialFeature), LiturgieHeiligerLehnseid(
+			"Liturgie: Heiliger Lehnseid", FeatureGroupType.SpecialFeature), LiturgieHeiligesLiebesspiel(
+			"Liturgie: Heiliges Liebesspiel", FeatureGroupType.SpecialFeature), LiturgieHeilungDesTapamsSegenDerHeiligenNoiona(
+			"Liturgie: Heilung des Tapams (Segen der Heiligen Noiona)", FeatureGroupType.SpecialFeature), LiturgieHeilungDesTapamsSegenDerHeiligenNoionaIV(
+			"Liturgie: Heilung des Tapams (Segen der Heiligen Noiona (IV))", FeatureGroupType.SpecialFeature), LiturgieHeilungssegen(
+			"Liturgie: Heilungssegen", FeatureGroupType.SpecialFeature), LiturgieHerrÜberFeuerUndGlut(
+			"Liturgie: Herr über Feuer und Glut", FeatureGroupType.SpecialFeature), LiturgieHesindesFingerzeigBuchprüfung(
+			"Liturgie: Hesindes Fingerzeig (Buchprüfung)", FeatureGroupType.SpecialFeature), LiturgieHilfeInDerNot(
+			"Liturgie: Hilfe in der Not", FeatureGroupType.SpecialFeature), LiturgieHoftagDerSprachen(
+			"Liturgie: Hoftag der Sprachen", FeatureGroupType.SpecialFeature), LiturgieIndoktrination(
+			"Liturgie: Indoktrination", FeatureGroupType.SpecialFeature), LiturgieIngalfsAlchimie(
+			"Liturgie: Ingalfs Alchimie", FeatureGroupType.SpecialFeature), LiturgieIngerimmsZornVerschoneUns(
+			"Liturgie: Ingerimms Zorn verschone uns", FeatureGroupType.SpecialFeature), LiturgieInitiation(
+			"Liturgie: Initiation", FeatureGroupType.SpecialFeature), LiturgieInnereRuhe("Liturgie: Innere Ruhe",
+			FeatureGroupType.SpecialFeature), LiturgieJagdglück("Liturgie: Jagdglück", FeatureGroupType.SpecialFeature), LiturgieKälbchensegen(
+			"Liturgie: Kälbchensegen", FeatureGroupType.SpecialFeature), LiturgieKamaluqsUnerbittlicherSpeerBannfluchDesHeiligenKhalid(
+			"Liturgie: Kamaluqs unerbittlicher Speer (Bannfluch des Heiligen Khalid)", FeatureGroupType.SpecialFeature), LiturgieKamaluqsFluch(
+			"Liturgie: Kamaluqs Fluch", FeatureGroupType.SpecialFeature), LiturgieKamaluqsFluchV(
+			"Liturgie: Kamaluqs Fluch (V)", FeatureGroupType.SpecialFeature), LiturgieKamaluqsFluchVI(
+			"Liturgie: Kamaluqs Fluch (VI)", FeatureGroupType.SpecialFeature), LiturgieKetaAjabanKudaWundersamesTeilenDesMartyriums(
+			"Liturgie: Keta ajaban kud'a - Wundersames Teilen des Martyriums", FeatureGroupType.SpecialFeature), LiturgieKetaAjabanKudaWundersamesTeilenDesMartyriumsV(
+			"Liturgie: Keta ajaban kud'a - Wundersames Teilen des Martyriums (V)", FeatureGroupType.SpecialFeature), LiturgieKetaAjabanKudaWundersamesTeilenDesMartyriumsVI(
+			"Liturgie: Keta ajaban kud'a - Wundersames Teilen des Martyriums (VI)", FeatureGroupType.SpecialFeature), LiturgieKhablasJugend(
+			"Liturgie: Khablas Jugend", FeatureGroupType.SpecialFeature), LiturgieKhablasJugendIV(
+			"Liturgie: Khablas Jugend (IV)", FeatureGroupType.SpecialFeature), LiturgieKhablasMakelloserLeib(
+			"Liturgie: Khablas makelloser Leib", FeatureGroupType.SpecialFeature), LiturgieKhablasMakelloserLeibVI(
+			"Liturgie: Khablas makelloser Leib (VI)", FeatureGroupType.SpecialFeature), LiturgieKirschblütenregen(
+			"Liturgie: Kirschblütenregen", FeatureGroupType.SpecialFeature), LiturgieKleineLiturgieDesHeiligenNemekath(
+			"Liturgie: Kleine Liturgie des Heiligen Nemekath", FeatureGroupType.SpecialFeature), LiturgieKleineSegnungDesHeimsteins(
+			"Liturgie: Kleine Segnung des Heimsteins", FeatureGroupType.SpecialFeature), LiturgieKleinerGiftbann(
+			"Liturgie: Kleiner Giftbann", FeatureGroupType.SpecialFeature), LiturgieKleinesTabuRufZurRuhe(
+			"Liturgie: Kleines Tabu (Ruf zur Ruhe)", FeatureGroupType.SpecialFeature), LiturgieKonsekration(
+			"Liturgie: Konsekration", FeatureGroupType.SpecialFeature), LiturgieKräftigungDerSchwachenUndVersehrten(
+			"Liturgie: Kräftigung der Schwachen und Versehrten", FeatureGroupType.SpecialFeature), LiturgieKräutersegenDesHeiligenNemekathRahjasRauschsegen(
+			"Liturgie: Kräutersegen des Heiligen Nemekath (Rahjas Rauschsegen)", FeatureGroupType.SpecialFeature), LiturgieLagoraxHammerRufen(
+			"Liturgie: Lagorax' Hammer rufen", FeatureGroupType.SpecialFeature), LiturgieLevthansFesseln(
+			"Liturgie: Levthans Fesseln", FeatureGroupType.SpecialFeature), LiturgieLichtDesHerrn(
+			"Liturgie: Licht des Herrn", FeatureGroupType.SpecialFeature), LiturgieLichtDesVerborgenenPfades(
+			"Liturgie: Licht des verborgenen Pfades", FeatureGroupType.SpecialFeature), LiturgieLohnDerUnverzagten(
+			"Liturgie: Lohn der Unverzagten", FeatureGroupType.SpecialFeature), LiturgieLugUndTrugUnverstellterBlick(
+			"Liturgie: Lug und Trug (Unverstellter Blick)", FeatureGroupType.SpecialFeature), LiturgieMannschaftssegen(
+			"Liturgie: Mannschaftssegen", FeatureGroupType.SpecialFeature), LiturgieMarbosGeisterblickNemekathsGeisterblick(
+			"Liturgie: Marbos Geisterblick (Nemekaths Geisterblick)", FeatureGroupType.SpecialFeature), LiturgieMarbosGeleit(
+			"Liturgie: Marbos Geleit", FeatureGroupType.SpecialFeature), LiturgieMärtyrersegen(
+			"Liturgie: Märtyrersegen", FeatureGroupType.SpecialFeature), LiturgieMeisterstückWandelnInHesindesHain(
+			"Liturgie: Meisterstück (Wandeln in Hesindes Hain)", FeatureGroupType.SpecialFeature), LiturgieMondsilberzunge(
+			"Liturgie: Mondsilberzunge", FeatureGroupType.SpecialFeature), LiturgieNandusSchriftkenntnisSchrifttumFernerLande(
+			"Liturgie: Nandus Schriftkenntnis (Schrifttum ferner Lande)", FeatureGroupType.SpecialFeature), LiturgieNemekathsBannfluchBishdarielsWarnung(
+			"Liturgie: Nemekaths Bannfluch (Bishdariels Warnung)", FeatureGroupType.SpecialFeature), LiturgieNemekathsGeisterblick(
+			"Liturgie: Nemekaths Geisterblick", FeatureGroupType.SpecialFeature), LiturgieNemekathsZwiesprache(
+			"Liturgie: Nemekaths Zwiesprache", FeatureGroupType.SpecialFeature), LiturgieNeunStreicheInEinem(
+			"Liturgie: Neun Streiche in Einem", FeatureGroupType.SpecialFeature), LiturgieNimmermüdeWanderschaft(
+			"Liturgie: Nimmermüde Wanderschaft", FeatureGroupType.SpecialFeature), LiturgieNoionasZuspruchSegenDerHlVelvenya(
+			"Liturgie: Noionas Zuspruch (Segen der Hl. Velvenya)", FeatureGroupType.SpecialFeature), LiturgieObaransBannstrahlZerschmetternderBannstrahl(
+			"Liturgie: Obarans Bannstrahl (Zerschmetternder Bannstrahl)", FeatureGroupType.SpecialFeature), LiturgieObjektsegen(
+			"Liturgie: Objektsegen", FeatureGroupType.SpecialFeature), LiturgieObjektsegenII(
+			"Liturgie: Objektsegen (II)", FeatureGroupType.SpecialFeature), LiturgieObjektsegenIV(
+			"Liturgie: Objektsegen (IV)", FeatureGroupType.SpecialFeature), LiturgieObjektsegenV(
+			"Liturgie: Objektsegen (V)", FeatureGroupType.SpecialFeature), LiturgieObjektweihe("Liturgie: Objektweihe",
+			FeatureGroupType.SpecialFeature), LiturgieObjektweiheIII("Liturgie: Objektweihe (III)",
+			FeatureGroupType.SpecialFeature), LiturgieObjektweiheIV("Liturgie: Objektweihe (IV)",
+			FeatureGroupType.SpecialFeature), LiturgieObjektweiheV("Liturgie: Objektweihe (V)",
+			FeatureGroupType.SpecialFeature), LiturgieObjektweiheVI("Liturgie: Objektweihe (VI)",
+			FeatureGroupType.SpecialFeature), LiturgieOrdination("Liturgie: Ordination",
+			FeatureGroupType.SpecialFeature), LiturgieParinorsVermächtnis("Liturgie: Parinors Vermächtnis",
+			FeatureGroupType.SpecialFeature), LiturgiePerainesPflanzengespür("Liturgie: Peraines Pflanzengespür",
+			FeatureGroupType.SpecialFeature), LiturgiePhexensAugenzwinkern("Liturgie: Phexens Augenzwinkern",
+			FeatureGroupType.SpecialFeature), LiturgiePhexensElsterflug("Liturgie: Phexens Elsterflug",
+			FeatureGroupType.SpecialFeature), LiturgiePhexensKunstverstandBlickFürDasHandwerk(
+			"Liturgie: Phexens Kunstverstand (Blick für das Handwerk)", FeatureGroupType.SpecialFeature), LiturgiePhexensMeisterschlüssel(
+			"Liturgie: Phexens Meisterschlüssel", FeatureGroupType.SpecialFeature), LiturgiePhexensNebelleib(
+			"Liturgie: Phexens Nebelleib", FeatureGroupType.SpecialFeature), LiturgiePhexensSchatten(
+			"Liturgie: Phexens Schatten", FeatureGroupType.SpecialFeature), LiturgiePhexensSternenwurf(
+			"Liturgie: Phexens Sternenwurf", FeatureGroupType.SpecialFeature), LiturgiePhexensWunderbareVerständigung(
+			"Liturgie: Phexens wunderbare Verständigung", FeatureGroupType.SpecialFeature), LiturgiePraiosMagiebann(
+			"Liturgie: Praios' Magiebann", FeatureGroupType.SpecialFeature), LiturgiePraiosMahnung(
+			"Liturgie: Praios Mahnung", FeatureGroupType.SpecialFeature), LiturgieProphezeiung(
+			"Liturgie: Prophezeiung", FeatureGroupType.SpecialFeature), LiturgiePurgation("Liturgie: Purgation",
+			FeatureGroupType.SpecialFeature), LiturgieQuellsegen("Liturgie: Quellsegen",
+			FeatureGroupType.SpecialFeature), LiturgieRahjalinasKuss("Liturgie: Rahjalinas Kuss",
+			FeatureGroupType.SpecialFeature), LiturgieRahjalinasWeinrankeParinorsVermächtnis(
+			"Liturgie: Rahjalinas Weinranke (Parinors Vermächtnis)", FeatureGroupType.SpecialFeature), LiturgieRahjasErquickungSchlafDesGesegneten(
+			"Liturgie: Rahjas Erquickung (Schlaf des Gesegneten)", FeatureGroupType.SpecialFeature), LiturgieRahjasFestDerFreude(
+			"Liturgie: Rahjas Fest der Freude", FeatureGroupType.SpecialFeature), LiturgieRahjasFreiheit(
+			"Liturgie: Rahjas Freiheit", FeatureGroupType.SpecialFeature), LiturgieRahjasGeheiligterWein(
+			"Liturgie: Rahjas geheiligter Wein", FeatureGroupType.SpecialFeature), LiturgieRahjasHeitereGelassenheitSegenDerHeiligenNoiona(
+			"Liturgie: Rahjas heitere Gelassenheit (Segen der Heiligen Noiona)", FeatureGroupType.SpecialFeature), LiturgieRahjasHeitereGelassenheitSegenDerHeiligenNoionaIV(
+			"Liturgie: Rahjas heitere Gelassenheit (Segen der Heiligen Noiona (IV))", FeatureGroupType.SpecialFeature), LiturgieRahjasRauschsegen(
+			"Liturgie: Rahjas Rauschsegen", FeatureGroupType.SpecialFeature), LiturgieRahjasSchoß(
+			"Liturgie: Rahjas Schoß", FeatureGroupType.SpecialFeature), LiturgieRahjasSinnlichkeit(
+			"Liturgie: Rahjas Sinnlichkeit", FeatureGroupType.SpecialFeature), LiturgieReichungDesAmethyst(
+			"Liturgie: Reichung des Amethyst", FeatureGroupType.SpecialFeature), LiturgieReichungDesAmethystII(
+			"Liturgie: Reichung des Amethyst (II)", FeatureGroupType.SpecialFeature), LiturgieReichungDesAmethystIII(
+			"Liturgie: Reichung des Amethyst (III)", FeatureGroupType.SpecialFeature), LiturgieReichungDesAmethystV(
+			"Liturgie: Reichung des Amethyst (V)", FeatureGroupType.SpecialFeature), LiturgieReisesegen(
+			"Liturgie: Reisesegen", FeatureGroupType.SpecialFeature), LiturgieRondrasHochzeit(
+			"Liturgie: Rondras Hochzeit", FeatureGroupType.SpecialFeature), LiturgieRondrasWundersameRüstung(
+			"Liturgie: Rondras wundersame Rüstung", FeatureGroupType.SpecialFeature), LiturgieRufDerGefährten(
+			"Liturgie: Ruf der Gefährten", FeatureGroupType.SpecialFeature), LiturgieRufDerGefährtenIV(
+			"Liturgie: Ruf der Gefährten (IV)", FeatureGroupType.SpecialFeature), LiturgieRufInBoronsArme(
+			"Liturgie: Ruf in Borons Arme", FeatureGroupType.SpecialFeature), LiturgieRufInBoronsArmeIII(
+			"Liturgie: Ruf in Borons Arme (III)", FeatureGroupType.SpecialFeature), LiturgieRufZurRuhe(
+			"Liturgie: Ruf zur Ruhe", FeatureGroupType.SpecialFeature), LiturgieSalbungDerHeiligenNoionaExorzismus(
+			"Liturgie: Salbung der Heiligen Noiona (Exorzismus)", FeatureGroupType.SpecialFeature), LiturgieSalbungDerHeiligenNoionaExorzismusIV(
+			"Liturgie: Salbung der Heiligen Noiona (Exorzismus) (IV)", FeatureGroupType.SpecialFeature), LiturgieSalbungDerHeiligenNoionaExorzismusV(
+			"Liturgie: Salbung der Heiligen Noiona (Exorzismus) (V)", FeatureGroupType.SpecialFeature), LiturgieSalbungDerHeiligenNoionaExorzismusVI(
+			"Liturgie: Salbung der Heiligen Noiona (Exorzismus) (VI)", FeatureGroupType.SpecialFeature), LiturgieSanktGilbornsBannfluchArgelionsBannendeHand(
+			"Liturgie: Sankt Gilborns Bannfluch (Argelions bannende Hand)", FeatureGroupType.SpecialFeature), LiturgieSchattenlarve(
+			"Liturgie: Schattenlarve", FeatureGroupType.SpecialFeature), LiturgieSchiffssegen("Liturgie: Schiffssegen",
+			FeatureGroupType.SpecialFeature), LiturgieSchlafDesGesegneten("Liturgie: Schlaf des Gesegneten",
+			FeatureGroupType.SpecialFeature), LiturgieSchlangenstab("Liturgie: Schlangenstab",
+			FeatureGroupType.SpecialFeature), LiturgieSchneesturmEissturm("Liturgie: Schneesturm/Eissturm",
+			FeatureGroupType.SpecialFeature), LiturgieSchrifttumFernerLande("Liturgie: Schrifttum ferner Lande",
+			FeatureGroupType.SpecialFeature), LiturgieSchutzDesGeleges("Liturgie: Schutz des Geleges",
+			FeatureGroupType.SpecialFeature), LiturgieSchutzsegen("Liturgie: Schutzsegen",
+			FeatureGroupType.SpecialFeature), LiturgieSchutzsegenII("Liturgie: Schutzsegen (II)",
+			FeatureGroupType.SpecialFeature), LiturgieSchutzsegenIII("Liturgie: Schutzsegen (III)",
+			FeatureGroupType.SpecialFeature), LiturgieSchwitzhütteFünfteLobpreisungDesFrühlings(
+			"Liturgie: Schwitzhütte (Fünfte Lobpreisung des Frühlings)", FeatureGroupType.SpecialFeature), LiturgieSeelenprüfung(
+			"Liturgie: Seelenprüfung", FeatureGroupType.SpecialFeature), LiturgieAuraprüfung("Liturgie: Auraprüfung",
+			FeatureGroupType.SpecialFeature), LiturgieGroßeSeelenprüfung("Liturgie: Große Seelenprüfung",
+			FeatureGroupType.SpecialFeature), LiturgieSegenDerGabetajParinorsVermächtnis(
+			"Liturgie: Segen der Gabetaj (Parinors Vermächtnis)", FeatureGroupType.SpecialFeature), LiturgieSegenDerHeiligenArdare(
+			"Liturgie: Segen der Heiligen Ardare", FeatureGroupType.SpecialFeature), LiturgieSegenDerHeiligenNoiona(
+			"Liturgie: Segen der Heiligen Noiona", FeatureGroupType.SpecialFeature), LiturgieSegenDerHeiligenNoionaIV(
+			"Liturgie: Segen der Heiligen Noiona (IV)", FeatureGroupType.SpecialFeature), LiturgieSegenDerHeiligenTheria(
+			"Liturgie: Segen der Heiligen Theria", FeatureGroupType.SpecialFeature), LiturgieSegenDerHeiligenVelvenya(
+			"Liturgie: Segen der Heiligen Velvenya", FeatureGroupType.SpecialFeature), LiturgieSegenDesHeiligenBadilakSegenDerHeiligenNoiona(
+			"Liturgie: Segen des Heiligen Badilak (Segen der Heiligen Noiona)", FeatureGroupType.SpecialFeature), LiturgieSegenDesHeiligenBadilakSegenDerHeiligenNoionaIV(
+			"Liturgie: Segen des Heiligen Badilak (Segen der Heiligen Noiona (IV))", FeatureGroupType.SpecialFeature), LiturgieSegenDesHeiligenHlûthar(
+			"Liturgie: Segen des Heiligen Hlûthar", FeatureGroupType.SpecialFeature), LiturgieSegenDesPlättlings(
+			"Liturgie: Segen des Plättlings", FeatureGroupType.SpecialFeature), LiturgieSegensreichesWasser(
+			"Liturgie: Segensreiches Wasser", FeatureGroupType.SpecialFeature), LiturgieSegnungDerSchlacht(
+			"Liturgie: Segnung der Schlacht", FeatureGroupType.SpecialFeature), LiturgieSegnungDerStählernenStirn(
+			"Liturgie: Segnung der Stählernen Stirn", FeatureGroupType.SpecialFeature), LiturgieSegnungDesHeimes(
+			"Liturgie: Segnung des Heimes", FeatureGroupType.SpecialFeature), LiturgieSichereWanderungImSchnee(
+			"Liturgie: Sichere Wanderung im Schnee", FeatureGroupType.SpecialFeature), LiturgieSichererWegDurchFels(
+			"Liturgie: Sicherer Weg durch Fels", FeatureGroupType.SpecialFeature), LiturgieSichtAufMadasWelt(
+			"Liturgie: Sicht auf Madas Welt", FeatureGroupType.SpecialFeature), LiturgieSiegelBorons(
+			"Liturgie: Siegel Borons", FeatureGroupType.SpecialFeature), LiturgieSimiasKelchTsasSegensreicherNeuanfang(
+			"Liturgie: Simias Kelch (Tsas Segensreicher Neuanfang)", FeatureGroupType.SpecialFeature), LiturgieSippenfluch(
+			"Liturgie: Sippenfluch", FeatureGroupType.SpecialFeature), LiturgieSpeisesegen("Liturgie: Speisesegen",
+			FeatureGroupType.SpecialFeature), LiturgieSpeisungDerBedürftigen("Liturgie: Speisung der Bedürftigen",
+			FeatureGroupType.SpecialFeature), LiturgieSpeisungDerBedürftigenIV(
+			"Liturgie: Speisung der Bedürftigen (IV)", FeatureGroupType.SpecialFeature), LiturgieSpeisungDerHungerndenSeele(
+			"Liturgie: Speisung der hungernden Seele", FeatureGroupType.SpecialFeature), LiturgieSprechendeSymbole(
+			"Liturgie: Sprechende Symbole", FeatureGroupType.SpecialFeature), LiturgieSterneFunkelnImmerfort(
+			"Liturgie: Sterne funkeln immerfort", FeatureGroupType.SpecialFeature), LiturgieSternenglanz(
+			"Liturgie: Sternenglanz", FeatureGroupType.SpecialFeature), LiturgieSternenspur("Liturgie: Sternenspur",
+			FeatureGroupType.SpecialFeature), LiturgieSternenstaub("Liturgie: Sternenstaub",
+			FeatureGroupType.SpecialFeature), LiturgieSulvasGnade("Liturgie: Sulvas Gnade",
+			FeatureGroupType.SpecialFeature), LiturgieSwafnirsFluke("Liturgie: Swafnirs Fluke",
+			FeatureGroupType.SpecialFeature), LiturgieSwafnirsRuhelied("Liturgie: Swafnirs Ruhelied",
+			FeatureGroupType.SpecialFeature), LiturgieTabuSiegelBorons("Liturgie: Tabu (Siegel Borons)",
+			FeatureGroupType.SpecialFeature), LiturgieTairachsFluch("Liturgie: Tairachs Fluch",
+			FeatureGroupType.SpecialFeature), LiturgieTairachsFluchV("Liturgie: Tairachs Fluch (V)",
+			FeatureGroupType.SpecialFeature), LiturgieTairachsFluchVI("Liturgie: Tairachs Fluch (VI)",
+			FeatureGroupType.SpecialFeature), LiturgieThalionmelsSchlachtgesang("Liturgie: Thalionmels Schlachtgesang",
+			FeatureGroupType.SpecialFeature), LiturgieTherbûnsErkenntnis("Liturgie: Therbûns Erkenntnis",
+			FeatureGroupType.SpecialFeature), LiturgieTierempathie("Liturgie: Tierempathie",
+			FeatureGroupType.SpecialFeature), LiturgieTiergestalt("Liturgie: Tiergestalt",
+			FeatureGroupType.SpecialFeature), LiturgieTiersprache("Liturgie: Tiersprache",
+			FeatureGroupType.SpecialFeature), LiturgieTranksegen("Liturgie: Tranksegen",
+			FeatureGroupType.SpecialFeature), LiturgieTraviabundGroßerEidsegen(
+			"Liturgie: Traviabund (Großer Eidsegen)", FeatureGroupType.SpecialFeature), LiturgieTraviasGebetDerSicherenZuflucht(
+			"Liturgie: Travias Gebet der sicheren Zuflucht", FeatureGroupType.SpecialFeature), LiturgieTraviasGebetDerVerborgenenHalle(
+			"Liturgie: Travias Gebet der verborgenen Halle", FeatureGroupType.SpecialFeature), LiturgieTraviniansSegenDerSchwelle(
+			"Liturgie: Travinians Segen der Schwelle", FeatureGroupType.SpecialFeature), LiturgieTrophäeErhalten(
+			"Liturgie: Trophäe erhalten", FeatureGroupType.SpecialFeature), LiturgieTsasEwigeJugend(
+			"Liturgie: Tsas ewige Jugend", FeatureGroupType.SpecialFeature), LiturgieTsasHeiligesLebensgeschenk(
+			"Liturgie: Tsas Heiliges Lebensgeschenk", FeatureGroupType.SpecialFeature), LiturgieTsasLebensschutz(
+			"Liturgie: Tsas Lebensschutz", FeatureGroupType.SpecialFeature), LiturgieTsasSegensreicherNeuanfang(
+			"Liturgie: Tsas Segensreicher Neuanfang", FeatureGroupType.SpecialFeature), LiturgieTsasWunderbareErneuerung(
+			"Liturgie: Tsas Wunderbare Erneuerung", FeatureGroupType.SpecialFeature), LiturgieTsasWundersameFruchtbarkeit(
+			"Liturgie: Tsas Wundersame Fruchtbarkeit", FeatureGroupType.SpecialFeature), LiturgieÜberDieWolken(
+			"Liturgie: Über die Wolken", FeatureGroupType.SpecialFeature), LiturgieÜberDieWolkenVI(
+			"Liturgie: Über die Wolken (VI)", FeatureGroupType.SpecialFeature), LiturgieUcurisGeleit(
+			"Liturgie: Ucuris Geleit", FeatureGroupType.SpecialFeature), LiturgieUnterpfandDesHeiligenRhys(
+			"Liturgie: Unterpfand des Heiligen Rhys", FeatureGroupType.SpecialFeature), LiturgieUnverstellterBlick(
+			"Liturgie: Unverstellter Blick", FeatureGroupType.SpecialFeature), LiturgieUrischarsOrdnenderBlick(
+			"Liturgie: Urischars ordnender Blick", FeatureGroupType.SpecialFeature), LiturgieVaêsTränen(
+			"Liturgie: Vaês Tränen", FeatureGroupType.SpecialFeature), LiturgieVerborgenWieDerNeumond(
+			"Liturgie: Verborgen wie der Neumond", FeatureGroupType.SpecialFeature), LiturgieVersiegeltesWissenGrauesSiegel(
+			"Liturgie: Versiegeltes Wissen (Graues Siegel)", FeatureGroupType.SpecialFeature), LiturgieVersiegeltesWissenGrauesSiegelIV(
+			"Liturgie: Versiegeltes Wissen (Graues Siegel) (IV)", FeatureGroupType.SpecialFeature), LiturgieVertrauterDerFlamme(
+			"Liturgie: Vertrauter der Flamme", FeatureGroupType.SpecialFeature), LiturgieVertrauterDesFelsens(
+			"Liturgie: Vertrauter des Felsens", FeatureGroupType.SpecialFeature), LiturgieVertreibungDesDunkelsinns(
+			"Liturgie: Vertreibung des Dunkelsinns", FeatureGroupType.SpecialFeature), LiturgieVisionssuche(
+			"Liturgie: Visionssuche", FeatureGroupType.SpecialFeature), LiturgieWaliburiasWehr(
+			"Liturgie: Waliburias Wehr", FeatureGroupType.SpecialFeature), LiturgieWandelnInHesindesHain(
+			"Liturgie: Wandeln in Hesindes Hain", FeatureGroupType.SpecialFeature), LiturgieWegDesFuchses(
+			"Liturgie: Weg des Fuchses", FeatureGroupType.SpecialFeature), LiturgieWeiheDerEwigenFlamme(
+			"Liturgie: Weihe der Ewigen Flamme", FeatureGroupType.SpecialFeature), LiturgieWeiheDerLetztenRuhestatt(
+			"Liturgie: Weihe der letzten Ruhestatt", FeatureGroupType.SpecialFeature), LiturgieWeihegesangDerHeiligenElidaVonSalza(
+			"Liturgie: Weihegesang der Heiligen Elida von Salza", FeatureGroupType.SpecialFeature), LiturgieWeisheitssegen(
+			"Liturgie: Weisheitssegen", FeatureGroupType.SpecialFeature), LiturgieWeisungDesHimmels(
+			"Liturgie: Weisung des Himmels", FeatureGroupType.SpecialFeature), LiturgieWilleZurWahrheit(
+			"Liturgie: Wille zur Wahrheit", FeatureGroupType.SpecialFeature), LiturgieWinterschlaf(
+			"Liturgie: Winterschlaf", FeatureGroupType.SpecialFeature), LiturgieWortDerWahrheitHeiligerBefehl(
+			"Liturgie: Wort der Wahrheit (Heiliger Befehl)", FeatureGroupType.SpecialFeature), LiturgieWunderbarerGeschlechterwandel(
+			"Liturgie: Wunderbarer Geschlechterwandel", FeatureGroupType.SpecialFeature), LiturgieWundersameBlütenpracht(
+			"Liturgie: Wundersame Blütenpracht", FeatureGroupType.SpecialFeature), LiturgieWundsegen(
+			"Liturgie: Wundsegen", FeatureGroupType.SpecialFeature), LiturgieWundsegenIII("Liturgie: Wundsegen (III)",
+			FeatureGroupType.SpecialFeature), LiturgieWundsegenIV("Liturgie: Wundsegen (IV)",
+			FeatureGroupType.SpecialFeature), LiturgieZerschmetternderBannstrahl(
+			"Liturgie: Zerschmetternder Bannstrahl", FeatureGroupType.SpecialFeature), LiturgieZufluchtFinden(
+			"Liturgie: Zuflucht finden", FeatureGroupType.SpecialFeature), LiturgieNamenlosesVergessen(
+			"Liturgie: Namenloses Vergessen", FeatureGroupType.SpecialFeature), LiturgieHerbeirufungDerDienerDesHerren(
+			"Liturgie: Herbeirufung der Diener des Herren", FeatureGroupType.SpecialFeature), LiturgieNamenloseKälte(
+			"Liturgie: Namenlose Kälte", FeatureGroupType.SpecialFeature), LiturgieDesEinenBezaubernderSphärenklang(
+			"Liturgie: Des Einen bezaubernder Sphärenklang", FeatureGroupType.SpecialFeature), LiturgieNamenloserZweifelNamenloseErleuchtung(
+			"Liturgie: Namenloser Zweifel - Namenlose Erleuchtung", FeatureGroupType.SpecialFeature), LiturgieSeelenschatten(
+			"Liturgie: Seelenschatten", FeatureGroupType.SpecialFeature), LiturgieSchwindendeZauberkraft(
+			"Liturgie: Schwindende Zauberkraft", FeatureGroupType.SpecialFeature), LiturgieFluchWiderDieUngläubigen(
+			"Liturgie: Fluch wider die Ungläubigen", FeatureGroupType.SpecialFeature), LiturgieGoldeneHand(
+			"Liturgie: Goldene Hand", FeatureGroupType.SpecialFeature), LiturgieNamenloseRaserei(
+			"Liturgie: Namenlose Raserei", FeatureGroupType.SpecialFeature), LiturgiePechUndSchwefel(
+			"Liturgie: Pech und Schwefel", FeatureGroupType.SpecialFeature), LiturgieGottDerGötter(
+			"Liturgie: Gott der Götter", FeatureGroupType.SpecialFeature), LiturgieGottDerGötterIII(
+			"Liturgie: Gott der Götter (III)", FeatureGroupType.SpecialFeature), LiturgieGottDerGötterIV(
+			"Liturgie: Gott der Götter (IV)", FeatureGroupType.SpecialFeature), LiturgieGottDerGötterV(
+			"Liturgie: Gott der Götter (V)", FeatureGroupType.SpecialFeature), LiturgieGottDerGötterVI(
+			"Liturgie: Gott der Götter (VI)", FeatureGroupType.SpecialFeature), LiturgieHerbeirufungDerHeerscharenDesRattenkindes(
+			"Liturgie: Herbeirufung der Heerscharen des Rattenkindes", FeatureGroupType.SpecialFeature), LiturgieWaffenfluch(
+			"Liturgie: Waffenfluch", FeatureGroupType.SpecialFeature), LiturgieSchleichendeFäulnis(
+			"Liturgie: Schleichende Fäulnis", FeatureGroupType.SpecialFeature), LiturgieEwigeJugend(
+			"Liturgie: Ewige Jugend", FeatureGroupType.SpecialFeature), LiturgieSeelenbannung(
+			"Liturgie: Seelenbannung", FeatureGroupType.SpecialFeature), LockeresZaubern("Lockeres Zaubern",
+			FeatureGroupType.SpecialFeature), Maraskankundig("Maraskankundig", FeatureGroupType.SpecialFeature), Matrixgeber(
+			"Matrixgeber", FeatureGroupType.SpecialFeature), Matrixkontrolle("Matrixkontrolle",
+			FeatureGroupType.SpecialFeature), MatrixregenerationI("Matrixregeneration I",
+			FeatureGroupType.SpecialFeature), MatrixregenerationII("Matrixregeneration II",
+			FeatureGroupType.SpecialFeature), Matrixverständnis("Matrixverständnis", FeatureGroupType.SpecialFeature), Meereskundig(
+			"Meereskundig", FeatureGroupType.SpecialFeature), MeisterDerImprovisation("Meister der Improvisation",
+			FeatureGroupType.SpecialFeature), MeisterDerWünsche("Meister der Wünsche", FeatureGroupType.SpecialFeature), MeisterlicheRegeneration(
+			"Meisterliche Regeneration", FeatureGroupType.SpecialFeature), MeisterlicheZauberkontrolle(
+			"Meisterliche Zauberkontrolle", FeatureGroupType.SpecialFeature), MeisterlicheZauberkontrolleI(
+			"Meisterliche Zauberkontrolle I", FeatureGroupType.SpecialFeature), MeisterlicheZauberkontrolleII(
+			"Meisterliche Zauberkontrolle II", FeatureGroupType.SpecialFeature), MeisterlichesEntwaffnen(
+			"Meisterliches Entwaffnen", FeatureGroupType.SpecialFeature), Meisterparade("Meisterparade",
+			FeatureGroupType.SpecialFeature), Meisterschütze("Meisterschütze", FeatureGroupType.SpecialFeature), MerkmalskenntnisAntimagie(
+			"Merkmalskenntnis: Antimagie", FeatureGroupType.SpecialFeature), MerkmalskenntnisBeschwörung(
+			"Merkmalskenntnis: Beschwörung", FeatureGroupType.SpecialFeature), MerkmalskenntnisDämonisch(
+			"Merkmalskenntnis: Dämonisch", FeatureGroupType.SpecialFeature), MerkmalskenntnisDämonischAgrimoth(
+			"Merkmalskenntnis: Dämonisch (Agrimoth)", FeatureGroupType.SpecialFeature), MerkmalskenntnisDämonischAmazeroth(
+			"Merkmalskenntnis: Dämonisch (Amazeroth)", FeatureGroupType.SpecialFeature), MerkmalskenntnisDämonischAsfaloth(
+			"Merkmalskenntnis: Dämonisch (Asfaloth)", FeatureGroupType.SpecialFeature), MerkmalskenntnisDämonischBelhalhar(
+			"Merkmalskenntnis: Dämonisch (Belhalhar)", FeatureGroupType.SpecialFeature), MerkmalskenntnisDämonischBelzhorash(
+			"Merkmalskenntnis: Dämonisch (Belzhorash)", FeatureGroupType.SpecialFeature), MerkmalskenntnisDämonischBlakharaz(
+			"Merkmalskenntnis: Dämonisch (Blakharaz)", FeatureGroupType.SpecialFeature), MerkmalskenntnisDämonischLolgramoth(
+			"Merkmalskenntnis: Dämonisch (Lolgramoth)", FeatureGroupType.SpecialFeature), MerkmalskenntnisDämonischThargunitoth(
+			"Merkmalskenntnis: Dämonisch (Thargunitoth)", FeatureGroupType.SpecialFeature), MerkmalskenntnisEigenschaften(
+			"Merkmalskenntnis: Eigenschaften", FeatureGroupType.SpecialFeature), MerkmalskenntnisEinfluss(
+			"Merkmalskenntnis: Einfluss", FeatureGroupType.SpecialFeature), MerkmalskenntnisElementar(
+			"Merkmalskenntnis: Elementar", FeatureGroupType.SpecialFeature), MerkmalskenntnisElementarEis(
+			"Merkmalskenntnis: Elementar (Eis)", FeatureGroupType.SpecialFeature), MerkmalskenntnisElementarErz(
+			"Merkmalskenntnis: Elementar (Erz)", FeatureGroupType.SpecialFeature), MerkmalskenntnisElementarFeuer(
+			"Merkmalskenntnis: Elementar (Feuer)", FeatureGroupType.SpecialFeature), MerkmalskenntnisElementarHumus(
+			"Merkmalskenntnis: Elementar (Humus)", FeatureGroupType.SpecialFeature), MerkmalskenntnisElementarLuft(
+			"Merkmalskenntnis: Elementar (Luft)", FeatureGroupType.SpecialFeature), MerkmalskenntnisElementarWasser(
+			"Merkmalskenntnis: Elementar (Wasser)", FeatureGroupType.SpecialFeature), MerkmalskenntnisForm(
+			"Merkmalskenntnis: Form", FeatureGroupType.SpecialFeature), MerkmalskenntnisGeisterwesen(
+			"Merkmalskenntnis: Geisterwesen", FeatureGroupType.SpecialFeature), MerkmalskenntnisHeilung(
+			"Merkmalskenntnis: Heilung", FeatureGroupType.SpecialFeature), MerkmalskenntnisHellsicht(
+			"Merkmalskenntnis: Hellsicht", FeatureGroupType.SpecialFeature), MerkmalskenntnisHerbeirufung(
+			"Merkmalskenntnis: Herbeirufung", FeatureGroupType.SpecialFeature), MerkmalskenntnisHerrschaft(
+			"Merkmalskenntnis: Herrschaft", FeatureGroupType.SpecialFeature), MerkmalskenntnisIllusion(
+			"Merkmalskenntnis: Illusion", FeatureGroupType.SpecialFeature), MerkmalskenntnisKraft(
+			"Merkmalskenntnis: Kraft", FeatureGroupType.SpecialFeature), MerkmalskenntnisLimbus(
+			"Merkmalskenntnis: Limbus", FeatureGroupType.SpecialFeature), MerkmalskenntnisMetamagie(
+			"Merkmalskenntnis: Metamagie", FeatureGroupType.SpecialFeature), MerkmalskenntnisObjekt(
+			"Merkmalskenntnis: Objekt", FeatureGroupType.SpecialFeature), MerkmalskenntnisSchaden(
+			"Merkmalskenntnis: Schaden", FeatureGroupType.SpecialFeature), MerkmalskenntnisTelekinese(
+			"Merkmalskenntnis: Telekinese", FeatureGroupType.SpecialFeature), MerkmalskenntnisTemporal(
+			"Merkmalskenntnis: Temporal", FeatureGroupType.SpecialFeature), MerkmalskenntnisUmwelt(
+			"Merkmalskenntnis: Umwelt", FeatureGroupType.SpecialFeature), MerkmalskenntnisVerständigung(
+			"Merkmalskenntnis: Verständigung", FeatureGroupType.SpecialFeature), NandusgefälligesWissen(
+			"Nandusgefälliges Wissen", FeatureGroupType.SpecialFeature), Nekromant("Nekromant",
+			FeatureGroupType.SpecialFeature), Niederringen("Niederringen", FeatureGroupType.SpecialFeature), Niederwerfen(
+			"Niederwerfen", FeatureGroupType.SpecialFeature), GabeDesOdûnHauchDesOdûn("Gabe des Odûn: Hauch des Odûn",
+			FeatureGroupType.SpecialFeature), GabeDesOdûnHautDesOdûn("Gabe des Odûn: Haut des Odûn",
+			FeatureGroupType.SpecialFeature), GabeDesOdûnBlutDesOdûn("Gabe des Odûn: Blut des Odûn",
+			FeatureGroupType.SpecialFeature), GabeDesOdûnRufDesOdûn("Gabe des Odûn: Ruf des Odûn",
+			FeatureGroupType.SpecialFeature), GabeDesOdûnSeeleDesOdûn("Gabe des Odûn: Seele des Odûn",
+			FeatureGroupType.SpecialFeature), Ortskenntnis("Ortskenntnis", FeatureGroupType.SpecialFeature), OrtskenntnisÖrtlichkeit1(
+			"Ortskenntnis (Örtlichkeit 1)", FeatureGroupType.SpecialFeature), OrtskenntnisÖrtlichkeit2(
+			"Ortskenntnis (Örtlichkeit 2)", FeatureGroupType.SpecialFeature), OrtskenntnisStrecke1(
+			"Ortskenntnis (Strecke 1)", FeatureGroupType.SpecialFeature), OrtskenntnisStrecke2(
+			"Ortskenntnis (Strecke 2)", FeatureGroupType.SpecialFeature), Ottagaldr("Ottagaldr",
+			FeatureGroupType.SpecialFeature), ParierwaffenI("Parierwaffen I", FeatureGroupType.SpecialFeature), ParierwaffenII(
+			"Parierwaffen II", FeatureGroupType.SpecialFeature), RegenerationI("Regeneration I",
+			FeatureGroupType.SpecialFeature), RegenerationII("Regeneration II", FeatureGroupType.SpecialFeature), Reiterkampf(
+			"Reiterkampf", FeatureGroupType.SpecialFeature), ReiterkampfStreitwagen("Reiterkampf (Streitwagen)",
+			FeatureGroupType.SpecialFeature), RepräsentationAchaz("Repräsentation: Achaz",
+			FeatureGroupType.SpecialFeature), RepräsentationBorbaradianer("Repräsentation: Borbaradianer",
+			FeatureGroupType.SpecialFeature), RepräsentationDruide("Repräsentation: Druide",
+			FeatureGroupType.SpecialFeature), RepräsentationElf("Repräsentation: Elf", FeatureGroupType.SpecialFeature), RepräsentationGeode(
+			"Repräsentation: Geode", FeatureGroupType.SpecialFeature), RepräsentationHexe("Repräsentation: Hexe",
+			FeatureGroupType.SpecialFeature), RepräsentationMagier("Repräsentation: Magier",
+			FeatureGroupType.SpecialFeature), RepräsentationScharlatan("Repräsentation: Scharlatan",
+			FeatureGroupType.SpecialFeature), RepräsentationSchelm("Repräsentation: Schelm",
+			FeatureGroupType.SpecialFeature), RitualArngrimsHöhle("Ritual: Arngrims Höhle",
+			FeatureGroupType.SpecialFeature), RitualAufmerksamerWächter("Ritual: Aufmerksamer Wächter",
+			FeatureGroupType.SpecialFeature), RitualBlickInLiskasAuge("Ritual: Blick in Liskas Auge",
+			FeatureGroupType.SpecialFeature), RitualBlickInsGeisterreich("Ritual: Blick ins Geisterreich",
+			FeatureGroupType.SpecialFeature), RitualBlickInsGeisterreichII("Ritual: Blick ins Geisterreich (II)",
+			FeatureGroupType.SpecialFeature), RitualBlickInsGeisterreichIII("Ritual: Blick ins Geisterreich (III)",
+			FeatureGroupType.SpecialFeature), RitualBlutsbund("Ritual: Blutsbund", FeatureGroupType.SpecialFeature), RitualBrazoraghGhorkai(
+			"Ritual: Brazoragh Ghorkai", FeatureGroupType.SpecialFeature), RitualErgochaiTairachi(
+			"Ritual: Ergochai Tairachi", FeatureGroupType.SpecialFeature), RitualExorzismus("Ritual: Exorzismus",
+			FeatureGroupType.SpecialFeature), RitualExorzismusIII("Ritual: Exorzismus (III)",
+			FeatureGroupType.SpecialFeature), RitualExorzismusIV("Ritual: Exorzismus (IV)",
+			FeatureGroupType.SpecialFeature), RitualExorzismusV("Ritual: Exorzismus (V)",
+			FeatureGroupType.SpecialFeature), RitualFarbenDesKrieges("Ritual: Farben des Krieges",
+			FeatureGroupType.SpecialFeature), RitualFluchDerVerwirrung("Ritual: Fluch der Verwirrung",
+			FeatureGroupType.SpecialFeature), RitualFreieSeelenfahrt("Ritual: Freie Seelenfahrt",
+			FeatureGroupType.SpecialFeature), RitualGabenDerErde("Ritual: Gaben der Erde",
+			FeatureGroupType.SpecialFeature), RitualGeisterbote("Ritual: Geisterbote", FeatureGroupType.SpecialFeature), RitualGeisterkerker(
+			"Ritual: Geisterkerker", FeatureGroupType.SpecialFeature), RitualGeistheilung("Ritual: Geistheilung",
+			FeatureGroupType.SpecialFeature), RitualGeleitDesNipakau("Ritual: Geleit des Nipakau",
+			FeatureGroupType.SpecialFeature), RitualGesangDerWölfe("Ritual: Gesang der Wölfe",
+			FeatureGroupType.SpecialFeature), RitualGharyakMaruki("Ritual: Gharyak Maruki",
+			FeatureGroupType.SpecialFeature), RitualGroßerGeisterbann("Ritual: Großer Geisterbann",
+			FeatureGroupType.SpecialFeature), RitualHairuf("Ritual: Hairuf", FeatureGroupType.SpecialFeature), RitualHauchDesElements(
+			"Ritual: Hauch des Elements", FeatureGroupType.SpecialFeature), RitualHeimführungDerHerde(
+			"Ritual: Heimführung der Herde", FeatureGroupType.SpecialFeature), RitualHerzDesTieres(
+			"Ritual: Herz des Tieres", FeatureGroupType.SpecialFeature), RitualHilferuf("Ritual: Hilferuf",
+			FeatureGroupType.SpecialFeature), RitualJagdfieber("Ritual: Jagdfieber", FeatureGroupType.SpecialFeature), RitualKhurkachaiTairachi(
+			"Ritual: Khurkachai Tairachi", FeatureGroupType.SpecialFeature), RitualKraftDerTayas(
+			"Ritual: Kraft der Tayas", FeatureGroupType.SpecialFeature), RitualKraftDesTieres(
+			"Ritual: Kraft des Tieres", FeatureGroupType.SpecialFeature), RitualMcharUtrakRikaii(
+			"Ritual: M´char Utrak Rikaii", FeatureGroupType.SpecialFeature), RitualMachtDerElemente(
+			"Ritual: Macht der Elemente", FeatureGroupType.SpecialFeature), RitualMachtDesBlutes(
+			"Ritual: Macht des Blutes", FeatureGroupType.SpecialFeature), RitualMailamRekdaisSegen(
+			"Ritual: Mailam Rekdais Segen", FeatureGroupType.SpecialFeature), RitualMammutruf("Ritual: Mammutruf",
+			FeatureGroupType.SpecialFeature), RitualOgerruf("Ritual: Ogerruf", FeatureGroupType.SpecialFeature), RitualPfadDerBlutrache(
+			"Ritual: Pfad der Blutrache", FeatureGroupType.SpecialFeature), RitualRangildUndRissasHochzeit(
+			"Ritual: Rangild und Rissas Hochzeit", FeatureGroupType.SpecialFeature), RitualRatDerAhnen(
+			"Ritual: Rat der Ahnen", FeatureGroupType.SpecialFeature), RitualRegentanz("Ritual: Regentanz",
+			FeatureGroupType.SpecialFeature), RitualReinigenDesWassers("Ritual: Reinigen des Wassers",
+			FeatureGroupType.SpecialFeature), RitualReißgramsFährte("Ritual: Reißgrams Fährte",
+			FeatureGroupType.SpecialFeature), RitualReitenderGeist("Ritual: Reitender Geist",
+			FeatureGroupType.SpecialFeature), RitualRikaisVerderben("Ritual: Rikais Verderben",
+			FeatureGroupType.SpecialFeature), RitualRinderruf("Ritual: Rinderruf", FeatureGroupType.SpecialFeature), RitualRufDesSchamanen(
+			"Ritual: Ruf des Schamanen", FeatureGroupType.SpecialFeature), RitualSchlangenfluch(
+			"Ritual: Schlangenfluch", FeatureGroupType.SpecialFeature), RitualSchlangenfluchV(
+			"Ritual: Schlangenfluch (V)", FeatureGroupType.SpecialFeature), RitualSchlangengeist(
+			"Ritual: Schlangengeist", FeatureGroupType.SpecialFeature), RitualSchlingerruf("Ritual: Schlingerruf",
+			FeatureGroupType.SpecialFeature), RitualSchomasKraft("Ritual: Schomas Kraft",
+			FeatureGroupType.SpecialFeature), RitualSchutzDerJurte("Ritual: Schutz der Jurte",
+			FeatureGroupType.SpecialFeature), RitualSchützendeRotte("Ritual: Schützende Rotte",
+			FeatureGroupType.SpecialFeature), RitualSeeschlangenruf("Ritual: Seeschlangenruf",
+			FeatureGroupType.SpecialFeature), RitualStimmeDesNipakau("Ritual: Stimme des Nipakau",
+			FeatureGroupType.SpecialFeature), RitualTabuzone("Ritual: Tabuzone", FeatureGroupType.SpecialFeature), RitualTauschplatz(
+			"Ritual: Tauschplatz", FeatureGroupType.SpecialFeature), RitualTiereAusFarben("Ritual: Tiere aus Farben",
+			FeatureGroupType.SpecialFeature), RitualTränkeMeineHerde("Ritual: Tränke meine Herde",
+			FeatureGroupType.SpecialFeature), RitualWeckruf("Ritual: Weckruf", FeatureGroupType.SpecialFeature), RitualWegDesWindes(
+			"Ritual: Weg des Windes", FeatureGroupType.SpecialFeature), RitualWegzeichen("Ritual: Wegzeichen",
+			FeatureGroupType.SpecialFeature), RitualWeidegründeFinden("Ritual: Weidegründe finden",
+			FeatureGroupType.SpecialFeature), RitualWildFinden("Ritual: Wild finden", FeatureGroupType.SpecialFeature), RitualWildschweinruf(
+			"Ritual: Wildschweinruf", FeatureGroupType.SpecialFeature), RitualWolfsfluch("Ritual: Wolfsfluch",
+			FeatureGroupType.SpecialFeature), RitualWolfsfluchV("Ritual: Wolfsfluch (V)",
+			FeatureGroupType.SpecialFeature), RitualWolfsruf("Ritual: Wolfsruf", FeatureGroupType.SpecialFeature), RitualZeichenSetzen(
+			"Ritual: Zeichen setzen", FeatureGroupType.SpecialFeature), RitualZornDesBerglöwen(
+			"Ritual: Zorn des Berglöwen", FeatureGroupType.SpecialFeature), RitualZornDesSchneelaurers(
+			"Ritual: Zorn des Schneelaurers", FeatureGroupType.SpecialFeature), RitualZornDerKhoramsbestie(
+			"Ritual: Zorn der Khoramsbestie", FeatureGroupType.SpecialFeature), RitualZornDesFirunsbären(
+			"Ritual: Zorn des Firunsbären", FeatureGroupType.SpecialFeature), RitualkenntnisAchazSchamane(
+			"Ritualkenntnis: Achaz-Schamane", FeatureGroupType.SpecialFeature), RitualkenntnisAlchimist(
+			"Ritualkenntnis: Alchimist", FeatureGroupType.SpecialFeature), RitualkenntnisDerwisch(
+			"Ritualkenntnis: Derwisch", FeatureGroupType.SpecialFeature), RitualkenntnisDruide(
+			"Ritualkenntnis: Druide", FeatureGroupType.SpecialFeature), RitualkenntnisDurroDûn(
+			"Ritualkenntnis: Durro-Dûn", FeatureGroupType.SpecialFeature), RitualkenntnisFerkinaSchamane(
+			"Ritualkenntnis: Ferkina-Schamane", FeatureGroupType.SpecialFeature), RitualkenntnisGeode(
+			"Ritualkenntnis: Geode", FeatureGroupType.SpecialFeature), RitualkenntnisGjalskerSchamane(
+			"Ritualkenntnis: Gjalsker-Schamane", FeatureGroupType.SpecialFeature), RitualkenntnisGoblinSchamanin(
+			"Ritualkenntnis: Goblin-Schamanin", FeatureGroupType.SpecialFeature), RitualkenntnisHexe(
+			"Ritualkenntnis: Hexe", FeatureGroupType.SpecialFeature), RitualkenntnisKristallomantie(
+			"Ritualkenntnis: Kristallomantie", FeatureGroupType.SpecialFeature), RitualkenntnisGildenmagie(
+			"Ritualkenntnis: Gildenmagie", FeatureGroupType.SpecialFeature), RitualkenntnisNivesenSchamane(
+			"Ritualkenntnis: Nivesen-Schamane", FeatureGroupType.SpecialFeature), RitualkenntnisOrkSchamane(
+			"Ritualkenntnis: Ork-Schamane", FeatureGroupType.SpecialFeature), RitualkenntnisScharlatan(
+			"Ritualkenntnis: Scharlatan", FeatureGroupType.SpecialFeature), RitualkenntnisRunenzauberei(
+			"Ritualkenntnis: Runenzauberei", FeatureGroupType.SpecialFeature), RitualkenntnisTrollzackerSchamane(
+			"Ritualkenntnis: Trollzacker-Schamane", FeatureGroupType.SpecialFeature), RitualkenntnisWaldmenschenSchamane(
+			"Ritualkenntnis: Waldmenschen-Schamane", FeatureGroupType.SpecialFeature), RitualkenntnisWaldmenschenSchamaneUtulus(
+			"Ritualkenntnis: Waldmenschen-Schamane (Utulus)", FeatureGroupType.SpecialFeature), RitualkenntnisWaldmenschenSchamaneTocamuyac(
+			"Ritualkenntnis: Waldmenschen-Schamane (Tocamuyac)", FeatureGroupType.SpecialFeature), RitualkenntnisZaubertänzer(
+			"Ritualkenntnis: Zaubertänzer", FeatureGroupType.SpecialFeature), RitualkenntnisZaubertänzertulamidischeSharisad(
+			"Ritualkenntnis: Zaubertänzer (tulamidische Sharisad)", FeatureGroupType.SpecialFeature), RitualkenntnisZaubertänzernovadischeSharisad(
+			"Ritualkenntnis: Zaubertänzer (novadische Sharisad)", FeatureGroupType.SpecialFeature), RitualkenntnisZaubertänzerMajuna(
+			"Ritualkenntnis: Zaubertänzer (Majuna)", FeatureGroupType.SpecialFeature), RitualkenntnisZaubertänzerHazaqi(
+			"Ritualkenntnis: Zaubertänzer (Hazaqi)", FeatureGroupType.SpecialFeature), RitualkenntnisZibilja(
+			"Ritualkenntnis: Zibilja", FeatureGroupType.SpecialFeature), RitualkenntnisAlhanisch(
+			"Ritualkenntnis: Alhanisch", FeatureGroupType.SpecialFeature), RitualkenntnisDruidischGeodisch(
+			"Ritualkenntnis: Druidisch-Geodisch", FeatureGroupType.SpecialFeature), RitualkenntnisGüldenländisch(
+			"Ritualkenntnis: Güldenländisch", FeatureGroupType.SpecialFeature), RitualkenntnisGrolmisch(
+			"Ritualkenntnis: Grolmisch", FeatureGroupType.SpecialFeature), RitualkenntnisKophtanisch(
+			"Ritualkenntnis: Kophtanisch", FeatureGroupType.SpecialFeature), RitualkenntnisMudramulisch(
+			"Ritualkenntnis: Mudramulisch", FeatureGroupType.SpecialFeature), RitualkenntnisSatuarisch(
+			"Ritualkenntnis: Satuarisch", FeatureGroupType.SpecialFeature), RitualkenntnisTapasuul(
+			"Ritualkenntnis: Tapasuul", FeatureGroupType.SpecialFeature), RüstungsgewöhnungI("Rüstungsgewöhnung I",
+			FeatureGroupType.SpecialFeature), RüstungsgewöhnungII("Rüstungsgewöhnung II",
+			FeatureGroupType.SpecialFeature), RüstungsgewöhnungIII("Rüstungsgewöhnung III",
+			FeatureGroupType.SpecialFeature), Runenkunde("Runenkunde", FeatureGroupType.SpecialFeature), RunenRauschrune(
+			"Runen: Rauschrune", FeatureGroupType.SpecialFeature), RunenFriedensrune("Runen: Friedensrune",
+			FeatureGroupType.SpecialFeature), RunenOttarune("Runen: Ottarune", FeatureGroupType.SpecialFeature), RunenFinsterrune(
+			"Runen: Finsterrune", FeatureGroupType.SpecialFeature), RunenWogensturmrune("Runen: Wogensturmrune",
+			FeatureGroupType.SpecialFeature), RunenFelsenrune("Runen: Felsenrune", FeatureGroupType.SpecialFeature), RunenSchicksalsrune(
+			"Runen: Schicksalsrune", FeatureGroupType.SpecialFeature), RunenPfeilrune("Runen: Pfeilrune",
+			FeatureGroupType.SpecialFeature), RunenWaffenrune("Runen: Waffenrune", FeatureGroupType.SpecialFeature), RunenDrachenrune(
+			"Runen: Drachenrune", FeatureGroupType.SpecialFeature), RunenFurchtrune("Runen: Furchtrune",
+			FeatureGroupType.SpecialFeature), RunenBlutrune("Runen: Blutrune", FeatureGroupType.SpecialFeature), Salasandra(
+			"Salasandra", FeatureGroupType.SpecialFeature), Schmetterschlag("Schmetterschlag",
+			FeatureGroupType.SpecialFeature), SchmutzigeTricks("Schmutzige Tricks", FeatureGroupType.SpecialFeature), Schwanzschlag(
+			"Schwanzschlag", FeatureGroupType.SpecialFeature), Schwanzfeger("Schwanzfeger",
+			FeatureGroupType.SpecialFeature), Schwinger("Schwinger", FeatureGroupType.SpecialFeature), Schwitzkasten(
+			"Schwitzkasten", FeatureGroupType.SpecialFeature), SchalenzauberWeiheDerSchale(
+			"Schalenzauber: Weihe der Schale", FeatureGroupType.SpecialFeature), SchalenzauberAllegorischeAnalyse(
+			"Schalenzauber: Allegorische Analyse", FeatureGroupType.SpecialFeature), SchalenzauberChymischeHochzeit(
+			"Schalenzauber: Chymische Hochzeit", FeatureGroupType.SpecialFeature), SchalenzauberMandriconsBindung(
+			"Schalenzauber: Mandricons Bindung", FeatureGroupType.SpecialFeature), SchalenzauberFeuerUndEis(
+			"Schalenzauber: Feuer und Eis", FeatureGroupType.SpecialFeature), SchalenzauberTransmutationDerElemente(
+			"Schalenzauber: Transmutation der Elemente", FeatureGroupType.SpecialFeature), Scharfschütze(
+			"Scharfschütze", FeatureGroupType.SpecialFeature), Sprung("Sprung", FeatureGroupType.SpecialFeature), Sprungtritt(
+			"Sprungtritt", FeatureGroupType.SpecialFeature), SchlangenringZauberWeiheDerSchlange(
+			"Schlangenring-Zauber: Weihe der Schlange", FeatureGroupType.SpecialFeature), SchlangenringZauberMagnetismus(
+			"Schlangenring-Zauber: Magnetismus", FeatureGroupType.SpecialFeature), SchlangenringZauberWasserbann(
+			"Schlangenring-Zauber: Wasserbann", FeatureGroupType.SpecialFeature), SchlangenringZauberMachtÜberDenRegen(
+			"Schlangenring-Zauber: Macht über den Regen", FeatureGroupType.SpecialFeature), SchlangenringZauberSeelenfeuer(
+			"Schlangenring-Zauber: Seelenfeuer", FeatureGroupType.SpecialFeature), SchlangenringZauberHerrDerFlammen(
+			"Schlangenring-Zauber: Herr der Flammen", FeatureGroupType.SpecialFeature), SchlangenringZauberMachtDesLebens(
+			"Schlangenring-Zauber: Macht des Lebens", FeatureGroupType.SpecialFeature), SchlangenringZauberKräfteDerNatur(
+			"Schlangenring-Zauber: Kräfte der Natur", FeatureGroupType.SpecialFeature), SchlangenringZauberWirbelnderLuftschild(
+			"Schlangenring-Zauber: Wirbelnder Luftschild", FeatureGroupType.SpecialFeature), SchlangenringZauberLaunenDesWindes(
+			"Schlangenring-Zauber: Launen des Windes", FeatureGroupType.SpecialFeature), SchlangenringZauberWegDurchSumusLeib(
+			"Schlangenring-Zauber: Weg durch Sumus Leib", FeatureGroupType.SpecialFeature), DieGestaltAusRauch(
+			"Die Gestalt aus Rauch", FeatureGroupType.SpecialFeature), SchuppenbeutelBindungDesSchuppenbeutels(
+			"Schuppenbeutel: Bindung des Schuppenbeutels", FeatureGroupType.SpecialFeature), SchuppenbeutelSuchendeFinger(
+			"Schuppenbeutel: Suchende Finger", FeatureGroupType.SpecialFeature), SchuppenbeutelEwigeWegzehrung(
+			"Schuppenbeutel: Ewige Wegzehrung", FeatureGroupType.SpecialFeature), SchildkampfI("Schildkampf I",
+			FeatureGroupType.SpecialFeature), SchildkampfII("Schildkampf II", FeatureGroupType.SpecialFeature), Schildspalter(
+			"Schildspalter", FeatureGroupType.SpecialFeature), Signaturkenntnis("Signaturkenntnis",
+			FeatureGroupType.SpecialFeature), Schnellladen("Schnellladen", FeatureGroupType.SpecialFeature), Schnellziehen(
+			"Schnellziehen", FeatureGroupType.SpecialFeature), SemipermanenzI("Semipermanenz I",
+			FeatureGroupType.SpecialFeature), SemipermanenzII("Semipermanenz II", FeatureGroupType.SpecialFeature), Simultanzaubern(
+			"Simultanzaubern", FeatureGroupType.SpecialFeature), SpätweiheAlveranischeGottheit(
+			"Spätweihe Alveranische Gottheit", FeatureGroupType.SpecialFeature), SpätweiheNamenloser(
+			"Spätweihe Namenloser", FeatureGroupType.SpecialFeature), SpätweiheNichtalveranischeGottheit(
+			"Spätweihe Nichtalveranische Gottheit", FeatureGroupType.SpecialFeature), Spießgespann("Spießgespann",
+			FeatureGroupType.SpecialFeature), StabzauberBindung("Stabzauber: Bindung", FeatureGroupType.SpecialFeature), StabzauberFackel(
+			"Stabzauber: Fackel", FeatureGroupType.SpecialFeature), StabzauberSeil("Stabzauber: Seil",
+			FeatureGroupType.SpecialFeature), StabzauberStabverlängerung("Stabzauber: Stabverlängerung",
+			FeatureGroupType.SpecialFeature), StabzauberHammerDesMagus("Stabzauber: Hammer des Magus",
+			FeatureGroupType.SpecialFeature), StabzauberKraftfokus("Stabzauber: Kraftfokus",
+			FeatureGroupType.SpecialFeature), StabzauberModifikationsfokus("Stabzauber: Modifikationsfokus",
+			FeatureGroupType.SpecialFeature), StabzauberZauberspeicher("Stabzauber: Zauberspeicher",
+			FeatureGroupType.SpecialFeature), StabzauberMerkmalsfokus("Stabzauber: Merkmalsfokus",
+			FeatureGroupType.SpecialFeature), StabzauberFlammenschwert("Stabzauber: Flammenschwert",
+			FeatureGroupType.SpecialFeature), StabzauberSchuppenhaut("Stabzauber: Schuppenhaut",
+			FeatureGroupType.SpecialFeature), StabzauberAstralschild("Stabzauber: Astralschild",
+			FeatureGroupType.SpecialFeature), StabzauberLangerArm("Stabzauber: Langer Arm",
+			FeatureGroupType.SpecialFeature), StabzauberSchutzGegenUntote("Stabzauber: Schutz gegen Untote",
+			FeatureGroupType.SpecialFeature), Stapeleffekt("Stapeleffekt", FeatureGroupType.SpecialFeature), Steppenkundig(
+			"Steppenkundig", FeatureGroupType.SpecialFeature), Sturmangriff("Sturmangriff",
+			FeatureGroupType.SpecialFeature), Sumpfkundig("Sumpfkundig", FeatureGroupType.SpecialFeature), TrankDesUngehindertenWeges(
+			"Trank des ungehinderten Weges", FeatureGroupType.SpecialFeature), TanzDerMada("Tanz der Mada",
+			FeatureGroupType.SpecialFeature), TierischerBegleiter("Tierischer Begleiter",
+			FeatureGroupType.SpecialFeature), TodVonLinks("Tod von links", FeatureGroupType.SpecialFeature), Todesstoß(
+			"Todesstoß", FeatureGroupType.SpecialFeature), Traumgänger("Traumgänger", FeatureGroupType.SpecialFeature), Tritt(
+			"Tritt", FeatureGroupType.SpecialFeature), TrommelzauberRufDesKrieges("Trommelzauber: Ruf des Krieges",
+			FeatureGroupType.SpecialFeature), TrommelzauberSturmDerWüste("Trommelzauber: Sturm der Wüste",
+			FeatureGroupType.SpecialFeature), TrommelzauberSchutzRastullahs("Trommelzauber: Schutz Rastullahs",
+			FeatureGroupType.SpecialFeature), TrommelzauberRastullahsGüte("Trommelzauber: Rastullahs Güte",
+			FeatureGroupType.SpecialFeature), TrommelzauberZornDesGottgefälligen(
+			"Trommelzauber: Zorn des Gottgefälligen", FeatureGroupType.SpecialFeature), Turnierreiterei(
+			"Turnierreiterei", FeatureGroupType.SpecialFeature), Umreißen("Umreißen", FeatureGroupType.SpecialFeature), Unterwasserkampf(
+			"Unterwasserkampf", FeatureGroupType.SpecialFeature), VerbotenePforten("Verbotene Pforten",
+			FeatureGroupType.SpecialFeature), VersteckteKlinge("Versteckte Klinge", FeatureGroupType.SpecialFeature), Vertrautenbindung(
+			"Vertrautenbindung", FeatureGroupType.SpecialFeature), WaffeZerbrechen("Waffe zerbrechen",
+			FeatureGroupType.SpecialFeature), Waffenmeister("Waffenmeister", FeatureGroupType.SpecialFeature), Würgegriff(
+			"Würgegriff", FeatureGroupType.SpecialFeature), Wurf("Wurf", FeatureGroupType.SpecialFeature), WaffenloserKampfstilBornländisch(
+			"Waffenloser Kampfstil: Bornländisch", FeatureGroupType.SpecialFeature), WaffenloserKampfstilGladiatorenstil(
+			"Waffenloser Kampfstil: Gladiatorenstil", FeatureGroupType.SpecialFeature), WaffenloserKampfstilHammerfaust(
+			"Waffenloser Kampfstil: Hammerfaust", FeatureGroupType.SpecialFeature), WaffenloserKampfstilHruruzat(
+			"Waffenloser Kampfstil: Hruruzat", FeatureGroupType.SpecialFeature), WaffenloserKampfstilMercenario(
+			"Waffenloser Kampfstil: Mercenario", FeatureGroupType.SpecialFeature), WaffenloserKampfstilUnauerSchule(
+			"Waffenloser Kampfstil: Unauer Schule", FeatureGroupType.SpecialFeature), WaffenloserKampfstilGladiatorenstilDDZ(
+			"Waffenloser Kampfstil: Gladiatorenstil (DDZ)", FeatureGroupType.SpecialFeature), VielfacheLadungen(
+			"Vielfache Ladungen", FeatureGroupType.SpecialFeature), Waldkundig("Waldkundig",
+			FeatureGroupType.SpecialFeature), Windmühle("Windmühle", FeatureGroupType.SpecialFeature), Wuchtschlag(
+			"Wuchtschlag", FeatureGroupType.SpecialFeature), Wüstenkundig("Wüstenkundig",
+			FeatureGroupType.SpecialFeature), ZauberBereithalten("Zauber bereithalten", FeatureGroupType.SpecialFeature), Zauberkontrolle(
+			"Zauberkontrolle", FeatureGroupType.SpecialFeature), Zauberroutine("Zauberroutine",
+			FeatureGroupType.SpecialFeature), ZauberUnterbrechen("Zauber unterbrechen", FeatureGroupType.SpecialFeature), ZauberVereinigen(
+			"Zauber vereinigen", FeatureGroupType.SpecialFeature), ZauberzeichenLeuchtendesZeichen(
+			"Zauberzeichen: Leuchtendes Zeichen", FeatureGroupType.SpecialFeature), ZauberzeichenSingendesZeichen(
+			"Zauberzeichen: Singendes Zeichen", FeatureGroupType.SpecialFeature), ZauberzeichenSiegelDerSeelenruhe(
+			"Zauberzeichen: Siegel der Seelenruhe", FeatureGroupType.SpecialFeature), ZauberzeichenHermetischesSiegel(
+			"Zauberzeichen: Hermetisches Siegel", FeatureGroupType.SpecialFeature), ZauberzeichenGlypheDerElementarenAttraktion(
+			"Zauberzeichen: Glyphe der Elementaren Attraktion", FeatureGroupType.SpecialFeature), ZauberzeichenUngesehenesZeichen(
+			"Zauberzeichen: Ungesehenes Zeichen", FeatureGroupType.SpecialFeature), ZauberzeichenGlypheDerElementarenBannung(
+			"Zauberzeichen: Glyphe der Elementaren Bannung", FeatureGroupType.SpecialFeature), ZauberzeichenZähneDesFeuers(
+			"Zauberzeichen: Zähne des Feuers", FeatureGroupType.SpecialFeature), ZauberzeichenZeichenDerZauberschmiede(
+			"Zauberzeichen: Zeichen der Zauberschmiede", FeatureGroupType.SpecialFeature), ZauberzeichenMarkierungDesTodes(
+			"Zauberzeichen: Markierung des Todes", FeatureGroupType.SpecialFeature), ZauberzeichenFanalDerHerrschaft(
+			"Zauberzeichen: Fanal der Herrschaft", FeatureGroupType.SpecialFeature), ZauberzeichenGlypheDesVerfluchtenGoldes(
+			"Zauberzeichen: Glyphe des verfluchten Goldes", FeatureGroupType.SpecialFeature), ZauberzeichenAugeDerEwigenWacht(
+			"Zauberzeichen: Auge der Ewigen Wacht", FeatureGroupType.SpecialFeature), ZauberzeichenAugeDesBasilisken(
+			"Zauberzeichen: Auge des Basilisken", FeatureGroupType.SpecialFeature), ZauberzeichenSatinavsSiegel(
+			"Zauberzeichen: Satinavs Siegel", FeatureGroupType.SpecialFeature), ZauberzeichenSchutzsiegel(
+			"Zauberzeichen: Schutzsiegel", FeatureGroupType.SpecialFeature), ZauberzeichenSchutzkreisGegenTraumgänger(
+			"Zauberzeichen: Schutzkreis gegen Traumgänger", FeatureGroupType.SpecialFeature), ZaubertanzTanzDerLiebe(
+			"Zaubertanz: Tanz der Liebe", FeatureGroupType.SpecialFeature), ZaubertanzKhablasVerlockungTanzDerLiebe(
+			"Zaubertanz: Khablas Verlockung (Tanz der Liebe)", FeatureGroupType.SpecialFeature), ZaubertanzRahjarraTanzDerLiebe(
+			"Zaubertanz: Rahjarra (Tanz der Liebe)", FeatureGroupType.SpecialFeature), ZaubertanzTanzDerFreude(
+			"Zaubertanz: Tanz der Freude", FeatureGroupType.SpecialFeature), ZaubertanzPerhinasSegenTanzDerFreude(
+			"Zaubertanz: Perhinas Segen (Tanz der Freude)", FeatureGroupType.SpecialFeature), ZaubertanzPerainesLiebeTanzDerFreude(
+			"Zaubertanz: Peraines Liebe (Tanz der Freude)", FeatureGroupType.SpecialFeature), ZaubertanzTanzDerErmutigung(
+			"Zaubertanz: Tanz der Ermutigung", FeatureGroupType.SpecialFeature), ZaubertanzRhondarasForderungTanzDerErmutigung(
+			"Zaubertanz: Rhondaras Forderung (Tanz der Ermutigung)", FeatureGroupType.SpecialFeature), ZaubertanzRondrasMutTanzDerErmutigung(
+			"Zaubertanz: Rondras Mut (Tanz der Ermutigung)", FeatureGroupType.SpecialFeature), ZaubertanzPavonearseTanzDerErmutigung(
+			"Zaubertanz: Pavonearse (Tanz der Ermutigung)", FeatureGroupType.SpecialFeature), ZaubertanzTanzDerWahrheit(
+			"Zaubertanz: Tanz der Wahrheit", FeatureGroupType.SpecialFeature), ZaubertanzHeschinjasBlickTanzDerWahrheit(
+			"Zaubertanz: Heschinjas Blick (Tanz der Wahrheit)", FeatureGroupType.SpecialFeature), ZaubertanzTanzDerErlösung(
+			"Zaubertanz: Tanz der Erlösung", FeatureGroupType.SpecialFeature), ZaubertanzMarhibosHandTanzDerErlösung(
+			"Zaubertanz: Marhibos Hand (Tanz der Erlösung)", FeatureGroupType.SpecialFeature), ZaubertanzHesindesMachtTanzDerErlösung(
+			"Zaubertanz: Hesindes Macht (Tanz der Erlösung)", FeatureGroupType.SpecialFeature), ZaubertanzZarpadaTanzDerErlösung(
+			"Zaubertanz: Zarpada (Tanz der Erlösung)", FeatureGroupType.SpecialFeature), ZaubertanzTanzDerBilder(
+			"Zaubertanz: Tanz der Bilder", FeatureGroupType.SpecialFeature), ZaubertanzShimijasRauschTanzDerBilder(
+			"Zaubertanz: Shimijas Rausch (Tanz der Bilder)", FeatureGroupType.SpecialFeature), ZaubertanzPhexensGeschmeideTanzDerBilder(
+			"Zaubertanz: Phexens Geschmeide (Tanz der Bilder)", FeatureGroupType.SpecialFeature), ZaubertanzElVanidadTanzDerBilder(
+			"Zaubertanz: El Vanidad (Tanz der Bilder)", FeatureGroupType.SpecialFeature), ZaubertanzTanzOhneEnde(
+			"Zaubertanz: Tanz ohne Ende", FeatureGroupType.SpecialFeature), ZaubertanzNahemasTraumTanzOhneEnde(
+			"Zaubertanz: Nahemas Traum (Tanz ohne Ende)", FeatureGroupType.SpecialFeature), ZaubertanzSatinavsGabeTanzOhneEnde(
+			"Zaubertanz: Satinavs Gabe (Tanz ohne Ende)", FeatureGroupType.SpecialFeature), ZaubertanzSuenyoTanzOhneEnde(
+			"Zaubertanz: Suenyo (Tanz ohne Ende)", FeatureGroupType.SpecialFeature), ZaubertanzTanzDesUngehorsams(
+			"Zaubertanz: Tanz des Ungehorsams", FeatureGroupType.SpecialFeature), ZaubertanzTanzDerGemeinschaft(
+			"Zaubertanz: Tanz der Gemeinschaft", FeatureGroupType.SpecialFeature), ZaubertanzOrhimasTanzTanzDerWeisheit(
+			"Zaubertanz: Orhimas Tanz (Tanz der Weisheit)", FeatureGroupType.SpecialFeature), ZaubertanzTanzFürRastullahTanzDerUnantastbarkeit(
+			"Zaubertanz: Tanz für Rastullah (Tanz der Unantastbarkeit)", FeatureGroupType.SpecialFeature), ZaubertanzSelinata(
+			"Zaubertanz: Selinata", FeatureGroupType.SpecialFeature), ZaubertanzMadayana("Zaubertanz: Madayana",
+			FeatureGroupType.SpecialFeature), ZaubertanzFirunsJagd("Zaubertanz: Firuns Jagd",
+			FeatureGroupType.SpecialFeature), ZaubertanzRahjasBegehren("Zaubertanz: Rahjas Begehren",
+			FeatureGroupType.SpecialFeature), Zauberzeichen("Zauberzeichen", FeatureGroupType.SpecialFeature), ZibiljaRitualSchwarmseele(
+			"Zibilja-Ritual: Schwarmseele", FeatureGroupType.SpecialFeature), ZibiljaRitualMackestopp(
+			"Zibilja-Ritual: Mackestopp", FeatureGroupType.SpecialFeature), ZibiljaRitualTraumseherin(
+			"Zibilja-Ritual: Traumseherin", FeatureGroupType.SpecialFeature), ZibiljaRitualWeisheitDerSchrift(
+			"Zibilja-Ritual: Weisheit der Schrift", FeatureGroupType.SpecialFeature), ZibiljaRitualSiegelDerEwigenRuhe(
+			"Zibilja-Ritual: Siegel der Ewigen Ruhe", FeatureGroupType.SpecialFeature), ZibiljaRitualUnsichtbareChronik(
+			"Zibilja-Ritual: Unsichtbare Chronik", FeatureGroupType.SpecialFeature), ZibiljaRitualRufDesBienenstocks(
+			"Zibilja-Ritual: Ruf des Bienenstocks", FeatureGroupType.SpecialFeature), ZibiljaRitualWinterlager(
+			"Zibilja-Ritual: Winterlager", FeatureGroupType.SpecialFeature), ZibiljaRitualBienenschwarm(
+			"Zibilja-Ritual: Bienenschwarm", FeatureGroupType.SpecialFeature), ZibiljaRitualWachshaut(
+			"Zibilja-Ritual: Wachshaut", FeatureGroupType.SpecialFeature), ZibiljaRitualBienenkönigin(
+			"Zibilja-Ritual: Bienenkönigin", FeatureGroupType.SpecialFeature), ZibiljaRitualBienenfleiß(
+			"Zibilja-Ritual: Bienenfleiß", FeatureGroupType.SpecialFeature), ZibiljaRitualBienentanz(
+			"Zibilja-Ritual: Bienentanz", FeatureGroupType.SpecialFeature), ZibiljaRitualTraumwissen(
+			"Zibilja-Ritual: Traumwissen", FeatureGroupType.SpecialFeature), AkklimatisierungHitze(
+			"Akklimatisierung: Hitze", FeatureGroupType.SpecialFeature), AkklimatisierungKälte(
+			"Akklimatisierung: Kälte", FeatureGroupType.SpecialFeature), Fälscher("Fälscher",
+			FeatureGroupType.SpecialFeature), Rosstäuscher("Rosstäuscher", FeatureGroupType.SpecialFeature), Standfest(
+			"Standfest", FeatureGroupType.SpecialFeature), Geschützmeister("Geschützmeister",
+			FeatureGroupType.SpecialFeature), Halbschwert("Halbschwert", FeatureGroupType.SpecialFeature), Klingentänzer(
+			"Klingentänzer", FeatureGroupType.SpecialFeature), Chimärenmeister("Chimärenmeister",
+			FeatureGroupType.SpecialFeature), RitualkenntnisSeher("Ritualkenntnis Seher",
+			FeatureGroupType.SpecialFeature), SeherRunenbindung("Seher: Runenbindung", FeatureGroupType.SpecialFeature), SeherTraumseher(
+			"Seher: Traumseher", FeatureGroupType.SpecialFeature), SeherRunenDerWeissagung(
+			"Seher: Runen der Weissagung", FeatureGroupType.SpecialFeature), SeherRatDerAhnen("Seher: Rat der Ahnen",
+			FeatureGroupType.SpecialFeature), SeherRufDerRunjas("Seher: Ruf der Runjas",
+			FeatureGroupType.SpecialFeature), Talentspezialisierung("Talentspezialisierung",
+			FeatureGroupType.SpecialFeature), Zauberspezialisierung("Zauberspezialisierung",
+			FeatureGroupType.SpecialFeature), RepräsentationAlhanisch("Repräsentation: Alhanisch",
+			FeatureGroupType.SpecialFeature), RepräsentationDruidischGeodisch("Repräsentation: Druidisch-Geodisch",
+			FeatureGroupType.SpecialFeature), RepräsentationGüldenländisch("Repräsentation: Güldenländisch",
+			FeatureGroupType.SpecialFeature), RepräsentationGrolmisch("Repräsentation: Grolmisch",
+			FeatureGroupType.SpecialFeature), RepräsentationKophtanisch("Repräsentation: Kophtanisch",
+			FeatureGroupType.SpecialFeature), RepräsentationMudramulisch("Repräsentation: Mudramulisch",
+			FeatureGroupType.SpecialFeature), RepräsentationSatuarisch("Repräsentation: Satuarisch",
+			FeatureGroupType.SpecialFeature), SchlangenszeptersBindung("Schlangenszepters: Bindung",
+			FeatureGroupType.SpecialFeature), SchlangenszeptersRufDerFliegendenSchlange(
+			"Schlangenszepters: Ruf der fliegenden Schlange", FeatureGroupType.SpecialFeature), SzepterBindung(
+			"Szepter: Bindung", FeatureGroupType.SpecialFeature), SzepterFliegenleib("Szepter: Fliegenleib",
+			FeatureGroupType.SpecialFeature), SzepterGolemdiener("Szepter: Golemdiener",
+			FeatureGroupType.SpecialFeature), SzepterHerrscherDerDjinnim("Szepter: Herrscher der Djinnim",
+			FeatureGroupType.SpecialFeature), SzepterHerrscherDerIfriitim("Szepter: Herrscher der Ifriitim",
+			FeatureGroupType.SpecialFeature), SzepterKraftDerKophtanim("Szepter: Kraft der Kophtanim",
+			FeatureGroupType.SpecialFeature), SzepterSchutzDerAhnen("Szepter: Schutz der Ahnen",
+			FeatureGroupType.SpecialFeature), SzepterStimmeDerMacht("Szepter: Stimme der Macht",
+			FeatureGroupType.SpecialFeature), SzepterVermächtnisDerKophtanim("Szepter: Vermächtnis der Kophtanim",
+			FeatureGroupType.SpecialFeature), SzepterWaffeDesGeistes("Szepter: Waffe des Geistes",
+			FeatureGroupType.SpecialFeature), RituelleStrafeÄngsteMehren("Rituelle Strafe: Ängste mehren",
+			FeatureGroupType.SpecialFeature), RituelleStrafeBeißAufGranit("Rituelle Strafe: Beiß auf Granit",
+			FeatureGroupType.SpecialFeature), RituelleStrafeBeute("Rituelle Strafe: Beute",
+			FeatureGroupType.SpecialFeature), RituelleStrafeHexenschuss("Rituelle Strafe: Hexenschuss",
+			FeatureGroupType.SpecialFeature), RituelleStrafeKrötenkuss("Rituelle Strafe: Krötenkuss",
+			FeatureGroupType.SpecialFeature), RituelleStrafeMitBlindheitSchlagen(
+			"Rituelle Strafe: Mit Blindheit schlagen", FeatureGroupType.SpecialFeature), RituelleStrafePechAnDenHals(
+			"Rituelle Strafe: Pech an den Hals", FeatureGroupType.SpecialFeature), RituelleStrafePestilenz(
+			"Rituelle Strafe: Pestilenz", FeatureGroupType.SpecialFeature), RituelleStrafeSchlafRauben(
+			"Rituelle Strafe: Schlaf rauben", FeatureGroupType.SpecialFeature), RituelleStrafeTodesfluch(
+			"Rituelle Strafe: Todesfluch", FeatureGroupType.SpecialFeature), RituelleStrafeUnfruchtbarkeit(
+			"Rituelle Strafe: Unfruchtbarkeit", FeatureGroupType.SpecialFeature), RituelleStrafeWarzenSprießen(
+			"Rituelle Strafe: Warzen sprießen", FeatureGroupType.SpecialFeature), RituelleStrafeZungeLähmen(
+			"Rituelle Strafe: Zunge lähmen", FeatureGroupType.SpecialFeature), KristallpendelAstralesZeichen(
+			"Kristallpendel: Astrales Zeichen", FeatureGroupType.SpecialFeature), KristallpendelAuraDesFriedens(
+			"Kristallpendel: Aura des Friedens", FeatureGroupType.SpecialFeature), KristallpendelBlutDerSippe(
+			"Kristallpendel: Blut der Sippe", FeatureGroupType.SpecialFeature), KristallpendelGebetDerFürsorge(
+			"Kristallpendel: Gebet der Fürsorge", FeatureGroupType.SpecialFeature), KristallpendelHilfeDesPendels(
+			"Kristallpendel: Hilfe des Pendels", FeatureGroupType.SpecialFeature), KristallpendelLichtDerHoffnung(
+			"Kristallpendel: Licht der Hoffnung", FeatureGroupType.SpecialFeature), KristallpendelPendelDerHellsicht(
+			"Kristallpendel: Pendel der Hellsicht", FeatureGroupType.SpecialFeature), KristallpendelSeelengespür(
+			"Kristallpendel: Seelengespür", FeatureGroupType.SpecialFeature), KristallpendelSteinDerWeisen(
+			"Kristallpendel: Stein der Weisen", FeatureGroupType.SpecialFeature), KristallpendelTraumgespinste(
+			"Kristallpendel: Traumgespinste", FeatureGroupType.SpecialFeature), KristallpendelWeiheDesPendels(
+			"Kristallpendel: Weihe des Pendels", FeatureGroupType.SpecialFeature), ZauberzeichenFixierungszeichen(
+			"Zauberzeichen: Fixierungszeichen", FeatureGroupType.SpecialFeature), ZauberzeichenHypnotischesZeichen(
+			"Zauberzeichen: Hypnotisches Zeichen", FeatureGroupType.SpecialFeature), ZauberzeichenSiegelDerStille(
+			"Zauberzeichen: Siegel der Stille", FeatureGroupType.SpecialFeature), ZauberzeichenSigilleDesUnsichtbarenWeges(
+			"Zauberzeichen: Sigille des unsichtbaren Weges", FeatureGroupType.SpecialFeature), ZauberzeichenVerständigungszeichen(
+			"Zauberzeichen: Verständigungszeichen", FeatureGroupType.SpecialFeature), ZauberzeichenZeichenDesStillstands(
+			"Zauberzeichen: Zeichen des Stillstands", FeatureGroupType.SpecialFeature), ZauberzeichenZeichenGegenMagie(
+			"Zauberzeichen: Zeichen gegen Magie", FeatureGroupType.SpecialFeature), ZauberzeichenZusatzzeichenTarnung(
+			"Zauberzeichen: Zusatzzeichen Tarnung", FeatureGroupType.SpecialFeature), ZauberzeichenZusatzzeichenKraftquellenspeisung(
+			"Zauberzeichen: Zusatzzeichen Kraftquellenspeisung", FeatureGroupType.SpecialFeature), TapasuulBlutFürVisar(
+			"Tapasuul: Blut für Visar", FeatureGroupType.SpecialFeature), TapasuulEinHerzFürVisar(
+			"Tapasuul: Ein Herz für Visar", FeatureGroupType.SpecialFeature), TapasuulGestaltDesTapam(
+			"Tapasuul: Gestalt des Tapam", FeatureGroupType.SpecialFeature), TapasuulKerkerDesSatuul(
+			"Tapasuul: Kerker des Satuul", FeatureGroupType.SpecialFeature), TapasuulKraftDesTapam(
+			"Tapasuul: Kraft des Tapam", FeatureGroupType.SpecialFeature), LiturgiekenntnisDunkleZeiten(
+			"Liturgiekenntnis (Dunkle Zeiten)", FeatureGroupType.SpecialFeature), GöttlicheEssenzKanalisierenI(
+			"Göttliche Essenz kanalisieren (I)", FeatureGroupType.SpecialFeature), GöttlichesPrinzipStärkenI(
+			"Göttliches Prinzip stärken (I)", FeatureGroupType.SpecialFeature), GöttlichenWillenErzwingenI(
+			"Göttlichen Willen erzwingen (I)", FeatureGroupType.SpecialFeature), GöttlicheMachtBindenI(
+			"Göttliche Macht binden (I)", FeatureGroupType.SpecialFeature), GöttlicheBeseelungRufenI(
+			"Göttliche Beseelung rufen (I)", FeatureGroupType.SpecialFeature), GöttlichenSchutzErflehenI(
+			"Göttlichen Schutz erflehen (I)", FeatureGroupType.SpecialFeature), GöttlicheEssenzKanalisierenII(
+			"Göttliche Essenz kanalisieren (II)", FeatureGroupType.SpecialFeature), GöttlichesPrinzipStärkenII(
+			"Göttliches Prinzip stärken (II)", FeatureGroupType.SpecialFeature), GöttlichenWillenErzwingenII(
+			"Göttlichen Willen erzwingen (II)", FeatureGroupType.SpecialFeature), GöttlicheMachtBindenII(
+			"Göttliche Macht binden (II)", FeatureGroupType.SpecialFeature), GöttlicheBeseelungRufenII(
+			"Göttliche Beseelung rufen (II)", FeatureGroupType.SpecialFeature), GöttlichenSchutzErflehenII(
+			"Göttlichen Schutz erflehen (II)", FeatureGroupType.SpecialFeature), GöttlicheEssenzKanalisierenIII(
+			"Göttliche Essenz kanalisieren (III)", FeatureGroupType.SpecialFeature), GöttlichesPrinzipStärkenIII(
+			"Göttliches Prinzip stärken (III)", FeatureGroupType.SpecialFeature), GöttlichenWillenErzwingenIII(
+			"Göttlichen Willen erzwingen (III)", FeatureGroupType.SpecialFeature), GöttlicheMachtBindenIII(
+			"Göttliche Macht binden (III)", FeatureGroupType.SpecialFeature), GöttlicheBeseelungRufenIII(
+			"Göttliche Beseelung rufen (III)", FeatureGroupType.SpecialFeature), GöttlichenSchutzErflehenIII(
+			"Göttlichen Schutz erflehen (III)", FeatureGroupType.SpecialFeature), GöttlicheEssenzKanalisierenIV(
+			"Göttliche Essenz kanalisieren (IV)", FeatureGroupType.SpecialFeature), GöttlichesPrinzipStärkenIV(
+			"Göttliches Prinzip stärken (IV)", FeatureGroupType.SpecialFeature), GöttlichenWillenErzwingenIV(
+			"Göttlichen Willen erzwingen (IV)", FeatureGroupType.SpecialFeature), GöttlicheMachtBindenIV(
+			"Göttliche Macht binden (IV)", FeatureGroupType.SpecialFeature), GöttlicheBeseelungRufenIV(
+			"Göttliche Beseelung rufen (IV)", FeatureGroupType.SpecialFeature), GöttlichenSchutzErflehenIV(
+			"Göttlichen Schutz erflehen (IV)", FeatureGroupType.SpecialFeature), GöttlicheEssenzKanalisierenV(
+			"Göttliche Essenz kanalisieren (V)", FeatureGroupType.SpecialFeature), GöttlichesPrinzipStärkenV(
+			"Göttliches Prinzip stärken (V)", FeatureGroupType.SpecialFeature), GöttlichenWillenErzwingenV(
+			"Göttlichen Willen erzwingen (V)", FeatureGroupType.SpecialFeature), GöttlicheMachtBindenV(
+			"Göttliche Macht binden (V)", FeatureGroupType.SpecialFeature), GöttlicheBeseelungRufenV(
+			"Göttliche Beseelung rufen (V)", FeatureGroupType.SpecialFeature), GöttlichenSchutzErflehenV(
+			"Göttlichen Schutz erflehen (V)", FeatureGroupType.SpecialFeature), WaffenloserKampfstilCyclopeischesRingen(
+			"Waffenloser Kampfstil: Cyclopeisches Ringen", FeatureGroupType.SpecialFeature), WaffenloserKampfstilEchsenzwinger(
+			"Waffenloser Kampfstil: Echsenzwinger", FeatureGroupType.SpecialFeature), WaffenloserKampfstilLegionärsstil(
+			"Waffenloser Kampfstil: Legionärsstil", FeatureGroupType.SpecialFeature), WaffenloserKampfstilGossenstil(
+			"Waffenloser Kampfstil: Gossenstil", FeatureGroupType.SpecialFeature), SchalenzauberSatinavsBannung(
+			"Schalenzauber: Satinavs Bannung", FeatureGroupType.SpecialFeature), KugelzauberGeschenkDesSsadNavv(
+			"Kugelzauber: Geschenk des Ssad'Navv", FeatureGroupType.SpecialFeature), KugelzauberAlMahmoud(
+			"Kugelzauber: Al'Mahmoud", FeatureGroupType.SpecialFeature), KugelzauberSiegelDerSechsfachenEhre(
+			"Kugelzauber: Siegel der Sechsfachen Ehre", FeatureGroupType.SpecialFeature), KugelzauberUntrüglicherBlickDesFalken(
+			"Kugelzauber: Untrüglicher Blick des Falken", FeatureGroupType.SpecialFeature), KugelzauberZauberspeicher(
+			"Kugelzauber: Zauberspeicher", FeatureGroupType.SpecialFeature), ZauberzeichenSchutzkreisGegenChimären(
+			"Zauberzeichen: Schutzkreis gegen Chimären", FeatureGroupType.SpecialFeature), SeeleDerGemeinschaft(
+			"Seele der Gemeinschaft", FeatureGroupType.SpecialFeature), ZauberzeichenBannUndSchutzkreisGegenElementare(
+			"Zauberzeichen: Bann- und Schutzkreis gegen Elementare", FeatureGroupType.SpecialFeature), ZauberzeichenBannUndSchutzkreisGegenGehörnteDämonen(
+			"Zauberzeichen: Bann- und Schutzkreis gegen gehörnte Dämonen", FeatureGroupType.SpecialFeature), ZauberzeichenBannUndSchutzkreisGegenGeisterwesen(
+			"Zauberzeichen: Bann- und Schutzkreis gegen Geisterwesen", FeatureGroupType.SpecialFeature), ZauberzeichenBannUndSchutzkreisGegenNiedereDämonen(
+			"Zauberzeichen: Bann- und Schutzkreis gegen niedere Dämonen", FeatureGroupType.SpecialFeature), ZauberzeichenSchutzkreisGegenReptilien(
+			"Zauberzeichen: Schutzkreis gegen Reptilien", FeatureGroupType.SpecialFeature), ZauberzeichenSchutzkreisGegenUngeziefer(
+			"Zauberzeichen: Schutzkreis gegen Ungeziefer", FeatureGroupType.SpecialFeature), ZauberzeichenBannkreisGegenChimären(
+			"Zauberzeichen: Bannkreis gegen Chimären", FeatureGroupType.SpecialFeature), ZauberzeichenBannkreisGegenTraumgänger(
+			"Zauberzeichen: Bannkreis gegen Traumgänger", FeatureGroupType.SpecialFeature), Ablegen("Ablegen",
+			FeatureGroupType.SpecialFeature), AlmadanerSchritt("Almadaner Schritt", FeatureGroupType.SpecialFeature), AnspringenTier(
+			"Anspringen (Tier)", FeatureGroupType.SpecialFeature), Anzeige("Anzeige", FeatureGroupType.SpecialFeature), ApportTier(
+			"Apport (Tier)", FeatureGroupType.SpecialFeature), Ausbildung("Ausbildung", FeatureGroupType.SpecialFeature), Capriola(
+			"Capriola", FeatureGroupType.SpecialFeature), Corbetto("Corbetto", FeatureGroupType.SpecialFeature), Eingefahren(
+			"Eingefahren", FeatureGroupType.SpecialFeature), FassI("Fass I", FeatureGroupType.SpecialFeature), FassII(
+			"Fass II", FeatureGroupType.SpecialFeature), Flugangriff("Flugangriff", FeatureGroupType.SpecialFeature), Galoppwechsel(
+			"Galoppwechsel", FeatureGroupType.SpecialFeature), Gelände("Gelände", FeatureGroupType.SpecialFeature), Geländehindernisse(
+			"Geländehindernisse", FeatureGroupType.SpecialFeature), Gespanngewöhnung("Gespanngewöhnung",
+			FeatureGroupType.SpecialFeature), GezielterAngriff("Gezielter Angriff", FeatureGroupType.SpecialFeature), GezielterBiss(
+			"Gezielter Biss", FeatureGroupType.SpecialFeature), GezielterTritt("Gezielter Tritt",
+			FeatureGroupType.SpecialFeature), GroßerGegner("Großer Gegner", FeatureGroupType.SpecialFeature), Hinlegen(
+			"Hinlegen", FeatureGroupType.SpecialFeature), Hinterhalt("Hinterhalt", FeatureGroupType.SpecialFeature), Kehrtwende(
+			"Kehrtwende", FeatureGroupType.SpecialFeature), Kniefall("Kniefall", FeatureGroupType.SpecialFeature), KommenAufSignal(
+			"Kommen auf Signal", FeatureGroupType.SpecialFeature), Kreisel("Kreisel", FeatureGroupType.SpecialFeature), Lanzengang(
+			"Lanzengang", FeatureGroupType.SpecialFeature), Laut("Laut", FeatureGroupType.SpecialFeature), LenkenOhneZügel(
+			"Lenken ohne Zügel", FeatureGroupType.SpecialFeature), Mehrspännig("Mehrspännig",
+			FeatureGroupType.SpecialFeature), NiederwerfenTier("Niederwerfen (Tier)", FeatureGroupType.SpecialFeature), Passage(
+			"Passage", FeatureGroupType.SpecialFeature), Piaffe("Piaffe", FeatureGroupType.SpecialFeature), Platz(
+			"Platz", FeatureGroupType.SpecialFeature), Raserei("Raserei", FeatureGroupType.SpecialFeature), RastullahsSchwingen(
+			"Rastullahs Schwingen", FeatureGroupType.SpecialFeature), Reitertreue("Reitertreue",
+			FeatureGroupType.SpecialFeature), Schrecksicher("Schrecksicher", FeatureGroupType.SpecialFeature), SehrKleinerGegner(
+			"Sehr kleiner Gegner", FeatureGroupType.SpecialFeature), Seitengänge("Seitengänge",
+			FeatureGroupType.SpecialFeature), Separieren("Separieren", FeatureGroupType.SpecialFeature), Sitz("Sitz",
+			FeatureGroupType.SpecialFeature), Sprungsicherheit("Sprungsicherheit", FeatureGroupType.SpecialFeature), Steigen(
+			"Steigen", FeatureGroupType.SpecialFeature), Still("Still", FeatureGroupType.SpecialFeature), StilleWacht(
+			"Stille Wacht", FeatureGroupType.SpecialFeature), Stillstand("Stillstand", FeatureGroupType.SpecialFeature), Stopp(
+			"Stopp", FeatureGroupType.SpecialFeature), Sturzflug("Sturzflug", FeatureGroupType.SpecialFeature), Such(
+			"Such", FeatureGroupType.SpecialFeature), Trampeln("Trampeln", FeatureGroupType.SpecialFeature), Treiben(
+			"Treiben", FeatureGroupType.SpecialFeature), Trick("Trick", FeatureGroupType.SpecialFeature), Unarten(
+			"Unarten", FeatureGroupType.SpecialFeature), Verbeißen("Verbeißen", FeatureGroupType.SpecialFeature), Verkrallen(
+			"Verkrallen", FeatureGroupType.SpecialFeature), Wache("Wache", FeatureGroupType.SpecialFeature), Wacht(
+			"Wacht", FeatureGroupType.SpecialFeature), WeichesGangwerk("Weiches Gangwerk",
+			FeatureGroupType.SpecialFeature), Zusammenarbeit("Zusammenarbeit", FeatureGroupType.SpecialFeature), Zählen(
+			"Zählen", FeatureGroupType.SpecialFeature);
 
 	public enum FeatureGroupType {
 		Advantage, Disadvantage, SpecialFeature
 	}
 
-	
 	private String xmlName;
 	private FeatureGroupType type;
-	
+
 	private FeatureType(String xmlName) {
 		this.xmlName = xmlName;
 	}
-	
-	private FeatureType(String xmlName, int typeInt) {
+
+	private FeatureType(String xmlName, FeatureGroupType type) {
 		this.xmlName = xmlName;
-		switch (typeInt) {
-		case TYPE_ADVANTAGE:
-			type = FeatureGroupType.Advantage;
-			break;
-		case TYPE_DISADVANTAGE:
-			type = FeatureGroupType.Disadvantage;
-			break;
-		case TYPE_SPECIAL_FEATURE:
-			type = FeatureGroupType.SpecialFeature;
-			break;
-		}
+		this.type = type;
 	}
-	
+
 	public String xmlName() {
 		return xmlName;
 	}
-	
+
 	public boolean isAdvantage() {
 		return type == FeatureGroupType.Advantage;
 	}
@@ -1408,7 +1273,7 @@ public enum FeatureType {
 	public FeatureGroupType type() {
 		return type;
 	}
-	
+
 	public static FeatureType byXmlName(String code) {
 
 		if (code == null)
@@ -1418,7 +1283,7 @@ public enum FeatureType {
 			if (attr == Talentspezialisierung) {
 				if (code.startsWith(Talentspezialisierung.xmlName()))
 					return attr;
-			} else if  (attr == Zauberspezialisierung) {
+			} else if (attr == Zauberspezialisierung) {
 				if (code.startsWith(Zauberspezialisierung.xmlName()))
 					return attr;
 			}

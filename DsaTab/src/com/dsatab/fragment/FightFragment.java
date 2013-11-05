@@ -564,7 +564,8 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.fragment.BaseFragment#onFilterChanged(com.dsatab.view. FilterSettings.FilterType, com.dsatab.view.FilterSettings)
+	 * @see com.dsatab.fragment.BaseFragment#onFilterChanged(com.dsatab.view. FilterSettings.FilterType,
+	 * com.dsatab.view.FilterSettings)
 	 */
 	@Override
 	public void onFilterChanged(FilterType type, FilterSettings settings) {
@@ -585,7 +586,8 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu, com.actionbarsherlock.view.MenuInflater)
+	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu,
+	 * com.actionbarsherlock.view.MenuInflater)
 	 */
 	@Override
 	public void onCreateOptionsMenu(Menu menu, com.actionbarsherlock.view.MenuInflater inflater) {
@@ -711,7 +713,8 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+	 * android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -742,8 +745,8 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 				false);
 
 		ImageButton iconLeft = (ImageButton) fightausweichen.findViewById(android.R.id.icon1);
-		iconLeft.setOnClickListener(getBaseActivity().getProbeListener());
-		iconLeft.setOnLongClickListener(getBaseActivity().getEditListener());
+		iconLeft.setOnClickListener(getProbeListener());
+		iconLeft.setOnLongClickListener(getEditListener());
 		iconLeft.setImageResource(R.drawable.icon_ausweichen);
 		iconLeft.setVisibility(View.VISIBLE);
 		iconLeft.setFocusable(true);
@@ -777,7 +780,7 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 			}
 		});
 
-		fightLpLayout.setOnClickListener(getBaseActivity().getEditListener());
+		fightLpLayout.setOnClickListener(getEditListener());
 
 		SharedPreferences pref = getActivity().getPreferences(Context.MODE_PRIVATE);
 		try {
@@ -841,7 +844,7 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 
 		fightItemAdapter = new FightEquippedItemAdapter(getActivity(), getHero(), getHero().getEquippedItems(),
 				getFilterSettings());
-		fightItemAdapter.setProbeListener(getBaseActivity().getProbeListener());
+		fightItemAdapter.setProbeListener(getProbeListener());
 		fightItemAdapter.setTargetListener(targetListener);
 		addWaffenloseTalente();
 		fightMergeAdapter = new MergeAdapter();
@@ -1041,7 +1044,8 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget .AdapterView, android.view.View, int, long)
+	 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget .AdapterView, android.view.View,
+	 * int, long)
 	 */
 	@Override
 	public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -1144,7 +1148,8 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerAdded (com.dsatab.data.items.ItemContainer)
+	 * @see com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerAdded
+	 * (com.dsatab.data.items.ItemContainer)
 	 */
 	@Override
 	public void onItemContainerAdded(ItemContainer itemContainer) {
@@ -1155,7 +1160,8 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerRemoved (com.dsatab.data.items.ItemContainer)
+	 * @see com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerRemoved
+	 * (com.dsatab.data.items.ItemContainer)
 	 */
 	@Override
 	public void onItemContainerRemoved(ItemContainer itemContainer) {
@@ -1166,7 +1172,8 @@ public class FightFragment extends BaseListFragment implements OnLongClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerChanged (com.dsatab.data.items.ItemContainer)
+	 * @see com.dsatab.view.listener.HeroInventoryChangedListener#onItemContainerChanged
+	 * (com.dsatab.data.items.ItemContainer)
 	 */
 	@Override
 	public void onItemContainerChanged(ItemContainer itemContainer) {

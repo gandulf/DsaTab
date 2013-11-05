@@ -138,13 +138,13 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 
 	public static final String DEFAULT_SCREEN_ORIENTATION = SCREEN_ORIENTATION_AUTO;
 	// http://dl.dropbox.com/u/15750588/dsatab-wesnoth-portraits.zip
-	public static final String PATH_WESNOTH_PORTRAITS = "https://dl.dropboxusercontent.com/u/15750588/dsatab-wesnoth-portraits.zip";
+	public static final String PATH_WESNOTH_PORTRAITS = "http://dl.dropboxusercontent.com/u/15750588/dsatab-wesnoth-portraits.zip";
 
-	public static final String PATH_OFFICIAL_MAP_PACK = "https://dl.dropboxusercontent.com/u/15750588/dsatab-maps-v1.zip";
+	public static final String PATH_OFFICIAL_MAP_PACK = "http://dl.dropboxusercontent.com/u/15750588/dsatab-maps-v1.zip";
 
-	public static final String PATH_OSM_MAP_PACK = "https://dl.dropboxusercontent.com/u/15750588/dsatab-osmmap-v1.zip";
+	public static final String PATH_OSM_MAP_PACK = "http://dl.dropboxusercontent.com/u/15750588/dsatab-osmmap-v1.zip";
 
-	public static final String PATH_BACKGROUNDS = "https://dl.dropboxusercontent.com/u/15750588/dsatab-backgrounds.zip";
+	public static final String PATH_BACKGROUNDS = "http://dl.dropboxusercontent.com/u/15750588/dsatab-backgrounds.zip";
 
 	private static final String[] RESTART_KEYS = { KEY_THEME };
 	static {

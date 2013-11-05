@@ -10,20 +10,21 @@ buildscript {
 apply plugin: 'android'
 
 group = 'com.dsatab'
-version = '4.1.4'
+version = '4.1.6'
 
 repositories {
   mavenCentral()
 }
 
 dependencies {
+    compile "com.android.support:gridlayout-v7:19.0.+"
     compile project(':guiLib')
     compile fileTree(dir: 'libs', include: '*.jar')
 }
 
 android {
-    compileSdkVersion 17
-    buildToolsVersion "18.1.0"
+    compileSdkVersion 18
+    buildToolsVersion "19.0.0"
 
     sourceSets {
         main {

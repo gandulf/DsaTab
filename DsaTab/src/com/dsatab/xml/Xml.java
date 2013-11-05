@@ -30,10 +30,12 @@ public abstract class Xml {
 	public static final String KEY_ABENTEUERPUNKTE = "abenteuerpunkte";
 	public static final String KEY_FREIE_ABENTEUERPUNKTE = "freieabenteuerpunkte";
 
-	public static final String KEY_SONDERFERTIGKEITEN = "sf";
+	public static final String KEY_SF = "sf";
+	public static final String KEY_SONDERFERTIGKEITEN = "sonderfertigkeiten";
 	public static final String KEY_SONDERFERTIGKEIT = "sonderfertigkeit";
 
-	public static final String KEY_VORTEILE = "vt";
+	public static final String KEY_VT = "vt";
+	public static final String KEY_VORTEILE = "vorteile";
 	public static final String KEY_VORTEIL = "vorteil";
 	public static final String KEY_NACHTEIL = "nachteil";
 	public static final String KEY_EREIGNIS = "ereignis";
@@ -155,6 +157,21 @@ public abstract class Xml {
 	public static final String KEY_INFO = "Info";
 	public static final String KEY_SF_INFOS = "sfInfos";
 	public static final String KEY_SF_NAME = "sfname";
+
+	// Animal stuff
+	public static final String KEY_TIER = "Tier";
+	public static final String KEY_GATTUNG = "gattung";
+	public static final String KEY_FAMILIE = "familie";
+	public static final String KEY_INI = "ini";
+	public static final String KEY_INI_MUL = "mul";
+	public static final String KEY_INI_SUM = "sum";
+	public static final String KEY_INI_W = "w";
+	public static final String KEY_ANGRIFFE = "angriffe";
+	public static final String KEY_ANGRIFF = "angriff";
+	public static final String KEY_AT = "at";
+	public static final String KEY_PA = "pa";
+	public static final String KEY_TP = "tp";
+	public static final String KEY_DK = "dk";
 
 	public static String toString(String s) {
 		if (s == null)

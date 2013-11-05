@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.dsatab.R;
+import com.dsatab.data.AbstractBeing;
 import com.dsatab.data.Attribute;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.util.Util;
@@ -83,11 +84,11 @@ public abstract class BaseAttributesFragment extends BaseFragment {
 		if (!tv.isLongClickable()) {
 			if (type == AttributeType.Behinderung || type == AttributeType.Sozialstatus
 					|| type == AttributeType.Magieresistenz) {
-				tv.setOnClickListener(getBaseActivity().getEditListener());
+				tv.setOnClickListener(getEditListener());
 			} else if (type.probable()) {
-				tv.setOnClickListener(getBaseActivity().getProbeListener());
+				tv.setOnClickListener(getProbeListener());
 			}
-			tv.setOnLongClickListener(getBaseActivity().getEditListener());
+			tv.setOnLongClickListener(getEditListener());
 		}
 		tv.setTag(type);
 	}
@@ -110,10 +111,15 @@ public abstract class BaseAttributesFragment extends BaseFragment {
 
 	protected void fillAttributeValue(TextView tv, AttributeType type, String prefix, boolean includeBe,
 			boolean inverseColors) {
-		if (getHero() == null || tv == null)
+		if (tv == null)
 			return;
 
-		Attribute attribute = getHero().getAttribute(type);
+		if (getBeing() == null) {
+			tv.setText(null);
+			return;
+		}
+
+		Attribute attribute = getBeing().getAttribute(type);
 
 		fillAttributeValue(tv, attribute, prefix, includeBe, inverseColors);
 	}
@@ -123,24 +129,28 @@ public abstract class BaseAttributesFragment extends BaseFragment {
 
 		if (attribute != null) {
 
-			int modifier = getHero().getModifier(attribute, includeBe, true);
+			int modifier = getBeing().getModifier(attribute, includeBe, true);
 			Util.setText(tv, attribute, modifier, prefix, inverseColors);
 			tv.setTag(attribute);
 
 			if (!tv.isLongClickable()) {
 
 				if (attribute.getType().probable()) {
-					tv.setOnClickListener(getBaseActivity().getProbeListener());
+					tv.setOnClickListener(getProbeListener());
 				} else if (attribute.getType().editable()) {
-					tv.setOnClickListener(getBaseActivity().getEditListener());
+					tv.setOnClickListener(getEditListener());
 				}
 
 				if (attribute.getType().editable())
-					tv.setOnLongClickListener(getBaseActivity().getEditListener());
+					tv.setOnLongClickListener(getEditListener());
 			}
 		} else {
 			tv.setText(null);
 		}
+	}
+
+	public AbstractBeing getBeing() {
+		return getHero();
 	}
 
 	protected void fillAttribute(Attribute attr, boolean inverseColors) {
