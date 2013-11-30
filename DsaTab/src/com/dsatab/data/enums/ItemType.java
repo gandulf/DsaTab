@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.bugsense.trace.BugSenseHandler;
 import com.dsatab.exception.ItemTypeUnknownException;
+import com.dsatab.util.Debug;
 
 public enum ItemType {
 	Waffen('W', true), Fernwaffen('D', true), Rüstung('A', true), Schilde('S', true), Sonstiges('M');
@@ -72,7 +72,7 @@ public enum ItemType {
 		case 'M':
 			return Sonstiges;
 		default:
-			BugSenseHandler.sendException(new ItemTypeUnknownException(c));
+			Debug.error(new ItemTypeUnknownException(c));
 			return Sonstiges;
 		}
 	}

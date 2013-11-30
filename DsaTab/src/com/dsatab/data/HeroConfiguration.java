@@ -1,8 +1,11 @@
 package com.dsatab.data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.json.JSONArray;
@@ -12,7 +15,6 @@ import org.json.JSONObject;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 
-import com.bugsense.trace.BugSenseHandler;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.TabInfo;
 import com.dsatab.data.Hero.CombatStyle;
@@ -43,6 +45,7 @@ public class HeroConfiguration {
 	private static final String FIELD_BE_CALCULATION = "beCalculation";
 	private static final String FIELD_META_TALENTS = "metaTalents";
 	private static final String FIELD_EVENTS = "events";
+	private static final String FIELD_PROPERTIES = "properties";
 
 	private static final String FIELD_LE_MODIFIER = "leModifier";
 	private static final String FIELD_AU_MODIFIER = "auModifier";
@@ -65,6 +68,8 @@ public class HeroConfiguration {
 	private boolean auModifierActive;
 	private Hero hero;
 
+	private Map<String, String> properties;
+
 	/**
 	 * 
 	 */
@@ -82,6 +87,8 @@ public class HeroConfiguration {
 
 		leModifierActive = true;
 		auModifierActive = true;
+
+		properties = new HashMap<String, String>();
 
 		tabInfos = getDefaultTabs(null);
 	}
@@ -180,8 +187,7 @@ public class HeroConfiguration {
 					MetaTalent info = new MetaTalent(this.hero, tab);
 					metaTalents.add(info);
 				} catch (Exception e) {
-					Debug.warning(e);
-					BugSenseHandler.sendException(e);
+					Debug.error(e);
 				}
 			}
 		} else {
@@ -216,6 +222,25 @@ public class HeroConfiguration {
 			auModifierActive = in.getBoolean(FIELD_AU_MODIFIER);
 		}
 
+		properties = new HashMap<String, String>();
+		if (in.has(FIELD_PROPERTIES)) {
+
+			JSONObject map = in.getJSONObject(FIELD_PROPERTIES);
+			Iterator<String> keys = map.keys();
+
+			while (keys.hasNext()) {
+				String key = keys.next();
+				properties.put(key, map.optString(key));
+			}
+		}
+	}
+
+	public String getProperty(String key) {
+		return properties.get(key);
+	}
+
+	public void setProperty(String key, String value) {
+		properties.put(key, value);
 	}
 
 	/**
@@ -437,7 +462,7 @@ public class HeroConfiguration {
 		out.put(FIELD_BE_CALCULATION, beCalculation);
 		out.put(FIELD_LE_MODIFIER, leModifierActive);
 		out.put(FIELD_AU_MODIFIER, auModifierActive);
-
+		out.put(FIELD_PROPERTIES, new JSONObject(properties));
 		return out;
 	}
 

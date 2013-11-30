@@ -1,6 +1,7 @@
 <changelog>    
-<release version="4.1.6-beta" versioncode="72">    
+<release version="4.1.6" versioncode="73">    
     <fix>Tiere/Begleiter Support mit eigenem Tab</fix>
+    <fix>Exotischere Talente wie Magegespür, etc. werden nun auch erkannt</fix>
 </release>
 <release version="4.1.5" versioncode="71">    
     <fix>Herunterladen von Zusatzpaketen vor ICS</fix>

@@ -11,6 +11,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.SystemClock;
+import android.text.TextUtils;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -28,7 +29,9 @@ import com.dsatab.view.listener.HeroChangedListener;
 public abstract class AbstractBeing {
 	private String name;
 
-	private Uri profileUri;
+	private static final String KEY_PORTRAIT_URI = "portraitUri";
+
+	private Uri portraitUri;
 
 	private Map<AttributeType, Attribute> attributes;
 	private Map<FeatureType, Feature> featuresByType;
@@ -39,6 +42,8 @@ public abstract class AbstractBeing {
 	private Map<TalentType, Talent> talentByType;
 
 	private Set<HeroChangedListener> listener = new HashSet<HeroChangedListener>();
+
+	protected HeroConfiguration configuration;
 
 	public AbstractBeing() {
 		this.featuresByType = new EnumMap<FeatureType, Feature>(FeatureType.class);
@@ -51,6 +56,8 @@ public abstract class AbstractBeing {
 		this.talentByType = new EnumMap<TalentType, Talent>(TalentType.class);
 	}
 
+	protected abstract String getId();
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -59,8 +66,16 @@ public abstract class AbstractBeing {
 		return name;
 	}
 
+	public HeroConfiguration getHeroConfiguration() {
+		return configuration;
+	}
+
 	public void setPortraitUri(Uri uri) {
-		this.profileUri = uri;
+		this.portraitUri = uri;
+		if (uri != null)
+			getHeroConfiguration().setProperty(getId() + KEY_PORTRAIT_URI, uri.toString());
+		else
+			getHeroConfiguration().setProperty(getId() + KEY_PORTRAIT_URI, null);
 
 		for (HeroChangedListener l : listener) {
 			l.onPortraitChanged();
@@ -68,15 +83,16 @@ public abstract class AbstractBeing {
 	}
 
 	public void setPortraitUri(URI uri) {
-		this.profileUri = Uri.parse(uri.toString());
-
-		for (HeroChangedListener l : listener) {
-			l.onPortraitChanged();
-		}
+		setPortraitUri(Uri.parse(uri.toString()));
 	}
 
 	public Uri getPortraitUri() {
-		return profileUri;
+		if (portraitUri == null) {
+			if (!TextUtils.isEmpty(getHeroConfiguration().getProperty(getId() + KEY_PORTRAIT_URI))) {
+				portraitUri = Uri.parse(getHeroConfiguration().getProperty(getId() + KEY_PORTRAIT_URI));
+			}
+		}
+		return portraitUri;
 	}
 
 	public Bitmap getPortrait() {
@@ -89,13 +105,6 @@ public abstract class AbstractBeing {
 			portraitBitmap = Util.decodeBitmap(getPortraitUri(), display.getWidth());
 		}
 		return portraitBitmap;
-	}
-
-	/**
-	 * @param uri
-	 */
-	public void setProfileUri(Uri uri) {
-		this.profileUri = uri;
 	}
 
 	public void fireValueChangedEvent(Value value) {

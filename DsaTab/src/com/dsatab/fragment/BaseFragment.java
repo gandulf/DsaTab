@@ -15,13 +15,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.bugsense.trace.BugSenseHandler;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.TabInfo;
 import com.dsatab.activity.DsaTabActivity;
-import com.dsatab.activity.DsaTabActivity.EditListener;
-import com.dsatab.activity.DsaTabActivity.ProbeListener;
 import com.dsatab.data.AbstractBeing;
 import com.dsatab.data.Hero;
 import com.dsatab.data.Probe;
@@ -32,10 +29,12 @@ import com.dsatab.util.Hint;
 import com.dsatab.util.Util;
 import com.dsatab.view.FilterSettings;
 import com.dsatab.view.FilterSettings.FilterType;
+import com.dsatab.view.listener.EditListener;
 import com.dsatab.view.listener.FilterChangedListener;
 import com.dsatab.view.listener.HeroChangedListener;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
 import com.dsatab.view.listener.HeroLoader;
+import com.dsatab.view.listener.ProbeListener;
 
 public abstract class BaseFragment extends SherlockFragment implements HeroLoader, HeroChangedListener,
 		FilterChangedListener, OnSharedPreferenceChangeListener {
@@ -262,8 +261,7 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 				Debug.verbose("Loading hero in " + getClass() + " onActivityCreated " + hero.getName());
 				loadHero(hero);
 			} else {
-				BugSenseHandler.sendException(new IllegalArgumentException(
-						"getActivity was null in onActivityCreated of BaseFragment"));
+				Debug.error(new IllegalArgumentException("getActivity was null in onActivityCreated of BaseFragment"));
 			}
 		}
 	}

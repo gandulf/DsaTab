@@ -1,7 +1,6 @@
 package com.dsatab.activity;
 
 import java.io.File;
-import java.lang.ref.WeakReference;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,23 +32,18 @@ import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.TabInfo;
 import com.dsatab.activity.menu.TabListener;
-import com.dsatab.data.CombatMeleeTalent;
 import com.dsatab.data.Hero;
 import com.dsatab.data.HeroConfiguration;
 import com.dsatab.data.HeroLoaderTask;
 import com.dsatab.data.Probe;
-import com.dsatab.data.Value;
 import com.dsatab.data.adapter.TabAdapter;
 import com.dsatab.data.adapter.TabPagerAdapter;
-import com.dsatab.data.enums.AttributeType;
 import com.dsatab.fragment.AttributeListFragment;
 import com.dsatab.fragment.BaseFragment;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.dsatab.view.ChangeLogDialog;
 import com.dsatab.view.DiceSlider;
-import com.dsatab.view.InlineEditDialog;
-import com.dsatab.view.InlineEditFightDialog;
 import com.dsatab.view.MyViewPager;
 import com.dsatab.view.listener.ShakeListener;
 
@@ -86,145 +80,6 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 
 	private View loadingView;
 
-	public static class EditListener implements View.OnClickListener, View.OnLongClickListener {
-
-		private WeakReference<BaseFragment> mFragment;
-
-		/**
-		 * 
-		 */
-		public EditListener(BaseFragment context) {
-			this.mFragment = new WeakReference<BaseFragment>(context);
-		}
-
-		@Override
-		public void onClick(View v) {
-			BaseFragment baseFragment = mFragment.get();
-			if (baseFragment == null)
-				return;
-
-			Value value = null;
-			if (v.getTag(R.id.TAG_KEY_VALUE) instanceof Value) {
-				value = (Value) v.getTag(R.id.TAG_KEY_VALUE);
-			} else if (v.getTag() instanceof Value) {
-				value = (Value) v.getTag();
-			} else if (v.getTag(R.id.TAG_KEY_VALUE) instanceof AttributeType) {
-				AttributeType type = (AttributeType) v.getTag(R.id.TAG_KEY_VALUE);
-				if (baseFragment.getBeing() != null)
-					value = baseFragment.getBeing().getAttribute(type);
-			} else if (v.getTag() instanceof AttributeType) {
-				AttributeType type = (AttributeType) v.getTag();
-				if (baseFragment.getBeing() != null)
-					value = baseFragment.getBeing().getAttribute(type);
-			}
-
-			if (value != null) {
-				showEditPopup(v.getContext(), value);
-			}
-
-		}
-
-		@Override
-		public boolean onLongClick(View v) {
-			BaseFragment baseFragment = mFragment.get();
-			if (baseFragment == null)
-				return false;
-
-			Value value = null;
-			if (v.getTag(R.id.TAG_KEY_VALUE) instanceof Value) {
-				value = (Value) v.getTag(R.id.TAG_KEY_VALUE);
-			} else if (v.getTag() instanceof Value) {
-				value = (Value) v.getTag();
-			} else if (v.getTag(R.id.TAG_KEY_VALUE) instanceof AttributeType) {
-				AttributeType type = (AttributeType) v.getTag(R.id.TAG_KEY_VALUE);
-				if (baseFragment.getBeing() != null)
-					value = baseFragment.getBeing().getAttribute(type);
-			} else if (v.getTag() instanceof AttributeType) {
-				AttributeType type = (AttributeType) v.getTag();
-				if (baseFragment.getBeing() != null)
-					value = baseFragment.getBeing().getAttribute(type);
-			}
-
-			if (value != null) {
-				showEditPopup(v.getContext(), value);
-				return true;
-			}
-			return false;
-
-		}
-
-	}
-
-	public static class ProbeListener implements View.OnClickListener, View.OnLongClickListener {
-
-		private WeakReference<BaseFragment> mFragment;
-
-		/**
-		 * 
-		 */
-		public ProbeListener(BaseFragment context) {
-			this.mFragment = new WeakReference<BaseFragment>(context);
-		}
-
-		@Override
-		public void onClick(View v) {
-			BaseFragment baseFragment = mFragment.get();
-			if (baseFragment == null)
-				return;
-
-			Probe probe = null;
-
-			if (v.getTag(R.id.TAG_KEY_PROBE) instanceof Probe) {
-				probe = (Probe) v.getTag(R.id.TAG_KEY_PROBE);
-			} else if (v.getTag() instanceof Probe) {
-				probe = (Probe) v.getTag();
-			} else if (v.getTag(R.id.TAG_KEY_PROBE) instanceof AttributeType) {
-				AttributeType type = (AttributeType) v.getTag(R.id.TAG_KEY_PROBE);
-				if (baseFragment.getBeing() != null)
-					probe = baseFragment.getBeing().getAttribute(type);
-			} else if (v.getTag() instanceof AttributeType) {
-				AttributeType type = (AttributeType) v.getTag();
-				if (baseFragment.getBeing() != null)
-					probe = baseFragment.getBeing().getAttribute(type);
-			}
-
-			if (probe != null) {
-				baseFragment.checkProbe(probe);
-			}
-
-		}
-
-		@Override
-		public boolean onLongClick(View v) {
-			BaseFragment baseFragment = mFragment.get();
-			if (baseFragment == null)
-				return false;
-
-			Probe probe = null;
-
-			if (v.getTag(R.id.TAG_KEY_PROBE) instanceof Probe) {
-				probe = (Probe) v.getTag(R.id.TAG_KEY_PROBE);
-			} else if (v.getTag() instanceof Probe) {
-				probe = (Probe) v.getTag();
-			} else if (v.getTag(R.id.TAG_KEY_PROBE) instanceof AttributeType) {
-				AttributeType type = (AttributeType) v.getTag(R.id.TAG_KEY_PROBE);
-				if (baseFragment.getBeing() != null)
-					probe = baseFragment.getBeing().getAttribute(type);
-			} else if (v.getTag() instanceof AttributeType) {
-				AttributeType type = (AttributeType) v.getTag();
-				if (baseFragment.getBeing() != null)
-					probe = baseFragment.getBeing().getAttribute(type);
-			}
-
-			if (probe != null) {
-				baseFragment.checkProbe(probe);
-				return true;
-			}
-			return false;
-		}
-
-	}
-
 	private TabPagerAdapter viewPagerAdapter;
 
 	public Hero getHero() {
@@ -240,20 +95,6 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		Bundle args = new Bundle();
 		args.putString(KEY_HERO_PATH, heroPath);
 		getSupportLoaderManager().restartLoader(0, args, this);
-	}
-
-	public static void showEditPopup(Context context, Value value) {
-
-		if (value instanceof CombatMeleeTalent) {
-			InlineEditFightDialog inlineEditFightdialog = new InlineEditFightDialog(context, (CombatMeleeTalent) value);
-			inlineEditFightdialog.setTitle(value.getName());
-			inlineEditFightdialog.show();
-		} else if (value != null) {
-			InlineEditDialog inlineEditdialog = new InlineEditDialog(context, value);
-			inlineEditdialog.setTitle(value.getName());
-			inlineEditdialog.show();
-		}
-
 	}
 
 	@Override
@@ -411,7 +252,6 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 			if (resultCode == Activity.RESULT_OK) {
 				setupTabs();
 			}
-
 		}
 
 		// notify other listeners (fragments, heroes)

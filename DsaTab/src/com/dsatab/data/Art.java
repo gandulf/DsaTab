@@ -6,13 +6,13 @@ import java.util.EnumSet;
 
 import android.text.TextUtils;
 
-import com.bugsense.trace.BugSenseHandler;
 import com.dsatab.common.DsaTabRuntimeException;
 import com.dsatab.data.enums.ArtGroupType;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.FeatureType;
 import com.dsatab.data.enums.TalentType;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
+import com.dsatab.exception.ArtUnknownException;
 import com.dsatab.exception.FeatureTypeUnknownException;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
@@ -172,7 +172,7 @@ public class Art extends MarkableElement implements Value {
 		try {
 			this.type = FeatureType.byXmlName(name);
 		} catch (FeatureTypeUnknownException e) {
-			BugSenseHandler.sendException(e);
+			Debug.error(e);
 		}
 
 		setGroupType(ArtGroupType.getTypeOfArt(name));
@@ -212,8 +212,7 @@ public class Art extends MarkableElement implements Value {
 			if (grade != null) {
 				info.setGrade(Util.gradeToInt(grade));
 			}
-			BugSenseHandler.sendEvent("No unique art found for " + name + " : " + grade + " creating a new one");
-			Debug.warning("No unique art found for " + name + " : " + grade + " creating a new one");
+			Debug.error(new ArtUnknownException(name, grade));
 		}
 
 		setProbePattern(info.getProbe());

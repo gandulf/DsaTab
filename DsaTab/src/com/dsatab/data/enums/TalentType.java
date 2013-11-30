@@ -203,7 +203,8 @@ public enum TalentType {
 			"Liturgiekenntnis (Tairach)", TalentGroupType.Gaben, null), LiturgiekenntnisTravia(
 			"Liturgiekenntnis (Travia)", TalentGroupType.Gaben, null), LiturgiekenntnisTsa("Liturgiekenntnis (Tsa)",
 			TalentGroupType.Gaben, null), LiturgiekenntnisZsahh("Liturgiekenntnis (Zsahh)", TalentGroupType.Gaben, null), Prophezeien(
-			"Prophezeien", TalentGroupType.Gaben, null), Geräuschhexerei("Geräuschhexerei", TalentGroupType.Gaben, null);
+			"Prophezeien", TalentGroupType.Gaben, null), Geräuschhexerei("Geräuschhexerei", TalentGroupType.Gaben, null), Magiegespür(
+			"Magiegespür", TalentGroupType.Gaben, null);
 
 	private TalentGroupType groupType;
 	private Integer be;

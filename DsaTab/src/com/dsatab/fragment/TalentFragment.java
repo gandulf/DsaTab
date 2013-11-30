@@ -15,7 +15,6 @@ import android.widget.ExpandableListView;
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.dsatab.R;
-import com.dsatab.activity.DsaTabActivity;
 import com.dsatab.data.Attribute;
 import com.dsatab.data.CombatMeleeAttribute;
 import com.dsatab.data.CombatTalent;
@@ -31,6 +30,7 @@ import com.dsatab.util.Util;
 import com.dsatab.view.FilterSettings;
 import com.dsatab.view.FilterSettings.FilterType;
 import com.dsatab.view.ListFilterSettings;
+import com.dsatab.view.listener.EditListener;
 import com.dsatab.view.listener.HeroChangedListener;
 
 public class TalentFragment extends BaseListFragment implements HeroChangedListener, OnItemLongClickListener {
@@ -55,7 +55,7 @@ public class TalentFragment extends BaseListFragment implements HeroChangedListe
 							Talent talent = (Talent) obj;
 							switch (item.getItemId()) {
 							case R.id.option_edit_talent:
-								DsaTabActivity.showEditPopup(getActivity(), talent);
+								EditListener.showEditPopup(getActivity(), talent);
 								mode.finish();
 								return true;
 							case R.id.option_mark_favorite_talent:

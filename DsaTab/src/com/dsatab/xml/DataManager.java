@@ -13,7 +13,6 @@ import java.util.UUID;
 import android.database.Cursor;
 import android.text.TextUtils;
 
-import com.bugsense.trace.BugSenseHandler;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.data.ArtInfo;
 import com.dsatab.data.SpellInfo;
@@ -62,7 +61,7 @@ public class DataManager {
 			}
 		} catch (SQLException e) {
 			Debug.error(e);
-			BugSenseHandler.sendException(e);
+
 		}
 
 	}
@@ -79,7 +78,6 @@ public class DataManager {
 
 		} catch (SQLException e) {
 			Debug.error(e);
-			BugSenseHandler.sendException(e);
 		}
 
 	}
@@ -95,7 +93,6 @@ public class DataManager {
 					.eq("name", itemNameArg).prepare();
 		} catch (SQLException e) {
 			Debug.error(e);
-			BugSenseHandler.sendException(e);
 		}
 
 	}
@@ -161,7 +158,6 @@ public class DataManager {
 			return cursor;
 		} catch (SQLException e) {
 			Debug.error(e);
-			BugSenseHandler.sendExceptionMessage(Debug.CATEGORY_DATABASE, "DataManager.getItemsCursor", e);
 		}
 
 		return null;

@@ -13,7 +13,6 @@ import android.widget.ListView;
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.dsatab.R;
-import com.dsatab.activity.DsaTabActivity;
 import com.dsatab.data.Hero;
 import com.dsatab.data.Spell;
 import com.dsatab.data.Value;
@@ -22,6 +21,7 @@ import com.dsatab.view.FilterSettings;
 import com.dsatab.view.FilterSettings.FilterType;
 import com.dsatab.view.ListFilterSettings;
 import com.dsatab.view.SpellInfoDialog;
+import com.dsatab.view.listener.EditListener;
 import com.dsatab.view.listener.HeroChangedListener;
 
 /**
@@ -47,7 +47,7 @@ public class SpellFragment extends BaseListFragment implements OnItemClickListen
 
 						switch (item.getItemId()) {
 						case R.id.option_edit_spell:
-							DsaTabActivity.showEditPopup(getActivity(), spell);
+							EditListener.showEditPopup(getActivity(), spell);
 							mode.finish();
 							return true;
 						case R.id.option_view_spell:
@@ -169,7 +169,8 @@ public class SpellFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+	 * android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -243,7 +244,8 @@ public class SpellFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget .AdapterView, android.view.View, int, long)
+	 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget .AdapterView, android.view.View,
+	 * int, long)
 	 */
 	@Override
 	public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -268,7 +270,8 @@ public class SpellFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.fragment.BaseFragment#onFilterChanged(com.dsatab.view. FilterSettings.FilterType, com.dsatab.view.FilterSettings)
+	 * @see com.dsatab.fragment.BaseFragment#onFilterChanged(com.dsatab.view. FilterSettings.FilterType,
+	 * com.dsatab.view.FilterSettings)
 	 */
 	@Override
 	public void onFilterChanged(FilterType type, FilterSettings settings) {

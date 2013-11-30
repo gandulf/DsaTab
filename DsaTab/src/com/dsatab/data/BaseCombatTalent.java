@@ -3,15 +3,8 @@ package com.dsatab.data;
 import com.dsatab.data.enums.TalentType;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 
-/**
- * 
- * 
- */
 public abstract class BaseCombatTalent extends Talent implements CombatTalent {
 
-	/**
-	 * 
-	 */
 	public BaseCombatTalent(Hero hero) {
 		super(hero);
 	}

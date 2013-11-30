@@ -12,7 +12,6 @@ import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.bugsense.trace.BugSenseHandler;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.cloud.HeroExchange.OnHeroExchangeListener;
@@ -175,7 +174,6 @@ public class ImportHeroTaskNew extends AsyncTask<String, String, Integer> implem
 			} else {
 				Toast.makeText(context, R.string.download_error, Toast.LENGTH_SHORT).show();
 				Debug.error(caughtException);
-				BugSenseHandler.sendException(caughtException);
 			}
 		}
 

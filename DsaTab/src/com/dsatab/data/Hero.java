@@ -99,8 +99,6 @@ public class Hero extends AbstractBeing {
 
 	private HeroBaseInfo baseInfo;
 
-	private HeroConfiguration configuration;
-
 	private List<ChangeEvent> changeEvents;
 
 	private Integer oldAuRatioLevel, oldLeRatioLevel, beCache;
@@ -313,6 +311,11 @@ public class Hero extends AbstractBeing {
 
 	public String getKey() {
 		return key;
+	}
+
+	@Override
+	protected String getId() {
+		return getKey();
 	}
 
 	public int getActiveSet() {
@@ -1985,10 +1988,6 @@ public class Hero extends AbstractBeing {
 		for (ArmorAttribute a : getArmorAttributes(set).values()) {
 			a.recalcValue();
 		}
-	}
-
-	public HeroConfiguration getHeroConfiguration() {
-		return configuration;
 	}
 
 	/**

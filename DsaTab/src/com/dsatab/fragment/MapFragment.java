@@ -95,7 +95,8 @@ public class MapFragment extends BaseFragment {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu, com.actionbarsherlock.view.MenuInflater)
+	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu,
+	 * com.actionbarsherlock.view.MenuInflater)
 	 */
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -121,7 +122,8 @@ public class MapFragment extends BaseFragment {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+	 * android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -486,6 +488,7 @@ public class MapFragment extends BaseFragment {
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setTitle("Karte auswählen");
+
 		builder.setItems(mapNames, new DialogInterface.OnClickListener() {
 
 			@Override
@@ -500,7 +503,7 @@ public class MapFragment extends BaseFragment {
 			}
 		});
 
-		builder.show();
+		builder.show().setCanceledOnTouchOutside(true);
 	}
 
 }

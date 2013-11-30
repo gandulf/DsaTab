@@ -298,7 +298,9 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 		configuration = new DsaTabConfiguration(this);
 
 		poorRichFont = Typeface.createFromAsset(this.getAssets(), "fonts/poorich.ttf");
-		BugSenseHandler.initAndStartSession(this, BUGSENSE_API_KEY);
+
+		if (!BuildConfig.DEBUG)
+			BugSenseHandler.initAndStartSession(this, BUGSENSE_API_KEY);
 
 		checkDirectories();
 
@@ -483,7 +485,6 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 		} catch (Exception e) {
 			Toast.makeText(this, "Held konnte nicht gespeichert werden.", Toast.LENGTH_LONG).show();
 			Debug.error(e);
-			BugSenseHandler.sendException(e);
 		} finally {
 			if (out != null) {
 				try {

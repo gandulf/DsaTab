@@ -35,6 +35,9 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.SubMenu;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.common.StyleableSpannableStringBuilder;
@@ -61,6 +64,9 @@ import com.dsatab.view.listener.HeroChangedListener;
 public class AnimalFragment extends BaseAttributesFragment implements OnClickListener, OnLongClickListener {
 
 	private static final String PREF_SHOW_FEATURE_COMMENTS = "SHOW_COMMENTS";
+
+	private static final int ANIMAL_GROUP_ID = 1001;
+	private static final int ANIMAL_MENU_ID = 1000;
 
 	private static final int ACTION_PHOTO = 1;
 	private static final int ACTION_GALERY = 2;
@@ -147,6 +153,46 @@ public class AnimalFragment extends BaseAttributesFragment implements OnClickLis
 	 */
 	public AnimalFragment() {
 		this.inverseColors = false;
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+
+		if (getHero().getAnimals().size() > 1) {
+			SubMenu subMenu = menu.addSubMenu(Menu.NONE, ANIMAL_MENU_ID, 0, "Tier auswählen");
+			subMenu.getItem().setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+			subMenu.setIcon(Util.getThemeResourceId(getActivity(), R.attr.imgBarSet));
+			for (int i = 0; i < getHero().getAnimals().size(); i++) {
+				Animal animal = getHero().getAnimals().get(i);
+				MenuItem animalItem = subMenu.add(ANIMAL_GROUP_ID, i, i, animal.getTitle());
+			}
+			subMenu.setGroupCheckable(ANIMAL_GROUP_ID, true, true);
+		}
+	}
+
+	@Override
+	public void onPrepareOptionsMenu(Menu menu) {
+		MenuItem animalMenu = menu.findItem(ANIMAL_MENU_ID);
+		if (animalMenu != null && animalMenu.hasSubMenu()) {
+			SubMenu subMenu = animalMenu.getSubMenu();
+			if (animalIndex >= 0 && animalIndex < subMenu.size()) {
+				subMenu.getItem(animalIndex).setChecked(true);
+			}
+		}
+		super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getGroupId() == ANIMAL_GROUP_ID) {
+			animalIndex = item.getItemId();
+			item.setChecked(true);
+			onAnimalLoaded(getAnimal());
+			return true;
+		} else {
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	/*
@@ -434,6 +480,13 @@ public class AnimalFragment extends BaseAttributesFragment implements OnClickLis
 	}
 
 	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		setHasOptionsMenu(true);
+	}
+
+	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.gen_portrait:
@@ -542,14 +595,7 @@ public class AnimalFragment extends BaseAttributesFragment implements OnClickLis
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.dsatab.activity.BaseMenuActivity#onHeroLoaded(com.dsatab.data.Hero)
-	 */
-	@Override
-	public void onHeroLoaded(Hero hero) {
-
+	public void onAnimalLoaded(Animal animal) {
 		updateValues();
 
 		fillAttributeValue(tfAE, AttributeType.Astralenergie_Aktuell);
@@ -644,7 +690,10 @@ public class AnimalFragment extends BaseAttributesFragment implements OnClickLis
 				attackLayout.addView(listItem);
 			}
 		}
+	}
 
+	public void onHeroLoaded(Hero hero) {
+		onAnimalLoaded(getAnimal());
 	}
 
 	public AbstractBeing getBeing() {
@@ -662,20 +711,23 @@ public class AnimalFragment extends BaseAttributesFragment implements OnClickLis
 		fillAttributesList(charAttributesList);
 
 		StyleableSpannableStringBuilder sb = new StyleableSpannableStringBuilder();
-		if (getBeing().getAttribute(AttributeType.Geschwindigkeit) != null) {
+		if (getBeing() != null && getBeing().getAttribute(AttributeType.Geschwindigkeit) != null) {
 			sb.append(Util.toString(getBeing().getAttributeValue(AttributeType.Geschwindigkeit)));
 		}
-		if (getBeing().getAttribute(AttributeType.Geschwindigkeit2) != null) {
+		if (getBeing() != null && getBeing().getAttribute(AttributeType.Geschwindigkeit2) != null) {
 			sb.append("/");
 			sb.append(Util.toString(getBeing().getAttributeValue(AttributeType.Geschwindigkeit2)));
 		}
-		if (getBeing().getAttribute(AttributeType.Geschwindigkeit3) != null) {
+		if (getBeing() != null && getBeing().getAttribute(AttributeType.Geschwindigkeit3) != null) {
 			sb.append("/");
 			sb.append(Util.toString(getBeing().getAttributeValue(AttributeType.Geschwindigkeit3)));
 		}
 		tfGS.setText(sb);
 
-		tfINI.setText(getAnimal().getIniDice().toString());
+		if (getAnimal() != null && getAnimal().getIniDice() != null)
+			tfINI.setText(getAnimal().getIniDice().toString());
+		else
+			tfINI.setText(null);
 		fillAttributeValue(tfLO, AttributeType.Loyalität, false);
 	}
 

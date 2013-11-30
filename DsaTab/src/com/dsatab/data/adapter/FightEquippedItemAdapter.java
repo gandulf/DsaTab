@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dsatab.R;
-import com.dsatab.activity.DsaTabActivity.ProbeListener;
 import com.dsatab.common.StyleableSpannableStringBuilder;
 import com.dsatab.data.CombatProbe;
 import com.dsatab.data.Hero;
@@ -31,6 +30,7 @@ import com.dsatab.fragment.FightFragment.TargetListener;
 import com.dsatab.util.Util;
 import com.dsatab.view.FightFilterSettings;
 import com.dsatab.view.ItemListItem;
+import com.dsatab.view.listener.ProbeListener;
 
 public class FightEquippedItemAdapter extends OpenArrayAdapter<EquippedItem> {
 

@@ -9,6 +9,7 @@ import com.dsatab.data.Hero.CombatStyle;
 import com.dsatab.data.enums.AttributeType;
 
 public class Animal extends AbstractBeing {
+
 	private Hero hero;
 
 	private String title;
@@ -29,7 +30,13 @@ public class Animal extends AbstractBeing {
 
 	public Animal(Hero hero) {
 		this.hero = hero;
+		this.configuration = hero.getHeroConfiguration();
 		animalAttacks = new ArrayList<AnimalAttack>();
+	}
+
+	@Override
+	protected String getId() {
+		return getName() + getSlot();
 	}
 
 	public String getSpecies() {

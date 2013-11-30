@@ -25,7 +25,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
 
-import com.bugsense.trace.BugSenseHandler;
 import com.dsatab.data.AbstractBeing;
 import com.dsatab.data.Animal;
 import com.dsatab.data.AnimalAttack;
@@ -133,7 +132,7 @@ public class HeldenXmlParser {
 		hero.setName(heroElement.getAttributeValue(Xml.KEY_NAME));
 		hero.setKey(heroElement.getAttributeValue(Xml.KEY_KEY));
 		if (heroElement.getAttributeValue(Xml.KEY_PORTRAIT_PATH) != null) {
-			hero.setProfileUri(Uri.parse(heroElement.getAttributeValue(Xml.KEY_PORTRAIT_PATH)));
+			hero.setPortraitUri(Uri.parse(heroElement.getAttributeValue(Xml.KEY_PORTRAIT_PATH)));
 		}
 
 		Element xpElement = DomUtil.getChildByTagName(heroElement, Xml.KEY_BASIS, Xml.KEY_ABENTEUERPUNKTE);
@@ -194,7 +193,7 @@ public class HeldenXmlParser {
 			try {
 				featureType = FeatureType.byXmlName(element.getAttributeValue(Xml.KEY_NAME).trim());
 			} catch (FeatureTypeUnknownException e) {
-				BugSenseHandler.sendException(e);
+				Debug.error(e);
 				continue;
 			}
 			Feature adv = new Feature(featureType);
@@ -239,7 +238,7 @@ public class HeldenXmlParser {
 				try {
 					featureType = FeatureType.byXmlName(element.getAttributeValue(Xml.KEY_NAME));
 				} catch (FeatureTypeUnknownException e) {
-					BugSenseHandler.sendException(e);
+					Debug.error(e);
 					continue;
 				}
 				Feature specialFeature = new Feature(featureType);
@@ -696,7 +695,7 @@ public class HeldenXmlParser {
 						feature.setComment(kommentar.getAttributeValue(Xml.KEY_KOMMENTAR));
 					}
 				} catch (FeatureTypeUnknownException e) {
-					BugSenseHandler.sendException(e);
+					Debug.error(e);
 				}
 			}
 
@@ -719,7 +718,7 @@ public class HeldenXmlParser {
 							art.getInfo().setCastDuration(sfInfo.getAttributeValue(Xml.KEY_DAUER));
 					}
 				} catch (FeatureTypeUnknownException e) {
-					BugSenseHandler.sendException(e);
+					Debug.error(e);
 				}
 			}
 		}
@@ -814,8 +813,8 @@ public class HeldenXmlParser {
 			Item item = hero.getItem(itemName, itemSlot);
 
 			if (item == null) {
-				BugSenseHandler.sendExceptionMessage(Debug.CATEGORY_DATA, "" + itemName, new InconsistentDataException(
-						"Unable to find an item with the name '" + itemName + "' in slot '" + itemSlot + "'."));
+				Debug.error(new InconsistentDataException("Unable to find an item with the name '" + itemName
+						+ "' in slot '" + itemSlot + "'."));
 				continue;
 			}
 
@@ -1176,7 +1175,7 @@ public class HeldenXmlParser {
 			try {
 				talentType = TalentType.byXmlName(element.getAttributeValue(Xml.KEY_NAME));
 			} catch (TalentTypeUnknownException e) {
-				BugSenseHandler.sendException(e);
+				Debug.error(e);
 				continue;
 			}
 			int talentValue = Util.parseInt(element.getAttributeValue(Xml.KEY_VALUE));
@@ -1451,16 +1450,25 @@ public class HeldenXmlParser {
 		List<Element> talentList = DomUtil.getChildrenByTagName(heldElement, Xml.KEY_TALENTLISTE, Xml.KEY_TALENT);
 
 		for (Element talentElement : talentList) {
-			writeTalent(hero, hero.getTalent(talentElement.getAttributeValue(Xml.KEY_NAME)), talentElement);
-			Debug.verbose("Xml popuplate talent " + talentElement);
+			try {
+				writeTalent(hero, hero.getTalent(talentElement.getAttributeValue(Xml.KEY_NAME)), talentElement);
+				Debug.verbose("Xml popuplate talent " + talentElement);
+			} catch (TalentTypeUnknownException e) {
+				Debug.error("Skipping talent since it's unknown " + talentElement, e);
+			}
 		}
 
 		List<Element> combatAttributesList = DomUtil.getChildrenByTagName(heldElement, Xml.KEY_KAMPF,
 				Xml.KEY_KAMPFWERTE);
 
 		for (Element combatTalent : combatAttributesList) {
-			writeCombatTalent(hero, hero.getCombatTalent(combatTalent.getAttributeValue(Xml.KEY_NAME)), combatTalent);
-			Debug.verbose("Xml popuplate combattalent " + combatTalent);
+			try {
+				writeCombatTalent(hero, hero.getCombatTalent(combatTalent.getAttributeValue(Xml.KEY_NAME)),
+						combatTalent);
+				Debug.verbose("Xml popuplate combattalent " + combatTalent);
+			} catch (TalentTypeUnknownException e) {
+				Debug.error("Skipping combattalent since it's unknown " + combatTalent, e);
+			}
 		}
 
 		List<Element> spellList = DomUtil.getChildrenByTagName(heldElement, Xml.KEY_ZAUBERLISTE, Xml.KEY_ZAUBER);

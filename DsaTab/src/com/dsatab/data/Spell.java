@@ -5,9 +5,9 @@ import java.util.EnumSet;
 
 import android.text.TextUtils;
 
-import com.bugsense.trace.BugSenseHandler;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
+import com.dsatab.exception.SpellUnknownException;
 import com.dsatab.util.Debug;
 import com.dsatab.xml.DataManager;
 
@@ -57,8 +57,7 @@ public class Spell extends MarkableElement implements Value {
 
 		this.info = DataManager.getSpellByName(name);
 		if (info == null) {
-			BugSenseHandler.sendEvent("No spell info found for " + name + ", creating one");
-			Debug.warning("No spell info found for " + name + ", creating one");
+			Debug.error(new SpellUnknownException(name));
 
 			info = new SpellInfo();
 			info.setName(name);

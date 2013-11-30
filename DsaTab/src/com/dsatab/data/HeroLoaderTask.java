@@ -10,7 +10,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.support.v4.content.AsyncTaskLoader;
 
-import com.bugsense.trace.BugSenseHandler;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.activity.DsaTabActivity;
 import com.dsatab.util.Debug;
@@ -56,8 +55,8 @@ public class HeroLoaderTask extends AsyncTaskLoader<Hero> {
 	}
 
 	/**
-	 * This is where the bulk of our work is done. This function is called in a background thread and should generate a new set of data to be published by the
-	 * loader.
+	 * This is where the bulk of our work is done. This function is called in a background thread and should generate a
+	 * new set of data to be published by the loader.
 	 */
 	@Override
 	public Hero loadInBackground() {
@@ -103,7 +102,6 @@ public class HeroLoaderTask extends AsyncTaskLoader<Hero> {
 			editor.commit();
 			exception = e;
 			Debug.error(e);
-			BugSenseHandler.sendException(e);
 			return null;
 		} finally {
 			if (fis != null) {
