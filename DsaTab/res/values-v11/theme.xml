@@ -36,7 +36,9 @@
         <item name="android:actionDropDownStyle">@style/dsatabdark_DropDownNav</item>
         <item name="android:actionBarStyle">@style/dsatabdark_transparent_ActionBar</item>
         <item name="android:panelBackground">@drawable/menu_hardkey_panel_dsatabdark</item>
-        <!--  ActionBar styles -->        
+        <!--  ActionBar styles -->
+        
+        <item name="flipImageViewStyle">@style/FlipImageView.Checked</item>
     </style>
     
     <style name="Theme.Dialog.Dark" parent="@Theme.Dialog.__Dark">                        
@@ -57,7 +59,9 @@
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_holo_dark</item>
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo_dark</item>
         <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb_holo</item>
-        <!-- Holo generated styles -->               
+        <!-- Holo generated styles -->
+        
+        <item name="flipImageViewStyle">@style/FlipImageView.Checked</item>               
     </style>
     
     

@@ -12,14 +12,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.dsatab.data.JSONable;
-import com.dsatab.fragment.ArtFragment;
 import com.dsatab.fragment.BaseFragment;
 import com.dsatab.fragment.BaseListFragment;
-import com.dsatab.fragment.FightFragment;
+import com.dsatab.fragment.ListableFragment;
 import com.dsatab.util.Util;
-import com.dsatab.view.FightFilterSettings;
-import com.dsatab.view.FilterSettings;
-import com.dsatab.view.ListFilterSettings;
+import com.dsatab.view.ListSettings;
 
 public class TabInfo implements Parcelable, JSONable, Cloneable {
 
@@ -33,17 +30,19 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 	private static final String FIELD_DICE_SLIDER = "diceSlider";
 	private static final String FIELD_ATTRIBUTE_LIST = "attributeList";
 	private static final String FIELD_FILTER_SETTINGS = "filterSettings";
+	private static final String FIELD_TITLE = "title";
 
 	@SuppressWarnings("unchecked")
 	private Class<? extends BaseFragment>[] activityClazz = new Class[MAX_TABS_PER_PAGE];
 
+	private String title;
 	private boolean diceSlider = true;
 	private boolean attributeList = true;
 
 	private transient UUID id;
 	private Uri iconUri;
 
-	private FilterSettings[] filterSettings = new FilterSettings[MAX_TABS_PER_PAGE];
+	private ListSettings[] filterSettings = new ListSettings[MAX_TABS_PER_PAGE];
 
 	private static final int indexToResourceId(int index) {
 		if (index < 0 || index >= DsaTabApplication.getInstance().getConfiguration().getTabIcons().size())
@@ -62,13 +61,14 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 	}
 
 	public TabInfo(Class<? extends BaseFragment> activityClazz1, Class<? extends BaseFragment> activityClazz2,
-			int tabResourceId, boolean diceSlider) {
+			int tabResourceId, boolean diceSlider, boolean attributeList) {
 		super();
 		this.activityClazz[0] = activityClazz1;
 		this.activityClazz[1] = activityClazz2;
 
 		this.iconUri = Util.getUriForResourceId(tabResourceId);
 		this.diceSlider = diceSlider;
+		this.attributeList = attributeList;
 		this.id = UUID.randomUUID();
 
 		updateFilterSettings();
@@ -76,19 +76,20 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 
 	public TabInfo(Class<? extends BaseFragment> activityClazz1, Class<? extends BaseFragment> activityClazz2,
 			int tabResourceId) {
-		this(activityClazz1, activityClazz2, tabResourceId, true);
+		this(activityClazz1, activityClazz2, tabResourceId, true, true);
 	}
 
-	public TabInfo(Class<? extends BaseFragment> activityClazz1, int tabResourceId, boolean diceSlider) {
-		this(activityClazz1, null, tabResourceId, diceSlider);
+	public TabInfo(Class<? extends BaseFragment> activityClazz1, int tabResourceId, boolean diceSlider,
+			boolean attributeList) {
+		this(activityClazz1, null, tabResourceId, diceSlider, attributeList);
 	}
 
 	public TabInfo(Class<? extends BaseFragment> activityClazz1, int tabResourceId) {
-		this(activityClazz1, null, tabResourceId, true);
+		this(activityClazz1, null, tabResourceId, true, true);
 	}
 
 	public TabInfo() {
-		this(null, null, -1, true);
+		this(null, null, -1, true, true);
 	}
 
 	/**
@@ -102,8 +103,9 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		}
 		this.diceSlider = in.readInt() == 0 ? false : true;
 		this.id = UUID.randomUUID();
-		this.filterSettings = (FilterSettings[]) in.readSerializable();
+		this.filterSettings = (ListSettings[]) in.readParcelableArray(ListSettings.class.getClassLoader());
 		this.attributeList = in.readInt() == 0 ? false : true;
+		this.title = in.readString();
 		updateFilterSettings();
 	}
 
@@ -115,6 +117,7 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 	 */
 	@SuppressWarnings("unchecked")
 	public TabInfo(JSONObject in) throws JSONException, ClassNotFoundException {
+
 		// backwardcompat for resourceindex
 		if (in.has(FIELD_TAB_RESOURCE_INDEX)) {
 			int tabResourceIndex = in.getInt(FIELD_TAB_RESOURCE_INDEX);
@@ -131,8 +134,17 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		// old delegate version
 		if (!in.isNull(FIELD_PRIMARY_ACTIVITY_CLAZZ)) {
 			String className = in.getString(FIELD_PRIMARY_ACTIVITY_CLAZZ);
-			if ("com.dsatab.fragment.LiturgieFragment".equals(className)) {
-				className = ArtFragment.class.getName();
+			if ("com.dsatab.fragment.LiturgieFragment".equals(className)
+					|| "com.dsatab.fragment.ArtFragment".equals(className)) {
+				className = ListableFragment.class.getName();
+			}
+
+			if ("com.dsatab.fragment.SpellFragment".equals(className)) {
+				className = ListableFragment.class.getName();
+			}
+
+			if ("com.dsatab.fragment.TalentFragment".equals(className)) {
+				className = ListableFragment.class.getName();
 			}
 
 			activityClazz[0] = (Class<? extends BaseFragment>) Class.forName(className, true,
@@ -142,8 +154,17 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		if (!in.isNull(FIELD_SECONDARY_ACTIVITY_CLAZZ)) {
 
 			String className = in.getString(FIELD_SECONDARY_ACTIVITY_CLAZZ);
-			if ("com.dsatab.fragment.LiturgieFragment".equals(className)) {
-				className = ArtFragment.class.getName();
+			if ("com.dsatab.fragment.LiturgieFragment".equals(className)
+					|| "com.dsatab.fragment.ArtFragment".equals(className)) {
+				className = ListableFragment.class.getName();
+			}
+
+			if ("com.dsatab.fragment.SpellFragment".equals(className)) {
+				className = ListableFragment.class.getName();
+			}
+
+			if ("com.dsatab.fragment.TalentFragment".equals(className)) {
+				className = ListableFragment.class.getName();
 			}
 
 			activityClazz[1] = (Class<? extends BaseFragment>) Class.forName(className, true,
@@ -157,8 +178,17 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				if (!jsonArray.isNull(i)) {
 					String className = jsonArray.getString(i);
-					if ("com.dsatab.fragment.LiturgieFragment".equals(className)) {
-						className = ArtFragment.class.getName();
+					if ("com.dsatab.fragment.LiturgieFragment".equals(className)
+							|| "com.dsatab.fragment.ArtFragment".equals(className)) {
+						className = ListableFragment.class.getName();
+					}
+
+					if ("com.dsatab.fragment.SpellFragment".equals(className)) {
+						className = ListableFragment.class.getName();
+					}
+
+					if ("com.dsatab.fragment.TalentFragment".equals(className)) {
+						className = ListableFragment.class.getName();
 					}
 
 					activityClazz[i] = (Class<? extends BaseFragment>) Class.forName(className, true,
@@ -174,21 +204,21 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		}
 		if (!in.isNull(FIELD_FILTER_SETTINGS)) {
 			JSONArray jsonArray = in.getJSONArray(FIELD_FILTER_SETTINGS);
-			filterSettings = new FilterSettings[MAX_TABS_PER_PAGE];
+			filterSettings = new ListSettings[MAX_TABS_PER_PAGE];
 
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject filterJson = jsonArray.optJSONObject(i);
 
 				if (filterJson != null) {
-					if (filterJson.has(ListFilterSettings.class.getName())) {
-						filterSettings[i] = new ListFilterSettings(filterJson.getJSONObject(ListFilterSettings.class
-								.getName()));
-					} else if (filterJson.has(FightFilterSettings.class.getName())) {
-						filterSettings[i] = new FightFilterSettings(filterJson.getJSONObject(FightFilterSettings.class
-								.getName()));
+					if (filterJson.has(ListSettings.class.getName())) {
+						filterSettings[i] = new ListSettings(filterJson.getJSONObject(ListSettings.class.getName()));
 					}
 				}
 			}
+		}
+
+		if (in.has(FIELD_TITLE)) {
+			title = in.optString(FIELD_TITLE);
 		}
 
 		updateFilterSettings();
@@ -239,17 +269,25 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 	}
 
 	public String getTitle() {
-		StringBuilder title = new StringBuilder();
+		if (title == null) {
+			StringBuilder title = new StringBuilder();
 
-		for (Class<? extends BaseFragment> clazz : getActivityClazzes()) {
-			if (clazz != null) {
-				if (title.length() > 0)
-					title.append("/");
+			for (Class<? extends BaseFragment> clazz : getActivityClazzes()) {
+				if (clazz != null) {
+					if (title.length() > 0)
+						title.append("/");
 
-				title.append(BaseFragment.getFragmentTitle(clazz));
+					title.append(BaseFragment.getFragmentTitle(clazz));
+				}
 			}
+			return title.toString();
+		} else {
+			return title;
 		}
-		return title.toString();
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public void setIconUri(Uri uri) {
@@ -291,13 +329,9 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 
 	private void updateFilterSettings(int i) {
 		if (activityClazz[i] != null) {
-			if (FightFragment.class.isAssignableFrom(activityClazz[i])) {
-				if (!(filterSettings[i] instanceof FightFilterSettings)) {
-					filterSettings[i] = new FightFilterSettings(true, true, true, true);
-				}
-			} else if (BaseListFragment.class.isAssignableFrom(activityClazz[i])) {
-				if (!(filterSettings[i] instanceof ListFilterSettings)) {
-					filterSettings[i] = new ListFilterSettings(true, true, true, true);
+			if (BaseListFragment.class.isAssignableFrom(activityClazz[i])) {
+				if (!(filterSettings[i] instanceof ListSettings)) {
+					filterSettings[i] = new ListSettings();
 				}
 			} else {
 				filterSettings[i] = null;
@@ -307,14 +341,14 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		}
 	}
 
-	public FilterSettings getFilterSettings(int pos) {
+	public ListSettings getFilterSettings(int pos) {
 		if (filterSettings[pos] == null) {
 			updateFilterSettings();
 		}
 		return filterSettings[pos];
 	}
 
-	public FilterSettings getFilterSettings(BaseFragment baseFragment) {
+	public ListSettings getFilterSettings(BaseFragment baseFragment) {
 		for (int i = 0; i < activityClazz.length; i++) {
 			if (activityClazz[i] == baseFragment.getClass()) {
 				return getFilterSettings(i);
@@ -323,7 +357,7 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		return null;
 	}
 
-	public FilterSettings[] getFilterSettings() {
+	public ListSettings[] getListSettings() {
 		return filterSettings;
 	}
 
@@ -365,8 +399,9 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		else
 			dest.writeString(null);
 		dest.writeInt(diceSlider ? 1 : 0);
-		dest.writeSerializable(filterSettings);
+		dest.writeParcelableArray(filterSettings, 0);
 		dest.writeInt(attributeList ? 1 : 0);
+		dest.writeString(getTitle());
 	}
 
 	/**
@@ -409,6 +444,8 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 
 			out.put(FIELD_FILTER_SETTINGS, jsonArray);
 		}
+
+		out.put(FIELD_TITLE, getTitle());
 		return out;
 	}
 

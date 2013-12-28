@@ -16,8 +16,8 @@ public class ProbeListener implements View.OnClickListener, View.OnLongClickList
 	/**
 	 * 
 	 */
-	public ProbeListener(BaseFragment context) {
-		this.mFragment = new WeakReference<BaseFragment>(context);
+	public ProbeListener(BaseFragment fragment) {
+		this.mFragment = new WeakReference<BaseFragment>(fragment);
 	}
 
 	@Override

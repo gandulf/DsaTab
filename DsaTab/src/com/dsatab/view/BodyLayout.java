@@ -24,7 +24,7 @@ public class BodyLayout extends FrameLayout {
 	private static final double OFFSET_UPPER_LEG_X = 0.35;
 	private static final double OFFSET_RIGHT_ARM_X = 0.83;
 	private static final double OFFSET_RIGHT_UPPER_ARM_X = 0.7;
-	private static final double OFFSET_LEFT_ARM_X = 0.15;
+	private static final double OFFSET_LEFT_ARM_X = 0.16;
 	private static final double OFFSET_LEFT_UPPER_ARM_X = 0.26;
 	private static final double OFFSET_LEFT_SHOULDER_X = 0.30;
 	private static final double OFFSET_STOMACH_X = 0.5;

@@ -80,6 +80,8 @@
     <string name="menu_upload_item">Eintrag hochladen</string>
     <string name="menu_show_comments">Kommentare einblenden</string>
     <string name="menu_hide_comments">Kommentare ausblenden</string>
+    <string name="message_empty">"Keine Einträge gefunden."\n\n
+"Um diesen Tab zu entfernen, wähle den Menüpunkt <b>Tabs anpassen</b>."</string>
     <string name="message_spell_empty">"Keine Zaubersprüche gefunden."\n\n
 "Um diesen Tab zu entfernen, wähle den Menüpunkt <b>Tabs anpassen</b>."</string>
     <string name="message_art_empty">"Keine Künste gefunden."\n\n

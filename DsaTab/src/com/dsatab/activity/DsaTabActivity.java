@@ -150,6 +150,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 
 		if (getSupportActionBar().getSelectedNavigationIndex() != position) {
 			getSupportActionBar().setSelectedNavigationItem(position);
+			supportInvalidateOptionsMenu();
 		}
 		if (getHeroConfiguration() != null) {
 			tabInfo = getHeroConfiguration().getTab(position);
@@ -764,7 +765,9 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 			return true;
 		case R.id.option_tabs:
 			if (getHero() != null) {
-				startActivityForResult(new Intent(this, TabEditActivity.class), ACTION_EDIT_TABS);
+				Intent editTab = new Intent(this, TabEditActivity.class);
+				editTab.putExtra(TabEditActivity.DATA_INTENT_TAB_INDEX, viewPager.getCurrentItem());
+				startActivityForResult(editTab, ACTION_EDIT_TABS);
 			}
 			return true;
 		case R.id.option_items:

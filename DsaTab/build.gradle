@@ -18,13 +18,14 @@ repositories {
 
 dependencies {
     compile "com.android.support:gridlayout-v7:19.0.+"
+    compile 'com.nhaarman.listviewanimations:library:2.5.2'
     compile project(':guiLib')
     compile fileTree(dir: 'libs', include: '*.jar')
 }
 
 android {
     compileSdkVersion 18
-    buildToolsVersion "19.0.0"
+    buildToolsVersion "19.0.1"
 
     sourceSets {
         main {

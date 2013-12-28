@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:guilib="http://schemas.android.com/apk/com.gandulf.guilib"
     android:id="@+id/sheet_character"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -22,7 +23,7 @@
             android:layout_marginRight="5dp"
             android:cropToPadding="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/profile_picture">
+            android:src="@drawable/profile_picture" >
         </ImageView>
 
         <TableLayout
@@ -48,11 +49,10 @@
                     android:ellipsize="middle"
                     android:gravity="left|center_vertical"
                     android:text="Name" >
-
                 </TextView>
             </TableRow>
 
-            <TableRow                
+            <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
 
@@ -67,8 +67,8 @@
                     android:layout_span="3"
                     android:ellipsize="middle"
                     android:gravity="left"
-                    android:singleLine="true"
-                    android:paddingLeft="4dip" >
+                    android:paddingLeft="4dip"
+                    android:singleLine="true" >
                 </TextView>
             </TableRow>
 
@@ -88,8 +88,8 @@
                     android:layout_span="3"
                     android:ellipsize="middle"
                     android:gravity="left"
-                    android:singleLine="true"
-                    android:paddingLeft="4dip" >
+                    android:paddingLeft="4dip"
+                    android:singleLine="true" >
                 </TextView>
             </TableRow>
 
@@ -109,8 +109,8 @@
                     android:layout_span="3"
                     android:ellipsize="middle"
                     android:gravity="left"
-                    android:singleLine="true"
-                    android:paddingLeft="4dip" >
+                    android:paddingLeft="4dip"
+                    android:singleLine="true" >
                 </TextView>
             </TableRow>
 
@@ -129,8 +129,8 @@
                     android:layout_span="3"
                     android:ellipsize="middle"
                     android:gravity="left"
-                    android:singleLine="true"
-                    android:paddingLeft="4dip" >
+                    android:paddingLeft="4dip"
+                    android:singleLine="true" >
                 </TextView>
             </TableRow>
 
@@ -150,8 +150,8 @@
                     android:layout_span="3"
                     android:ellipsize="middle"
                     android:gravity="left"
-                    android:singleLine="true"
-                    android:paddingLeft="4dip" >
+                    android:paddingLeft="4dip"
+                    android:singleLine="true" >
                 </TextView>
             </TableRow>
 
@@ -168,8 +168,8 @@
                     android:id="@+id/gen_gewicht"
                     style="@style/TextValue.Small.NoTouch"
                     android:gravity="left"
-                    android:singleLine="true"
-                    android:paddingLeft="4dip" >
+                    android:paddingLeft="4dip"
+                    android:singleLine="true" >
                 </TextView>
 
                 <TextView
@@ -181,8 +181,8 @@
                     android:id="@+id/gen_groesse"
                     style="@style/TextValue.Small.NoTouch"
                     android:gravity="left"
-                    android:singleLine="true"
-                    android:paddingLeft="4dip" >
+                    android:paddingLeft="4dip"
+                    android:singleLine="true" >
                 </TextView>
             </TableRow>
 
@@ -199,8 +199,8 @@
                     android:id="@+id/gen_haar_augen"
                     style="@style/TextValue.Small.NoTouch"
                     android:gravity="left"
-                    android:singleLine="true"
-                    android:paddingLeft="4dip" >
+                    android:paddingLeft="4dip"
+                    android:singleLine="true" >
                 </TextView>
 
                 <TextView
@@ -213,8 +213,8 @@
                     style="@style/TextValue.Small.NoTouch"
                     android:ellipsize="middle"
                     android:gravity="left"
-                    android:singleLine="true"
-                    android:paddingLeft="4dip" >
+                    android:paddingLeft="4dip"
+                    android:singleLine="true" >
                 </TextView>
             </TableRow>
 
@@ -234,8 +234,8 @@
                     android:layout_span="3"
                     android:ellipsize="middle"
                     android:gravity="left"
-                    android:singleLine="true"
                     android:paddingLeft="4dip"
+                    android:singleLine="true"
                     android:text="" >
                 </TextView>
             </TableRow>
@@ -254,8 +254,8 @@
                     style="@style/TextValue.Small.NoTouch"
                     android:ellipsize="none"
                     android:gravity="left"
-                    android:singleLine="true"
-                    android:paddingLeft="4dip" >
+                    android:paddingLeft="4dip"
+                    android:singleLine="true" >
                 </TextView>
 
                 <TextView
@@ -266,11 +266,11 @@
 
                 <TextView
                     android:id="@+id/attr_ws"
-                    style="@style/TextValue.Small.NoTouch"                    
+                    style="@style/TextValue.Small.NoTouch"
                     android:ellipsize="none"
                     android:gravity="left"
-                    android:singleLine="true"
-                    android:paddingLeft="4dip" >
+                    android:paddingLeft="4dip"
+                    android:singleLine="true" >
                 </TextView>
             </TableRow>
 
@@ -278,10 +278,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
 
-                
-                
                 <TextView
-                    android:id="@+id/attr_gs_label"                    
+                    android:id="@+id/attr_gs_label"
                     style="@style/TextLabel.Mini"
                     android:layout_span="3"
                     android:text="@string/label_gs" >
@@ -289,13 +287,12 @@
 
                 <TextView
                     android:id="@+id/attr_gs"
-                    style="@style/TextValue.Small.NoTouch"                    
+                    style="@style/TextValue.Small.NoTouch"
                     android:ellipsize="none"
                     android:gravity="left"
-                    android:singleLine="true"
                     android:paddingLeft="4dip"
+                    android:singleLine="true"
                     android:text="1" >
-
                 </TextView>
             </TableRow>
         </TableLayout>
@@ -331,7 +328,7 @@
 
                 <TableRow
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content" >
 
                     <TextView
                         android:id="@+id/attr_mu_label"
@@ -696,9 +693,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_gravity="center_vertical"
+                android:background="?attr/selectableBackground"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:background="?attr/selectableBackground"                
                 android:text="@string/label_at" >
             </TextView>
 
@@ -721,8 +718,8 @@
                 android:layout_height="fill_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="4dp"
-                android:ellipsize="end"
                 android:background="?attr/selectableBackground"
+                android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:text="@string/label_pa" >
             </TextView>
@@ -746,8 +743,8 @@
                 android:layout_height="fill_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="4dp"
-                android:ellipsize="end"
                 android:background="?attr/selectableBackground"
+                android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:text="@string/label_fk" >
             </TextView>
@@ -771,8 +768,8 @@
                 android:layout_height="fill_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="4dp"
-                android:ellipsize="end"
                 android:background="?attr/selectableBackground"
+                android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:text="@string/label_ini" >
             </TextView>
@@ -812,7 +809,6 @@
                 android:lineSpacingExtra="4dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp" >
-
             </TextView>
 
             <TextView
@@ -840,6 +836,15 @@
                 android:layout_height="wrap_content"
                 android:text="Nachteile" >
             </TextView>
+
+            <fr.castorflex.android.flipimageview.library.FlipImageView
+                android:id="@android:id/icon1"
+                android:layout_width="@dimen/icon_button_size"
+                android:layout_height="@dimen/icon_button_size"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_action_camera_light"
+                guilib:isAnimated="false"
+                guilib:flipDrawable="@drawable/ic_action_done_light" />
 
             <TextView
                 android:id="@+id/gen_disadvantages"

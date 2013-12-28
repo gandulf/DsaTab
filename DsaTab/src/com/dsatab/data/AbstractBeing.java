@@ -165,6 +165,10 @@ public abstract class AbstractBeing {
 		return attribute;
 	}
 
+	public Map<AttributeType, Attribute> getAttributes() {
+		return attributes;
+	}
+
 	public Integer getAttributeValue(AttributeType type) {
 		Attribute attribute = getAttribute(type);
 

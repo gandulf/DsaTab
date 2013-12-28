@@ -2,13 +2,17 @@ package com.dsatab.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.Checkable;
 import android.widget.ImageButton;
 
-public class CheckableImageButton extends ImageButton implements Checkable {
+import com.dsatab.view.listener.CheckableListenable;
+import com.dsatab.view.listener.OnCheckedChangeListener;
+
+public class CheckableImageButton extends ImageButton implements CheckableListenable {
 	boolean mChecked = false;
 
 	private static final int[] CHECKED_STATE_SET = { android.R.attr.state_checked };
+
+	private OnCheckedChangeListener mOnCheckedChangeListener;
 
 	public CheckableImageButton(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -32,13 +36,16 @@ public class CheckableImageButton extends ImageButton implements Checkable {
 		if (mChecked != checked) {
 			mChecked = checked;
 			refreshDrawableState();
+
+			if (mOnCheckedChangeListener != null) {
+				mOnCheckedChangeListener.onCheckedChanged(this, mChecked);
+			}
 		}
 	}
 
 	@Override
 	public void toggle() {
-		mChecked = !mChecked;
-		refreshDrawableState();
+		setChecked(!mChecked);
 	}
 
 	@Override
@@ -54,6 +61,10 @@ public class CheckableImageButton extends ImageButton implements Checkable {
 			mergeDrawableStates(drawableState, CHECKED_STATE_SET);
 		}
 		return drawableState;
+	}
+
+	public void setOnCheckedChangeListener(OnCheckedChangeListener onCheckedChangeListener) {
+		this.mOnCheckedChangeListener = onCheckedChangeListener;
 	}
 
 }

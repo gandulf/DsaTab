@@ -2,11 +2,12 @@ package com.dsatab.data;
 
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.FeatureType;
+import com.dsatab.data.listable.Listable;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 import com.dsatab.util.Util;
 import com.gandulf.guilib.util.MathUtil;
 
-public class Attribute extends BaseProbe implements Value, Cloneable {
+public class Attribute extends BaseProbe implements Value, Cloneable, Listable {
 
 	private static final String CONSTANT_BE = "BE";
 
@@ -351,6 +352,9 @@ public class Attribute extends BaseProbe implements Value, Cloneable {
 		case Körperkraft:
 		case Sozialstatus:
 			max = 25;
+			break;
+		case Initiative_Aktuell:
+			max = 40;
 			break;
 		case Lebensenergie:
 		case Astralenergie:

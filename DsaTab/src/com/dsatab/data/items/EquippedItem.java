@@ -15,10 +15,11 @@ import com.dsatab.data.Hero;
 import com.dsatab.data.enums.Hand;
 import com.dsatab.data.enums.TalentType;
 import com.dsatab.data.enums.UsageType;
+import com.dsatab.data.listable.Listable;
 import com.dsatab.util.Util;
 import com.gandulf.guilib.util.Debug;
 
-public class EquippedItem implements ItemCard {
+public class EquippedItem implements ItemCard, Listable {
 
 	public static final String NAME_PREFIX_RUESTUNG = "ruestung";
 

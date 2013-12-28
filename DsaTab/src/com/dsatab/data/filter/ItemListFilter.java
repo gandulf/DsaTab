@@ -6,11 +6,11 @@ import java.util.Locale;
 
 import android.text.TextUtils;
 
-import com.dsatab.data.adapter.OpenArrayAdapter;
-import com.dsatab.data.adapter.OpenFilter;
 import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemSpecification;
+import com.gandulf.guilib.data.OpenArrayAdapter;
+import com.gandulf.guilib.data.OpenFilter;
 
 public class ItemListFilter extends OpenFilter<Item> {
 
@@ -18,9 +18,6 @@ public class ItemListFilter extends OpenFilter<Item> {
 
 	private String category;
 
-	/**
-	 * 
-	 */
 	public ItemListFilter(OpenArrayAdapter<Item> list) {
 		super(list);
 	}

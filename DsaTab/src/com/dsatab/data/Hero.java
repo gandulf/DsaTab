@@ -483,8 +483,6 @@ public class Hero extends AbstractBeing {
 			}
 		}
 
-		Collections.sort(connections, Connection.NAME_COMPARATOR);
-
 		prepareAdvantages(context);
 		prepareSpeciaFeatures(context);
 		prepareSystemRules(context);
@@ -1426,7 +1424,6 @@ public class Hero extends AbstractBeing {
 
 	public void addConnection(Connection connection) {
 		getConnections().add(connection);
-		Collections.sort(getConnections(), Connection.NAME_COMPARATOR);
 	}
 
 	public void removeConnection(Connection connection) {
@@ -1443,7 +1440,6 @@ public class Hero extends AbstractBeing {
 
 	public void addEvent(Event event) {
 		getHeroConfiguration().addEvent(event);
-		Collections.sort(getHeroConfiguration().getEvents(), Event.COMPARATOR);
 	}
 
 	public List<Event> getEvents() {
@@ -1940,6 +1936,15 @@ public class Hero extends AbstractBeing {
 			return result;
 	}
 
+	public Modificator getUserModificators(String name) {
+		for (Modificator mod : getModificators()) {
+			if (!(mod instanceof RulesModificator) && mod.getModificatorName().equals(name)) {
+				return mod;
+			}
+		}
+		return null;
+	}
+
 	public List<Modificator> getUserModificators() {
 		Set<Modificator> modificators = new HashSet<Modificator>();
 
@@ -2102,6 +2107,18 @@ public class Hero extends AbstractBeing {
 		getItemContainers().remove(itemContainer);
 
 		fireItemContainerRemovedEvent(itemContainer);
+	}
+
+	public List<Talent> getTalents() {
+		List<Talent> talents = new ArrayList<Talent>();
+
+		for (TalentGroupType type : TalentGroupType.values()) {
+			if (getTalentGroup(type) != null) {
+				talents.addAll(getTalentGroup(type).getTalents());
+			}
+		}
+
+		return talents;
 	}
 
 }

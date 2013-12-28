@@ -13,13 +13,14 @@ import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.filter.ItemCardListFilter;
 import com.dsatab.data.items.ItemCard;
 import com.dsatab.view.CardView;
+import com.gandulf.guilib.data.OpenArrayAdapter;
 
 public class GridItemAdapter extends OpenArrayAdapter<ItemCard> {
 
 	private ItemCardListFilter filter;
 
-	int width;
-	int height;
+	private int width;
+	private int height;
 
 	public GridItemAdapter(Context context) {
 		super(context, 0, new ArrayList<ItemCard>());
@@ -52,8 +53,8 @@ public class GridItemAdapter extends OpenArrayAdapter<ItemCard> {
 	 */
 	@Override
 	public ItemCard getItem(int position) {
-		if (mObjects != null && position < mObjects.size())
-			return mObjects.get(position);
+		if (position < getCount())
+			return super.getItem(position);
 		else
 			return null;
 	}
@@ -74,14 +75,13 @@ public class GridItemAdapter extends OpenArrayAdapter<ItemCard> {
 	}
 
 	private void propagatePosition() {
-		if (mObjects != null) {
-			final int count = mObjects.size();
-			ItemCard card;
-			for (int i = 0; i < count; i++) {
-				card = mObjects.get(i);
-				card.setCellNumber(i);
-			}
+		final int count = getCount();
+		ItemCard card;
+		for (int i = 0; i < count; i++) {
+			card = getItem(i);
+			card.setCellNumber(i);
 		}
+
 	}
 
 	/*
@@ -98,9 +98,9 @@ public class GridItemAdapter extends OpenArrayAdapter<ItemCard> {
 	}
 
 	public int getPositionByName(ItemCard item) {
-		if (item != null && mObjects != null) {
-			for (int i = 0; i < mObjects.size(); i++) {
-				if (item.getTitle().equals(mObjects.get(i).getTitle()))
+		if (item != null) {
+			for (int i = 0; i < getCount(); i++) {
+				if (item.getTitle().equals(getItem(i).getTitle()))
 					return i;
 			}
 		}

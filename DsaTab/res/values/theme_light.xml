@@ -146,12 +146,13 @@
         <!-- item name="android:panelBackground">@drawable/menu_hardkey_panel_dsatablight</item -->
         <item name="android:actionModeBackground">@drawable/cab_background_top_holo_dsatablight</item>
         <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_holo_dsatablight</item>
-        
-        
+                
          <!-- Light.DarkActionBar specific -->
         <item name="actionBarWidgetTheme">@style/Theme.dsatablight.widget</item>
         <item name="android:actionBarWidgetTheme">@style/Theme.dsatablight.widget</item>
         <!--  ActionBar styles -->
+        
+        <item name="flipImageViewStyle">@style/FlipImageView.Checked</item>
     </style>
     
     <style name="DsaTabTheme.Light" parent="@DsaTabTheme.__Light">
@@ -181,6 +182,8 @@
         <item name="android:listViewWhiteStyle">@style/ListViewDsaTabLight.White</item>
         <item name="android:spinnerItemStyle">@style/SpinnerItemDsaTabLight</item>
         <!-- Holo generated styles -->
+        
+        <item name="flipImageViewStyle">@style/FlipImageView.Checked</item>
     </style>
     
     <style name="Theme.Dialog.Light" parent="@Theme.Dialog.__Light">

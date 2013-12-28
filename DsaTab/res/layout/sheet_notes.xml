@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/sheet_notes" android:layout_height="fill_parent"
-	android:layout_margin="@dimen/page_margin"
-	android:layout_weight="1" android:layout_width="fill_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sheet_notes"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_margin="@dimen/page_margin"
+    android:layout_weight="1" >
 
     <TextView
         android:id="@+android:id/empty"
@@ -13,11 +16,13 @@
         android:drawableTop="?attr/imgEmpty"
         android:gravity="center"
         android:text="@string/message_notes_empty"
-        android:visibility="gone">
-    </TextView>			
-    
-	<ListView 
-		android:layout_height="fill_parent" android:layout_width="fill_parent" 
-		android:id="@android:id/list"></ListView>
+        android:visibility="gone" >
+    </TextView>
+
+    <com.haarman.listviewanimations.view.DynamicListView
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:divider="@null" />
 
 </LinearLayout>

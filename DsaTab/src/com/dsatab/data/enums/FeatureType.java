@@ -3,8 +3,9 @@ package com.dsatab.data.enums;
 import com.dsatab.exception.FeatureTypeUnknownException;
 
 public enum FeatureType {
-	Amtsadel("Amtsadel", FeatureGroupType.Advantage), AdligeAbstammung("Adlige Abstammung", FeatureGroupType.Advantage), AdligesErbe(
-			"Adliges Erbe", FeatureGroupType.Advantage), AffinitätZu("Affinität zu", FeatureGroupType.Advantage), AkademischeAusbildungGelehrter(
+	Dschinngeboren("Dschinngeboren", FeatureGroupType.Advantage), Amtsadel("Amtsadel", FeatureGroupType.Advantage), AdligeAbstammung(
+			"Adlige Abstammung", FeatureGroupType.Advantage), AdligesErbe("Adliges Erbe", FeatureGroupType.Advantage), AffinitätZu(
+			"Affinität zu", FeatureGroupType.Advantage), AkademischeAusbildungGelehrter(
 			"Akademische Ausbildung (Gelehrter)", FeatureGroupType.Advantage), AkademischeAusbildungKrieger(
 			"Akademische Ausbildung (Krieger)", FeatureGroupType.Advantage), AkademischeAusbildungMagier(
 			"Akademische Ausbildung (Magier)", FeatureGroupType.Advantage), Altersresistenz("Altersresistenz",

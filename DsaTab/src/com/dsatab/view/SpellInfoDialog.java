@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.common.StyleableSpannableStringBuilder;
-import com.dsatab.data.Hero;
 import com.dsatab.data.Spell;
 import com.dsatab.data.SpellInfo;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
@@ -30,11 +29,8 @@ public class SpellInfoDialog extends AlertDialog implements DialogInterface.OnCl
 
 	private boolean editMode = false;
 
-	private Hero hero;
-
-	public SpellInfoDialog(Context context, Hero hero) {
+	public SpellInfoDialog(Context context) {
 		super(context);
-		this.hero = hero;
 		init();
 	}
 
@@ -155,7 +151,8 @@ public class SpellInfoDialog extends AlertDialog implements DialogInterface.OnCl
 							.getRuntimeExceptionDao(SpellInfo.class);
 					dao.createOrUpdate(info);
 
-					hero.fireValueChangedEvent(spell);
+					spell.fireValueChangedEvent();
+
 					Toast.makeText(getContext(), "Zauberinformationen wurden gespeichert", Toast.LENGTH_SHORT).show();
 					SpellInfoDialog.this.dismiss();
 				} else {

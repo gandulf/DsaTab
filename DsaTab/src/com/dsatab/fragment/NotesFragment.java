@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import android.app.Activity;
@@ -23,25 +24,27 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
-import com.commonsware.cwac.merge.MergeAdapter;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.NotesEditActivity;
 import com.dsatab.data.Connection;
 import com.dsatab.data.Event;
 import com.dsatab.data.Hero;
-import com.dsatab.data.adapter.ConnectionAdapter;
-import com.dsatab.data.adapter.EventAdapter;
+import com.dsatab.data.NotesItem;
+import com.dsatab.data.adapter.NotesAdapter;
 import com.dsatab.data.enums.EventCategory;
 import com.dsatab.util.Debug;
+import com.dsatab.util.Util;
+import com.haarman.listviewanimations.itemmanipulation.AnimateAdapter;
+import com.haarman.listviewanimations.itemmanipulation.OnAnimateCallback;
+import com.haarman.listviewanimations.view.DynamicListView;
 
-public class NotesFragment extends BaseListFragment implements OnItemClickListener, OnMultiChoiceClickListener {
+public class NotesFragment extends BaseListFragment implements OnItemClickListener, OnMultiChoiceClickListener,
+		OnAnimateCallback {
 
 	public static final int ACTION_EDIT = 1;
 
@@ -50,11 +53,10 @@ public class NotesFragment extends BaseListFragment implements OnItemClickListen
 
 	private File recordingsDir;
 
-	private ListView listView;
+	private DynamicListView listView;
 
-	private MergeAdapter mergeAdapter;
-	private EventAdapter notesListAdapter;
-	private ConnectionAdapter connectionsAdapter;
+	private NotesAdapter notesAdapter;
+	private AnimateAdapter<NotesItem> animateNotesAdapter;
 
 	private Set<EventCategory> categoriesSelected;
 	private EventCategory[] categories;
@@ -65,22 +67,19 @@ public class NotesFragment extends BaseListFragment implements OnItemClickListen
 		@Override
 		public boolean onActionItemClicked(ActionMode mode, com.actionbarsherlock.view.MenuItem item) {
 			boolean notifyNotesChanged = false;
-			boolean notifyConnectionsChanged = false;
 
-			notesListAdapter.setNotifyOnChange(false);
-			connectionsAdapter.setNotifyOnChange(false);
+			notesAdapter.setNotifyOnChange(false);
 
 			SparseBooleanArray checkedPositions = listView.getCheckedItemPositions();
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
 					if (checkedPositions.valueAt(i)) {
-						Object obj = mergeAdapter.getItem(checkedPositions.keyAt(i));
+						Object obj = notesAdapter.getItem(checkedPositions.keyAt(i));
 						if (obj instanceof Event) {
 							Event event = (Event) obj;
 							if (item.getItemId() == R.id.option_delete) {
 								if (event.isDeletable()) {
-									getHero().removeEvent(event);
-									notesListAdapter.remove(event);
+									animateNotesAdapter.animateDismiss(checkedPositions.keyAt(i));
 									notifyNotesChanged = true;
 								}
 							} else if (item.getItemId() == R.id.option_edit) {
@@ -91,9 +90,8 @@ public class NotesFragment extends BaseListFragment implements OnItemClickListen
 						} else if (obj instanceof Connection) {
 							Connection connection = (Connection) obj;
 							if (item.getItemId() == R.id.option_delete) {
-								getHero().removeConnection(connection);
-								connectionsAdapter.remove(connection);
-								notifyConnectionsChanged = true;
+								animateNotesAdapter.animateDismiss(checkedPositions.keyAt(i));
+								notifyNotesChanged = true;
 							} else if (item.getItemId() == R.id.option_edit) {
 								editConnection(connection);
 								mode.finish();
@@ -103,14 +101,11 @@ public class NotesFragment extends BaseListFragment implements OnItemClickListen
 					}
 				}
 				if (notifyNotesChanged) {
-					notesListAdapter.notifyDataSetChanged();
+					notesAdapter.notifyDataSetChanged();
 				}
-				if (notifyConnectionsChanged) {
-					connectionsAdapter.notifyDataSetChanged();
-				}
+
 			}
-			notesListAdapter.setNotifyOnChange(true);
-			connectionsAdapter.setNotifyOnChange(true);
+			notesAdapter.setNotifyOnChange(true);
 			mode.finish();
 			return true;
 		}
@@ -126,7 +121,7 @@ public class NotesFragment extends BaseListFragment implements OnItemClickListen
 		public void onDestroyActionMode(ActionMode mode) {
 			mMode = null;
 			listView.clearChoices();
-			mergeAdapter.notifyDataSetChanged();
+			notesAdapter.notifyDataSetChanged();
 		}
 
 		/*
@@ -145,7 +140,7 @@ public class NotesFragment extends BaseListFragment implements OnItemClickListen
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
 					if (checkedPositions.valueAt(i)) {
-						Object obj = mergeAdapter.getItem(checkedPositions.keyAt(i));
+						Object obj = notesAdapter.getItem(checkedPositions.keyAt(i));
 						selected++;
 						if (obj instanceof Event) {
 							Event event = (Event) obj;
@@ -161,6 +156,8 @@ public class NotesFragment extends BaseListFragment implements OnItemClickListen
 			}
 
 			mode.setSubtitle(selected + " ausgewählt");
+
+			notesAdapter.notifyDataSetChanged();
 
 			return false;
 		}
@@ -199,7 +196,9 @@ public class NotesFragment extends BaseListFragment implements OnItemClickListen
 	@Override
 	public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
 		if (item.getItemId() == R.id.option_note_add) {
-			editEvent(null, null);
+
+			notesAdapter.swapItems(3, 4);
+			// editEvent(null, null);
 			return true;
 		} else if (item.getItemId() == R.id.option_note_record) {
 			recordEvent();
@@ -228,8 +227,7 @@ public class NotesFragment extends BaseListFragment implements OnItemClickListen
 
 				@Override
 				public void onDismiss(DialogInterface dialog) {
-					notesListAdapter.filter(null, new ArrayList<EventCategory>(categoriesSelected));
-					connectionsAdapter.filter(null, new ArrayList<EventCategory>(categoriesSelected));
+					notesAdapter.filter(null, new ArrayList<EventCategory>(categoriesSelected));
 				}
 			});
 			return true;
@@ -260,9 +258,10 @@ public class NotesFragment extends BaseListFragment implements OnItemClickListen
 
 		recordingsDir = DsaTabApplication.getDirectory(DsaTabApplication.DIR_RECORDINGS);
 
-		listView = (ListView) findViewById(android.R.id.list);
+		listView = (DynamicListView) findViewById(android.R.id.list);
 		listView.setOnItemLongClickListener(this);
 		listView.setOnItemClickListener(this);
+		listView.setOnItemCheckedListener(this);
 		listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 
 		categories = EventCategory.values();
@@ -277,15 +276,31 @@ public class NotesFragment extends BaseListFragment implements OnItemClickListen
 	 */
 	@Override
 	public void onHeroLoaded(Hero hero) {
-		notesListAdapter = new EventAdapter(getActivity(), getHero().getEvents());
+		List<NotesItem> notes = new ArrayList<NotesItem>();
+		notes.addAll(getHero().getEvents());
+		notes.addAll(getHero().getConnections());
 
-		connectionsAdapter = new ConnectionAdapter(getActivity(), getHero().getConnections());
+		notesAdapter = new NotesAdapter(getActivity(), notes);
+		animateNotesAdapter = new AnimateAdapter<NotesItem>(notesAdapter, this);
+		animateNotesAdapter.setAbsListView(listView);
+		listView.setAdapter(animateNotesAdapter);
+	}
 
-		mergeAdapter = new MergeAdapter();
-		mergeAdapter.addAdapter(notesListAdapter);
-		mergeAdapter.addAdapter(connectionsAdapter);
+	@Override
+	public void onShow(AbsListView listView, int[] reverseSortedPositions) {
 
-		listView.setAdapter(mergeAdapter);
+	}
+
+	@Override
+	public void onDismiss(AbsListView list, int[] positions) {
+		for (int pos : positions) {
+			NotesItem item = notesAdapter.getItem(pos);
+			notesAdapter.remove(item);
+			if (item instanceof Event)
+				getHero().removeEvent((Event) item);
+			else if (item instanceof Connection)
+				getHero().removeConnection((Connection) item);
+		}
 	}
 
 	/**
@@ -480,9 +495,9 @@ public class NotesFragment extends BaseListFragment implements OnItemClickListen
 			if (category == EventCategory.Bekanntschaft) {
 				if (selectedObject instanceof Event) {
 					getHero().removeEvent((Event) selectedObject);
-					notesListAdapter.remove((Event) selectedObject);
+					notesAdapter.remove((Event) selectedObject);
 					selectedObject = null;
-					notesListAdapter.notifyDataSetChanged();
+					animateNotesAdapter.notifyDataSetChanged();
 				}
 
 				if (selectedObject instanceof Connection) {
@@ -490,22 +505,24 @@ public class NotesFragment extends BaseListFragment implements OnItemClickListen
 					selectedEvent.setDescription(comment.trim());
 					selectedEvent.setName(name);
 					selectedEvent.setSozialStatus(sozialstatus);
+					animateNotesAdapter.notifyDataSetChanged();
 				} else if (selectedObject == null) {
 					Connection connection = new Connection();
 					connection.setName(name);
 					connection.setDescription(comment);
 					connection.setSozialStatus(sozialstatus);
 					getHero().addConnection(connection);
-					connectionsAdapter.add(connection);
+					animateNotesAdapter.animateShow(notesAdapter.getCount());
+					notesAdapter.add(connection);
 				}
 
-				connectionsAdapter.sort(Connection.NAME_COMPARATOR);
-				connectionsAdapter.refilter();
+				// notesAdapter.sort(NotesItem.COMPARATOR);
+				// notesAdapter.refilter();
 
 			} else {
 				if (selectedObject instanceof Connection) {
 					getHero().removeConnection((Connection) selectedObject);
-					connectionsAdapter.remove((Connection) selectedObject);
+					notesAdapter.remove((Connection) selectedObject);
 					selectedObject = null;
 				}
 
@@ -515,6 +532,8 @@ public class NotesFragment extends BaseListFragment implements OnItemClickListen
 					selectedEvent.setComment(comment);
 					selectedEvent.setAudioPath(audioPath);
 					selectedEvent.setCategory(category);
+
+					animateNotesAdapter.notifyDataSetChanged();
 				} else if (selectedObject == null) {
 					Event selectedEvent = new Event();
 					selectedEvent.setName(name);
@@ -522,11 +541,12 @@ public class NotesFragment extends BaseListFragment implements OnItemClickListen
 					selectedEvent.setComment(comment);
 					selectedEvent.setAudioPath(audioPath);
 					getHero().addEvent(selectedEvent);
-					notesListAdapter.add(selectedEvent);
+
+					animateNotesAdapter.animateShow(notesAdapter.getCount());
+					notesAdapter.add(selectedEvent);
 				}
 
-				notesListAdapter.sort(Event.COMPARATOR);
-				notesListAdapter.refilter();
+				notesAdapter.refilter();
 			}
 
 		}
@@ -535,7 +555,7 @@ public class NotesFragment extends BaseListFragment implements OnItemClickListen
 	}
 
 	public void onEventChanged(Event e) {
-		((ArrayAdapter<?>) listView.getAdapter()).notifyDataSetChanged();
+		Util.notifyDatasetChanged(listView);
 	}
 
 	/*

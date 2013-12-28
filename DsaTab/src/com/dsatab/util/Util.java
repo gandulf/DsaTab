@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Arrays;
@@ -16,6 +17,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -41,7 +46,9 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -55,6 +62,7 @@ import com.dsatab.common.StyleableSpannableStringBuilder;
 import com.dsatab.data.AbstractBeing;
 import com.dsatab.data.Attribute;
 import com.dsatab.data.CombatTalent;
+import com.dsatab.data.JSONable;
 import com.dsatab.data.Markable;
 import com.dsatab.data.Probe;
 import com.dsatab.data.Value;
@@ -68,6 +76,8 @@ import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemSpecification;
 import com.dsatab.data.items.Shield;
 import com.dsatab.data.items.Weapon;
+import com.dsatab.view.listener.EditListener;
+import com.dsatab.view.listener.ProbeListener;
 
 public class Util {
 
@@ -388,6 +398,18 @@ public class Util {
 
 	}
 
+	public static boolean notifyDatasetChanged(AdapterView<?> list) {
+		Adapter adapter = list.getAdapter();
+		if (adapter instanceof BaseAdapter) {
+			BaseAdapter baseAdapter = (BaseAdapter) adapter;
+			baseAdapter.notifyDataSetChanged();
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
 	public static String toString(float[] floats) {
 		StringBuilder sb = new StringBuilder();
 		for (float f : floats) {
@@ -493,6 +515,9 @@ public class Util {
 	}
 
 	public static void applyRowStyle(View row, int position) {
+		if (row == null)
+			return;
+
 		LevelListDrawable levelListDrawable;
 
 		if (row.getBackground() instanceof LevelListDrawable) {
@@ -505,10 +530,14 @@ public class Util {
 		levelListDrawable.setLevel(position % 2);
 	}
 
+	public static void setVisibility(View view, boolean visible) {
+		setVisibility(view, visible, null);
+	}
+
 	public static void setVisibility(View view, boolean visible, View expander) {
 		if (visible && view.getVisibility() != View.VISIBLE) {
 
-			if (view.getVisibility() == View.GONE) {
+			if (view.getVisibility() == View.GONE && expander != null) {
 				// weight of text5 is added to text1 if invisible
 				((LinearLayout.LayoutParams) expander.getLayoutParams()).weight -= ((LinearLayout.LayoutParams) view
 						.getLayoutParams()).weight;
@@ -520,9 +549,11 @@ public class Util {
 
 		if (!visible && view.getVisibility() == View.VISIBLE) {
 			view.setVisibility(View.GONE);
-			// weight of text5 is added to text1 if invisible
-			((LinearLayout.LayoutParams) expander.getLayoutParams()).weight += ((LinearLayout.LayoutParams) view
-					.getLayoutParams()).weight;
+			if (expander != null) {
+				// weight of text5 is added to text1 if invisible
+				((LinearLayout.LayoutParams) expander.getLayoutParams()).weight += ((LinearLayout.LayoutParams) view
+						.getLayoutParams()).weight;
+			}
 		}
 	}
 
@@ -668,6 +699,43 @@ public class Util {
 			}
 			setTextColor(tf, modifier, inverse);
 		}
+	}
+
+	public static void setValue(AbstractBeing being, TextView tv, Attribute attribute, String prefix,
+			boolean includeBe, boolean inverseColors, ProbeListener probeListener, EditListener editListener) {
+		if (attribute != null) {
+
+			int modifier = being.getModifier(attribute, includeBe, true);
+			Util.setText(tv, attribute, modifier, prefix, inverseColors);
+			tv.setTag(attribute);
+
+			if (!tv.isLongClickable()) {
+
+				if (attribute.getType().probable()) {
+					tv.setOnClickListener(probeListener);
+				} else if (attribute.getType().editable()) {
+					tv.setOnClickListener(editListener);
+				}
+
+				if (attribute.getType().editable())
+					tv.setOnLongClickListener(editListener);
+			}
+		} else {
+			tv.setText(null);
+		}
+	}
+
+	public static void setLabel(View tv, AttributeType type, ProbeListener probeListener, EditListener editListener) {
+		if (!tv.isLongClickable()) {
+			if (type == AttributeType.Behinderung || type == AttributeType.Sozialstatus
+					|| type == AttributeType.Magieresistenz) {
+				tv.setOnClickListener(editListener);
+			} else if (type.probable()) {
+				tv.setOnClickListener(probeListener);
+			}
+			tv.setOnLongClickListener(editListener);
+		}
+		tv.setTag(type);
 	}
 
 	public static void appendValue(AbstractBeing being, StyleableSpannableStringBuilder title, AttributeType type) {
@@ -842,6 +910,14 @@ public class Util {
 			return effectFormat.format(value);
 		else
 			return MINUS;
+	}
+
+	public static String readableFileSize(long size) {
+		if (size <= 0)
+			return "0";
+		final String[] units = new String[] { "B", "KB", "MB", "GB", "TB" };
+		int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
+		return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
 	}
 
 	public static String toProbe(Integer value) {
@@ -1116,5 +1192,30 @@ public class Util {
 
 		// get the width and height
 		return deviceDisplayMetrics.heightPixels;
+	}
+
+	public static void putArray(JSONObject out, List<? extends JSONable> list, String name) throws JSONException {
+		JSONArray jsonArray = new JSONArray();
+		int index = 0;
+		final int count = list.size();
+		for (int i = 0; i < count; i++) {
+			JSONObject jsonObject = list.get(i).toJSONObject();
+			if (jsonObject != null) {
+				jsonArray.put(index++, jsonObject);
+			}
+		}
+		out.put(name, jsonArray);
+
+	}
+
+	public static void putStringArray(JSONObject out, List<String> list, String name) throws JSONException {
+		JSONArray jsonArray = new JSONArray();
+		int index = 0;
+		final int count = list.size();
+		for (int i = 0; i < count; i++) {
+			jsonArray.put(index++, list.get(i));
+		}
+		out.put(name, jsonArray);
+
 	}
 }

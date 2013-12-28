@@ -11,6 +11,7 @@ import com.dsatab.data.enums.ArtGroupType;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.FeatureType;
 import com.dsatab.data.enums.TalentType;
+import com.dsatab.data.listable.Listable;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 import com.dsatab.exception.ArtUnknownException;
 import com.dsatab.exception.FeatureTypeUnknownException;
@@ -18,7 +19,7 @@ import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.dsatab.xml.DataManager;
 
-public class Art extends MarkableElement implements Value {
+public class Art extends MarkableElement implements Value, Listable {
 
 	public static final String LITURGIE_PREFIX = "Liturgie: ";
 	public static final String RITUAL_PREFIX = "Ritual: ";

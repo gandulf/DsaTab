@@ -13,11 +13,8 @@ import com.dsatab.R;
 import com.dsatab.data.Hero;
 import com.dsatab.data.items.ItemContainer;
 import com.dsatab.util.Util;
+import com.gandulf.guilib.data.OpenArrayAdapter;
 
-/**
- * 
- *
- */
 public class ItemContainerAdapter extends OpenArrayAdapter<ItemContainer> {
 
 	private LayoutInflater inflater;

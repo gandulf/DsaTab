@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.dsatab.R;
 import com.dsatab.TabInfo;
 import com.dsatab.util.Util;
+import com.gandulf.guilib.data.OpenArrayAdapter;
 
 public class TabAdapter extends OpenArrayAdapter<TabInfo> {
 

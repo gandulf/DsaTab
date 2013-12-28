@@ -422,20 +422,20 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 			return true;
 		case R.id.option_itemgrid_set1:
 			showScreen(0);
-			getSherlockActivity().invalidateOptionsMenu();
+			getSherlockActivity().supportInvalidateOptionsMenu();
 			return true;
 		case R.id.option_itemgrid_set2:
 			showScreen(1);
-			getSherlockActivity().invalidateOptionsMenu();
+			getSherlockActivity().supportInvalidateOptionsMenu();
 			return true;
 		case R.id.option_itemgrid_set3:
 			showScreen(2);
-			getSherlockActivity().invalidateOptionsMenu();
+			getSherlockActivity().supportInvalidateOptionsMenu();
 			return true;
 		default:
 			if (item.getGroupId() == MENU_CONTAINER_GROUP) {
 				showScreen(item.getItemId());
-				getSherlockActivity().invalidateOptionsMenu();
+				getSherlockActivity().supportInvalidateOptionsMenu();
 				return true;
 			}
 			return super.onOptionsItemSelected(item);
@@ -601,7 +601,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 
 			containerList.setItemChecked(mCurrentScreen, true);
 
-			getSherlockActivity().invalidateOptionsMenu();
+			getSherlockActivity().supportInvalidateOptionsMenu();
 		}
 	}
 

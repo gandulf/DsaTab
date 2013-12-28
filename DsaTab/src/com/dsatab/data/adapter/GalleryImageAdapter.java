@@ -13,6 +13,7 @@ import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.filter.ItemListFilter;
 import com.dsatab.data.items.Item;
 import com.dsatab.view.CardView;
+import com.gandulf.guilib.data.OpenArrayAdapter;
 
 public class GalleryImageAdapter extends OpenArrayAdapter<Item> {
 
@@ -54,8 +55,8 @@ public class GalleryImageAdapter extends OpenArrayAdapter<Item> {
 
 	public int getPositionByName(Item item) {
 		if (item != null) {
-			for (int i = 0; i < mObjects.size(); i++) {
-				if (item.getName().equals(mObjects.get(i).getName()))
+			for (int i = 0; i < getCount(); i++) {
+				if (item.getName().equals(getItem(i).getName()))
 					return i;
 			}
 		}

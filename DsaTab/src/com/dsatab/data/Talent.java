@@ -5,9 +5,10 @@ import java.util.EnumSet;
 
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.TalentType;
+import com.dsatab.data.listable.Listable;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 
-public class Talent extends MarkableElement implements Value {
+public class Talent extends MarkableElement implements Value, Listable {
 
 	public static final Comparator<Talent> NAME_COMPARATOR = new Comparator<Talent>() {
 		/*

@@ -6,20 +6,28 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.dsatab.data.enums.EventCategory;
+import com.dsatab.data.listable.Listable;
 
-public class Event implements JSONable {
+public class Event implements JSONable, NotesItem, Listable {
 
 	public static final Comparator<Event> COMPARATOR = new Comparator<Event>() {
 		@Override
 		public int compare(Event object1, Event object2) {
+			int compare0 = (int) (object1.getIndex() - object2.getIndex());
 			int compare1 = object1.getCategory().compareTo(object2.getCategory());
 			int compare2 = (int) (object1.getTime() - object2.getTime());
 
-			return compare1 * 10000 + compare2;
+			if (compare2 > 0)
+				compare2 = 1;
+			else if (compare2 < 0)
+				compare2 = -1;
+
+			return compare0 * 10000 + compare1 * 10 + compare2;
 		}
 	};
 
 	private static final String FIELD_NAME = "name";
+	private static final String FIELD_INDEX = "index";
 	private static final String FIELD_COMMENT = "comment";
 	private static final String FIELD_CATEGORY = "category";
 	private static final String FIELD_AUDIO_PATH = "auidoPath";
@@ -34,6 +42,8 @@ public class Event implements JSONable {
 	private EventCategory category;
 
 	private long time;
+
+	private int index;
 
 	public Event() {
 		this.time = System.currentTimeMillis();
@@ -61,6 +71,8 @@ public class Event implements JSONable {
 		else
 			this.category = EventCategory.Misc;
 
+		if (json.has(FIELD_INDEX))
+			this.index = json.getInt(FIELD_INDEX);
 	}
 
 	public void setComment(String message) {
@@ -100,6 +112,14 @@ public class Event implements JSONable {
 		this.name = name;
 	}
 
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
 	public boolean isDeletable() {
 		return category != EventCategory.Heldensoftware;
 	}
@@ -124,6 +144,7 @@ public class Event implements JSONable {
 		out.put(FIELD_CATEGORY, category.name());
 		out.put(FIELD_AUDIO_PATH, audioPath);
 		out.put(FIELD_TIME, time);
+		out.put(FIELD_INDEX, index);
 
 		return out;
 	}

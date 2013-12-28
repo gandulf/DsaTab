@@ -42,6 +42,8 @@
         <item name="actionBarWidgetTheme">@style/Theme.dsatablight.widget</item>
         <item name="android:actionBarWidgetTheme">@style/Theme.dsatablight.widget</item>
         <!--  ActionBar styles -->
+        
+        <item name="flipImageViewStyle">@style/FlipImageView.Checked</item>
     </style>
         
     <style name="Theme.Dialog.Light" parent="@Theme.Dialog.__Light">
@@ -63,6 +65,8 @@
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo_light</item>
         <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb_holo</item>
         <!-- Holo generated styles -->
+        
+        <item name="flipImageViewStyle">@style/FlipImageView.Checked</item>
     </style>    
     
 </resources>

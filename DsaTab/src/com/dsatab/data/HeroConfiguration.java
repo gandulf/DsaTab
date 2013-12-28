@@ -16,23 +16,26 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 
 import com.dsatab.DsaTabApplication;
+import com.dsatab.R;
 import com.dsatab.TabInfo;
 import com.dsatab.data.Hero.CombatStyle;
+import com.dsatab.data.enums.AttributeType;
+import com.dsatab.data.enums.TalentGroupType;
 import com.dsatab.data.items.ItemContainer;
 import com.dsatab.fragment.AnimalFragment;
-import com.dsatab.fragment.ArtFragment;
 import com.dsatab.fragment.BaseFragment;
 import com.dsatab.fragment.BodyFragment;
 import com.dsatab.fragment.CharacterFragment;
-import com.dsatab.fragment.DocumentsFragment;
-import com.dsatab.fragment.FightFragment;
 import com.dsatab.fragment.ItemsListFragment;
+import com.dsatab.fragment.ListableFragment;
 import com.dsatab.fragment.MapFragment;
 import com.dsatab.fragment.NotesFragment;
 import com.dsatab.fragment.PurseFragment;
-import com.dsatab.fragment.SpellFragment;
-import com.dsatab.fragment.TalentFragment;
 import com.dsatab.util.Debug;
+import com.dsatab.util.Util;
+import com.dsatab.view.ListSettings;
+import com.dsatab.view.ListSettings.ListItem;
+import com.dsatab.view.ListSettings.ListItemType;
 
 public class HeroConfiguration {
 
@@ -49,6 +52,7 @@ public class HeroConfiguration {
 
 	private static final String FIELD_LE_MODIFIER = "leModifier";
 	private static final String FIELD_AU_MODIFIER = "auModifier";
+	private static final String FIELD_VERSION = "version";
 
 	private List<TabInfo> tabInfos;
 
@@ -95,21 +99,29 @@ public class HeroConfiguration {
 
 	public HeroConfiguration(Hero hero, JSONObject in) throws JSONException {
 		this.hero = hero;
+
+		int version = in.optInt(FIELD_VERSION);
+
 		JSONArray array = null;
-		if (in.has(FIELD_TABS_PORTRAIT)) {
-			array = in.getJSONArray(FIELD_TABS_PORTRAIT);
-			tabInfos = new ArrayList<TabInfo>(array.length());
-			for (int i = 0; i < array.length(); i++) {
-				JSONObject tab = array.getJSONObject(i);
-				try {
-					TabInfo info = new TabInfo(tab);
-					tabInfos.add(info);
-				} catch (ClassNotFoundException e) {
-					Debug.error(e);
-				}
-			}
+
+		if (version < 74) {
+			tabInfos = getDefaultTabs(tabInfos);
 		} else {
-			tabInfos = new ArrayList<TabInfo>();
+			if (in.has(FIELD_TABS_PORTRAIT)) {
+				array = in.getJSONArray(FIELD_TABS_PORTRAIT);
+				tabInfos = new ArrayList<TabInfo>(array.length());
+				for (int i = 0; i < array.length(); i++) {
+					JSONObject tab = array.getJSONObject(i);
+					try {
+						TabInfo info = new TabInfo(tab);
+						tabInfos.add(info);
+					} catch (ClassNotFoundException e) {
+						Debug.error(e);
+					}
+				}
+			} else {
+				tabInfos = new ArrayList<TabInfo>();
+			}
 		}
 
 		if (in.has(FIELD_MODIFICATORS)) {
@@ -402,29 +414,98 @@ public class HeroConfiguration {
 			tabInfos.clear();
 		}
 		if (isDualPanel()) {
-			tabInfos.add(new TabInfo(CharacterFragment.class, TalentFragment.class,
-					getTabResourceId(CharacterFragment.class)));
-			tabInfos.add(new TabInfo(SpellFragment.class, ArtFragment.class, getTabResourceId(SpellFragment.class)));
-			tabInfos.add(new TabInfo(FightFragment.class, BodyFragment.class, getTabResourceId(FightFragment.class)));
-			tabInfos.add(new TabInfo(ItemsListFragment.class, getTabResourceId(ItemsListFragment.class), false));
+			ListSettings listSettings;
+
+			TabInfo tabInfo = new TabInfo(CharacterFragment.class, ListableFragment.class,
+					getTabResourceId(CharacterFragment.class), true, false);
+
+			listSettings = (ListSettings) tabInfo.getFilterSettings(1);
+			listSettings.addListItem(new ListItem(ListItemType.Talent));
+			tabInfos.add(tabInfo);
+
+			tabInfo = new TabInfo(ListableFragment.class, ListableFragment.class, R.drawable.tab_magic);
+			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
+			listSettings.addListItem(new ListItem(ListItemType.Spell));
+			listSettings = (ListSettings) tabInfo.getFilterSettings(1);
+			listSettings.addListItem(new ListItem(ListItemType.Talent, TalentGroupType.Gaben.name()));
+			listSettings.addListItem(new ListItem(ListItemType.Header, "Künste"));
+			listSettings.addListItem(new ListItem(ListItemType.Art));
+			tabInfo.setTitle("Zauber und Künste");
+			tabInfos.add(tabInfo);
+
+			tabInfo = new TabInfo(ListableFragment.class, BodyFragment.class, R.drawable.tab_fight);
+			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
+			listSettings.addListItem(new ListItem(AttributeType.Lebensenergie_Aktuell));
+			listSettings.addListItem(new ListItem(AttributeType.Ausdauer_Aktuell));
+			listSettings.addListItem(new ListItem(AttributeType.Astralenergie_Aktuell));
+			listSettings.addListItem(new ListItem(AttributeType.Karmaenergie_Aktuell));
+			listSettings.addListItem(new ListItem(AttributeType.Initiative_Aktuell));
+			listSettings.addListItem(new ListItem(ListItemType.Header, "Gegenstände"));
+			listSettings.addListItem(new ListItem(ListItemType.EquippedItem));
+			listSettings.addListItem(new ListItem(AttributeType.Ausweichen));
+			listSettings.addListItem(new ListItem(ListItemType.Header, "Modifikatoren"));
+			listSettings.addListItem(new ListItem(ListItemType.Modificator));
+			tabInfo.setTitle("Kampf");
+			tabInfos.add(tabInfo);
+
+			tabInfos.add(new TabInfo(ItemsListFragment.class, getTabResourceId(ItemsListFragment.class), false, true));
 			tabInfos.add(new TabInfo(NotesFragment.class, PurseFragment.class, getTabResourceId(NotesFragment.class),
-					false));
-			tabInfos.add(new TabInfo(DocumentsFragment.class, getTabResourceId(DocumentsFragment.class), false));
-			tabInfos.add(new TabInfo(AnimalFragment.class, getTabResourceId(AnimalFragment.class), false));
-			tabInfos.add(new TabInfo(MapFragment.class, getTabResourceId(MapFragment.class), false));
+					false, false));
+
+			tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_pdf, false, false);
+			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
+			listSettings.addListItem(new ListItem(ListItemType.Document));
+			tabInfos.add(tabInfo);
+
+			tabInfos.add(new TabInfo(AnimalFragment.class, getTabResourceId(AnimalFragment.class), false, false));
+			tabInfos.add(new TabInfo(MapFragment.class, getTabResourceId(MapFragment.class), false, false));
 		} else {
-			tabInfos.add(new TabInfo(CharacterFragment.class, getTabResourceId(CharacterFragment.class)));
-			tabInfos.add(new TabInfo(TalentFragment.class, getTabResourceId(TalentFragment.class)));
-			tabInfos.add(new TabInfo(SpellFragment.class, getTabResourceId(SpellFragment.class)));
-			tabInfos.add(new TabInfo(ArtFragment.class, getTabResourceId(ArtFragment.class)));
+			tabInfos.add(new TabInfo(CharacterFragment.class, getTabResourceId(CharacterFragment.class), true, false));
+
+			TabInfo tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_talents);
+			ListSettings listSettings = (ListSettings) tabInfo.getFilterSettings(0);
+			listSettings.addListItem(new ListItem(ListItemType.Talent));
+			tabInfos.add(tabInfo);
+
+			tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_magic);
+			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
+			listSettings.addListItem(new ListItem(ListItemType.Spell));
+			tabInfos.add(tabInfo);
+
+			tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_art);
+			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
+			listSettings.addListItem(new ListItem(ListItemType.Talent, TalentGroupType.Gaben.name()));
+			listSettings.addListItem(new ListItem(ListItemType.Header, "Künste"));
+			listSettings.addListItem(new ListItem(ListItemType.Art));
+			tabInfos.add(tabInfo);
+
 			tabInfos.add(new TabInfo(BodyFragment.class, getTabResourceId(BodyFragment.class)));
-			tabInfos.add(new TabInfo(FightFragment.class, getTabResourceId(FightFragment.class)));
-			tabInfos.add(new TabInfo(ItemsListFragment.class, getTabResourceId(ItemsListFragment.class), false));
-			tabInfos.add(new TabInfo(NotesFragment.class, getTabResourceId(NotesFragment.class)));
-			tabInfos.add(new TabInfo(PurseFragment.class, getTabResourceId(PurseFragment.class)));
-			tabInfos.add(new TabInfo(DocumentsFragment.class, getTabResourceId(DocumentsFragment.class), false));
-			tabInfos.add(new TabInfo(AnimalFragment.class, getTabResourceId(AnimalFragment.class), false));
-			tabInfos.add(new TabInfo(MapFragment.class, getTabResourceId(MapFragment.class), false));
+
+			tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_fight);
+			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
+			listSettings.addListItem(new ListItem(AttributeType.Lebensenergie_Aktuell));
+			listSettings.addListItem(new ListItem(AttributeType.Ausdauer_Aktuell));
+			listSettings.addListItem(new ListItem(AttributeType.Astralenergie_Aktuell));
+			listSettings.addListItem(new ListItem(AttributeType.Karmaenergie_Aktuell));
+			listSettings.addListItem(new ListItem(AttributeType.Initiative_Aktuell));
+			listSettings.addListItem(new ListItem(ListItemType.Header, "Gegenstände"));
+			listSettings.addListItem(new ListItem(ListItemType.EquippedItem));
+			listSettings.addListItem(new ListItem(AttributeType.Ausweichen));
+			listSettings.addListItem(new ListItem(ListItemType.Header, "Modifikatoren"));
+			listSettings.addListItem(new ListItem(ListItemType.Modificator));
+			tabInfos.add(tabInfo);
+
+			tabInfos.add(new TabInfo(ItemsListFragment.class, getTabResourceId(ItemsListFragment.class), false, true));
+			tabInfos.add(new TabInfo(NotesFragment.class, getTabResourceId(NotesFragment.class), false, false));
+			tabInfos.add(new TabInfo(PurseFragment.class, getTabResourceId(PurseFragment.class), false, false));
+
+			tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_pdf, false, false);
+			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
+			listSettings.addListItem(new ListItem(ListItemType.Document));
+			tabInfos.add(tabInfo);
+
+			tabInfos.add(new TabInfo(AnimalFragment.class, getTabResourceId(AnimalFragment.class), false, false));
+			tabInfos.add(new TabInfo(MapFragment.class, getTabResourceId(MapFragment.class), false, false));
 		}
 
 		return tabInfos;
@@ -439,6 +520,8 @@ public class HeroConfiguration {
 	public JSONObject toJSONObject() throws JSONException {
 		JSONObject out = new JSONObject();
 
+		out.put(FIELD_VERSION, DsaTabApplication.getInstance().getPackageVersion());
+
 		JSONArray array = new JSONArray();
 		for (int s = 0; s < armorAttributes.length; s++) {
 			JSONArray inArray = new JSONArray();
@@ -451,12 +534,12 @@ public class HeroConfiguration {
 		}
 		out.put(FIELD_ARMOR_ATTRIBUTES, array);
 
-		putArray(out, tabInfos, FIELD_TABS_PORTRAIT);
-		putArray(out, modificators, FIELD_MODIFICATORS);
-		putArray(out, wounds, FIELD_WOUNDS);
-		putArray(out, new ArrayList<CustomAttribute>(attributes), FIELD_ATTRIBUTES);
-		putArray(out, new ArrayList<MetaTalent>(metaTalents), FIELD_META_TALENTS);
-		putArray(out, events, FIELD_EVENTS);
+		Util.putArray(out, tabInfos, FIELD_TABS_PORTRAIT);
+		Util.putArray(out, modificators, FIELD_MODIFICATORS);
+		Util.putArray(out, wounds, FIELD_WOUNDS);
+		Util.putArray(out, new ArrayList<CustomAttribute>(attributes), FIELD_ATTRIBUTES);
+		Util.putArray(out, new ArrayList<MetaTalent>(metaTalents), FIELD_META_TALENTS);
+		Util.putArray(out, events, FIELD_EVENTS);
 
 		out.put(FIELD_COMBAT_STYLE, combatStyle.name());
 		out.put(FIELD_BE_CALCULATION, beCalculation);
@@ -466,28 +549,4 @@ public class HeroConfiguration {
 		return out;
 	}
 
-	private void putArray(JSONObject out, List<? extends JSONable> list, String name) throws JSONException {
-		JSONArray jsonArray = new JSONArray();
-		int index = 0;
-		final int count = list.size();
-		for (int i = 0; i < count; i++) {
-			JSONObject jsonObject = list.get(i).toJSONObject();
-			if (jsonObject != null) {
-				jsonArray.put(index++, jsonObject);
-			}
-		}
-		out.put(name, jsonArray);
-
-	}
-
-	private void putStringArray(JSONObject out, List<String> list, String name) throws JSONException {
-		JSONArray jsonArray = new JSONArray();
-		int index = 0;
-		final int count = list.size();
-		for (int i = 0; i < count; i++) {
-			jsonArray.put(index++, list.get(i));
-		}
-		out.put(name, jsonArray);
-
-	}
 }

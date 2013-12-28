@@ -13,21 +13,17 @@ import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.data.enums.ArmorPosition;
 import com.dsatab.data.enums.Position;
 import com.dsatab.fragment.AnimalFragment;
-import com.dsatab.fragment.ArtFragment;
 import com.dsatab.fragment.BaseFragment;
 import com.dsatab.fragment.BodyFragment;
 import com.dsatab.fragment.CharacterFragment;
-import com.dsatab.fragment.DocumentsFragment;
-import com.dsatab.fragment.FightFragment;
 import com.dsatab.fragment.ItemChooserFragment;
 import com.dsatab.fragment.ItemsFragment;
 import com.dsatab.fragment.ItemsListFragment;
+import com.dsatab.fragment.ListableFragment;
 import com.dsatab.fragment.MapFragment;
 import com.dsatab.fragment.NotesEditFragment;
 import com.dsatab.fragment.NotesFragment;
 import com.dsatab.fragment.PurseFragment;
-import com.dsatab.fragment.SpellFragment;
-import com.dsatab.fragment.TalentFragment;
 
 /**
  *  
@@ -74,11 +70,8 @@ public class DsaTabConfiguration {
 		this.context = context;
 
 		tabResourceIds.put(CharacterFragment.class, R.drawable.tab_character);
-		tabResourceIds.put(TalentFragment.class, R.drawable.tab_talents);
-		tabResourceIds.put(SpellFragment.class, R.drawable.tab_magic);
-		tabResourceIds.put(ArtFragment.class, R.drawable.tab_art);
 		tabResourceIds.put(BodyFragment.class, R.drawable.tab_wound);
-		tabResourceIds.put(FightFragment.class, R.drawable.tab_fight);
+		tabResourceIds.put(ListableFragment.class, R.drawable.tab_fight);
 		tabResourceIds.put(ItemsFragment.class, R.drawable.tab_items);
 		tabResourceIds.put(ItemsListFragment.class, R.drawable.tab_items);
 		tabResourceIds.put(ItemChooserFragment.class, R.drawable.tab_items);
@@ -86,7 +79,6 @@ public class DsaTabConfiguration {
 		tabResourceIds.put(NotesEditFragment.class, R.drawable.tab_notes);
 		tabResourceIds.put(PurseFragment.class, R.drawable.tab_coins);
 		tabResourceIds.put(MapFragment.class, R.drawable.tab_map);
-		tabResourceIds.put(DocumentsFragment.class, R.drawable.tab_pdf);
 		tabResourceIds.put(AnimalFragment.class, R.drawable.tab_animal);
 
 		// DO NOT CHANGE ORDER OF ICONS BECAUSE IT IS stored in tabconfiguration

@@ -17,8 +17,8 @@ import android.view.ViewGroup;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.dsatab.R;
 import com.dsatab.TabInfo;
-import com.dsatab.view.FilterSettings;
-import com.dsatab.view.FilterSettings.FilterType;
+import com.dsatab.view.ListSettings;
+import com.dsatab.view.ListSettings.FilterType;
 import com.dsatab.view.listener.FilterChangedListener;
 import com.gandulf.guilib.util.Debug;
 
@@ -78,7 +78,8 @@ public class DualPaneFragment extends SherlockFragment implements FilterChangedL
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu, com.actionbarsherlock.view.MenuInflater)
+	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu,
+	 * com.actionbarsherlock.view.MenuInflater)
 	 */
 	@Override
 	public void onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu,
@@ -138,7 +139,8 @@ public class DualPaneFragment extends SherlockFragment implements FilterChangedL
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+	 * android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -250,13 +252,14 @@ public class DualPaneFragment extends SherlockFragment implements FilterChangedL
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.fragment.FilterChangedListener#onFilterChanged(com.dsatab .view.FilterSettings.FilterType, com.dsatab.view.FilterSettings)
+	 * @see com.dsatab.fragment.FilterChangedListener#onFilterChanged(com.dsatab .view.FilterSettings.FilterType,
+	 * com.dsatab.view.FilterSettings)
 	 */
 	@Override
-	public void onFilterChanged(FilterType type, FilterSettings settings) {
+	public void onFilterChanged(FilterType type, ListSettings settings) {
 		for (Fragment fragment : fragments) {
-			if (fragment instanceof BaseFragment) {
-				((BaseFragment) fragment).onFilterChanged(type, settings);
+			if (fragment instanceof BaseListFragment) {
+				((BaseListFragment) fragment).onFilterChanged(type, settings);
 			}
 		}
 	}
@@ -264,7 +267,8 @@ public class DualPaneFragment extends SherlockFragment implements FilterChangedL
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.content.SharedPreferences.OnSharedPreferenceChangeListener #onSharedPreferenceChanged(android.content.SharedPreferences, java.lang.String)
+	 * @see android.content.SharedPreferences.OnSharedPreferenceChangeListener
+	 * #onSharedPreferenceChanged(android.content.SharedPreferences, java.lang.String)
 	 */
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

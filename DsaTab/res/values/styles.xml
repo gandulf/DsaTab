@@ -3,7 +3,7 @@
     	xmlns:android="http://schemas.android.com/apk/res/android"
     	xmlns:custom="http://schemas.android.com/apk/res-auto">
     
-    <style name="Widget.IconImageView">
+    <style name="Widget.IconImageView" parent="@style/FlipImageView.Checked">
         <item name="android:scaleType">fitCenter</item>
         <item name="android:minWidth">@dimen/icon_button_size</item>
         <item name="android:minHeight">@dimen/icon_button_size</item>
@@ -109,6 +109,10 @@
         <item name="android:shadowDx">1.0</item>
         <item name="android:shadowDy">1.0</item>
         <item name="android:shadowRadius">2.0</item>
+    </style>
+    
+    <style name="FlipImageView.Checked" parent="@style/FlipImageView">
+        <item name="flipDrawable">@drawable/dsa_list_checked</item>
     </style>
     
     <style name="BodyItemImage" parent="@android:style/Widget.ImageButton">

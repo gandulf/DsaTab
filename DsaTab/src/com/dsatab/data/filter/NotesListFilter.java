@@ -4,19 +4,18 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import com.dsatab.data.Connection;
 import com.dsatab.data.Event;
-import com.dsatab.data.adapter.OpenArrayAdapter;
-import com.dsatab.data.adapter.OpenFilter;
+import com.dsatab.data.NotesItem;
 import com.dsatab.data.enums.EventCategory;
+import com.gandulf.guilib.data.OpenArrayAdapter;
+import com.gandulf.guilib.data.OpenFilter;
 
-public class EventListFilter extends OpenFilter<Event> {
+public class NotesListFilter extends OpenFilter<NotesItem> {
 
 	private List<EventCategory> types;
 
-	/**
-	 * 
-	 */
-	public EventListFilter(OpenArrayAdapter<Event> list) {
+	public NotesListFilter(OpenArrayAdapter<NotesItem> list) {
 		super(list);
 	}
 
@@ -41,7 +40,36 @@ public class EventListFilter extends OpenFilter<Event> {
 	}
 
 	@Override
-	public boolean filter(Event m) {
+	public boolean filter(NotesItem m) {
+		if (m instanceof Event) {
+			return filterEvent((Event) m);
+		} else if (m instanceof Connection) {
+			return filterConection((Connection) m);
+		} else {
+			return true;
+		}
+	}
+
+	public boolean filterConection(Connection m) {
+		boolean valid = true;
+		if (types != null) {
+			boolean found = false;
+
+			if (types.contains(m.getCategory())) {
+				found = true;
+			}
+
+			valid &= found;
+		}
+
+		if (constraint != null) {
+			valid &= m.getName().toLowerCase(Locale.GERMAN).startsWith(constraint);
+		}
+
+		return valid;
+	}
+
+	protected boolean filterEvent(Event m) {
 		boolean valid = true;
 		if (types != null) {
 			boolean found = false;

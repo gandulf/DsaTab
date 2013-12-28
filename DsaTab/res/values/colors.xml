@@ -6,10 +6,10 @@
 	
 	<color name="RowEven">#11000000</color>
 	<color name="RowOdd">#11FFFFFF</color>
-	<color name="RowFavoriteEven">#22005500</color>
-	<color name="RowFavoriteOdd">#22AAFFAA</color>	
-	<color name="RowUnusedEven">#22550000</color>
-	<color name="RowUnusedOdd">#22FFAAAA</color>
+	<color name="RowFavoriteEven">#44005500</color>
+	<color name="RowFavoriteOdd">#44AAFFAA</color>	
+	<color name="RowUnusedEven">#44550000</color>
+	<color name="RowUnusedOdd">#44FFAAAA</color>
 	
 	<color name="ValueRed">#FFCC0000</color>
 	<color name="ValueGreen">#FF669900</color>

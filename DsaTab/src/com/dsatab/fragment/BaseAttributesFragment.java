@@ -80,17 +80,7 @@ public abstract class BaseAttributesFragment extends BaseFragment {
 	}
 
 	protected void fillAttributeLabel(View tv, AttributeType type) {
-
-		if (!tv.isLongClickable()) {
-			if (type == AttributeType.Behinderung || type == AttributeType.Sozialstatus
-					|| type == AttributeType.Magieresistenz) {
-				tv.setOnClickListener(getEditListener());
-			} else if (type.probable()) {
-				tv.setOnClickListener(getProbeListener());
-			}
-			tv.setOnLongClickListener(getEditListener());
-		}
-		tv.setTag(type);
+		Util.setLabel(tv, type, probeListener, editListener);
 	}
 
 	protected void fillAttributeValue(TextView tv, Attribute attr) {
@@ -126,27 +116,8 @@ public abstract class BaseAttributesFragment extends BaseFragment {
 
 	protected void fillAttributeValue(TextView tv, Attribute attribute, String prefix, boolean includeBe,
 			boolean inverseColors) {
-
-		if (attribute != null) {
-
-			int modifier = getBeing().getModifier(attribute, includeBe, true);
-			Util.setText(tv, attribute, modifier, prefix, inverseColors);
-			tv.setTag(attribute);
-
-			if (!tv.isLongClickable()) {
-
-				if (attribute.getType().probable()) {
-					tv.setOnClickListener(getProbeListener());
-				} else if (attribute.getType().editable()) {
-					tv.setOnClickListener(getEditListener());
-				}
-
-				if (attribute.getType().editable())
-					tv.setOnLongClickListener(getEditListener());
-			}
-		} else {
-			tv.setText(null);
-		}
+		Util.setValue(getBeing(), tv, attribute, prefix, includeBe, inverseColors, getProbeListener(),
+				getEditListener());
 	}
 
 	public AbstractBeing getBeing() {

@@ -3,8 +3,9 @@ package com.dsatab.data;
 import java.util.Comparator;
 
 import com.dsatab.data.enums.EventCategory;
+import com.dsatab.data.listable.Listable;
 
-public class Connection {
+public class Connection implements NotesItem, Listable {
 
 	public static Comparator<Connection> NAME_COMPARATOR = new Comparator<Connection>() {
 		@Override

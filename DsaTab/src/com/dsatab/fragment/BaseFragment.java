@@ -27,17 +27,16 @@ import com.dsatab.data.modifier.Modificator;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Hint;
 import com.dsatab.util.Util;
-import com.dsatab.view.FilterSettings;
-import com.dsatab.view.FilterSettings.FilterType;
+import com.dsatab.view.ListSettings;
 import com.dsatab.view.listener.EditListener;
-import com.dsatab.view.listener.FilterChangedListener;
 import com.dsatab.view.listener.HeroChangedListener;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
 import com.dsatab.view.listener.HeroLoader;
 import com.dsatab.view.listener.ProbeListener;
+import com.dsatab.view.listener.TargetListener;
 
 public abstract class BaseFragment extends SherlockFragment implements HeroLoader, HeroChangedListener,
-		FilterChangedListener, OnSharedPreferenceChangeListener {
+		OnSharedPreferenceChangeListener {
 
 	public static final String TAB_POSITION = "TAB_POSITION";
 	public static final String TAB_INFO = "TAB_INFO";
@@ -46,13 +45,12 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 	public static List<Class<? extends BaseFragment>> activityValues;
 
 	static {
-		activities = Arrays.asList("Keine", "Charakter", "Talente", "Zauber", "Künste", "Wunden", "Kampf",
-				"Ausrüstung (Bilder)", "Ausrüstung (Liste)", "Notizen", "Geldbörse", "Karte", "Dokumente", "Tiere");
+		activities = Arrays.asList("Keine", "Charakter", "Liste", "Wunden", "Ausrüstung (Bilder)",
+				"Ausrüstung (Liste)", "Notizen", "Geldbörse", "Karte", "Tiere");
 
-		activityValues = Arrays.asList(null, CharacterFragment.class, TalentFragment.class, SpellFragment.class,
-				ArtFragment.class, BodyFragment.class, FightFragment.class, ItemsFragment.class,
-				ItemsListFragment.class, NotesFragment.class, PurseFragment.class, MapFragment.class,
-				DocumentsFragment.class, AnimalFragment.class);
+		activityValues = Arrays.asList(null, CharacterFragment.class, ListableFragment.class, BodyFragment.class,
+				ItemsFragment.class, ItemsListFragment.class, NotesFragment.class, PurseFragment.class,
+				MapFragment.class, AnimalFragment.class);
 	}
 
 	public static String getFragmentTitle(Class<? extends BaseFragment> fragmentClass) {
@@ -65,11 +63,13 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 
 	protected SharedPreferences preferences;
 
-	protected FilterSettings filterSettings;
+	protected ListSettings filterSettings;
 
 	protected ProbeListener probeListener;
 
 	protected EditListener editListener;
+
+	protected TargetListener targetListener;
 
 	/**
 	 * 
@@ -77,6 +77,7 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 	public BaseFragment() {
 		probeListener = new ProbeListener(this);
 		editListener = new EditListener(this);
+		targetListener = new TargetListener(getBaseActivity());
 	}
 
 	protected void customizeActionModeCloseButton() {
@@ -177,17 +178,6 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.fragment.FilterChangedListener#onFilterChanged(com.dsatab. view.FilterSettings.FilterType,
-	 * com.dsatab.view.FilterSettings)
-	 */
-	@Override
-	public void onFilterChanged(FilterType type, FilterSettings settings) {
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see android.support.v4.app.Fragment#onDestroyView()
 	 */
 	@Override
@@ -245,15 +235,6 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-
-		if (getTabPosition() >= 0 && getTabInfo() != null) {
-			// update filter settings to be correct type just to be sure
-			getTabInfo().updateFilterSettings();
-			filterSettings = getTabInfo().getFilterSettings(getTabPosition());
-			if (filterSettings != null) {
-				onFilterChanged(null, filterSettings);
-			}
-		}
 
 		Hero hero = getHero();
 		if (hero != null) {
@@ -361,16 +342,16 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 
 	}
 
-	protected FilterSettings getFilterSettings() {
-		return filterSettings;
-	}
-
 	public ProbeListener getProbeListener() {
 		return probeListener;
 	}
 
 	public EditListener getEditListener() {
 		return editListener;
+	}
+
+	public TargetListener getTargetListener() {
+		return targetListener;
 	}
 
 }

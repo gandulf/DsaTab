@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
 
     <CheckBox
         android:id="@+id/popup_edit_show_unused"
@@ -24,5 +25,38 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Modifikatoren einberechnen" />
+
+    <LinearLayout
+        android:id="@+id/popup_edit_list_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+
+        <TextView            
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left|center_vertical"
+            android:text="Listeninhalt" />
+
+        <Spinner
+            android:id="@+id/popup_edit_list_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/popup_edit_list_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_add" />
+
+    </LinearLayout>
+
+    <com.haarman.listviewanimations.view.DynamicListView
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+         />
 
 </merge>

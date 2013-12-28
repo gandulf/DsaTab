@@ -6,12 +6,13 @@ import java.util.EnumSet;
 import android.text.TextUtils;
 
 import com.dsatab.data.enums.AttributeType;
+import com.dsatab.data.listable.Listable;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 import com.dsatab.exception.SpellUnknownException;
 import com.dsatab.util.Debug;
 import com.dsatab.xml.DataManager;
 
-public class Spell extends MarkableElement implements Value {
+public class Spell extends MarkableElement implements Value, Listable {
 
 	public static final Comparator<Spell> NAME_COMPARATOR = new Comparator<Spell>() {
 		/*
@@ -123,6 +124,12 @@ public class Spell extends MarkableElement implements Value {
 			return hero.getModifiedValue(type, false, false);
 		} else {
 			return null;
+		}
+	}
+
+	public void fireValueChangedEvent() {
+		if (hero != null) {
+			hero.fireValueChangedEvent(this);
 		}
 	}
 

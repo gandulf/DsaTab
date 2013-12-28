@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:guilib="http://schemas.android.com/apk/com.gandulf.guilib"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/listItemBackground"
+    android:gravity="center_horizontal"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:paddingLeft="6dp"
+    android:paddingRight="6dp"
+    android:weightSum="1.0" >
+
+    <TextView
+        android:id="@+id/wheel_label"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/icon_button_size"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:text="@string/label_le"
+        style="@style/TextLabel"
+         />
+
+    <Button
+        android:id="@+id/wheel_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"        
+        style="@style/TextValue"
+        android:layout_gravity="center"
+        android:layout_marginRight="4dp" />
+
+    <com.gandulf.guilib.view.SeekBarEx
+        android:id="@+id/wheel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical" />
+
+    <!--
+        <kankan.wheel.widget.WheelView
+            android:id="@+id/wheel"
+            android:layout_width="fill_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_height="@dimen/icon_button_size"
+            guilib:orientation="vertical"
+            guilib:visibleItems="@integer/fight_wheel_items" />
+    -->
+
+</LinearLayout>

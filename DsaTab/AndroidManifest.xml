@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dsatab"
     android:installLocation="auto"
-    android:versionCode="73"
-    android:versionName="4.1.6">
+    android:versionCode="74"
+    android:versionName="4.2" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -55,30 +55,26 @@
         </activity>
         <activity
             android:name="com.dsatab.activity.DsaTabPreferenceActivity"
-            android:label="Einstellungen" >
-        </activity>
+            android:label="Einstellungen" />
         <activity
             android:name="com.dsatab.activity.ItemChooserActivity"
-            android:label="Inventar" >
-        </activity>
+            android:label="Inventar" />
         <activity
             android:name="com.dsatab.activity.NotesEditActivity"
             android:label="Notiz bearbeiten"
             android:logo="@android:drawable/ic_menu_edit"
-            android:theme="@style/Theme.Dialog.Dark" >
-        </activity>
+            android:theme="@style/Theme.Dialog.Dark" />
         <activity
             android:name=".activity.TabEditActivity"
             android:label="Tab bearbeiten"
             android:logo="@android:drawable/ic_menu_edit"
-            android:theme="@style/Theme.Dialog.Dark" >
-        </activity>
+            android:theme="@style/Theme.Dialog.Dark"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.ModificatorEditActivity"
             android:label="Modifikator bearbeiten"
             android:logo="@android:drawable/ic_menu_edit"
-            android:theme="@style/Theme.Dialog.Dark" >
-        </activity>
+            android:theme="@style/Theme.Dialog.Dark" />
         <activity
             android:name=".activity.ItemContainerEditActivity"
             android:label="Behälter bearbeiten"
@@ -96,8 +92,7 @@
             android:theme="@style/Theme.Dialog.Dark" />
         <activity
             android:name="com.dsatab.activity.HeroChooserActivity"
-            android:label="Held auswählen" >
-        </activity>
+            android:label="Held auswählen" />
         <activity
             android:name="com.dsatab.activity.SearchableActivity"
             android:label="Suche"
@@ -127,7 +122,7 @@
         service
             android:name="com.dsatab.common.ExportHeroService"
             android:exported="false" >
-        </service
+        </service
         -->
 
         <meta-data

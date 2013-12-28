@@ -5,9 +5,10 @@ import java.util.List;
 import com.dsatab.data.Modifier;
 import com.dsatab.data.Probe;
 import com.dsatab.data.enums.AttributeType;
+import com.dsatab.data.listable.Listable;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 
-public interface Modificator {
+public interface Modificator extends Listable {
 
 	public Modifier getModifier(Probe type);
 
