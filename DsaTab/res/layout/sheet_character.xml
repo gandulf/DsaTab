@@ -836,16 +836,7 @@
                 android:layout_height="wrap_content"
                 android:text="Nachteile" >
             </TextView>
-
-            <fr.castorflex.android.flipimageview.library.FlipImageView
-                android:id="@android:id/icon1"
-                android:layout_width="@dimen/icon_button_size"
-                android:layout_height="@dimen/icon_button_size"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_action_camera_light"
-                guilib:isAnimated="false"
-                guilib:flipDrawable="@drawable/ic_action_done_light" />
-
+            
             <TextView
                 android:id="@+id/gen_disadvantages"
                 style="@style/TextLabel.Small"

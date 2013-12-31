@@ -2091,8 +2091,11 @@ public class Hero extends AbstractBeing {
 	 * @param itemContainer
 	 */
 	public void addItemContainer(ItemContainer itemContainer) {
-		// TODO listeners
-		itemContainer.setId(getItemContainers().size() + MAXIMUM_SET_NUMBER);
+		int maxId = MAXIMUM_SET_NUMBER;
+		for (ItemContainer container : getItemContainers()) {
+			maxId = Math.max(maxId, container.getId());
+		}
+		itemContainer.setId(maxId + 1);
 		getItemContainers().add(itemContainer);
 
 		fireItemContainerAddedEvent(itemContainer);
@@ -2102,7 +2105,6 @@ public class Hero extends AbstractBeing {
 	 * @param itemContainer
 	 */
 	public void removeItemContainer(ItemContainer itemContainer) {
-		// TODO listeners
 		getItemContainers().get(0).getItems().addAll(itemContainer.getItems());
 		getItemContainers().remove(itemContainer);
 

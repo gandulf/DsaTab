@@ -75,7 +75,8 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+	 * android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -207,8 +208,10 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 		else
 			titleView.setText(null);
 
-		priceView.setText(Util.toString(card.getPrice()));
-		weightView.setText(Util.toString(card.getWeight()));
+		if (card.getPrice() > 0)
+			priceView.setText(Util.toString(card.getPrice()));
+		if (card.getWeight() > 0.0f)
+			weightView.setText(Util.toString(card.getWeight()));
 		categorySpn.setSelection(categoryAdapter.getPosition(card.getCategory()));
 		imageTextOverlayView.setChecked(card.isImageTextOverlay());
 
@@ -217,7 +220,8 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu, com.actionbarsherlock.view.MenuInflater)
+	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu,
+	 * com.actionbarsherlock.view.MenuInflater)
 	 */
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -227,8 +231,8 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 	public Item accept() {
 		origItem.setName(nameView.getText().toString());
 		origItem.setTitle(titleView.getText().toString());
-		origItem.setPrice(Util.parseInt(priceView.getText().toString()));
-		origItem.setWeight(Util.parseFloat(weightView.getText().toString()));
+		origItem.setPrice(Util.parseInt(priceView.getText().toString(), 0));
+		origItem.setWeight(Util.parseFloat(weightView.getText().toString(), 0.0f));
 		origItem.setIconUri(cloneItem.getIconUri());
 		origItem.setImageUri(cloneItem.getImageUri());
 		origItem.setCategory((String) categorySpn.getSelectedItem());
@@ -275,7 +279,8 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.widget.CompoundButton.OnCheckedChangeListener#onCheckedChanged (android.widget.CompoundButton, boolean)
+	 * @see android.widget.CompoundButton.OnCheckedChangeListener#onCheckedChanged (android.widget.CompoundButton,
+	 * boolean)
 	 */
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

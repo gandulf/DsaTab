@@ -582,13 +582,17 @@ public class Util {
 	}
 
 	public static Float parseFloat(String s) {
+		return parseFloat(s, null);
+	}
+
+	public static Float parseFloat(String s, Float defaultValue) {
 		if (s == null)
-			return null;
+			return defaultValue;
 
 		s = s.trim();
 
 		if (s.length() == 0 || MINUS.equals(s) || NULL.equals(s))
-			return null;
+			return defaultValue;
 
 		Float i;
 

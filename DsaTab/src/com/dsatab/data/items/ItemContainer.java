@@ -13,8 +13,6 @@ public class ItemContainer {
 
 	private int capacity;
 
-	private int weight;
-
 	private Uri iconUri;
 
 	private List<Item> items;

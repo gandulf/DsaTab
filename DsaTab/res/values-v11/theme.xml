@@ -39,6 +39,7 @@
         <!--  ActionBar styles -->
         
         <item name="flipImageViewStyle">@style/FlipImageView.Checked</item>
+        <item name="listShadowBackground">@drawable/dsa_listshadow_bg_dark</item>
     </style>
     
     <style name="Theme.Dialog.Dark" parent="@Theme.Dialog.__Dark">                        
@@ -61,7 +62,8 @@
         <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb_holo</item>
         <!-- Holo generated styles -->
         
-        <item name="flipImageViewStyle">@style/FlipImageView.Checked</item>               
+        <item name="flipImageViewStyle">@style/FlipImageView.Checked</item>
+        <item name="listShadowBackground">@drawable/dsa_listshadow_bg_dark</item>               
     </style>
     
     

@@ -156,7 +156,6 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 
 	protected boolean showRandomHint() {
 		return Hint.showRandomHint(getClass().getSimpleName(), getActivity());
-
 	}
 
 	protected int getTabPosition() {

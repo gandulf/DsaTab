@@ -353,7 +353,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		HeaderViewHolder holder = (HeaderViewHolder) convertView.getTag();
 
 		holder.text1.setText(item.getTitle());
-		// holder.text1.setFocusable(true);
+		holder.text1.setFocusable(true);
 		return convertView;
 	}
 

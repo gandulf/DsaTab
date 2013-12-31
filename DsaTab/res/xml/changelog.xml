@@ -1,4 +1,7 @@
 <changelog>    
+<release version="4.2-beta" versioncode="74">    
+    <change>Flexible Tabs, der Inhalt von Listen kann nun unter 'Tabs anpassen' frei definiert werden</change>    
+</release>
 <release version="4.1.6" versioncode="73">    
     <fix>Tiere/Begleiter Support mit eigenem Tab</fix>
     <fix>Exotischere Talente wie Magegespür, etc. werden nun auch erkannt</fix>

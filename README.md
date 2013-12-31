@@ -3,7 +3,7 @@ DsaTab
 ![DsaTab](Web/function.jpg)
 
 An android app to handle your [DSA][2] Pen&amp;Paper roleplaying characters.
-DsaTab requires Android 2.2 and is compatible with the newest version of [Helden-Software][1] 5.2.6
+DsaTab requires Android 2.2 and is compatible with the newest version of [Helden-Software][1] 5.3.1
 
 Get the current version (only in german) from the [google play store][3], old release can be found in the [releases](https://github.com/gandulf/DsaTab/tree/master/Releases) folder:
 
@@ -33,10 +33,10 @@ To deploy this app you need the following Libraries in your Eclipse workspace:
 
 * [GuiLib][5] (Combination of the following libraries below)<br>
 	Create a library project named GuiLib. These library includes the following projects:
-	* [Drag Sort list][6]
+	* [ListViewAnimations][6]
 	* [PhotoView][7]	
-	* [ShowcaseView][8]	
-	* [Draggable GridView][9]
+	* [ShowcaseView][8]		
+	* [FlipImageView][9]
 	* [GridViewCompat][10]
 	
 * GridLayout v7 support library from google sdk<br>	
@@ -76,8 +76,8 @@ To deploy this app you need the following Libraries in your Eclipse workspace:
 [3]: https://play.google.com/store/apps/details?id=com.dsatab
 [4]: http://actionbarsherlock.com
 [5]: https://github.com/gandulf/GuiLib
-[6]: https://github.com/bauerca/drag-sort-listview
+[6]: https://github.com/nhaarman/ListViewAnimations
 [7]: https://github.com/chrisbanes/PhotoView
 [8]: https://github.com/Espiandev/ShowcaseView
-[9]: https://github.com/thquinn/DraggableGridView
+[9]: https://github.com/castorflex/FlipImageView
 [10]: https://github.com/paramvir-b/AndroidGridViewCompatLib

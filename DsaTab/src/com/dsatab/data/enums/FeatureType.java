@@ -80,12 +80,13 @@ public enum FeatureType {
 			FeatureGroupType.Advantage), Zeitgefühl("Zeitgefühl", FeatureGroupType.Advantage), ZusätzlicheGliedmaßen(
 			"Zusätzliche Gliedmaßen", FeatureGroupType.Advantage), ZweistimmigerGesang("Zweistimmiger Gesang",
 			FeatureGroupType.Advantage), Zwergennase("Zwergennase", FeatureGroupType.Advantage), AbneigungGegenOrks(
-			"Abneigung gegen Orks", FeatureGroupType.Advantage), AusdauerndTier1("Ausdauernd (Tier) 1",
-			FeatureGroupType.Advantage), AusdauerndTier2("Ausdauernd (Tier) 2", FeatureGroupType.Advantage), Eigenwillig(
-			"Eigenwillig", FeatureGroupType.Advantage), Einzelgänger("Einzelgänger", FeatureGroupType.Advantage), EleganteErscheinung(
-			"Elegante Erscheinung", FeatureGroupType.Advantage), Feurig("Feurig", FeatureGroupType.Advantage), Flinkheit(
-			"Flinkheit", FeatureGroupType.Advantage), Friedliebend("Friedliebend", FeatureGroupType.Advantage), Geduldig(
-			"Geduldig", FeatureGroupType.Advantage), Genügsam("Genügsam", FeatureGroupType.Advantage), GuterOrientierungssinn(
+			"Abneigung gegen Orks", FeatureGroupType.Advantage), AusdauerndTier("Ausdauernd (Tier)",
+			FeatureGroupType.Advantage), AusdauerndTier1("Ausdauernd (Tier) 1", FeatureGroupType.Advantage), AusdauerndTier2(
+			"Ausdauernd (Tier) 2", FeatureGroupType.Advantage), Eigenwillig("Eigenwillig", FeatureGroupType.Advantage), Einzelgänger(
+			"Einzelgänger", FeatureGroupType.Advantage), EleganteErscheinung("Elegante Erscheinung",
+			FeatureGroupType.Advantage), Feurig("Feurig", FeatureGroupType.Advantage), Flinkheit("Flinkheit",
+			FeatureGroupType.Advantage), Friedliebend("Friedliebend", FeatureGroupType.Advantage), Geduldig("Geduldig",
+			FeatureGroupType.Advantage), Genügsam("Genügsam", FeatureGroupType.Advantage), GuterOrientierungssinn(
 			"Guter Orientierungssinn", FeatureGroupType.Advantage), Gutmütig("Gutmütig", FeatureGroupType.Advantage), Halbwild(
 			"Halbwild", FeatureGroupType.Advantage), Intelligent("Intelligent", FeatureGroupType.Advantage), Kehlenbiss(
 			"Kehlenbiss", FeatureGroupType.Advantage), Kläffer("Kläffer", FeatureGroupType.Advantage), Lernfähig(
@@ -94,10 +95,11 @@ public enum FeatureType {
 			"Schnelligkeit", FeatureGroupType.Advantage), SchwerZuErziehen("Schwer zu erziehen",
 			FeatureGroupType.Advantage), SehrLernfähig("Sehr lernfähig", FeatureGroupType.Advantage), Spieltrieb(
 			"Spieltrieb", FeatureGroupType.Advantage), Stark("Stark", FeatureGroupType.Advantage), Störrisch(
-			"Störrisch", FeatureGroupType.Advantage), Tragkraft1("Tragkraft 1", FeatureGroupType.Advantage), Tragkraft2(
-			"Tragkraft 2", FeatureGroupType.Advantage), Trendeln("Trendeln", FeatureGroupType.Advantage), Trittsicherheit(
-			"Trittsicherheit", FeatureGroupType.Advantage), Wasserliebend("Wasserliebend", FeatureGroupType.Advantage), WeicheGänge(
-			"Weiche Gänge", FeatureGroupType.Advantage), Zäh("Zäh", FeatureGroupType.Advantage), Zugkraft1(
+			"Störrisch", FeatureGroupType.Advantage), Tragkraft("Tragkraft", FeatureGroupType.Advantage), Tragkraft1(
+			"Tragkraft 1", FeatureGroupType.Advantage), Tragkraft2("Tragkraft 2", FeatureGroupType.Advantage), Trendeln(
+			"Trendeln", FeatureGroupType.Advantage), Trittsicherheit("Trittsicherheit", FeatureGroupType.Advantage), Wasserliebend(
+			"Wasserliebend", FeatureGroupType.Advantage), WeicheGänge("Weiche Gänge", FeatureGroupType.Advantage), Zäh(
+			"Zäh", FeatureGroupType.Advantage), Zugkraft("Zugkraft", FeatureGroupType.Advantage), Zugkraft1(
 			"Zugkraft 1", FeatureGroupType.Advantage), Zugkraft2("Zugkraft 2", FeatureGroupType.Advantage), Aberglaube(
 			"Aberglaube", FeatureGroupType.Disadvantage), Agrimothwahn("Agrimothwahn", FeatureGroupType.Disadvantage), Albino(
 			"Albino", FeatureGroupType.Disadvantage), AngstVorInsekten("Angst vor Insekten",

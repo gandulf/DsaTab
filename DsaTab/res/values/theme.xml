@@ -6,6 +6,7 @@
         
         <item name="iconImageViewStyle">@style/Widget.IconImageView</item>        
         <item name="listItemBackground">@drawable/list_background_holo_dark</item>
+        <item name="listShadowBackground">@drawable/dsa_listshadow_bg_dark</item>
         
         <item name="android:soundEffectsEnabled">false</item>
         
@@ -156,7 +157,9 @@
         
     </style>
         
-    <style name="Theme.Dialog.__Dark" parent="@android:style/Theme.Dialog">        
+    <style name="Theme.Dialog.__Dark" parent="@android:style/Theme.Dialog">
+        <item name="listShadowBackground">@drawable/dsa_listshadow_bg_dark</item>
+                
         <item name="iconImageViewStyle">@style/Widget.IconImageView</item>        
         <item name="android:soundEffectsEnabled">false</item>
         

@@ -196,6 +196,11 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 	}
 
 	@Override
+	protected void onResume() {
+		super.onResume();
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
 		com.actionbarsherlock.view.MenuItem item = menu
 				.add(Menu.NONE, R.id.option_tab_add, Menu.NONE, "Tab hinzufügen");
@@ -379,8 +384,11 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 								});
 
 						swipeAdapter.setAbsListView(list);
+						final AnimateAdapter<ListItem> animateAdapter = new AnimateAdapter<ListSettings.ListItem>(
+								swipeAdapter, this);
+						animateAdapter.setAbsListView(list);
 						list.setDivider(null);
-						list.setAdapter(swipeAdapter);
+						list.setAdapter(animateAdapter);
 						list.setOnItemClickListener(this);
 
 						final Spinner listItemType = (Spinner) addons[i].findViewById(R.id.popup_edit_list_type);
@@ -392,6 +400,7 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 							@Override
 							public void onClick(View v) {
 								ListItem newListItem = new ListItem((ListItemType) listItemType.getSelectedItem());
+								animateAdapter.animateShow(listAdapter.getCount());
 								listAdapter.add(newListItem);
 								listSettings.getListItems().add(newListItem);
 							}
@@ -412,18 +421,20 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 
 	@Override
 	public void onDismiss(AbsListView list, int[] reverseSortedPositions) {
-		for (int position : reverseSortedPositions) {
-			if (tabsAdapter.getCount() > position) {
-				tabsAdapter.remove(position);
+		if (list == tabsList) {
+			for (int position : reverseSortedPositions) {
+				if (tabsAdapter.getCount() > position) {
+					tabsAdapter.remove(position);
+				}
 			}
-		}
 
-		if (tabsList.getCheckedItemPosition() != AdapterView.INVALID_POSITION
-				&& tabsList.getCheckedItemPosition() < tabsAdapter.getCount()) {
-			selectTabInfo(tabsAdapter.getItem(tabsList.getCheckedItemPosition()));
-		} else {
-			tabsList.clearChoices();
-			selectTabInfo(null);
+			if (tabsList.getCheckedItemPosition() != AdapterView.INVALID_POSITION
+					&& tabsList.getCheckedItemPosition() < tabsAdapter.getCount()) {
+				selectTabInfo(tabsAdapter.getItem(tabsList.getCheckedItemPosition()));
+			} else {
+				tabsList.clearChoices();
+				selectTabInfo(null);
+			}
 		}
 
 	}

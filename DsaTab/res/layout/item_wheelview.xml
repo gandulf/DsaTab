@@ -12,19 +12,18 @@
 
     <TextView
         android:id="@+id/wheel_label"
+        style="@style/TextLabel"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/icon_button_size"
         android:layout_marginRight="10dp"
         android:gravity="center"
-        android:text="@string/label_le"
-        style="@style/TextLabel"
-         />
+        android:text="@string/label_le" />
 
     <Button
         android:id="@+id/wheel_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"        
         style="@style/TextValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginRight="4dp" />
 
@@ -41,7 +40,8 @@
             android:layout_gravity="center_vertical"
             android:layout_height="@dimen/icon_button_size"
             guilib:orientation="vertical"
-            guilib:visibleItems="@integer/fight_wheel_items" />
+            guilib:visibleItems="@integer/fight_wheel_items" />
+            
     -->
 
 </LinearLayout>

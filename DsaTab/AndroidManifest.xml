@@ -3,11 +3,11 @@
     package="com.dsatab"
     android:installLocation="auto"
     android:versionCode="74"
-    android:versionName="4.2" >
+    android:versionName="4.2-beta" >
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />

@@ -2,7 +2,6 @@
 <resources>
     
     <style name="DsaTabTheme.Light" parent="@DsaTabTheme.__Light">
-        
         <!-- Holo generated styles -->
         <item name="android:editTextBackground">@drawable/edit_text_holo_light</item>
         <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewDsaTabLight</item>
@@ -44,6 +43,7 @@
         <!--  ActionBar styles -->
         
         <item name="flipImageViewStyle">@style/FlipImageView.Checked</item>
+        <item name="listShadowBackground">@drawable/dsa_listshadow_bg_light</item>
     </style>
         
     <style name="Theme.Dialog.Light" parent="@Theme.Dialog.__Light">
@@ -67,6 +67,7 @@
         <!-- Holo generated styles -->
         
         <item name="flipImageViewStyle">@style/FlipImageView.Checked</item>
+        <item name="listShadowBackground">@drawable/dsa_listshadow_bg_light</item>
     </style>    
     
 </resources>

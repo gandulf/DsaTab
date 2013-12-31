@@ -16,44 +16,26 @@
         auto:orientation="vertical"
         auto:useDefaultMargins="true">
         
-        <TextView
-            android:id="@+id/popup_edit_name_label"
-            style="?android:attr/listSeparatorTextViewStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            auto:layout_gravity="fill_horizontal"
-            android:text="Name" >
-
-        </TextView>
-
         <EditText
             android:id="@+id/popup_edit_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            auto:layout_gravity="fill_horizontal"
+            android:hint="Name"
+            auto:layout_gravity="bottom"
             android:inputType="textPersonName" >
 
             <requestFocus>
             </requestFocus>
         </EditText>
 
-        <TextView
-            android:id="@+id/popup_edit_info_label"
-            style="?android:attr/listSeparatorTextViewStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            auto:layout_gravity="fill_horizontal"
-            android:text="Regeln" >
-        </TextView>
-
         <EditText
             android:id="@+id/popup_edit_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             auto:layout_gravity="fill_horizontal"
-            android:hint="z.B.: MU+2, KL-1"
+            android:hint="Regeln z.B.: MU+2, KL-1"
             android:inputType="textMultiLine"
-            android:lines="3" >
+            android:lines="3">
         </EditText>
 
         <TextView
@@ -64,25 +46,15 @@
             android:text="Regeln im Format &quot;MU+2, KL-1, Zauber+1, Talente+2, Eigenschaften+1, AT+1, PA+1, INI+2, AW+2, MR+1&quot; eingeben. Kein Leerzeichen zwischen Eigenschaft und +/-. Um TP anzupassen entweder den Namen der Waffe, des Talentes, des Zaubers, ... oder AT/FK gefolgt von TP eingeben z.B.: AT TP+2, Langdolch TP+1, Dolche TP-1."
             android:textAppearance="?android:attr/textAppearanceSmall" >
         </TextView>
-
-        <TextView
-            android:id="@+id/popup_edit_duration_label"
-            style="?android:attr/listSeparatorTextViewStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            auto:layout_gravity="fill_horizontal"
-            android:text="Info" >
-        </TextView>
         
         <EditText
             android:id="@+id/popup_edit_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             auto:layout_gravity="fill_horizontal"
+            android:hint="Info"
             android:inputType="textShortMessage" >
         </EditText>
-
-        
 
         <CheckBox
             android:id="@+id/popup_edit_active"

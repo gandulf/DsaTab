@@ -5,6 +5,8 @@
         <attr name="iconImageViewStyle" format="reference"/>
         
         <attr name="listItemBackground" format="reference"/>
+        <attr name="listShadowBackground" format="reference"/>
+        
         <attr name="selectableBackground" format="reference" />
         <attr name="imgDividerVertical" format="reference" />
         <attr name="imgDragVertical" format="reference"/>

@@ -55,6 +55,7 @@ public abstract class BaseListFragment extends BaseFragment implements OnItemLon
 
 	}
 
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public void onItemChecked(AdapterView<?> parent, int position, boolean value) {
 
@@ -67,7 +68,7 @@ public abstract class BaseListFragment extends BaseFragment implements OnItemLon
 
 		SparseBooleanArray checked;
 		if (gridViewCompat != null)
-			checked = gridViewCompat.getCheckedItemPositionsC();
+			checked = gridViewCompat.getCheckedItemPositions();
 		else if (parent instanceof ListView) {
 			checked = ((ListView) parent).getCheckedItemPositions();
 		} else {
@@ -118,7 +119,7 @@ public abstract class BaseListFragment extends BaseFragment implements OnItemLon
 
 			SparseBooleanArray checked = null;
 			if (gridViewCompat != null)
-				checked = gridViewCompat.getCheckedItemPositionsC();
+				checked = gridViewCompat.getCheckedItemPositions();
 			else if (parent instanceof ListView)
 				checked = ((ListView) parent).getCheckedItemPositions();
 			else if (parent instanceof GridView) {
@@ -165,6 +166,7 @@ public abstract class BaseListFragment extends BaseFragment implements OnItemLon
 	 * @see android.widget.AdapterView.OnItemLongClickListener#onItemLongClick(android .widget.AdapterView,
 	 * android.view.View, int, long)
 	 */
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 		GridViewCompat gridViewCompat = null;
@@ -173,7 +175,7 @@ public abstract class BaseListFragment extends BaseFragment implements OnItemLon
 		}
 
 		if (gridViewCompat != null)
-			gridViewCompat.setItemCheckedC(position, !gridViewCompat.isItemCheckedC(position));
+			gridViewCompat.setItemChecked(position, !gridViewCompat.isItemChecked(position));
 		else if (parent instanceof ListView) {
 			((ListView) parent).setItemChecked(position, !((ListView) parent).isItemChecked(position));
 		} else {
@@ -184,7 +186,7 @@ public abstract class BaseListFragment extends BaseFragment implements OnItemLon
 
 		SparseBooleanArray checked;
 		if (gridViewCompat != null)
-			checked = gridViewCompat.getCheckedItemPositionsC();
+			checked = gridViewCompat.getCheckedItemPositions();
 		else if (parent instanceof ListView) {
 			checked = ((ListView) parent).getCheckedItemPositions();
 		} else {

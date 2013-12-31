@@ -12,8 +12,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.os.Build;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
@@ -273,11 +275,15 @@ public class HeroConfiguration {
 		return getTabs().get(index);
 	}
 
+	@SuppressLint("InlinedApi")
 	private boolean isDualPanel() {
 		Configuration configuration = DsaTabApplication.getInstance().getResources().getConfiguration();
 		int size = Configuration.SCREENLAYOUT_SIZE_MASK & configuration.screenLayout;
-
-		return size == Configuration.SCREENLAYOUT_SIZE_XLARGE;
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+			return size == Configuration.SCREENLAYOUT_SIZE_XLARGE;
+		} else {
+			return size == Configuration.SCREENLAYOUT_SIZE_LARGE;
+		}
 	}
 
 	private int getTabResourceId(Class<? extends BaseFragment> clazz) {
@@ -425,8 +431,10 @@ public class HeroConfiguration {
 
 			tabInfo = new TabInfo(ListableFragment.class, ListableFragment.class, R.drawable.tab_magic);
 			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
+			listSettings.addListItem(new ListItem(AttributeType.Astralenergie_Aktuell));
 			listSettings.addListItem(new ListItem(ListItemType.Spell));
 			listSettings = (ListSettings) tabInfo.getFilterSettings(1);
+			listSettings.addListItem(new ListItem(AttributeType.Karmaenergie_Aktuell));
 			listSettings.addListItem(new ListItem(ListItemType.Talent, TalentGroupType.Gaben.name()));
 			listSettings.addListItem(new ListItem(ListItemType.Header, "Künste"));
 			listSettings.addListItem(new ListItem(ListItemType.Art));
@@ -437,8 +445,6 @@ public class HeroConfiguration {
 			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
 			listSettings.addListItem(new ListItem(AttributeType.Lebensenergie_Aktuell));
 			listSettings.addListItem(new ListItem(AttributeType.Ausdauer_Aktuell));
-			listSettings.addListItem(new ListItem(AttributeType.Astralenergie_Aktuell));
-			listSettings.addListItem(new ListItem(AttributeType.Karmaenergie_Aktuell));
 			listSettings.addListItem(new ListItem(AttributeType.Initiative_Aktuell));
 			listSettings.addListItem(new ListItem(ListItemType.Header, "Gegenstände"));
 			listSettings.addListItem(new ListItem(ListItemType.EquippedItem));
@@ -469,11 +475,13 @@ public class HeroConfiguration {
 
 			tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_magic);
 			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
+			listSettings.addListItem(new ListItem(AttributeType.Astralenergie_Aktuell));
 			listSettings.addListItem(new ListItem(ListItemType.Spell));
 			tabInfos.add(tabInfo);
 
 			tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_art);
 			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
+			listSettings.addListItem(new ListItem(AttributeType.Karmaenergie_Aktuell));
 			listSettings.addListItem(new ListItem(ListItemType.Talent, TalentGroupType.Gaben.name()));
 			listSettings.addListItem(new ListItem(ListItemType.Header, "Künste"));
 			listSettings.addListItem(new ListItem(ListItemType.Art));
@@ -485,8 +493,6 @@ public class HeroConfiguration {
 			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
 			listSettings.addListItem(new ListItem(AttributeType.Lebensenergie_Aktuell));
 			listSettings.addListItem(new ListItem(AttributeType.Ausdauer_Aktuell));
-			listSettings.addListItem(new ListItem(AttributeType.Astralenergie_Aktuell));
-			listSettings.addListItem(new ListItem(AttributeType.Karmaenergie_Aktuell));
 			listSettings.addListItem(new ListItem(AttributeType.Initiative_Aktuell));
 			listSettings.addListItem(new ListItem(ListItemType.Header, "Gegenstände"));
 			listSettings.addListItem(new ListItem(ListItemType.EquippedItem));

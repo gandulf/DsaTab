@@ -3,14 +3,14 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.5.+'
+        classpath 'com.android.tools.build:gradle:0.7.+'
     }
 }
 
 apply plugin: 'android'
 
 group = 'com.dsatab'
-version = '4.1.6'
+version = '4.2-beta'
 
 repositories {
   mavenCentral()
@@ -18,13 +18,12 @@ repositories {
 
 dependencies {
     compile "com.android.support:gridlayout-v7:19.0.+"
-    compile 'com.nhaarman.listviewanimations:library:2.5.2'
     compile project(':guiLib')
     compile fileTree(dir: 'libs', include: '*.jar')
 }
 
 android {
-    compileSdkVersion 18
+    compileSdkVersion 19
     buildToolsVersion "19.0.1"
 
     sourceSets {

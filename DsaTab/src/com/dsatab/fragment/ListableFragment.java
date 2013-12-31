@@ -44,7 +44,9 @@ import com.dsatab.activity.ModificatorEditActivity;
 import com.dsatab.data.Art;
 import com.dsatab.data.Attribute;
 import com.dsatab.data.CombatTalent;
+import com.dsatab.data.Connection;
 import com.dsatab.data.CustomModificator;
+import com.dsatab.data.Event;
 import com.dsatab.data.Hero;
 import com.dsatab.data.MetaTalent;
 import com.dsatab.data.Probe;
@@ -406,7 +408,12 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 								break;
 							}
 							case R.id.option_delete: {
-								getHero().removeEquippedItem(equippedItem);
+								if (list.getAdapter() instanceof AnimateAdapter) {
+									AnimateAdapter<Listable> adapter = (AnimateAdapter<Listable>) list.getAdapter();
+									adapter.animateDismiss(checkedPositions.keyAt(i));
+								} else {
+									getHero().removeEquippedItem(equippedItem);
+								}
 								break;
 							}
 							}
@@ -1318,117 +1325,138 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 	private void fillListItems(Hero hero) {
 		listItemAdapter.setNotifyOnChange(false);
 		listItemAdapter.clear();
+		if (getFilterSettings() != null && getFilterSettings().getListItems() != null) {
+			for (ListItem listItem : getFilterSettings().getListItems()) {
+				switch (listItem.getType()) {
+				case Talent:
+					if (TextUtils.isEmpty(listItem.getName())) {
 
-		for (ListItem listItem : getFilterSettings().getListItems()) {
-			switch (listItem.getType()) {
-			case Talent:
-				if (TextUtils.isEmpty(listItem.getName())) {
+						for (TalentGroupType talentGroupType : TalentGroupType.values()) {
+							TalentGroup talentGroup = hero.getTalentGroup(talentGroupType);
 
-					for (TalentGroupType talentGroupType : TalentGroupType.values()) {
-						TalentGroup talentGroup = hero.getTalentGroup(talentGroupType);
-
-						if (talentGroup != null && !talentGroup.getTalents().isEmpty()) {
-							listItemAdapter.add(new HeaderListItem(talentGroupType.name()));
-							listItemAdapter.addAll(talentGroup.getTalents());
+							if (talentGroup != null && !talentGroup.getTalents().isEmpty()) {
+								listItemAdapter.add(new HeaderListItem(talentGroupType.name()));
+								listItemAdapter.addAll(talentGroup.getTalents());
+							}
 						}
-					}
 
-				} else {
-					try {
-						TalentGroupType talentGroupType = TalentGroupType.valueOf(listItem.getName());
-						TalentGroup talentGroup = hero.getTalentGroup(talentGroupType);
-						if (talentGroup != null && !talentGroup.getTalents().isEmpty()) {
-							listItemAdapter.addAll(talentGroup.getTalents());
-						}
-					} catch (IllegalArgumentException e) {
-						// if its no talentgrouptype name try adding talent by name
-						Talent talent = hero.getTalent(listItem.getName());
-						if (talent != null) {
-							listItemAdapter.add(hero.getTalent(listItem.getName()));
-						}
-					}
-				}
-				break;
-			case Spell:
-				if (TextUtils.isEmpty(listItem.getName())) {
-					listItemAdapter.addAll(hero.getSpells().values());
-				} else {
-					Spell spell = hero.getSpell(listItem.getName());
-					if (spell != null) {
-						listItemAdapter.add(spell);
-					}
-				}
-				break;
-			case Art:
-				if (TextUtils.isEmpty(listItem.getName())) {
-					listItemAdapter.addAll(hero.getArts().values());
-				} else {
-					Art art = hero.getArt(listItem.getName());
-					if (art != null) {
-						listItemAdapter.add(art);
-					}
-				}
-				break;
-			case Attribute:
-				if (TextUtils.isEmpty(listItem.getName())) {
-					listItemAdapter.addAll(hero.getAttributes().values());
-				} else {
-					try {
-						AttributeType attributeType = AttributeType.valueOf(listItem.getName());
-						Attribute attr = hero.getAttribute(attributeType);
-						if (attr != null) {
-							listItemAdapter.add(attr);
-						}
-					} catch (IllegalArgumentException e) {
-						Debug.error(e);
-					}
-				}
-				break;
-			case EquippedItem:
-				if (TextUtils.isEmpty(listItem.getName())) {
-					List<EquippedItem> items = hero.getEquippedItems();
-					Util.sort(items);
-					listItemAdapter.addAll(items);
-
-					addWaffenloseTalente();
-				} else {
-					EquippedItem item = hero.getEquippedItem(getHero().getActiveSet(), listItem.getName());
-					if (item != null) {
-						listItemAdapter.add(item);
-					}
-				}
-				break;
-			case Modificator:
-				if (TextUtils.isEmpty(listItem.getName())) {
-					listItemAdapter.addAll(hero.getUserModificators());
-				} else {
-					listItemAdapter.add(hero.getUserModificators(listItem.getName()));
-				}
-				break;
-			case Header:
-				listItemAdapter.add(new HeaderListItem(listItem.getName()));
-				break;
-			case Document:
-				File pdfsDir = DsaTabApplication.getDirectory(DsaTabApplication.DIR_PDFS);
-				if (pdfsDir != null && pdfsDir.exists() && pdfsDir.isDirectory()) {
-					File[] pdfFiles = pdfsDir.listFiles();
-					List<File> documents;
-					if (pdfFiles != null) {
-						documents = Arrays.asList(pdfFiles);
-						Collections.sort(documents, new Util.FileNameComparator());
 					} else {
-						documents = Collections.emptyList();
-						String path = pdfsDir.getAbsolutePath();
-						Toast.makeText(getActivity(), Util.getText(R.string.message_documents_empty, path).toString(),
-								Toast.LENGTH_SHORT).show();
+						try {
+							TalentGroupType talentGroupType = TalentGroupType.valueOf(listItem.getName());
+							TalentGroup talentGroup = hero.getTalentGroup(talentGroupType);
+							if (talentGroup != null && !talentGroup.getTalents().isEmpty()) {
+								listItemAdapter.addAll(talentGroup.getTalents());
+							}
+						} catch (IllegalArgumentException e) {
+							// if its no talentgrouptype name try adding talent by name
+							Talent talent = hero.getTalent(listItem.getName());
+							if (talent != null) {
+								listItemAdapter.add(talent);
+							}
+						}
 					}
-					for (File file : documents) {
-						listItemAdapter.add(new FileListable(file));
+					break;
+				case Spell:
+					if (TextUtils.isEmpty(listItem.getName())) {
+						listItemAdapter.addAll(hero.getSpells().values());
+					} else {
+						Spell spell = hero.getSpell(listItem.getName());
+						if (spell != null) {
+							listItemAdapter.add(spell);
+						}
 					}
-				}
-				break;
-			}
+					break;
+				case Art:
+					if (TextUtils.isEmpty(listItem.getName())) {
+						listItemAdapter.addAll(hero.getArts().values());
+					} else {
+						Art art = hero.getArt(listItem.getName());
+						if (art != null) {
+							listItemAdapter.add(art);
+						}
+					}
+					break;
+				case Attribute:
+					if (TextUtils.isEmpty(listItem.getName())) {
+						listItemAdapter.addAll(hero.getAttributes().values());
+					} else {
+						try {
+							AttributeType attributeType = AttributeType.valueOf(listItem.getName());
+							Attribute attr = hero.getAttribute(attributeType);
+							if (attr != null) {
 
+								switch (attr.getType()) {
+								case Astralenergie_Aktuell:
+								case Astralenergie:
+									Integer ae = hero.getAttributeValue(AttributeType.Astralenergie);
+									if (ae != null && ae > 0) {
+										listItemAdapter.add(attr);
+									}
+									break;
+								case Karmaenergie_Aktuell:
+								case Karmaenergie:
+									Integer ke = hero.getAttributeValue(AttributeType.Karmaenergie);
+									if (ke != null && ke > 0) {
+										listItemAdapter.add(attr);
+									}
+									break;
+								default:
+									listItemAdapter.add(attr);
+								}
+
+							}
+						} catch (IllegalArgumentException e) {
+							Debug.error(e);
+						}
+					}
+					break;
+				case EquippedItem:
+					if (TextUtils.isEmpty(listItem.getName())) {
+						List<EquippedItem> items = hero.getEquippedItems();
+						Util.sort(items);
+						listItemAdapter.addAll(items);
+
+						addWaffenloseTalente();
+					} else {
+						EquippedItem item = hero.getEquippedItem(getHero().getActiveSet(), listItem.getName());
+						if (item != null) {
+							listItemAdapter.add(item);
+						}
+					}
+					break;
+				case Modificator:
+					if (TextUtils.isEmpty(listItem.getName())) {
+						listItemAdapter.addAll(hero.getUserModificators());
+					} else {
+						listItemAdapter.add(hero.getUserModificators(listItem.getName()));
+					}
+					break;
+				case Header:
+					listItemAdapter.add(new HeaderListItem(listItem.getName()));
+					break;
+				case Document:
+					File pdfsDir = DsaTabApplication.getDirectory(DsaTabApplication.DIR_PDFS);
+					if (pdfsDir != null && pdfsDir.exists() && pdfsDir.isDirectory()) {
+						File[] pdfFiles = pdfsDir.listFiles();
+						List<File> documents;
+						if (pdfFiles != null) {
+							documents = Arrays.asList(pdfFiles);
+							Collections.sort(documents, new Util.FileNameComparator());
+						} else {
+							documents = Collections.emptyList();
+							String path = pdfsDir.getAbsolutePath();
+							Toast.makeText(getActivity(),
+									Util.getText(R.string.message_documents_empty, path).toString(), Toast.LENGTH_SHORT)
+									.show();
+						}
+						for (File file : documents) {
+							listItemAdapter.add(new FileListable(file));
+						}
+					}
+					break;
+				}
+
+			}
 		}
 		listItemAdapter.notifyDataSetChanged();
 	}
@@ -1587,7 +1615,6 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 	@Override
 	public void onItemChanged(Item item) {
 		// TODO Auto-generated method stub
-
 	}
 
 	/*
@@ -1598,7 +1625,6 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 	 */
 	@Override
 	public void onItemContainerAdded(ItemContainer itemContainer) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -1610,7 +1636,6 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 	 */
 	@Override
 	public void onItemContainerRemoved(ItemContainer itemContainer) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -1622,7 +1647,6 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 	 */
 	@Override
 	public void onItemContainerChanged(ItemContainer itemContainer) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -1631,17 +1655,18 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 		for (int pos : positions) {
 			Listable item = listItemAdapter.getItem(pos);
 			listItemAdapter.remove(item);
-			// if (item instanceof Event)
-			// getHero().removeEvent((Event) item);
-			// else if (item instanceof Connection)
-			// getHero().removeConnection((Connection) item);
+			if (item instanceof EquippedItem) {
+				getHero().removeEquippedItem((EquippedItem) item);
+			} else if (item instanceof Event)
+				getHero().removeEvent((Event) item);
+			else if (item instanceof Connection)
+				getHero().removeConnection((Connection) item);
 		}
 
 	}
 
 	@Override
-	public void onShow(AbsListView arg0, int[] arg1) {
-		// TODO Auto-generated method stub
+	public void onShow(AbsListView list, int[] positions) {
 
 	}
 

@@ -33,26 +33,48 @@ public class DualPaneFragment extends SherlockFragment implements FilterChangedL
 
 	private TabInfo tabInfo;
 
-	public DualPaneFragment(TabInfo tabInfo) {
-		fragments = new ArrayList<Fragment>();
-		this.tabInfo = tabInfo;
+	public static DualPaneFragment makeInstance(TabInfo tabInfo) {
+		DualPaneFragment fragment = new DualPaneFragment();
+		Bundle bundle = new Bundle();
+		bundle.putParcelable(TABINFO, tabInfo);
+		fragment.setArguments(bundle);
+		return fragment;
 
-		try {
-			for (int i = 0; i < TabInfo.MAX_TABS_PER_PAGE; i++) {
-				if (tabInfo.getActivityClazz(i) != null) {
-					BaseFragment f = tabInfo.getFragment(i);
-					fragments.add(f);
-				} else {
-					fragments.add(null);
-				}
-			}
-		} catch (java.lang.InstantiationException e) {
-			Debug.error(e);
-		} catch (IllegalAccessException e) {
-			Debug.error(e);
-		}
+	}
+
+	public DualPaneFragment() {
+		fragments = new ArrayList<Fragment>();
 		setRetainInstance(true);
 		setHasOptionsMenu(true);
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		if (getArguments() != null) {
+			this.tabInfo = getArguments().getParcelable(TABINFO);
+		}
+		if (tabInfo != null) {
+			try {
+
+				for (int i = 0; i < TabInfo.MAX_TABS_PER_PAGE; i++) {
+					if (tabInfo.getActivityClazz(i) != null) {
+						BaseFragment f = tabInfo.getFragment(i);
+						fragments.add(f);
+					} else {
+						fragments.add(null);
+					}
+				}
+
+			} catch (java.lang.InstantiationException e) {
+				Debug.error(e);
+			} catch (IllegalAccessException e) {
+				Debug.error(e);
+			}
+		} else {
+			Debug.warning("Created DualPaneFragment without Tabinfo.");
+		}
 	}
 
 	public TabInfo getTabInfo() {

@@ -65,8 +65,9 @@ public class BodyFragment extends BaseFragment implements OnClickListener, HeroI
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
-		menu.removeItem(R.id.option_set);
-		inflater.inflate(R.menu.body_menu, menu);
+		if (menu.findItem(R.id.option_set) == null) {
+			inflater.inflate(R.menu.body_menu, menu);
+		}
 	}
 
 	/*

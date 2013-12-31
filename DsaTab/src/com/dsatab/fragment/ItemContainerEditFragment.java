@@ -42,7 +42,8 @@ public class ItemContainerEditFragment extends BaseFragment implements OnItemSel
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+	 * android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,7 +74,9 @@ public class ItemContainerEditFragment extends BaseFragment implements OnItemSel
 		if (itemContainer == null) {
 			itemContainer = new ItemContainer();
 		}
-		editCapacity.setText(Integer.toString(itemContainer.getCapacity()));
+		if (itemContainer.getCapacity() > 0) {
+			editCapacity.setText(Integer.toString(itemContainer.getCapacity()));
+		}
 		editName.setText(itemContainer.getName());
 		iconView.setImageURI(itemContainer.getIconUri());
 
@@ -93,7 +96,8 @@ public class ItemContainerEditFragment extends BaseFragment implements OnItemSel
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget .AdapterView, android.view.View, int, long)
+	 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget .AdapterView, android.view.View,
+	 * int, long)
 	 */
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

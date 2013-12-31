@@ -12,6 +12,7 @@ import android.view.WindowManager;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.dsatab.DsaTabApplication;
+import com.dsatab.util.Hint;
 import com.dsatab.util.Util;
 
 public class BaseFragmentActivity extends SherlockFragmentActivity {
@@ -28,6 +29,12 @@ public class BaseFragmentActivity extends SherlockFragmentActivity {
 		updateFullscreenStatus(preferences.getBoolean(DsaTabPreferenceActivity.KEY_FULLSCREEN, false));
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		showRandomHint();
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -37,6 +44,10 @@ public class BaseFragmentActivity extends SherlockFragmentActivity {
 	protected void onDestroy() {
 		// Util.unbindDrawables(getWindow().getDecorView());
 		super.onDestroy();
+	}
+
+	protected boolean showRandomHint() {
+		return Hint.showRandomHint(getClass().getSimpleName(), this);
 	}
 
 	protected void applyPreferencesToTheme() {

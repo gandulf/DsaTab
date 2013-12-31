@@ -28,4 +28,6 @@ public interface NotesItem {
 	public EventCategory getCategory();
 
 	public String getName();
+
+	public String getComment();
 }

@@ -8,9 +8,8 @@
         android:id="@+id/popup_tab_list"
         android:layout_width="120dp"
         android:layout_height="match_parent"
-        android:layout_margin="4dp"
-        android:divider="@null"
-        />
+        android:background="?attr/listShadowBackground"
+        android:divider="@null" />
 
     <TabHost
         android:id="@android:id/tabhost"
@@ -39,13 +38,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical" >
-
-                    <TextView                        
-                        style="?android:attr/listSeparatorTextViewStyle"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="left|center_vertical"
-                        android:text="Titel" />
 
                     <EditText
                         android:id="@+id/popup_edit_title"
@@ -96,13 +88,6 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical" >
 
-                    <TextView                        
-                        style="?android:attr/listSeparatorTextViewStyle"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="left|center_vertical"
-                        android:text="Art" />
-
                     <Spinner
                         android:id="@+id/popup_edit_primary"
                         android:layout_width="match_parent"
@@ -113,8 +98,9 @@
                     <LinearLayout
                         android:id="@+id/popup_edit_primary_addon"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" >
+                        android:layout_height="0dp"
+                        android:orientation="vertical"
+                        android:layout_weight="1" >
                     </LinearLayout>
                 </LinearLayout>
 
@@ -123,13 +109,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical" >
-
-                    <TextView                        
-                        style="?android:attr/listSeparatorTextViewStyle"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="left|center_vertical"
-                        android:text="Art" />
 
                     <Spinner
                         android:id="@+id/popup_edit_secondary"
@@ -141,7 +120,8 @@
                     <LinearLayout
                         android:id="@+id/popup_edit_secondary_addon"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
                         android:orientation="vertical" >
                     </LinearLayout>
                 </LinearLayout>

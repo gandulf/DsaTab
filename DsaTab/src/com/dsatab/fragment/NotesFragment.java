@@ -196,9 +196,7 @@ public class NotesFragment extends BaseListFragment implements OnItemClickListen
 	@Override
 	public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
 		if (item.getItemId() == R.id.option_note_add) {
-
-			notesAdapter.swapItems(3, 4);
-			// editEvent(null, null);
+			editEvent(null, null);
 			return true;
 		} else if (item.getItemId() == R.id.option_note_record) {
 			recordEvent();

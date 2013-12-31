@@ -33,5 +33,20 @@
             title="Zusätzliche Probenzuschläge"
             viewId="@id/dice_info"/>        
     </fragment>
+    
+    <fragment name="TabEditActivity">
+        <hint
+            id="DRAG_TABS"
+            description="Mittels Drag&amp;Drop kann die Reihenfolge der Tabs angepasst werden."
+            title="Reihenfolge des Tabs"
+            viewId="@id/popup_tab_list"/>
+        
+        <hint
+            id="TAB_TABS"
+            description="Über die Tabs 'Primär' und 'Sekundär' kannst du den Inhalt konfigurieren."
+            title="Tab Einstellungen"
+            viewId="@android:id/tabs"/>
+        
+    </fragment>
 
 </hints>

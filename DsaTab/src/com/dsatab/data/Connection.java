@@ -27,6 +27,11 @@ public class Connection implements NotesItem, Listable {
 		return EventCategory.Bekanntschaft;
 	}
 
+	@Override
+	public String getComment() {
+		return getDescription();
+	}
+
 	public String getDescription() {
 		return description;
 	}

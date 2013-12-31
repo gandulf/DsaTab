@@ -8,12 +8,14 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -61,6 +63,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 	private ActionMode.Callback mCallback;
 
 	private final class HeroesActionMode implements ActionMode.Callback {
+		@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 		@Override
 		public boolean onActionItemClicked(ActionMode mode, com.actionbarsherlock.view.MenuItem item) {
 			boolean notifyChanged = false;
@@ -68,7 +71,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 				return false;
 			}
 
-			SparseBooleanArray checkedPositions = list.getCheckedItemPositionsC();
+			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
 			if (checkedPositions != null) {
 				adapter.setNotifyOnChange(false);
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
@@ -129,11 +132,12 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 			return true;
 		}
 
+		@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 		@Override
 		public void onDestroyActionMode(ActionMode mode) {
 			mMode = null;
 			if (list != null) {
-				list.clearChoicesC();
+				list.clearChoices();
 			}
 			if (adapter != null) {
 				adapter.notifyDataSetChanged();
@@ -146,12 +150,13 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 		 * @see com.actionbarsherlock.view.ActionMode.Callback#onPrepareActionMode
 		 * (com.actionbarsherlock.view.ActionMode, com.actionbarsherlock.view.Menu)
 		 */
+		@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 		@Override
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
 			int selected = 0;
 			boolean online = false;
 			boolean deletable = false;
-			SparseBooleanArray checkedPositions = list.getCheckedItemPositionsC();
+			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
 					if (checkedPositions.valueAt(i)) {
@@ -196,6 +201,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 	 * 
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setTheme(DsaTabApplication.getInstance().getCustomTheme());
@@ -260,7 +266,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 			heroes = DsaTabApplication.getInstance().getHeroes();
 
 		list = (GridViewCompat) findViewById(R.id.popup_hero_chooser_list);
-		list.setChoiceModeC(AbsListView.CHOICE_MODE_MULTIPLE);
+		list.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 		adapter = new HeroAdapter(this, R.layout.hero_chooser_item, heroes);
 		list.setAdapter(adapter);
 		list.setOnItemClickListener(this);
@@ -458,10 +464,11 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		if (mMode != null) {
-			SparseBooleanArray checked = list.getCheckedItemPositionsC();
+			SparseBooleanArray checked = list.getCheckedItemPositions();
 			boolean hasCheckedElement = false;
 			for (int i = 0; i < checked.size() && !hasCheckedElement; i++) {
 				hasCheckedElement = checked.valueAt(i);
@@ -472,7 +479,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 				mMode.finish();
 			}
 		} else {
-			list.setItemCheckedC(position, false);
+			list.setItemChecked(position, false);
 
 			HeroFileInfo hero = (HeroFileInfo) list.getItemAtPosition(position);
 
@@ -502,6 +509,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 		}
 	}
 
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 		if (mCallback == null) {
@@ -509,11 +517,11 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 		}
 		GridViewCompat gridView = (GridViewCompat) parent;
 
-		gridView.setItemCheckedC(position, !gridView.isItemCheckedC(position));
+		gridView.setItemChecked(position, !gridView.isItemChecked(position));
 
 		List<Object> checkedObjects = new ArrayList<Object>();
 
-		SparseBooleanArray checked = gridView.getCheckedItemPositionsC();
+		SparseBooleanArray checked = gridView.getCheckedItemPositions();
 		boolean hasCheckedElement = false;
 		if (checked != null) {
 			for (int i = 0; i < checked.size() && !hasCheckedElement; i++) {
