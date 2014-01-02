@@ -31,7 +31,6 @@ import com.dsatab.fragment.CharacterFragment;
 import com.dsatab.fragment.ItemsListFragment;
 import com.dsatab.fragment.ListableFragment;
 import com.dsatab.fragment.MapFragment;
-import com.dsatab.fragment.NotesFragment;
 import com.dsatab.fragment.PurseFragment;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
@@ -455,8 +454,11 @@ public class HeroConfiguration {
 			tabInfos.add(tabInfo);
 
 			tabInfos.add(new TabInfo(ItemsListFragment.class, getTabResourceId(ItemsListFragment.class), false, true));
-			tabInfos.add(new TabInfo(NotesFragment.class, PurseFragment.class, getTabResourceId(NotesFragment.class),
-					false, false));
+			tabInfo = new TabInfo(ListableFragment.class, PurseFragment.class, R.drawable.tab_notes, false, false);
+			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
+			listSettings.addListItem(new ListItem(ListItemType.Notes));
+			tabInfo.setTitle("Notizen");
+			tabInfos.add(tabInfo);
 
 			tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_pdf, false, false);
 			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
@@ -502,7 +504,12 @@ public class HeroConfiguration {
 			tabInfos.add(tabInfo);
 
 			tabInfos.add(new TabInfo(ItemsListFragment.class, getTabResourceId(ItemsListFragment.class), false, true));
-			tabInfos.add(new TabInfo(NotesFragment.class, getTabResourceId(NotesFragment.class), false, false));
+
+			tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_notes, false, false);
+			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
+			listSettings.addListItem(new ListItem(ListItemType.Notes));
+			tabInfo.setTitle("Notizen");
+
 			tabInfos.add(new TabInfo(PurseFragment.class, getTabResourceId(PurseFragment.class), false, false));
 
 			tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_pdf, false, false);

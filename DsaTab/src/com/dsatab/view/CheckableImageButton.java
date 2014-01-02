@@ -4,8 +4,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageButton;
 
-import com.dsatab.view.listener.CheckableListenable;
-import com.dsatab.view.listener.OnCheckedChangeListener;
+import com.gandulf.guilib.listener.CheckableListenable;
+import com.gandulf.guilib.listener.OnCheckedChangeListener;
 
 public class CheckableImageButton extends ImageButton implements CheckableListenable {
 	boolean mChecked = false;

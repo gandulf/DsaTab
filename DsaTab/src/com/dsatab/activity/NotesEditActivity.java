@@ -1,5 +1,6 @@
 package com.dsatab.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,11 +10,40 @@ import android.view.ViewGroup;
 import com.actionbarsherlock.app.ActionBar;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
+import com.dsatab.data.Connection;
+import com.dsatab.data.Event;
 import com.dsatab.fragment.NotesEditFragment;
 
 public class NotesEditActivity extends BaseFragmentActivity {
 
 	private NotesEditFragment fragment;
+
+	public static void openEditEvent(Event event, String audioPath, Activity activity) {
+		Intent intent = new Intent(activity, NotesEditActivity.class);
+		if (event != null) {
+			intent.putExtra(NotesEditFragment.INTENT_NOTES_ITEM, event);
+			intent.putExtra(NotesEditFragment.INTENT_NAME_EVENT_TEXT, event.getComment());
+			intent.putExtra(NotesEditFragment.INTENT_NAME_EVENT_NAME, event.getName());
+			intent.putExtra(NotesEditFragment.INTENT_NAME_EVENT_CATEGORY, event.getCategory());
+		}
+		if (audioPath != null) {
+			intent.putExtra(NotesEditFragment.INTENT_NAME_AUDIO_PATH, audioPath);
+		}
+		activity.startActivity(intent);
+	}
+
+	public static void openEditConnection(Connection event, Activity activity) {
+
+		Intent intent = new Intent(activity, NotesEditActivity.class);
+		if (event != null) {
+			intent.putExtra(NotesEditFragment.INTENT_NOTES_ITEM, event);
+			intent.putExtra(NotesEditFragment.INTENT_NAME_EVENT_TEXT, event.getDescription());
+			intent.putExtra(NotesEditFragment.INTENT_NAME_EVENT_NAME, event.getName());
+			intent.putExtra(NotesEditFragment.INTENT_NAME_EVENT_SOZIALSTATUS, event.getSozialStatus());
+			intent.putExtra(NotesEditFragment.INTENT_NAME_EVENT_CATEGORY, event.getCategory());
+		}
+		activity.startActivity(intent);
+	}
 
 	/*
 	 * (non-Javadoc)

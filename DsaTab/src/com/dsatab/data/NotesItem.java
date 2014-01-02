@@ -1,10 +1,11 @@
 package com.dsatab.data;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 import com.dsatab.data.enums.EventCategory;
 
-public interface NotesItem {
+public interface NotesItem extends Serializable {
 
 	public static final Comparator<NotesItem> COMPARATOR = new Comparator<NotesItem>() {
 		@Override

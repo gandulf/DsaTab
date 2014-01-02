@@ -10,7 +10,7 @@
         android:id="@+id/inc_archery_item"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        layout="@layout/item_listitem" >
+        layout="@layout/item_listitem_equippeditem" >
     </include>
 
     <TextView

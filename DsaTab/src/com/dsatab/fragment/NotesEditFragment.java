@@ -16,7 +16,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.dsatab.R;
+import com.dsatab.data.Connection;
+import com.dsatab.data.Event;
 import com.dsatab.data.Hero;
+import com.dsatab.data.NotesItem;
 import com.dsatab.data.adapter.EventCatgoryAdapter;
 import com.dsatab.data.enums.EventCategory;
 import com.dsatab.util.Util;
@@ -26,6 +29,8 @@ import com.dsatab.util.Util;
  * 
  */
 public class NotesEditFragment extends BaseFragment implements OnItemSelectedListener {
+
+	public static final String INTENT_NOTES_ITEM = "notesItem";
 
 	public static final String INTENT_NAME_EVENT_CATEGORY = "eventCategory";
 	public static final String INTENT_NAME_EVENT_TEXT = "eventText";
@@ -47,10 +52,13 @@ public class NotesEditFragment extends BaseFragment implements OnItemSelectedLis
 
 	private String audioPath;
 
+	private NotesItem notesItem;
+
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+	 * android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -92,11 +100,27 @@ public class NotesEditFragment extends BaseFragment implements OnItemSelectedLis
 			if (category == null)
 				category = EventCategory.Misc;
 
+			notesItem = (NotesItem) extra.getSerializable(INTENT_NOTES_ITEM);
+
 			String event = extra.getString(INTENT_NAME_EVENT_TEXT);
 			String name = extra.getString(INTENT_NAME_EVENT_NAME);
 			String sozial = extra.getString(INTENT_NAME_EVENT_SOZIALSTATUS);
-
 			audioPath = extra.getString(INTENT_NAME_AUDIO_PATH);
+
+			if (notesItem != null) {
+				event = notesItem.getComment();
+				name = notesItem.getName();
+				category = notesItem.getCategory();
+
+				if (notesItem instanceof Connection) {
+					Connection connection = (Connection) notesItem;
+					sozial = connection.getSozialStatus();
+				} else if (notesItem instanceof Event) {
+					Event eventItem = (Event) notesItem;
+					audioPath = eventItem.getAudioPath();
+				}
+			}
+
 			if (category == EventCategory.Heldensoftware) {
 				categorySpn.setVisibility(View.GONE);
 				categoryLabel.setVisibility(View.GONE);
@@ -149,7 +173,8 @@ public class NotesEditFragment extends BaseFragment implements OnItemSelectedLis
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget .AdapterView, android.view.View, int, long)
+	 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget .AdapterView, android.view.View,
+	 * int, long)
 	 */
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -184,13 +209,72 @@ public class NotesEditFragment extends BaseFragment implements OnItemSelectedLis
 	public Bundle accept() {
 		EditText editText = (EditText) findViewById(R.id.popup_notes_edit_text);
 
+		String descrition = editText.getText().toString();
+		String name = editName.getText().toString();
+		String so = editSozialStatus.getText().toString();
+
 		Bundle data = new Bundle(5);
-		data.putString(INTENT_NAME_EVENT_TEXT, editText.getText().toString());
-		data.putString(INTENT_NAME_EVENT_NAME, editName.getText().toString());
-		data.putString(INTENT_NAME_EVENT_SOZIALSTATUS, editSozialStatus.getText().toString());
+
+		data.putString(INTENT_NAME_EVENT_TEXT, descrition);
+		data.putString(INTENT_NAME_EVENT_NAME, name);
+		data.putString(INTENT_NAME_EVENT_SOZIALSTATUS, so);
 		data.putSerializable(INTENT_NAME_EVENT_CATEGORY, category);
 		data.putString(INTENT_NAME_AUDIO_PATH, audioPath);
 		Util.hideKeyboard(editText);
+
+		if (category == EventCategory.Bekanntschaft) {
+			if (notesItem instanceof Event) {
+				getHero().removeEvent((Event) notesItem);
+			} else if (notesItem instanceof Connection) {
+				Connection selectedEvent = (Connection) notesItem;
+
+				// we have to fetch the original object from heroes, since we are working with a serialized copy of it
+				// here
+				for (Connection c : getHero().getConnections()) {
+					if (selectedEvent.equals(c)) {
+						selectedEvent = c;
+					}
+				}
+
+				selectedEvent.setDescription(descrition.trim());
+				selectedEvent.setName(name);
+				selectedEvent.setSozialStatus(so);
+				// TODO notify event changed
+			} else if (notesItem == null) {
+				Connection connection = new Connection();
+				connection.setName(name);
+				connection.setDescription(descrition);
+				connection.setSozialStatus(so);
+				getHero().addConnection(connection);
+			}
+		} else {
+			if (notesItem instanceof Connection) {
+				getHero().removeConnection((Connection) notesItem);
+			} else if (notesItem instanceof Event) {
+				Event selectedEvent = (Event) notesItem;
+				// we have to fetch the original object from heroes, since we are working with a serialized copy of it
+				// here
+				for (Event c : getHero().getEvents()) {
+					if (selectedEvent.equals(c)) {
+						selectedEvent = c;
+					}
+				}
+
+				selectedEvent.setName(name);
+				selectedEvent.setComment(descrition);
+				selectedEvent.setAudioPath(audioPath);
+				selectedEvent.setCategory(category);
+
+				// TODO notify event changed
+			} else if (notesItem == null) {
+				Event selectedEvent = new Event();
+				selectedEvent.setName(name);
+				selectedEvent.setCategory(category);
+				selectedEvent.setComment(descrition);
+				selectedEvent.setAudioPath(audioPath);
+				getHero().addEvent(selectedEvent);
+			}
+		}
 
 		return data;
 

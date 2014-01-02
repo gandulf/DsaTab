@@ -12,6 +12,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -1212,14 +1213,24 @@ public class Util {
 
 	}
 
-	public static void putStringArray(JSONObject out, List<String> list, String name) throws JSONException {
+	public static void putStringArray(JSONObject out, Collection<String> list, String name) throws JSONException {
 		JSONArray jsonArray = new JSONArray();
 		int index = 0;
-		final int count = list.size();
-		for (int i = 0; i < count; i++) {
-			jsonArray.put(index++, list.get(i));
+		for (String value : list) {
+			jsonArray.put(index++, value);
 		}
 		out.put(name, jsonArray);
 
 	}
+
+	public static void putEnumArray(JSONObject out, Collection<? extends Enum<?>> list, String name)
+			throws JSONException {
+		JSONArray jsonArray = new JSONArray();
+		int index = 0;
+		for (Enum<?> value : list) {
+			jsonArray.put(index++, value.name());
+		}
+		out.put(name, jsonArray);
+	}
+
 }

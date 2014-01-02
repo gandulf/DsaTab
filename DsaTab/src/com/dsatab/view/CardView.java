@@ -26,8 +26,8 @@ import com.squareup.picasso.Picasso;
  */
 public class CardView extends ImageView implements Checkable {
 
-	private static final int HQ_IMAGE_SIZE = 300;
-	private static final int LQ_IMAGE_SIZE = 120;
+	private static final int HQ_IMAGE_SIZE = 600;
+	private static final int LQ_IMAGE_SIZE = 300;
 
 	private static final int[] CHECKED_STATE_SET = { android.R.attr.state_checked };
 
@@ -78,7 +78,6 @@ public class CardView extends ImageView implements Checkable {
 
 		setDrawingCacheEnabled(false);
 		setBackgroundResource(R.drawable.border_patch);
-		setScaleType(ScaleType.FIT_XY);
 
 		textBox = new Rect();
 		paint = new Paint();
@@ -130,14 +129,18 @@ public class CardView extends ImageView implements Checkable {
 		if (item != null) {
 			if (item.hasImage()) {
 				Debug.verbose("Loading image from " + item.getImageUri().toString());
+
+				setScaleType(ScaleType.CENTER_INSIDE);
+
 				if (highQuality) {
 					Picasso.with(getContext()).load(item.getImageUri().toString()).placeholder(R.drawable.item_card)
-							.resize(HQ_IMAGE_SIZE, HQ_IMAGE_SIZE).into(this);
+							.resize(HQ_IMAGE_SIZE, HQ_IMAGE_SIZE).centerInside().into(this);
 					// setImageBitmap(DataManager.getBitmap(item.getImageUri(), HQ_IMAGE_SIZE));
-					// setScaleType(ScaleType.FIT_CENTER);
+					// setScaleType(ScaleType.CENTER_INSIDE);
 				} else {
+
 					Picasso.with(getContext()).load(item.getImageUri().toString()).placeholder(R.drawable.item_card)
-							.resize(LQ_IMAGE_SIZE, LQ_IMAGE_SIZE).into(this);
+							.resize(LQ_IMAGE_SIZE, LQ_IMAGE_SIZE).centerInside().into(this);
 					// setImageBitmap(DataManager.getBitmap(item.getImageUri(), LQ_IMAGE_SIZE));
 					// setScaleType(ScaleType.FIT_CENTER);
 				}
@@ -147,6 +150,7 @@ public class CardView extends ImageView implements Checkable {
 				setImageResource(R.drawable.item_card);
 				setScaleType(ScaleType.FIT_XY);
 			}
+
 			itemText = item.getTitle();
 			imageTextOverlay = item.isImageTextOverlay();
 		} else {

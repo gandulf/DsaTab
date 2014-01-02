@@ -10,7 +10,6 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -31,8 +30,10 @@ import com.dsatab.data.CombatDistanceTalent;
 import com.dsatab.data.CombatMeleeTalent;
 import com.dsatab.data.CombatProbe;
 import com.dsatab.data.CustomModificator;
+import com.dsatab.data.Event;
 import com.dsatab.data.Hero;
 import com.dsatab.data.Markable;
+import com.dsatab.data.NotesItem;
 import com.dsatab.data.Spell;
 import com.dsatab.data.Talent;
 import com.dsatab.data.Talent.Flags;
@@ -59,18 +60,16 @@ import com.dsatab.util.Util;
 import com.dsatab.view.EvadeChooserDialog;
 import com.dsatab.view.ItemListItem;
 import com.dsatab.view.ListSettings;
-import com.dsatab.view.listener.CheckableListenable;
 import com.dsatab.view.listener.EditListener;
-import com.dsatab.view.listener.OnCheckedChangeListener;
 import com.dsatab.view.listener.ProbeListener;
 import com.dsatab.view.listener.TargetListener;
 import com.gandulf.guilib.data.OpenArrayAdapter;
 import com.gandulf.guilib.view.SeekBarEx;
 
 import fr.castorflex.android.flipimageview.library.FlipImageView;
+import fr.castorflex.android.flipimageview.library.FlipImageView.FlippableViewHolder;
 
-public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements OnSeekBarChangeListener,
-		OnCheckedChangeListener, OnClickListener {
+public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements OnSeekBarChangeListener {
 
 	private Hero hero;
 
@@ -94,6 +93,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 	private static final int ITEM_TYPE_SIMPLE_TALENT = 4;
 	private static final int ITEM_TYPE_MODIFIER = 5;
 	private static final int ITEM_TYPE_HEADER = 6;
+	private static final int ITEM_TYPE_NOTES = 7;
 
 	private DsaTabActivity main;
 
@@ -137,7 +137,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 	 */
 	@Override
 	public int getViewTypeCount() {
-		return 7;
+		return 8;
 	}
 
 	/*
@@ -176,6 +176,8 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 			return ITEM_TYPE_HEADER;
 		} else if (item instanceof FileListable) {
 			return ITEM_TYPE_VIEW;
+		} else if (item instanceof NotesItem) {
+			return ITEM_TYPE_NOTES;
 		} else {
 			return IGNORE_ITEM_VIEW_TYPE;
 		}
@@ -233,14 +235,6 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				holder.text3 = (TextView) convertView.findViewById(R.id.text3);
 				holder.icon1 = (ImageView) convertView.findViewById(android.R.id.icon1);
 				holder.flip = (FlipImageView) convertView.findViewById(android.R.id.icon1);
-				if (parent instanceof ListView) {
-					holder.list = (ListView) parent;
-					holder.position = position;
-					holder.flip.setOnClickListener(this);
-					holder.flip.setTag(holder);
-				} else {
-					holder.flip.setOnClickListener(null);
-				}
 
 				holder.icon2 = (ImageView) convertView.findViewById(android.R.id.icon2);
 				holder.icon_chain_bottom = (ImageView) convertView.findViewById(R.id.icon_chain_bottom);
@@ -249,7 +243,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				break;
 			}
 			case ITEM_TYPE_EDIT: {
-				convertView = (ItemListItem) inflater.inflate(R.layout.item_listitem, parent, false);
+				convertView = (ItemListItem) inflater.inflate(R.layout.item_listitem_equippeditem, parent, false);
 				ViewHolder holder = new ViewHolder();
 				holder.text1 = (TextView) convertView.findViewById(android.R.id.text1);
 				holder.text2 = (TextView) convertView.findViewById(android.R.id.text2);
@@ -262,7 +256,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				break;
 			}
 			case ITEM_TYPE_SEEK: {
-				convertView = (ViewGroup) inflater.inflate(R.layout.item_wheelview, parent, false);
+				convertView = (ViewGroup) inflater.inflate(R.layout.item_listitem_wheelview, parent, false);
 				SeekViewHolder viewHolder = new SeekViewHolder();
 				viewHolder.seek = (SeekBarEx) convertView.findViewById(R.id.wheel);
 				viewHolder.text = (TextView) convertView.findViewById(R.id.wheel_label);
@@ -272,7 +266,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 			}
 			case ITEM_TYPE_COMBAT_TALENT:
 			case ITEM_TYPE_SIMPLE_TALENT: {
-				convertView = inflater.inflate(R.layout.talent_list_item, parent, false);
+				convertView = inflater.inflate(R.layout.item_listitem_talent, parent, false);
 
 				TalentViewHolder holder = new TalentViewHolder();
 				// name
@@ -292,12 +286,12 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 			case ITEM_TYPE_MODIFIER: {
 				// We need the layoutinflater to pick up the view from xml
 				// Pick up the TwoLineListItem defined in the xml file
-				convertView = inflater.inflate(R.layout.fight_sheet_modifier, parent, false);
+				convertView = inflater.inflate(R.layout.item_listitem_modifier, parent, false);
 
 				ModifierViewHolder holder = new ModifierViewHolder();
 				holder.text1 = (TextView) convertView.findViewById(android.R.id.text1);
 				holder.text2 = (TextView) convertView.findViewById(android.R.id.text2);
-				holder.icon1 = (ImageView) convertView.findViewById(android.R.id.icon1);
+				holder.flip = (FlipImageView) convertView.findViewById(android.R.id.icon1);
 				holder.active = (CheckBox) convertView.findViewById(R.id.active);
 				convertView.setTag(holder);
 				break;
@@ -310,14 +304,22 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				convertView.setTag(holder);
 				break;
 			}
+			case ITEM_TYPE_NOTES: {
+				convertView = inflater.inflate(R.layout.item_listitem_event, parent, false);
+
+				EventViewHolder holder = new EventViewHolder();
+				holder.text1 = (TextView) convertView.findViewById(android.R.id.text1);
+				holder.text2 = (TextView) convertView.findViewById(android.R.id.text2);
+				holder.flip = (FlipImageView) convertView.findViewById(android.R.id.icon1);
+				holder.icon2 = (ImageView) convertView.findViewById(android.R.id.icon2);
+
+				convertView.setTag(holder);
+			}
 			}
 
 		}
 
-		if (convertView.getTag() instanceof ViewHolder && parent instanceof ListView) {
-			((ViewHolder) convertView.getTag()).position = position;
-			((ViewHolder) convertView.getTag()).list = (ListView) parent;
-		}
+		FlippableViewHolder.prepare(position, convertView, (ListView) parent);
 
 		Listable item = getItem(position);
 
@@ -337,6 +339,8 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 			convertView = prepareView((HeaderListItem) item, position, convertView, parent);
 		} else if (item instanceof FileListable) {
 			convertView = prepareView((FileListable) item, position, convertView, parent);
+		} else if (item instanceof NotesItem) {
+			convertView = prepareView((NotesItem) item, position, convertView, parent);
 		}
 
 		if (item instanceof Markable) {
@@ -357,6 +361,42 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		return convertView;
 	}
 
+	protected View prepareView(NotesItem e, int position, View convertView, ViewGroup parent) {
+		EventViewHolder holder = (EventViewHolder) convertView.getTag();
+
+		if (e.getCategory() != null) {
+
+			if (holder.flip != null) {
+				holder.flip.setImageResource(e.getCategory().getDrawableId());
+			}
+
+			if (holder.icon2 != null) {
+				if (e instanceof Event) {
+					if (((Event) e).getAudioPath() != null) {
+						holder.icon2.setVisibility(View.VISIBLE);
+						holder.icon2
+								.setImageResource(Util.getThemeResourceId(getContext(), R.attr.imgActionMicrophone));
+					} else {
+						holder.icon2.setVisibility(View.GONE);
+					}
+				} else {
+					holder.icon2.setVisibility(View.GONE);
+				}
+			}
+		}
+
+		if (e.getCategory().hasName() && !TextUtils.isEmpty(e.getName())) {
+			holder.text1.setText(e.getName().trim());
+			holder.text2.setText(e.getComment().trim());
+			holder.text2.setVisibility(View.VISIBLE);
+		} else {
+			holder.text1.setText(e.getComment().trim());
+			holder.text2.setVisibility(View.GONE);
+		}
+
+		return convertView;
+	}
+
 	protected View prepareView(Modificator item, int position, View convertView, ViewGroup parent) {
 		ModifierViewHolder holder = (ModifierViewHolder) convertView.getTag();
 
@@ -371,17 +411,17 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 			holder.active.setVisibility(View.GONE);
 		}
 
-		holder.icon1.setBackgroundResource(0);
-		holder.icon1.setScaleType(ScaleType.CENTER);
+		holder.flip.setBackgroundResource(0);
+		holder.flip.setScaleType(ScaleType.CENTER);
 		if (item instanceof WoundModificator) {
 			if (item.isActive())
-				holder.icon1.setImageResource(R.drawable.icon_wound_selected);
+				holder.flip.setImageResource(R.drawable.icon_wound_selected);
 			else
-				holder.icon1.setImageResource(R.drawable.icon_wound_normal);
+				holder.flip.setImageResource(R.drawable.icon_wound_normal);
 		} else if (item instanceof RulesModificator) {
-			holder.icon1.setImageResource(Util.getThemeResourceId(getContext(), R.attr.imgSettings));
+			holder.flip.setImageResource(Util.getThemeResourceId(getContext(), R.attr.imgSettings));
 		} else if (item instanceof CustomModificator) {
-			holder.icon1.setImageResource(Util.getThemeResourceId(getContext(), R.attr.imgModifier));
+			holder.flip.setImageResource(Util.getThemeResourceId(getContext(), R.attr.imgModifier));
 		}
 
 		if (item != null) {
@@ -559,14 +599,6 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		holder.icon1.setImageResource(file.getIcon());
 		holder.icon2.setImageResource(0);
 
-		if (holder.flip != null) {
-			if (convertView instanceof CheckableListenable) {
-				CheckableListenable checkable = (CheckableListenable) convertView;
-				holder.flip.setFlipped(checkable.isChecked());
-				holder.flip.setRotationReversed(checkable.isChecked());
-				checkable.setOnCheckedChangeListener(this);
-			}
-		}
 		if (holder.icon_chain_top != null && holder.icon_chain_bottom != null) {
 			holder.icon_chain_top.setVisibility(View.GONE);
 			holder.icon_chain_bottom.setVisibility(View.GONE);
@@ -873,32 +905,11 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		}
 	}
 
-	@Override
-	public void onClick(View v) {
-		FlipImageView flipImageView = (FlipImageView) v;
-		ViewHolder listHolder = (ViewHolder) v.getTag();
-		listHolder.list.setItemChecked(listHolder.position, !flipImageView.isFlipped());
-	}
-
-	@Override
-	public void onCheckedChanged(View checkableView, boolean isChecked) {
-		if (checkableView.getTag() instanceof ViewHolder) {
-			ViewHolder holder = (ViewHolder) checkableView.getTag();
-			if (holder.flip != null) {
-				holder.flip.setRotationReversed(isChecked);
-				holder.flip.setFlipped(isChecked, true);
-			}
-		}
-	}
-
-	private static class ViewHolder {
-
-		ListView list;
-		int position;
+	private static class ViewHolder extends FlippableViewHolder {
 
 		TextView text1, text2, text3;
 		ImageView icon1, icon2, icon_chain_top, icon_chain_bottom;
-		FlipImageView flip;
+
 	}
 
 	private static class SeekViewHolder {
@@ -912,14 +923,18 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		ImageView indicator;
 	}
 
-	private static class ModifierViewHolder {
+	private static class ModifierViewHolder extends FlippableViewHolder {
 		TextView text1, text2;
-		ImageView icon1;
 		CheckBox active;
 	}
 
 	private static class HeaderViewHolder {
 		TextView text1;
+	}
+
+	private static class EventViewHolder extends FlippableViewHolder {
+		TextView text1, text2;
+		ImageView icon2;
 	}
 
 }

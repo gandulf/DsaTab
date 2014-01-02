@@ -2,6 +2,8 @@ package com.dsatab.data.filter;
 
 import java.util.Locale;
 
+import com.dsatab.data.Connection;
+import com.dsatab.data.Event;
 import com.dsatab.data.Markable;
 import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.listable.Listable;
@@ -13,9 +15,6 @@ public class FilterableListFilter<T extends Listable> extends OpenFilter<T> {
 
 	private ListSettings settings;
 
-	/**
-	 * 
-	 */
 	public FilterableListFilter(OpenArrayAdapter<T> list) {
 		super(list);
 		settings = new ListSettings();
@@ -40,7 +39,13 @@ public class FilterableListFilter<T extends Listable> extends OpenFilter<T> {
 		if (settings != null) {
 
 			if (m instanceof Markable) {
-				valid = settings.isVisible((Markable) m);
+				valid &= settings.isVisible((Markable) m);
+			}
+
+			if (m instanceof Event) {
+				valid &= filterEvent((Event) m);
+			} else if (m instanceof Connection) {
+				valid &= filterConection((Connection) m);
 			}
 		}
 
@@ -57,6 +62,44 @@ public class FilterableListFilter<T extends Listable> extends OpenFilter<T> {
 					valid &= equippedItem.getName().toLowerCase(Locale.GERMAN).startsWith(constraint);
 				}
 			}
+		}
+
+		return valid;
+	}
+
+	public boolean filterConection(Connection m) {
+		boolean valid = true;
+		if (settings.getEventCategories() != null) {
+			boolean found = false;
+
+			if (settings.getEventCategories().contains(m.getCategory())) {
+				found = true;
+			}
+
+			valid &= found;
+		}
+
+		if (constraint != null) {
+			valid &= m.getName().toLowerCase(Locale.GERMAN).startsWith(constraint);
+		}
+
+		return valid;
+	}
+
+	protected boolean filterEvent(Event m) {
+		boolean valid = true;
+		if (settings.getEventCategories() != null) {
+			boolean found = false;
+
+			if (settings.getEventCategories().contains(m.getCategory())) {
+				found = true;
+			}
+
+			valid &= found;
+		}
+
+		if (constraint != null) {
+			valid &= m.getComment().toLowerCase(Locale.GERMAN).startsWith(constraint);
 		}
 
 		return valid;

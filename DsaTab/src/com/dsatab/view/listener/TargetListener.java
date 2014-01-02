@@ -6,17 +6,18 @@ import android.view.View;
 
 import com.dsatab.activity.DsaTabActivity;
 import com.dsatab.data.items.EquippedItem;
+import com.dsatab.fragment.BaseFragment;
 import com.dsatab.view.ArcheryChooserDialog;
 
 public class TargetListener implements View.OnClickListener {
 
-	private WeakReference<DsaTabActivity> mActivity;
+	private WeakReference<BaseFragment> mFragment;
 
 	/**
 	 * 
 	 */
-	public TargetListener(DsaTabActivity activity) {
-		this.mActivity = new WeakReference<DsaTabActivity>(activity);
+	public TargetListener(BaseFragment fragment) {
+		this.mFragment = new WeakReference<BaseFragment>(fragment);
 	}
 
 	@Override
@@ -24,9 +25,11 @@ public class TargetListener implements View.OnClickListener {
 		if (v.getTag() instanceof EquippedItem) {
 			EquippedItem item = (EquippedItem) v.getTag();
 
-			DsaTabActivity mainActivity = mActivity.get();
-			if (mainActivity != null) {
-				ArcheryChooserDialog targetChooserDialog = new ArcheryChooserDialog(mainActivity);
+			BaseFragment fragment = mFragment.get();
+
+			if (fragment != null && fragment.getActivity() instanceof DsaTabActivity) {
+				ArcheryChooserDialog targetChooserDialog = new ArcheryChooserDialog(
+						(DsaTabActivity) fragment.getActivity());
 				targetChooserDialog.setWeapon(item);
 				targetChooserDialog.show();
 			}

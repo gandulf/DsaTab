@@ -44,13 +44,13 @@ public class DualPaneFragment extends SherlockFragment implements FilterChangedL
 
 	public DualPaneFragment() {
 		fragments = new ArrayList<Fragment>();
-		setRetainInstance(true);
-		setHasOptionsMenu(true);
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
+		setHasOptionsMenu(true);
 
 		if (getArguments() != null) {
 			this.tabInfo = getArguments().getParcelable(TABINFO);
@@ -106,11 +106,10 @@ public class DualPaneFragment extends SherlockFragment implements FilterChangedL
 	@Override
 	public void onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu,
 			com.actionbarsherlock.view.MenuInflater inflater) {
-
 		super.onCreateOptionsMenu(menu, inflater);
 
 		for (Fragment f : fragments) {
-			if (f instanceof SherlockFragment)
+			if (f instanceof SherlockFragment && f.isAdded() && f.isMenuVisible())
 				((SherlockFragment) f).onCreateOptionsMenu(menu, inflater);
 		}
 	}

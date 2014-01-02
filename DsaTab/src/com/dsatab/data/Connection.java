@@ -1,11 +1,14 @@
 package com.dsatab.data;
 
 import java.util.Comparator;
+import java.util.UUID;
 
 import com.dsatab.data.enums.EventCategory;
 import com.dsatab.data.listable.Listable;
 
 public class Connection implements NotesItem, Listable {
+
+	private static final long serialVersionUID = -4271662079398408292L;
 
 	public static Comparator<Connection> NAME_COMPARATOR = new Comparator<Connection>() {
 		@Override
@@ -14,13 +17,12 @@ public class Connection implements NotesItem, Listable {
 		}
 	};
 
+	private UUID id;
+
 	private String description, name, sozialStatus;
 
-	/**
-	 * 
-	 */
 	public Connection() {
-
+		this.id = UUID.randomUUID();
 	}
 
 	public EventCategory getCategory() {
@@ -54,6 +56,30 @@ public class Connection implements NotesItem, Listable {
 
 	public void setSozialStatus(String value) {
 		this.sozialStatus = value;
+	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (other == null)
+			return false;
+		if (other == this)
+			return true;
+		if (!(other instanceof Connection))
+			return false;
+
+		Connection otherMyClass = (Connection) other;
+		if (id != null && otherMyClass.id != null)
+			return id.equals(otherMyClass.id);
+		else
+			return super.equals(other);
+	}
+
+	@Override
+	public int hashCode() {
+		if (id != null)
+			return id.hashCode();
+		else
+			return super.hashCode();
 	}
 
 }

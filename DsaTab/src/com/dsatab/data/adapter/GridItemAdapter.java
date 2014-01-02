@@ -110,16 +110,6 @@ public class GridItemAdapter extends OpenArrayAdapter<ItemCard> {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.data.adapter.OpenArrayAdapter#notifyDataSetChanged()
-	 */
-	@Override
-	public void notifyDataSetChanged() {
-		super.notifyDataSetChanged();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see android.widget.Adapter#getView(int, android.view.View, android.view.ViewGroup)
 	 */
 	@Override

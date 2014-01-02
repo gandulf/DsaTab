@@ -662,7 +662,7 @@ public class AnimalFragment extends BaseAttributesFragment implements OnClickLis
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
 		if (getAnimal() != null && getAnimal().getAnimalAttacks() != null) {
 			for (AnimalAttack animalAttack : getAnimal().getAnimalAttacks()) {
-				ItemListItem listItem = (ItemListItem) inflater.inflate(R.layout.item_listitem, attackLayout, false);
+				ItemListItem listItem = (ItemListItem) inflater.inflate(R.layout.item_listitem_equippeditem, attackLayout, false);
 
 				StyleableSpannableStringBuilder title = new StyleableSpannableStringBuilder();
 				if (!TextUtils.isEmpty(animalAttack.getName())) {

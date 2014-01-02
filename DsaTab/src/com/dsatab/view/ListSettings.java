@@ -2,7 +2,10 @@ package com.dsatab.view;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,6 +22,7 @@ import com.dsatab.data.Spell;
 import com.dsatab.data.Talent;
 import com.dsatab.data.Value;
 import com.dsatab.data.enums.AttributeType;
+import com.dsatab.data.enums.EventCategory;
 import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.listable.FileListable;
 import com.dsatab.data.modifier.Modificator;
@@ -33,6 +37,7 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
 	private static final String FIELD_SHOW_FAVORITE = "showFavorite";
 	private static final String FIELD_SHOW_UNUSED = "showUnused";
 	private static final String FIELD_ITEMS = "items";
+	private static final String FIELD_EVENT_CATEGORIES = "eventCategories";
 
 	public enum FilterType {
 		Talent, Spell, Art, Fight
@@ -43,6 +48,8 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
 	private boolean includeModifiers;
 
 	private List<ListItem> listItems;
+
+	private Set<EventCategory> eventCategories;
 
 	/**
 	 * Basic constructor
@@ -66,6 +73,17 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
 		} else {
 			listItems = new ArrayList<ListItem>();
 		}
+
+		eventCategories = new HashSet<EventCategory>();
+		if (jsonObject.has(FIELD_EVENT_CATEGORIES)) {
+			JSONArray array = jsonObject.getJSONArray(FIELD_EVENT_CATEGORIES);
+			for (int i = 0; i < array.length(); i++) {
+				EventCategory category = EventCategory.valueOf(array.optString(i));
+				eventCategories.add(category);
+			}
+		} else {
+			eventCategories.addAll(Arrays.asList(EventCategory.values()));
+		}
 	}
 
 	public ListSettings(ListSettings settings) {
@@ -79,6 +97,7 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
 		this.includeModifiers = incMod;
 
 		listItems = new ArrayList<ListItem>();
+		eventCategories = new HashSet<EventCategory>(Arrays.asList(EventCategory.values()));
 	}
 
 	/**
@@ -94,6 +113,13 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
 
 		listItems = new ArrayList<ListItem>();
 		in.readTypedList(listItems, ListItem.CREATOR);
+
+		eventCategories = new HashSet<EventCategory>();
+		List<String> enumStrings = new ArrayList<String>();
+		in.readList(enumStrings, null);
+		for (String enumString : enumStrings) {
+			eventCategories.add(EventCategory.valueOf(enumString));
+		}
 
 	}
 
@@ -131,6 +157,12 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeBooleanArray(new boolean[] { showFavorite, showNormal, showUnused, includeModifiers });
 		dest.writeTypedList(listItems);
+
+		List<String> enumStrings = new ArrayList<String>();
+		for (EventCategory improvement : eventCategories) {
+			enumStrings.add(improvement.name());
+		}
+		dest.writeList(enumStrings);
 	}
 
 	public boolean isShowNormal() {
@@ -166,18 +198,26 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
 	}
 
 	public boolean equals(ListSettings settings) {
-		return settings != null
-				&& equals(settings.isShowFavorite(), settings.isShowNormal(), settings.isShowUnused(),
-						settings.isIncludeModifiers());
+		boolean result = settings != null;
+
+		if (settings != null) {
+			result &= equals(settings.isShowFavorite(), settings.isShowNormal(), settings.isShowUnused(),
+					settings.isIncludeModifiers());
+
+			result &= getEventCategories().containsAll(settings.getEventCategories());
+			result &= getEventCategories().size() == settings.getEventCategories().size();
+
+		}
+		return result;
 	}
 
-	public boolean equals(boolean showFavorite, boolean showNormal, boolean showUnused, boolean includeModifiers) {
+	private boolean equals(boolean showFavorite, boolean showNormal, boolean showUnused, boolean includeModifiers) {
 		return this.showFavorite == showFavorite && this.showNormal == showNormal && this.showUnused == showUnused
 				&& this.includeModifiers == includeModifiers;
 	}
 
 	public boolean isAllVisible() {
-		return showFavorite && showNormal && showUnused;
+		return showFavorite && showNormal && showUnused && eventCategories.size() == EventCategory.values().length;
 	}
 
 	public boolean isVisible(Markable mark) {
@@ -187,8 +227,13 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
 
 	public void set(ListSettings settings) {
 		if (settings != null) {
-			set(settings.isShowFavorite(), settings.isShowNormal(), settings.isShowUnused(),
-					settings.isIncludeModifiers());
+
+			this.showFavorite = settings.isShowFavorite();
+			this.showNormal = settings.isShowNormal();
+			this.showUnused = settings.isShowUnused();
+			this.includeModifiers = settings.isIncludeModifiers();
+
+			this.eventCategories = settings.getEventCategories();
 		}
 	}
 
@@ -204,17 +249,12 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
 		return listItems;
 	}
 
-	/**
-	 * @param checked
-	 * @param checked2
-	 * @param checked3
-	 */
-	public void set(boolean fav, boolean normal, boolean unused, boolean incMod) {
-		this.showFavorite = fav;
-		this.showNormal = normal;
-		this.showUnused = unused;
-		this.includeModifiers = incMod;
+	public Set<EventCategory> getEventCategories() {
+		return eventCategories;
+	}
 
+	public void setEventCategories(HashSet<EventCategory> eventCategories) {
+		this.eventCategories = eventCategories;
 	}
 
 	public boolean isAffected(Value value) {
@@ -243,6 +283,8 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
 		jsonObject.put(FIELD_SHOW_UNUSED, showUnused);
 
 		Util.putArray(jsonObject, listItems, FIELD_ITEMS);
+		Util.putEnumArray(jsonObject, eventCategories, FIELD_EVENT_CATEGORIES);
+
 		return jsonObject;
 	}
 
@@ -257,7 +299,7 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
 	}
 
 	public enum ListItemType {
-		Header, Talent, Spell, Art, Attribute, EquippedItem, Modificator, Document
+		Header, Talent, Spell, Art, Attribute, EquippedItem, Modificator, Document, Notes
 	}
 
 	public static class ListItem implements JSONable, Parcelable {

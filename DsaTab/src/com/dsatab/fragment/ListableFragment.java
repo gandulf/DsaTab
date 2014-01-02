@@ -1,6 +1,7 @@
 package com.dsatab.fragment;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,8 +15,12 @@ import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -41,6 +46,7 @@ import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.activity.ItemEditActivity;
 import com.dsatab.activity.ItemViewActivity;
 import com.dsatab.activity.ModificatorEditActivity;
+import com.dsatab.activity.NotesEditActivity;
 import com.dsatab.data.Art;
 import com.dsatab.data.Attribute;
 import com.dsatab.data.CombatTalent;
@@ -49,6 +55,7 @@ import com.dsatab.data.CustomModificator;
 import com.dsatab.data.Event;
 import com.dsatab.data.Hero;
 import com.dsatab.data.MetaTalent;
+import com.dsatab.data.NotesItem;
 import com.dsatab.data.Probe;
 import com.dsatab.data.Spell;
 import com.dsatab.data.Talent;
@@ -56,6 +63,7 @@ import com.dsatab.data.TalentGroup;
 import com.dsatab.data.Value;
 import com.dsatab.data.adapter.ListableItemAdapter;
 import com.dsatab.data.enums.AttributeType;
+import com.dsatab.data.enums.EventCategory;
 import com.dsatab.data.enums.FeatureType;
 import com.dsatab.data.enums.Hand;
 import com.dsatab.data.enums.TalentGroupType;
@@ -983,11 +991,139 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 		}
 	}
 
+	protected static final class NoteActionMode implements ActionMode.Callback {
+
+		private WeakReference<ListView> listView;
+		private WeakReference<AnimateAdapter<Listable>> animateAdapter;
+		private WeakReference<BaseListFragment> listFragment;
+
+		public NoteActionMode(BaseListFragment fragment, ListView listView, AnimateAdapter<Listable> animateAdapter) {
+			this.listFragment = new WeakReference<BaseListFragment>(fragment);
+			this.listView = new WeakReference<ListView>(listView);
+			this.animateAdapter = new WeakReference<AnimateAdapter<Listable>>(animateAdapter);
+		}
+
+		@Override
+		public boolean onActionItemClicked(ActionMode mode, com.actionbarsherlock.view.MenuItem item) {
+			boolean notifyNotesChanged = false;
+
+			ListView list = listView.get();
+			BaseListFragment fragment = listFragment.get();
+			AnimateAdapter<Listable> adapter = animateAdapter.get();
+			if (list == null || fragment == null || adapter == null)
+				return false;
+
+			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+			if (checkedPositions != null) {
+				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
+					if (checkedPositions.valueAt(i)) {
+						Object obj = list.getItemAtPosition(checkedPositions.keyAt(i));
+						if (obj instanceof Event) {
+							Event event = (Event) obj;
+							if (item.getItemId() == R.id.option_delete) {
+								if (event.isDeletable()) {
+									adapter.animateDismiss(checkedPositions.keyAt(i));
+									notifyNotesChanged = true;
+								}
+							} else if (item.getItemId() == R.id.option_edit) {
+								NotesEditActivity.openEditEvent(event, null, fragment.getActivity());
+
+								mode.finish();
+								break;
+							}
+						} else if (obj instanceof Connection) {
+							Connection connection = (Connection) obj;
+							if (item.getItemId() == R.id.option_delete) {
+								adapter.animateDismiss(checkedPositions.keyAt(i));
+								notifyNotesChanged = true;
+							} else if (item.getItemId() == R.id.option_edit) {
+								NotesEditActivity.openEditConnection(connection, fragment.getActivity());
+
+								mode.finish();
+								break;
+							}
+						}
+					}
+				}
+				if (notifyNotesChanged) {
+					Util.notifyDatasetChanged(list);
+				}
+
+			}
+			mode.finish();
+			return true;
+		}
+
+		@Override
+		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+			mode.getMenuInflater().inflate(R.menu.note_list_popupmenu, menu);
+			mode.setTitle("Notizen");
+			return true;
+		}
+
+		@Override
+		public void onDestroyActionMode(ActionMode mode) {
+			ListView list = listView.get();
+			BaseListFragment fragment = listFragment.get();
+			if (list == null || fragment == null)
+				return;
+
+			fragment.mMode = null;
+			list.clearChoices();
+
+			Util.notifyDatasetChanged(list);
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see com.actionbarsherlock.view.ActionMode.Callback#onPrepareActionMode
+		 * (com.actionbarsherlock.view.ActionMode, com.actionbarsherlock.view.Menu)
+		 */
+		@Override
+		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+			ListView list = listView.get();
+			BaseListFragment fragment = listFragment.get();
+			if (list == null || fragment == null)
+				return false;
+
+			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+
+			com.actionbarsherlock.view.MenuItem view = menu.findItem(R.id.option_delete);
+			int selected = 0;
+			boolean allDeletable = true;
+			if (checkedPositions != null) {
+				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
+					if (checkedPositions.valueAt(i)) {
+						Object obj = list.getItemAtPosition(checkedPositions.keyAt(i));
+						selected++;
+						if (obj instanceof Event) {
+							Event event = (Event) obj;
+							allDeletable &= event.isDeletable();
+						}
+					}
+				}
+			}
+
+			if (allDeletable != view.isEnabled()) {
+				view.setEnabled(allDeletable);
+				return true;
+			}
+
+			mode.setSubtitle(selected + " ausgewählt");
+
+			Util.notifyDatasetChanged(list);
+
+			return false;
+		}
+	}
+
 	private Callback mItemsCallback;
 	private Callback mModifiersCallback;
 	private Callback mTalentCallback;
 	private Callback mSpellCallback;
 	private Callback mArtCallback;
+	private Callback mNotesCallback;
 
 	/*
 	 * (non-Javadoc)
@@ -1037,36 +1173,23 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 
 	@Override
 	protected Callback getActionModeCallback(List<Object> objects) {
-		boolean hasItems = false;
-		boolean hasModifiers = false;
-		boolean hasTalents = false;
-		boolean hasSpells = false;
-		boolean hasArts = false;
+
 		for (Object o : objects) {
 			if (o instanceof EquippedItem)
-				hasItems = true;
+				return mItemsCallback;
 			else if (o instanceof CustomModificator)
-				hasModifiers = true;
+				return mModifiersCallback;
 			else if (o instanceof Talent)
-				hasTalents = true;
+				return mTalentCallback;
 			else if (o instanceof Spell)
-				hasSpells = true;
+				return mSpellCallback;
 			else if (o instanceof Art)
-				hasArts = true;
+				return mArtCallback;
+			else if (o instanceof NotesItem)
+				return mNotesCallback;
 		}
 
-		if (hasItems && !hasModifiers && !hasTalents) {
-			return mItemsCallback;
-		} else if (hasModifiers && !hasItems && !hasTalents) {
-			return mModifiersCallback;
-		} else if (hasTalents && !hasItems && !hasModifiers) {
-			return mTalentCallback;
-		} else if (hasSpells && !hasItems && !hasModifiers) {
-			return mSpellCallback;
-		} else if (hasArts && !hasItems && !hasModifiers) {
-			return mArtCallback;
-		} else
-			return null;
+		return null;
 	}
 
 	/*
@@ -1109,6 +1232,10 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 
 			if (listSettings.hasListItem(ListItemType.Document) && menu.findItem(R.id.option_documents_choose) == null) {
 				inflater.inflate(R.menu.documents_menu, menu);
+			}
+
+			if (listSettings.hasListItem(ListItemType.Notes) && menu.findItem(R.id.option_note_add) == null) {
+				inflater.inflate(R.menu.note_list_menu, menu);
 			}
 		}
 
@@ -1173,6 +1300,57 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 			new DirectoryChooserDialogHelper(getActivity(), resultListener, docFile.getAbsolutePath());
 			return true;
 
+		} else if (item.getItemId() == R.id.option_note_add) {
+			NotesEditActivity.openEditEvent(null, null, getActivity());
+			return true;
+		} else if (item.getItemId() == R.id.option_note_record) {
+			recordEvent();
+			return true;
+		} else if (item.getItemId() == R.id.option_note_filter) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+			EventCategory[] categories = EventCategory.values();
+
+			String[] categoryNames = new String[categories.length];
+			boolean[] categoriesSet = new boolean[categories.length];
+
+			for (int i = 0; i < categories.length; i++) {
+				categoryNames[i] = categories[i].name();
+				if (getFilterSettings().getEventCategories().contains(categories[i]))
+					categoriesSet[i] = true;
+			}
+
+			builder.setMultiChoiceItems(categoryNames, categoriesSet, new OnMultiChoiceClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+					EventCategory[] categories = EventCategory.values();
+
+					if (isChecked)
+						getFilterSettings().getEventCategories().add(categories[which]);
+					else
+						getFilterSettings().getEventCategories().remove(categories[which]);
+
+				}
+			});
+			builder.setTitle("Filtern");
+
+			builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+			});
+
+			AlertDialog dialog = builder.show();
+			dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+				@Override
+				public void onDismiss(DialogInterface dialog) {
+					listItemAdapter.filter(getFilterSettings());
+				}
+			});
+			dialog.setCanceledOnTouchOutside(true);
+			return true;
 		} else {
 			return super.onOptionsItemSelected(item);
 		}
@@ -1208,6 +1386,8 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 		mArtCallback = new ArtActionMode(this, itemList);
 		mModifiersCallback = new ModifierActionMode(this, itemList);
 		mItemsCallback = new EquippedItemActionMode(this, itemList);
+
+		mCallback = new NoteActionMode(this, itemList, animateAdapter);
 
 		return root;
 	}
@@ -1248,6 +1428,8 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 		animateAdapter.setAbsListView(itemList);
 
 		itemList.setAdapter(animateAdapter);
+
+		mNotesCallback = new NoteActionMode(this, itemList, animateAdapter);
 
 		refreshEmptyView(listItemAdapter);
 	}
@@ -1454,11 +1636,93 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 						}
 					}
 					break;
+				case Notes:
+					listItemAdapter.addAll(getHero().getEvents());
+					listItemAdapter.addAll(getHero().getConnections());
+					break;
 				}
 
 			}
 		}
 		listItemAdapter.notifyDataSetChanged();
+	}
+
+	private void recordEvent() {
+		try {
+
+			File recordingsDir = DsaTabApplication.getDirectory(DsaTabApplication.DIR_RECORDINGS);
+
+			final File currentAudio = new File(recordingsDir, "last.3gp");
+
+			final MediaRecorder mediaRecorder = new MediaRecorder();
+
+			mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+			mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+			mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+			mediaRecorder.setOutputFile(currentAudio.getAbsolutePath());
+			mediaRecorder.prepare();
+			mediaRecorder.start(); // Recording is now started
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle(R.string.recording);
+			builder.setMessage(R.string.recording_message);
+			builder.setPositiveButton(R.string.label_save, new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					if (mediaRecorder != null) {
+						try {
+							mediaRecorder.stop();
+						} catch (IllegalStateException e) {
+							Debug.warning("Couldn't stop mediaRecorder something went wrong.", e);
+						} finally {
+							mediaRecorder.reset();
+						}
+					}
+
+					File nowAudio = new File(DsaTabApplication.getDirectory(DsaTabApplication.DIR_RECORDINGS), System
+							.currentTimeMillis() + ".3gp");
+					currentAudio.renameTo(nowAudio);
+
+					NotesEditActivity.openEditEvent(null, nowAudio.getAbsolutePath(), getActivity());
+				}
+			});
+
+			builder.setNegativeButton(R.string.label_cancel, new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					if (mediaRecorder != null) {
+						try {
+							mediaRecorder.stop();
+						} catch (IllegalStateException e) {
+							Debug.warning("Couldn't stop mediaRecorder something went wrong.", e);
+						} finally {
+							mediaRecorder.reset();
+						}
+					}
+					currentAudio.delete();
+				}
+			});
+
+			AlertDialog dialog = builder.show();
+
+			dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+				@Override
+				public void onDismiss(DialogInterface dialog) {
+					if (mediaRecorder != null) {
+						mediaRecorder.release();
+					}
+				}
+			});
+
+		} catch (IllegalStateException e) {
+			Debug.error(e);
+		} catch (IOException e) {
+			Debug.error(e);
+		}
 	}
 
 	private void addWaffenloseTalente() {
@@ -1528,6 +1792,36 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 									"Keine App zum Betrachten von " + file.getName() + " gefunden", Toast.LENGTH_SHORT)
 									.show();
 						}
+					}
+				} else if (object instanceof Event) {
+					Event event = (Event) object;
+
+					if (event.getAudioPath() != null) {
+						try {
+
+							MediaPlayer mediaPlayer = new MediaPlayer();
+							mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+							mediaPlayer.setDataSource(event.getAudioPath());
+							mediaPlayer.prepare();
+							mediaPlayer.start();
+							mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+								@Override
+								public void onCompletion(MediaPlayer mp) {
+									mp.stop();
+									mp.reset();
+									mp.release();
+								}
+							});
+						} catch (IllegalArgumentException e) {
+							Debug.error(e);
+						} catch (IllegalStateException e) {
+							Debug.error(e);
+						} catch (IOException e) {
+							Debug.error(e);
+						}
+
 					}
 				}
 

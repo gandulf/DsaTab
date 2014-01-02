@@ -1,5 +1,6 @@
 package com.dsatab.fragment;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -17,11 +18,13 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
+import android.widget.ListView;
 
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.SubMenu;
+import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.ItemEditActivity;
 import com.dsatab.activity.ItemViewActivity;
@@ -51,17 +54,31 @@ public class ItemsListFragment extends BaseListFragment implements OnItemClickLi
 	private Set<ItemType> categoriesSelected;
 	private ItemType[] categories;
 
-	private final class ItemsActionMode implements ActionMode.Callback {
+	private static final class ItemsActionMode implements ActionMode.Callback {
+
+		private WeakReference<ListView> listView;
+		private WeakReference<BaseListFragment> listFragment;
+
+		public ItemsActionMode(BaseListFragment fragment, ListView listView) {
+			this.listFragment = new WeakReference<BaseListFragment>(fragment);
+			this.listView = new WeakReference<ListView>(listView);
+		}
+
 		@Override
 		public boolean onActionItemClicked(ActionMode mode, com.actionbarsherlock.view.MenuItem item) {
 			boolean notifyChanged = false;
 
-			SparseBooleanArray checkedPositions = itemList.getCheckedItemPositions();
+			final ListView list = listView.get();
+			final BaseListFragment fragment = listFragment.get();
+			if (list == null || fragment == null)
+				return false;
+
+			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
 					if (checkedPositions.valueAt(i)) {
 
-						Object obj = itemList.getItemAtPosition(checkedPositions.keyAt(i));
+						Object obj = list.getItemAtPosition(checkedPositions.keyAt(i));
 						if (obj instanceof Item) {
 							Item selectedItem = (Item) obj;
 
@@ -78,11 +95,11 @@ public class ItemsListFragment extends BaseListFragment implements OnItemClickLi
 									notifyChanged = false;
 									break;
 								case R.id.option_view:
-									ItemViewActivity.view(getActivity(), getHero(), selectedItem);
+									ItemViewActivity.view(fragment.getActivity(), getHero(), selectedItem);
 									mode.finish();
 									return true;
 								case R.id.option_edit:
-									ItemEditActivity.edit(getActivity(), getHero(), selectedItem);
+									ItemEditActivity.edit(fragment.getActivity(), getHero(), selectedItem);
 									mode.finish();
 									return true;
 								case R.id.option_equipped:
@@ -90,13 +107,13 @@ public class ItemsListFragment extends BaseListFragment implements OnItemClickLi
 								case R.id.option_move:
 									return false;
 								case R.id.option_equipped_set1:
-									getHero().addEquippedItem(getActivity(), selectedItem, null, null, 0);
+									getHero().addEquippedItem(fragment.getActivity(), selectedItem, null, null, 0);
 									break;
 								case R.id.option_equipped_set2:
-									getHero().addEquippedItem(getActivity(), selectedItem, null, null, 1);
+									getHero().addEquippedItem(fragment.getActivity(), selectedItem, null, null, 1);
 									break;
 								case R.id.option_equipped_set3:
-									getHero().addEquippedItem(getActivity(), selectedItem, null, null, 2);
+									getHero().addEquippedItem(fragment.getActivity(), selectedItem, null, null, 2);
 									break;
 								}
 							}
@@ -106,11 +123,15 @@ public class ItemsListFragment extends BaseListFragment implements OnItemClickLi
 
 				}
 				if (notifyChanged) {
-					itemAdapter.notifyDataSetChanged();
+					Util.notifyDatasetChanged(list);
 				}
 			}
 			mode.finish();
 			return true;
+		}
+
+		private Hero getHero() {
+			return DsaTabApplication.getInstance().getHero();
 		}
 
 		@Override
@@ -132,9 +153,15 @@ public class ItemsListFragment extends BaseListFragment implements OnItemClickLi
 
 		@Override
 		public void onDestroyActionMode(ActionMode mode) {
-			mMode = null;
-			itemList.clearChoices();
-			itemAdapter.notifyDataSetChanged();
+			ListView list = listView.get();
+			BaseListFragment fragment = listFragment.get();
+			if (list == null || fragment == null)
+				return;
+
+			fragment.mMode = null;
+			list.clearChoices();
+
+			Util.notifyDatasetChanged(list);
 		}
 
 		/*
@@ -145,7 +172,12 @@ public class ItemsListFragment extends BaseListFragment implements OnItemClickLi
 		 */
 		@Override
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-			SparseBooleanArray checkedPositions = itemList.getCheckedItemPositions();
+			final ListView list = listView.get();
+			final BaseListFragment fragment = listFragment.get();
+			if (list == null || fragment == null)
+				return false;
+
+			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
 			int selected = 0;
 			boolean isEquippable = true;
 			boolean changed = false;
@@ -154,7 +186,7 @@ public class ItemsListFragment extends BaseListFragment implements OnItemClickLi
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
 					if (checkedPositions.valueAt(i)) {
-						Object obj = itemList.getItemAtPosition(checkedPositions.keyAt(i));
+						Object obj = list.getItemAtPosition(checkedPositions.keyAt(i));
 						if (obj instanceof Item) {
 							Item selectedItem = (Item) obj;
 							selected++;
@@ -212,8 +244,6 @@ public class ItemsListFragment extends BaseListFragment implements OnItemClickLi
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
-
-		mCallback = new ItemsActionMode();
 	}
 
 	/*
@@ -283,6 +313,8 @@ public class ItemsListFragment extends BaseListFragment implements OnItemClickLi
 		View root = configureContainerView(inflater.inflate(R.layout.sheet_items_list, container, false));
 
 		itemList = (ExpandableListView) root.findViewById(android.R.id.list);
+
+		mCallback = new ItemsActionMode(this, itemList);
 
 		return root;
 	}

@@ -26,14 +26,14 @@
             android:key="soundRollDice"
             android:summaryOff="Es wird kein Geräusch abgespielt."
             android:summaryOn="Jeder Probewurf wird musikalisch untermalt"
-            android:title="Wurfelgeräusch abspielen" />
+            android:title="Würfelgeräusch abspielen" />
         <CheckBoxPreference
             android:defaultValue="true"
             android:dependency="soundRollDice"            
             android:key="soundResultDice"
             android:summaryOff="Es wird ein neutraler Würfelsound abgespielt."
             android:summaryOn="Es wird je nach Ergebnis der Probe ein anderer Sound abgespielt."
-            android:title="Wurfelgeräusch abhängig vom Ergebnis" />
+            android:title="Würfelgeräusch abhängig vom Ergebnis" />
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="probeShowModificators"

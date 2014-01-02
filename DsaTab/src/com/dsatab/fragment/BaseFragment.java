@@ -46,11 +46,11 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 
 	static {
 		activities = Arrays.asList("Keine", "Charakter", "Liste", "Wunden", "Ausrüstung (Bilder)",
-				"Ausrüstung (Liste)", "Notizen", "Geldbörse", "Karte", "Tiere");
+				"Ausrüstung (Liste)", "Geldbörse", "Karte", "Tiere");
 
 		activityValues = Arrays.asList(null, CharacterFragment.class, ListableFragment.class, BodyFragment.class,
-				ItemsFragment.class, ItemsListFragment.class, NotesFragment.class, PurseFragment.class,
-				MapFragment.class, AnimalFragment.class);
+				ItemsFragment.class, ItemsListFragment.class, PurseFragment.class, MapFragment.class,
+				AnimalFragment.class);
 	}
 
 	public static String getFragmentTitle(Class<? extends BaseFragment> fragmentClass) {
@@ -77,7 +77,7 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 	public BaseFragment() {
 		probeListener = new ProbeListener(this);
 		editListener = new EditListener(this);
-		targetListener = new TargetListener(getBaseActivity());
+		targetListener = new TargetListener(this);
 	}
 
 	protected void customizeActionModeCloseButton() {
@@ -109,6 +109,7 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 		// if we reattach a fragment there is already a view present
 		if (getView() != null && getActivity() != null) {
 			Hero hero = getHero();
+
 			if (hero != null) {
 				Debug.verbose("Loading hero in " + getClass() + " onAttach " + hero.getName());
 				loadHero(hero);

@@ -7,7 +7,7 @@
     android:paddingRight="6dp"
     android:paddingLeft="6dp">
 
-    <ImageView
+    <fr.castorflex.android.flipimageview.library.FlipImageView
         android:id="@android:id/icon1"
         style="?attr/iconImageViewStyle"
         android:layout_width="@dimen/icon_button_size"

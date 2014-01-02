@@ -4,8 +4,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
-import com.dsatab.view.listener.CheckableListenable;
-import com.dsatab.view.listener.OnCheckedChangeListener;
+import com.gandulf.guilib.listener.CheckableListenable;
+import com.gandulf.guilib.listener.OnCheckedChangeListener;
 
 public class CheckableRelativeLayout extends RelativeLayout implements CheckableListenable {
 	boolean mChecked = false;

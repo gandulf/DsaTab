@@ -147,6 +147,10 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 				className = ListableFragment.class.getName();
 			}
 
+			if ("com.dsatab.fragment.NotesFragment".equals(className)) {
+				className = ListableFragment.class.getName();
+			}
+
 			activityClazz[0] = (Class<? extends BaseFragment>) Class.forName(className, true,
 					BaseFragment.class.getClassLoader());
 		}
@@ -164,6 +168,10 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 			}
 
 			if ("com.dsatab.fragment.TalentFragment".equals(className)) {
+				className = ListableFragment.class.getName();
+			}
+
+			if ("com.dsatab.fragment.NotesFragment".equals(className)) {
 				className = ListableFragment.class.getName();
 			}
 
@@ -188,6 +196,10 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 					}
 
 					if ("com.dsatab.fragment.TalentFragment".equals(className)) {
+						className = ListableFragment.class.getName();
+					}
+
+					if ("com.dsatab.fragment.NotesFragment".equals(className)) {
 						className = ListableFragment.class.getName();
 					}
 

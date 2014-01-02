@@ -5,9 +5,9 @@
     android:background="?attr/listItemBackground"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:paddingLeft="6dp"
-    android:paddingRight="6dp" >
+    android:paddingRight="6dp">
 
-    <ImageView
+    <fr.castorflex.android.flipimageview.library.FlipImageView
         android:id="@android:id/icon1"
         style="?attr/iconImageViewStyle"
         android:layout_width="wrap_content"
@@ -15,8 +15,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="4dip"
-        android:src="@drawable/icon_patch" >
-    </ImageView>
+        android:src="@drawable/icon_patch" />
 
     <TextView
         android:id="@android:id/text1"

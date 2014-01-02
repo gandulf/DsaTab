@@ -10,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +26,8 @@ import com.dsatab.data.items.ItemContainer;
 import com.dsatab.util.Util;
 import com.dsatab.view.CheckableImageButton;
 import com.dsatab.view.EquippedItemListItem;
+
+import fr.castorflex.android.flipimageview.library.FlipImageView.FlippableViewHolder;
 
 public class ExpandableItemAdapter extends BaseExpandableListAdapter implements OnClickListener {
 
@@ -117,7 +121,11 @@ public class ExpandableItemAdapter extends BaseExpandableListAdapter implements 
 
 	@Override
 	public long getChildId(int groupPosition, int childPosition) {
-		return childPosition;
+		Object child = getChild(groupPosition, childPosition);
+		if (child != null)
+			return child.hashCode();
+		else
+			return AdapterView.INVALID_ROW_ID;
 	}
 
 	@Override
@@ -137,15 +145,31 @@ public class ExpandableItemAdapter extends BaseExpandableListAdapter implements 
 	public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
 			ViewGroup parent) {
 
+		ViewHolder holder;
 		EquippedItemListItem view;
 		if (!(convertView instanceof EquippedItemListItem)) {
 			view = (EquippedItemListItem) inflater.inflate(R.layout.equippeditem_listitem, parent, false);
+			convertView = view;
+
+			holder = new ViewHolder();
+			holder.flip = view.getIcon1();
+			view.setTag(holder);
 		} else {
 			view = (EquippedItemListItem) convertView;
+			holder = (ViewHolder) view.getTag();
 		}
 
 		Item item = getChild(groupPosition, childPosition);
 		view.setItem(item);
+
+		int flatPosition = AdapterView.INVALID_POSITION;
+		if (parent instanceof ExpandableListView) {
+			ExpandableListView expandableListView = (ExpandableListView) parent;
+			flatPosition = expandableListView.getFlatListPosition(ExpandableListView.getPackedPositionForChild(
+					groupPosition, childPosition));
+		}
+
+		FlippableViewHolder.prepare(flatPosition, convertView, parent);
 
 		if (item != null && item.isEquipable()) {
 			for (int set = 0; set < Hero.MAXIMUM_SET_NUMBER; set++) {
@@ -187,7 +211,10 @@ public class ExpandableItemAdapter extends BaseExpandableListAdapter implements 
 
 	@Override
 	public long getGroupId(int groupPosition) {
-		return groupPosition;
+		if (getGroup(groupPosition) != null)
+			return getGroup(groupPosition).hashCode();
+		else
+			return AdapterView.INVALID_ROW_ID;
 	}
 
 	@Override
@@ -199,7 +226,7 @@ public class ExpandableItemAdapter extends BaseExpandableListAdapter implements 
 			listItem = convertView;
 			holder = (ViewHeaderHolder) convertView.getTag();
 		} else {
-			listItem = inflater.inflate(R.layout.talent_list_headeritem, parent, false);
+			listItem = inflater.inflate(R.layout.equippeditem_headeritem, parent, false);
 
 			holder = new ViewHeaderHolder();
 			holder.text1 = (TextView) listItem.findViewById(R.id.talent_list_headeritem);
@@ -233,7 +260,7 @@ public class ExpandableItemAdapter extends BaseExpandableListAdapter implements 
 
 	@Override
 	public boolean hasStableIds() {
-		return false;
+		return true;
 	}
 
 	/*
@@ -264,7 +291,11 @@ public class ExpandableItemAdapter extends BaseExpandableListAdapter implements 
 
 	}
 
-	private static class ViewHeaderHolder {
+	private static class ViewHolder extends FlippableViewHolder {
+
+	}
+
+	private static class ViewHeaderHolder extends FlippableViewHolder {
 		TextView text1;
 		ImageView indicator;
 	}

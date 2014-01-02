@@ -1,6 +1,7 @@
 package com.dsatab.data;
 
 import java.util.Comparator;
+import java.util.UUID;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,6 +10,8 @@ import com.dsatab.data.enums.EventCategory;
 import com.dsatab.data.listable.Listable;
 
 public class Event implements JSONable, NotesItem, Listable {
+
+	private static final long serialVersionUID = 6524208974421996950L;
 
 	public static final Comparator<Event> COMPARATOR = new Comparator<Event>() {
 		@Override
@@ -33,6 +36,8 @@ public class Event implements JSONable, NotesItem, Listable {
 	private static final String FIELD_AUDIO_PATH = "auidoPath";
 	private static final String FIELD_TIME = "time";
 
+	private UUID id;
+
 	private String audioPath;
 
 	private String name;
@@ -46,11 +51,13 @@ public class Event implements JSONable, NotesItem, Listable {
 	private int index;
 
 	public Event() {
+		this.id = UUID.randomUUID();
 		this.time = System.currentTimeMillis();
 		this.category = EventCategory.Misc;
 	}
 
 	public Event(JSONObject json) throws JSONException {
+		this.id = UUID.randomUUID();
 
 		if (json.has(FIELD_COMMENT))
 			this.comment = json.getString(FIELD_COMMENT);
@@ -147,6 +154,30 @@ public class Event implements JSONable, NotesItem, Listable {
 		out.put(FIELD_INDEX, index);
 
 		return out;
+	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (other == null)
+			return false;
+		if (other == this)
+			return true;
+		if (!(other instanceof Event))
+			return false;
+
+		Event otherMyClass = (Event) other;
+		if (id != null && otherMyClass.id != null)
+			return id.equals(otherMyClass.id);
+		else
+			return super.equals(other);
+	}
+
+	@Override
+	public int hashCode() {
+		if (id != null)
+			return id.hashCode();
+		else
+			return super.hashCode();
 	}
 
 }
