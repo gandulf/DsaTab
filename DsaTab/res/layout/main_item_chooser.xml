@@ -10,7 +10,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         class="com.dsatab.fragment.ItemChooserFragment"
-        tools:layout="@layout/sheet_item" >
+        tools:layout="@layout/sheet_item_view" >
     </fragment>
 
 </RelativeLayout>

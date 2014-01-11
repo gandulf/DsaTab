@@ -274,18 +274,6 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 			return themes[0];
 	}
 
-	public int getCustomDialogTheme() {
-		String theme = getPreferences().getString(DsaTabPreferenceActivity.KEY_THEME, THEME_DEFAULT);
-
-		if (THEME_LIGHT_PLAIN.equals(theme)) {
-			return R.style.Theme_Dialog_Light;
-		} else if (THEME_DARK_PLAIN.equals(theme)) {
-			return R.style.Theme_Dialog_Dark;
-		} else {
-			return R.style.Theme_Dialog_Light;
-		}
-	}
-
 	@Override
 	public void onCreate() {
 		// provide an instance for our static accessors

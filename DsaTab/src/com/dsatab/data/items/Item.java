@@ -90,7 +90,7 @@ public class Item implements Serializable, Comparable<Item>, Cloneable, ItemCard
 
 	private List<ItemSpecification> itemSpecs;
 
-	private int screen = INVALID_POSITION;
+	private int containerId = INVALID_POSITION;
 
 	/**
 	 * Indicates the position of the associated cell.
@@ -410,12 +410,12 @@ public class Item implements Serializable, Comparable<Item>, Cloneable, ItemCard
 		}
 	}
 
-	public int getScreen() {
-		return screen;
+	public int getContainerId() {
+		return containerId;
 	}
 
-	public void setScreen(int screen) {
-		this.screen = screen;
+	public void setContainerId(int screen) {
+		this.containerId = screen;
 	}
 
 	public int getCellNumber() {

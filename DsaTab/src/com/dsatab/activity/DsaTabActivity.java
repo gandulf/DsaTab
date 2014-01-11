@@ -21,6 +21,7 @@ import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
@@ -154,16 +155,34 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		}
 		if (getHeroConfiguration() != null) {
 			tabInfo = getHeroConfiguration().getTab(position);
+			updatePage(tabInfo);
+		}
 
-			if (tabInfo.isDiceSlider())
-				showDiceSlider();
-			else
-				hideDiceSlider();
+		Fragment fragment = viewPagerAdapter.getFragment(position);
+		if (fragment != null) {
+			fragment.setUserVisibleHint(true);
+		}
+	}
 
-			if (attributeFragment != null && attributeFragment.isAdded() && attributeFragment.getView() != null) {
-				if (tabInfo.isAttributeList()) {
+	private void updatePage(TabInfo tabInfo) {
+		if (tabInfo.isDiceSlider())
+			showDiceSlider();
+		else
+			hideDiceSlider();
+
+		if (attributeFragment != null && attributeFragment.isAdded() && attributeFragment.getView() != null) {
+			if (tabInfo.isAttributeList()) {
+				if (attributeFragment.getView().getVisibility() == View.GONE) {
 					attributeFragment.getView().setVisibility(View.VISIBLE);
-				} else {
+
+					Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_in_top);
+					attributeFragment.getView().startAnimation(animation);
+				}
+
+			} else {
+				if (attributeFragment.getView().getVisibility() == View.VISIBLE) {
+					Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_out_top);
+					attributeFragment.getView().startAnimation(animation);
 					attributeFragment.getView().setVisibility(View.GONE);
 				}
 			}
@@ -562,6 +581,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		if (attributeFragment != null && attributeFragment.isAdded())
 			attributeFragment.loadHero(hero);
 
+		updatePage(tabInfo);
 	}
 
 	public boolean checkProbe(Probe probe) {
@@ -739,6 +759,37 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 			item.setEnabled(getHero() != null);
 		}
 
+		item = menu.findItem(R.id.option_set);
+		if (getHero() != null) {
+
+			if (item != null) {
+				item.setEnabled(true);
+			}
+			switch (getHero().getActiveSet()) {
+			case 0:
+				if (menu.findItem(R.id.option_set1) != null) {
+					menu.findItem(R.id.option_set1).setChecked(true);
+				}
+				break;
+			case 1:
+				if (menu.findItem(R.id.option_set2) != null) {
+					menu.findItem(R.id.option_set2).setChecked(true);
+				}
+				break;
+			case 2:
+				if (menu.findItem(R.id.option_set3) != null) {
+					menu.findItem(R.id.option_set3).setChecked(true);
+				}
+				break;
+			default:
+				break;
+			}
+		} else {
+			if (item != null) {
+				item.setEnabled(false);
+			}
+		}
+
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -757,10 +808,22 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		case R.id.option_settings:
 			DsaTabPreferenceActivity.startPreferenceActivity(this);
 			return true;
-		case R.id.option_set:
+		case R.id.option_set1:
 			if (getHero() != null) {
-				int set = getHero().getActiveSet();
-				getHero().setActiveSet((set + 1) % Hero.MAXIMUM_SET_NUMBER);
+				getHero().setActiveSet(0);
+				item.setChecked(true);
+			}
+			return true;
+		case R.id.option_set2:
+			if (getHero() != null) {
+				getHero().setActiveSet(1);
+				item.setChecked(true);
+			}
+			return true;
+		case R.id.option_set3:
+			if (getHero() != null) {
+				getHero().setActiveSet(2);
+				item.setChecked(true);
 			}
 			return true;
 		case R.id.option_tabs:

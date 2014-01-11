@@ -4,8 +4,12 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 import com.dsatab.data.enums.EventCategory;
+import com.dsatab.data.listable.Listable;
 
-public interface NotesItem extends Serializable {
+public interface NotesItem extends Serializable, Listable {
+
+	public static final String TYPE_CONNECTIONS = "Bekanntschaften";
+	public static final String TYPE_EVENTS = "Notizen";
 
 	public static final Comparator<NotesItem> COMPARATOR = new Comparator<NotesItem>() {
 		@Override

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/listItemBackground"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:paddingLeft="6dp"
+    android:paddingRight="6dp" 
+    android:orientation="vertical">
+
+    <Spinner
+        android:id="@+id/sp_currency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        tools:listitem="@android:layout/simple_spinner_item" >
+    </Spinner>
+    
+    <TextView
+        android:id="@+id/tv_currency_header"
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:text="Header"
+        android:visibility="gone" />
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/sp_currency"
+        android:shrinkColumns="0,1,2,3"
+        android:stretchColumns="0,1,2,3" >
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/tv_currency1"
+                style="@style/TextLabel.Small"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_horizontal"
+                android:text="Dukaten"
+                android:textStyle="bold" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/tv_currency2"
+                style="@style/TextLabel.Small"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_horizontal"
+                android:text="Silber"
+                android:textStyle="bold" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/tv_currency3"
+                style="@style/TextLabel.Small"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_horizontal"
+                android:text="Heller"
+                android:textStyle="bold" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/tv_currency4"
+                style="@style/TextLabel.Small"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_horizontal"
+                android:text="Kreuzer"
+                android:textStyle="bold" >
+            </TextView>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+
+            <net.simonvt.numberpicker.NumberPicker
+                android:id="@+id/popup_purse_dukat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <net.simonvt.numberpicker.NumberPicker
+                android:id="@+id/popup_purse_silver"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <net.simonvt.numberpicker.NumberPicker
+                android:id="@+id/popup_purse_heller"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <net.simonvt.numberpicker.NumberPicker
+                android:id="@+id/popup_purse_kreuzer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>

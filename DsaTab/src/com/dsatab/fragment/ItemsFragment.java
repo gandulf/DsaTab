@@ -1,9 +1,15 @@
 package com.dsatab.fragment;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,10 +19,12 @@ import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -28,53 +36,72 @@ import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.SubMenu;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
+import com.dsatab.activity.ItemChooserActivity;
 import com.dsatab.activity.ItemContainerEditActivity;
 import com.dsatab.activity.ItemEditActivity;
 import com.dsatab.activity.ItemViewActivity;
 import com.dsatab.data.Hero;
 import com.dsatab.data.adapter.GridItemAdapter;
+import com.dsatab.data.adapter.ItemAdapter;
 import com.dsatab.data.adapter.ItemContainerAdapter;
+import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemCard;
 import com.dsatab.data.items.ItemContainer;
+import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
-import com.dsatab.view.ItemChooserDialog;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
+import com.dsatab.xml.DataManager;
 import com.haarman.listviewanimations.itemmanipulation.AnimateAdapter;
 import com.haarman.listviewanimations.itemmanipulation.OnAnimateCallback;
+import com.haarman.listviewanimations.view.DynamicListView;
 import com.rokoder.android.lib.support.v4.widget.GridViewCompat;
 
 public class ItemsFragment extends BaseListFragment implements OnItemClickListener, HeroInventoryChangedListener,
-		OnAnimateCallback {
+		OnAnimateCallback, OnClickListener {
 
-	private static final int MENU_CONTAINER_GROUP = 99;
+	private static final int ACTION_ADD = 1099;
+
+	private static final int MENU_FILTER_GROUP = 98;
+
+	private static final int INVALID_SET = -1;
 
 	private static final String PREF_KEY_LAST_OPEN_SCREEN = "_lastopenscreen";
+	private static final String PREF_KEY_SCREEN_TYPE = "_screen_type";
+
+	public static final String TYPE_GRID = "grid";
+	public static final String TYPE_LIST = "list";
 
 	private ListView containerList;
 	private AnimateAdapter<ItemContainer> animateAdapter;
 	private ItemContainerAdapter containerAdapter;
 
+	private Button containerTypeButton;
+
 	private GridViewCompat itemGridCompat;
+	private GridItemAdapter itemGridAdapter;
 
-	private GridItemAdapter itemAdapter;
+	private DynamicListView itemList;
+	private ItemAdapter itemListAdapter;
 
-	private int mCurrentScreen = -1;
-
-	private ItemChooserDialog itemChooserDialog;
+	private int mCurrentContainerId = INVALID_SET;
+	private String mScreenType = TYPE_LIST;
 
 	protected Callback mContainerCallback;
-	protected Callback mItemCallback;
+	protected Callback mItemGridCallback;
+	protected Callback mItemListCallback;
+
+	private Set<ItemType> categoriesSelected;
 
 	private static final class ItemsActionMode implements ActionMode.Callback {
 
-		private WeakReference<GridViewCompat> listView;
+		private WeakReference<AbsListView> listView;
 		private WeakReference<ItemsFragment> listFragment;
 
-		public ItemsActionMode(ItemsFragment fragment, GridViewCompat listView) {
+		public ItemsActionMode(ItemsFragment fragment, AbsListView listView) {
 			this.listFragment = new WeakReference<ItemsFragment>(fragment);
-			this.listView = new WeakReference<GridViewCompat>(listView);
+			this.listView = new WeakReference<AbsListView>(listView);
 		}
 
 		@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -82,7 +109,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		public boolean onActionItemClicked(ActionMode mode, com.actionbarsherlock.view.MenuItem item) {
 			boolean notifyChanged = false;
 
-			GridViewCompat list = listView.get();
+			AbsListView list = listView.get();
 			ItemsFragment fragment = listFragment.get();
 			if (list == null || fragment == null)
 				return false;
@@ -99,9 +126,9 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 
 							Item selectedItem = itemCard.getItem();
 
-							if (item.getGroupId() == MENU_CONTAINER_GROUP) {
+							if (item.getGroupId() == R.id.option_group_container) {
 								int newScreen = item.getItemId();
-								if (newScreen != selectedItem.getScreen()) {
+								if (newScreen != selectedItem.getContainerId()) {
 									getHero().moveItem(selectedItem, newScreen);
 									notifyChanged = true;
 								}
@@ -152,7 +179,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 
 		@Override
 		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-			GridViewCompat list = listView.get();
+			AbsListView list = listView.get();
 			ItemsFragment fragment = listFragment.get();
 			if (list == null || fragment == null)
 				return false;
@@ -161,10 +188,10 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 
 			com.actionbarsherlock.view.MenuItem move = menu.findItem(R.id.option_move);
 			SubMenu moveMenu = move.getSubMenu();
-
+			int order = 4;
 			for (ItemContainer itemContainer : getHero().getItemContainers()) {
-				moveMenu.add(MENU_CONTAINER_GROUP, itemContainer.getId(), Menu.NONE, itemContainer.getName()).setIcon(
-						Util.getDrawableByUri(itemContainer.getIconUri()));
+				moveMenu.add(R.id.option_group_container, itemContainer.getId(), order++, itemContainer.getName())
+						.setIcon(Util.getDrawableByUri(itemContainer.getIconUri()));
 			}
 
 			mode.setTitle("Ausrüstung");
@@ -174,7 +201,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 		@Override
 		public void onDestroyActionMode(ActionMode mode) {
-			GridViewCompat list = listView.get();
+			AbsListView list = listView.get();
 			ItemsFragment fragment = listFragment.get();
 			if (list == null || fragment == null)
 				return;
@@ -195,7 +222,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		@Override
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
 
-			GridViewCompat list = listView.get();
+			AbsListView list = listView.get();
 			ItemsFragment fragment = listFragment.get();
 			if (list == null || fragment == null)
 				return false;
@@ -205,7 +232,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 			boolean isEquippable = true;
 			boolean changed = false;
 			// only moveable if we are not on a set
-			boolean isMoveable = fragment.getActiveSet() == -1;
+			boolean isMoveable = !isSetIndex(fragment.getCurrentContainerId());
 
 			com.actionbarsherlock.view.MenuItem move = menu.findItem(R.id.option_move);
 			com.actionbarsherlock.view.MenuItem view = menu.findItem(R.id.option_view);
@@ -393,36 +420,42 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	public void onHeroLoaded(Hero hero) {
 
 		ItemContainer set1 = new ItemContainer(0, "Set I");
-		set1.setIconUri(Util.getUriForResourceId(Util.getThemeResourceId(getActivity(), R.attr.imgBarSet1)));
+		set1.setIconUri(Util.getUriForResourceId(Util.getThemeResourceId(getActivity(), R.attr.imgSet1)));
 
 		ItemContainer set2 = new ItemContainer(1, "Set II");
-		set2.setIconUri(Util.getUriForResourceId(Util.getThemeResourceId(getActivity(), R.attr.imgBarSet2)));
+		set2.setIconUri(Util.getUriForResourceId(Util.getThemeResourceId(getActivity(), R.attr.imgSet2)));
 
 		ItemContainer set3 = new ItemContainer(2, "Set III");
-		set3.setIconUri(Util.getUriForResourceId(Util.getThemeResourceId(getActivity(), R.attr.imgBarSet3)));
+		set3.setIconUri(Util.getUriForResourceId(Util.getThemeResourceId(getActivity(), R.attr.imgSet3)));
 
 		containerAdapter = new ItemContainerAdapter(getActivity(), getHero().getItemContainers());
 		containerAdapter.insert(set1, 0);
 		containerAdapter.insert(set2, 1);
 		containerAdapter.insert(set3, 2);
 
-		animateAdapter = new AnimateAdapter<ItemContainer>(containerAdapter, this);
-		animateAdapter.setAbsListView(containerList);
-		containerList.setAdapter(animateAdapter);
+		if (containerList != null) {
+			animateAdapter = new AnimateAdapter<ItemContainer>(containerAdapter, this);
+			animateAdapter.setAbsListView(containerList);
+			containerList.setAdapter(animateAdapter);
 
-		mContainerCallback = new ItemsContainerActionMode(this, containerList, animateAdapter);
+			mContainerCallback = new ItemsContainerActionMode(this, containerList, animateAdapter);
+		}
+		itemListAdapter = new ItemAdapter(getActivity(), hero);
+		itemList.setAdapter(itemListAdapter);
 
 		SharedPreferences pref = getActivity().getPreferences(Context.MODE_PRIVATE);
-		int screen = pref.getInt(PREF_KEY_LAST_OPEN_SCREEN, 0);
+		int containerID = pref.getInt(PREF_KEY_LAST_OPEN_SCREEN, 0);
 
-		showScreen(screen);
+		showScreen(containerID);
 	}
 
 	@Override
 	public void onDismiss(AbsListView list, int[] positions) {
-		for (int pos : positions) {
-			ItemContainer container = containerAdapter.remove(pos);
-			getHero().removeItemContainer(container);
+		if (list == containerList) {
+			for (int pos : positions) {
+				ItemContainer container = containerAdapter.remove(pos);
+				getHero().removeItemContainer(container);
+			}
 		}
 	}
 
@@ -432,44 +465,15 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	}
 
 	private void showItemPopup() {
-		if (itemChooserDialog == null) {
-			itemChooserDialog = new ItemChooserDialog(getActivity());
-			itemChooserDialog.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-				@Override
-				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-					Item item = itemChooserDialog.getItem(position);
-
-					if (item != null) {
-						item = item.duplicate();
-						if (isSetIndex(mCurrentScreen)) {
-							getHero().addEquippedItem(getBaseActivity(), item, null, null, getActiveSet());
-						} else {
-							item.setScreen(mCurrentScreen);
-							getHero().addItem(item);
-						}
-					}
-					itemChooserDialog.dismiss();
-				}
-			});
-		}
-
-		if (itemAdapter.getFilter().getTypes() != null && !itemAdapter.getFilter().getTypes().isEmpty()) {
-			itemChooserDialog.setItemTypes(itemAdapter.getFilter().getTypes());
-		}
-
-		itemChooserDialog.show();
+		ItemChooserActivity.pick(getActivity(), itemGridAdapter.getFilter().getTypes(), ACTION_ADD);
 	}
 
 	public static boolean isSetIndex(int index) {
 		return index >= 0 && index < Hero.MAXIMUM_SET_NUMBER;
 	}
 
-	protected int getActiveSet() {
-		if (!isSetIndex(mCurrentScreen))
-			return -1;
-		else
-			return mCurrentScreen;
+	public int getCurrentContainerId() {
+		return mCurrentContainerId;
 	}
 
 	/*
@@ -481,6 +485,23 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
+
+		SharedPreferences pref = getActivity().getPreferences(Context.MODE_PRIVATE);
+		mScreenType = pref.getString(PREF_KEY_SCREEN_TYPE, TYPE_LIST);
+
+		categoriesSelected = new HashSet<ItemType>(Arrays.asList(ItemType.values()));
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.container_add:
+			Intent intent = new Intent(getActivity(), ItemContainerEditActivity.class);
+			startActivity(intent);
+			break;
+		case R.id.container_type:
+			toggleScreenType();
+		}
 	}
 
 	/*
@@ -492,15 +513,30 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.item_grid_menu, menu);
+		inflater.inflate(R.menu.item_list_menu, menu);
 
 		SubMenu gridSet = menu.findItem(R.id.option_itemgrid_set).getSubMenu();
 
+		int order = Hero.MAXIMUM_SET_NUMBER;
 		for (ItemContainer itemContainer : getHero().getItemContainers()) {
-			gridSet.add(MENU_CONTAINER_GROUP, itemContainer.getId(), Menu.NONE, itemContainer.getName()).setIcon(
-					Util.getDrawableByUri(itemContainer.getIconUri()));
+			MenuItem item = gridSet.add(R.id.option_group_container, itemContainer.getId(), order++,
+					itemContainer.getName()).setIcon(Util.getDrawableByUri(itemContainer.getIconUri()));
+			item.setCheckable(true);
 		}
-		updateActionBarIcons(menu, mCurrentScreen);
+		inflater.inflate(R.menu.menuitem_add_container, gridSet);
+
+		SubMenu filterSet = menu.findItem(R.id.option_item_filter).getSubMenu();
+		ItemType[] itemType = ItemType.values();
+		for (int i = 0; i < itemType.length; i++) {
+			MenuItem item = filterSet.add(MENU_FILTER_GROUP, i, Menu.NONE, itemType[i].name()).setIcon(
+					itemType[i].getDrawableId());
+			item.setCheckable(true);
+			item.setChecked(categoriesSelected.contains(itemType[item.getItemId()]));
+
+		}
+		gridSet.setGroupCheckable(R.id.option_group_container, true, true);
+
+		updateActionBarIcons(menu, mCurrentContainerId);
 	}
 
 	/*
@@ -511,20 +547,61 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	@Override
 	public void onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
+
 		SubMenu gridSet = menu.findItem(R.id.option_itemgrid_set).getSubMenu();
 
-		for (int i = gridSet.size() - 1; i >= 3; i--) {
-			MenuItem item = gridSet.getItem(i);
-			gridSet.removeItem(item.getItemId());
+		for (int i = gridSet.size() - 2; i >= Hero.MAXIMUM_SET_NUMBER; i--) {
+			gridSet.removeItem(gridSet.getItem(i).getItemId());
 		}
 
+		int order = Hero.MAXIMUM_SET_NUMBER;
 		for (ItemContainer itemContainer : getHero().getItemContainers()) {
 			if (gridSet.findItem(itemContainer.getId()) == null) {
-				gridSet.add(MENU_CONTAINER_GROUP, itemContainer.getId(), Menu.NONE, itemContainer.getName()).setIcon(
-						Util.getDrawableByUri(itemContainer.getIconUri()));
+				MenuItem item = gridSet.add(R.id.option_group_container, itemContainer.getId(), order++,
+						itemContainer.getName()).setIcon(Util.getDrawableByUri(itemContainer.getIconUri()));
+				item.setCheckable(true);
 			}
 		}
-		updateActionBarIcons(menu, mCurrentScreen);
+
+		gridSet.setGroupCheckable(R.id.option_group_container, true, true);
+
+		switch (mCurrentContainerId) {
+		case 0:
+			if (gridSet.findItem(R.id.option_itemgrid_set1) != null) {
+				gridSet.findItem(R.id.option_itemgrid_set1).setChecked(true);
+			}
+			break;
+		case 1:
+			if (gridSet.findItem(R.id.option_itemgrid_set2) != null) {
+				gridSet.findItem(R.id.option_itemgrid_set2).setChecked(true);
+			}
+			break;
+		case 2:
+			if (gridSet.findItem(R.id.option_itemgrid_set3) != null) {
+				gridSet.findItem(R.id.option_itemgrid_set3).setChecked(true);
+			}
+			break;
+		default:
+			if (gridSet.findItem(mCurrentContainerId) != null) {
+				gridSet.findItem(mCurrentContainerId).setChecked(true);
+			}
+			break;
+		}
+
+		SubMenu filterSet = menu.findItem(R.id.option_item_filter).getSubMenu();
+		ItemType[] itemType = ItemType.values();
+		for (int i = 0; i < filterSet.size(); i++) {
+			MenuItem item = filterSet.getItem(i);
+			item.setChecked(categoriesSelected.contains(itemType[item.getItemId()]));
+		}
+
+		if (TYPE_GRID.equals(mScreenType)) {
+			menu.findItem(R.id.option_itemgrid_type_grid).setChecked(true);
+		} else {
+			menu.findItem(R.id.option_itemgrid_type_list).setChecked(true);
+		}
+
+		updateActionBarIcons(menu, mCurrentContainerId);
 	}
 
 	/*
@@ -534,6 +611,22 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+
+		if (item.getGroupId() == MENU_FILTER_GROUP) {
+
+			item.setChecked(!item.isChecked());
+
+			ItemType category = ItemType.values()[item.getItemId()];
+			if (item.isChecked())
+				categoriesSelected.add(category);
+			else
+				categoriesSelected.remove(category);
+
+			itemListAdapter.filter(new ArrayList<ItemType>(categoriesSelected), null, null);
+			itemGridAdapter.filter(new ArrayList<ItemType>(categoriesSelected), null, null);
+
+			return true;
+		}
 
 		switch (item.getItemId()) {
 		case R.id.option_item_add_table:
@@ -551,8 +644,20 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 			showScreen(2);
 			getSherlockActivity().supportInvalidateOptionsMenu();
 			return true;
+		case R.id.option_add_container:
+			Intent intent = new Intent(getActivity(), ItemContainerEditActivity.class);
+			startActivity(intent);
+			return true;
+		case R.id.option_itemgrid_type_grid:
+			setScreenType(TYPE_GRID);
+			item.setChecked(true);
+			return true;
+		case R.id.option_itemgrid_type_list:
+			setScreenType(TYPE_LIST);
+			item.setChecked(true);
+			return true;
 		default:
-			if (item.getGroupId() == MENU_CONTAINER_GROUP) {
+			if (item.getGroupId() == R.id.option_group_container) {
 
 				ItemContainer itemContainer = getHero().getItemContainer(item.getItemId());
 				int index = containerAdapter.indexOf(itemContainer);
@@ -572,12 +677,24 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View root = configureContainerView(inflater.inflate(R.layout.sheet_items_table, container, false));
+		View root = configureContainerView(inflater.inflate(R.layout.sheet_items, container, false));
 
-		itemGridCompat = (GridViewCompat) root.findViewById(R.id.workspace);
 		containerList = (ListView) root.findViewById(R.id.container_list);
+		itemGridCompat = (GridViewCompat) root.findViewById(R.id.workspace);
 
-		mItemCallback = new ItemsActionMode(this, itemGridCompat);
+		itemList = (DynamicListView) root.findViewById(android.R.id.list);
+		itemList.setOnItemCheckedListener(this);
+
+		Button containerAdd = (Button) root.findViewById(R.id.container_add);
+		if (containerAdd != null)
+			containerAdd.setOnClickListener(this);
+
+		containerTypeButton = (Button) root.findViewById(R.id.container_type);
+		if (containerTypeButton != null)
+			containerTypeButton.setOnClickListener(this);
+
+		mItemGridCallback = new ItemsActionMode(this, itemGridCompat);
+		mItemListCallback = new ItemsActionMode(this, itemList);
 
 		return root;
 	}
@@ -593,41 +710,69 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		// 192*288
 		// 120*180
 
-		itemAdapter = new GridItemAdapter(getActivity());
+		itemGridAdapter = new GridItemAdapter(getActivity());
 		itemGridCompat.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
-		itemGridCompat.setAdapter(itemAdapter);
+		itemGridCompat.setAdapter(itemGridAdapter);
 		itemGridCompat.setOnItemClickListener(this);
 		itemGridCompat.setOnItemLongClickListener(this);
 
-		containerList.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-		containerList.setOnItemClickListener(this);
-		containerList.setOnItemLongClickListener(new ListView.OnItemLongClickListener() {
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see android.widget.AdapterView.OnItemLongClickListener#onItemLongClick (android.widget.AdapterView,
-			 * android.view.View, int, long)
-			 */
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-				containerList.setItemChecked(position, true);
-				showScreen(position);
-				if (mMode == null) {
-					if (mContainerCallback != null) {
-						mMode = ((SherlockFragmentActivity) getActivity()).startActionMode(mContainerCallback);
-						customizeActionModeCloseButton();
-						mMode.invalidate();
+		itemList.setOnItemClickListener(this);
+		itemList.setOnItemLongClickListener(this);
+		itemList.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+		if (containerList != null) {
+			containerList.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+			containerList.setOnItemClickListener(this);
+			containerList.setOnItemLongClickListener(new ListView.OnItemLongClickListener() {
+				/*
+				 * (non-Javadoc)
+				 * 
+				 * @see android.widget.AdapterView.OnItemLongClickListener#onItemLongClick (android.widget.AdapterView,
+				 * android.view.View, int, long)
+				 */
+				@Override
+				public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+					containerList.setItemChecked(position, true);
+
+					ItemContainer container = (ItemContainer) containerList.getItemAtPosition(position);
+					showScreen(container.getId());
+
+					if (mMode == null) {
+						if (mContainerCallback != null) {
+							mMode = ((SherlockFragmentActivity) getActivity()).startActionMode(mContainerCallback);
+							customizeActionModeCloseButton();
+							mMode.invalidate();
+						} else {
+							return false;
+						}
 					} else {
-						return false;
+						mMode.invalidate();
 					}
-				} else {
-					mMode.invalidate();
+					return false;
 				}
-				return false;
-			}
-		});
+			});
+		}
 
 		super.onActivityCreated(savedInstanceState);
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == ACTION_ADD) {
+			if (resultCode == Activity.RESULT_OK) {
+				UUID itemId = (UUID) data.getSerializableExtra(ItemChooserActivity.DATA_INTENT_ITEM_ID);
+
+				if (itemId != null) {
+					Item item = DataManager.getItemById(itemId).duplicate();
+					if (isSetIndex(mCurrentContainerId)) {
+						getHero().addEquippedItem(getBaseActivity(), item, null, null, mCurrentContainerId);
+					} else {
+						item.setContainerId(mCurrentContainerId);
+						getHero().addItem(item);
+					}
+				}
+			}
+		}
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	protected Callback getActionModeCallback(List<Object> objects) {
@@ -638,7 +783,10 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 			if (obj instanceof ItemContainer) {
 				return mContainerCallback;
 			} else if (obj instanceof ItemCard) {
-				return mItemCallback;
+				if (TYPE_GRID.equals(mScreenType))
+					return mItemGridCallback;
+				else
+					return mItemListCallback;
 			}
 		}
 		return null;
@@ -653,16 +801,21 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+		// containerlist
 		if (parent == containerList) {
 			if (mMode != null) {
 				mMode.invalidate();
 			}
 			containerList.setItemChecked(position, true);
-			showScreen(position);
+			ItemContainer container = (ItemContainer) containerList.getItemAtPosition(position);
+			showScreen(container.getId());
 		} else {
+			// items grid
 			if (mMode == null) {
 				itemGridCompat.setItemChecked(position, false);
-				ItemViewActivity.view(getActivity(), getHero(), itemAdapter.getItem(position));
+				itemList.setItemChecked(position, false);
+				ItemViewActivity.view(getActivity(), getHero(), itemGridAdapter.getItem(position));
 			} else {
 				super.onItemClick(parent, view, position, id);
 			}
@@ -707,40 +860,88 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 
 		SharedPreferences pref = getActivity().getPreferences(Context.MODE_PRIVATE);
 		Editor edit = pref.edit();
-		edit.putInt(PREF_KEY_LAST_OPEN_SCREEN, mCurrentScreen);
+		edit.putInt(PREF_KEY_LAST_OPEN_SCREEN, mCurrentContainerId);
+		edit.putString(PREF_KEY_SCREEN_TYPE, mScreenType);
 		edit.commit();
 	}
 
+	private void setScreenType(String type) {
+		if (!mScreenType.equals(type)) {
+			mScreenType = type;
+			updateScreenType();
+		}
+
+	}
+
+	private void toggleScreenType() {
+		if (TYPE_GRID.equals(mScreenType)) {
+			mScreenType = TYPE_LIST;
+		} else {
+			mScreenType = TYPE_GRID;
+		}
+		updateScreenType();
+	}
+
+	private void updateScreenType() {
+		if (TYPE_GRID.equals(mScreenType)) {
+			itemGridCompat.setVisibility(View.VISIBLE);
+			itemList.setVisibility(View.GONE);
+			if (containerTypeButton != null)
+				containerTypeButton.setText("Liste anzeigen");
+		} else {
+			itemGridCompat.setVisibility(View.GONE);
+			itemList.setVisibility(View.VISIBLE);
+			if (containerTypeButton != null)
+				containerTypeButton.setText("Grid anzeigen");
+		}
+	}
+
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	private void showScreen(int index) {
-		if (getHero() != null && index >= 0) {
+	private void showScreen(int containerId) {
+		Debug.trace("Show screen id:" + containerId);
+
+		updateScreenType();
+
+		if (getHero() != null && containerId >= 0) {
 			if (mMode != null) {
 				mMode.finish();
 			}
-			itemAdapter.setNotifyOnChange(false);
-			itemAdapter.clear();
+			itemGridAdapter.setNotifyOnChange(false);
+			itemGridAdapter.clear();
 			itemGridCompat.clearChoices();
 
-			if (index < 0 || index >= containerAdapter.getCount())
-				index = 0;
+			itemListAdapter.setNotifyOnChange(false);
+			itemListAdapter.clear();
+			itemList.clearChoices();
 
-			if (isSetIndex(index)) {
-				mCurrentScreen = index;
-				for (EquippedItem item : getHero().getEquippedItems(index)) {
-					itemAdapter.add(item);
+			if (isSetIndex(containerId)) {
+				mCurrentContainerId = containerId;
+				itemGridAdapter.addAll(getHero().getEquippedItems(containerId));
+				itemListAdapter.addAll(getHero().getEquippedItems(containerId));
+				if (containerList != null) {
+					containerList.setItemChecked(containerId, true);
 				}
 			} else {
-				ItemContainer itemContainer = containerAdapter.getItem(index);
-				mCurrentScreen = itemContainer.getId();
-				for (Item item : itemContainer.getItems()) {
-					itemAdapter.add(item);
+				ItemContainer itemContainer = getHero().getItemContainer(containerId);
+				if (itemContainer != null) {
+					mCurrentContainerId = itemContainer.getId();
+					itemGridAdapter.addAll(itemContainer.getItems());
+					itemListAdapter.addAll(itemContainer.getItems());
+
+					if (containerList != null) {
+						int index = containerAdapter.indexOf(itemContainer);
+						containerList.setItemChecked(index, true);
+					}
+				} else {
+					mCurrentContainerId = INVALID_SET;
 				}
 			}
 
-			itemAdapter.setNotifyOnChange(true);
-			itemAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
+			itemGridAdapter.setNotifyOnChange(true);
+			itemGridAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
 
-			containerList.setItemChecked(index, true);
+			itemListAdapter.setNotifyOnChange(true);
+			itemListAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
 
 			getSherlockActivity().supportInvalidateOptionsMenu();
 		}
@@ -753,14 +954,18 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	 */
 	@Override
 	public void onItemAdded(Item item) {
-		if (item.getScreen() == mCurrentScreen) {
+		Debug.trace("onItemAdded " + item);
+		if (item.getContainerId() == mCurrentContainerId) {
 			// skip items that are equippable since they will be equipped using
 			// a onItemEquipped Event. this would cause duplicates
-			if (item.isEquipable() && isSetIndex(mCurrentScreen))
+			if (item.isEquipable() && isSetIndex(mCurrentContainerId))
 				return;
 
-			itemAdapter.add(item);
-			itemAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
+			itemGridAdapter.add(item);
+			itemGridAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
+
+			itemListAdapter.add(item);
+			itemListAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
 		}
 		containerAdapter.notifyDataSetChanged();
 	}
@@ -772,8 +977,10 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	 */
 	@Override
 	public void onItemChanged(EquippedItem item) {
-		if (item.getSet() == mCurrentScreen) {
-			itemAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
+		Debug.trace("onItemChanged " + item);
+		if (item.getSet() == mCurrentContainerId) {
+			itemGridAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
+			itemListAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
 		}
 	}
 
@@ -784,8 +991,10 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	 */
 	@Override
 	public void onItemChanged(Item item) {
-		if (item.getScreen() == mCurrentScreen) {
-			itemAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
+		Debug.trace("onItemChanged " + item);
+		if (item.getContainerId() == mCurrentContainerId) {
+			itemGridAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
+			itemListAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
 		}
 	}
 
@@ -796,8 +1005,10 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	 */
 	@Override
 	public void onItemRemoved(Item item) {
-		if (item.getScreen() == mCurrentScreen) {
-			itemAdapter.remove(item);
+		Debug.trace("onItemRemoved " + item);
+		if (item.getContainerId() == mCurrentContainerId) {
+			itemGridAdapter.remove(item);
+			itemListAdapter.remove(item);
 		}
 		containerAdapter.notifyDataSetChanged();
 	}
@@ -809,9 +1020,13 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	 */
 	@Override
 	public void onItemEquipped(EquippedItem item) {
-		if (item.getSet() == mCurrentScreen) {
-			itemAdapter.add(item);
-			itemAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
+		Debug.trace("onItemEquipped " + item);
+		if (item.getSet() == mCurrentContainerId) {
+			itemGridAdapter.add(item);
+			itemGridAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
+
+			itemListAdapter.add(item);
+			itemListAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
 		}
 	}
 
@@ -822,8 +1037,10 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	 */
 	@Override
 	public void onItemUnequipped(EquippedItem item) {
-		if (item.getSet() == mCurrentScreen) {
-			itemAdapter.remove(item);
+		Debug.trace("onItemUnequipped " + item);
+		if (item.getSet() == mCurrentContainerId) {
+			itemGridAdapter.remove(item);
+			itemListAdapter.remove(item);
 		}
 	}
 
@@ -845,6 +1062,8 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	 */
 	@Override
 	public void onItemContainerAdded(ItemContainer itemContainer) {
+		Debug.trace("onItemContainerAdded " + itemContainer);
+
 		containerAdapter.add(itemContainer);
 		getSherlockActivity().supportInvalidateOptionsMenu();
 	}
@@ -857,6 +1076,8 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	 */
 	@Override
 	public void onItemContainerRemoved(ItemContainer itemContainer) {
+		Debug.trace("onItemContainerRemoved " + itemContainer);
+
 		containerAdapter.remove(itemContainer);
 		getSherlockActivity().supportInvalidateOptionsMenu();
 	}
@@ -869,6 +1090,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	 */
 	@Override
 	public void onItemContainerChanged(ItemContainer itemContainer) {
+		Debug.trace("onItemContainerChanged " + itemContainer);
 		containerAdapter.notifyDataSetChanged();
 	}
 

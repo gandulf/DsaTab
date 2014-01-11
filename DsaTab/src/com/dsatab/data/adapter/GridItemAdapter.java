@@ -2,6 +2,7 @@ package com.dsatab.data.adapter;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 import android.content.Context;
 import android.view.View;
@@ -29,22 +30,11 @@ public class GridItemAdapter extends OpenArrayAdapter<ItemCard> {
 		height = getContext().getResources().getDimensionPixelSize(R.dimen.workspace_cell_height);
 	}
 
-	public void filter(ItemType type, String category, String constraint) {
-		getFilter().setType(type);
+	public void filter(List<ItemType> types, String category, String constraint) {
+		getFilter().setTypes(types);
 		filter.setCategory(category);
 		filter.filter(constraint);
 	}
-
-	// /*
-	// * (non-Javadoc)
-	// *
-	// * @see com.dsatab.data.adapter.OpenArrayAdapter#getCount()
-	// */
-	// @Override
-	// public int getCount() {
-	// int count = super.getCount();
-	// return Math.max(16, count);
-	// }
 
 	/*
 	 * (non-Javadoc)

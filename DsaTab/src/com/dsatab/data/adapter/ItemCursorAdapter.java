@@ -6,11 +6,16 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.dsatab.R;
 import com.dsatab.util.Util;
 import com.dsatab.view.ItemListItem;
 import com.dsatab.xml.DataManager;
+
+import fr.castorflex.android.flipimageview.library.FlipImageView;
+import fr.castorflex.android.flipimageview.library.FlipImageView.FlippableViewHolder;
 
 public class ItemCursorAdapter extends SimpleCursorAdapter {
 
@@ -25,25 +30,54 @@ public class ItemCursorAdapter extends SimpleCursorAdapter {
 	}
 
 	@Override
+	public boolean hasStableIds() {
+		return true;
+	}
+
+	@Override
+	public long getItemId(int position) {
+		Cursor cursor = (Cursor) getItem(position);
+		String _id = cursor.getString(cursor.getColumnIndex("_id"));
+		return _id.hashCode();
+	}
+
+	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		// View view = super.getView(position, convertView, parent);
 
-		ItemListItem view = null;
+		ViewHolder holder = null;
+		if (convertView == null) {
+			convertView = (ItemListItem) inflater.inflate(R.layout.item_listitem_view, parent, false);
 
-		if (!(convertView instanceof ItemListItem)) {
-			view = (ItemListItem) inflater.inflate(R.layout.item_listitem_view, parent, false);
+			holder = new ViewHolder();
+			holder.text1 = (TextView) convertView.findViewById(android.R.id.text1);
+			holder.text2 = (TextView) convertView.findViewById(android.R.id.text2);
+			holder.text3 = (TextView) convertView.findViewById(R.id.text3);
+			holder.icon1 = (ImageView) convertView.findViewById(android.R.id.icon1);
+			holder.flip = (FlipImageView) convertView.findViewById(android.R.id.icon1);
+
+			holder.icon2 = (ImageView) convertView.findViewById(android.R.id.icon2);
+			holder.icon_chain_bottom = (ImageView) convertView.findViewById(R.id.icon_chain_bottom);
+			holder.icon_chain_top = (ImageView) convertView.findViewById(R.id.icon_chain_top);
+			convertView.setTag(holder);
 		} else {
-			view = (ItemListItem) convertView;
+			holder = (ViewHolder) convertView.getTag();
 		}
+
+		FlippableViewHolder.prepare(position, convertView, parent);
 
 		// this seems to be called even after stop in some rare occasions...
 		if (!getCursor().isClosed()) {
 			Cursor item = (Cursor) getItem(position);
-			view.setItem(DataManager.getItemByCursor(item));
+			((ItemListItem) convertView).setItem(DataManager.getItemByCursor(item));
 		}
 
-		Util.applyRowStyle(view, position);
-		return view;
+		Util.applyRowStyle(convertView, position);
+		return convertView;
+	}
+
+	private static class ViewHolder extends FlippableViewHolder {
+		TextView text1, text2, text3;
+		ImageView icon1, icon2, icon_chain_top, icon_chain_bottom;
 	}
 
 }

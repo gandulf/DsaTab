@@ -1,6 +1,9 @@
 <changelog>    
-<release version="4.2-beta" versioncode="74">    
-    <change>Flexible Tabs, der Inhalt von Listen kann nun unter 'Tabs anpassen' frei definiert werden</change>    
+<release version="4.2" versioncode="75">    
+    <change>Flexible Tabs, der Inhalt von Listen kann nun unter 'Tabs anpassen' frei definiert werden</change>
+    <change>Ggenstände Verwaltung überarbeitet (Liste statt Gallery)</change>
+    <change>Theme an Kitkat angepasst</change>
+    <change>Native Auswahl für Zahlen von Android übernommen</change>
 </release>
 <release version="4.1.6" versioncode="73">    
     <fix>Tiere/Begleiter Support mit eigenem Tab</fix>

@@ -14,6 +14,7 @@ import android.os.Parcelable;
 import com.dsatab.data.JSONable;
 import com.dsatab.fragment.BaseFragment;
 import com.dsatab.fragment.BaseListFragment;
+import com.dsatab.fragment.ItemsFragment;
 import com.dsatab.fragment.ListableFragment;
 import com.dsatab.util.Util;
 import com.dsatab.view.ListSettings;
@@ -133,47 +134,14 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 
 		// old delegate version
 		if (!in.isNull(FIELD_PRIMARY_ACTIVITY_CLAZZ)) {
-			String className = in.getString(FIELD_PRIMARY_ACTIVITY_CLAZZ);
-			if ("com.dsatab.fragment.LiturgieFragment".equals(className)
-					|| "com.dsatab.fragment.ArtFragment".equals(className)) {
-				className = ListableFragment.class.getName();
-			}
-
-			if ("com.dsatab.fragment.SpellFragment".equals(className)) {
-				className = ListableFragment.class.getName();
-			}
-
-			if ("com.dsatab.fragment.TalentFragment".equals(className)) {
-				className = ListableFragment.class.getName();
-			}
-
-			if ("com.dsatab.fragment.NotesFragment".equals(className)) {
-				className = ListableFragment.class.getName();
-			}
+			String className = compatibleFragmentName(in.getString(FIELD_PRIMARY_ACTIVITY_CLAZZ));
 
 			activityClazz[0] = (Class<? extends BaseFragment>) Class.forName(className, true,
 					BaseFragment.class.getClassLoader());
 		}
 		// old delegate version
 		if (!in.isNull(FIELD_SECONDARY_ACTIVITY_CLAZZ)) {
-
-			String className = in.getString(FIELD_SECONDARY_ACTIVITY_CLAZZ);
-			if ("com.dsatab.fragment.LiturgieFragment".equals(className)
-					|| "com.dsatab.fragment.ArtFragment".equals(className)) {
-				className = ListableFragment.class.getName();
-			}
-
-			if ("com.dsatab.fragment.SpellFragment".equals(className)) {
-				className = ListableFragment.class.getName();
-			}
-
-			if ("com.dsatab.fragment.TalentFragment".equals(className)) {
-				className = ListableFragment.class.getName();
-			}
-
-			if ("com.dsatab.fragment.NotesFragment".equals(className)) {
-				className = ListableFragment.class.getName();
-			}
+			String className = compatibleFragmentName(in.getString(FIELD_SECONDARY_ACTIVITY_CLAZZ));
 
 			activityClazz[1] = (Class<? extends BaseFragment>) Class.forName(className, true,
 					BaseFragment.class.getClassLoader());
@@ -185,23 +153,7 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 			activityClazz = new Class[MAX_TABS_PER_PAGE];
 			for (int i = 0; i < jsonArray.length(); i++) {
 				if (!jsonArray.isNull(i)) {
-					String className = jsonArray.getString(i);
-					if ("com.dsatab.fragment.LiturgieFragment".equals(className)
-							|| "com.dsatab.fragment.ArtFragment".equals(className)) {
-						className = ListableFragment.class.getName();
-					}
-
-					if ("com.dsatab.fragment.SpellFragment".equals(className)) {
-						className = ListableFragment.class.getName();
-					}
-
-					if ("com.dsatab.fragment.TalentFragment".equals(className)) {
-						className = ListableFragment.class.getName();
-					}
-
-					if ("com.dsatab.fragment.NotesFragment".equals(className)) {
-						className = ListableFragment.class.getName();
-					}
+					String className = compatibleFragmentName(jsonArray.getString(i));
 
 					activityClazz[i] = (Class<? extends BaseFragment>) Class.forName(className, true,
 							BaseFragment.class.getClassLoader());
@@ -234,6 +186,42 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		}
 
 		updateFilterSettings();
+	}
+
+	private String compatibleFragmentName(String className) {
+		if (className == null)
+			return null;
+
+		if ("com.dsatab.fragment.LiturgieFragment".equals(className)
+				|| "com.dsatab.fragment.ArtFragment".equals(className)) {
+			className = ListableFragment.class.getName();
+		}
+
+		if ("com.dsatab.fragment.SpellFragment".equals(className)) {
+			className = ListableFragment.class.getName();
+		}
+
+		if ("com.dsatab.fragment.TalentFragment".equals(className)) {
+			className = ListableFragment.class.getName();
+		}
+
+		if ("com.dsatab.fragment.NotesFragment".equals(className)) {
+			className = ListableFragment.class.getName();
+		}
+
+		if ("com.dsatab.fragment.DocumentsFragment".equals(className)) {
+			className = ListableFragment.class.getName();
+		}
+
+		if ("com.dsatab.fragment.ItemsListFragment".equals(className)) {
+			className = ItemsFragment.class.getName();
+		}
+
+		if ("com.dsatab.fragment.PurseFragment".equals(className)) {
+			className = ItemsFragment.class.getName();
+		}
+
+		return className;
 	}
 
 	public UUID getId() {

@@ -27,27 +27,8 @@ public class BaseFragmentActivity extends SherlockFragmentActivity {
 		super.onPostCreate(savedInstanceState);
 		SharedPreferences preferences = DsaTabApplication.getPreferences();
 		updateFullscreenStatus(preferences.getBoolean(DsaTabPreferenceActivity.KEY_FULLSCREEN, false));
-	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		showRandomHint();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.support.v4.app.FragmentActivity#onDestroy()
-	 */
-	@Override
-	protected void onDestroy() {
-		// Util.unbindDrawables(getWindow().getDecorView());
-		super.onDestroy();
-	}
-
-	protected boolean showRandomHint() {
-		return Hint.showRandomHint(getClass().getSimpleName(), this);
+		Hint.showRandomHint(getClass().getSimpleName(), this);
 	}
 
 	protected void applyPreferencesToTheme() {

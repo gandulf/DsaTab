@@ -5,6 +5,10 @@
         <item quantity="one">Gegenstand</item>
         <item quantity="other">Gegenstände</item>
     </plurals>
+    
+    <string name="hero_chooser_title">Held auswählen</string>
+    <string name="item_container_edit_title">Behälter bearbeiten</string>
+    
     <string name="label_capacity">%1$s von %2$s Unzen</string>
     
     <string name="path_items">http://dl.dropboxusercontent.com/u/15750588/dsatab-items3.zip</string>

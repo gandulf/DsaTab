@@ -25,6 +25,7 @@ import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.EventCategory;
 import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.listable.FileListable;
+import com.dsatab.data.listable.PurseListable;
 import com.dsatab.data.modifier.Modificator;
 import com.dsatab.util.Util;
 
@@ -299,7 +300,7 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
 	}
 
 	public enum ListItemType {
-		Header, Talent, Spell, Art, Attribute, EquippedItem, Modificator, Document, Notes
+		Header, Talent, Spell, Art, Attribute, EquippedItem, Modificator, Document, Notes, Purse
 	}
 
 	public static class ListItem implements JSONable, Parcelable {
@@ -411,6 +412,8 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
 			return ListItemType.Modificator;
 		} else if (o instanceof FileListable) {
 			return ListItemType.Document;
+		} else if (o instanceof PurseListable) {
+			return ListItemType.Purse;
 		} else {
 			return null;
 		}
@@ -432,6 +435,12 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
 			return ((Modificator) o).getModificatorName();
 		} else if (o instanceof FileListable) {
 			return ((FileListable) o).getFile().getName();
+		} else if (o instanceof PurseListable) {
+			if (((PurseListable) o).getCurrency() != null) {
+				return ((PurseListable) o).getCurrency().name();
+			} else {
+				return null;
+			}
 		} else {
 			return null;
 		}

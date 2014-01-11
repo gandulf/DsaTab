@@ -26,6 +26,7 @@ import android.text.TextUtils;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabPreferenceActivity;
+import com.dsatab.data.Purse.Currency;
 import com.dsatab.data.Talent.Flags;
 import com.dsatab.data.enums.ArmorPosition;
 import com.dsatab.data.enums.AttributeType;
@@ -486,6 +487,10 @@ public class Hero extends AbstractBeing {
 		prepareAdvantages(context);
 		prepareSpeciaFeatures(context);
 		prepareSystemRules(context);
+
+		if (getPurse() != null && getPurse().getActiveCurrency() == null) {
+			getPurse().setActiveCurrency(Currency.Mittelreich);
+		}
 	}
 
 	private void prepareSpeciaFeatures(Context context) {
@@ -801,7 +806,7 @@ public class Hero extends AbstractBeing {
 
 	public void moveItem(Item item, int newScreen) {
 		removeItem(item, false);
-		item.setScreen(newScreen);
+		item.setContainerId(newScreen);
 		addItem(item);
 	}
 
@@ -818,7 +823,7 @@ public class Hero extends AbstractBeing {
 	protected void removeItem(Item item, boolean cleanupEquippedItems) {
 		boolean found = false;
 		for (ItemContainer itemContainer : getItemContainers()) {
-			found = itemContainer.getItems().remove(item);
+			found = itemContainer.remove(item);
 			if (found) {
 				break;
 			}
@@ -875,17 +880,17 @@ public class Hero extends AbstractBeing {
 	 */
 	public boolean addItem(Item item) {
 
-		ItemContainer itemContainer = getItemContainer(item.getScreen());
+		ItemContainer itemContainer = getItemContainer(item.getContainerId());
 		if (itemContainer == null) {
 			itemContainer = getItemContainers().get(0);
-			item.setScreen(Hero.FIRST_INVENTORY_SCREEN);
+			item.setContainerId(Hero.FIRST_INVENTORY_SCREEN);
 		}
 
 		// item already added, no need to add again
-		if (itemContainer.getItems().contains(item))
+		if (itemContainer.contains(item))
 			return false;
 
-		itemContainer.getItems().add(item);
+		itemContainer.add(item);
 		fireItemAddedEvent(item);
 
 		return true;
@@ -1801,9 +1806,8 @@ public class Hero extends AbstractBeing {
 					CombatMeleeAttribute pa = new CombatMeleeAttribute(this, CombatMeleeAttribute.PARADE);
 					pa.setValue(getAttributeValue(AttributeType.pa));
 
-					talent = new CombatMeleeTalent(this, at, pa);
+					talent = new CombatMeleeTalent(this, talentType, at, pa);
 					talent.setValue(0);
-					talent.setType(talentType);
 
 					if (talent.getProbeInfo().getBe() != null) {
 						talent.setProbeBe(talent.getProbeInfo().getBe());
@@ -2042,11 +2046,17 @@ public class Hero extends AbstractBeing {
 		return null;
 	}
 
+	public void addEquippedItem(EquippedItem equippedItem, boolean sort) {
+		equippedItems[equippedItem.getSet()].add(equippedItem);
+		if (sort)
+			Util.sort(equippedItems[equippedItem.getSet()]);
+	}
+
 	/**
 	 * @param equippedItem
 	 */
 	public void addEquippedItem(EquippedItem equippedItem) {
-		equippedItems[equippedItem.getSet()].add(equippedItem);
+		addEquippedItem(equippedItem, true);
 	}
 
 	/**
@@ -2076,12 +2086,12 @@ public class Hero extends AbstractBeing {
 	}
 
 	/**
-	 * @param newScreen
+	 * @param containerId
 	 * @return
 	 */
-	public ItemContainer getItemContainer(int newScreen) {
+	public ItemContainer getItemContainer(int containerId) {
 		for (ItemContainer container : getItemContainers()) {
-			if (container.getId() == newScreen)
+			if (container.getId() == containerId)
 				return container;
 		}
 		return null;
@@ -2091,11 +2101,13 @@ public class Hero extends AbstractBeing {
 	 * @param itemContainer
 	 */
 	public void addItemContainer(ItemContainer itemContainer) {
-		int maxId = MAXIMUM_SET_NUMBER;
-		for (ItemContainer container : getItemContainers()) {
-			maxId = Math.max(maxId, container.getId());
+		if (itemContainer.getId() == ItemContainer.INVALID_ID) {
+			int maxId = MAXIMUM_SET_NUMBER;
+			for (ItemContainer container : getItemContainers()) {
+				maxId = Math.max(maxId, container.getId());
+			}
+			itemContainer.setId(maxId + 1);
 		}
-		itemContainer.setId(maxId + 1);
 		getItemContainers().add(itemContainer);
 
 		fireItemContainerAddedEvent(itemContainer);
@@ -2105,7 +2117,7 @@ public class Hero extends AbstractBeing {
 	 * @param itemContainer
 	 */
 	public void removeItemContainer(ItemContainer itemContainer) {
-		getItemContainers().get(0).getItems().addAll(itemContainer.getItems());
+		getItemContainers().get(0).addAll(itemContainer.getItems());
 		getItemContainers().remove(itemContainer);
 
 		fireItemContainerRemovedEvent(itemContainer);

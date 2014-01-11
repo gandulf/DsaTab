@@ -409,7 +409,7 @@ public class EquippedItem implements ItemCard, Listable {
 		hero.clearModifiersCache(getCombatProbeDefense());
 	}
 
-	public int getScreen() {
+	public int getContainerId() {
 		return set;
 	}
 

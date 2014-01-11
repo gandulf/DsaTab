@@ -10,14 +10,17 @@ buildscript {
 apply plugin: 'android'
 
 group = 'com.dsatab'
-version = '4.2-beta'
+version = '4.2'
 
 repositories {
   mavenCentral()
+  mavenLocal()
 }
 
 dependencies {
     compile "com.android.support:gridlayout-v7:19.0.+"
+    compile "net.simonvt.numberpicker:library:1.0.1@aar"
+    compile 'com.github.espiandev:library:3.2.0@aar'
     compile project(':guiLib')
     compile fileTree(dir: 'libs', include: '*.jar')
 }

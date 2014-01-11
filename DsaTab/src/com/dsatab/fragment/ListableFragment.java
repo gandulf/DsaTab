@@ -15,7 +15,6 @@ import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.media.AudioManager;
@@ -39,6 +38,7 @@ import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.ActionMode.Callback;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.SubMenu;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabActivity;
@@ -57,6 +57,7 @@ import com.dsatab.data.Hero;
 import com.dsatab.data.MetaTalent;
 import com.dsatab.data.NotesItem;
 import com.dsatab.data.Probe;
+import com.dsatab.data.Purse.Currency;
 import com.dsatab.data.Spell;
 import com.dsatab.data.Talent;
 import com.dsatab.data.TalentGroup;
@@ -77,6 +78,7 @@ import com.dsatab.data.items.Weapon;
 import com.dsatab.data.listable.FileListable;
 import com.dsatab.data.listable.HeaderListItem;
 import com.dsatab.data.listable.Listable;
+import com.dsatab.data.listable.PurseListable;
 import com.dsatab.data.modifier.AbstractModificator;
 import com.dsatab.data.modifier.Modificator;
 import com.dsatab.util.Debug;
@@ -99,6 +101,8 @@ import com.haarman.listviewanimations.view.DynamicListView;
 
 public class ListableFragment extends BaseListFragment implements OnItemClickListener, HeroInventoryChangedListener,
 		OnAnimateCallback {
+
+	private static final int MENU_FILTER_GROUP = 97;
 
 	private DynamicListView itemList;
 	private ListableItemAdapter listItemAdapter;
@@ -1223,7 +1227,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 		ListSettings listSettings = getFilterSettings();
 		if (listSettings != null) {
 			if (listSettings.hasListItem(ListItemType.EquippedItem) && menu.findItem(R.id.option_set) == null) {
-				inflater.inflate(R.menu.equipped_item_menu, menu);
+				inflater.inflate(R.menu.menuitem_set, menu);
 			}
 
 			if (listSettings.hasListItem(ListItemType.Modificator) && menu.findItem(R.id.option_modifier_add) == null) {
@@ -1236,6 +1240,20 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 
 			if (listSettings.hasListItem(ListItemType.Notes) && menu.findItem(R.id.option_note_add) == null) {
 				inflater.inflate(R.menu.note_list_menu, menu);
+
+				if (menu.findItem(R.id.option_note_filter) != null) {
+					SubMenu filterSet = menu.findItem(R.id.option_note_filter).getSubMenu();
+					EventCategory[] eventCategory = EventCategory.values();
+
+					for (int i = 0; i < eventCategory.length; i++) {
+						MenuItem item = filterSet.add(MENU_FILTER_GROUP, i, Menu.NONE, eventCategory[i].name())
+								.setIcon(eventCategory[i].getDrawableId());
+						item.setCheckable(true);
+						item.setChecked(getFilterSettings().getEventCategories().contains(
+								eventCategory[item.getItemId()]));
+					}
+				}
+
 			}
 		}
 
@@ -1257,6 +1275,15 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 				menu.findItem(R.id.option_documents_choose).setVisible(
 						getFilterSettings().hasListItem(ListItemType.Document));
 			}
+
+			if (menu.findItem(R.id.option_note_filter) != null) {
+				SubMenu filterSet = menu.findItem(R.id.option_note_filter).getSubMenu();
+				EventCategory[] eventCategory = EventCategory.values();
+				for (int i = 0; i < filterSet.size(); i++) {
+					MenuItem item = filterSet.getItem(i);
+					item.setChecked(getFilterSettings().getEventCategories().contains(eventCategory[item.getItemId()]));
+				}
+			}
 		}
 
 	}
@@ -1268,6 +1295,20 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 	 */
 	@Override
 	public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
+
+		if (item.getGroupId() == MENU_FILTER_GROUP) {
+
+			item.setChecked(!item.isChecked());
+
+			EventCategory category = EventCategory.values()[item.getItemId()];
+			if (item.isChecked())
+				getFilterSettings().getEventCategories().add(category);
+			else
+				getFilterSettings().getEventCategories().remove(category);
+
+			listItemAdapter.filter(getFilterSettings());
+			return true;
+		}
 
 		if (item.getItemId() == R.id.option_modifier_add) {
 			getActivity().startActivityForResult(new Intent(getActivity(), ModificatorEditActivity.class),
@@ -1306,51 +1347,6 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 		} else if (item.getItemId() == R.id.option_note_record) {
 			recordEvent();
 			return true;
-		} else if (item.getItemId() == R.id.option_note_filter) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-			EventCategory[] categories = EventCategory.values();
-
-			String[] categoryNames = new String[categories.length];
-			boolean[] categoriesSet = new boolean[categories.length];
-
-			for (int i = 0; i < categories.length; i++) {
-				categoryNames[i] = categories[i].name();
-				if (getFilterSettings().getEventCategories().contains(categories[i]))
-					categoriesSet[i] = true;
-			}
-
-			builder.setMultiChoiceItems(categoryNames, categoriesSet, new OnMultiChoiceClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-					EventCategory[] categories = EventCategory.values();
-
-					if (isChecked)
-						getFilterSettings().getEventCategories().add(categories[which]);
-					else
-						getFilterSettings().getEventCategories().remove(categories[which]);
-
-				}
-			});
-			builder.setTitle("Filtern");
-
-			builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					dialog.dismiss();
-				}
-			});
-
-			AlertDialog dialog = builder.show();
-			dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-
-				@Override
-				public void onDismiss(DialogInterface dialog) {
-					listItemAdapter.filter(getFilterSettings());
-				}
-			});
-			dialog.setCanceledOnTouchOutside(true);
-			return true;
 		} else {
 			return super.onOptionsItemSelected(item);
 		}
@@ -1365,7 +1361,6 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
-
 	}
 
 	/*
@@ -1433,10 +1428,6 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 
 		refreshEmptyView(listItemAdapter);
 	}
-
-	/**
-	 * 
-	 */
 
 	@Override
 	public void onModifierAdded(Modificator value) {
@@ -1594,9 +1585,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 					break;
 				case EquippedItem:
 					if (TextUtils.isEmpty(listItem.getName())) {
-						List<EquippedItem> items = hero.getEquippedItems();
-						Util.sort(items);
-						listItemAdapter.addAll(items);
+						listItemAdapter.addAll(hero.getEquippedItems());
 
 						addWaffenloseTalente();
 					} else {
@@ -1637,8 +1626,31 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 					}
 					break;
 				case Notes:
-					listItemAdapter.addAll(getHero().getEvents());
-					listItemAdapter.addAll(getHero().getConnections());
+					if (TextUtils.isEmpty(listItem.getName())) {
+						listItemAdapter.addAll(getHero().getEvents());
+						listItemAdapter.addAll(getHero().getConnections());
+					} else {
+						for (NotesItem notesItem : getHero().getEvents()) {
+							if (notesItem.getCategory().name().equals(listItem.getName())) {
+								listItemAdapter.add(notesItem);
+							}
+						}
+						for (NotesItem notesItem : getHero().getConnections()) {
+							if (notesItem.getCategory().name().equals(listItem.getName())) {
+								listItemAdapter.add(notesItem);
+							}
+						}
+					}
+					break;
+				case Purse:
+					if (TextUtils.isEmpty(listItem.getName())) {
+						PurseListable purseListable = new PurseListable(null);
+						listItemAdapter.add(purseListable);
+					} else {
+						Currency currency = Currency.valueOf(listItem.getName());
+						PurseListable purseListable = new PurseListable(currency);
+						listItemAdapter.add(purseListable);
+					}
 					break;
 				}
 
@@ -1767,7 +1779,6 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 				if (object instanceof AbstractModificator) {
 					AbstractModificator modificator = (AbstractModificator) object;
 					modificator.setActive(!modificator.isActive());
-					listItemAdapter.notifyDataSetChanged();
 				} else if (object instanceof Probe) {
 					getBaseActivity().checkProbe((Probe) object);
 				} else if (object instanceof FileListable) {

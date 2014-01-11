@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto">
-    <style name="DsaTabTheme.__Light" parent="@Theme.Sherlock.Light.DarkActionBar">            		
-               
-        <item name="iconImageViewStyle">@style/Widget.IconImageView</item>
-        
-        <item name="listItemBackground">@drawable/list_background_holo_light</item>
-        <item name="listShadowBackground">@drawable/dsa_listshadow_bg_light</item>
-        
-        <item name="android:soundEffectsEnabled">false</item>
+    
+    <style name="DsaTabTheme.Light" parent="@style/DsaTabTheme.__Light">            		
         
         <item name="imgChainTop">@drawable/chain_top_light</item>
         <item name="imgChainBottom">@drawable/chain_bottom_light</item>
@@ -105,91 +99,15 @@
         <item name="imgActionMicrophone">@drawable/ic_action_microphone_light</item>
         <item name="imgBarActionMicrophone">@drawable/ic_action_microphone_dark</item>
         
-        <!-- Holo generated styles -->
-        <item name="android:editTextStyle">@style/EditTextDsaTabLight</item>
-        <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewDsaTabLight</item>
-        <item name="android:checkboxStyle">@style/CheckBoxDsaTabLight</item>
-        <item name="android:radioButtonStyle">@style/RadioButtonDsaTabLight</item>
-        <item name="android:buttonStyle">@style/ButtonDsaTabLight</item>
-        <item name="android:imageButtonStyle">@style/ImageButtonDsaTabLight</item>
-        <item name="android:spinnerStyle">@style/SpinnerDsaTabLight</item>
-        <item name="android:dropDownSpinnerStyle">@style/SpinnerDsaTabLight.DropDown</item>
-        <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemDsaTabLight</item>
-        <item name="android:progressBarStyleHorizontal">@style/ProgressBarDsaTabLight</item>
-        <item name="android:seekBarStyle">@style/SeekBarDsaTabLight</item>
-        <item name="android:ratingBarStyle">@style/RatingBarDsaTabLight</item>
-        <item name="android:ratingBarStyleIndicator">@style/RatingBarBigDsaTabLight</item>
-        <item name="android:ratingBarStyleSmall">@style/RatingBarSmallDsaTabLight</item>
-        <item name="android:buttonStyleToggle">@style/ToggleDsaTabLight</item>
-        <item name="android:listViewStyle">@style/ListViewDsaTabLight</item>
-        <item name="android:listViewWhiteStyle">@style/ListViewDsaTabLight.White</item>
-        <item name="android:spinnerItemStyle">@style/SpinnerItemDsaTabLight</item>        
-        <!-- Holo generated styles -->
-        <item name="selectableBackground">@drawable/list_selector_holo_light</item>
-        <item name="imgDividerVertical">@drawable/divider_vertical_holo_light</item>
-        
-        <!--  ActionBar styles -->
-        <item name="actionBarItemBackground">@drawable/selectable_background_dsatablight</item>
-        <item name="popupMenuStyle">@style/dsatablight_PopupMenu</item>
-        <item name="dropDownListViewStyle">@style/dsatablight_DropDownListView</item>
-        <item name="actionBarTabStyle">@style/dsatablight_ActionBarTabStyle</item>
-        <item name="actionDropDownStyle">@style/dsatablight_DropDownNav</item>
-        <item name="actionBarStyle">@style/dsatablight_solid_ActionBar</item>
-        <item name="actionModeBackground">@drawable/cab_background_top_holo_dsatablight</item>
-        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_holo_dsatablight</item>
-
-        <item name="android:actionBarItemBackground">@drawable/selectable_background_dsatablight</item>
-        <item name="android:popupMenuStyle">@style/dsatablight_PopupMenu</item>
-        <item name="android:dropDownListViewStyle">@style/dsatablight_DropDownListView</item>
-        <item name="android:actionBarTabStyle">@style/dsatablight_ActionBarTabStyle</item>
-        <item name="android:actionDropDownStyle">@style/dsatablight_DropDownNav</item>
-        <item name="android:actionBarStyle">@style/dsatablight_solid_ActionBar</item>        
-        <!-- item name="android:panelBackground">@drawable/menu_hardkey_panel_dsatablight</item -->
-        <item name="android:actionModeBackground">@drawable/cab_background_top_holo_dsatablight</item>
-        <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_holo_dsatablight</item>
-                
-         <!-- Light.DarkActionBar specific -->
-        <item name="actionBarWidgetTheme">@style/Theme.dsatablight.widget</item>
-        <item name="android:actionBarWidgetTheme">@style/Theme.dsatablight.widget</item>
-        <!--  ActionBar styles -->
-        
-        <item name="flipImageViewStyle">@style/FlipImageView.Checked</item>
-    </style>
-    
-    <style name="DsaTabTheme.Light" parent="@DsaTabTheme.__Light">
-    </style>
-        
-    <style name="Theme.Dialog.__Light" parent="@android:style/Theme.Dialog">
+		<item name="android:soundEffectsEnabled">false</item>       
+        <item name="iconImageViewStyle">@style/Widget.IconImageView</item>        
+        <item name="listItemBackground">@drawable/list_background_holo_light</item>
         <item name="listShadowBackground">@drawable/dsa_listshadow_bg_light</item>
-        
-        <item name="iconImageViewStyle">@style/Widget.IconImageView</item>
-        <item name="android:soundEffectsEnabled">false</item>
-        
-        <!-- Holo generated styles -->
-        <item name="android:editTextStyle">@style/EditTextDsaTabLight</item>
-        <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewDsaTabLight</item>
-        <item name="android:checkboxStyle">@style/CheckBoxDsaTabLight</item>
-        <item name="android:radioButtonStyle">@style/RadioButtonDsaTabLight</item>
-        <item name="android:buttonStyle">@style/ButtonDsaTabLight</item>
-        <item name="android:imageButtonStyle">@style/ImageButtonDsaTabLight</item>
-        <item name="android:spinnerStyle">@style/SpinnerDsaTabLight</item>
-        <item name="android:dropDownSpinnerStyle">@style/SpinnerDsaTabLight.DropDown</item>
-        <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemDsaTabLight</item>
-        <item name="android:progressBarStyleHorizontal">@style/ProgressBarDsaTabLight</item>
-        <item name="android:seekBarStyle">@style/SeekBarDsaTabLight</item>
-        <item name="android:ratingBarStyle">@style/RatingBarDsaTabLight</item>
-        <item name="android:ratingBarStyleIndicator">@style/RatingBarBigDsaTabLight</item>
-        <item name="android:ratingBarStyleSmall">@style/RatingBarSmallDsaTabLight</item>
-        <item name="android:buttonStyleToggle">@style/ToggleDsaTabLight</item>
-        <item name="android:listViewStyle">@style/ListViewDsaTabLight</item>
-        <item name="android:listViewWhiteStyle">@style/ListViewDsaTabLight.White</item>
-        <item name="android:spinnerItemStyle">@style/SpinnerItemDsaTabLight</item>
-        <!-- Holo generated styles -->
-        
-        <item name="flipImageViewStyle">@style/FlipImageView.Checked</item>
-    </style>
-    
-    <style name="Theme.Dialog.Light" parent="@Theme.Dialog.__Light">
+        <item name="selectableBackground">@drawable/list_selector_holo_light</item>
+        <item name="imgDividerVertical">@drawable/divider_vertical_holo_light</item>        
+        <item name="flipImageViewStyle">@style/FlipImageView.Checked</item>        
+        <item name="numberPickerStyle">@style/NPWidget.Holo.Light.NumberPicker</item>
+        <item name="showcaseViewStyle">@style/ShowcaseView.Light</item>
     </style>
     
 </resources>

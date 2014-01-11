@@ -11,7 +11,7 @@ public class CombatMeleeTalent extends BaseCombatTalent {
 
 	private CombatMeleeAttribute at;
 
-	public CombatMeleeTalent(Hero hero, CombatMeleeAttribute at, CombatMeleeAttribute pa) {
+	public CombatMeleeTalent(Hero hero, TalentType talentType, CombatMeleeAttribute at, CombatMeleeAttribute pa) {
 		super(hero);
 		if (at != null)
 			at.setCombatMeleeTalent(this);
@@ -19,6 +19,7 @@ public class CombatMeleeTalent extends BaseCombatTalent {
 			pa.setCombatMeleeTalent(this);
 		this.at = at;
 		this.pa = pa;
+		setType(talentType);
 	}
 
 	@Override

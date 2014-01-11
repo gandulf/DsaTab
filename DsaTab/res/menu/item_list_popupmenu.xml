@@ -6,44 +6,37 @@
             android:icon="?attr/imgBarView"
             android:showAsAction="withText|ifRoom"
             android:title="Details"/>
-        
         <item
-            android:id="@+id/option_edit"
-            android:icon="?attr/imgBarEdit"
-            android:showAsAction="withText|ifRoom"
-            android:title="Bearbeiten"/>
-        
-        <item android:id="@+id/option_move"
-            android:icon="?attr/imgBarSet"            
+            android:id="@+id/option_move"
+            android:icon="?attr/imgBarSet"
             android:showAsAction="withText|ifRoom"
             android:title="Verschieben">
-		 <menu>
-		     
-		 </menu>
-		</item>
-		
-        <item android:id="@+id/option_equipped"
-            android:icon="?attr/imgBarSet"            
+            <menu>
+            </menu>
+        </item>
+        <item
+            android:id="@+id/option_equipped"
+            android:icon="?attr/imgBarSet"
             android:showAsAction="withText|ifRoom"
             android:title="Ausrüsten">
-		 <menu>
-        
-	        <item android:id="@+id/option_equipped_set1"
-		          android:icon="?attr/imgBarSet1"
-		          android:showAsAction="withText"
-		          android:title="Set 1" />
-		    
-		    <item android:id="@+id/option_equipped_set2"
-		          android:icon="?attr/imgBarSet2"
-		          android:showAsAction="withText"
-		          android:title="Set 2" />
-		    
-		    <item android:id="@+id/option_equipped_set3"
-		          android:icon="?attr/imgBarSet3"
-		          android:showAsAction="withText"
-		          android:title="Set 3" />
-	    	</menu>
-		</item>
+            <menu>
+                <item
+                    android:id="@+id/option_equipped_set1"
+                    android:icon="?attr/imgBarSet1"
+                    android:showAsAction="withText"
+                    android:title="Set 1"/>
+                <item
+                    android:id="@+id/option_equipped_set2"
+                    android:icon="?attr/imgBarSet2"
+                    android:showAsAction="withText"
+                    android:title="Set 2"/>
+                <item
+                    android:id="@+id/option_equipped_set3"
+                    android:icon="?attr/imgBarSet3"
+                    android:showAsAction="withText"
+                    android:title="Set 3"/>
+            </menu>
+        </item>
         <item
             android:id="@+id/option_delete"
             android:icon="?attr/imgBarDelete"

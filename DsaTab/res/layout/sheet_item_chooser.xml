@@ -1,82 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/sheet_item"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_margin="@dimen/page_margin"
-    android:layout_weight="1" >
+    android:layout_margin="@dimen/page_margin" >
 
-    <Gallery
-        android:id="@+id/gal_gallery"
+    <com.haarman.listviewanimations.view.DynamicListView
+        android:id="@android:id/list"
+        android:divider="@null"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/gallery_thumb_height"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:visibility="visible" >
-    </Gallery>
+        android:layout_height="fill_parent" />
+    
 
-    <com.dsatab.view.CardView
-        android:id="@+id/gal_imageView"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/inc_gal_item_view"
-        android:layout_alignWithParentIfMissing="true"
-        android:layout_below="@+id/gal_gallery"
-        android:layout_toRightOf="@+id/body_attack_button"
-        android:scaleType="fitCenter" >
-    </com.dsatab.view.CardView>
-
-    <ImageButton
-        android:id="@+id/body_attack_button"
-        android:layout_width="@dimen/icon_button_size"
-        android:layout_height="@dimen/icon_button_size"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/gal_gallery"
-        android:layout_marginBottom="2dp"
-        android:src="@drawable/icon_longsword" />
-
-    <ImageButton
-        android:id="@+id/body_defense_button"
-        android:layout_width="@dimen/icon_button_size"
-        android:layout_height="@dimen/icon_button_size"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/body_attack_button"
-        android:layout_marginBottom="2dp"
-        android:src="@drawable/icon_metal_shield" />
-
-    <ImageButton
-        android:id="@+id/body_distance_button"
-        android:layout_width="@dimen/icon_button_size"
-        android:layout_height="@dimen/icon_button_size"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/body_defense_button"
-        android:layout_marginBottom="2dp"
-        android:src="@drawable/icon_longbow" />
-
-    <ImageButton
-        android:id="@+id/body_armor_button"
-        android:layout_width="@dimen/icon_button_size"
-        android:layout_height="@dimen/icon_button_size"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/body_distance_button"
-        android:layout_marginBottom="2dp"
-        android:src="@drawable/icon_steel_armor" />
-
-    <ImageButton
-        android:id="@+id/body_items_button"
-        android:layout_width="@dimen/icon_button_size"
-        android:layout_height="@dimen/icon_button_size"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/body_armor_button"        
-        android:src="@drawable/icon_misc" />
-
-    <include
-        android:id="@+id/inc_gal_item_view"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        layout="@layout/item_listitem_view" >
-    </include>
-
-</RelativeLayout>
+</FrameLayout>

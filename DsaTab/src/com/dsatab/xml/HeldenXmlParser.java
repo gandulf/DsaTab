@@ -856,7 +856,7 @@ public class HeldenXmlParser {
 				secondaryItems.add(equippedItem);
 			}
 
-			hero.addEquippedItem(equippedItem);
+			hero.addEquippedItem(equippedItem, false);
 		}
 
 		// handle bk elements
@@ -940,7 +940,7 @@ public class HeldenXmlParser {
 				if (element.getAttribute(Xml.KEY_SCREEN) != null) {
 					// there is only one inventory screen left...
 					int screen = Util.parseInt(element.getAttributeValue(Xml.KEY_SCREEN));
-					item.setScreen(screen);
+					item.setContainerId(screen);
 				}
 
 				Element domallgemein = element.getChild(Xml.KEY_MOD_ALLGEMEIN);
@@ -1190,7 +1190,7 @@ public class HeldenXmlParser {
 					CombatMeleeAttribute at = new CombatMeleeAttribute(hero, CombatMeleeAttribute.ATTACKE);
 					at.setValue(hero.getAttributeValue(AttributeType.at) + talentValue);
 
-					talent = new CombatMeleeTalent(hero, at, null);
+					talent = new CombatMeleeTalent(hero, talentType, at, null);
 				} else if (talentType.type() == TalentGroupType.Fernkampf) {
 					talent = new CombatDistanceTalent(hero);
 				} else {
@@ -1213,7 +1213,7 @@ public class HeldenXmlParser {
 									pa.setValue(Util.parseInteger(item.getAttributeValue(Xml.KEY_VALUE)));
 								}
 							}
-							talent = new CombatMeleeTalent(hero, at, pa);
+							talent = new CombatMeleeTalent(hero, talentType, at, pa);
 							iter.remove();
 							break;
 						}
@@ -1253,9 +1253,7 @@ public class HeldenXmlParser {
 					pa.setValue(Util.parseInteger(item.getAttributeValue(Xml.KEY_VALUE)));
 				}
 			}
-
-			CombatMeleeTalent combatTalent = new CombatMeleeTalent(hero, at, pa);
-			combatTalent.setType(TalentType.byXmlName(talentName));
+			CombatMeleeTalent combatTalent = new CombatMeleeTalent(hero, TalentType.byXmlName(talentName), at, pa);
 
 			hero.addTalent(combatTalent, false);
 		}
@@ -1895,8 +1893,8 @@ public class HeldenXmlParser {
 	 * @param element
 	 */
 	private static void writeItemInfo(ItemCard itemInfo, Element element) {
-		if (itemInfo.getScreen() != Hero.FIRST_INVENTORY_SCREEN) {
-			element.setAttribute(Xml.KEY_SCREEN, Util.toString(itemInfo.getScreen()));
+		if (itemInfo.getContainerId() != Hero.FIRST_INVENTORY_SCREEN) {
+			element.setAttribute(Xml.KEY_SCREEN, Util.toString(itemInfo.getContainerId()));
 		} else {
 			element.removeAttribute(Xml.KEY_SCREEN);
 		}

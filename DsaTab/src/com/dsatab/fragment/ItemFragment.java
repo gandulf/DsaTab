@@ -13,8 +13,10 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
+import com.dsatab.activity.ItemEditActivity;
 import com.dsatab.data.Hero;
 import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemSpecification;
@@ -35,7 +37,7 @@ public class ItemFragment extends BaseFragment {
 	private ImageView iconView;
 	private TextView categoryView;
 
-	private Item origItem = null;
+	private Item item = null;
 	private ItemSpecification itemSpecification;
 
 	/*
@@ -52,11 +54,12 @@ public class ItemFragment extends BaseFragment {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+	 * android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View root = inflater.inflate(R.layout.sheet_item, container, false);
+		View root = inflater.inflate(R.layout.sheet_item_view, container, false);
 
 		nameView = (TextView) root.findViewById(R.id.popup_edit_name);
 		titleView = (TextView) root.findViewById(R.id.popup_edit_title);
@@ -89,18 +92,18 @@ public class ItemFragment extends BaseFragment {
 		if (extra != null) {
 			UUID itemId = (UUID) extra.getSerializable(INTENT_EXTRA_ITEM_ID);
 			if (itemId != null) {
-				origItem = hero.getItem(itemId);
-				if (origItem == null)
-					origItem = DataManager.getItemById(itemId);
+				item = hero.getItem(itemId);
+				if (item == null)
+					item = DataManager.getItemById(itemId);
 			}
 		}
 
 		imageView.setHighQuality(true);
 		itemView.setTextColor(Color.BLACK);
 		itemView.setBackgroundColor(getResources().getColor(R.color.Brighter));
-		if (origItem != null) {
-			itemSpecification = origItem.getSpecifications().get(0);
-			showCard(origItem, itemSpecification);
+		if (item != null) {
+			itemSpecification = item.getSpecifications().get(0);
+			showCard(item, itemSpecification);
 		}
 		super.onActivityCreated(savedInstanceState);
 	}
@@ -138,11 +141,25 @@ public class ItemFragment extends BaseFragment {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu, com.actionbarsherlock.view.MenuInflater)
+	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu,
+	 * com.actionbarsherlock.view.MenuInflater)
 	 */
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
+
+		inflater.inflate(R.menu.menuitem_edit, menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.option_edit: {
+			ItemEditActivity.edit(getActivity(), getHero(), this.item);
+			return true;
+		}
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 }

@@ -661,8 +661,10 @@ public class AnimalFragment extends BaseAttributesFragment implements OnClickLis
 		attackLayout.removeAllViews();
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
 		if (getAnimal() != null && getAnimal().getAnimalAttacks() != null) {
+			int position = 0;
 			for (AnimalAttack animalAttack : getAnimal().getAnimalAttacks()) {
-				ItemListItem listItem = (ItemListItem) inflater.inflate(R.layout.item_listitem_equippeditem, attackLayout, false);
+				ItemListItem listItem = (ItemListItem) inflater.inflate(R.layout.item_listitem_equippeditem,
+						attackLayout, false);
 
 				StyleableSpannableStringBuilder title = new StyleableSpannableStringBuilder();
 				if (!TextUtils.isEmpty(animalAttack.getName())) {
@@ -687,6 +689,7 @@ public class AnimalFragment extends BaseAttributesFragment implements OnClickLis
 					listItem.icon2.setOnClickListener(getProbeListener());
 				}
 
+				Util.applyRowStyle(listItem, position++);
 				attackLayout.addView(listItem);
 			}
 		}

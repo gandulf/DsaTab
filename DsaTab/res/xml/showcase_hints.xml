@@ -4,19 +4,19 @@
             id="PROBE_DICE_MU"
             description="Um eine Probe zu würfeln, klicke einfach auf diese mit Kreisen markierten Werte.\n\n Zum Editieren, klicke lange auf den Wert (manche Werte sind nicht editierbar)."
             title="Probe würfeln"
-            viewId="@id/attr_mu"/>
+            viewId="@id/attr_total_le"/>
         <hint
             id="ANIMAL_FRAGMENT"
             description="Es gibt nun einen neuen Tab mit dem die Werte seiner Begleittiere angezeigt werden können."
             title="Tiere/Begleiter verwalten"
             x="95.0"
-            y="5.0"/>        
-    </fragment>    
+            y="5.0"/>
+    </fragment>
     <fragment name="ListableFragment">
         <hint
             id="LISTABLE_CONFIG"
             description="Listen können nun dynamisch aus den unterschiedlichsten Bereichen zusammengestellt werden. Unter 'Tabs anpassen' kann definiert werden was alles in einer Liste angezeigt werden soll (Talente, Zauber, Attribute, ...)"
-            title="Dynaimsche Listen"
+            title="Dynamische Listen"
             viewId="@android:id/list"/>               
     </fragment>
     <fragment name="ItemsFragment">

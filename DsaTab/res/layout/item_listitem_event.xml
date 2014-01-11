@@ -38,6 +38,21 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textStyle="normal" />
 
+    <TextView
+        android:id="@+id/text3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@android:id/text1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@android:id/text1"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_below="@android:id/text2"
+        android:gravity="bottom|right"
+        android:textAllCaps="true"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="10sp"
+        android:textStyle="normal" />
+    
     <ImageView
         android:id="@android:id/icon2"
         android:layout_width="wrap_content"

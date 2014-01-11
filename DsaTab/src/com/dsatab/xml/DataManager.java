@@ -135,7 +135,12 @@ public class DataManager {
 				Where<Item, UUID> where = builder.where();
 
 				if (!TextUtils.isEmpty(nameConstraint)) {
-					where = where.like("name", nameConstraint + "%").and();
+					String name = nameConstraint.toString();
+					if (name.contains("%")) {
+						where = where.like("name", nameConstraint).and();
+					} else {
+						where = where.like("name", nameConstraint + "%").and();
+					}
 				}
 
 				if (!TextUtils.isEmpty(itemCategory)) {

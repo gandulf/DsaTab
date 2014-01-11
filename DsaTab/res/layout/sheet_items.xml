@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sheet_items"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:layout_margin="@dimen/page_margin"
+    android:layout_weight="1"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="?attr/listShadowBackground"
+        android:orientation="vertical" >
+
+        <TextView
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Behälter" />
+
+        <com.haarman.listviewanimations.view.DynamicListView
+            android:id="@+id/container_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:divider="@null" />
+
+        <Button
+            android:id="@+id/container_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="?attr/imgSwordAdd"
+            android:ellipsize="middle"
+            android:text="Behälter erstellen" />
+
+        <Button
+            android:id="@+id/container_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="?attr/imgFilter"
+            android:ellipsize="middle"
+            android:text="Darstellung" />
+
+    </LinearLayout>
+
+    <com.haarman.listviewanimations.view.DynamicListView
+        android:id="@android:id/list"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:divider="@null"
+        android:visibility="gone" />
+
+    <com.rokoder.android.lib.support.v4.widget.GridViewCompat
+        android:id="@+id/workspace"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:columnWidth="@dimen/workspace_cell_width"
+        android:horizontalSpacing="@dimen/workspace_cell_horizontal_padding"
+        android:numColumns="auto_fit"
+        android:stretchMode="spacingWidth"
+        android:verticalSpacing="@dimen/workspace_cell_vertical_padding" />
+
+</LinearLayout>

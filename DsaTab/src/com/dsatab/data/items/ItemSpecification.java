@@ -1,9 +1,13 @@
 package com.dsatab.data.items;
 
+import java.io.Serializable;
+
 import com.dsatab.data.enums.ItemType;
 import com.j256.ormlite.field.DatabaseField;
 
-public abstract class ItemSpecification implements Cloneable {
+public abstract class ItemSpecification implements Cloneable, Serializable {
+
+	private static final long serialVersionUID = -5119414460010671876L;
 
 	public static final String ITEM_ID_FIELD_NAME = "item_id";
 

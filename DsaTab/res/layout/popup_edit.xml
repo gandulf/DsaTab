@@ -13,7 +13,7 @@
         android:text="BE automatisch berechnen" >
     </CheckBox>
 
-    <kankan.wheel.widget.WheelView
+    <net.simonvt.numberpicker.NumberPicker
         android:id="@+id/popup_edit_text"
         android:layout_width="match_parent"
         android:layout_height="200dp"

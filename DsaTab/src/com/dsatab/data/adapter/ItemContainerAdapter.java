@@ -3,7 +3,6 @@ package com.dsatab.data.adapter;
 import java.util.Collection;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,17 +16,14 @@ import com.gandulf.guilib.data.OpenArrayAdapter;
 
 public class ItemContainerAdapter extends OpenArrayAdapter<ItemContainer> {
 
-	private LayoutInflater inflater;
-
 	/**
 	 * @param context
 	 * @param textViewResourceId
 	 * @param objects
 	 */
-	public ItemContainerAdapter(Context context, Collection<ItemContainer> spells) {
-		super(context, 0, 0, spells);
+	public ItemContainerAdapter(Context context, Collection<ItemContainer> container) {
+		super(context, 0, 0, container);
 
-		inflater = LayoutInflater.from(getContext());
 	}
 
 	/*
@@ -38,35 +34,35 @@ public class ItemContainerAdapter extends OpenArrayAdapter<ItemContainer> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
-		View listItem;
 		ViewHolder holder;
 		if (convertView == null) {
-			listItem = inflater.inflate(R.layout.item_listitem_view, parent, false);
+			convertView = mInflater.inflate(R.layout.item_listitem_view, parent, false);
 
 			holder = new ViewHolder();
-			holder.text1 = (TextView) listItem.findViewById(android.R.id.text1);
-			holder.text2 = (TextView) listItem.findViewById(android.R.id.text2);
-			holder.text3 = (TextView) listItem.findViewById(R.id.text3);
-			holder.icon1 = (ImageView) listItem.findViewById(android.R.id.icon1);
-			holder.icon2 = (ImageView) listItem.findViewById(android.R.id.icon2);
+			holder.text1 = (TextView) convertView.findViewById(android.R.id.text1);
+			holder.text2 = (TextView) convertView.findViewById(android.R.id.text2);
+			holder.text3 = (TextView) convertView.findViewById(R.id.text3);
+			holder.icon1 = (ImageView) convertView.findViewById(android.R.id.icon1);
+			holder.icon2 = (ImageView) convertView.findViewById(android.R.id.icon2);
 
-			listItem.setTag(holder);
+			convertView.setTag(holder);
 		} else {
-			listItem = convertView;
 			holder = (ViewHolder) convertView.getTag();
 		}
 
-		ItemContainer item = getItem(position);
+		ItemContainer itemContainer = getItem(position);
 
-		holder.text1.setText(item.getName());
-		holder.icon1.setImageURI(item.getIconUri());
-		if (item.getId() >= Hero.FIRST_INVENTORY_SCREEN) {
-			holder.text2.setText(item.getItems().size() + " "
-					+ getContext().getResources().getQuantityString(R.plurals.items, item.getItems().size()));
-			if (item.getCapacity() != 0 || item.getWeight() != 0) {
+		holder.text1.setText(itemContainer.getName());
+		holder.icon1.setImageURI(itemContainer.getIconUri());
+		holder.icon1.setBackgroundResource(0);
+		if (itemContainer.getId() >= Hero.FIRST_INVENTORY_SCREEN) {
+			holder.text2.setText(itemContainer.size() + " "
+					+ getContext().getResources().getQuantityString(R.plurals.items, itemContainer.size()));
+
+			if (itemContainer.getCapacity() != 0 || itemContainer.getWeight() != 0.0f) {
 				holder.text3.setVisibility(View.VISIBLE);
-				holder.text3.setText(getContext().getResources().getString(R.string.label_capacity, item.getWeight(),
-						item.getCapacity()));
+				holder.text3.setText(getContext().getResources().getString(R.string.label_capacity,
+						itemContainer.getWeight(), itemContainer.getCapacity()));
 			} else {
 				holder.text3.setVisibility(View.GONE);
 			}
@@ -74,9 +70,10 @@ public class ItemContainerAdapter extends OpenArrayAdapter<ItemContainer> {
 			holder.text2.setText(null);
 			holder.text3.setText(null);
 		}
-		Util.applyRowStyle(listItem, position);
 
-		return listItem;
+		Util.applyRowStyle(convertView, position);
+
+		return convertView;
 
 	}
 

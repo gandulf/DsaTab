@@ -3,6 +3,8 @@ package com.dsatab.data.adapter;
 import java.util.Collections;
 import java.util.List;
 
+import net.simonvt.numberpicker.NumberPicker;
+import net.simonvt.numberpicker.NumberPicker.OnValueChangeListener;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +13,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -18,6 +22,7 @@ import android.widget.ImageView.ScaleType;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.dsatab.R;
@@ -34,6 +39,8 @@ import com.dsatab.data.Event;
 import com.dsatab.data.Hero;
 import com.dsatab.data.Markable;
 import com.dsatab.data.NotesItem;
+import com.dsatab.data.Purse.Currency;
+import com.dsatab.data.Purse.PurseUnit;
 import com.dsatab.data.Spell;
 import com.dsatab.data.Talent;
 import com.dsatab.data.Talent.Flags;
@@ -51,6 +58,7 @@ import com.dsatab.data.items.Weapon;
 import com.dsatab.data.listable.FileListable;
 import com.dsatab.data.listable.HeaderListItem;
 import com.dsatab.data.listable.Listable;
+import com.dsatab.data.listable.PurseListable;
 import com.dsatab.data.modifier.AbstractModificator;
 import com.dsatab.data.modifier.Modificator;
 import com.dsatab.data.modifier.RulesModificator;
@@ -94,8 +102,46 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 	private static final int ITEM_TYPE_MODIFIER = 5;
 	private static final int ITEM_TYPE_HEADER = 6;
 	private static final int ITEM_TYPE_NOTES = 7;
+	private static final int ITEM_TYPE_PURSE = 8;
 
 	private DsaTabActivity main;
+
+	private OnItemSelectedListener onPurseItemSelectedListener = new OnItemSelectedListener() {
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see android.widget.AdapterView.OnItemSelectedListener#onItemSelected(android .widget.AdapterView,
+		 * android.view.View, int, long)
+		 */
+		@Override
+		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+			if (hero.getPurse() != null) {
+				Currency cur = (Currency) parent.getItemAtPosition(position);
+				if (cur != hero.getPurse().getActiveCurrency()) {
+					hero.getPurse().setActiveCurrency(cur);
+					notifyDataSetChanged();
+				}
+			}
+		}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> arg0) {
+			// TODO Auto-generated method stub
+
+		}
+	};
+	private OnValueChangeListener onPurseValueChangeListener = new OnValueChangeListener() {
+
+		@Override
+		public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+			if (hero.getPurse() != null) {
+				PurseUnit unit = (PurseUnit) picker.getTag();
+				if (unit != null) {
+					hero.getPurse().setCoins(unit, newVal);
+				}
+			}
+		}
+	};
 
 	public ListableItemAdapter(DsaTabActivity context, Hero hero, ListSettings settings) {
 		this(context, hero, (List<Listable>) Collections.EMPTY_LIST, settings);
@@ -137,7 +183,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 	 */
 	@Override
 	public int getViewTypeCount() {
-		return 8;
+		return 9;
 	}
 
 	/*
@@ -175,9 +221,11 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		} else if (item instanceof HeaderListItem) {
 			return ITEM_TYPE_HEADER;
 		} else if (item instanceof FileListable) {
-			return ITEM_TYPE_VIEW;
+			return ITEM_TYPE_NOTES;
 		} else if (item instanceof NotesItem) {
 			return ITEM_TYPE_NOTES;
+		} else if (item instanceof PurseListable) {
+			return ITEM_TYPE_PURSE;
 		} else {
 			return IGNORE_ITEM_VIEW_TYPE;
 		}
@@ -256,7 +304,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				break;
 			}
 			case ITEM_TYPE_SEEK: {
-				convertView = (ViewGroup) inflater.inflate(R.layout.item_listitem_wheelview, parent, false);
+				convertView = (ViewGroup) inflater.inflate(R.layout.item_listitem_seek, parent, false);
 				SeekViewHolder viewHolder = new SeekViewHolder();
 				viewHolder.seek = (SeekBarEx) convertView.findViewById(R.id.wheel);
 				viewHolder.text = (TextView) convertView.findViewById(R.id.wheel_label);
@@ -310,11 +358,34 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				EventViewHolder holder = new EventViewHolder();
 				holder.text1 = (TextView) convertView.findViewById(android.R.id.text1);
 				holder.text2 = (TextView) convertView.findViewById(android.R.id.text2);
+				holder.text3 = (TextView) convertView.findViewById(R.id.text3);
 				holder.flip = (FlipImageView) convertView.findViewById(android.R.id.icon1);
 				holder.icon2 = (ImageView) convertView.findViewById(android.R.id.icon2);
 
 				convertView.setTag(holder);
+				break;
 			}
+			case ITEM_TYPE_PURSE:
+				convertView = inflater.inflate(R.layout.item_listitem_purse, parent, false);
+				PurseViewHolder holder = new PurseViewHolder();
+
+				holder.currencySpinner = (Spinner) convertView.findViewById(R.id.sp_currency);
+				holder.header = (TextView) convertView.findViewById(R.id.tv_currency_header);
+
+				holder.picker = new NumberPicker[4];
+				holder.picker[0] = (NumberPicker) convertView.findViewById(R.id.popup_purse_dukat);
+				holder.picker[1] = (NumberPicker) convertView.findViewById(R.id.popup_purse_silver);
+				holder.picker[2] = (NumberPicker) convertView.findViewById(R.id.popup_purse_heller);
+				holder.picker[3] = (NumberPicker) convertView.findViewById(R.id.popup_purse_kreuzer);
+
+				holder.labels = new TextView[4];
+				holder.labels[0] = (TextView) convertView.findViewById(R.id.tv_currency1);
+				holder.labels[1] = (TextView) convertView.findViewById(R.id.tv_currency2);
+				holder.labels[2] = (TextView) convertView.findViewById(R.id.tv_currency3);
+				holder.labels[3] = (TextView) convertView.findViewById(R.id.tv_currency4);
+
+				convertView.setTag(holder);
+				break;
 			}
 
 		}
@@ -341,6 +412,8 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 			convertView = prepareView((FileListable) item, position, convertView, parent);
 		} else if (item instanceof NotesItem) {
 			convertView = prepareView((NotesItem) item, position, convertView, parent);
+		} else if (item instanceof PurseListable) {
+			convertView = prepareView((PurseListable) item, position, convertView, parent);
 		}
 
 		if (item instanceof Markable) {
@@ -351,6 +424,55 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 
 		return convertView;
 
+	}
+
+	protected View prepareView(PurseListable item, int position, View convertView, ViewGroup parent) {
+		PurseViewHolder holder = (PurseViewHolder) convertView.getTag();
+
+		Currency currency = item.getCurrency();
+		if (currency == null) {
+			currency = hero.getPurse().getActiveCurrency();
+
+			SpinnerSimpleAdapter<Currency> currencyAdapter = new SpinnerSimpleAdapter<Currency>(getContext(),
+					Currency.values());
+			holder.currencySpinner.setOnItemSelectedListener(null);
+			holder.currencySpinner.setAdapter(currencyAdapter);
+			holder.currencySpinner.setSelection(currencyAdapter.getPosition(currency));
+			holder.currencySpinner.setOnItemSelectedListener(onPurseItemSelectedListener);
+			holder.currencySpinner.setVisibility(View.VISIBLE);
+			holder.header.setVisibility(View.GONE);
+		} else {
+			holder.currencySpinner.setVisibility(View.GONE);
+			holder.currencySpinner.setOnItemSelectedListener(null);
+			holder.header.setVisibility(View.VISIBLE);
+			holder.header.setText(currency.xmlName());
+		}
+
+		List<PurseUnit> units = currency.units();
+		for (int i = 0; i < units.size(); i++) {
+			holder.picker[i].setVisibility(View.VISIBLE);
+			holder.picker[i].setTag(units.get(i));
+			holder.picker[i].setMinValue(0);
+			if (i == 0)
+				holder.picker[i].setMaxValue(999);
+			else
+				holder.picker[i].setMaxValue(100);
+
+			holder.picker[i].setValue(hero.getPurse().getCoins(units.get(i)));
+			holder.picker[i].setOnValueChangedListener(onPurseValueChangeListener);
+
+			holder.labels[i].setVisibility(View.VISIBLE);
+			holder.labels[i].setText(units.get(i).xmlName());
+
+		}
+
+		for (int i = units.size(); i < 4; i++) {
+			holder.picker[i].setVisibility(View.GONE);
+			holder.picker[i].setTag(null);
+			holder.labels[i].setVisibility(View.GONE);
+		}
+
+		return convertView;
 	}
 
 	protected View prepareView(HeaderListItem item, int position, View convertView, ViewGroup parent) {
@@ -393,6 +515,8 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 			holder.text1.setText(e.getComment().trim());
 			holder.text2.setVisibility(View.GONE);
 		}
+
+		holder.text3.setText(e.getCategory().name());
 
 		return convertView;
 	}
@@ -588,7 +712,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 	}
 
 	protected View prepareView(FileListable file, int position, View convertView, ViewGroup parent) {
-		ViewHolder holder = (ViewHolder) convertView.getTag();
+		EventViewHolder holder = (EventViewHolder) convertView.getTag();
 
 		String fileName = file.getFile().getName();
 		long fileSize = file.getFile().length();
@@ -596,13 +720,8 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		holder.text1.setText(fileName);
 		holder.text2.setText(null);
 		holder.text3.setText(Util.readableFileSize(fileSize));
-		holder.icon1.setImageResource(file.getIcon());
-		holder.icon2.setImageResource(0);
-
-		if (holder.icon_chain_top != null && holder.icon_chain_bottom != null) {
-			holder.icon_chain_top.setVisibility(View.GONE);
-			holder.icon_chain_bottom.setVisibility(View.GONE);
-		}
+		holder.flip.setImageResource(file.getIcon());
+		holder.icon2.setVisibility(View.GONE);
 
 		return convertView;
 	}
@@ -738,14 +857,11 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 			title.append(item.getTitle());
 
 		holder.text2.setText(itemSpecification.getInfo());
+		holder.text3.setText(null);
 
 		holder.icon1.setImageResource(itemSpecification.getResourceId());
 		holder.icon1.setVisibility(View.VISIBLE);
-		holder.icon1.setTag(null);
-		holder.icon1.setOnClickListener(null);
-		holder.icon2.setTag(null);
-		holder.icon2.setOnClickListener(null);
-		holder.text3.setText("");
+
 		if (itemSpecification instanceof DistanceWeapon) {
 			DistanceWeapon distanceWeapon = (DistanceWeapon) itemSpecification;
 
@@ -763,19 +879,31 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				holder.icon1.setOnClickListener(probeListener);
 			} else {
 				holder.icon2.setEnabled(false);
+				holder.icon2.setTag(null);
+				holder.icon2.setOnClickListener(null);
+
 				holder.icon1.setEnabled(false);
+				holder.icon1.setTag(null);
+				holder.icon1.setOnClickListener(null);
 			}
 
 			holder.text2.setText(distanceWeapon.getInfo(hero.getModifierTP(equippedItem)));
+
+			if (hero.getHuntingWeapon() != null && hero.getHuntingWeapon().equals(equippedItem)) {
+				holder.text3.setText(" Jagdwaffe");
+			}
+
 		} else if (itemSpecification instanceof Shield) {
 			holder.icon1.setVisibility(View.INVISIBLE);
+			holder.icon1.setTag(null);
+			holder.icon1.setOnClickListener(null);
+
 			if (equippedItem.getUsageType() == UsageType.Paradewaffe)
 				holder.icon2.setImageURI(item.getIconUri());
 			else
 				holder.icon2.setImageResource(R.drawable.icon_shield);
 
 			holder.icon2.setVisibility(View.VISIBLE);
-
 			if (equippedItem.getTalent() != null) {
 				holder.icon2.setEnabled(true);
 				CombatProbe probe = equippedItem.getCombatProbeDefense();
@@ -786,6 +914,8 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				holder.text3.setText(equippedItem.getTalent().getName());
 			} else {
 				holder.icon2.setEnabled(false);
+				holder.icon2.setTag(null);
+				holder.icon2.setOnClickListener(null);
 			}
 
 		} else if (itemSpecification instanceof Weapon) {
@@ -805,6 +935,8 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 					holder.icon1.setOnClickListener(probeListener);
 				} else {
 					holder.icon1.setVisibility(View.INVISIBLE);
+					holder.icon1.setTag(null);
+					holder.icon1.setOnClickListener(null);
 				}
 
 				if (weapon.isDefendable()) {
@@ -815,6 +947,8 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 					holder.icon2.setOnClickListener(probeListener);
 				} else {
 					holder.icon2.setVisibility(View.INVISIBLE);
+					holder.icon2.setTag(null);
+					holder.icon2.setOnClickListener(null);
 				}
 
 				String talentName = null;
@@ -847,7 +981,12 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				Util.appendValue(hero, title, at, pa, getFilter().getSettings().isIncludeModifiers());
 			} else {
 				holder.icon2.setEnabled(false);
+				holder.icon2.setTag(null);
+				holder.icon2.setOnClickListener(null);
+
 				holder.icon1.setEnabled(false);
+				holder.icon1.setTag(null);
+				holder.icon1.setOnClickListener(null);
 			}
 			if (getFilter().getSettings().isIncludeModifiers()) {
 				holder.text2.setText(weapon.getInfo(hero.getModifiedValue(AttributeType.Körperkraft, true, true),
@@ -858,12 +997,8 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		} else if (itemSpecification instanceof Armor) {
 			// Armor armor = (Armor) itemSpecification;
 			holder.icon2.setVisibility(View.GONE);
-			holder.icon1.setFocusable(false);
-			holder.icon1.setClickable(false);
-		}
-
-		if (hero.getHuntingWeapon() != null && hero.getHuntingWeapon().equals(equippedItem)) {
-			holder.text3.setText(" Jagdwaffe");
+			holder.icon2.setTag(null);
+			holder.icon2.setOnClickListener(null);
 		}
 
 		if (holder.icon_chain_top != null && holder.icon_chain_bottom != null) {
@@ -933,8 +1068,15 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 	}
 
 	private static class EventViewHolder extends FlippableViewHolder {
-		TextView text1, text2;
+		TextView text1, text2, text3;
 		ImageView icon2;
+	}
+
+	private static class PurseViewHolder {
+		private TextView header;
+		private Spinner currencySpinner;
+		private NumberPicker[] picker;
+		private TextView[] labels;
 	}
 
 }

@@ -37,7 +37,7 @@ public class ItemContainerEditActivity extends BaseFragmentActivity {
 			@Override
 			public void onClick(View v) {
 				ItemContainer itemContainer = fragment.accept();
-				if (itemContainer.getId() == 0) {
+				if (itemContainer.getId() == ItemContainer.INVALID_ID) {
 					DsaTabApplication.getInstance().getHero().addItemContainer(itemContainer);
 				} else {
 					DsaTabApplication.getInstance().getHero().fireItemContainerChangedEvent(itemContainer);

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">  
+
+  <style name="DsaTabTheme.__Light" parent="Theme.Dsatablight">
+
+    <item name="android:editTextStyle">@style/EditTextLight</item>
+
+    <item name="android:textColorHighlight">#99cc0000</item>
+
+    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewLight</item>
+
+    <item name="android:checkboxStyle">@style/CheckBoxLight</item>
+
+    <item name="android:radioButtonStyle">@style/RadioButtonLight</item>
+
+    <item name="android:buttonStyle">@style/ButtonLight</item>
+
+    <item name="android:imageButtonStyle">@style/ImageButtonLight</item>
+
+    <item name="android:spinnerStyle">@style/SpinnerLight</item>
+
+    <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemLight</item>
+
+    <item name="android:progressBarStyleHorizontal">@style/ProgressBarLight</item>
+
+    <item name="android:seekBarStyle">@style/SeekBarLight</item>
+
+    <item name="android:ratingBarStyle">@style/RatingBarLight</item>
+
+    <item name="android:ratingBarStyleIndicator">@style/RatingBarBigLight</item>
+
+    <item name="android:ratingBarStyleSmall">@style/RatingBarSmallLight</item>
+
+    <item name="android:buttonStyleToggle">@style/ToggleLight</item>
+
+    <item name="android:listViewStyle">@style/ListViewLight</item>
+
+    <item name="android:listViewWhiteStyle">@style/ListViewLight.White</item>
+
+    <item name="android:spinnerItemStyle">@style/SpinnerItemLight</item>
+
+  </style>
+
+</resources>

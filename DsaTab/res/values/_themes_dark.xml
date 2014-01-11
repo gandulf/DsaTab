@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="DsaTabTheme.__Dark" parent="Theme.Dsatabdark">
+
+    <item name="android:editTextStyle">@style/EditTextDark</item>
+
+    <item name="android:textColorHighlight">#99cc0000</item>
+
+    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewDark</item>
+
+    <item name="android:checkboxStyle">@style/CheckBoxDark</item>
+
+    <item name="android:radioButtonStyle">@style/RadioButtonDark</item>
+
+    <item name="android:buttonStyle">@style/ButtonDark</item>
+
+    <item name="android:imageButtonStyle">@style/ImageButtonDark</item>
+
+    <item name="android:spinnerStyle">@style/SpinnerDark</item>
+
+    <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemDark</item>
+
+    <item name="android:progressBarStyleHorizontal">@style/ProgressBarDark</item>
+
+    <item name="android:seekBarStyle">@style/SeekBarDark</item>
+
+    <item name="android:ratingBarStyle">@style/RatingBarDark</item>
+
+    <item name="android:ratingBarStyleIndicator">@style/RatingBarBigDark</item>
+
+    <item name="android:ratingBarStyleSmall">@style/RatingBarSmallDark</item>
+
+    <item name="android:buttonStyleToggle">@style/ToggleDark</item>
+
+    <item name="android:listViewStyle">@style/ListViewDark</item>
+
+    <item name="android:listViewWhiteStyle">@style/ListViewDark.White</item>
+
+    <item name="android:spinnerItemStyle">@style/SpinnerItemDark</item>
+
+  </style>
+
+</resources>

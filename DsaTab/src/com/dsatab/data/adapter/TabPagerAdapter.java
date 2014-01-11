@@ -115,9 +115,9 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
 		return POSITION_NONE;
 	}
 
-	public Fragment getFragment(int key) {
-		if (mPageReferenceMap.size() > key)
-			return mPageReferenceMap.get(key);
+	public Fragment getFragment(int index) {
+		if (mPageReferenceMap.size() > index)
+			return mPageReferenceMap.get(index);
 		else
 			return null;
 	}

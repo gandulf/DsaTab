@@ -19,8 +19,12 @@ import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.espian.showcaseview.ShowcaseView;
+import com.espian.showcaseview.targets.PointTarget;
+import com.espian.showcaseview.targets.ViewTarget;
 
 public class Hint {
+
+	private static long hintShown = 0;
 
 	public static final String PREF_PREFIX_HINT_STORAGE = "dsatab_hint_";
 	public static final String VIEW_ID_PREFIX = "@id/";
@@ -32,30 +36,45 @@ public class Hint {
 	private static Random rnd = new Random();
 
 	public static boolean showHint(String fragmentName, String hintId, Activity activity) {
-		if (DsaTabApplication.getPreferences().getBoolean(DsaTabPreferenceActivity.KEY_TIP_TODAY, true)) {
+		if (hintDelayCheck()
+				&& DsaTabApplication.getPreferences().getBoolean(DsaTabPreferenceActivity.KEY_TIP_TODAY, true)) {
 			Hint hint = getHint(fragmentName, hintId);
-			if (hint != null)
+			if (hint != null) {
+				hintShown = System.currentTimeMillis();
 				return hint.show(activity);
-			else
+			} else {
 				return false;
+			}
 		} else
 			return false;
 
+	}
+
+	protected static boolean hintDelayCheck() {
+		if (hintShown != 0 && System.currentTimeMillis() - hintShown < 1000 * 1) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	public static boolean showRandomHint(String fragmentName, Activity activity) {
 
-		if (DsaTabApplication.getPreferences().getBoolean(DsaTabPreferenceActivity.KEY_TIP_TODAY, true)) {
+		if (hintDelayCheck()
+				&& DsaTabApplication.getPreferences().getBoolean(DsaTabPreferenceActivity.KEY_TIP_TODAY, true)) {
 			Hint hint = getRandomHint(fragmentName);
-			if (hint != null)
+			if (hint != null) {
+				hintShown = System.currentTimeMillis();
 				return hint.show(activity);
-			else
+			} else {
 				return false;
-		} else
+			}
+		} else {
 			return false;
+		}
 	}
 
-	public static Hint getRandomHint(String fragmentName) {
+	protected static Hint getRandomHint(String fragmentName) {
 		if (hints == null)
 			loadHints();
 
@@ -75,7 +94,7 @@ public class Hint {
 		return null;
 	}
 
-	public static Hint getHint(String fragmentName, String hintId) {
+	protected static Hint getHint(String fragmentName, String hintId) {
 		if (hints == null)
 			loadHints();
 
@@ -149,14 +168,15 @@ public class Hint {
 			int viewIdInt = activity.getResources().getIdentifier(this.viewId, "id",
 					DsaTabApplication.getInstance().getPackageName());
 			if (viewIdInt != 0) {
-				ShowcaseView.insertShowcaseView(viewIdInt, activity, title, description, null);
+				ViewTarget target = new ViewTarget(viewIdInt, activity);
+				ShowcaseView.insertShowcaseView(target, activity, title, description, null).show();
 				shown = true;
 			}
 		} else if (this.x >= 0 && this.y >= 0) {
-			float x = Util.getWidth(activity) * (this.x / 100.0f);
-			float y = Util.getHeight(activity) * (this.y / 100.0f);
-
-			ShowcaseView.insertShowcaseView(x, y, activity, title, description, null);
+			int x = (int) (Util.getWidth(activity) * (this.x / 100.0f));
+			int y = (int) (Util.getHeight(activity) * (this.y / 100.0f));
+			PointTarget pointTarget = new PointTarget(x, y);
+			ShowcaseView.insertShowcaseView(pointTarget, activity, title, description, null).show();
 			shown = true;
 		}
 

@@ -45,12 +45,10 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 	public static List<Class<? extends BaseFragment>> activityValues;
 
 	static {
-		activities = Arrays.asList("Keine", "Charakter", "Liste", "Wunden", "Ausrüstung (Bilder)",
-				"Ausrüstung (Liste)", "Geldbörse", "Karte", "Tiere");
+		activities = Arrays.asList("Keine", "Charakter", "Liste", "Wunden", "Ausrüstung", "Karte", "Tiere");
 
 		activityValues = Arrays.asList(null, CharacterFragment.class, ListableFragment.class, BodyFragment.class,
-				ItemsFragment.class, ItemsListFragment.class, PurseFragment.class, MapFragment.class,
-				AnimalFragment.class);
+				ItemsFragment.class, MapFragment.class, AnimalFragment.class);
 	}
 
 	public static String getFragmentTitle(Class<? extends BaseFragment> fragmentClass) {
@@ -128,7 +126,7 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 		super.onResume();
 
 		if (getUserVisibleHint()) {
-			showRandomHint();
+			Hint.showRandomHint(getClass().getSimpleName(), getActivity());
 		}
 	}
 
@@ -153,10 +151,6 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 				hero.addHeroInventoryChangedListener((HeroInventoryChangedListener) this);
 			}
 		}
-	}
-
-	protected boolean showRandomHint() {
-		return Hint.showRandomHint(getClass().getSimpleName(), getActivity());
 	}
 
 	protected int getTabPosition() {

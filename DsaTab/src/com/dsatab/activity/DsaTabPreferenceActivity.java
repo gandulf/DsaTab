@@ -375,29 +375,33 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 	protected void handleImagePick(String prefKey, Intent data) {
 
 		Uri selectedImage = data.getData();
-		String[] filePathColumn = { MediaColumns.DATA, ImageColumns.BUCKET_ID };
+		if (selectedImage != null) {
+			String[] filePathColumn = { MediaColumns.DATA, ImageColumns.BUCKET_ID };
 
-		Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+			Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
 
-		if (cursor.moveToFirst()) {
+			if (cursor.moveToFirst()) {
 
-			int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-			// int bucketIndex = cursor.getColumnIndex(filePathColumn[1]);
-			String filePath = cursor.getString(columnIndex);
-			// String bucketId = cursor.getString(bucketIndex);
+				int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+				// int bucketIndex = cursor.getColumnIndex(filePathColumn[1]);
+				String filePath = cursor.getString(columnIndex);
+				// String bucketId = cursor.getString(bucketIndex);
 
-			cursor.close();
-			if (filePath != null) {
-				File file = new File(filePath);
-				if (file.exists()) {
-					SharedPreferences preferences = DsaTabApplication.getPreferences();
-					Editor edit = preferences.edit();
-					edit.putString(prefKey, filePath);
-					edit.commit();
+				cursor.close();
+				if (filePath != null) {
+					File file = new File(filePath);
+					if (file.exists()) {
+						SharedPreferences preferences = DsaTabApplication.getPreferences();
+						Editor edit = preferences.edit();
+						edit.putString(prefKey, filePath);
+						edit.commit();
 
-					Toast.makeText(this, "Hintergrundbild wurde verändert.", Toast.LENGTH_SHORT).show();
+						Toast.makeText(this, "Hintergrundbild wurde verändert.", Toast.LENGTH_SHORT).show();
+					}
 				}
 			}
+		} else {
+			Debug.error("Intent returned from image pick did not containt uri data:" + data);
 		}
 	}
 

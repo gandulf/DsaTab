@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">  
+
+  <style name="DsaTabTheme.__Light" parent="Theme.Dsatablight">
+
+    <item name="android:editTextBackground">@drawable/_edit_text_holo_light</item>
+
+    <item name="android:textColorHighlight">#99cc0000</item>
+    <item name="android:textSelectHandleLeft">@drawable/_text_select_handle_left</item>
+    <item name="android:textSelectHandleRight">@drawable/_text_select_handle_right</item>
+    <item name="android:textSelectHandle">@drawable/_text_select_handle_middle</item>
+
+    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewLight</item>
+
+    <item name="android:listChoiceIndicatorMultiple">@drawable/_btn_check_holo_light</item>
+
+    <item name="android:listChoiceIndicatorSingle">@drawable/_btn_radio_holo_light</item>
+
+    <item name="android:buttonStyle">@style/ButtonLight</item>
+
+    <item name="android:imageButtonStyle">@style/ImageButtonLight</item>
+
+    <item name="android:dropDownSpinnerStyle">@style/SpinnerLight</item>
+
+    <item name="android:progressBarStyleHorizontal">@style/ProgressBarLight</item>
+
+    <item name="android:seekBarStyle">@style/SeekBarLight</item>
+
+    <item name="android:ratingBarStyle">@style/RatingBarLight</item>
+
+    <item name="android:ratingBarStyleIndicator">@style/RatingBarBigLight</item>
+
+    <item name="android:ratingBarStyleSmall">@style/RatingBarSmallLight</item>
+
+    <item name="android:buttonStyleToggle">@style/ToggleLight</item>
+
+    <item name="android:listChoiceBackgroundIndicator">@drawable/_list_selector_holo_light</item>
+
+    <item name="android:activatedBackgroundIndicator">@drawable/_activated_background_holo_light</item>
+
+    <item name="android:fastScrollThumbDrawable">@drawable/_fastscroll_thumb_holo</item>
+
+  </style>
+
+</resources>

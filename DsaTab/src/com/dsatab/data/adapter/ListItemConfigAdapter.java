@@ -17,9 +17,11 @@ import android.widget.TextView;
 import com.dsatab.R;
 import com.dsatab.data.Art;
 import com.dsatab.data.Hero;
+import com.dsatab.data.Purse.Currency;
 import com.dsatab.data.Spell;
 import com.dsatab.data.Talent;
 import com.dsatab.data.enums.AttributeType;
+import com.dsatab.data.enums.EventCategory;
 import com.dsatab.data.enums.TalentGroupType;
 import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.modifier.Modificator;
@@ -91,6 +93,16 @@ public class ListItemConfigAdapter extends ArrayAdapter<ListItem> implements OnI
 				}
 				break;
 			case Header:
+				break;
+			case Notes:
+				for (EventCategory category : EventCategory.values()) {
+					types.add(category.name());
+				}
+				break;
+			case Purse:
+				for (Currency category : Currency.values()) {
+					types.add(category.name());
+				}
 				break;
 			}
 

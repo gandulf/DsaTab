@@ -26,7 +26,7 @@ public interface ItemCard {
 
 	public void setCellNumber(int cell);
 
-	public int getScreen();
+	public int getContainerId();
 
 	public Uri getImageUri();
 

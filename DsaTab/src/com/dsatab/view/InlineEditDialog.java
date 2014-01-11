@@ -1,8 +1,6 @@
 package com.dsatab.view;
 
-import kankan.wheel.widget.OnWheelClickedListener;
-import kankan.wheel.widget.WheelView;
-import kankan.wheel.widget.adapters.NumericWheelAdapter;
+import net.simonvt.numberpicker.NumberPicker;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,28 +16,30 @@ import com.dsatab.R;
 import com.dsatab.data.ArmorAttribute;
 import com.dsatab.data.Attribute;
 import com.dsatab.data.CombatDistanceTalent;
-import com.dsatab.data.Experience;
 import com.dsatab.data.Hero.CombatStyle;
 import com.dsatab.data.Value;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 
-public class InlineEditDialog extends AlertDialog implements DialogInterface.OnClickListener, OnCheckedChangeListener,
-		OnWheelClickedListener {
+public class InlineEditDialog extends AlertDialog implements DialogInterface.OnClickListener, OnCheckedChangeListener {
 
 	private Value value;
 
-	private WheelView editText;
+	private NumberPicker numberPicker;
 
-	private NumericWheelAdapter wheelAdapter;
 	private ToggleButton combatStyleBtn;
 	private CheckBox beCalculation;
 
+	private Context context;
+
 	public InlineEditDialog(Context context, Value value) {
 		super(context);
+
+		this.context = context;
 		init();
 		setValue(value);
+
 	}
 
 	public Value getValue() {
@@ -51,22 +51,16 @@ public class InlineEditDialog extends AlertDialog implements DialogInterface.OnC
 
 		if (value != null) {
 
-			int currentValue = value.getValue();
-
-			wheelAdapter.setRange(value.getMinimum(), value.getMaximum());
-			if (value instanceof Experience) {
-				wheelAdapter.setStepSize(5);
+			Integer currentValue = value.getValue();
+			numberPicker.setMinValue(value.getMinimum());
+			numberPicker.setMaxValue(value.getMaximum());
+			if (currentValue != null) {
+				numberPicker.setValue(currentValue);
 			} else {
-				wheelAdapter.setStepSize(1);
+				Debug.error("Setting value was null:" + value);
+				numberPicker.setValue(0);
 			}
-			if (value instanceof CombatDistanceTalent) {
-				wheelAdapter.setBaseValue(((CombatDistanceTalent) value).getBaseValue());
-			} else {
-				wheelAdapter.setBaseValue(0);
-			}
-
-			editText.setCurrentItem(wheelAdapter.getPosition(currentValue));
-			editText.setEnabled(true);
+			numberPicker.setEnabled(true);
 
 			int visible = View.GONE;
 			if (value instanceof Attribute) {
@@ -75,7 +69,7 @@ public class InlineEditDialog extends AlertDialog implements DialogInterface.OnC
 					visible = View.VISIBLE;
 					combatStyleBtn.setChecked(attr.getHero().getCombatStyle() == CombatStyle.Offensive);
 					beCalculation.setChecked(attr.getHero().isBeCalculation());
-					editText.setEnabled(!beCalculation.isChecked());
+					numberPicker.setEnabled(!beCalculation.isChecked());
 				}
 			}
 
@@ -116,20 +110,10 @@ public class InlineEditDialog extends AlertDialog implements DialogInterface.OnC
 			}
 		} else if (buttonView == beCalculation) {
 
-			editText.setEnabled(!isChecked);
+			numberPicker.setEnabled(!isChecked);
 
 		}
 
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see kankan.wheel.widget.OnWheelClickedListener#onItemClicked(kankan.wheel .widget.WheelView, int, boolean)
-	 */
-	@Override
-	public void onWheelClick(WheelView wheel, int itemIndex) {
-		accept();
 	}
 
 	private void accept() {
@@ -150,11 +134,15 @@ public class InlineEditDialog extends AlertDialog implements DialogInterface.OnC
 
 		try {
 
-			int currentValue = wheelAdapter.getItem(editText.getCurrentItem());
+			int currentValue = numberPicker.getValue();
 
 			if (value instanceof ArmorAttribute) {
 				ArmorAttribute armorAttribute = (ArmorAttribute) value;
 				armorAttribute.setValue(currentValue, true);
+
+			} else if (value instanceof CombatDistanceTalent) {
+				int baseValue = ((CombatDistanceTalent) value).getBaseValue();
+				value.setValue(currentValue - baseValue);
 			} else {
 				value.setValue(currentValue);
 			}
@@ -188,15 +176,12 @@ public class InlineEditDialog extends AlertDialog implements DialogInterface.OnC
 	private void init() {
 		setCanceledOnTouchOutside(true);
 
-		RelativeLayout popupcontent = (RelativeLayout) LayoutInflater.from(getContext()).inflate(R.layout.popup_edit,
-				null, false);
+		RelativeLayout popupcontent = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.popup_edit, null,
+				false);
 		setView(popupcontent);
 
-		editText = (WheelView) popupcontent.findViewById(R.id.popup_edit_text);
-
-		wheelAdapter = new NumericWheelAdapter(getContext());
-		editText.setViewAdapter(wheelAdapter);
-		editText.setOnWheelClickedListeners(this);
+		numberPicker = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_text);
+		numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
 		combatStyleBtn = (ToggleButton) popupcontent.findViewById(R.id.popup_edit_combat_style);
 		combatStyleBtn.setTextOn(getContext().getText(R.string.offensive));

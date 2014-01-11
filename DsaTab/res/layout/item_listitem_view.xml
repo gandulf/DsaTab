@@ -16,9 +16,9 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="4dip"
-        android:focusable="false"
         android:clickable="false"
-        android:scaleType="fitCenter"
+        android:focusable="false"
+        android:scaleType="centerInside"
         android:visibility="visible" />
 
     <TextView
@@ -53,10 +53,10 @@
         android:layout_alignLeft="@android:id/text1"
         android:layout_alignRight="@android:id/text1"
         android:layout_below="@android:id/text2"
+        android:gravity="bottom|right"
+        android:textAllCaps="true"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textSize="10sp"
-        android:textAllCaps="true"
-        android:gravity="right"
         android:textStyle="normal" />
     
     <ImageView
@@ -67,9 +67,9 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="4dip"
-        android:focusable="false"
         android:clickable="false"
-        android:scaleType="fitCenter"
+        android:focusable="false"
+        android:scaleType="centerInside"
         android:visibility="gone" />
 
 </com.dsatab.view.ItemListItem>

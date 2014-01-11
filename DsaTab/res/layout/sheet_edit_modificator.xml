@@ -8,20 +8,16 @@
     android:fillViewport="true"
     android:padding="5dp" >
 
-    <android.support.v7.widget.GridLayout
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="start|end"
-        auto:columnCount="2"
-        auto:orientation="vertical"
-        auto:useDefaultMargins="true">
+        android:orientation="vertical" >
         
         <EditText
             android:id="@+id/popup_edit_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Name"
-            auto:layout_gravity="bottom"
             android:inputType="textPersonName" >
 
             <requestFocus>
@@ -30,40 +26,43 @@
 
         <EditText
             android:id="@+id/popup_edit_info"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            auto:layout_gravity="fill_horizontal"
             android:hint="Regeln z.B.: MU+2, KL-1"
             android:inputType="textMultiLine"
-            android:lines="3">
+            android:lines="3" >
+
         </EditText>
 
         <TextView
             android:id="@+id/popup_edit_info_help"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            auto:layout_gravity="fill_horizontal"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
             android:text="Regeln im Format &quot;MU+2, KL-1, Zauber+1, Talente+2, Eigenschaften+1, AT+1, PA+1, INI+2, AW+2, MR+1&quot; eingeben. Kein Leerzeichen zwischen Eigenschaft und +/-. Um TP anzupassen entweder den Namen der Waffe, des Talentes, des Zaubers, ... oder AT/FK gefolgt von TP eingeben z.B.: AT TP+2, Langdolch TP+1, Dolche TP-1."
             android:textAppearance="?android:attr/textAppearanceSmall" >
+
         </TextView>
         
         <EditText
             android:id="@+id/popup_edit_comment"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            auto:layout_gravity="fill_horizontal"
             android:hint="Info"
             android:inputType="textShortMessage" >
+
         </EditText>
 
         <CheckBox
             android:id="@+id/popup_edit_active"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            auto:layout_gravity="fill_horizontal"
             android:text="Aktiv" >
+
         </CheckBox>
         
-    </android.support.v7.widget.GridLayout>
+    </LinearLayout>
 
 </ScrollView>
