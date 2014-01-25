@@ -1,5 +1,9 @@
 package com.dsatab.xml;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,7 +14,25 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
+import android.content.Context;
 import android.database.Cursor;
+import android.support.v4.util.LruCache;
 import android.text.TextUtils;
 
 import com.dsatab.DsaTabApplication;
@@ -20,6 +42,7 @@ import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemSpecification;
 import com.dsatab.util.Debug;
+import com.gandulf.guilib.util.ResUtil;
 import com.j256.ormlite.android.AndroidCompiledStatement;
 import com.j256.ormlite.dao.GenericRawResults;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
@@ -44,6 +67,10 @@ public class DataManager {
 
 	private static SelectArg itemNameArg;
 	private static PreparedQuery<Item> itemNameQuery;
+
+	private static List<String> webInfos;
+	private static String webInfoTemplate;
+	private static LruCache<String, String> webInfo;
 
 	private static void initArtQueries() {
 		try {
@@ -273,4 +300,97 @@ public class DataManager {
 		return DsaTabApplication.getInstance().getDBHelper().getItemDao().queryForFirst(itemNameQuery);
 	}
 
+	public static List<String> getWebInfos(Context context) {
+		if (webInfos == null) {
+			webInfos = new ArrayList<String>();
+			InputStream is = null;
+
+			try {
+				XPathFactory factory = XPathFactory.newInstance();
+				XPath xPath = factory.newXPath();
+				is = context.getResources().getAssets().open("data/webinfo.html");
+				InputSource inputSource = new InputSource(is);
+
+				NodeList shows = (NodeList) xPath.evaluate("//div[@class='card']", inputSource, XPathConstants.NODESET);
+
+				for (int i = 0; i < shows.getLength(); i++) {
+					Element show = (Element) shows.item(i);
+					webInfos.add(show.getAttribute("id"));
+				}
+
+			} catch (XPathExpressionException e) {
+				Debug.error(e);
+			} catch (FileNotFoundException e) {
+				Debug.error(e);
+			} catch (IOException e) {
+				Debug.error(e);
+
+			} catch (TransformerFactoryConfigurationError e) {
+				Debug.error(e);
+			} finally {
+				try {
+					if (is != null)
+						is.close();
+				} catch (IOException e) {
+
+				}
+			}
+		}
+
+		return webInfos;
+	}
+
+	public static String getWebInfo(Context context, String tag) {
+
+		if (webInfo == null) {
+			webInfo = new LruCache<String, String>(20);
+		}
+		if (webInfoTemplate == null) {
+			webInfoTemplate = ResUtil.loadAssestToString("data/webinfo_template.html", context);
+		}
+
+		String data = webInfo.get(tag);
+
+		if (data == null) {
+			InputStream is = null;
+			try {
+				XPathFactory factory = XPathFactory.newInstance();
+				XPath xPath = factory.newXPath();
+
+				is = context.getResources().getAssets().open("data/webinfo.html");
+				InputSource inputSource = new InputSource(is);
+
+				Element show = (Element) xPath.evaluate("//div[@id='" + tag + "']", inputSource, XPathConstants.NODE);
+
+				StringWriter writer = new StringWriter();
+				Transformer transformer = TransformerFactory.newInstance().newTransformer();
+				transformer.transform(new DOMSource(show), new StreamResult(writer));
+				data = writer.toString();
+				if (webInfoTemplate != null) {
+					data = webInfoTemplate.replace("${data}", data);
+				}
+				webInfo.put(tag, data);
+
+			} catch (XPathExpressionException e) {
+				Debug.error(e);
+			} catch (FileNotFoundException e) {
+				Debug.error(e);
+			} catch (IOException e) {
+				Debug.error(e);
+			} catch (TransformerConfigurationException e) {
+				Debug.error(e);
+			} catch (TransformerFactoryConfigurationError e) {
+				Debug.error(e);
+			} catch (TransformerException e) {
+				Debug.error(e);
+			} finally {
+				try {
+					if (is != null)
+						is.close();
+				} catch (IOException e) {
+				}
+			}
+		}
+		return data;
+	}
 }

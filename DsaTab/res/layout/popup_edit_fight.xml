@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="4dip">
+    android:padding="@dimen/default_gap">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:id="@+id/popup_edit_free_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Zu vergebende Punkte:"
+            android:text="@string/label_distributable_points"
             android:textAppearance="?android:attr/textAppearanceSmall" >
         </TextView>
 
@@ -25,9 +25,8 @@
             android:id="@+id/popup_edit_free_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:text="8"
+            android:paddingLeft="@dimen/default_gap"
+            android:paddingRight="@dimen/default_gap"            
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold" >
 
@@ -66,15 +65,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
-        <TextView
+        <com.dsatab.view.FlexibleTextView
             android:id="@+id/popup_edit_talent_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:gravity="center"
-            android:text="Talent"
-            android:textAppearance="?android:attr/textAppearanceMedium" >
-        </TextView>
+            android:text="@string/label_talent"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
             android:id="@+id/popup_edit_at_label"
@@ -82,19 +80,20 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center"
-            android:text="AT"
+            android:text="@string/label_at"
+            android:hint="@string/label_at_short"
             android:textAppearance="?android:attr/textAppearanceMedium" >
         </TextView>
 
-        <TextView
+        <com.dsatab.view.FlexibleTextView
             android:id="@+id/popup_edit_pa_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center"
-            android:text="PA"
-            android:textAppearance="?android:attr/textAppearanceMedium" >
-        </TextView>
+            android:text="@string/label_pa"
+            android:hint="@string/label_pa_short"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
     </LinearLayout>
 
 </LinearLayout>

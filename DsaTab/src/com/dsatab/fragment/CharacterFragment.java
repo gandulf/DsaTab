@@ -56,6 +56,7 @@ import com.dsatab.util.Util;
 import com.dsatab.view.PortraitChooserDialog;
 import com.dsatab.view.PortraitViewDialog;
 import com.dsatab.view.WebInfoDialog;
+import com.dsatab.xml.DataManager;
 
 public class CharacterFragment extends BaseAttributesFragment implements OnClickListener, OnLongClickListener {
 
@@ -744,22 +745,14 @@ public class CharacterFragment extends BaseAttributesFragment implements OnClick
 		StyleableSpannableStringBuilder disadvantageBuilder = new StyleableSpannableStringBuilder();
 
 		tfSpecialFeatures.setMovementMethod(LinkMovementMethod.getInstance());
-		String[] featureInfos;
-		try {
-			featureInfos = getResources().getAssets().list("data/feature");
-			Arrays.sort(featureInfos);
-		} catch (IOException e) {
-			featureInfos = new String[0];
-		}
+		String[] featureInfos = DataManager.getWebInfos(getActivity()).toArray(new String[0]);
+		Arrays.sort(featureInfos);
 
 		OnSpanClickListener linkClicker = new OnSpanClickListener() {
-
 			@Override
 			public void onClick(CharSequence tag, ClickSpan v) {
 				if (getActivity() != null) {
-					String url = "file:///android_asset/data/feature/" + tag + ".html";
-					WebInfoDialog infoDialog = new WebInfoDialog(getActivity(), url);
-					infoDialog.show();
+					WebInfoDialog.show(getActivity(), tag);
 				}
 			}
 		};
@@ -781,11 +774,10 @@ public class CharacterFragment extends BaseAttributesFragment implements OnClick
 				if (currentBuilder.length() > 0) {
 					currentBuilder.append(", ");
 				}
-				// due to a bugin webview we cannot load urls with spaces in it
-				String tag = feature.getType().xmlName().replace(" ", "");
-				tag = Util.convertNonAscii(tag);
 
-				if (Arrays.binarySearch(featureInfos, tag + ".html") >= 0) {
+				String tag = feature.getType().xmlName();
+
+				if (Arrays.binarySearch(featureInfos, tag) >= 0) {
 					currentBuilder.appendClick(linkClicker, feature.toString(), tag);
 				} else {
 					currentBuilder.append(feature.toString());

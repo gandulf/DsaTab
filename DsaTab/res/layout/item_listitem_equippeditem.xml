@@ -14,8 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"        
-        android:layout_marginRight="100dip"        
+        android:layout_marginRight="100dip"               
         android:visibility="gone" />
+    
     <ImageView
         android:id="@+id/icon_chain_bottom"
         android:src="?attr/imgChainBottom"
@@ -33,7 +34,8 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="4dip"
-        android:scaleType="fitCenter"
+        android:padding="@dimen/default_gap"
+        android:scaleType="centerInside"
         android:visibility="visible" />
 
     <TextView
@@ -81,7 +83,8 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="4dip"
-        android:scaleType="fitCenter"
+        android:padding="@dimen/default_gap"
+        android:scaleType="centerInside"
         android:visibility="gone" />
 
 </com.dsatab.view.ItemListItem>

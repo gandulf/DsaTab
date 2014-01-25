@@ -45,8 +45,6 @@ public class CardView extends ImageView implements Checkable {
 
 	private boolean highQuality = false;
 
-	private int TEXT_PADDING = 0;
-
 	boolean mChecked = false;
 
 	/**
@@ -87,7 +85,6 @@ public class CardView extends ImageView implements Checkable {
 		paint.setAntiAlias(true);
 		if (!isInEditMode()) {
 			paint.setTypeface(DsaTabApplication.getInstance().getPoorRichardFont());
-			TEXT_PADDING = getResources().getDimensionPixelOffset(R.dimen.card_text_padding);
 		}
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -179,16 +176,19 @@ public class CardView extends ImageView implements Checkable {
 		paint.setTextSize(getWidth() / 7);
 
 		int maxWidth = 0;
+		int paddingHorizontal = w / 10;
+		int paddingVertical = h / 10;
 		switch (textGravity) {
 		case Gravity.TOP:
-			maxWidth = (w - TEXT_PADDING * 2);
+
+			maxWidth = w - (paddingHorizontal * 2);
 			break;
 		case Gravity.CENTER:
-			maxWidth = (int) Math.sqrt((w - TEXT_PADDING * 2) * (w - TEXT_PADDING * 2) + (h - TEXT_PADDING * 2)
-					* (h - TEXT_PADDING * 2));
+			maxWidth = (int) Math.sqrt((w - paddingHorizontal * 2) * (w - paddingHorizontal * 2)
+					+ (h - paddingVertical * 2) * (h - paddingVertical * 2));
 			break;
 		default:
-			maxWidth = (w - TEXT_PADDING * 2);
+			maxWidth = w - (paddingHorizontal * 2);
 			break;
 		}
 
@@ -206,13 +206,13 @@ public class CardView extends ImageView implements Checkable {
 
 		switch (textGravity) {
 		case Gravity.TOP:
-			textPath.moveTo(0, TEXT_PADDING + paint.getTextSize() / 2);
-			textPath.lineTo(w, TEXT_PADDING + paint.getTextSize() / 2);
-			textBox.set(0, 0, w, (int) (TEXT_PADDING * 2 + paint.getTextSize()));
+			textPath.moveTo(0, paddingVertical + paint.getTextSize() / 2);
+			textPath.lineTo(w, paddingVertical + paint.getTextSize() / 2);
+			textBox.set(0, 0, w, (int) (paddingVertical * 2 + paint.getTextSize()));
 			break;
 		case Gravity.CENTER:
-			textPath.moveTo(TEXT_PADDING, TEXT_PADDING);
-			textPath.lineTo(w - TEXT_PADDING, h - TEXT_PADDING);
+			textPath.moveTo(paddingHorizontal, paddingVertical);
+			textPath.lineTo(w - paddingHorizontal, h - paddingVertical);
 			textBox.set(0, 0, 0, 0);
 			break;
 		}

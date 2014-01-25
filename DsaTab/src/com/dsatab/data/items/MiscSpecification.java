@@ -25,6 +25,11 @@ public class MiscSpecification extends ItemSpecification {
 		super(item, type != null ? type : ItemType.Sonstiges, 0);
 	}
 
+	@Override
+	public int getId() {
+		return id;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 

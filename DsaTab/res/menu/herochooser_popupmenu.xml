@@ -1,0 +1,19 @@
+
+    <menu xmlns:android="http://schemas.android.com/apk/res/android">
+        
+        <item
+        android:id="@+id/option_download"
+        android:icon="?attr/imgBarSwordAdd"
+        android:showAsAction="withText|ifRoom"
+        android:title="@string/menu_download_item"/>
+        <item
+        android:id="@+id/option_upload"
+        android:icon="?attr/imgBarSwordAdd"
+        android:showAsAction="withText|ifRoom"
+        android:title="@string/menu_upload_item"/>
+        <item
+        android:id="@+id/option_delete"
+        android:icon="?attr/imgBarDelete"
+        android:showAsAction="withText|ifRoom"
+        android:title="@string/menu_delete_item"/>        
+    </menu>

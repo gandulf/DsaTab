@@ -107,8 +107,10 @@ public class ItemListItem extends CheckableRelativeLayout {
 			icon1.setVisibility(View.VISIBLE);
 			if (e.getIconUri() != null)
 				icon1.setImageURI(e.getIconUri());
-			else
+			else if (spec != null)
 				icon1.setImageResource(spec.getResourceId());
+			else
+				icon1.setImageResource(0);
 		}
 		// Set value for the first text field
 		if (text1 != null) {
@@ -119,9 +121,13 @@ public class ItemListItem extends CheckableRelativeLayout {
 
 		// set value for the second text field
 		if (text2 != null) {
-			text2.setText(spec.getInfo());
-			if (textColor != Color.TRANSPARENT)
-				text2.setTextColor(textColor);
+			if (spec != null) {
+				text2.setText(spec.getInfo());
+				if (textColor != Color.TRANSPARENT)
+					text2.setTextColor(textColor);
+			} else {
+				text2.setText(null);
+			}
 		}
 	}
 

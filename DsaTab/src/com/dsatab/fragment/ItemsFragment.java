@@ -36,10 +36,10 @@ import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.SubMenu;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
-import com.dsatab.activity.ItemChooserActivity;
 import com.dsatab.activity.ItemContainerEditActivity;
 import com.dsatab.activity.ItemEditActivity;
 import com.dsatab.activity.ItemViewActivity;
+import com.dsatab.activity.ItemsActivity;
 import com.dsatab.data.Hero;
 import com.dsatab.data.adapter.GridItemAdapter;
 import com.dsatab.data.adapter.ItemAdapter;
@@ -465,7 +465,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	}
 
 	private void showItemPopup() {
-		ItemChooserActivity.pick(getActivity(), itemGridAdapter.getFilter().getTypes(), ACTION_ADD);
+		ItemsActivity.pick(getActivity(), itemGridAdapter.getFilter().getTypes(), ACTION_ADD);
 	}
 
 	public static boolean isSetIndex(int index) {
@@ -759,7 +759,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == ACTION_ADD) {
 			if (resultCode == Activity.RESULT_OK) {
-				UUID itemId = (UUID) data.getSerializableExtra(ItemChooserActivity.DATA_INTENT_ITEM_ID);
+				UUID itemId = (UUID) data.getSerializableExtra(ItemsActivity.DATA_INTENT_ITEM_ID);
 
 				if (itemId != null) {
 					Item item = DataManager.getItemById(itemId).duplicate();
@@ -1065,7 +1065,9 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		Debug.trace("onItemContainerAdded " + itemContainer);
 
 		containerAdapter.add(itemContainer);
-		getSherlockActivity().supportInvalidateOptionsMenu();
+		if (getSherlockActivity() != null) {
+			getSherlockActivity().supportInvalidateOptionsMenu();
+		}
 	}
 
 	/*
@@ -1079,7 +1081,9 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		Debug.trace("onItemContainerRemoved " + itemContainer);
 
 		containerAdapter.remove(itemContainer);
-		getSherlockActivity().supportInvalidateOptionsMenu();
+		if (getSherlockActivity() != null) {
+			getSherlockActivity().supportInvalidateOptionsMenu();
+		}
 	}
 
 	/*

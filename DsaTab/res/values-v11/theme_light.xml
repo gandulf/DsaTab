@@ -103,7 +103,7 @@
         <item name="iconImageViewStyle">@style/Widget.IconImageView</item>        
         <item name="listItemBackground">@drawable/list_background_holo_light</item>
         <item name="listShadowBackground">@drawable/dsa_listshadow_bg_light</item>
-        <item name="selectableBackground">@drawable/list_selector_holo_light</item>
+        <item name="selectableBackground">@drawable/_list_selector_holo_light</item>
         <item name="imgDividerVertical">@drawable/divider_vertical_holo_light</item>        
         <item name="flipImageViewStyle">@style/FlipImageView.Checked</item>        
         <item name="numberPickerStyle">@style/NPWidget.Holo.Light.NumberPicker</item>

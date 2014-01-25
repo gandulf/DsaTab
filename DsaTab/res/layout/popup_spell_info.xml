@@ -8,8 +8,8 @@
         android:id="@+id/popup_spell_table"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
+        android:paddingLeft="@dimen/default_gap"
+        android:paddingRight="@dimen/default_gap"
         android:shrinkColumns="1"
         android:stretchColumns="0,1" >
 
@@ -21,7 +21,7 @@
                 style="@style/TextLabel.Popup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Zauberdauer" >
+                android:text="@string/label_cast_duration" >
             </TextView>
 
             <TextView
@@ -29,8 +29,7 @@
                 style="@style/TextValue.NoTouch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right|center_vertical"
-                android:text="10SP" >
+                android:gravity="right|center_vertical" >
             </TextView>
 
             <EditText
@@ -38,7 +37,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text=""
                 android:inputType="text"
                 android:visibility="gone" />
         </TableRow>
@@ -51,7 +49,7 @@
                 style="@style/TextLabel.Popup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Probe" >
+                android:text="@string/label_probe" >
             </TextView>
 
             <TextView
@@ -59,8 +57,7 @@
                 style="@style/TextValue.NoTouch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right|center_vertical"
-                android:text="" >
+                android:gravity="right|center_vertical" >
             </TextView>
 
             <EditText
@@ -68,10 +65,10 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text=""
                 android:inputType="text"
                 android:visibility="gone" />
         </TableRow>
+
         <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
@@ -80,7 +77,7 @@
                 style="@style/TextLabel.Popup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Kosten" >
+                android:text="@string/label_costs" >
             </TextView>
 
             <TextView
@@ -88,8 +85,7 @@
                 style="@style/TextValue.NoTouch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right|center_vertical"
-                android:text="10SP" >
+                android:gravity="right|center_vertical" >
             </TextView>
 
             <EditText
@@ -97,7 +93,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text=""
                 android:inputType="text"
                 android:visibility="gone" />
         </TableRow>
@@ -110,7 +105,7 @@
                 style="@style/TextLabel.Popup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ziel" >
+                android:text="@string/label_target" >
             </TextView>
 
             <TextView
@@ -118,8 +113,7 @@
                 style="@style/TextValue.NoTouch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right|center_vertical"
-                android:text="1 Person" >
+                android:gravity="right|center_vertical" >
             </TextView>
 
             <EditText
@@ -127,7 +121,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text=""
                 android:inputType="text"
                 android:visibility="gone" />
         </TableRow>
@@ -140,7 +133,7 @@
                 style="@style/TextLabel.Popup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Reichweite" >
+                android:text="@string/label_range" >
             </TextView>
 
             <TextView
@@ -148,8 +141,7 @@
                 style="@style/TextValue.NoTouch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right|center_vertical"
-                android:text="10Schritt" >
+                android:gravity="right|center_vertical" >
             </TextView>
 
             <EditText
@@ -157,7 +149,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text=""
                 android:inputType="text"
                 android:visibility="gone" />
         </TableRow>
@@ -170,8 +161,8 @@
                 style="@style/TextLabel.Popup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingRight="5dp"
-                android:text="Wirkungsdauer" >
+                android:paddingRight="@dimen/default_gap"
+                android:text="@string/label_effect_duration" >
             </TextView>
 
             <TextView
@@ -179,8 +170,7 @@
                 style="@style/TextValue.NoTouch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right|center_vertical"
-                android:text="10Schritt" >
+                android:gravity="right|center_vertical" >
             </TextView>
 
             <EditText
@@ -188,7 +178,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text=""
                 android:inputType="text"
                 android:visibility="gone" />
         </TableRow>
@@ -201,7 +190,7 @@
                 style="@style/TextLabel.Popup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Wirkung" >
+                android:text="@string/label_effect" >
             </TextView>
 
             <TextView
@@ -218,7 +207,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text=""
                 android:inputType="text"
                 android:visibility="gone" />
         </TableRow>
@@ -231,8 +219,8 @@
                 style="@style/TextLabel.Popup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingRight="5dp"
-                android:text="Merkmal" >
+                android:paddingRight="@dimen/default_gap"
+                android:text="@string/label_feature" >
             </TextView>
 
             <TextView
@@ -241,15 +229,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="right|center_vertical"
-                android:text="Objekt" />
+                android:gravity="right|center_vertical" />
 
             <EditText
                 android:id="@+id/popup_spell_merkmal_edit"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text=""
                 android:inputType="text"
                 android:visibility="gone" />
         </TableRow>
@@ -262,8 +248,8 @@
                 style="@style/TextLabel.Popup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingRight="5dp"
-                android:text="Repräsentation" >
+                android:paddingRight="@dimen/default_gap"
+                android:text="@string/label_representation" >
             </TextView>
 
             <TextView
@@ -271,8 +257,7 @@
                 style="@style/TextValue.NoTouch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right|center_vertical"
-                android:text="Magier" >
+                android:gravity="right|center_vertical" >
             </TextView>
 
             <EditText
@@ -280,7 +265,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text=""
                 android:inputType="text"
                 android:visibility="gone" />
         </TableRow>
@@ -293,7 +277,7 @@
                 style="@style/TextLabel.Popup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Quelle" >
+                android:text="@string/label_source" >
             </TextView>
 
             <TextView
@@ -309,7 +293,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text=""
                 android:inputType="text"
                 android:visibility="gone" />
         </TableRow>
@@ -322,7 +305,7 @@
                 style="@style/TextLabel.Popup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Komplexität" >
+                android:text="@string/label_complexity" >
             </TextView>
 
             <TextView
@@ -338,7 +321,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text=""
                 android:inputType="text"
                 android:visibility="gone" />
         </TableRow>
@@ -353,7 +335,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_span="3"
-                android:text="Charakter spezifische Werte" >
+                android:text="@string/label_character_specific_values" >
             </TextView>
         </TableRow>
 
@@ -366,7 +348,7 @@
                 style="@style/TextLabel.Popup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Kommentar" >
+                android:text="@string/label_comment" >
             </TextView>
 
             <TextView
@@ -383,7 +365,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text=""
                 android:inputType="text"
                 android:visibility="gone" />
         </TableRow>
@@ -397,7 +378,7 @@
                 style="@style/TextLabel.Popup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Variante" >
+                android:text="@string/label_variant" >
             </TextView>
 
             <TextView
@@ -413,7 +394,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text=""
                 android:inputType="text"
                 android:visibility="gone" />
         </TableRow>

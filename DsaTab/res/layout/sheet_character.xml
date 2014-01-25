@@ -4,7 +4,7 @@
     android:id="@+id/sheet_character"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_margin="@dimen/page_margin"
+    android:layout_margin="@dimen/default_gap"
     android:layout_weight="1"
     android:fillViewport="true"
     android:scrollbarStyle="outsideOverlay" >
@@ -42,26 +42,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     android:id="@+id/gen_name"
                     style="@style/TextValue.Small.NoTouch"
                     android:layout_span="4"
                     android:ellipsize="middle"
                     android:gravity="left|center_vertical"
-                    android:text="Name" >
-                </TextView>
+                    android:text="@string/label_name" >
+                </com.dsatab.view.FlexibleTextView>
             </TableRow>
 
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     style="@style/TextLabel.Mini"
-                    android:text="Ausbildung" >
-                </TextView>
+                    android:text="@string/label_education" >
+                </com.dsatab.view.FlexibleTextView>
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     android:id="@+id/gen_ausbildung"
                     style="@style/TextValue.Small.NoTouch"
                     android:layout_span="3"
@@ -69,7 +69,7 @@
                     android:gravity="left"
                     android:paddingLeft="4dip"
                     android:singleLine="true" >
-                </TextView>
+                </com.dsatab.view.FlexibleTextView>
             </TableRow>
 
             <TableRow
@@ -77,12 +77,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     style="@style/TextLabel.Mini"
                     android:text="@string/label_titel" >
-                </TextView>
+                </com.dsatab.view.FlexibleTextView>
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     android:id="@+id/gen_titel"
                     style="@style/TextValue.Small.NoTouch"
                     android:layout_span="3"
@@ -90,7 +90,7 @@
                     android:gravity="left"
                     android:paddingLeft="4dip"
                     android:singleLine="true" >
-                </TextView>
+                </com.dsatab.view.FlexibleTextView>
             </TableRow>
 
             <TableRow
@@ -98,12 +98,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     style="@style/TextLabel.Mini"
                     android:text="@string/label_stand" >
-                </TextView>
+                </com.dsatab.view.FlexibleTextView>
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     android:id="@+id/gen_stand"
                     style="@style/TextValue.Small.NoTouch"
                     android:layout_span="3"
@@ -111,19 +111,19 @@
                     android:gravity="left"
                     android:paddingLeft="4dip"
                     android:singleLine="true" >
-                </TextView>
+                </com.dsatab.view.FlexibleTextView>
             </TableRow>
 
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     style="@style/TextLabel.Mini"
                     android:text="@string/label_rasse" >
-                </TextView>
+                </com.dsatab.view.FlexibleTextView>
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     android:id="@+id/gen_rasse"
                     style="@style/TextValue.Small.NoTouch"
                     android:layout_span="3"
@@ -131,7 +131,7 @@
                     android:gravity="left"
                     android:paddingLeft="4dip"
                     android:singleLine="true" >
-                </TextView>
+                </com.dsatab.view.FlexibleTextView>
             </TableRow>
 
             <TableRow
@@ -139,12 +139,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     style="@style/TextLabel.Mini"
                     android:text="@string/label_kultur" >
-                </TextView>
+                </com.dsatab.view.FlexibleTextView>
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     android:id="@+id/gen_kultur"
                     style="@style/TextValue.Small.NoTouch"
                     android:layout_span="3"
@@ -152,70 +152,70 @@
                     android:gravity="left"
                     android:paddingLeft="4dip"
                     android:singleLine="true" >
-                </TextView>
+                </com.dsatab.view.FlexibleTextView>
             </TableRow>
 
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     style="@style/TextLabel.Mini"
                     android:text="@string/label_gewicht" >
-                </TextView>
+                </com.dsatab.view.FlexibleTextView>
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     android:id="@+id/gen_gewicht"
                     style="@style/TextValue.Small.NoTouch"
                     android:gravity="left"
                     android:paddingLeft="4dip"
                     android:singleLine="true" >
-                </TextView>
+                </com.dsatab.view.FlexibleTextView>
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     style="@style/TextLabel.Mini"
                     android:text="@string/label_groesse" >
-                </TextView>
+                </com.dsatab.view.FlexibleTextView>
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     android:id="@+id/gen_groesse"
                     style="@style/TextValue.Small.NoTouch"
                     android:gravity="left"
                     android:paddingLeft="4dip"
                     android:singleLine="true" >
-                </TextView>
+                </com.dsatab.view.FlexibleTextView>
             </TableRow>
 
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     style="@style/TextLabel.Mini"
                     android:text="@string/label_haar_augen_farbe" >
-                </TextView>
+                </com.dsatab.view.FlexibleTextView>
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     android:id="@+id/gen_haar_augen"
                     style="@style/TextValue.Small.NoTouch"
                     android:gravity="left"
                     android:paddingLeft="4dip"
                     android:singleLine="true" >
-                </TextView>
+                </com.dsatab.view.FlexibleTextView>
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     style="@style/TextLabel.Mini"
                     android:text="@string/label_alter" >
-                </TextView>
+                </com.dsatab.view.FlexibleTextView>
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     android:id="@+id/gen_alter"
                     style="@style/TextValue.Small.NoTouch"
                     android:ellipsize="middle"
                     android:gravity="left"
                     android:paddingLeft="4dip"
                     android:singleLine="true" >
-                </TextView>
+                </com.dsatab.view.FlexibleTextView>
             </TableRow>
 
             <TableRow
@@ -223,12 +223,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     style="@style/TextLabel.Mini"
                     android:text="@string/label_aussehen" >
-                </TextView>
+                </com.dsatab.view.FlexibleTextView>
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     android:id="@+id/gen_aussehen"
                     style="@style/TextValue.Small.NoTouch"
                     android:layout_span="3"
@@ -237,63 +237,65 @@
                     android:paddingLeft="4dip"
                     android:singleLine="true"
                     android:text="" >
-                </TextView>
+                </com.dsatab.view.FlexibleTextView>
             </TableRow>
 
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     style="@style/TextLabel.Mini"
-                    android:text="@string/label_st" >
-                </TextView>
+                    android:text="@string/label_st"
+                    android:hint="@string/label_st_short" >
+                </com.dsatab.view.FlexibleTextView>
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     android:id="@+id/attr_st"
                     style="@style/TextValue.Small.NoTouch"
                     android:ellipsize="none"
                     android:gravity="left"
                     android:paddingLeft="4dip"
                     android:singleLine="true" >
-                </TextView>
+                </com.dsatab.view.FlexibleTextView>
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     android:id="@+id/attr_ws_label"
                     style="@style/TextLabel.Mini"
-                    android:text="@string/label_ws" >
-                </TextView>
+                    android:text="@string/label_ws"
+                    android:hint="@string/label_ws_short" >
+                </com.dsatab.view.FlexibleTextView>
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     android:id="@+id/attr_ws"
                     style="@style/TextValue.Small.NoTouch"
                     android:ellipsize="none"
                     android:gravity="left"
                     android:paddingLeft="4dip"
                     android:singleLine="true" >
-                </TextView>
+                </com.dsatab.view.FlexibleTextView>
             </TableRow>
 
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     android:id="@+id/attr_gs_label"
                     style="@style/TextLabel.Mini"
                     android:layout_span="3"
-                    android:text="@string/label_gs" >
-                </TextView>
+                    android:text="@string/label_gs"
+                    android:hint="@string/label_gs_short" >
+                </com.dsatab.view.FlexibleTextView>
 
-                <TextView
+                <com.dsatab.view.FlexibleTextView
                     android:id="@+id/attr_gs"
                     style="@style/TextValue.Small.NoTouch"
                     android:ellipsize="none"
                     android:gravity="left"
                     android:paddingLeft="4dip"
-                    android:singleLine="true"
-                    android:text="1" >
-                </TextView>
+                    android:singleLine="true">
+                </com.dsatab.view.FlexibleTextView>
             </TableRow>
         </TableLayout>
 
@@ -303,8 +305,8 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/gen_description"
             android:layout_alignRight="@+id/gen_description"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginBottom="@dimen/default_gap"
+            android:layout_marginRight="@dimen/default_gap"
             android:background="@null"
             android:src="?attr/imgExpanderClose" />
 
@@ -314,7 +316,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/gen_portrait"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/default_gap"
             android:baselineAligned="false" >
 
             <TableLayout
@@ -322,7 +324,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="6"
-                android:paddingRight="4dp"
+                android:paddingRight="@dimen/default_gap"
                 android:shrinkColumns="0"
                 android:stretchColumns="0" >
 
@@ -330,20 +332,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
 
-                    <TextView
+                    <com.dsatab.view.FlexibleTextView
                         android:id="@+id/attr_mu_label"
                         style="@style/TextLabel"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
                         android:singleLine="true"
-                        android:text="@string/label_mu" >
-                    </TextView>
+                        android:text="@string/label_mu"
+                        android:hint="@string/label_mu_short" >
+                    </com.dsatab.view.FlexibleTextView>
 
                     <Button
                         android:id="@+id/attr_mu"
                         style="@style/TextValue"
-                        android:layout_gravity="center"
-                        android:layout_marginRight="4dp" >
+                        android:layout_gravity="center" >
                     </Button>
                 </TableRow>
 
@@ -351,20 +353,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
 
-                    <TextView
+                    <com.dsatab.view.FlexibleTextView
                         android:id="@+id/attr_kl_label"
                         style="@style/TextLabel"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
                         android:singleLine="true"
-                        android:text="@string/label_kl" >
-                    </TextView>
+                        android:text="@string/label_kl"
+                        android:hint="@string/label_kl_short" >
+                    </com.dsatab.view.FlexibleTextView>
 
                     <Button
                         android:id="@+id/attr_kl"
                         style="@style/TextValue"
-                        android:layout_gravity="center"
-                        android:layout_marginRight="8dp" >
+                        android:layout_gravity="center" >
                     </Button>
                 </TableRow>
 
@@ -372,14 +374,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
 
-                    <TextView
+                    <com.dsatab.view.FlexibleTextView
                         android:id="@+id/attr_in_label"
                         style="@style/TextLabel"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
                         android:singleLine="true"
-                        android:text="@string/label_in" >
-                    </TextView>
+                        android:text="@string/label_in"
+                        android:hint="@string/label_in_short" >
+                    </com.dsatab.view.FlexibleTextView>
 
                     <Button
                         android:id="@+id/attr_in"
@@ -392,14 +395,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
 
-                    <TextView
+                    <com.dsatab.view.FlexibleTextView
                         android:id="@+id/attr_ch_label"
                         style="@style/TextLabel"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
                         android:singleLine="true"
-                        android:text="@string/label_ch" >
-                    </TextView>
+                        android:text="@string/label_ch"
+                        android:hint="@string/label_ch_short" >
+                    </com.dsatab.view.FlexibleTextView>
 
                     <Button
                         android:id="@+id/attr_ch"
@@ -412,14 +416,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
 
-                    <TextView
+                    <com.dsatab.view.FlexibleTextView
                         android:id="@+id/attr_ff_label"
                         style="@style/TextLabel"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
                         android:singleLine="true"
-                        android:text="@string/label_ff" >
-                    </TextView>
+                        android:text="@string/label_ff"
+                        android:hint="@string/label_ff_short" >
+                    </com.dsatab.view.FlexibleTextView>
 
                     <Button
                         android:id="@+id/attr_ff"
@@ -432,14 +437,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
 
-                    <TextView
+                    <com.dsatab.view.FlexibleTextView
                         android:id="@+id/attr_ge_label"
                         style="@style/TextLabel"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
                         android:singleLine="true"
-                        android:text="@string/label_ge" >
-                    </TextView>
+                        android:text="@string/label_ge"
+                        android:hint="@string/label_ge_short" >
+                    </com.dsatab.view.FlexibleTextView>
 
                     <Button
                         android:id="@+id/attr_ge"
@@ -452,14 +458,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
 
-                    <TextView
+                    <com.dsatab.view.FlexibleTextView
                         android:id="@+id/attr_ko_label"
                         style="@style/TextLabel"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
                         android:singleLine="true"
-                        android:text="@string/label_ko" >
-                    </TextView>
+                        android:text="@string/label_ko"
+                        android:hint="@string/label_ko_short" >
+                    </com.dsatab.view.FlexibleTextView>
 
                     <Button
                         android:id="@+id/attr_ko"
@@ -472,14 +479,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
 
-                    <TextView
+                    <com.dsatab.view.FlexibleTextView
                         android:id="@+id/attr_kk_label"
                         style="@style/TextLabel"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
                         android:singleLine="true"
-                        android:text="@string/label_kk" >
-                    </TextView>
+                        android:text="@string/label_kk"
+                        android:hint="@string/label_kk_short" >
+                    </com.dsatab.view.FlexibleTextView>
 
                     <Button
                         android:id="@+id/attr_kk"
@@ -494,8 +502,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
-                android:paddingLeft="4dp"
-                android:paddingRight="8dp"
+                android:paddingLeft="@dimen/default_gap"
+                android:paddingRight="@dimen/default_gap"
                 android:shrinkColumns="0"
                 android:stretchColumns="0" >
 
@@ -503,13 +511,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
 
-                    <TextView
+                    <com.dsatab.view.FlexibleTextView
                         style="@style/TextLabel"
                         android:layout_gravity="center_vertical"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:text="@string/label_le" >
-                    </TextView>
+                        android:text="@string/label_le"
+                        android:hint="@string/label_le_short" >
+                    </com.dsatab.view.FlexibleTextView>
 
                     <Button
                         android:id="@+id/attr_le"
@@ -518,8 +527,7 @@
 
                     <Button
                         android:id="@+id/attr_total_le"
-                        style="@style/TextValue.Right"
-                        android:layout_marginRight="4dp" >
+                        style="@style/TextValue.Right" >
                     </Button>
                 </TableRow>
 
@@ -527,13 +535,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
 
-                    <TextView
+                    <com.dsatab.view.FlexibleTextView
                         style="@style/TextLabel"
                         android:layout_gravity="center_vertical"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:text="@string/label_au" >
-                    </TextView>
+                        android:text="@string/label_au"
+                        android:hint="@string/label_au_short" >
+                    </com.dsatab.view.FlexibleTextView>
 
                     <Button
                         android:id="@+id/attr_au"
@@ -551,14 +560,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
 
-                    <TextView
+                    <com.dsatab.view.FlexibleTextView
                         android:id="@+id/attr_ae_label"
                         style="@style/TextLabel"
                         android:layout_gravity="center_vertical"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:text="@string/label_ae" >
-                    </TextView>
+                        android:text="@string/label_ae"
+                        android:hint="@string/label_ae_short" >
+                    </com.dsatab.view.FlexibleTextView>
 
                     <Button
                         android:id="@+id/attr_ae"
@@ -576,14 +586,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
 
-                    <TextView
+                    <com.dsatab.view.FlexibleTextView
                         android:id="@+id/attr_ke_label"
                         style="@style/TextLabel"
                         android:layout_gravity="center_vertical"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:text="@string/label_ke" >
-                    </TextView>
+                        android:text="@string/label_ke"
+                        android:hint="@string/label_ke_short" >
+                    </com.dsatab.view.FlexibleTextView>
 
                     <Button
                         android:id="@+id/attr_ke"
@@ -600,15 +611,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
 
-                    <TextView
+                    <com.dsatab.view.FlexibleTextView
                         android:id="@+id/attr_mr_label"
                         style="@style/TextLabel"
                         android:layout_gravity="center_vertical"
                         android:layout_span="2"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:text="@string/label_mr" >
-                    </TextView>
+                        android:text="@string/label_mr"
+                        android:hint="@string/label_mr_short" >
+                    </com.dsatab.view.FlexibleTextView>
 
                     <Button
                         android:id="@+id/attr_mr"
@@ -620,15 +632,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
 
-                    <TextView
+                    <com.dsatab.view.FlexibleTextView
                         android:id="@+id/attr_so_label"
                         style="@style/TextLabel"
                         android:layout_gravity="center_vertical"
                         android:layout_span="2"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:text="@string/label_so" >
-                    </TextView>
+                        android:text="@string/label_so"
+                        android:hint="@string/label_so_short" >
+                    </com.dsatab.view.FlexibleTextView>
 
                     <Button
                         android:id="@+id/attr_so"
@@ -640,14 +653,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
 
-                    <TextView
+                    <com.dsatab.view.FlexibleTextView
                         android:id="@+id/attr_abp_label"
                         style="@style/TextLabel"
                         android:layout_gravity="center_vertical"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:text="@string/label_ap" >
-                    </TextView>
+                        android:text="@string/label_ap"
+                        android:hint="@string/label_ap_short" >
+                    </com.dsatab.view.FlexibleTextView>
 
                     <Button
                         android:id="@+id/attr_abp"
@@ -660,15 +674,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
 
-                    <TextView
+                    <com.dsatab.view.FlexibleTextView
                         android:id="@+id/attr_be_label"
                         style="@style/TextLabel"
                         android:layout_gravity="center_vertical"
                         android:layout_span="2"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:text="@string/label_be" >
-                    </TextView>
+                        android:text="@string/label_be" 
+                        android:hint="@string/label_be_short">
+                    </com.dsatab.view.FlexibleTextView>
 
                     <Button
                         android:id="@+id/attr_be"
@@ -684,10 +699,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/gen_attributes_layout"
             android:background="?attr/listItemBackground"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp" >
+            android:paddingLeft="@dimen/default_gap"
+            android:paddingRight="@dimen/default_gap" >
 
-            <TextView
+            <com.dsatab.view.FlexibleTextView
                 android:id="@+id/attr_at_label"
                 style="@style/TextLabel.Mini"
                 android:layout_width="wrap_content"
@@ -696,83 +711,87 @@
                 android:background="?attr/selectableBackground"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:text="@string/label_at" >
-            </TextView>
+                android:text="@string/label_at"
+                android:hint="@string/label_at_short" >
+            </com.dsatab.view.FlexibleTextView>
 
             <Button
                 android:id="@+id/attr_at"
                 style="@style/TextValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="4dp"
+                android:layout_marginRight="@dimen/default_gap"
                 android:layout_weight="1"
                 android:ellipsize="none"
                 android:gravity="center"
                 android:singleLine="true" >
             </Button>
 
-            <TextView
+            <com.dsatab.view.FlexibleTextView
                 android:id="@+id/attr_pa_label"
                 style="@style/TextLabel.Mini"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="4dp"
+                android:layout_marginLeft="@dimen/default_gap"
                 android:background="?attr/selectableBackground"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:text="@string/label_pa" >
-            </TextView>
+                android:text="@string/label_pa"
+                android:hint="@string/label_pa_short" >
+            </com.dsatab.view.FlexibleTextView>
 
             <Button
                 android:id="@+id/attr_pa"
                 style="@style/TextValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="4dp"
+                android:layout_marginRight="@dimen/default_gap"
                 android:layout_weight="1"
                 android:ellipsize="none"
                 android:gravity="center"
                 android:singleLine="true" >
             </Button>
 
-            <TextView
+            <com.dsatab.view.FlexibleTextView
                 android:id="@+id/attr_fk_label"
                 style="@style/TextLabel.Mini"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="4dp"
+                android:layout_marginLeft="@dimen/default_gap"
                 android:background="?attr/selectableBackground"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:text="@string/label_fk" >
-            </TextView>
+                android:text="@string/label_fk"
+                android:hint="@string/label_fk_short" >
+            </com.dsatab.view.FlexibleTextView>
 
             <Button
                 android:id="@+id/attr_fk"
                 style="@style/TextValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="4dp"
+                android:layout_marginRight="@dimen/default_gap"
                 android:layout_weight="1"
                 android:ellipsize="none"
                 android:gravity="center"
                 android:singleLine="true" >
             </Button>
 
-            <TextView
+            <com.dsatab.view.FlexibleTextView
                 android:id="@+id/attr_ini_label"
                 style="@style/TextLabel.Mini"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="4dp"
+                android:layout_marginLeft="@dimen/default_gap"
                 android:background="?attr/selectableBackground"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:text="@string/label_ini" >
-            </TextView>
+                android:text="@string/label_ini"
+                android:hint="@string/label_ini_short" >
+            </com.dsatab.view.FlexibleTextView>
 
             <Button
                 android:id="@+id/attr_ini"
@@ -790,63 +809,64 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/gen_attributes3"
+            android:background="?attr/actionBarItemBackground"
             android:orientation="vertical" >
 
-            <TextView
+            <com.dsatab.view.FlexibleTextView
                 android:id="@+id/gen_specialfeatures_title"
                 style="?android:attr/listSeparatorTextViewStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Sonderfertigkeiten" >
-            </TextView>
+                android:text="@string/label_special_features" >
+            </com.dsatab.view.FlexibleTextView>
 
-            <TextView
+            <com.dsatab.view.FlexibleTextView
                 android:id="@+id/gen_specialfeatures"
                 style="@style/TextLabel.Small"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="none"
                 android:lineSpacingExtra="4dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp" >
-            </TextView>
+                android:paddingLeft="@dimen/default_gap"
+                android:paddingRight="@dimen/default_gap" >
+            </com.dsatab.view.FlexibleTextView>
 
-            <TextView
+            <com.dsatab.view.FlexibleTextView
                 android:id="@+id/gen_advantages_title"
                 style="?android:attr/listSeparatorTextViewStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Vorteile" >
-            </TextView>
+                android:text="@string/label_advantages" >
+            </com.dsatab.view.FlexibleTextView>
 
-            <TextView
+            <com.dsatab.view.FlexibleTextView
                 android:id="@+id/gen_advantages"
                 style="@style/TextLabel.Small"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="none"
                 android:lineSpacingExtra="4dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp" />
+                android:paddingLeft="@dimen/default_gap"
+                android:paddingRight="@dimen/default_gap" />
 
-            <TextView
+            <com.dsatab.view.FlexibleTextView
                 android:id="@+id/gen_disadvantages_title"
                 style="?android:attr/listSeparatorTextViewStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Nachteile" >
-            </TextView>
-            
-            <TextView
+                android:text="@string/label_disadvantages" >
+            </com.dsatab.view.FlexibleTextView>
+
+            <com.dsatab.view.FlexibleTextView
                 android:id="@+id/gen_disadvantages"
                 style="@style/TextLabel.Small"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="none"
                 android:lineSpacingExtra="4dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp" >
-            </TextView>
+                android:paddingLeft="@dimen/default_gap"
+                android:paddingRight="@dimen/default_gap" >
+            </com.dsatab.view.FlexibleTextView>
         </LinearLayout>
     </RelativeLayout>
 

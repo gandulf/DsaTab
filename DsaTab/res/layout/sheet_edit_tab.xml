@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+<android.support.v4.widget.SlidingPaneLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/slidepanel"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
     <com.haarman.listviewanimations.view.DynamicListView
         android:id="@+id/popup_tab_list"
-        android:layout_width="120dp"
+        android:layout_width="350dp"
         android:layout_height="match_parent"
         android:background="?attr/listShadowBackground"
+        android:layout_weight="0"
         android:divider="@null" />
 
     <TabHost
         android:id="@android:id/tabhost"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1" >
 
@@ -43,7 +45,7 @@
                         android:id="@+id/popup_edit_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Titel"
+                        android:hint="@string/label_titel"
                         android:inputType="textPersonName" />
 
                     <TextView                        
@@ -51,7 +53,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:gravity="left|center_vertical"
-                        android:text="Icon" />
+                        android:text="@string/label_icon" />
 
                     <ImageView
                         android:id="@+id/popup_edit_icon"
@@ -65,20 +67,20 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:gravity="left|center_vertical"
-                        android:text="Einstellungen" />
+                        android:text="@string/settings" />
 
                     <CheckBox
                         android:id="@+id/popup_edit_diceslider"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Würfel anzeigen" >
+                        android:text="@string/show_dice" >
                     </CheckBox>
 
                     <CheckBox
                         android:id="@+id/popup_edit_attributelist"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Kopfleiste anzeigen" >
+                        android:text="@string/show_header" >
                     </CheckBox>
                 </LinearLayout>
 
@@ -113,7 +115,8 @@
                     <Spinner
                         android:id="@+id/popup_edit_secondary"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" 
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical" 
                         android:minHeight="?android:attr/listPreferredItemHeight">
                     </Spinner>
 
@@ -129,4 +132,4 @@
         </LinearLayout>
     </TabHost>
 
-</LinearLayout>
+</android.support.v4.widget.SlidingPaneLayout>

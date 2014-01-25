@@ -14,11 +14,11 @@ import com.dsatab.data.Hero;
 import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemCard;
-import com.dsatab.fragment.ItemFragment;
+import com.dsatab.fragment.ItemViewFragment;
 
 public class ItemViewActivity extends BaseFragmentActivity {
 
-	private ItemFragment fragment;
+	private ItemViewFragment fragment;
 
 	public static void view(Context context, Hero hero, ItemCard itemCard) {
 		if (itemCard != null && context != null) {
@@ -28,9 +28,13 @@ public class ItemViewActivity extends BaseFragmentActivity {
 			Intent intent = new Intent(context, ItemViewActivity.class);
 			intent.setAction(Intent.ACTION_VIEW);
 			if (itemCard instanceof EquippedItem) {
-				intent.putExtra(ItemFragment.INTENT_EXTRA_EQUIPPED_ITEM_ID, item.getId());
+				intent.putExtra(ItemViewFragment.INTENT_EXTRA_EQUIPPED_ITEM_ID, ((EquippedItem) itemCard).getId());
+			} else {
+				intent.putExtra(ItemViewFragment.INTENT_EXTRA_ITEM_ID, item.getId());
 			}
-			intent.putExtra(ItemFragment.INTENT_EXTRA_ITEM_ID, item.getId());
+			if (hero != null) {
+				intent.putExtra(ItemViewFragment.INTENT_EXTRA_HERO, hero.getKey());
+			}
 
 			context.startActivity(intent);
 		}
@@ -48,7 +52,7 @@ public class ItemViewActivity extends BaseFragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_item);
 
-		fragment = (ItemFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_item);
+		fragment = (ItemViewFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_item);
 
 		// Inflate a "Done/Discard" custom action bar view.
 		LayoutInflater inflater = LayoutInflater.from(this);

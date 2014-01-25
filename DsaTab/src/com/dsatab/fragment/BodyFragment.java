@@ -190,7 +190,8 @@ public class BodyFragment extends BaseFragment implements OnClickListener, HeroI
 						ItemViewActivity.view(getActivity(), getHero(), adapter.getItem(which));
 					}
 				});
-				builder.show();
+				builder.show().setCanceledOnTouchOutside(true);
+				;
 			}
 
 		}

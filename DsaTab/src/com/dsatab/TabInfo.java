@@ -1,5 +1,8 @@
 package com.dsatab;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import org.json.JSONArray;
@@ -18,6 +21,7 @@ import com.dsatab.fragment.ItemsFragment;
 import com.dsatab.fragment.ListableFragment;
 import com.dsatab.util.Util;
 import com.dsatab.view.ListSettings;
+import com.gandulf.guilib.util.Debug;
 
 public class TabInfo implements Parcelable, JSONable, Cloneable {
 
@@ -43,7 +47,7 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 	private transient UUID id;
 	private Uri iconUri;
 
-	private ListSettings[] filterSettings = new ListSettings[MAX_TABS_PER_PAGE];
+	private ListSettings[] filterSettings;
 
 	private static final int indexToResourceId(int index) {
 		if (index < 0 || index >= DsaTabApplication.getInstance().getConfiguration().getTabIcons().size())
@@ -67,6 +71,7 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		this.activityClazz[0] = activityClazz1;
 		this.activityClazz[1] = activityClazz2;
 
+		this.filterSettings = new ListSettings[MAX_TABS_PER_PAGE];
 		this.iconUri = Util.getUriForResourceId(tabResourceId);
 		this.diceSlider = diceSlider;
 		this.attributeList = attributeList;
@@ -104,7 +109,12 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		}
 		this.diceSlider = in.readInt() == 0 ? false : true;
 		this.id = UUID.randomUUID();
-		this.filterSettings = (ListSettings[]) in.readParcelableArray(ListSettings.class.getClassLoader());
+
+		List<ListSettings> list = new ArrayList<ListSettings>(MAX_TABS_PER_PAGE);
+		in.readTypedList(list, ListSettings.CREATOR);
+		this.filterSettings = new ListSettings[list.size()];
+		this.filterSettings = list.toArray(filterSettings);
+
 		this.attributeList = in.readInt() == 0 ? false : true;
 		this.title = in.readString();
 		updateFilterSettings();
@@ -166,9 +176,9 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		if (in.has(FIELD_ATTRIBUTE_LIST)) {
 			attributeList = in.optBoolean(FIELD_ATTRIBUTE_LIST, true);
 		}
+		filterSettings = new ListSettings[MAX_TABS_PER_PAGE];
 		if (!in.isNull(FIELD_FILTER_SETTINGS)) {
 			JSONArray jsonArray = in.getJSONArray(FIELD_FILTER_SETTINGS);
-			filterSettings = new ListSettings[MAX_TABS_PER_PAGE];
 
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject filterJson = jsonArray.optJSONObject(i);
@@ -399,7 +409,7 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		else
 			dest.writeString(null);
 		dest.writeInt(diceSlider ? 1 : 0);
-		dest.writeParcelableArray(filterSettings, 0);
+		dest.writeTypedList(Arrays.asList(filterSettings));
 		dest.writeInt(attributeList ? 1 : 0);
 		dest.writeString(getTitle());
 	}
@@ -469,7 +479,7 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		try {
 			return (TabInfo) super.clone();
 		} catch (CloneNotSupportedException e) {
-			e.printStackTrace();
+			Debug.error(e);
 			return null;
 		}
 	}

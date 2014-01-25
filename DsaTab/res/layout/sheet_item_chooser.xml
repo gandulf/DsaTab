@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_margin="@dimen/page_margin" >
+    android:layout_margin="@dimen/default_gap" >
 
     <com.haarman.listviewanimations.view.DynamicListView
         android:id="@android:id/list"

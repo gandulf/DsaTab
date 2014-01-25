@@ -17,7 +17,7 @@
         auto:layout_column="1"
         auto:layout_gravity="start|end"
         auto:layout_row="0"
-        android:text="Name" />
+        android:text="@string/label_name" />
 
     <ImageView
         android:id="@+id/popup_edit_icon"
@@ -46,7 +46,7 @@
         auto:layout_columnSpan="2"
         auto:layout_gravity="start|end"
         auto:layout_row="2"
-        android:text="Titel" />
+        android:text="@string/label_titel" />
 
     <TextView
         android:id="@+id/popup_edit_title"
@@ -71,7 +71,7 @@
             android:layout_marginRight="4dp"
             android:layout_weight="1"
             android:gravity="right"
-            android:text="Preis" />
+            android:text="@string/label_price" />
 
         <TextView
             android:id="@+id/popup_edit_weight_label"
@@ -81,7 +81,7 @@
             android:layout_marginLeft="4dp"
             android:layout_weight="1"
             android:gravity="right"
-            android:text="Gewicht" />
+            android:text="@string/label_weight" />
     </LinearLayout>
 
     <LinearLayout
@@ -105,7 +105,7 @@
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
             auto:layout_gravity="left|center_vertical"
-            android:text="Kreuzer"
+            android:text="@string/label_kreuzer"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
@@ -123,7 +123,7 @@
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
             auto:layout_gravity="right|center_vertical"
-            android:text="Unzen"
+            android:text="@string/label_ounces"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </LinearLayout>
 
@@ -136,7 +136,7 @@
         auto:layout_columnSpan="2"
         auto:layout_gravity="start|end"
         auto:layout_row="8"
-        android:text="Kategorie" />
+        android:text="@string/label_category" />
 
     <TextView
         android:id="@+id/popup_edit_category"

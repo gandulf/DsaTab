@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.dsatab.view.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+<com.dsatab.view.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:minHeight="?android:attr/listPreferredItemHeight"
     android:background="?attr/listItemBackground"
-    android:paddingRight="6dp"
-    android:paddingLeft="6dp">
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:paddingLeft="@dimen/default_gap"
+    android:paddingRight="@dimen/default_gap" >
 
     <ImageView
         android:id="@+id/drag"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/icon_button_size"
         android:layout_gravity="center_vertical"
-        android:src="?attr/imgDragVertical" android:paddingRight="4dp" />
+        android:src="?attr/imgDragVertical" />
 
-	<ImageView android:id="@+id/gen_tab"
-	    android:paddingLeft="4dp"
-		android:layout_height="@dimen/icon_button_size" android:layout_width="@dimen/icon_button_size" android:layout_gravity="center_vertical"/>
-		
+    <ImageView
+        android:id="@+id/gen_tab"
+        android:layout_width="@dimen/icon_button_size"
+        android:layout_height="@dimen/icon_button_size"
+        android:layout_gravity="center_vertical" />
+
+    <TextView
+        android:id="@android:id/text1"
+        android:layout_weight="1" 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|center_vertical"/>
 </com.dsatab.view.CheckableLinearLayout>

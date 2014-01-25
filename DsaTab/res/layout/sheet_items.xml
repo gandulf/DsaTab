@@ -3,7 +3,7 @@
     android:id="@+id/sheet_items"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:layout_margin="@dimen/page_margin"
+    android:layout_margin="@dimen/default_gap"
     android:layout_weight="1"
     android:orientation="horizontal" >
 
@@ -18,7 +18,7 @@
             style="?android:attr/listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Behälter" />
+            android:text="@string/containers" />
 
         <com.haarman.listviewanimations.view.DynamicListView
             android:id="@+id/container_list"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="?attr/imgSwordAdd"
             android:ellipsize="middle"
-            android:text="Behälter erstellen" />
+            android:text="@string/add_container" />
 
         <Button
             android:id="@+id/container_type"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="?attr/imgFilter"
             android:ellipsize="middle"
-            android:text="Darstellung" />
+            android:text="@string/display" />
 
     </LinearLayout>
 
@@ -61,7 +61,7 @@
         android:columnWidth="@dimen/workspace_cell_width"
         android:horizontalSpacing="@dimen/workspace_cell_horizontal_padding"
         android:numColumns="auto_fit"
-        android:stretchMode="spacingWidth"
+        android:stretchMode="spacingWidthUniform"
         android:verticalSpacing="@dimen/workspace_cell_vertical_padding" />
 
 </LinearLayout>

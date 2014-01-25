@@ -1,19 +1,24 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <menu xmlns:android="http://schemas.android.com/apk/res/android">
-        
-        <item
-        android:id="@+id/option_download"
+    <item
+        android:id="@+id/option_hero_import"
+        android:icon="@drawable/ic_menu_account_list"
+        android:showAsAction="withText|ifRoom"
+        android:title="Aus Heldenaustausch importieren"/>
+    <item
+        android:id="@+id/option_refresh"
+        android:icon="@drawable/ic_action_refresh"
+        android:showAsAction="withText|ifRoom"
+        android:title="Refresh"/>
+    <item
+        android:id="@+id/option_items"
         android:icon="?attr/imgBarSwordAdd"
-        android:showAsAction="withText|ifRoom"
-        android:title="@string/menu_download_item"/>
-        <item
-        android:id="@+id/option_upload"
-        android:icon="?attr/imgBarSwordAdd"
-        android:showAsAction="withText|ifRoom"
-        android:title="@string/menu_upload_item"/>
-        <item
-        android:id="@+id/option_delete"
-        android:icon="?attr/imgBarDelete"
-        android:showAsAction="withText|ifRoom"
-        android:title="@string/menu_delete_item"/>        
-    </menu>
+        android:showAsAction="never"
+        android:title="Gegenstände"/>
+    <item
+        android:id="@+id/option_settings"
+        android:icon="@drawable/ic_menu_preferences"
+        android:showAsAction="never"
+        android:title="Einstellungen"/>
+
+</menu>

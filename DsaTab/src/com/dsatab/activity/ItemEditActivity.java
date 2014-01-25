@@ -1,5 +1,7 @@
 package com.dsatab.activity;
 
+import java.util.UUID;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,20 +34,34 @@ public class ItemEditActivity extends BaseFragmentActivity {
 
 	public static void edit(Context context, Hero hero, ItemCard itemCard) {
 		if (itemCard != null) {
-
 			Item item = itemCard.getItem();
-
 			Intent intent = new Intent(context, ItemEditActivity.class);
 			intent.setAction(Intent.ACTION_EDIT);
 			if (itemCard instanceof EquippedItem) {
-				intent.putExtra(ItemEditFragment.INTENT_EXTRA_EQUIPPED_ITEM_ID, item.getId());
+				intent.putExtra(ItemEditFragment.INTENT_EXTRA_EQUIPPED_ITEM_ID, ((EquippedItem) itemCard).getId());
+			} else {
+				intent.putExtra(ItemEditFragment.INTENT_EXTRA_ITEM_ID, item.getId());
 			}
-			intent.putExtra(ItemEditFragment.INTENT_EXTRA_ITEM_ID, item.getId());
 			if (hero != null) {
 				intent.putExtra(ItemEditFragment.INTENT_EXTRA_HERO, hero.getKey());
 			}
 			context.startActivity(intent);
 		}
+	}
+
+	public static void edit(Context context, Hero hero, UUID itemID, UUID equippedItemId) {
+		Intent intent = new Intent(context, ItemEditActivity.class);
+		intent.setAction(Intent.ACTION_EDIT);
+		if (equippedItemId != null) {
+			intent.putExtra(ItemEditFragment.INTENT_EXTRA_EQUIPPED_ITEM_ID, equippedItemId);
+		}
+		if (itemID != null) {
+			intent.putExtra(ItemEditFragment.INTENT_EXTRA_ITEM_ID, itemID);
+		}
+		if (hero != null) {
+			intent.putExtra(ItemEditFragment.INTENT_EXTRA_HERO, hero.getKey());
+		}
+		context.startActivity(intent);
 	}
 
 	/*

@@ -41,12 +41,13 @@ import com.dsatab.data.adapter.TabAdapter;
 import com.dsatab.data.adapter.TabPagerAdapter;
 import com.dsatab.fragment.AttributeListFragment;
 import com.dsatab.fragment.BaseFragment;
+import com.dsatab.fragment.DiceSliderFragment;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.dsatab.view.ChangeLogDialog;
-import com.dsatab.view.DiceSlider;
 import com.dsatab.view.MyViewPager;
 import com.dsatab.view.listener.ShakeListener;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 public class DsaTabActivity extends BaseFragmentActivity implements OnClickListener, OnPageChangeListener,
 		LoaderManager.LoaderCallbacks<Hero>, OnSharedPreferenceChangeListener {
@@ -69,9 +70,8 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 
 	protected SharedPreferences preferences;
 
-	private DiceSlider diceSlider;
-
 	private AttributeListFragment attributeFragment;
+	private DiceSliderFragment diceSliderFragment;
 
 	private ShakeListener mShaker;
 
@@ -104,21 +104,6 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		appData.putParcelable(SearchableActivity.INTENT_TAB_INFO, tabInfo);
 		startSearch(null, false, appData, false);
 		return true;
-	}
-
-	public void showDiceSlider() {
-		if (diceSlider != null) {
-			diceSlider.setSliderVisible(true);
-		}
-	}
-
-	public void hideDiceSlider() {
-		if (diceSlider != null) {
-			if (diceSlider.isOpened()) {
-				diceSlider.close();
-			}
-			diceSlider.setSliderVisible(false);
-		}
 	}
 
 	/*
@@ -165,10 +150,24 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	}
 
 	private void updatePage(TabInfo tabInfo) {
-		if (tabInfo.isDiceSlider())
-			showDiceSlider();
-		else
-			hideDiceSlider();
+
+		if (diceSliderFragment != null && diceSliderFragment.isAdded() && diceSliderFragment.getView() != null) {
+			if (tabInfo.isDiceSlider()) {
+				if (diceSliderFragment.getView().getVisibility() == View.GONE) {
+					diceSliderFragment.getView().setVisibility(View.VISIBLE);
+
+					Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_in_bottom);
+					diceSliderFragment.getView().startAnimation(animation);
+				}
+
+			} else {
+				if (diceSliderFragment.getView().getVisibility() == View.VISIBLE) {
+					Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_out_bottom);
+					diceSliderFragment.getView().startAnimation(animation);
+					diceSliderFragment.getView().setVisibility(View.GONE);
+				}
+			}
+		}
 
 		if (attributeFragment != null && attributeFragment.isAdded() && attributeFragment.getView() != null) {
 			if (tabInfo.isAttributeList()) {
@@ -311,6 +310,8 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		viewPager = (MyViewPager) findViewById(R.id.viewpager);
 		loadingView = findViewById(R.id.loading);
 
+		SlidingUpPanelLayout slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.slidepanel);
+
 		String orientation = preferences.getString(DsaTabPreferenceActivity.KEY_SCREEN_ORIENTATION,
 				DsaTabPreferenceActivity.DEFAULT_SCREEN_ORIENTATION);
 
@@ -324,11 +325,11 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 			tabInfo = getIntent().getParcelableExtra(INTENT_TAB_INFO);
 		}
 
-		diceSlider = (DiceSlider) findViewById(R.id.SlidingDrawer);
-		diceSlider.setSlideHandleButton(findViewById(R.id.slideHandleButton));
-
 		attributeFragment = (AttributeListFragment) getSupportFragmentManager().findFragmentByTag(
 				AttributeListFragment.TAG);
+
+		diceSliderFragment = (DiceSliderFragment) getSupportFragmentManager().findFragmentByTag(DiceSliderFragment.TAG);
+		diceSliderFragment.setSlidingUpPanelLayout(slidingUpPanelLayout);
 
 		// Debug.verbose("onCreate Orientation =" + configuration.orientation);
 		if (DsaTabPreferenceActivity.SCREEN_ORIENTATION_LANDSCAPE.equals(orientation)
@@ -554,9 +555,8 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	 */
 	@Override
 	public void onBackPressed() {
-
-		if (diceSlider != null && diceSlider.isOpened()) {
-			diceSlider.animateClose();
+		if (diceSliderFragment != null && diceSliderFragment.isSliderVisible()) {
+			diceSliderFragment.setSliderVisible(false);
 		} else {
 			super.onBackPressed();
 		}
@@ -578,16 +578,21 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 			showTab(tabInfo);
 		}
 
-		if (attributeFragment != null && attributeFragment.isAdded())
+		if (attributeFragment != null && attributeFragment.isAdded()) {
 			attributeFragment.loadHero(hero);
+		}
+
+		if (diceSliderFragment != null && diceSliderFragment.isAdded()) {
+			diceSliderFragment.loadHero(hero);
+		}
 
 		updatePage(tabInfo);
 	}
 
 	public boolean checkProbe(Probe probe) {
-		if (diceSlider != null) {
+		if (diceSliderFragment != null) {
 			if (probe != null && getHero() != null) {
-				diceSlider.checkProbe(getHero(), probe);
+				diceSliderFragment.checkProbe(getHero(), probe);
 				return true;
 			}
 		}
@@ -618,8 +623,8 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 						@Override
 						public void onShake() {
 							vibe.vibrate(100);
-							if (diceSlider != null)
-								diceSlider.rollDice20();
+							if (diceSliderFragment != null)
+								diceSliderFragment.rollDice20();
 						}
 					});
 
@@ -733,16 +738,19 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		com.actionbarsherlock.view.MenuItem item = menu.findItem(R.id.option_set);
 		if (item != null) {
-			switch (getHero().getActiveSet()) {
-			case 0:
-				item.setIcon(Util.getThemeResourceId(this, R.attr.imgBarSet1));
-				break;
-			case 1:
-				item.setIcon(Util.getThemeResourceId(this, R.attr.imgBarSet2));
-				break;
-			case 2:
-				item.setIcon(Util.getThemeResourceId(this, R.attr.imgBarSet3));
-				break;
+			item.setEnabled(getHero() != null);
+			if (getHero() != null) {
+				switch (getHero().getActiveSet()) {
+				case 0:
+					item.setIcon(Util.getThemeResourceId(this, R.attr.imgBarSet1));
+					break;
+				case 1:
+					item.setIcon(Util.getThemeResourceId(this, R.attr.imgBarSet2));
+					break;
+				case 2:
+					item.setIcon(Util.getThemeResourceId(this, R.attr.imgBarSet3));
+					break;
+				}
 			}
 		}
 
@@ -834,7 +842,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 			}
 			return true;
 		case R.id.option_items:
-			startActivity(new Intent(this, ItemChooserActivity.class));
+			startActivity(new Intent(this, ItemsActivity.class));
 			return true;
 		}
 

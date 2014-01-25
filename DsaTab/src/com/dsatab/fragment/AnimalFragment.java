@@ -60,6 +60,7 @@ import com.dsatab.view.PortraitChooserDialog;
 import com.dsatab.view.PortraitViewDialog;
 import com.dsatab.view.WebInfoDialog;
 import com.dsatab.view.listener.HeroChangedListener;
+import com.dsatab.xml.DataManager;
 
 public class AnimalFragment extends BaseAttributesFragment implements OnClickListener, OnLongClickListener {
 
@@ -783,22 +784,15 @@ public class AnimalFragment extends BaseAttributesFragment implements OnClickLis
 		StyleableSpannableStringBuilder disadvantageBuilder = new StyleableSpannableStringBuilder();
 
 		tfSpecialFeatures.setMovementMethod(LinkMovementMethod.getInstance());
-		String[] featureInfos;
-		try {
-			featureInfos = getResources().getAssets().list("data/feature");
-			Arrays.sort(featureInfos);
-		} catch (IOException e) {
-			featureInfos = new String[0];
-		}
+		String[] featureInfos = DataManager.getWebInfos(getActivity()).toArray(new String[0]);
+		Arrays.sort(featureInfos);
 
 		OnSpanClickListener linkClicker = new OnSpanClickListener() {
 
 			@Override
 			public void onClick(CharSequence tag, ClickSpan v) {
 				if (getActivity() != null) {
-					String url = "file:///android_asset/data/feature/" + tag + ".html";
-					WebInfoDialog infoDialog = new WebInfoDialog(getActivity(), url);
-					infoDialog.show();
+					WebInfoDialog.show(getActivity(), tag);
 				}
 			}
 		};
@@ -820,11 +814,9 @@ public class AnimalFragment extends BaseAttributesFragment implements OnClickLis
 				if (currentBuilder.length() > 0) {
 					currentBuilder.append(", ");
 				}
-				// due to a bugin webview we cannot load urls with spaces in it
-				String tag = feature.getType().xmlName().replace(" ", "");
-				tag = Util.convertNonAscii(tag);
+				String tag = feature.getType().xmlName();
 
-				if (Arrays.binarySearch(featureInfos, tag + ".html") >= 0) {
+				if (Arrays.binarySearch(featureInfos, tag) >= 0) {
 					currentBuilder.appendClick(linkClicker, feature.toString(), tag);
 				} else {
 					currentBuilder.append(feature.toString());

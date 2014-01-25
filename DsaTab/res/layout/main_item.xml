@@ -9,7 +9,7 @@
         android:name="com.dsatab.fragment.ItemFragment"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        class="com.dsatab.fragment.ItemFragment"
+        class="com.dsatab.fragment.ItemViewFragment"
         tools:layout="@layout/sheet_item_view">
     </fragment>
 

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:padding="5dp" >
+    android:padding="@dimen/default_gap" >
 
     <android.support.v7.widget.GridLayout
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
             auto:layout_column="1"
             auto:layout_gravity="bottom|fill_horizontal"
             auto:layout_row="1"
-            android:hint="Name"
+            android:hint="@string/label_name"
             android:inputType="textPersonName" >
 
             <requestFocus/>
@@ -53,7 +53,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Kapazität"
+                android:hint="@string/label_capacity"
                 android:inputType="number"
                 android:lines="3" >
             </EditText>
@@ -64,7 +64,7 @@
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
                     auto:layout_gravity="right|center_vertical"
-                    android:text="Unzen"
+                    android:text="@string/label_ounces"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             
         </LinearLayout>

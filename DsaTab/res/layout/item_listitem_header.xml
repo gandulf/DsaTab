@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:ellipsize="end"
-        android:text="Header" />
+        android:ellipsize="end" />
 
 </com.dsatab.view.CheckableRelativeLayout>

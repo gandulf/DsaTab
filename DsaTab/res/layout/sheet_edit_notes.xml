@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:padding="5dp" >
+    android:padding="@dimen/default_gap" >
 
     <android.support.v7.widget.GridLayout
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"                
                 auto:layout_gravity="fill_horizontal"                
-                android:text="Kategorie" />
+                android:text="@string/label_category" />
         <Spinner
             android:id="@+id/popup_notes_spn_category"
             android:layout_width="fill_parent"
@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"                
                 auto:layout_gravity="fill_horizontal"                
-                android:text="Name" />
+                android:text="@string/label_name" />
         
         <EditText
             android:id="@+id/popup_notes_edit_name"

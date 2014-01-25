@@ -10,8 +10,8 @@ import com.dsatab.R;
 import com.dsatab.common.StyleableSpannableStringBuilder;
 import com.dsatab.data.Dice;
 import com.dsatab.data.enums.ItemType;
+import com.dsatab.fragment.DiceSliderFragment.DiceRoll;
 import com.dsatab.util.Util;
-import com.dsatab.view.DiceSlider.DiceRoll;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -51,6 +51,11 @@ public class Weapon extends CloseCombatItem {
 	 */
 	public Weapon(Item item) {
 		super(item, ItemType.Waffen, 0);
+	}
+
+	@Override
+	public int getId() {
+		return id;
 	}
 
 	public String getTp() {

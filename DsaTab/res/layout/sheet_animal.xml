@@ -3,7 +3,7 @@
     android:id="@+id/sheet_animal"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_margin="@dimen/page_margin"
+    android:layout_margin="@dimen/default_gap"
     android:layout_weight="1"
     android:fillViewport="true"
     android:scrollbarStyle="outsideOverlay" >
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="4dp"
+            android:layout_marginBottom="@dimen/default_gap"
             android:layout_toRightOf="@+id/gen_portrait"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
@@ -47,7 +47,7 @@
                     android:layout_span="4"
                     android:ellipsize="middle"
                     android:gravity="left|center_vertical"
-                    android:text="Name" >
+                    android:text="@string/label_name" >
                 </TextView>
             </TableRow>
 
@@ -57,7 +57,7 @@
 
                 <TextView
                     style="@style/TextLabel.Mini"
-                    android:text="Familie" >
+                    android:text="@string/label_familie" >
                 </TextView>
 
                 <TextView
@@ -66,7 +66,7 @@
                     android:layout_span="3"
                     android:ellipsize="middle"
                     android:gravity="left"
-                    android:paddingLeft="4dip"
+                    android:paddingLeft="@dimen/default_gap"
                     android:singleLine="true" >
                 </TextView>
             </TableRow>
@@ -77,7 +77,7 @@
 
                 <TextView
                     style="@style/TextLabel.Mini"
-                    android:text="Gattung" >
+                    android:text="@string/label_gattung" >
                 </TextView>
 
                 <TextView
@@ -86,7 +86,7 @@
                     android:layout_span="3"
                     android:ellipsize="middle"
                     android:gravity="left"
-                    android:paddingLeft="4dip"
+                    android:paddingLeft="@dimen/default_gap"
                     android:singleLine="true" >
                 </TextView>
             </TableRow>
@@ -104,7 +104,7 @@
                     android:id="@+id/gen_gewicht"
                     style="@style/TextValue.Small.NoTouch"
                     android:gravity="left"
-                    android:paddingLeft="4dip"
+                    android:paddingLeft="@dimen/default_gap"
                     android:singleLine="true" >
                 </TextView>
 
@@ -117,7 +117,7 @@
                     android:id="@+id/gen_groesse"
                     style="@style/TextValue.Small.NoTouch"
                     android:gravity="left"
-                    android:paddingLeft="4dip"
+                    android:paddingLeft="@dimen/default_gap"
                     android:singleLine="true" >
                 </TextView>
             </TableRow>
@@ -130,7 +130,8 @@
                     android:id="@+id/attr_gs_label"
                     style="@style/TextLabel.Mini"
                     android:layout_span="3"
-                    android:text="@string/label_gs" >
+                    android:text="@string/label_gs"
+                    android:hint="@string/label_gs_short" >
                 </TextView>
 
                 <TextView
@@ -138,9 +139,8 @@
                     style="@style/TextValue.Small.NoTouch"
                     android:ellipsize="none"
                     android:gravity="left"
-                    android:paddingLeft="4dip"
-                    android:singleLine="true"
-                    android:text="1" >
+                    android:paddingLeft="@dimen/default_gap"
+                    android:singleLine="true">
                 </TextView>
             </TableRow>
         </TableLayout>
@@ -151,7 +151,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/gen_portrait"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/default_gap"
             android:baselineAligned="false" >
 
             <TableLayout
@@ -159,7 +159,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="6"
-                android:paddingRight="4dp"
+                android:paddingRight="@dimen/default_gap"
                 android:shrinkColumns="0"
                 android:stretchColumns="0" >
 
@@ -180,7 +180,7 @@
                         android:id="@+id/attr_mu"
                         style="@style/TextValue"
                         android:layout_gravity="center"
-                        android:layout_marginRight="4dp" >
+                        android:layout_marginRight="@dimen/default_gap" >
                     </Button>
                 </TableRow>
 
@@ -331,7 +331,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
-                android:paddingLeft="4dp"
+                android:paddingLeft="@dimen/default_gap"
                 android:paddingRight="8dp"
                 android:shrinkColumns="0"
                 android:stretchColumns="0" >
@@ -356,7 +356,7 @@
                     <Button
                         android:id="@+id/attr_total_le"
                         style="@style/TextValue.Right"
-                        android:layout_marginRight="4dp" >
+                        android:layout_marginRight="@dimen/default_gap" >
                     </Button>
                 </TableRow>
 
@@ -524,7 +524,7 @@
                 style="?android:attr/listSeparatorTextViewStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Sonderfertigkeiten" >
+                android:text="@string/label_special_features" >
             </TextView>
 
             <TextView
@@ -533,7 +533,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="none"
-                android:lineSpacingExtra="4dp"
+                android:lineSpacingExtra="@dimen/default_gap"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp" >
             </TextView>
@@ -543,7 +543,7 @@
                 style="?android:attr/listSeparatorTextViewStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Vorteile" >
+                android:text="@string/label_advantages" >
             </TextView>
 
             <TextView
@@ -552,7 +552,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="none"
-                android:lineSpacingExtra="4dp"
+                android:lineSpacingExtra="@dimen/default_gap"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp" />
 
@@ -561,7 +561,7 @@
                 style="?android:attr/listSeparatorTextViewStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Nachteile" >
+                android:text="@string/label_disadvantages" >
             </TextView>
 
             <TextView
@@ -570,7 +570,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="none"
-                android:lineSpacingExtra="4dp"
+                android:lineSpacingExtra="@dimen/default_gap"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp" >
             </TextView>
@@ -580,7 +580,7 @@
                 style="?android:attr/listSeparatorTextViewStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Angriffe" />
+                android:text="@string/label_attacks" />
 
             <LinearLayout
                 android:id="@+id/animal_attacks"

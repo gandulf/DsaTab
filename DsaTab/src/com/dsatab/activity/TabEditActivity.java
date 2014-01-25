@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.widget.SlidingPaneLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.TabWidget;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -79,6 +81,10 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 		applyPreferencesToTheme();
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.sheet_edit_tab);
+
+		SlidingPaneLayout slidingPaneLayout = (SlidingPaneLayout) findViewById(R.id.slidepanel);
+		slidingPaneLayout.setParallaxDistance(100);
+		slidingPaneLayout.openPane();
 
 		TabHost tabHost = (TabHost) findViewById(android.R.id.tabhost);
 		tabHost.setup();
@@ -339,7 +345,7 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 				if (info.getListSettings()[i] != null) {
 					final ListSettings listSettings = info.getListSettings()[i];
 
-					getLayoutInflater().inflate(R.layout.popup_edit_tab_list, addons[i]);
+					getLayoutInflater().inflate(R.layout._edit_tabinfo_list, addons[i]);
 
 					check = (CheckBox) addons[i].findViewById(R.id.popup_edit_show_normal);
 					check.setTag(listSettings);
@@ -653,12 +659,12 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 			if (convertView == null) {
 				convertView = mInflater.inflate(R.layout.item_drag_tab, parent, false);
 			}
-			ImageView imageButton = (ImageView) convertView.findViewById(R.id.gen_tab);
+			ImageView imageView = (ImageView) convertView.findViewById(R.id.gen_tab);
+			TextView text1 = (TextView) convertView.findViewById(android.R.id.text1);
 			TabInfo info = getItem(position);
 
-			imageButton.setFocusable(false);
-			imageButton.setClickable(false);
-			imageButton.setImageURI(info.getIconUri());
+			text1.setText(info.getTitle());
+			imageView.setImageURI(info.getIconUri());
 
 			Util.applyRowStyle(convertView, position);
 

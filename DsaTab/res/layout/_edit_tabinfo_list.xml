@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <CheckBox
+        android:id="@+id/popup_edit_show_unused"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/show_unused" />
+
+    <CheckBox
+        android:id="@+id/popup_edit_show_favorites"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/show_favorites" />
+
+    <CheckBox
+        android:id="@+id/popup_edit_show_normal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/show_normal" />
+
+    <CheckBox
+        android:id="@+id/popup_edit_include_modifiers"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/consider_modificators" />
+
+    <TextView            
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left|center_vertical"
+            android:text="@string/list_content" />
+
+    <com.haarman.listviewanimations.view.DynamicListView
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+         />
+
+    <LinearLayout
+        android:id="@+id/popup_edit_list_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Spinner
+            android:id="@+id/popup_edit_list_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/popup_edit_list_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_add"
+            android:contentDescription="@string/add" />
+
+    </LinearLayout>
+</merge>

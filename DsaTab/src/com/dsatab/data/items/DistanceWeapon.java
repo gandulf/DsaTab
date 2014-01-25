@@ -11,8 +11,8 @@ import com.dsatab.common.StyleableSpannableStringBuilder;
 import com.dsatab.data.Dice;
 import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.enums.TalentType;
+import com.dsatab.fragment.DiceSliderFragment.DiceRoll;
 import com.dsatab.util.Util;
-import com.dsatab.view.DiceSlider.DiceRoll;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.types.EnumStringType;
 import com.j256.ormlite.table.DatabaseTable;
@@ -48,6 +48,11 @@ public class DistanceWeapon extends ItemSpecification {
 
 	public DistanceWeapon(Item item) {
 		super(item, ItemType.Fernwaffen, 0);
+	}
+
+	@Override
+	public int getId() {
+		return id;
 	}
 
 	public String getTp() {

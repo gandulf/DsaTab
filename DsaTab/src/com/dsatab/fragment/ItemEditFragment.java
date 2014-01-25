@@ -22,7 +22,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -31,6 +30,7 @@ import com.dsatab.R;
 import com.dsatab.data.Hero;
 import com.dsatab.data.adapter.SpinnerSimpleAdapter;
 import com.dsatab.data.enums.ItemType;
+import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemSpecification;
 import com.dsatab.data.items.MiscSpecification;
@@ -87,12 +87,16 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 		priceView = (EditText) root.findViewById(R.id.popup_edit_price);
 		weightView = (EditText) root.findViewById(R.id.popup_edit_weight);
 		iconView = (ImageView) root.findViewById(R.id.popup_edit_icon);
+
 		imageView = (CardView) root.findViewById(R.id.popup_edit_image);
+		imageView.setHighQuality(true);
+
 		itemView = (ItemListItem) root.findViewById(R.id.inc_gal_item_view);
+		itemView.setTextColor(Color.BLACK);
+		itemView.setBackgroundColor(getResources().getColor(R.color.Brighter));
+
 		categorySpn = (Spinner) root.findViewById(R.id.popup_edit_category);
 		imageTextOverlayView = (CheckBox) root.findViewById(R.id.popup_edit_overlay);
-		imageView.setOnClickListener(this);
-		imageTextOverlayView.setOnCheckedChangeListener(this);
 
 		return root;
 	}
@@ -104,25 +108,7 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 	 */
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		Hero hero = DsaTabApplication.getInstance().getHero();
-
-		if (hero == null) {
-			Toast.makeText(getActivity(), "Fehler: Kein Held geladen.", Toast.LENGTH_SHORT).show();
-			getActivity().finish();
-			super.onActivityCreated(savedInstanceState);
-			return;
-		}
-		Bundle extra = getActivity().getIntent().getExtras();
-		if (extra != null) {
-			UUID itemId = (UUID) extra.getSerializable(INTENT_EXTRA_ITEM_ID);
-			if (itemId != null) {
-				origItem = hero.getItem(itemId);
-				if (origItem == null)
-					origItem = DataManager.getItemById(itemId);
-
-				cloneItem = origItem.clone();
-			}
-		}
+		loadData();
 
 		nameView.addTextChangedListener(new DefaultTextWatcher() {
 
@@ -144,25 +130,57 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 			}
 		});
 
-		imageView.setHighQuality(true);
-		itemView.setTextColor(Color.BLACK);
-		itemView.setBackgroundColor(getResources().getColor(R.color.Brighter));
+		imageView.setOnClickListener(this);
+		imageTextOverlayView.setOnCheckedChangeListener(this);
 		iconView.setOnClickListener(this);
 
 		categoryAdapter = new SpinnerSimpleAdapter<String>(getActivity(), DataManager.getItemCategories());
-
 		categorySpn.setAdapter(categoryAdapter);
-		if (cloneItem == null) {
-			cloneItem = new Item();
-			cloneItem.addSpecification(new MiscSpecification(cloneItem, ItemType.Sonstiges));
-			origItem = cloneItem;
-		}
-
-		itemSpecification = cloneItem.getSpecifications().get(0);
 
 		showCard(cloneItem, itemSpecification);
 
 		super.onActivityCreated(savedInstanceState);
+	}
+
+	protected void loadData() {
+		Hero hero = DsaTabApplication.getInstance().getHero();
+
+		Bundle extra = getActivity().getIntent().getExtras();
+		if (extra != null) {
+			UUID itemId = (UUID) extra.getSerializable(INTENT_EXTRA_ITEM_ID);
+			UUID equippedItemId = (UUID) extra.getSerializable(INTENT_EXTRA_EQUIPPED_ITEM_ID);
+			if (equippedItemId != null && hero != null) {
+				EquippedItem equippedItem = hero.getEquippedItem(equippedItemId);
+				if (equippedItem != null) {
+					origItem = equippedItem.getItem();
+					itemSpecification = equippedItem.getItemSpecification();
+
+					cloneItem = origItem.clone();
+					for (ItemSpecification specification : cloneItem.getSpecifications()) {
+						if (specification.equals(itemSpecification)) {
+							itemSpecification = specification;
+							break;
+						}
+					}
+				}
+			}
+			if (origItem == null && itemId != null) {
+				if (hero != null) {
+					origItem = hero.getItem(itemId);
+				}
+				if (origItem == null) {
+					origItem = DataManager.getItemById(itemId);
+				}
+				cloneItem = origItem.clone();
+				itemSpecification = cloneItem.getSpecifications().get(0);
+			}
+		}
+		if (cloneItem == null) {
+			cloneItem = new Item();
+			itemSpecification = new MiscSpecification(cloneItem, ItemType.Sonstiges);
+			cloneItem.addSpecification(itemSpecification);
+			origItem = cloneItem;
+		}
 	}
 
 	/*
@@ -194,27 +212,30 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 	}
 
 	private void showCard(Item card, ItemSpecification itemSpecification) {
-		imageView.setItem(card);
-		itemView.setItem(card, itemSpecification);
+		if (card != null) {
+			imageView.setItem(card);
+			itemView.setItem(card, itemSpecification);
 
-		if (card.getIconUri() != null)
-			iconView.setImageURI(card.getIconUri());
-		else
-			iconView.setImageResource(itemSpecification.getResourceId());
+			if (card.getIconUri() != null) {
+				iconView.setImageURI(card.getIconUri());
+			} else if (itemSpecification != null) {
+				iconView.setImageResource(itemSpecification.getResourceId());
+			}
+			nameView.setText(card.getName());
+			if (card.hasTitle())
+				titleView.setText(card.getTitle());
+			else
+				titleView.setText(null);
 
-		nameView.setText(card.getName());
-		if (card.hasTitle())
-			titleView.setText(card.getTitle());
-		else
-			titleView.setText(null);
-
-		if (card.getPrice() > 0)
-			priceView.setText(Util.toString(card.getPrice()));
-		if (card.getWeight() > 0.0f)
-			weightView.setText(Util.toString(card.getWeight()));
-		categorySpn.setSelection(categoryAdapter.getPosition(card.getCategory()));
-		imageTextOverlayView.setChecked(card.isImageTextOverlay());
-
+			if (card.getPrice() > 0) {
+				priceView.setText(Util.toString(card.getPrice()));
+			}
+			if (card.getWeight() > 0.0f) {
+				weightView.setText(Util.toString(card.getWeight()));
+			}
+			categorySpn.setSelection(categoryAdapter.getPosition(card.getCategory()));
+			imageTextOverlayView.setChecked(card.isImageTextOverlay());
+		}
 	}
 
 	/*

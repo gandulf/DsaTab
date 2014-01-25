@@ -622,23 +622,16 @@ public class Util {
 					|| (value.getReferenceValue() != null && value.getValue() > value.getReferenceValue()))
 				tf.setTextColor(DsaTabApplication.getInstance().getResources().getColor(R.color.ValueGreen));
 			else {
-				if (inverse)
-					tf.setTextColor(tf.getContext().getResources().getColor(android.R.color.primary_text_dark));
-				else
-					tf.setTextColor(getThemeColors(tf.getContext(), android.R.attr.textColorPrimary));
+				tf.setTextColor(getThemeColors(tf.getContext(), android.R.attr.textColorPrimary));
 			}
 		} else {
-			if (inverse)
-				tf.setTextColor(DsaTabApplication.getInstance().getResources()
-						.getColor(android.R.color.primary_text_dark));
-			else
-				tf.setTextColor(getThemeColors(tf.getContext(), android.R.attr.textColorPrimary));
+			tf.setTextColor(getThemeColors(tf.getContext(), android.R.attr.textColorPrimary));
 		}
 	}
 
 	public static int getThemeColors(Context context, int attr) {
 		if (getThemeResourceId(context, attr) != 0)
-			return DsaTabApplication.getInstance().getResources().getColor(getThemeResourceId(context, attr));
+			return context.getResources().getColor(getThemeResourceId(context, attr));
 		else
 			return 0;
 	}
@@ -652,15 +645,10 @@ public class Util {
 		}
 	}
 
-	public static void setTextColor(TextView tf, int modifier, boolean inverse) {
+	public static void setTextColor(TextView tf, int modifier) {
 
 		if (modifier == 0) {
-			if (inverse) {
-				tf.setTextColor(DsaTabApplication.getInstance().getResources()
-						.getColor(android.R.color.primary_text_dark));
-			} else {
-				tf.setTextColor(getThemeColors(tf.getContext(), android.R.attr.textColorPrimary));
-			}
+			tf.setTextColor(getThemeColors(tf.getContext(), android.R.attr.textColorPrimary));
 		} else if (modifier < 0)
 			tf.setTextColor(tf.getResources().getColor(R.color.ValueRed));
 		else if (modifier > 0)
@@ -702,7 +690,7 @@ public class Util {
 			} else {
 				tf.setText(null);
 			}
-			setTextColor(tf, modifier, inverse);
+			setTextColor(tf, modifier);
 		}
 	}
 
@@ -749,17 +737,19 @@ public class Util {
 		if (attr != null && attr.getValue() != null) {
 			int modifier = being.getModifier(attr);
 
-			int color;
+			int color = Color.TRANSPARENT;
 			if (modifier < 0)
 				color = DsaTabApplication.getInstance().getResources().getColor(R.color.ValueRed);
 			else if (modifier > 0)
 				color = DsaTabApplication.getInstance().getResources().getColor(R.color.ValueGreen);
-			else {
-				color = getThemeColors(DsaTabApplication.getInstance(), android.R.attr.textColorPrimary);
 
-			}
 			title.append(" (");
-			title.appendColor(color, Util.toString(attr.getValue() + modifier));
+
+			if (color != Color.TRANSPARENT)
+				title.appendColor(color, Util.toString(attr.getValue() + modifier));
+			else
+				title.append(Util.toString(attr.getValue() + modifier));
+
 			title.append(")");
 		}
 

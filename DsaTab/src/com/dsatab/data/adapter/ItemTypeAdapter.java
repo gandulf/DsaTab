@@ -30,8 +30,7 @@ public class ItemTypeAdapter extends SpinnerSimpleAdapter<ItemType> {
 			ItemType e = getItem(position);
 
 			textView.setCompoundDrawablesWithIntrinsicBounds(e.getDrawableId(), 0, 0, 0);
-			textView.setCompoundDrawablePadding(getContext().getResources()
-					.getDimensionPixelSize(R.dimen.dices_padding));
+			textView.setCompoundDrawablePadding(getContext().getResources().getDimensionPixelSize(R.dimen.default_gap));
 			textView.setText(e.name());
 			textView.setGravity(Gravity.CENTER_VERTICAL);
 		}
@@ -48,8 +47,7 @@ public class ItemTypeAdapter extends SpinnerSimpleAdapter<ItemType> {
 			ItemType e = getItem(position);
 
 			textView.setCompoundDrawablesWithIntrinsicBounds(e.getDrawableId(), 0, 0, 0);
-			textView.setCompoundDrawablePadding(getContext().getResources()
-					.getDimensionPixelSize(R.dimen.dices_padding));
+			textView.setCompoundDrawablePadding(getContext().getResources().getDimensionPixelSize(R.dimen.default_gap));
 			textView.setText(e.name());
 			textView.setGravity(Gravity.CENTER_VERTICAL);
 		}

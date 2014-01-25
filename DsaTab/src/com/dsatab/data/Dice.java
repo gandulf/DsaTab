@@ -7,9 +7,9 @@ import java.util.regex.Pattern;
 
 import android.text.TextUtils;
 
+import com.dsatab.fragment.DiceSliderFragment.DiceRoll;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
-import com.dsatab.view.DiceSlider.DiceRoll;
 
 public class Dice {
 

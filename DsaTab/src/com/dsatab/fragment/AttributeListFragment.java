@@ -2,10 +2,12 @@ package com.dsatab.fragment;
 
 import java.util.List;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,11 +39,17 @@ public class AttributeListFragment extends BaseAttributesFragment implements Her
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+	 * android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.attributes_list, container, false);
+		// create ContextThemeWrapper from the original Activity Context with the custom theme
+		Context context = new ContextThemeWrapper(getActivity(), R.style.DsaTabTheme_Dark);
+		// clone the inflater using the ContextThemeWrapper
+		LayoutInflater localInflater = inflater.cloneInContext(context);
+		// inflate using the cloned inflater, not the passed in default
+		View view = localInflater.inflate(R.layout.attributes_list, container, false);
 
 		tfName = (TextView) view.findViewById(R.id.attr_name);
 
@@ -317,7 +325,8 @@ public class AttributeListFragment extends BaseAttributesFragment implements Her
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.fragment.BaseFragment#onSharedPreferenceChanged(android.content .SharedPreferences, java.lang.String)
+	 * @see com.dsatab.fragment.BaseFragment#onSharedPreferenceChanged(android.content .SharedPreferences,
+	 * java.lang.String)
 	 */
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

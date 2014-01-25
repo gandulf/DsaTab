@@ -50,7 +50,7 @@ public class ItemAdapter extends OpenArrayAdapter<ItemCard> implements OnClickLi
 		ViewHolder holder;
 		EquippedItemListItem view;
 		if (!(convertView instanceof EquippedItemListItem)) {
-			view = (EquippedItemListItem) mInflater.inflate(R.layout.equippeditem_listitem, parent, false);
+			view = (EquippedItemListItem) mInflater.inflate(R.layout.item_listitem_item, parent, false);
 			convertView = view;
 
 			holder = new ViewHolder();

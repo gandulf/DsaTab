@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SlidingPaneLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/slidepanel"
+    android:layout_width="fill_parent"    
+    android:layout_height="fill_parent">
+
+    <fragment
+        android:id="@+id/fragment_item_chooser"
+        android:name="com.dsatab.fragment.ItemChooserFragment"
+        android:layout_width="350dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0"
+        class="com.dsatab.fragment.ItemChooserFragment"
+        tools:layout="@layout/sheet_item_view" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_item"
+        android:name="com.dsatab.fragment.ItemViewFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        class="com.dsatab.fragment.ItemViewFragment"
+        tools:layout="@layout/sheet_item_view" >
+    </fragment>
+
+</android.support.v4.widget.SlidingPaneLayout>

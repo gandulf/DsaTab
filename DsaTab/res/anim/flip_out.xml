@@ -2,9 +2,9 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android">
 
 	<translate android:fromXDelta="0%" android:toXDelta="200%"
-		android:fromYDelta="0%" android:toYDelta="200%" android:duration="1000"
+		android:fromYDelta="0%" android:toYDelta="200%" android:duration="500"
 		android:zAdjustment="top" />
 
 	<rotate android:fromDegrees="0" android:toDegrees="90"
-		android:pivotX="-5%" android:pivotY="25%" android:duration="1000" />
+		android:pivotX="-5%" android:pivotY="25%" android:duration="500" />
 </set>

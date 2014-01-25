@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 
@@ -30,7 +31,6 @@ import com.actionbarsherlock.view.MenuItem;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.ItemEditActivity;
-import com.dsatab.activity.ItemViewActivity;
 import com.dsatab.data.Hero;
 import com.dsatab.data.adapter.ItemCursorAdapter;
 import com.dsatab.data.adapter.ItemTypeAdapter;
@@ -41,13 +41,15 @@ import com.dsatab.xml.DataManager;
 import com.gandulf.guilib.util.DefaultTextWatcher;
 import com.haarman.listviewanimations.view.DynamicListView;
 
-public class ItemChooserFragment extends BaseListFragment implements TabListener {
+public class ItemChooserFragment extends BaseListFragment implements TabListener, OnItemClickListener {
 
 	private ItemCursorAdapter itemAdapter = null;
 
 	private DynamicListView itemList;
 
 	private Collection<ItemType> itemTypes = null;
+
+	private OnItemClickListener itemClickListener;
 
 	protected static final class ItemActionMode implements ActionMode.Callback {
 
@@ -67,7 +69,6 @@ public class ItemChooserFragment extends BaseListFragment implements TabListener
 				return false;
 
 			boolean notifyChanged = false;
-			boolean refill = false;
 
 			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
 			if (checkedPositions != null) {
@@ -82,9 +83,6 @@ public class ItemChooserFragment extends BaseListFragment implements TabListener
 							switch (menuItem.getItemId()) {
 							case R.id.option_edit:
 								ItemEditActivity.edit(fragment.getActivity(), getHero(), item);
-								break;
-							case R.id.option_view:
-								ItemViewActivity.view(fragment.getActivity(), getHero(), item);
 								break;
 							case R.id.option_delete: {
 								DataManager.deleteItem(item);
@@ -105,7 +103,8 @@ public class ItemChooserFragment extends BaseListFragment implements TabListener
 
 		@Override
 		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-			mode.getMenuInflater().inflate(R.menu.item_popupmenu, menu);
+			mode.getMenuInflater().inflate(R.menu.menuitem_edit, menu);
+			mode.getMenuInflater().inflate(R.menu.menuitem_delete, menu);
 			return true;
 		}
 
@@ -140,7 +139,6 @@ public class ItemChooserFragment extends BaseListFragment implements TabListener
 				}
 			}
 
-			menu.findItem(R.id.option_view).setEnabled(selected == 1);
 			menu.findItem(R.id.option_edit).setEnabled(selected == 1);
 
 			return true;
@@ -183,33 +181,16 @@ public class ItemChooserFragment extends BaseListFragment implements TabListener
 			}
 		});
 
-		// ActionBar.Tab tab0 = actionBar.newTab().setText("Gegenstände").setIcon(R.drawable.icon_bags);
-		// ActionBar.Tab tab1 = actionBar.newTab().setText("Waffen").setIcon(R.drawable.icon_sword);
-		// ActionBar.Tab tab2 = actionBar.newTab().setText("Schilde").setIcon(R.drawable.icon_shield);
-		// ActionBar.Tab tab3 = actionBar.newTab().setText("Fernwaffen").setIcon(R.drawable.icon_bow);
-		// ActionBar.Tab tab4 = actionBar.newTab().setText("Rüstung").setIcon(R.drawable.icon_armor);
-		// ActionBar.Tab tab5 = actionBar.newTab().setText("Sonstiges").setIcon(R.drawable.icon_misc);
-		//
-		// tab0.setTag(null);
-		// tab1.setTag(ItemType.Waffen);
-		// tab2.setTag(ItemType.Schilde);
-		// tab3.setTag(ItemType.Fernwaffen);
-		// tab4.setTag(ItemType.Rüstung);
-		// tab5.setTag(ItemType.Sonstiges);
-		//
-		// tab0.setTabListener(this);
-		// tab1.setTabListener(this);
-		// tab2.setTabListener(this);
-		// tab3.setTabListener(this);
-		// tab4.setTabListener(this);
-		// tab5.setTabListener(this);
-		//
-		// actionBar.addTab(tab0);
-		// actionBar.addTab(tab1);
-		// actionBar.addTab(tab2);
-		// actionBar.addTab(tab3);
-		// actionBar.addTab(tab4);
-		// actionBar.addTab(tab5);
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+		if (mMode == null) {
+			itemList.setItemChecked(position, false);
+			itemClickListener.onItemClick(parent, v, position, id);
+		} else {
+			super.onItemClick(parent, v, position, id);
+		}
 
 	}
 
@@ -395,23 +376,12 @@ public class ItemChooserFragment extends BaseListFragment implements TabListener
 		this.itemTypes = itemType;
 	}
 
-	@Override
-	public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-		if (mMode == null) {
-			Item item = getItem(position);
-			ItemViewActivity.view(getActivity(), null, item);
-			itemList.setItemChecked(position, false);
-		} else {
-			super.onItemClick(parent, v, position, id);
-		}
-	}
-
 	public AdapterView.OnItemClickListener getOnItemClickListener() {
-		return itemList.getOnItemClickListener();
+		return itemClickListener;
 	}
 
 	public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
-		itemList.setOnItemClickListener(onItemClickListener);
+		itemClickListener = onItemClickListener;
 	}
 
 }

@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dsatab"
     android:installLocation="auto"
-    android:versionCode="75"
-    android:versionName="4.2" >
+    android:versionCode="76"
+    android:versionName="4.2-beta3" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -57,7 +57,7 @@
             android:name="com.dsatab.activity.DsaTabPreferenceActivity"
             android:label="Einstellungen" />
         <activity
-            android:name="com.dsatab.activity.ItemChooserActivity"
+            android:name="com.dsatab.activity.ItemsActivity"
             android:label="Inventar" />
         <activity
             android:name="com.dsatab.activity.NotesEditActivity"
@@ -116,7 +116,8 @@
         service
             android:name="com.dsatab.common.ExportHeroService"
             android:exported="false" >
-        </service        -->
+        </service
+        -->
 
         <meta-data
             android:name="android.app.default_searchable"

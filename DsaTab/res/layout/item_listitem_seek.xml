@@ -16,8 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/icon_button_size"
         android:layout_marginRight="10dp"
-        android:gravity="center"
-        android:text="@string/label_le" />
+        android:gravity="center" />
 
     <Button
         android:id="@+id/wheel_value"
@@ -32,16 +31,5 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical" />
-
-    <!--
-        <kankan.wheel.widget.WheelView
-            android:id="@+id/wheel"
-            android:layout_width="fill_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_height="@dimen/icon_button_size"
-            guilib:orientation="vertical"
-            guilib:visibleItems="@integer/fight_wheel_items" />
-            
-    -->
 
 </LinearLayout>

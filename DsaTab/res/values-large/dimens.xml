@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>	
-	
-	<integer name="fight_wheel_items">3</integer>
-
-	<dimen name="wound_icon_size">50dp</dimen>	
-	<dimen name="rs_icon_size">50dp</dimen>
-	<dimen name="rs_icon_text_size">14dp</dimen>
-</resources>

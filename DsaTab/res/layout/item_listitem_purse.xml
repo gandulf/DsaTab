@@ -22,15 +22,12 @@
         style="?android:attr/listSeparatorTextViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:text="Header"
+        android:ellipsize="end"        
         android:visibility="gone" />
 
     <TableLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/sp_currency"
+        android:layout_height="wrap_content"             
         android:shrinkColumns="0,1,2,3"
         android:stretchColumns="0,1,2,3" >
 
@@ -45,8 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:gravity="center_horizontal"
-                android:text="Dukaten"
+                android:gravity="center_horizontal"                
                 android:textStyle="bold" >
             </TextView>
 
@@ -57,8 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:gravity="center_horizontal"
-                android:text="Silber"
+                android:gravity="center_horizontal"                
                 android:textStyle="bold" >
             </TextView>
 
@@ -69,8 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:gravity="center_horizontal"
-                android:text="Heller"
+                android:gravity="center_horizontal"                
                 android:textStyle="bold" >
             </TextView>
 
@@ -81,8 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:gravity="center_horizontal"
-                android:text="Kreuzer"
+                android:gravity="center_horizontal"                
                 android:textStyle="bold" >
             </TextView>
         </TableRow>

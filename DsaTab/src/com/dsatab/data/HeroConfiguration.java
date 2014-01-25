@@ -104,7 +104,7 @@ public class HeroConfiguration {
 
 		JSONArray array = null;
 
-		if (version < 74) {
+		if (version < 75) {
 			tabInfos = getDefaultTabs(tabInfos);
 		} else {
 			if (in.has(FIELD_TABS_PORTRAIT)) {
@@ -422,12 +422,13 @@ public class HeroConfiguration {
 
 			TabInfo tabInfo = new TabInfo(CharacterFragment.class, ListableFragment.class,
 					getTabResourceId(CharacterFragment.class), true, false);
-
+			tabInfo.setTitle("Talente");
 			listSettings = (ListSettings) tabInfo.getFilterSettings(1);
 			listSettings.addListItem(new ListItem(ListItemType.Talent));
 			tabInfos.add(tabInfo);
 
 			tabInfo = new TabInfo(ListableFragment.class, ListableFragment.class, R.drawable.tab_magic);
+			tabInfo.setTitle("Zauber und Künste");
 			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
 			listSettings.addListItem(new ListItem(AttributeType.Astralenergie_Aktuell));
 			listSettings.addListItem(new ListItem(ListItemType.Spell));
@@ -436,10 +437,10 @@ public class HeroConfiguration {
 			listSettings.addListItem(new ListItem(ListItemType.Talent, TalentGroupType.Gaben.name()));
 			listSettings.addListItem(new ListItem(ListItemType.Header, "Künste"));
 			listSettings.addListItem(new ListItem(ListItemType.Art));
-			tabInfo.setTitle("Zauber und Künste");
 			tabInfos.add(tabInfo);
 
 			tabInfo = new TabInfo(ListableFragment.class, BodyFragment.class, R.drawable.tab_fight);
+			tabInfo.setTitle("Kampf");
 			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
 			listSettings.addListItem(new ListItem(AttributeType.Lebensenergie_Aktuell));
 			listSettings.addListItem(new ListItem(AttributeType.Ausdauer_Aktuell));
@@ -449,10 +450,12 @@ public class HeroConfiguration {
 			listSettings.addListItem(new ListItem(AttributeType.Ausweichen));
 			listSettings.addListItem(new ListItem(ListItemType.Header, "Modifikatoren"));
 			listSettings.addListItem(new ListItem(ListItemType.Modificator));
-			tabInfo.setTitle("Kampf");
 			tabInfos.add(tabInfo);
 
-			tabInfos.add(new TabInfo(ItemsFragment.class, getTabResourceId(ItemsFragment.class), false, true));
+			tabInfo = new TabInfo(ItemsFragment.class, getTabResourceId(ItemsFragment.class), false, true);
+			tabInfo.setTitle("Notizen");
+			tabInfos.add(tabInfo);
+
 			tabInfo = new TabInfo(ListableFragment.class, ListableFragment.class, R.drawable.tab_notes, false, false);
 			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
 			listSettings.addListItem(new ListItem(ListItemType.Notes));
@@ -460,26 +463,37 @@ public class HeroConfiguration {
 			listSettings.addListItem(new ListItem(ListItemType.Document));
 			listSettings = (ListSettings) tabInfo.getFilterSettings(1);
 			listSettings.addListItem(new ListItem(ListItemType.Purse));
-			tabInfo.setTitle("Notizen");
 			tabInfos.add(tabInfo);
 
-			tabInfos.add(new TabInfo(AnimalFragment.class, getTabResourceId(AnimalFragment.class), true, false));
-			tabInfos.add(new TabInfo(MapFragment.class, getTabResourceId(MapFragment.class), false, false));
-		} else {
-			tabInfos.add(new TabInfo(CharacterFragment.class, getTabResourceId(CharacterFragment.class), true, false));
+			tabInfo = new TabInfo(AnimalFragment.class, getTabResourceId(AnimalFragment.class), true, false);
+			tabInfo.setTitle("Begleiter");
+			tabInfos.add(tabInfo);
 
-			TabInfo tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_talents);
+			tabInfo = new TabInfo(MapFragment.class, getTabResourceId(MapFragment.class), false, false);
+			tabInfo.setTitle("Karten");
+			tabInfos.add(tabInfo);
+		} else {
+
+			TabInfo tabInfo = new TabInfo(CharacterFragment.class, getTabResourceId(CharacterFragment.class), true,
+					false);
+			tabInfo.setTitle("Charakter");
+			tabInfos.add(tabInfo);
+
+			tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_talents);
+			tabInfo.setTitle("Talente");
 			ListSettings listSettings = (ListSettings) tabInfo.getFilterSettings(0);
 			listSettings.addListItem(new ListItem(ListItemType.Talent));
 			tabInfos.add(tabInfo);
 
 			tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_magic);
+			tabInfo.setTitle("Zauber");
 			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
 			listSettings.addListItem(new ListItem(AttributeType.Astralenergie_Aktuell));
 			listSettings.addListItem(new ListItem(ListItemType.Spell));
 			tabInfos.add(tabInfo);
 
 			tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_art);
+			tabInfo.setTitle("Künste");
 			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
 			listSettings.addListItem(new ListItem(AttributeType.Karmaenergie_Aktuell));
 			listSettings.addListItem(new ListItem(ListItemType.Talent, TalentGroupType.Gaben.name()));
@@ -487,9 +501,12 @@ public class HeroConfiguration {
 			listSettings.addListItem(new ListItem(ListItemType.Art));
 			tabInfos.add(tabInfo);
 
-			tabInfos.add(new TabInfo(BodyFragment.class, getTabResourceId(BodyFragment.class)));
+			tabInfo = new TabInfo(BodyFragment.class, getTabResourceId(BodyFragment.class));
+			tabInfo.setTitle("Wunden");
+			tabInfos.add(tabInfo);
 
 			tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_fight);
+			tabInfo.setTitle("Kampf");
 			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
 			listSettings.addListItem(new ListItem(AttributeType.Lebensenergie_Aktuell));
 			listSettings.addListItem(new ListItem(AttributeType.Ausdauer_Aktuell));
@@ -501,20 +518,27 @@ public class HeroConfiguration {
 			listSettings.addListItem(new ListItem(ListItemType.Modificator));
 			tabInfos.add(tabInfo);
 
-			tabInfos.add(new TabInfo(ItemsFragment.class, getTabResourceId(ItemsFragment.class), false, true));
+			tabInfo = new TabInfo(ItemsFragment.class, getTabResourceId(ItemsFragment.class), false, true);
+			tabInfo.setTitle("Gegenstände");
+			tabInfos.add(tabInfo);
 
 			tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_notes, false, false);
+			tabInfo.setTitle("Notizen");
 			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
 			listSettings.addListItem(new ListItem(ListItemType.Notes));
 			listSettings.addListItem(new ListItem(ListItemType.Header, "Dokumente"));
 			listSettings.addListItem(new ListItem(ListItemType.Document));
 			listSettings.addListItem(new ListItem(ListItemType.Header, "Geldbörse"));
 			listSettings.addListItem(new ListItem(ListItemType.Purse));
-			tabInfo.setTitle("Notizen");
+			tabInfos.add(tabInfo);
 
-			tabInfos.add(new TabInfo(AnimalFragment.class, getTabResourceId(AnimalFragment.class), true, false));
+			tabInfo = new TabInfo(AnimalFragment.class, getTabResourceId(AnimalFragment.class), true, false);
+			tabInfo.setTitle("Begleiter");
+			tabInfos.add(tabInfo);
 
-			tabInfos.add(new TabInfo(MapFragment.class, getTabResourceId(MapFragment.class), false, false));
+			tabInfo = new TabInfo(MapFragment.class, getTabResourceId(MapFragment.class), false, false);
+			tabInfo.setTitle("Karten");
+			tabInfos.add(tabInfo);
 		}
 
 		return tabInfos;

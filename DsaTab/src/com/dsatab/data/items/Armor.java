@@ -62,6 +62,11 @@ public class Armor extends ItemSpecification {
 		super(item, ItemType.Rüstung, 0);
 	}
 
+	@Override
+	public int getId() {
+		return id;
+	}
+
 	public float getTotalBe() {
 		return totalBe;
 	}
@@ -212,4 +217,5 @@ public class Armor extends ItemSpecification {
 			return R.drawable.icon_armor;
 		}
 	}
+
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -55,8 +56,7 @@ public class BodyLayout extends FrameLayout {
 	private int rsWidthMeasureSpec, rsHeightMeasureSpec;
 	private int woundWidthMeasureSpec, woundHeightMeasureSpec;
 
-	private int woundSize;
-	private int rsSize, rsTextSize;
+	private int woundHeight;
 
 	private Map<ArmorPosition, TextView> armorButtons = new HashMap<ArmorPosition, TextView>(
 			ArmorPosition.values().length);
@@ -180,15 +180,11 @@ public class BodyLayout extends FrameLayout {
 
 	protected void init() {
 
-		woundSize = getResources().getDimensionPixelSize(R.dimen.wound_icon_size);
-		rsSize = getResources().getDimensionPixelSize(R.dimen.rs_icon_size);
-		rsTextSize = getResources().getDimensionPixelSize(R.dimen.rs_icon_text_size);
+		rsWidthMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+		rsHeightMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
 
-		rsWidthMeasureSpec = MeasureSpec.makeMeasureSpec(rsSize, MeasureSpec.EXACTLY);
-		rsHeightMeasureSpec = MeasureSpec.makeMeasureSpec(rsSize, MeasureSpec.EXACTLY);
-
-		woundWidthMeasureSpec = MeasureSpec.makeMeasureSpec(woundSize, MeasureSpec.EXACTLY);
-		woundHeightMeasureSpec = MeasureSpec.makeMeasureSpec(woundSize, MeasureSpec.EXACTLY);
+		woundWidthMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+		woundHeightMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
 	}
 
 	public OnLongClickListener getOnArmorLongClickListener() {
@@ -231,13 +227,11 @@ public class BodyLayout extends FrameLayout {
 
 	protected ImageButton addWoundButton(WoundAttribute attr) {
 		ImageButton woundButton = new ImageButton(getContext());
-		woundButton.setPadding(5, 5, 5, 5);
 		woundButton.setTag(attr);
 		woundButton.setBackgroundResource(R.drawable.icon_wound_btn);
 		woundButton.setOnClickListener(onWoundClickListener);
 
-		addView(woundButton, new LayoutParams(woundSize, woundSize, attr.getPosition()));
-
+		addView(woundButton, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, attr.getPosition()));
 		return woundButton;
 	}
 
@@ -248,13 +242,15 @@ public class BodyLayout extends FrameLayout {
 		rsText.setOnClickListener(onArmorClickListener);
 		rsText.setOnLongClickListener(onArmorLongClickListener);
 		rsText.setGravity(Gravity.CENTER);
-		rsText.setTextSize(rsTextSize);
 		rsText.setTextColor(getResources().getColor(android.R.color.primary_text_light));
-		rsText.setMinimumWidth(rsSize);
-		rsText.setMinimumHeight(rsSize);
-		addView(rsText, new LayoutParams(rsSize, rsSize, pos));
+
+		addView(rsText, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, pos));
 
 		armorButtons.put(pos, rsText);
+
+		rsText.measure(rsWidthMeasureSpec, rsHeightMeasureSpec);
+
+		rsText.setTextSize(TypedValue.COMPLEX_UNIT_PX, rsText.getMeasuredHeight() / 1.7f);
 
 		return rsText;
 	}
@@ -268,6 +264,7 @@ public class BodyLayout extends FrameLayout {
 			// wound
 			if (child instanceof ImageButton) {
 				child.measure(woundWidthMeasureSpec, woundHeightMeasureSpec);
+				woundHeight = child.getMeasuredHeight();
 			} else if (child instanceof TextView) // armorbutton
 				child.measure(rsWidthMeasureSpec, rsHeightMeasureSpec);
 		}
@@ -440,49 +437,49 @@ public class BodyLayout extends FrameLayout {
 						case Kopf:
 							cl = (int) (width * OFFSET_HEAD_X) - (child.getMeasuredWidth() / 2);
 							cr = cl + child.getMeasuredWidth();
-							ct = (int) (height * (OFFSET_HEAD_Y) + woundSize);
+							ct = (int) (height * (OFFSET_HEAD_Y) + woundHeight);
 							cb = ct + child.getMeasuredHeight();
 							break;
 						case Bauch:
 							cl = (int) (width * OFFSET_STOMACH_X) - (child.getMeasuredWidth() / 2);
 							cr = cl + child.getMeasuredWidth();
-							ct = (int) (height * (OFFSET_STOMACH_Y) + woundSize);
+							ct = (int) (height * (OFFSET_STOMACH_Y) + woundHeight);
 							cb = ct + child.getMeasuredHeight();
 							break;
 						case Brust:
 							cl = (int) (width * OFFSET_CHEST_X) - (child.getMeasuredWidth() / 2);
 							cr = cl + child.getMeasuredWidth();
-							ct = (int) (height * (OFFSET_CHEST_Y) + woundSize);
+							ct = (int) (height * (OFFSET_CHEST_Y) + woundHeight);
 							cb = ct + child.getMeasuredHeight();
 							break;
 						case Ruecken:
 							cl = (int) (width * OFFSET_BACK_X) - (child.getMeasuredWidth() / 2);
 							cr = cl + child.getMeasuredWidth();
-							ct = (int) (height * (OFFSET_BACK_Y) + woundSize);
+							ct = (int) (height * (OFFSET_BACK_Y) + woundHeight);
 							cb = ct + child.getMeasuredHeight();
 							break;
 						case LinkerArm:
 							cl = (int) (width * OFFSET_LEFT_ARM_X) - (child.getMeasuredWidth() / 2);
 							cr = cl + child.getMeasuredWidth();
-							ct = (int) (height * (OFFSET_LEFT_ARM_Y) + woundSize);
+							ct = (int) (height * (OFFSET_LEFT_ARM_Y) + woundHeight);
 							cb = ct + child.getMeasuredHeight();
 							break;
 						case RechterArm:
 							cl = (int) (width * OFFSET_RIGHT_ARM_X) - (child.getMeasuredWidth() / 2);
 							cr = cl + child.getMeasuredWidth();
-							ct = (int) (height * (OFFSET_RIGHT_ARM_Y) + woundSize);
+							ct = (int) (height * (OFFSET_RIGHT_ARM_Y) + woundHeight);
 							cb = ct + child.getMeasuredHeight();
 							break;
 						case LinkesBein:
 							cl = (int) (width * OFFSET_UPPER_LEG_X) - (child.getMeasuredWidth() / 2);
 							cr = cl + child.getMeasuredWidth();
-							ct = (int) (height * (OFFSET_UPPER_LEG_Y) + woundSize);
+							ct = (int) (height * (OFFSET_UPPER_LEG_Y) + woundHeight);
 							cb = ct + child.getMeasuredHeight();
 							break;
 						case RechtesBein:
 							cl = (int) (width * OFFSET_LOWER_LEG_X) - (child.getMeasuredWidth() / 2);
 							cr = cl + child.getMeasuredWidth();
-							ct = (int) (height * (OFFSET_LOWER_LEG_Y) + woundSize);
+							ct = (int) (height * (OFFSET_LOWER_LEG_Y) + woundHeight);
 							cb = ct + child.getMeasuredHeight();
 							break;
 						default:

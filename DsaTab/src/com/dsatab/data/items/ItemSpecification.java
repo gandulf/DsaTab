@@ -44,6 +44,8 @@ public abstract class ItemSpecification implements Cloneable, Serializable {
 		this.item = item;
 	}
 
+	public abstract int getId();
+
 	public abstract String getInfo();
 
 	public abstract String getName();
@@ -78,5 +80,30 @@ public abstract class ItemSpecification implements Cloneable, Serializable {
 	@Override
 	protected ItemSpecification clone() throws CloneNotSupportedException {
 		return (ItemSpecification) super.clone();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof ItemSpecification)) {
+			return false; // different class
+		}
+
+		if (!getClass().equals(obj.getClass())) {
+			return false; // different sub class
+		}
+
+		ItemSpecification other = (ItemSpecification) obj;
+
+		if (this.getId() == other.getId()) {
+			return true;
+		}
+
+		return super.equals(obj);
 	}
 }

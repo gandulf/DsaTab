@@ -11,7 +11,6 @@ import java.util.List;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -26,7 +25,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -127,7 +125,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 
 		@Override
 		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-			mode.getMenuInflater().inflate(R.menu.herochooser_menu, menu);
+			mode.getMenuInflater().inflate(R.menu.herochooser_popupmenu, menu);
 			mode.setTitle("Helden");
 			return true;
 		}
@@ -214,8 +212,6 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 		getSupportActionBar().setDisplayShowHomeEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-		List<HeroFileInfo> heroes = null;
-
 		String error = Util.checkFileWriteAccess(DsaTabApplication.getDsaTabHeroDirectory());
 		if (error != null) {
 			Toast.makeText(this, error, Toast.LENGTH_LONG).show();
@@ -255,24 +251,25 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 				}
 			}
 
-		} else {
-			heroes = DsaTabApplication.getInstance().getHeroes();
-
-			if (heroes.size() == 1 && heroes.get(0).getName().equals(DUMMY_NAME))
-				dummy = true;
 		}
-
-		if (heroes == null)
-			heroes = DsaTabApplication.getInstance().getHeroes();
 
 		list = (GridViewCompat) findViewById(R.id.popup_hero_chooser_list);
 		list.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
-		adapter = new HeroAdapter(this, R.layout.hero_chooser_item, heroes);
-		list.setAdapter(adapter);
+
 		list.setOnItemClickListener(this);
 		list.setOnItemLongClickListener(this);
 
+		loadData();
 		updateViews();
+	}
+
+	protected void loadData() {
+		List<HeroFileInfo> heroes = DsaTabApplication.getInstance().getHeroes();
+		if (heroes.size() == 1 && heroes.get(0).getName().equals(DUMMY_NAME))
+			dummy = true;
+
+		adapter = new HeroAdapter(this, R.layout.hero_chooser_item, heroes);
+		list.setAdapter(adapter);
 
 	}
 
@@ -333,20 +330,11 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.actionbarsherlock.app.SherlockActivity#onCreateOptionsMenu(com. actionbarsherlock.view.Menu)
+	 * @see com.actionbarsherlock.app.SherlockActivity#onCreateOptionsMenu(com.actionbarsherlock.view.Menu)
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
-
-		com.actionbarsherlock.view.MenuItem item = menu.add(Menu.NONE, R.id.option_hero_import, Menu.NONE,
-				"Aus Heldenaustausch importieren");
-		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
-		item.setIcon(R.drawable.ic_menu_account_list);
-
-		item = menu.add(Menu.NONE, R.id.option_settings, Menu.NONE, "Einstellungen");
-		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-		item.setIcon(R.drawable.ic_menu_preferences);
-
+		getSupportMenuInflater().inflate(R.menu.herochooser_menu, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -354,6 +342,13 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 	public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
 
 		switch (item.getItemId()) {
+		case R.id.option_refresh:
+			loadData();
+			updateViews();
+			return true;
+		case R.id.option_items:
+			startActivity(new Intent(this, ItemsActivity.class));
+			return true;
 		case R.id.option_hero_import:
 
 			HeroExchange exchange = new HeroExchange(this);
@@ -534,7 +529,6 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 			if (mMode == null) {
 				if (mCallback != null) {
 					mMode = startActionMode(mCallback);
-					customizeActionModeCloseButton();
 					mMode.invalidate();
 				} else {
 					return false;
@@ -548,23 +542,6 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 			}
 		}
 		return true;
-	}
-
-	protected void customizeActionModeCloseButton() {
-		int buttonId = Resources.getSystem().getIdentifier("action_mode_close_button", "id", "android");
-		View v = findViewById(buttonId);
-		if (v == null) {
-			buttonId = R.id.abs__action_mode_close_button;
-			v = findViewById(buttonId);
-		}
-		if (v == null)
-			return;
-		LinearLayout ll = (LinearLayout) v;
-		if (ll.getChildCount() > 1 && ll.getChildAt(1) != null) {
-			TextView tv = (TextView) ll.getChildAt(1);
-			tv.setTextColor(getResources().getColor(android.R.color.white));
-			tv.setBackgroundResource(Util.getThemeResourceId(this, R.attr.actionBarItemBackground));
-		}
 	}
 
 }

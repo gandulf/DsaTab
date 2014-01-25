@@ -33,6 +33,11 @@ public class Shield extends CloseCombatItem {
 		super(item, ItemType.Schilde, 0);
 	}
 
+	@Override
+	public int getId() {
+		return id;
+	}
+
 	public boolean isShield() {
 		return shield;
 	}

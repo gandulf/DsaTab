@@ -101,7 +101,7 @@
         <item name="iconImageViewStyle">@style/Widget.IconImageView</item>        
         <item name="listItemBackground">@drawable/list_background_holo_dark</item>
         <item name="listShadowBackground">@drawable/dsa_listshadow_bg_dark</item>                
-        <item name="selectableBackground">@drawable/list_selector_holo_dark</item>
+        <item name="selectableBackground">@drawable/_list_selector_holo_dark</item>
         <item name="imgDividerVertical">@drawable/divider_vertical_holo_dark</item>
         <item name="flipImageViewStyle">@style/FlipImageView.Checked</item>
         <item name="numberPickerStyle">@style/NPWidget.Holo.NumberPicker</item>

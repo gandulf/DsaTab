@@ -7,7 +7,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:baselineAligned="false"
-    android:padding="@dimen/page_margin" >
+    android:padding="@dimen/default_gap" >
 
         <include
             android:layout_width="match_parent"

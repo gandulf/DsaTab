@@ -3,20 +3,20 @@
     android:id="@+id/popup_edit_layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="4dip" >
+    android:padding="@dimen/default_gap" >
 
     <CheckBox
         android:id="@+id/popup_edit_be_calculation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="BE automatisch berechnen" >
+        android:text="@string/label_auto_calculate_be" >
     </CheckBox>
 
     <net.simonvt.numberpicker.NumberPicker
         android:id="@+id/popup_edit_text"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="true"
         android:layout_below="@+id/popup_edit_be_calculation" />
 

@@ -34,10 +34,4 @@
             android:summaryOff="Es wird ein neutraler Würfelsound abgespielt."
             android:summaryOn="Es wird je nach Ergebnis der Probe ein anderer Sound abgespielt."
             android:title="Würfelgeräusch abhängig vom Ergebnis" />
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="probeShowModificators"
-            android:summaryOff="Die Liste wird nur auf Wunsch als Popup angezeigt"
-            android:summaryOn="Die Liste der Modifikatoren wird immer angezeigt"
-            android:title="Modifikatoren immer anzeigen" />
 </PreferenceScreen>

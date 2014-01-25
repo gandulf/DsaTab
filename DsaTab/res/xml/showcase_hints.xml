@@ -29,9 +29,9 @@
     <fragment name="DiceSlider">
         <hint
             id="PROBE_MANUAL_MODIFIER"
-            description="Wird eine Probe durch den Spielleiter noch zusätzlich erschwert oder erleichtert, kannst du dies beim Probenwurf nachträglich anpassen. Klicke hierzu auf die Infozeile, es erscheint dann ein Popup in dem sämtliche Modifikatoren der Probe aufgelistet werden und du eine manuelle Erschwernis hinzufügen kannst."
+            description="Wird eine Probe durch den Spielleiter noch zusätzlich erschwert oder erleichtert, kannst du dies beim Probenwurf nachträglich anpassen. Klicke hierzu auf die Infozeile, es werden dann sämtliche Modifikatoren der Probe aufgelistet und du kannst eine manuelle Erschwernis hinzufügen."
             title="Zusätzliche Probenzuschläge"
-            viewId="@id/dice_info"/>        
+            viewId="@id/details_switch"/>        
     </fragment>
     
     <fragment name="TabEditActivity">

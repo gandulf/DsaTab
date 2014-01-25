@@ -26,7 +26,7 @@
         auto:layout_column="1"
         auto:layout_gravity="bottom|fill_horizontal"
         auto:layout_row="0"
-        android:hint="Name"
+        android:hint="@string/label_name"
         android:inputType="text" >
 
         <requestFocus />
@@ -40,7 +40,7 @@
         auto:layout_columnSpan="2"
         auto:layout_gravity="start|end"
         auto:layout_row="3"
-        android:hint="Titel"
+        android:hint="@string/label_titel"
         android:inputType="text" />
 
     <LinearLayout
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             auto:layout_gravity="right|fill_horizontal"
-            android:hint="Preis"
+            android:hint="@string/label_price"
             android:inputType="number" />
 
         <TextView
@@ -65,7 +65,7 @@
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
             auto:layout_gravity="left|center_vertical"
-            android:text="Kreuzer"
+            android:text="@string/label_kreuzer"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <EditText
@@ -75,7 +75,7 @@
             android:layout_marginLeft="4dp"
             android:layout_weight="1"
             auto:layout_gravity="right|fill_horizontal"
-            android:hint="Gewicht"
+            android:hint="@string/label_weight"
             android:inputType="number" />
 
         <TextView
@@ -84,7 +84,7 @@
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
             auto:layout_gravity="right|center_vertical"
-            android:text="Unzen"
+            android:text="@string/label_ounces"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </LinearLayout>
 
@@ -97,7 +97,7 @@
         auto:layout_columnSpan="2"
         auto:layout_gravity="start|end"
         auto:layout_row="8"
-        android:text="Kategorie" />
+        android:text="@string/label_category" />
 
     <Spinner
         android:id="@+id/popup_edit_category"
@@ -115,7 +115,7 @@
         auto:layout_columnSpan="2"
         auto:layout_gravity="left"
         auto:layout_row="10"
-        android:text="Name über dem Bild anzeigen" />
+        android:text="@string/display_name_above_image" />
 
     <android.support.v7.widget.Space
         android:id="@+id/space1"

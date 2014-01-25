@@ -4,32 +4,18 @@
     <dimen name="tab_host_default_height">48dp</dimen>
 	
 	<!--  margin of the tab pages -->
-	<dimen name="page_margin">4dp</dimen>
-
-	<integer name="dices_font_size">15</integer>
-	<integer name="fight_wheel_items">3</integer>
+	<dimen name="default_gap">4dp</dimen>
 	
-	<dimen name="portrait_height_small">60dp</dimen>
-	<dimen name="portrait_width_small">60dp</dimen>
+	<dimen name="portrait_height_small">100dp</dimen>
+	<dimen name="portrait_width_small">100dp</dimen>
 	
-	<dimen name="icon_button_size">48dp</dimen>
+	<dimen name="icon_button_size">56dp</dimen>
 	
-	<dimen name="dice_size">72dp</dimen>	
-	
+	<dimen name="dice_size">72dp</dimen>
 	<dimen name="dices_size">48dp</dimen>
-	<dimen name="dices_padding">2.5dp</dimen>
 	
-	<dimen name="wound_icon_size">30dp</dimen>	
-	<dimen name="rs_icon_size">30dp</dimen>
-	<dimen name="rs_icon_text_size">11dp</dimen>
-	
-	<dimen name="gallery_thumb_width">80dp</dimen>
-	<dimen name="gallery_thumb_height">120dp</dimen>
-	
-	<dimen name="card_text_padding">20dp</dimen>
-	
-	<dimen name="workspace_cell_width">100dip</dimen>
-    <dimen name="workspace_cell_height">150dip</dimen>
+	<dimen name="workspace_cell_width">120dip</dimen>
+    <dimen name="workspace_cell_height">180dip</dimen>
     <dimen name="workspace_cell_horizontal_padding">4dip</dimen>
     <dimen name="workspace_cell_vertical_padding">6dip</dimen>
         

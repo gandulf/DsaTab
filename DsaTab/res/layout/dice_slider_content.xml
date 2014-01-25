@@ -3,36 +3,45 @@
     android:id="@+id/contentLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:clickable="true"
     android:gravity="center|top"
     android:orientation="vertical"
-    android:paddingBottom="2.5dip"
-    android:paddingTop="10dip" >
+    android:paddingBottom="@dimen/default_gap"
+    android:paddingLeft="@dimen/default_gap"
+    android:paddingRight="@dimen/default_gap"
+    
+    android:paddingTop="8dip" 
+    android:clickable="true">
 
     <TextView
         android:id="@+id/dice_talent"
-        style="@style/TextLabel.Inverse"
+        style="@style/TextLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:gravity="center_horizontal"
-        android:singleLine="true"
-        android:text="Schleichen" >
+        android:singleLine="true" >
     </TextView>
 
-    <ViewStub
-        android:id="@+id/modifier_container_stub"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_gravity="center_horizontal"
-        android:inflatedId="@+id/modifier_container"
-        android:layout="@layout/popup_probe_info" >
-    </ViewStub>
+    <ScrollView
+        android:id="@+id/probe_modifier"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <LinearLayout
+            android:id="@+id/probe_modifier_container"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/default_gap" >
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/dice_info_layout"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_gap"
         android:gravity="center"
         android:orientation="horizontal" >
 
@@ -43,93 +52,92 @@
             android:gravity="center"
             android:shrinkColumns="0" >
 
-            <TableRow                
+            <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
 
                 <TextView
                     android:id="@+id/dice_taw"
-                    style="@style/TextLabel.Small.Inverse"
+                    style="@style/TextLabel.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:paddingRight="2.5dip"
-                    android:text="TaW" >
+                    android:paddingRight="@dimen/default_gap"
+                    android:text="@string/label_taw_short" >
                 </TextView>
 
                 <TextView
                     android:id="@+id/dice_probe"
-                    style="@style/TextLabel.Small.Inverse"
+                    style="@style/TextLabel.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="(KK/KO/IN)" >
+                    android:gravity="center_horizontal">
                 </TextView>
 
                 <TextView
                     android:id="@+id/dice_effect"
-                    style="@style/TextLabel.Small.Inverse"
+                    style="@style/TextLabel.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dip"
+                    android:layout_marginLeft="@dimen/default_gap"
                     android:gravity="center_horizontal"
-                    android:text="TaP*" >
+                    android:text="@string/label_tap_short" >
                 </TextView>
             </TableRow>
 
-            <TableRow                
+            <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
 
                 <TextView
                     android:id="@+id/dice_talent_value"
-                    style="@style/TextValue.NoTouch.Inverse"
+                    style="@style/TextValue.NoTouch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:paddingLeft="2.5dp"
-                    android:paddingRight="2.5dp"
-                    android:text="5"
+                    android:paddingLeft="@dimen/default_gap"
+                    android:paddingRight="@dimen/default_gap"                    
                     android:textStyle="bold" >
                 </TextView>
 
                 <TextView
                     android:id="@+id/dice_value"
-                    style="@style/TextValue.NoTouch.Inverse"
+                    style="@style/TextValue.NoTouch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="13/15/9"
+                    android:gravity="center_horizontal"                    
                     android:textStyle="bold" >
                 </TextView>
 
                 <TextView
                     android:id="@+id/dice_effect_value"
-                    style="@style/TextValue.NoTouch.Inverse"
+                    style="@style/TextValue.NoTouch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:gravity="center_horizontal"
-                    android:text="5" >
+                    android:layout_marginLeft="@dimen/default_gap"
+                    android:gravity="center_horizontal">
                 </TextView>
             </TableRow>
         </TableLayout>
-
+        
         <ImageButton
-            android:id="@+id/dice_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:scaleType="fitCenter"
-            android:src="?attr/imgBarInfo" >
-        </ImageButton>
+             android:id="@+id/details_switch"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="top|right"
+             android:layout_marginBottom="@dimen/default_gap"
+             android:layout_marginRight="@dimen/default_gap"
+             android:background="@null"
+             android:contentDescription="@string/label_misc_modifications"
+             android:src="?attr/imgExpanderClose" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/dice_dices"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="@dimen/default_gap"
+        android:layout_marginTop="@dimen/default_gap"
         android:gravity="center_horizontal" >
 
         <ImageView
@@ -137,7 +145,7 @@
             android:layout_width="@dimen/dice_size"
             android:layout_height="@dimen/dice_size"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="5dip"
+            android:layout_marginRight="@dimen/default_gap"
             android:scaleType="fitCenter"
             android:soundEffectsEnabled="false"
             android:src="@drawable/w20" >
@@ -148,7 +156,7 @@
             android:layout_width="@dimen/dice_size"
             android:layout_height="@dimen/dice_size"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dip"
+            android:layout_marginLeft="@dimen/default_gap"
             android:scaleType="fitCenter"
             android:soundEffectsEnabled="false"
             android:src="@drawable/w6_6" >
@@ -159,8 +167,8 @@
             android:layout_width="@dimen/dice_size"
             android:layout_height="@dimen/dice_size"
             android:layout_gravity="center_vertical"
-            android:gravity="center"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="@dimen/default_gap"
+            android:gravity="center"            
             android:src="?attr/imgBarPlay" />
     </LinearLayout>
 
@@ -169,7 +177,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginTop="10dip"
+        android:layout_marginTop="@dimen/default_gap"
         android:minHeight="@dimen/dices_size"
         android:orientation="horizontal" >
     </LinearLayout>
