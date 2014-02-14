@@ -1,5 +1,6 @@
 package com.dsatab.data;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.EnumMap;
 import java.util.HashSet;
@@ -23,8 +24,8 @@ import com.dsatab.data.enums.TalentGroupType;
 import com.dsatab.data.enums.TalentType;
 import com.dsatab.data.modifier.Modificator;
 import com.dsatab.util.Debug;
-import com.dsatab.util.Util;
 import com.dsatab.view.listener.HeroChangedListener;
+import com.squareup.picasso.Picasso;
 
 public abstract class AbstractBeing {
 	private String name;
@@ -36,7 +37,6 @@ public abstract class AbstractBeing {
 	private Map<AttributeType, Attribute> attributes;
 	private Map<FeatureType, Feature> featuresByType;
 	private Map<String, Art> artsByName;
-	private Map<FeatureType, Art> artsByType;
 
 	private Map<TalentGroupType, TalentGroup> talentGroups;
 	private Map<TalentType, Talent> talentByType;
@@ -50,7 +50,6 @@ public abstract class AbstractBeing {
 		this.attributes = new EnumMap<AttributeType, Attribute>(AttributeType.class);
 
 		this.artsByName = new TreeMap<String, Art>();
-		this.artsByType = new EnumMap<FeatureType, Art>(FeatureType.class);
 
 		this.talentGroups = new EnumMap<TalentGroupType, TalentGroup>(TalentGroupType.class);
 		this.talentByType = new EnumMap<TalentType, Talent>(TalentType.class);
@@ -95,6 +94,7 @@ public abstract class AbstractBeing {
 		return portraitUri;
 	}
 
+	@SuppressWarnings("deprecation")
 	public Bitmap getPortrait() {
 		Bitmap portraitBitmap = null;
 		if (getPortraitUri() != null) {
@@ -102,7 +102,13 @@ public abstract class AbstractBeing {
 			WindowManager wm = (WindowManager) DsaTabApplication.getInstance().getSystemService(Context.WINDOW_SERVICE);
 			Display display = wm.getDefaultDisplay();
 
-			portraitBitmap = Util.decodeBitmap(getPortraitUri(), display.getWidth());
+			try {
+				portraitBitmap = Picasso.with(DsaTabApplication.getInstance().getApplicationContext())
+						.load(getPortraitUri()).resize(display.getWidth(), display.getHeight()).get();
+			} catch (IOException e) {
+				Debug.error(e);
+				return null;
+			}
 		}
 		return portraitBitmap;
 	}
@@ -232,10 +238,6 @@ public abstract class AbstractBeing {
 		return artsByName.get(name);
 	}
 
-	public Art getArt(FeatureType type) {
-		return artsByType.get(type);
-	}
-
 	public Map<String, Art> getArts() {
 		return artsByName;
 	}
@@ -245,9 +247,6 @@ public abstract class AbstractBeing {
 	 */
 	public void addArt(Art art) {
 		artsByName.put(art.getName(), art);
-		if (art.getType() != null) {
-			artsByType.put(art.getType(), art);
-		}
 	}
 
 	public Talent getTalent(TalentType talentName) {

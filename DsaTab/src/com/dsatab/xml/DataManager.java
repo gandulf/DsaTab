@@ -59,8 +59,8 @@ import com.j256.ormlite.support.DatabaseConnection;
  */
 public class DataManager {
 
-	private static SelectArg artNameArg, artGradeArg;
-	private static PreparedQuery<ArtInfo> artNameQuery, artNameGradeQuery;
+	private static SelectArg artNameArg, artGradeArg, artNameLikeArg;
+	private static PreparedQuery<ArtInfo> artNameQuery, artNameGradeQuery, artNameLikeQuery, artNameGradeLikeQuery;
 
 	private static SelectArg spellNameArg;
 	private static PreparedQuery<SpellInfo> spellNameQuery;
@@ -74,18 +74,33 @@ public class DataManager {
 
 	private static void initArtQueries() {
 		try {
-			if (artNameArg == null || artNameQuery == null) {
+			if (artNameArg == null)
 				artNameArg = new SelectArg();
+			if (artGradeArg == null)
+				artGradeArg = new SelectArg();
+			if (artNameLikeArg == null)
+				artNameLikeArg = new SelectArg();
+
+			if (artNameQuery == null) {
 				artNameQuery = DsaTabApplication.getInstance().getDBHelper().getRuntimeDao(ArtInfo.class)
 						.queryBuilder().where().eq("name", artNameArg).prepare();
 			}
 
-			if (artGradeArg == null || artNameArg == null || artNameQuery == null) {
-				artGradeArg = new SelectArg();
-
+			if (artNameGradeQuery == null) {
 				artNameGradeQuery = DsaTabApplication.getInstance().getDBHelper().getRuntimeDao(ArtInfo.class)
 						.queryBuilder().where().eq("name", artNameArg).and().eq("grade", artGradeArg).prepare();
 			}
+
+			if (artNameLikeQuery == null) {
+				artNameLikeQuery = DsaTabApplication.getInstance().getDBHelper().getRuntimeDao(ArtInfo.class)
+						.queryBuilder().where().like("name", artNameLikeArg).prepare();
+			}
+
+			if (artNameGradeLikeQuery == null) {
+				artNameGradeLikeQuery = DsaTabApplication.getInstance().getDBHelper().getRuntimeDao(ArtInfo.class)
+						.queryBuilder().where().like("name", artNameLikeArg).and().eq("grade", artGradeArg).prepare();
+			}
+
 		} catch (SQLException e) {
 			Debug.error(e);
 
@@ -257,9 +272,13 @@ public class DataManager {
 	}
 
 	public static Item getItemById(UUID itemId) {
-		RuntimeExceptionDao<Item, UUID> itemDao = DsaTabApplication.getInstance().getDBHelper().getItemDao();
-		Item item = itemDao.queryForId(itemId);
-		return item;
+		if (itemId != null) {
+			RuntimeExceptionDao<Item, UUID> itemDao = DsaTabApplication.getInstance().getDBHelper().getItemDao();
+			Item item = itemDao.queryForId(itemId);
+			return item;
+		} else {
+			return null;
+		}
 	}
 
 	public static SpellInfo getSpellByName(String name) {
@@ -275,6 +294,13 @@ public class DataManager {
 		return DsaTabApplication.getInstance().getDBHelper().getRuntimeDao(ArtInfo.class).queryForFirst(artNameQuery);
 	}
 
+	public static ArtInfo getArtLikeName(String name) {
+		initArtQueries();
+		artNameLikeArg.setValue("%" + name);
+		return DsaTabApplication.getInstance().getDBHelper().getRuntimeDao(ArtInfo.class)
+				.queryForFirst(artNameLikeQuery);
+	}
+
 	public static ArtInfo getArtByNameAndGrade(String name, String grade) {
 		initArtQueries();
 		artGradeArg.setValue(grade);
@@ -286,6 +312,24 @@ public class DataManager {
 		// if we find no art with grade, try without
 		if (info == null) {
 			info = getArtByName(name);
+			if (info != null)
+				Debug.warning("Art with grade could not be found using the one without grade: " + name);
+		}
+
+		return info;
+	}
+
+	public static ArtInfo getArtLikeNameAndGrade(String name, String grade) {
+		initArtQueries();
+		artGradeArg.setValue(grade);
+		artNameLikeArg.setValue(name);
+
+		ArtInfo info = DsaTabApplication.getInstance().getDBHelper().getRuntimeDao(ArtInfo.class)
+				.queryForFirst(artNameGradeLikeQuery);
+
+		// if we find no art with grade, try without
+		if (info == null) {
+			info = getArtLikeName(name);
 			if (info != null)
 				Debug.warning("Art with grade could not be found using the one without grade: " + name);
 		}

@@ -119,7 +119,7 @@ public class AnimalFragment extends BaseAttributesFragment implements OnClickLis
 		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
 			if (getAnimal() != null) {
 				mode.getMenuInflater().inflate(R.menu.portrait_popupmenu, menu);
-				mode.setTitle("Portrait");
+				mode.setTitle(R.string.portrait);
 				mode.setSubtitle(null);
 				if (getAnimal().getPortrait() == null) {
 					menu.findItem(R.id.option_view_portrait).setVisible(false);
@@ -161,12 +161,12 @@ public class AnimalFragment extends BaseAttributesFragment implements OnClickLis
 		super.onCreateOptionsMenu(menu, inflater);
 
 		if (getHero().getAnimals().size() > 1) {
-			SubMenu subMenu = menu.addSubMenu(Menu.NONE, ANIMAL_MENU_ID, 0, "Tier auswählen");
+			SubMenu subMenu = menu.addSubMenu(Menu.NONE, ANIMAL_MENU_ID, 0, R.string.choose_animal);
 			subMenu.getItem().setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 			subMenu.setIcon(Util.getThemeResourceId(getActivity(), R.attr.imgBarSet));
 			for (int i = 0; i < getHero().getAnimals().size(); i++) {
 				Animal animal = getHero().getAnimals().get(i);
-				MenuItem animalItem = subMenu.add(ANIMAL_GROUP_ID, i, i, animal.getTitle());
+				subMenu.add(ANIMAL_GROUP_ID, i, i, animal.getTitle());
 			}
 			subMenu.setGroupCheckable(ANIMAL_GROUP_ID, true, true);
 		}
@@ -290,6 +290,7 @@ public class AnimalFragment extends BaseAttributesFragment implements OnClickLis
 
 		fillAttributeLabel((View) tfLabelMR.getParent(), AttributeType.Magieresistenz);
 		fillAttributeLabel((View) tfLabelLO.getParent(), AttributeType.Loyalität);
+		fillAttributeLabel((View) tfLabelRS.getParent(), AttributeType.Rüstungsschutz);
 
 		fillAttributeLabel(tfLabelINI, AttributeType.ini);
 
@@ -350,7 +351,7 @@ public class AnimalFragment extends BaseAttributesFragment implements OnClickLis
 					}
 				} else {
 					Toast.makeText(getActivity(),
-							"Konnte Bild nicht öffnen. Verwende die Standard Gallerie um eine bild auszuwählen.",
+							"Konnte Bild nicht öffnen. Verwende die Standard Galerie um eine Bild auszuwählen.",
 							Toast.LENGTH_LONG).show();
 				}
 			}

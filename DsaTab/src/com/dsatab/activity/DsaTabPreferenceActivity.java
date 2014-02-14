@@ -5,7 +5,6 @@ import java.io.FileFilter;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 
 import net.saik0.android.unifiedpreference.UnifiedPreferenceFragment;
 import net.saik0.android.unifiedpreference.UnifiedSherlockPreferenceActivity;
@@ -18,7 +17,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,9 +25,6 @@ import android.preference.Preference;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
-import android.provider.MediaStore.Images.ImageColumns;
-import android.provider.MediaStore.Images.Media;
-import android.provider.MediaStore.MediaColumns;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -46,6 +41,7 @@ import com.dsatab.DsaTabConfiguration.WoundType;
 import com.dsatab.R;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Hint;
+import com.dsatab.util.Util;
 import com.dsatab.view.ChangeLogDialog;
 import com.dsatab.view.DirectoryChooserDialogHelper;
 import com.dsatab.view.DirectoryChooserDialogHelper.Result;
@@ -227,7 +223,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 			shakeDice.setEnabled(DsaTabApplication.getInstance().getPackageManager()
 					.hasSystemFeature(PackageManager.FEATURE_SENSOR_ACCELEROMETER));
 			if (!shakeDice.isEnabled()) {
-				shakeDice.setSummary("Dein Smartphone verfügt nicht über den benötigten Sensor.");
+				shakeDice.setSummary(R.string.message_sensor_not_supported_by_device);
 			}
 		}
 
@@ -348,8 +344,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 	@Override
 	protected void onStop() {
 		if (restartRequired) {
-			Toast.makeText(this, "Veränderte Einstellungen erfordern einen Neustart um übernommen zu werden.",
-					Toast.LENGTH_LONG).show();
+			Toast.makeText(this, R.string.message_changes_require_restart_of_app, Toast.LENGTH_LONG).show();
 		}
 		super.onStop();
 	}
@@ -364,59 +359,29 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 
 		if (resultCode == RESULT_OK) {
 			if (requestCode == ACTION_PICK_BG_PATH) {
-				handleImagePick(KEY_STYLE_BG_PATH, data);
+				File bg = Util.handleImagePick(this, KEY_STYLE_BG_PATH, data);
+
+				if (bg != null) {
+					SharedPreferences preferences = DsaTabApplication.getPreferences();
+					Editor edit = preferences.edit();
+					edit.putString(KEY_STYLE_BG_PATH, bg.getAbsolutePath());
+					edit.commit();
+
+					Toast.makeText(this, R.string.message_background_image_changed, Toast.LENGTH_SHORT).show();
+				}
 			} else if (requestCode == ACTION_PICK_BG_WOUNDS_PATH) {
-				handleImagePick(KEY_STYLE_BG_WOUNDS_PATH, data);
+				File bg = Util.handleImagePick(this, KEY_STYLE_BG_WOUNDS_PATH, data);
+				if (bg != null) {
+					SharedPreferences preferences = DsaTabApplication.getPreferences();
+					Editor edit = preferences.edit();
+					edit.putString(KEY_STYLE_BG_WOUNDS_PATH, bg.getAbsolutePath());
+					edit.commit();
+
+					Toast.makeText(this, R.string.message_background_image_changed, Toast.LENGTH_SHORT).show();
+				}
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);
-	}
-
-	protected void handleImagePick(String prefKey, Intent data) {
-
-		Uri selectedImage = data.getData();
-		if (selectedImage != null) {
-			String[] filePathColumn = { MediaColumns.DATA, ImageColumns.BUCKET_ID };
-
-			Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-
-			if (cursor.moveToFirst()) {
-
-				int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-				// int bucketIndex = cursor.getColumnIndex(filePathColumn[1]);
-				String filePath = cursor.getString(columnIndex);
-				// String bucketId = cursor.getString(bucketIndex);
-
-				cursor.close();
-				if (filePath != null) {
-					File file = new File(filePath);
-					if (file.exists()) {
-						SharedPreferences preferences = DsaTabApplication.getPreferences();
-						Editor edit = preferences.edit();
-						edit.putString(prefKey, filePath);
-						edit.commit();
-
-						Toast.makeText(this, "Hintergrundbild wurde verändert.", Toast.LENGTH_SHORT).show();
-					}
-				}
-			}
-		} else {
-			Debug.error("Intent returned from image pick did not containt uri data:" + data);
-		}
-	}
-
-	protected static void pickImage(Activity activity, int action) {
-
-		Uri targetUri = Media.EXTERNAL_CONTENT_URI;
-		String folderPath = DsaTabApplication.getDirectory(DsaTabApplication.DIR_PORTRAITS).getAbsolutePath();
-		String folderBucketId = Integer.toString(folderPath.toLowerCase(Locale.GERMAN).hashCode());
-
-		targetUri = targetUri.buildUpon().appendQueryParameter(ImageColumns.BUCKET_ID, folderBucketId).build();
-
-		Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-		photoPickerIntent.setData(targetUri);
-
-		activity.startActivityForResult(Intent.createChooser(photoPickerIntent, "Bild auswählen"), action);
 	}
 
 	protected static void cleanOldFiles() {
@@ -467,39 +432,39 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 			downloader.addPath(context.getString(R.string.path_items));
 			downloader.addPath(PATH_WESNOTH_PORTRAITS);
 			downloader.downloadZip();
-			Toast.makeText(context, "Download der Daten wurde im Hintergrund gestartet", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, R.string.message_download_started_in_background, Toast.LENGTH_SHORT).show();
 			return true;
 		} else if (KEY_DOWNLOAD_MAPS.equals(key)) {
 			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath() + DsaTabApplication.DIR_MAPS,
 					context);
 			downloader.addPath(PATH_OFFICIAL_MAP_PACK);
 			downloader.downloadZip();
-			Toast.makeText(context, "Download der Daten wurde im Hintergrund gestartet", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, R.string.message_download_started_in_background, Toast.LENGTH_SHORT).show();
 			return true;
 		} else if (KEY_DOWNLOAD_ITEMS.equals(key)) {
 			cleanOldFiles();
 			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath(), context);
 			downloader.addPath(context.getString(R.string.path_items));
 			downloader.downloadZip();
-			Toast.makeText(context, "Download der Daten wurde im Hintergrund gestartet", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, R.string.message_download_started_in_background, Toast.LENGTH_SHORT).show();
 			return true;
 		} else if (KEY_DOWNLOAD_WESNOTH_PORTRAITS.equals(key)) {
 			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath(), context);
 			downloader.addPath(PATH_WESNOTH_PORTRAITS);
 			downloader.downloadZip();
-			Toast.makeText(context, "Download der Daten wurde im Hintergrund gestartet", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, R.string.message_download_started_in_background, Toast.LENGTH_SHORT).show();
 			return true;
 		} else if (KEY_DOWNLOAD_BACKGROUNDS.equals(key)) {
 			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath(), context);
 			downloader.addPath(PATH_BACKGROUNDS);
 			downloader.downloadZip();
-			Toast.makeText(context, "Download der Daten wurde im Hintergrund gestartet", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, R.string.message_download_started_in_background, Toast.LENGTH_SHORT).show();
 			return true;
 		} else if (KEY_DOWNLOAD_OSMMAPS.equals(key)) {
 			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath(), context);
 			downloader.addPath(PATH_OSM_MAP_PACK);
 			downloader.downloadZip();
-			Toast.makeText(context, "Download der Daten wurde im Hintergrund gestartet", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, R.string.message_download_started_in_background, Toast.LENGTH_SHORT).show();
 			return true;
 		} else if (KEY_CREDITS.equals(key)) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -509,6 +474,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 			webView.getSettings().setDefaultTextEncodingName("utf-8");
 
 			String summary = ResUtil.loadResToString(R.raw.credits, context);
+			summary = summary.replace("{hs-version}", DsaTabApplication.HS_VERSION);
 			webView.loadDataWithBaseURL(null, summary, "text/html", "utf-8", null);
 			builder.setView(webView);
 			builder.setNeutralButton(R.string.label_ok, new DialogInterface.OnClickListener() {
@@ -548,24 +514,24 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 			builder.show();
 			return true;
 		} else if (KEY_STYLE_BG_PATH.equals(key)) {
-			pickImage(context, ACTION_PICK_BG_PATH);
+			Util.pickImage(context, ACTION_PICK_BG_PATH);
 			return true;
 		} else if (KEY_STYLE_BG_WOUNDS_PATH.equals(key)) {
-			pickImage(context, ACTION_PICK_BG_WOUNDS_PATH);
+			Util.pickImage(context, ACTION_PICK_BG_WOUNDS_PATH);
 			return true;
 		} else if (KEY_STYLE_BG_WOUNDS_DELETE.equals(key)) {
 			Editor edit = preferences.edit();
 			edit.remove(KEY_STYLE_BG_WOUNDS_PATH);
 			edit.commit();
 
-			Toast.makeText(context, "Wunden-Hintergrundbild wurde zurückgesetzt.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, R.string.message_background_image_reset, Toast.LENGTH_SHORT).show();
 			return true;
 		} else if (KEY_STYLE_BG_DELETE.equals(key)) {
 			Editor edit = preferences.edit();
 			edit.remove(KEY_STYLE_BG_PATH);
 			edit.commit();
 
-			Toast.makeText(context, "Hintergrundbild wurde zurückgesetzt.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, R.string.message_background_image_reset, Toast.LENGTH_SHORT).show();
 			return true;
 		} else if (KEY_SETUP_SDCARD_PATH.equals(key)) {
 			Result resultListener = new Result() {
@@ -583,8 +549,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 						edit.putString(KEY_SETUP_SDCARD_PATH, dir);
 						edit.commit();
 					} else {
-						Toast.makeText(context,
-								"DsaTab hat in diesem Verzeichnis keine Schreibrechte. Wähle bitte ein anderes aus.",
+						Toast.makeText(context, R.string.message_no_write_access_in_directory_choose_another,
 								Toast.LENGTH_LONG).show();
 					}
 				}
@@ -606,8 +571,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 						edit.putString(KEY_SETUP_SDCARD_HERO_PATH, dir);
 						edit.commit();
 					} else {
-						Toast.makeText(context,
-								"DsaTab hat in diesem Verzeichnis keine Schreibrechte. Wähle bitte ein anderes aus.",
+						Toast.makeText(context, R.string.message_no_write_access_in_directory_choose_another,
 								Toast.LENGTH_LONG).show();
 					}
 				}
@@ -622,7 +586,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 				}
 			}
 			edit.commit();
-			Toast.makeText(context, "Tips zurückgesetzt.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, R.string.message_tips_reset, Toast.LENGTH_SHORT).show();
 			return true;
 		}
 
@@ -634,7 +598,10 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 
 		if (preference != null) {
 			if (KEY_THEME.equals(key)) {
-				preference.setSummary("Aktuelles Theme: " + DsaTabApplication.getInstance().getCustomThemeName());
+
+				String theme = DsaTabApplication.getInstance().getString(R.string.current_theme,
+						DsaTabApplication.getInstance().getCustomThemeName());
+				preference.setSummary(theme);
 			} else if (KEY_STYLE_BG_PATH.equals(key)) {
 				((PreferenceWithButton) preference)
 						.setWidgetVisibility(sharedPreferences.contains(KEY_STYLE_BG_PATH) ? View.VISIBLE : View.GONE);

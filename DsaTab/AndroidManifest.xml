@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dsatab"
     android:installLocation="auto"
-    android:versionCode="76"
-    android:versionName="4.2-beta3" >
+    android:versionCode="78"
+    android:versionName="4.2-beta4" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -76,14 +76,6 @@
             android:name=".activity.ItemContainerEditActivity"
             android:label="@string/item_container_edit_title"
             android:logo="@android:drawable/ic_menu_edit" />
-        <activity
-            android:name=".activity.ItemEditActivity"
-            android:label="Gegenstand"
-            android:logo="@android:drawable/ic_menu_edit" />
-        <activity
-            android:name=".activity.ItemViewActivity"
-            android:label="Gegenstand"
-            android:logo="@android:drawable/ic_menu_view" />
         <activity
             android:name="com.dsatab.activity.HeroChooserActivity"
             android:label="@string/hero_chooser_title" />

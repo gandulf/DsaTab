@@ -11,7 +11,6 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ExpandableListAdapter;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -184,20 +183,6 @@ public abstract class BaseListFragment extends BaseFragment implements OnItemLon
 
 	protected void refreshEmptyView(Adapter adapter) {
 		refreshEmptyView(adapter, null);
-	}
-
-	protected void refreshEmptyView(ExpandableListAdapter adapter) {
-		if (findViewById(android.R.id.empty) != null) {
-			if (adapter.isEmpty()) {
-
-				findViewById(android.R.id.empty).setVisibility(View.VISIBLE);
-				findViewById(android.R.id.list).setVisibility(View.GONE);
-
-			} else {
-				findViewById(android.R.id.empty).setVisibility(View.GONE);
-				findViewById(android.R.id.list).setVisibility(View.VISIBLE);
-			}
-		}
 	}
 
 }

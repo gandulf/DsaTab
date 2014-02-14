@@ -71,7 +71,7 @@
         android:layout_alignRight="@android:id/text1"
         android:layout_below="@android:id/text2"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textSize="10sp"
+        android:textSize="12sp"
         android:textAllCaps="true"
         android:gravity="right"
         android:textStyle="normal" />

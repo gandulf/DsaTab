@@ -1,8 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item
-        android:id="@+id/option_add"
-        android:icon="?attr/imgBarSwordAdd"
+        android:id="@+id/option_ok"
+        android:icon="?attr/imgBarAccept"
         android:showAsAction="withText|ifRoom"
-        android:title="@string/label_create">
+        android:title="@string/menu_done">
     </item>
 </menu>

@@ -37,8 +37,6 @@ import com.actionbarsherlock.view.SubMenu;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.ItemContainerEditActivity;
-import com.dsatab.activity.ItemEditActivity;
-import com.dsatab.activity.ItemViewActivity;
 import com.dsatab.activity.ItemsActivity;
 import com.dsatab.data.Hero;
 import com.dsatab.data.adapter.GridItemAdapter;
@@ -50,6 +48,7 @@ import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemCard;
 import com.dsatab.data.items.ItemContainer;
 import com.dsatab.util.Debug;
+import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Util;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
 import com.dsatab.xml.DataManager;
@@ -62,6 +61,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		OnAnimateCallback, OnClickListener {
 
 	private static final int ACTION_ADD = 1099;
+	private static final int ACTION_EDIT = 1098;
 
 	private static final int MENU_FILTER_GROUP = 98;
 
@@ -139,11 +139,12 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 									notifyChanged = false;
 									break;
 								case R.id.option_view:
-									ItemViewActivity.view(fragment.getActivity(), getHero(), selectedItem);
+									ItemsActivity.view(fragment.getActivity(), getHero().getKey(), selectedItem);
 									mode.finish();
 									return true;
 								case R.id.option_edit:
-									ItemEditActivity.edit(fragment.getActivity(), getHero(), selectedItem);
+									ItemsActivity.edit(fragment.getActivity(), getHero().getKey(), selectedItem,
+											ACTION_EDIT);
 									mode.finish();
 									return true;
 								case R.id.option_equipped:
@@ -529,7 +530,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		ItemType[] itemType = ItemType.values();
 		for (int i = 0; i < itemType.length; i++) {
 			MenuItem item = filterSet.add(MENU_FILTER_GROUP, i, Menu.NONE, itemType[i].name()).setIcon(
-					itemType[i].getDrawableId());
+					DsaUtil.getResourceId(itemType[i]));
 			item.setCheckable(true);
 			item.setChecked(categoriesSelected.contains(itemType[item.getItemId()]));
 
@@ -759,7 +760,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == ACTION_ADD) {
 			if (resultCode == Activity.RESULT_OK) {
-				UUID itemId = (UUID) data.getSerializableExtra(ItemsActivity.DATA_INTENT_ITEM_ID);
+				UUID itemId = (UUID) data.getSerializableExtra(ItemsActivity.INTENT_EXTRA_ITEM_ID);
 
 				if (itemId != null) {
 					Item item = DataManager.getItemById(itemId).duplicate();
@@ -815,7 +816,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 			if (mMode == null) {
 				itemGridCompat.setItemChecked(position, false);
 				itemList.setItemChecked(position, false);
-				ItemViewActivity.view(getActivity(), getHero(), itemGridAdapter.getItem(position));
+				ItemsActivity.view(getActivity(), getHero().getKey(), itemGridAdapter.getItem(position));
 			} else {
 				super.onItemClick(parent, view, position, id);
 			}

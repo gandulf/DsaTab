@@ -20,7 +20,7 @@
 
     <Button
         android:id="@+id/wheel_value"
-        style="@style/TextValue"
+        style="?attr/textViewValueStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

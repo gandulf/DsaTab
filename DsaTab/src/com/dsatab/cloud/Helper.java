@@ -21,6 +21,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import com.dsatab.DsaTabApplication;
+import com.dsatab.R;
 import com.dsatab.common.HttpRequest;
 import com.gandulf.guilib.util.Debug;
 
@@ -44,7 +46,8 @@ public class Helper {
 		httpRequest.close();
 
 		if (result == null) {
-			throw new IOException("Konnte keine Verbindung zum Austausch Server herstellen.");
+			throw new IOException(DsaTabApplication.getInstance().getString(
+					R.string.message_connection_to_server_failed));
 		} else if (result.contains("Anmeldung fehlgeschlagen")) {
 			throw new AuthorizationException(token);
 		}
@@ -53,7 +56,8 @@ public class Helper {
 	}
 
 	/**
-	 * Deaktiviert alle SSL Checks Nur fÃ¼r selbst-signierte Certifikate bei localhost zu nutzen! Alles andere fÃ¼r zu extremen Sicherheitsproblemen!
+	 * Deaktiviert alle SSL Checks Nur fÃ¼r selbst-signierte Certifikate bei localhost zu nutzen! Alles andere fÃ¼r zu
+	 * extremen Sicherheitsproblemen!
 	 */
 	public static void disableSSLCheck() {
 		// Create a trust manager that does not validate certificate chains
@@ -93,10 +97,7 @@ public class Helper {
 			NodeList nodes = (NodeList) result;
 			return nodes;
 		} catch (Exception ex) {
-			System.out.println("Fehlerhafter xpath-Ausdruck: " + search);
-			System.out.println(ex.getMessage());
-			ex.printStackTrace();
-			System.out.println("====");
+			Debug.error("Fehlerhafter xpath-Ausdruck: " + search, ex);
 			return null;
 			// return getDatenAsString(search);
 		}
@@ -133,9 +134,7 @@ public class Helper {
 			Object result = expr.evaluate(doc, XPathConstants.STRING);
 			return (String) result;
 		} catch (Exception ex) {
-			System.out.println("Fehlerhafter xpath-Ausdruck: " + search);
-			System.out.println(ex.getMessage());
-			ex.printStackTrace();
+			Debug.error("Fehlerhafter xpath-Ausdruck: " + search, ex);
 			return null;
 		}
 
@@ -149,9 +148,7 @@ public class Helper {
 			Object result = expr.evaluate(doc, XPathConstants.NUMBER);
 			return Math.round((Double) result);
 		} catch (Exception ex) {
-			System.out.println("Fehlerhafter xpath-Ausdruck: " + search);
-			System.out.println(ex.getMessage());
-			ex.printStackTrace();
+			Debug.error("Fehlerhafter xpath-Ausdruck: " + search, ex);
 			return null;
 		}
 

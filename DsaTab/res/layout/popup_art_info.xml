@@ -16,7 +16,7 @@
 
 			<TextView
 			    android:id="@+id/popup_liturgie_type"
-			    style="@style/TextValue.NoTouch"
+			    style="?attr/textViewValueNoTouchStyle"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:gravity="right|center_vertical" >
@@ -30,7 +30,7 @@
 
 			<TextView
 			    android:id="@+id/popup_liturgie_target"
-			    style="@style/TextValue.NoTouch"
+			    style="?attr/textViewValueNoTouchStyle"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:gravity="right|center_vertical" >
@@ -53,7 +53,7 @@
 
 			<TextView
 			    android:id="@+id/popup_liturgie_range"
-			    style="@style/TextValue.NoTouch"
+			    style="?attr/textViewValueNoTouchStyle"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:gravity="right|center_vertical" >
@@ -76,7 +76,7 @@
 
 			<TextView
 			    android:id="@+id/popup_liturgie_castduration"
-			    style="@style/TextValue.NoTouch"
+			    style="?attr/textViewValueNoTouchStyle"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:gravity="right|center_vertical" >
@@ -98,7 +98,7 @@
 				android:layout_width="wrap_content" style="@style/TextLabel.Popup"
 				android:text="@string/label_effect"></TextView>
 			<TextView android:layout_height="wrap_content"
-				android:layout_width="wrap_content" style="@style/TextValue.NoTouch"
+				android:layout_width="wrap_content" style="?attr/textViewValueNoTouchStyle"
 				android:id="@+id/popup_liturgie_effect"
 				 android:singleLine="false" android:gravity="right|center_vertical"></TextView>
 			
@@ -118,7 +118,7 @@
 				android:paddingRight="@dimen/default_gap" style="@style/TextLabel.Popup"
 				android:layout_height="wrap_content"></TextView>
 			<TextView android:layout_width="wrap_content" 
-				style="@style/TextValue.NoTouch" android:layout_height="wrap_content"
+				style="?attr/textViewValueNoTouchStyle" android:layout_height="wrap_content"
 				android:id="@+id/popup_liturgie_effectduration" android:gravity="right|center_vertical"></TextView>
 			
 			<EditText
@@ -136,7 +136,7 @@
 			<TextView android:layout_width="wrap_content" android:text="@string/label_probe"
 				style="@style/TextLabel.Popup" android:layout_height="wrap_content"></TextView>
 			<TextView android:layout_width="wrap_content" android:id="@+id/popup_liturgie_probe"
-				style="@style/TextValue.NoTouch" android:layout_height="wrap_content"
+				style="?attr/textViewValueNoTouchStyle" android:layout_height="wrap_content"
 				android:gravity="right|center_vertical"></TextView>
 			
 			<EditText
@@ -157,7 +157,7 @@
 
 			<TextView
 			    android:id="@+id/popup_liturgie_costs"
-			    style="@style/TextValue.NoTouch"
+			    style="?attr/textViewValueNoTouchStyle"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:gravity="right|center_vertical" >
@@ -181,7 +181,7 @@
 
 			<TextView
 			    android:id="@+id/popup_liturgie_origin"
-			    style="@style/TextValue.NoTouch"
+			    style="?attr/textViewValueNoTouchStyle"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:gravity="right|center_vertical" >
@@ -198,7 +198,7 @@
 		
 		    <TableRow android:layout_height="wrap_content" android:layout_width="wrap_content">
 			<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/label_source" style="@style/TextLabel.Popup"></TextView>
-			<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/popup_liturgie_source" style="@style/TextValue.NoTouch" android:gravity="right|center_vertical"></TextView>
+			<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/popup_liturgie_source" style="?attr/textViewValueNoTouchStyle" android:gravity="right|center_vertical"></TextView>
 			<EditText
                 android:id="@+id/popup_liturgie_source_edit"
                 android:layout_width="fill_parent"
@@ -214,7 +214,7 @@
 
 			<TextView
 			    android:id="@+id/popup_liturgie_merkmal"
-			    style="@style/TextValue.NoTouch"
+			    style="?attr/textViewValueNoTouchStyle"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:gravity="right|center_vertical" >

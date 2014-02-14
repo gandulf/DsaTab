@@ -2,7 +2,6 @@ package com.dsatab.data.items;
 
 import android.text.TextUtils;
 
-import com.dsatab.R;
 import com.dsatab.data.enums.ItemType;
 import com.dsatab.util.Util;
 import com.j256.ormlite.field.DatabaseField;
@@ -10,6 +9,8 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "item_shield")
 public class Shield extends CloseCombatItem {
+
+	private static final long serialVersionUID = -3807118743867665515L;
 
 	@DatabaseField(generatedId = true)
 	protected int id;
@@ -52,14 +53,6 @@ public class Shield extends CloseCombatItem {
 
 	public void setParadeWeapon(boolean paradeWeapon) {
 		this.paradeWeapon = paradeWeapon;
-	}
-
-	@Override
-	public int getResourceId() {
-		if (isParadeWeapon() && !isShield())
-			return R.drawable.icon_messer;
-		else
-			return R.drawable.icon_shield;
 	}
 
 	/*

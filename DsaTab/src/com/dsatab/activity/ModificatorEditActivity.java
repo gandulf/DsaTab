@@ -82,7 +82,7 @@ public class ModificatorEditActivity extends BaseFragmentActivity {
 		String rules = etRules.getText().toString();
 
 		if (TextUtils.isEmpty(rules)) {
-			etRules.setError("erforderlich");
+			etRules.setError(getString(R.string.mandatory));
 			return;
 		}
 		data.putExtra(INTENT_NAME, name);

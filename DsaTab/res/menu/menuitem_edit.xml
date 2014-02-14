@@ -3,5 +3,5 @@
         android:id="@+id/option_edit"
         android:icon="?attr/imgBarEdit"
         android:showAsAction="withText|ifRoom"
-        android:title="Bearbeiten"/>
+        android:title="@string/label_edit"/>
 </menu>

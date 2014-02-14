@@ -9,12 +9,10 @@ import android.text.TextUtils;
 import com.dsatab.common.DsaTabRuntimeException;
 import com.dsatab.data.enums.ArtGroupType;
 import com.dsatab.data.enums.AttributeType;
-import com.dsatab.data.enums.FeatureType;
 import com.dsatab.data.enums.TalentType;
 import com.dsatab.data.listable.Listable;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 import com.dsatab.exception.ArtUnknownException;
-import com.dsatab.exception.FeatureTypeUnknownException;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.dsatab.xml.DataManager;
@@ -62,8 +60,6 @@ public class Art extends MarkableElement implements Value, Listable {
 	private AbstractBeing being;
 
 	private ArtGroupType groupType;
-
-	private FeatureType type;
 
 	private ArtInfo info;
 
@@ -117,10 +113,6 @@ public class Art extends MarkableElement implements Value, Listable {
 		return name;
 	}
 
-	public FeatureType getType() {
-		return type;
-	}
-
 	public ArtGroupType getGroupType() {
 		return groupType;
 	}
@@ -170,13 +162,8 @@ public class Art extends MarkableElement implements Value, Listable {
 	public void setName(String name) {
 		name = name.trim();
 
-		try {
-			this.type = FeatureType.byXmlName(name);
-		} catch (FeatureTypeUnknownException e) {
-			Debug.error(e);
-		}
-
 		setGroupType(ArtGroupType.getTypeOfArt(name));
+		String origName = name;
 		if (groupType != null) {
 			name = groupType.truncateName(name);
 		} else {
@@ -202,9 +189,21 @@ public class Art extends MarkableElement implements Value, Listable {
 		// loaded right!!!
 
 		if (grade == null) {
-			info = DataManager.getArtByName(name);
+			info = DataManager.getArtByName(origName);
+			if (info == null) {
+				info = DataManager.getArtByName(name);
+			}
+			if (info == null) {
+				info = DataManager.getArtLikeName(name);
+			}
 		} else {
 			info = DataManager.getArtByNameAndGrade(name, grade);
+			if (info == null) {
+				info = DataManager.getArtByNameAndGrade(origName, grade);
+			}
+			if (info == null) {
+				info = DataManager.getArtLikeNameAndGrade(name, grade);
+			}
 		}
 
 		if (info == null) {

@@ -8,6 +8,7 @@
     android:paddingBottom="@dimen/default_gap"
     android:paddingLeft="@dimen/default_gap"
     android:paddingRight="@dimen/default_gap"
+    android:background="@android:color/black"
     android:paddingTop="8dip" 
     android:clickable="true">
 
@@ -89,7 +90,7 @@
 
                 <TextView
                     android:id="@+id/dice_talent_value"
-                    style="@style/TextValue.NoTouch"
+                    style="?attr/textViewValueNoTouchStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
@@ -100,7 +101,7 @@
 
                 <TextView
                     android:id="@+id/dice_value"
-                    style="@style/TextValue.NoTouch"
+                    style="?attr/textViewValueNoTouchStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal">
@@ -108,7 +109,7 @@
 
                 <TextView
                     android:id="@+id/dice_effect_value"
-                    style="@style/TextValue.NoTouch"
+                    style="?attr/textViewValueNoTouchStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/default_gap"

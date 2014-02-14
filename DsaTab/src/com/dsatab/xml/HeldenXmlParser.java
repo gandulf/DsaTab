@@ -25,6 +25,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
 
+import com.bugsense.trace.BugSenseHandler;
 import com.dsatab.data.AbstractBeing;
 import com.dsatab.data.Animal;
 import com.dsatab.data.AnimalAttack;
@@ -120,14 +121,22 @@ public class HeldenXmlParser {
 		Debug.TRACE = true;
 
 		Document dom = readDocument(in);
+		if (dom == null || dom.getRootElement() == null) {
+			throw new InconsistentDataException("Invalid Xml file, could not find root element.");
+		}
 
+		String hsVersion = dom.getRootElement().getAttributeValue("Version");
 		Element heroElement = dom.getRootElement().getChild(Xml.KEY_HELD);
 		// check for valid hero node
 		if (heroElement == null) {
 			throw new InconsistentDataException("Invalid Hero xml file, could not find <" + Xml.KEY_HELD
-					+ "> element with in root node");
+					+ "> element with in root node. HS-Version=" + hsVersion);
 		}
-		hero = new Hero(path);
+
+		BugSenseHandler.clearCrashExtraData();
+		BugSenseHandler.addCrashExtraData("HS-Version", hsVersion);
+
+		hero = new Hero(path, hsVersion);
 
 		hero.setName(heroElement.getAttributeValue(Xml.KEY_NAME));
 		hero.setKey(heroElement.getAttributeValue(Xml.KEY_KEY));
@@ -685,11 +694,12 @@ public class HeldenXmlParser {
 				String key = kommentar.getAttributeValue(Xml.KEY_KEY);
 
 				try {
-					FeatureType featureType = FeatureType.byXmlName(key);
-					Art art = hero.getArt(featureType);
+
+					Art art = hero.getArt(key);
 					if (art != null && !TextUtils.isEmpty(kommentar.getAttributeValue(Xml.KEY_KOMMENTAR))) {
 						art.getInfo().setMerkmale(kommentar.getAttributeValue(Xml.KEY_KOMMENTAR));
 					}
+					FeatureType featureType = FeatureType.byXmlName(key);
 					Feature feature = hero.getFeature(featureType);
 					if (feature != null && !TextUtils.isEmpty(kommentar.getAttributeValue(Xml.KEY_KOMMENTAR))) {
 						feature.setComment(kommentar.getAttributeValue(Xml.KEY_KOMMENTAR));
@@ -704,22 +714,19 @@ public class HeldenXmlParser {
 				// <sfInfos dauer="" kosten="" probe="" sf="" sfname="Stabzauber: Flammenschwert" wirkung="" />
 
 				String infoName = sfInfo.getAttributeValue(Xml.KEY_SF_NAME);
-				try {
-					FeatureType featureType = FeatureType.byXmlName(infoName);
-					Art art = hero.getArt(featureType);
-					if (art != null) {
-						if (!TextUtils.isEmpty(sfInfo.getAttributeValue(Xml.KEY_PROBE)))
-							art.setProbePattern(sfInfo.getAttributeValue(Xml.KEY_PROBE));
-						if (!TextUtils.isEmpty(sfInfo.getAttributeValue(Xml.KEY_KOSTEN)))
-							art.getInfo().setCosts(sfInfo.getAttributeValue(Xml.KEY_KOSTEN));
-						if (!TextUtils.isEmpty(sfInfo.getAttributeValue(Xml.KEY_WIRKUNG)))
-							art.getInfo().setEffect(sfInfo.getAttributeValue(Xml.KEY_WIRKUNG));
-						if (!TextUtils.isEmpty(sfInfo.getAttributeValue(Xml.KEY_DAUER)))
-							art.getInfo().setCastDuration(sfInfo.getAttributeValue(Xml.KEY_DAUER));
-					}
-				} catch (FeatureTypeUnknownException e) {
-					Debug.error(e);
+
+				Art art = hero.getArt(infoName);
+				if (art != null) {
+					if (!TextUtils.isEmpty(sfInfo.getAttributeValue(Xml.KEY_PROBE)))
+						art.setProbePattern(sfInfo.getAttributeValue(Xml.KEY_PROBE));
+					if (!TextUtils.isEmpty(sfInfo.getAttributeValue(Xml.KEY_KOSTEN)))
+						art.getInfo().setCosts(sfInfo.getAttributeValue(Xml.KEY_KOSTEN));
+					if (!TextUtils.isEmpty(sfInfo.getAttributeValue(Xml.KEY_WIRKUNG)))
+						art.getInfo().setEffect(sfInfo.getAttributeValue(Xml.KEY_WIRKUNG));
+					if (!TextUtils.isEmpty(sfInfo.getAttributeValue(Xml.KEY_DAUER)))
+						art.getInfo().setCastDuration(sfInfo.getAttributeValue(Xml.KEY_DAUER));
 				}
+
 			}
 		}
 	}
@@ -1171,11 +1178,9 @@ public class HeldenXmlParser {
 			Element element = talentList.get(i);
 
 			talent = null;
-			TalentType talentType;
-			try {
-				talentType = TalentType.byXmlName(element.getAttributeValue(Xml.KEY_NAME));
-			} catch (TalentTypeUnknownException e) {
-				Debug.error(e);
+			TalentType talentType = TalentType.byXmlName(element.getAttributeValue(Xml.KEY_NAME));
+			if (talentType == null) {
+				Debug.error(new TalentTypeUnknownException(element.getAttributeValue(Xml.KEY_NAME)));
 				continue;
 			}
 			int talentValue = Util.parseInt(element.getAttributeValue(Xml.KEY_VALUE));

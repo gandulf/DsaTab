@@ -9,20 +9,15 @@
         android:id="@+id/fragment_item_chooser"
         android:name="com.dsatab.fragment.ItemChooserFragment"
         android:layout_width="350dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0"
-        class="com.dsatab.fragment.ItemChooserFragment"
-        tools:layout="@layout/sheet_item_view" >
+        android:layout_height="match_parent"        
+        class="com.dsatab.fragment.item.ItemListFragment"
+        tools:layout="@layout/sheet_item_chooser" >
     </fragment>
 
-    <fragment
-        android:id="@+id/fragment_item"
-        android:name="com.dsatab.fragment.ItemViewFragment"
-        android:layout_width="match_parent"
+    <FrameLayout android:id="@+id/details" 
+        android:layout_width="500dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        class="com.dsatab.fragment.ItemViewFragment"
-        tools:layout="@layout/sheet_item_view" >
-    </fragment>
+        android:clickable="true" />
 
 </android.support.v4.widget.SlidingPaneLayout>

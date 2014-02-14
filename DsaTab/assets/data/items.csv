@@ -1,432 +1,432 @@
-#Type,Name,Image,Kategorie,TP,KK-Mod,WM,INI,BF,DK,Extras,Talent1,Talent2,Talent3
-W,Achfawar,,Speere und St√§be											,1W+4,13/4,-1/0,0,4,S,,Speere,,
-W,Dreigliederstab,,Kettenst√§be											,1W+2,13/4,1/1,2,3,HN,z,Kettenst√§be,,
-W,Elemer S√§bel,,S√§bel													,1W+4,12/3,0/0,0,3,N,,S√§bel,,
-W,Hauswehr,,S√§bel														,1W+3,12/4,0/0,1,2,N,,S√§bel,Schwerter,
-W,Hornissenstachel,,Kettenwaffen										,1W+3,14/2,-1/-2,-1,3,N,,Kettenwaffen,,
-W,Hummerschere,,Waffenlos												,1W+2,12/4,0/-1,-1,4,H,,Raufen,,
-W,Kentema,,Speere und St√§be												,1W+7,14/4,0/0,0,3,NS,,Bastardst√§be,,
-W,Kentema[einh√§ndig],,Speere und St√§be									,1W+5,14/4,0/0,0,3,NS,,Bastardst√§be,,
-W,Kettenkugel,,Kettenwaffen												,3W+0,16/2,-2/-4,-3,2,S,,Kettenwaffen,,
-W,"Knochenkeule, gro√ü",,Zweihandhiebwaffen und -flegel					,2W+2,14/2,-1/-3,-2,2,N,,Zweihandhiebwaffen,,
-W,"Knochenkeule, klein",,Hiebwaffen										,1W+2,11/4,-1/-1,0,4,N,,Hiebwaffen,,
-W,"Knochenkeule, mittelgro√ü",,Hiebwaffen									,1W+3,11/3,0/-1,0,3,N,,Hiebwaffen,,
-W,Kophta-Szepter,,Hiebwaffen											,1W+3,12/3,-1/-1,0,1,N,,Hiebwaffen,,
-W,Kriegsf√§cher,,Waffenlos												,1W+2,12/5,0/1,0,3,H,,Hiebwaffen,,
-W,Kriegsf√§cher (Dornen),,Waffenlos										,1W+2,12/5,0/1,0,1,H,,Hiebwaffen,,
-W,Kriegsf√§cher (Vollmetall),,Waffenlos									,1W+2,12/5,0/1,0,1,H,,Hiebwaffen,,
-W,Linkhand,linkhand00.jpg,Dolche										,1W+1,12/5,0/1,0,0,H,,Dolche,,
-W,Linkhand mit Klingenf√§nger,linkhand00.jpg,Dolche					,1W+1,12/5,0/1,0,0,H,,Dolche,,
-W,Linkhand und Klingenbrecher,linkhand00.jpg,Dolche					,1W+1,12/5,0/1,0,0,H,,Dolche,,
-W,Palta,,Speere und St√§be												,1W+5,12/4,0/-2,-1,5,S,,Speere,S√§bel,
-W,Rei√üer (Gezahnte Axt),,Zweihandhiebwaffen und -flegel					,2W+4,13/3,0/-2,0,4,NS,,Zweihandhiebwaffen,,
-W,Runaskraja,,Hiebwaffen												,1W+3,11/3,0/0,0,4,N,,Hiebwaffen,Dolche,
-W,Schwertlanze,,Speere und St√§be										,1W+6,13/4,-1/-1,-2,3,NS,,Bastardst√§be,,
-W,Sichelschwert,,Schwerter												,1W+4,11/4,0/0,1,2,N,,Schwerter,,
-W,Skorpionstachel,,Kettenwaffen											,1W+4,15/1,-1/-3,-1,2,N,,Kettenwaffen,,
-W,Steinbeil,,Hiebwaffen													,1W+4,13/2,0/-1,-1,5,N,,Hiebwaffen,,
-W,Steinernes Beil,,Hiebwaffen											,1W+3,11/4,-1/-2,-1,6,N,,Hiebwaffen,,
-W,Steinmesser,,Dolche													,1W+1,12/6,-2/-3,-2,6,H,,Dolche,,
-W,S√§gefischschwert,,Schwerter											,1W+2,12/3,-2/1,-1,5,N,,Schwerter,,
-W,Anderthalbh√§nder,anderthalbhaender00.jpg,Anderthalbh√§nder          ,1W+5,11/4,0/0,1,2,NS,z,Anderthalbh√§nder,Zweihandschwerter/-s√§bel,
-W,Bastardschwert,bastardschwert00.jpg,Anderthalbh√§nder               ,1W+5,11/3,0/-1,0,2,NS,z,Anderthalbh√§nder,,
-W,Bastardschwert[einh√§ndig],bastardschwert00.jpg,Anderthalbh√§nder    ,1W+5,12/4,0/-1,-1,2,N,,Schwerter,,
-W,Nachtwind,,Anderthalbh√§nder          				                    ,1W+4,11/5,0/0,2,0,N,z,Anderthalbh√§nder,Schwerter,
-W,Nachtwind[einh√§ndig],,Anderthalbh√§nder                                ,1W+4,11/5,0/0,2,0,N,,Schwerter,,
-W,Rondrakamm,rondrakamm00.jpg,Anderthalbh√§nder                       ,2W+2,12/3,0/0,0,1,NS,z,Anderthalbh√§nder,Zweihandschwerter/-s√§bel,
-W,Tuzakmesser,tuzakmesser00.jpg,Anderthalbh√§nder                     ,1W+6,12/4,0/0,1,1,NS,z,Anderthalbh√§nder,Zweihandschwerter/-s√§bel,
-W,Basiliskenzunge,basiliskenzunge00.jpg,Dolche                       ,1W+2,12/4,0/-1,-1,4,H,,Dolche,,
-W,Dolch,dolch00.jpg,Dolche                                           ,1W+1,12/5,0/-1,0,2,H,,Dolche,,
-W,Drachenzahn,,Dolche   			                                    ,1W+2,11/4,0/0,0,0,H,,Dolche,,
-W,Eberf√§nger,,Dolche                			                        ,1W+2,12/4,0/-1,0,1,H,,Dolche,,
-W,Jagdmesser,jagdmesser00.jpg,Dolche                                 ,1W+2,12/5,0/-2,-1,3,H,,Dolche,,
-W,Langdolch,langdolch00.jpg,Dolche                                   ,1W+2,12/4,0/0,0,1,H,,Dolche,Fechtwaffen,
-W,Hakendolch,,Dolche                                   					,1W+1,12/4,0/1,0,-2,HN,,Dolche,,
-W,Mengbilar,mengbillar00.jpg,Dolche                                  ,1W+1,12/5,0/-3,-2,7,H,,Dolche,,
-W,Messer,messer00.jpg,Dolche                                         ,1W,12/6,-2/-3,-2,4,H,,Dolche,,
-W,Ogerf√§nger,,Dolche                                        			,1W+2,12/4,0/-2,0,4,H,,Dolche,,
-W,Scheibendolch,,Dolche                                     			,1W+2,11/4,0/-3,0,0,H,,Dolche,,
-W,Panzerstecher,,Fechtwaffen                                     		,1W+4,13/3,-1/-1,0,0,N,,Fechtwaffen,,
-W,Schwerer Dolch,dolch_schwer00.jpg,Dolche                           ,1W+2,12/4,0/-1,0,1,H,,Dolche,,
-W,Vulkanglasdolch,dolch_vulkanglas00.jpg,Dolche                      ,1W-1,12/5,-2/-3,-2,6,H,,Dolche,,
-W,Waqqif,waqqif00.jpg,Dolche                                         ,1W+2,12/5,-1/-3,-2,2,H,,Dolche,S√§bel,
-W,Degen,degen00.jpg,Fechtwaffen                                      ,1W+3,12/5,0/-1,2,3,N,,Fechtwaffen,,
-W,Firnelfisches Eisigelflorett,eisigelflorett00.jpg,Fechtwaffen      ,1W+3,12/5,1/-1,3,4,N,,Fechtwaffen,,
-W,Florett,florett00.jpg,Fechtwaffen                                  ,1W+3,12/5,1/-1,3,4,N,,Fechtwaffen,,
-W,Magierdegen,,Fechtwaffen                                  ,1W+2,13/5,0/-2,1,4,N,,Fechtwaffen,,
-W,Rapier,rapier00.jpg,Fechtwaffen                                    ,1W+3,12/4,0/0,1,2,N,,Fechtwaffen,Schwerter,
-W,Stockdegen,stockdegen00.jpg,Fechtwaffen                            ,1W+3,12/5,-1/-3,0,4,N,,Fechtwaffen,,
-W,Wolfsmesser,wolfsmesser00.jpg,Fechtwaffen                          ,1W+3,12/4,0/0,1,1,N,,Fechtwaffen,S√§bel,Schwerter
-W,Beil,handbeil00.jpg,Hiebwaffen                                     ,1W+3,11/4,-1/-2,-1,5,N,,Hiebwaffen,,
-W,Brabakbengel,brabakbengel00.jpg,Hiebwaffen                         ,1W+5,13/3,0/-1,0,1,N,,Hiebwaffen,,
-W,Byakka,byakka00.jpg,Hiebwaffen                                     ,1W+5,14/2,0/-2,-1,3,N,,Hiebwaffen,,
-W,Fackel,,Hiebwaffen                                        ,1W,11/5,-2/-3,-2,8,HN,,Hiebwaffen,,
-W,Fleischerbeil,,Hiebwaffen                                 ,1W+2,11/4,-2/-3,-1,2,H,,Hiebwaffen,,
-W,Haumesser,haumesser00.jpg,Hiebwaffen                               ,1W+3,13/3,0/-2,-1,3,HN,,Hiebwaffen,S√§bel,
-W,Keule,keule00.jpg,Hiebwaffen                                       ,1W+2,11/3,0/-2,0,3,N,,Hiebwaffen,,
-W,Kn√ºppel,,Hiebwaffen                                       ,1W+1,11/4,0/-2,0,6,N,,Hiebwaffen,,
-W,Lindwurmschl√§ger,lindwurmschlaeger00.jpg,Hiebwaffen                ,1W+4,11/3,0/-1,-1,1,HN,,Hiebwaffen,,
-W,Molokdeschnaja,,Hiebwaffen                                ,1W+4,11/3,0/0,0,3,N,,Hiebwaffen,,
-W,Rabenschnabel,rabenschnabel00.jpg,Hiebwaffen                       ,1W+4,10/4,0/0,0,3,"38,",,Hiebwaffen,,
-W,Rabenschnabel (Boron),rabenschnabel00.jpg,Hiebwaffen               ,1W+4,10/4,0/0,0,3,"38,",,Hiebwaffen,,
-W,Schmiedehammer,,Hiebwaffen                                ,1W+4,14/2,-1/-1,-1,1,N,,Hiebwaffen,,
-W,Sichel,sichel00.jpg,Hiebwaffen                                     ,1W+2,12/5,-2/-2,-2,6,H,,Hiebwaffen,,
-W,Skraja,skraja00.jpg,Hiebwaffen                                     ,1W+3,11/3,0/0,0,4,N,,Hiebwaffen,,
-W,Sonnenszepter,,Hiebwaffen                                  ,1W+3,12/3,-1/-1,0,1,N,,Hiebwaffen,,
-W,Streitaxt,streitaxt00.jpg,Hiebwaffen                               ,1W+4,13/2,0/-1,0,2,N,,Hiebwaffen,,
-W,Streitkolben,streitkolben00.jpg,Hiebwaffen                         ,1W+4,11/3,0/-1,0,1,N,,Hiebwaffen,,
-W,Stuhlbein,,Hiebwaffen                                     ,1W,11/5,-1/-1,-1,8,HN,,Hiebwaffen,,
-W,Zwergenskraja,,Hiebwaffen                                 ,1W+3,11/3,0/0,0,1,N,,Hiebwaffen,,
-W,Glefe,glefe00.jpg,Infanteriewaffen                                 ,1W+4,13/3,0/-2,-1,5,S,,Infanteriewaffen,,
-W,Hakenspie√ü,,Infanteriewaffen                              ,1W+3,13/4,-1/-1,0,5,S,z,Infanteriewaffen,,
-W,Hellebarde,hellebarde00.jpg,Infanteriewaffen                       ,1W+5,12/3,0/-1,0,5,S,z,Infanteriewaffen,,
-W,Korspie√ü,korspiess00.jpg,Infanteriewaffen                          ,2W+2,12/3,0/-1,0,3,S,z,Infanteriewaffen,Speere,
-W,Neethaner Langaxt,,Infanteriewaffen                       ,2W+2,13/4,-1/-3,-2,5,S,z,Infanteriewaffen,Zweihandhiebwaffen,
-W,Pailos,,Infanteriewaffen                                  ,2W+4,14/2,-1/-3,-2,3,S,z,Infanteriewaffen,Zweihandhiebwaffen,
-W,Partisane,partisane00.jpg,Infanteriewaffen                         ,1W+5,13/3,0/-2,0,4,S,z,Infanteriewaffen,Speere,
-W,Sense,,Infanteriewaffen                                   ,1W+3,13/4,-2/-4,-2,7,S,z,Infanteriewaffen,,
-W,Sturmsense,,Infanteriewaffen                              ,1W+4,13/3,-1/-2,-1,5,S,z,Infanteriewaffen,,
-W,Warunker Hammer,,Infanteriewaffen                         ,1W+6,14/3,0/-1,-1,2,NS,z,Infanteriewaffen,Zweihandhiebwaffen,
-W,Kettenstab,,Kettenst√§be                                   ,1W+2,13/4,1/0,2,2,HN,z,Kettenst√§be,,
-W,Gei√üel,geissel00.jpg,Kettenwaffen                      ,1W-1,14/5,0/-4,-1,5,N,,Kettenwaffen,,
-W,Morgenstern,morgenstern00.jpg,Kettenwaffen                         ,1W+5,14/2,-1/-2,-1,2,N,,Kettenwaffen,,
-W,Neunschw√§nzige,,Kettenwaffen                              ,1W+1,14/4,-1/-4,-1,5,N,,Kettenwaffen,,
-W,Ochsenherde,ochsenherde00.jpg,Kettenwaffen                         ,3W+3,17/1,-2/-4,-3,3,N,,Kettenwaffen,,
-W,Ogerschelle,ogerschelle00.jpg,Kettenwaffen                         ,2W+2,15/1,-1/-3,-2,3,N,,Kettenwaffen,,
-W,Peitsche,peitsche00.jpg,Kettenwaffen                               ,1W,14/5,0/-,0,4,S,,Peitsche,,
-W,(Lang-)Schwert,langschwert00.jpg,Schwerter                         ,1W+4,11/4,0/0,0,1,N,,Schwerter,,
-W,Arbach,,Schwerter                                         ,1W+4,12/3,0/-1,0,2,N,,S√§bel,Schwerter,
-W,Barbarenschwert,,Schwerter                                ,1W+5,12/3,0/-1,-1,4,N,,Schwerter,Hiebwaffen,
-W,Breitschwert,breitschwert00.jpg,Schwerter                          ,1W+4,12/3,0/-1,0,1,N,,Schwerter,,
-W,Kurzschwert,kurzschwert00.jpg,Schwerter                            ,1W+2,11/4,0/-1,0,1,HN,,Dolche,S√§bel,Schwerter
-W,Robbent√∂ter,,Schwerter                                    ,1W+3,12/4,0/0,0,2,N,,Fechtwaffen,S√§bel,Schwerter
-W,Turnierschwert,,Schwerter                                 ,1W+3A,11/5,0/0,0,3,N,,Schwerter,,
-W,Drachent√∂ter,,Speere und St√§be                            ,3W+5,20/1,-2/-4,-3,3,P,,Speere,,
-W,Drakoniterstab,draconiterstab00.jpg,Speere und St√§be               ,1W+1,12/4,0/0,1,5,NS,z,St√§be,,
-W,Dreizack,,Speere und St√§be                                ,1W+4,13/3,0/-1,0,5,S,z,Speere,,
-W,Dschadra,dschadra00.jpg,Speere und St√§be                           ,1W+5,12/4,0/-3,-1,6,S,,Speere,,
-W,Efferdbart,efferdbart00.jpg,Speere und St√§be                       ,1W+4,13/3,0/-1,0,3,NS,,Speere,,
-W,Jagdspie√ü,,Speere und St√§be                               ,1W+6,12/4,0/-1,-1,3,S,,Speere,,
-W,Kampfstab,kampfstab00.jpg,Speere und St√§be                         ,1W+1,12/4,0/0,1,5,NS,z,St√§be,,
-W,Kriegslanze,lanze_krieg00.jpg,Speere und St√§be                     ,1W+3,12/5,-2/-4,-2,5,P,,Speere,,
-W,Magierstab,magierstab00.jpg,Speere und St√§be                       ,1W+1,11/5,-1/-1,0,-9,NS,,St√§be,,
-W,Magierstab (kurz),magierstab00.jpg,Speere und St√§be                ,1W,11/4,-1/-1,0,-9,N,,Hiebwaffen,,
-W,Magierstab (sehr kurz),magierstab00.jpg,Speere und St√§be           ,1W+1,11/5,-1/-1,-1,-9,NS,,Hiebwaffen,,
-W,Magierstab als Stab,magierstab00.jpg,Speere und St√§be              ,1W+1,11/5,-1/-1,0,-9,NS,,St√§be,,
-W,Magierstab mit Kristallk.,magierstab00.jpg,Speere und St√§be        ,1W+1,11/4,-1/-1,-2,-9,N,,Zweihandhiebwaffen,,
-W,Pike,,Speere und St√§be                                    ,1W+5,14/4,-1/-2,-2,6,P,z,Speere,,
-W,Speer,speer00.jpg,Speere und St√§be                                 ,1W+5,12/4,0/-2,-1,5,S,z,Speere,,
-W,Holzspeer,speer00.jpg,Speere und St√§be                             ,1W+3,12/5,-1/-3,0,5,S,z,Speere,,
-W,Holzspeer[einh√§ndig],speer00.jpg,Speere und St√§be                   ,1W+2,13/6,-1/-6,0,5,S,,Speere,,
-W,Sto√üspeer,,Speere und St√§be                               ,2W+2,11/4,0/-1,-1,3,S,z,Speere,,
-W,Turnierlanze,lanze_turnier00.jpg,Speere und St√§be                  ,1W+2A,12/5,-2/-4,-2,8,P,,Speere,,
-W,Wurmspie√ü,,Speere und St√§be                               ,1W+5,13/4,0/-2,0,2,S,,Infanteriewaffen,Speere,
-W,Zweililien,zweililien00.jpg,Speere und St√§be                       ,1W+3,12/4,1/-1,1,4,NS,z,St√§be,,
-D,Blasrohr,blasrohr00.jpg,Schusswaffen                               ,1W-1,(2/5/10/20/40),(0/0/0/0/-2),Blasrohr,,,,,,
-W,Amazonens√§bel,amazonensaebel00.jpg,S√§bel                           ,1W+4,11/4,0/0,1,2,N,,S√§bel,Schwerter,
-W,Entermesser,entermesser00.jpg,S√§bel                                ,1W+3,12/4,0/0,0,2,N,,S√§bel,,
-W,Khunchomer,khunchumer00.jpg,S√§bel                                  ,1W+4,12/3,0/0,0,2,N,,S√§bel,,
-W,Kusliker S√§bel,saebel_kusliker00.jpg,S√§bel                         ,1W+3,12/4,0/0,1,1,N,,S√§bel,Schwerter,
-W,S√§bel,saebel00.jpg,S√§bel                                           ,1W+3,12/4,0/0,1,2,N,,S√§bel,Schwerter,
-W,Drachenklaue,,Waffenlos                                   ,1W+2,12/3,0/0,-1,0,H,,Raufen,,
-W,Hruruzat,,Waffenlos                                       ,2WA,10/3,0/0,0,-,H,,Raufen,,
-W,Hruruzat[gegen Waffe],,Waffenlos                           ,2WA,10/3,-1/-2,0,-,H,,Raufen,,
-W,Orchidee,,Waffenlos                                       ,1W+1,12/5,-1/-2,0,3,H,,Raufen,,
-W,Raufen,,Waffenlos                                         ,1WA,10/3,0/0,0,-,H,,Raufen,,
-W,Raufen[gegen Waffe],,Waffenlos                             ,1WA,10/3,-1/-2,0,-,H,,Raufen,,
-W,Ringen,,Waffenlos                                         ,1WA,10/3,0/0,0,-,H,,Ringen,,
-W,Ringen[gegen Waffe],,Waffenlos                             ,1WA,10/3,-1/-2,0,-,H,,Ringen,,
-W,Schlagring,,Waffenlos                                     ,1W+2A,10/3,-1/-2,0,0,H,,Raufen,,
-W,Veteranenhand,,Waffenlos                                  ,1W+2,12/4,0/-1,-1,4,H,,Raufen,,
-W,Barbarenstreitaxt,barbarenstreitaxt00.jpg,Zweihandhiebwaffen und -flegel,3W+2,15/1,-1/-4,-2,3,N,z,Zweihandhiebwaffen,,
-W,Dreschflegel,dreschflegel00.jpg,Zweihandhiebwaffen und -flegel     ,1W+3,12/3,-2/-3,-2,6,S,z,Zweihandflegel,,
-W,Echsische Axt,,Zweihandhiebwaffen und -flegel             ,1W+5,12/4,0/-1,0,3,NS,z,Zweihandhiebwaffen,,
-W,Felsspalter,felsspalter00.jpg,Zweihandhiebwaffen und -flegel       ,2W+2,14/2,0/-2,-1,2,N,z,Zweihandhiebwaffen,,
-W,Gruufhai,,Zweihandhiebwaffen und -flegel                  ,1W+6,14/2,-1/-3,-2,3,N,z,Zweihandhiebwaffen,,
-W,Holzf√§lleraxt,holzfaelleraxt00.jpg,Zweihandhiebwaffen und -flegel  ,2W,12/2,-1/-4,-2,5,N,z,Zweihandhiebwaffen,,
-W,Kriegsflegel,,Zweihandhiebwaffen und -flegel              ,1W+6,12/2,-1/-2,-1,5,S,z,Zweihandflegel,,
-W,Kriegshammer,kriegshammer00.jpg,Zweihandhiebwaffen und -flegel     ,2W+3,14/2,-1/-3,-2,2,N,z,Zweihandhiebwaffen,,
-W,Orknase,orknase00.jpg,Zweihandhiebwaffen und -flegel               ,1W+5,12/2,0/-1,-1,4,N,z,Zweihandhiebwaffen,,
-W,Orknase[einh√§ndig],orknase00.jpg,Zweihandhiebwaffen und -flegel    ,1W+5,13/3,0/-1,-1,4,N,,Hiebwaffen,Zweihandhiebwaffen,
-W,Schnitter,,Zweihandhiebwaffen und -flegel                 ,1W+5,14/4,0/0,0,4,NS,z,Infanteriewaffen,Speere,Zweihandhiebwaffen
-W,Spitzhacke,,Zweihandhiebwaffen und -flegel                ,1W+6,13/2,-2/-4,-3,5,N,z,Zweihandhiebwaffen,,
-W,Vorschlaghammer,,Zweihandhiebwaffen und -flegel           ,1W+5,13/2,-2/-4,-3,5,N,z,Zweihandhiebwaffen,,
-W,Zwergenschl√§gel,,Zweihandhiebwaffen und -flegel           ,1W+5,13/3,0/-1,-1,1,N,z,Zweihandhiebwaffen,,
-W,Andergaster,andergaster00.jpg,Zweihandschwerter und -s√§bel         ,3W+2,14/2,0/-2,-3,3,S,z,Zweihandschwerter/-s√§bel,,
-W,Boronsichel,,Zweihandschwerter und -s√§bel                 ,2W+6,13/3,0/-3,-2,3,S,z,Zweihandschwerter/-s√§bel,,
-W,Doppelkhunchomer,,Zweihandschwerter und -s√§bel            ,1W+6,13/2,0/-2,-2,3,NS,z,Zweihandschwerter/-s√§bel,,
-W,Gro√üer Sklaventod,,Zweihandschwerter und -s√§bel           ,2W+4,13/2,0/-2,-2,2,NS,z,Zweihandschwerter/-s√§bel,,
-W,Richtschwert,,Zweihandschwerter und -s√§bel                ,3W+4,13/2,-2/-4,-3,5,N,z,Zweihandschwerter/-s√§bel,,
-W,Zweih√§nder,zweihaender00.jpg,Zweihandschwerter und -s√§bel          ,2W+4,12/3,0/-1,-1,2,NS,z,Zweihandschwerter/-s√§bel,,
-W,Buckler (Vollmetall),,Parierwaffe                               ,1W+1,11/4,-2/0,-1,-2,H,,Raufen,,
-W,Buckler,,Parierwaffe                               			  ,1W,11/4,-2/-1,-1,0,H,,Raufen,,
-D,Bauchspanner-Armbrust,,Schusswaffen									,2W+4,(15/30/70/120/200),(+4/+2/0/-1/-2),Armbrust,,,,,,
-D,"Gandrasch-Armbrust, doppelt",,Schusswaffen								,2W+8,(10/25/50/100/150),(+2/+1/0/0/0),Armbrust,,,,,,
-D,"Gandrasch-Armbrust, einfach",,Schusswaffen								,2W+2,(5/15/25/40/60),(+1/0/0/0/0),Armbrust,,,,,,
-D,Jagddiskus,,Wurfwaffen												,2W+4,(5/10/20/30/60),(+1/0/0/0-1),Armbrust,,,,,,
-D,Palta,,Wurfwaffen														,1W+4,(5/10/15/25/40),(+3/+2/+1/0/0),Wurfspeere,,,,,,
-D,Arbalette,arbalette00.jpg,Schusswaffen                             ,2W+5,(10/20/30/60/100),(+2/+1/0/-1/-2),Armbrust,,,,,,
-D,Arbalone,,Schusswaffen                                    ,3W+6,(15/30/60/120/250),(+4/+2/0/-1/-3),Armbrust,,,,,,
-D,Balestra,,Schusswaffen                                    ,2W+2,(10/20/30/50/75),(+2/+1/0/0/-1),Armbrust,,,,,,
-D,Balestrina,,Schusswaffen                                  ,1W+4,(2/4/8/15/25),(+2/+1/0/0/-1),Armbrust,,,,,,
-D,Ball√§ster,,Schusswaffen                                   ,1W+4,(10/20/30/60/100),(+3/+1/0/-1/-1),Armbrust,,,,,,
-D,Eisenwalder,,Schusswaffen                                 ,,1W+3,(5/10/15/20/40),Armbrust,,,,,,
-D,Elfenbogen,langbogen00.jpg,Schusswaffen                            ,1W+5,(10/25/50/100/200),(+3/+2/+1/+1/0),Bogen,,,,,,
-D,Kompositbogen,kompositbogen00.jpg,Schusswaffen                     ,1W+5,(10/20/35/50/80),(+2/+1/+1/0/0),Bogen,,,,,,
-D,Kriegsbogen,,Schusswaffen                                 ,1W+7,(10/20/40/80/150),(+3/+2/+1/0/0),Bogen,,,,,,
-D,Kurzbogen,kurzbogen00.jpg,Schusswaffen                             ,1W+4,(5/15/25/40/60),(+1/+1/0/0/-1),Bogen,,,,,,
-D,Langbogen,langbogen00.jpg,Schusswaffen                             ,1W+6,(10/25/50/100/200),(+3/+2/+1/0/-1),Bogen,,,,,,
-D,Leichte Armbrust,armbrust_leicht00.jpg,Schusswaffen                ,1W+6,(10/15/25/40/60),(+1/+1/0/0/-1),Armbrust,,,,,,
-D,Orkischer Reiterbogen,,Schusswaffen                       ,1W+5,(5/15/30/60/100),(+3/+1/0/-1/-2),Bogen,,,,,,
-D,Windenarmbrust,armbrust_schwer00.jpg,Schusswaffen                  ,2W+6,(10/30/60/100/180),(+4/+2/0/-1/-3),Armbrust,,,,,,
-W,Sklaventot,,S√§bel                                         ,1W+4,12/3,0/0,0,3,N,,S√§bel,,
-D,Borndorn,borndorn00.jpg,Wurfwaffen                                 ,1W+2,(2/4/6/8/15),(+1/0/0/0/-1),Wurfmesser,,,,,,
-D,Diskus,,Wurfwaffen                                        ,1W+3,(5/10/20/30/60),(+1/0/0/0/-1),Diskus,,,,,,
-D,Efferdbart (Wurf),efferdbart00.jpg,Wurfwaffen                      ,1W+3,(3/6/10/15/25),(+2/+1/0/-1/-2),Wurfspeere,,,,,,
-D,Fledermaus,,Wurfwaffen                                    ,1W+2,(0/5/10/15/25),(-/0/0/0/-1),Schleuder,,,,,,
-D,Granatapfel,,Wurfwaffen                                   ,4W,(0/5/10/15/20),(-/-/-/-/-),Wurfspeere,,,,,,
-D,Holzspeer,,Wurfwaffen                                     ,1W+2,(5/10/15/25/40),(+1/0/0/-1/-2),Wurfspeere,,,,,,
-D,Kampfdiskus,,Wurfwaffen                                   ,1W+5,(10/20/30/45/60),(+1/0/0/0/0),Diskus,,,,,,
-D,Lasso,,Wurfwaffen                                         ,1W+4,(0/2/5/10/15),(-/0/0/-1/-2),Schleuder,,,,,,
-D,Schleuder,,Wurfwaffen                                     ,1W+2,(0/5/15/25/40),(-/0/0/0/0),Schleuder,,,,,,
-D,Schneidzahn,schneidzahn00.jpg,Wurfwaffen                           ,1W+4,(0/5/10/15/30),(-/+1/+1/0/-1),Wurfbeile,,,,,,
-D,Schweres Wurfnetz,,Wurfwaffen                             ,1W+6,(0/0/0/5/5),(-/-/-/-/-),Schleuder,,,,,,
-D,Speer (Wurf),speer00.jpg,Wurfwaffen                                ,1W+3,(5/10/15/25/40),(+1/0/0/-1/-2),Wurfspeere,,,,,,
-D,Speerschleuder,,Wurfwaffen                                ,1W+3,(5/15/25/35/50),(+2/+1/0/0/-1),Wurfspeere,,,,,,
-D,Stabschleuder,,Wurfwaffen                                 ,1W+3,(0/5/20/40/60),(-/0/0/0/0),Wurfspeere,,,,,,
-D,"Stein, Flasche",,Wurfwaffen                                ,(i),1W,(1/2/4/8/12),Wurfbeile,,,,,,
-D,Wurfbeil,wurfbeil00.jpg,Wurfwaffen                                 ,1W+3,(0/5/10/15/25),(-/+1/+1/0/-1),Wurfbeile,,,,,,
-D,Wurfdolch,wurfdolch00.jpg,Wurfwaffen                               ,1W+1,(2/4/6/8/15),(+1/0/0/0/-1),Wurfmesser,,,,,,
-D,Dolch,dolch00.jpg,Wurfwaffen                               ,1W,(1/3/5/7/10),(0/0/0/-1/-1),Wurfmesser,,,,,,
-D,Wurfkeule,,Wurfwaffen                                     ,2W+4A,(0/5/15/25/40),(-/+1/+1/+1/0),Wurfbeile,,,,,,
-D,Wurfmesser,wurfmesser00.jpg,Wurfwaffen                             ,1W,(2/4/6/8/15),(+1/0/0/0/-1),Wurfmesser,,,,,,
-D,Wurfnetz,,Wurfwaffen                                      ,1W+2,(0/0/0/5/5),(-/-/-/-/-),Schleuder,,,,,,
-D,"Wurfnetz, schwer",,Wurfwaffen								,1W+6,(0/0/0/5/5),(-/-/-/-/-),Schleuder,,,,,,
-D,Wurfscheibe,,Wurfwaffen                             ,1W+1,(2/4/8/12/20),(+1/0/0/0/0),Wurfmesser,,,,,,
-D,Wurfring,,Wurfwaffen                             ,1W+1,(2/4/8/12/20),(+1/0/0/0/0),Wurfmesser,,,,,,
-D,Wurfstern,,Wurfwaffen                             ,1W+1,(2/4/8/12/20),(+1/0/0/0/0),Wurfmesser,,,,,,
-D,Wurfspeer,wurfspeer00.jpg,Wurfwaffen                               ,1W+4,(5/10/15/25/40),(+3/+1/0/-1/-1),Wurfspeere,,,,,,
-W,Wurfspeer,wurfspeer00.jpg,Wurfwaffen                               ,1W+3,11/5,-1/-3,-2,4,N,,Speere,,
-S,Hummerschere,,Parierwaffe									,-2/1,-1,4,P,Raufen,,,,,
-S,Kriegsf√§cher,,Parierwaffe									,0/2,1,3,P,Raufen,,,,,
-S,Kriegsf√§cher (Dornen),,Parierwaffe						,0/2,1,1,P,Raufen,,,,,
-S,Kriegsf√§cher (Vollmetall),,Parierwaffe					,0/2,1,1,P,Raufen,,,,,
-S,Legion√§rsschild,,Schilde									,-2/4,-1,2,S,Raufen,,,,,
-S,Bock,,Parierwaffe                                         ,-1/1,0,0,SP,Raufen,,,,,
-S,Buckler (Vollmetall),,Parierwaffe                               ,0/2,0,-2,SP,Raufen,,,,,
-S,Langdolch,,Parierwaffe                                   ,0/1,0,0,SP,Dolche,,,,,
-S,Hakendolch,,Parierwaffe                                   ,-1/3,0,-2,SP,Dolche,,,,,
-S,Linkhand,linkhand00.jpg,Parierwaffe                                ,0/2,1,0,P,Dolche,,,,,
-S,Linkhand mit Klingenf√§nger,linkhand00.jpg,Parierwaffe              ,0/2,1,0,P,Dolche,,,,,
-S,Linkhand und Klingenbrecher,linkhand00.jpg,Parierwaffe             ,0/2,1,0,P,Dolche,,,,,
-S,Panzerarm,,Parierwaffe                                    ,-2/1,0,-2,SP,Raufen,,,,,
-S,Buckler,buckler00.jpg,Schilde                                      ,0/1,0,0,SP,Raufen,,,,,
-S,Holzschild,holzschild00.jpg,Schilde                      ,-1/3,-1,3,S,Raufen,,,,,
-S,Holzschild (verst√§rkt),holzschild_verstaerkt01.jpg,Schilde         ,-2/3,-1,0,S,Raufen,,,,,
-S,Gro√üschild,,Schilde                                       ,-2/5,-2,2,S,Raufen,,,,,
-S,Lederschild,,Schilde                                      ,-1/3,0,5,S,Raufen,,,,,
-S,Lederschild (gro√ü),lederschild00.jpg,Schilde                       ,-1/4,-1,6,S,Raufen,,,,,
-S,Reiterschild,turnierschild00.jpg,Schilde                           ,-2/5,-2,2,S,Raufen,,,,,
-S,Thorwaler Rundschild,thorwalerschild00.jpg,Schilde                      ,-2/4,-1,3,S,Raufen,,,,,
-S,Turmschild,,Schilde                                       ,-5/7,-3,1,S,Raufen,,,,,
-S,Vollmetallbuckler,,Schilde                                ,0/2,0,-2,SP,Raufen,,,,,
-M,Octavo,octavo01.jpg,B√ºcher                                         ,,,,,,,,,,
-M,Pergament,pergamente00.jpg,B√ºcher                                  ,,,,,,,,,,
-M,Quarto,quarto01.jpg,B√ºcher                                         ,,,,,,,,,,
-M,Essbesteck,essbesteck00.jpg,Essutensilien                          ,,,,,,,,,,
-M,Napf - L√∂ffel,napf_loeffel00.jpg,Essutensilien                     ,,,,,,,,,,
-M,Teekocher,teekocher00.jpg,Essutensilien                            ,,,,,,,,,,
-M,Teller - L√∂ffel aus Zinn,teller_loeffel00.jpg,Essutensilien        ,,,,,,,,,,
-M,Fernrohr,fernrohr00.jpg,Feinmechanik                               ,,,,,,,,,,
-M,Kompass,kompass00.jpg,Feinmechanik                                 ,,,,,,,,,,
-M,Pfeife,pfeife00.jpg,Freizeitbedarf                                 ,,,,,,,,,,
-M,Spielkarten,spielkarten00.jpg,Freizeitbedarf                       ,,,,,,,,,,
-M,W√ºrfel - Becher,wuerfel00.jpg,Freizeitbedarf                       ,,,,,,,,,,
-M,Blendlaterne,blendlaterne00.jpg,Illumination                       ,,,,,,,,,,
-M,Feuerstein Stahl,feuerstein_stahl00.jpg,Illumination               ,,,,,,,,,,
-M,Kerzen,kerzen00.jpg,Illumination                                   ,,,,,,,,,,
-M,Kerzenlaterne,laterne00.jpg,Illumination                           ,,,,,,,,,,
-M,Pechfackeln,fackeln00.jpg,Illumination                             ,,,,,,,,,,
-M,√ñllampe,oellampe00.jpg,Illumination                                ,,,,,,,,,,
-M,Fl√∂te,floete00.jpg,Instrumente                                     ,,,,,,,,,,
-M,Geige,geige00.jpg,Instrumente                                      ,,,,,,,,,,
-M,Laute,laute00.jpg,Instrumente                                      ,,,,,,,,,,
-M,Vierbl√§ttrige Einbeere,einbeere00.jpg,Kr√§uter                      ,,,,,,,,,,
-M,Wirselkraut,wirselkraut00.jpg,Kr√§uter                              ,,,,,,,,,,
-M,Brecheisen,brecheisen00.jpg,Werkzeuge                              ,,,,,,,,,,
-M,Phiolenk√§stchen,phiolenkaestchen00.jpg,Kisten                      ,,,,,,,,,,
-M,Schmuckk√§stchen,schmuckkasten00.jpg,Kisten                         ,,,,,,,,,,
-M,Zunderb√ºchse,zunderbuechse00.jpg,Kisten                            ,,,,,,,,,,
-M,Kamm,kamm00.jpg,K√∂rperpflege                                       ,,,,,,,,,,
-M,Rasiermesser,rasiermesser00.jpg,K√∂rperpflege                       ,,,,,,,,,,
-M,Seife,seife00.jpg,K√∂rperpflege                                     ,,,,,,,,,,
-M,Proviant,proviant00.jpg,Nahrung                                    ,,,,,,,,,,
-M,Hanfseil,seil00.jpg,Reisebedarf                                    ,,,,,,,,,,
-M,Kletterseil,seil01.jpg,Reisebedarf                                 ,,,,,,,,,,
-M,Wolldecke 3 x 9 Spann,wolldecke00.jpg,Reisebedarf                  ,,,,,,,,,,
-M,Wolldecke 6 x 10 Spann,wolldecke01.jpg,Reisebedarf                 ,,,,,,,,,,
-M,Wolldecke 6 x 9 Spann,wolldecke02.jpg,Reisebedarf                  ,,,,,,,,,,
-M,Zweimannzelt,zelt00.jpg,Reisebedarf                                ,,,,,,,,,,
-M,Schreibzeug,schreibzeug00.jpg,Schreibwaren                         ,,,,,,,,,,
-M,Siegelstock mit Wachs,siegelstock_wachs01.jpg,Sonstiges        ,,,,,,,,,,
-M,Einbruchswerkzeug,einbrech00.jpg,Werkzeuge                         ,,,,,,,,,,
-M,Haken,haken00.jpg,Werkzeuge                                        ,,,,,,,,,,
-M,Nadel - Garn,nadel_garn00.jpg,Werkzeuge                            ,,,,,,,,,,
-M,N√§gel,naegel00.jpg,Werkzeuge                                       ,,,,,,,,,,
-M,Schaufel,schaufel00.jpg,Werkzeuge                                  ,,,,,,,,,,
-M,Strickleiter,strickleiter00.jpg,Werkzeuge                          ,,,,,,,,,,
-M,Wurfhaken,wurfhaken00.jpg,Werkzeuge                                ,,,,,,,,,,
-M,Blasrohrpfeile,blasrohrpfeile00.jpg,Zubeh√∂r                        ,,,,,,,,,,
-M,Bolzen,bolzen01.jpg,Zubeh√∂r                                        ,,,,,,,,,,
-M,Duftwasser 3 Flux,duftwasser00.jpg,Flaschen                        ,,,,,,,,,,
-M,Feldflasche 1 Ma√ü,feldflasche00.jpg,Flaschen                       ,,,,,,,,,,
-M,Fl√§schchen 1 Schank,flaeschchen01.jpg,Flaschen                     ,,,,,,,,,,
-M,Fl√§schchen ¬Ω Schank,flaeschchen00.jpg,Flaschen                     ,,,,,,,,,,
-M,Glasflasche 2 Schank,flasche00.jpg,Flaschen                        ,,,,,,,,,,
-M,Lampen√∂l,lampenoel00.jpg,Flaschen                                  ,,,,,,,,,,
-M,Phiole 5 Flux,phiole00.jpg,Flaschen                                ,,,,,,,,,,
-M,Schnapsflasche 1 Schank,flasche_schnaps00.jpg,Flaschen             ,,,,,,,,,,
-M,Trinkhorn 1 Schank,trinkhorn00.jpg,Flaschen                        ,,,,,,,,,,
-M,Wasserschlauch (braun) 1 Ma√ü,wasserschlauch02.jpg,Flaschen         ,,,,,,,,,,
-M,Wasserschlauch 1 Ma√ü,wasserschlauch00.jpg,Flaschen                 ,,,,,,,,,,
-M,Wasserschlauch 5 Schank,wasserschlauch01.jpg,Flaschen              ,,,,,,,,,,
-M,Korb f√ºr 20 Stein,korb00.jpg,Kisten                                ,,,,,,,,,,
-M,Packkiste fasst 600 Unzen,packkiste00.jpg,Kisten                   ,,,,,,,,,,
-M,Zunderk√§stchen,zunderkasten00.jpg,Kisten                           ,,,,,,,,,,
-M,Lendenschurz,lendenschurz00.jpg,Beine                              ,,,,,,,,,,
-M,Stulpenhandschuhe,handschuhe_stulpen00.jpg,Handschuhe              ,,,,,,,,,,
-M,Lederhut,lederhut00.jpg,Kopfbedeckung                              ,,,,,,,,,,
-M,H√ºftk√∂cher 20 Bolzen,koecher_hueft00.jpg,K√∂cher                    ,,,,,,,,,,
-M,H√ºftk√∂cher 20 Pfeile,koecher_hueft01.jpg,K√∂cher                    ,,,,,,,,,,
-M,R√ºckenk√∂cher 20 Bolzen,koecher_ruecken01.jpg,K√∂cher                ,,,,,,,,,,
-M,R√ºckenk√∂cher 20 Pfeile,koecher_ruecken00.jpg,K√∂cher                ,,,,,,,,,,
-M,Holzbecher,holzbecher00.jpg,Sonstiges                         ,,,,,,,,,,
-M,Tiegel aus Elfenbein,tiegel00.jpg,Sonstiges                   ,,,,,,,,,,
-M,Trinkpokal Zinn,trinkpokal00.jpg,Sonstiges                    ,,,,,,,,,,
-M,G√ºrtelrolle fasst 50 Unzen,guertelrolle00.jpg,Taschen              ,,,,,,,,,,
-M,G√ºrteltasche,guerteltasche01.jpg,Taschen                           ,,,,,,,,,,
-M,G√ºrteltasche fasst 40 Unzen,guerteltasche00.jpg,Taschen            ,,,,,,,,,,
-M,G√ºrteltasche fasst 50 Unzen,guerteltasche01.jpg,Taschen            ,,,,,,,,,,
-M,Heilkr√§uter,heilkraeuter00.jpg,Taschen                             ,,,,,,,,,,
-M,Heilkr√§uter Gro√ü,heilkraeuter01.jpg,Taschen                        ,,,,,,,,,,
-M,Lederbeutel fasst 10 Unzen,beutel_leder01.jpg,Taschen              ,,,,,,,,,,
-M,Lederbeutel fasst 15 Unzen,beutel_leder02.jpg,Taschen              ,,,,,,,,,,
-M,Lederbeutel fasst 20 Unzen,beutel_leder00.jpg,Taschen              ,,,,,,,,,,
-M,Lederranzen fasst 200 Unzen,lederranzen00.jpg,Taschen              ,,,,,,,,,,
-M,Lederrucksack fasst 400 Unzen,rucksack_leder00.jpg,Taschen         ,,,,,,,,,,
-M,Leinenbeutel fasst 10 Unzen,beutel_leinen00.jpg,Taschen            ,,,,,,,,,,
-M,Phiolentasche,phiolentasche00.jpg,Taschen                          ,,,,,,,,,,
-M,Satteltaschen fassen je 400 Unzen,satteltaschen00.jpg,Taschen      ,,,,,,,,,,
-M,Umh√§ngetasche (alt) fasst 50 Unzen,umhaengetasche04.jpg,Taschen    ,,,,,,,,,,
-M,Umh√§ngetasche (dunkel) fasst 300 Unzen,umhaengetasche01.jpg,Taschen,,,,,,,,,,
-M,Umh√§ngetasche fasst 300 Unzen,umhaengetasche00.jpg,Taschen         ,,,,,,,,,,
-M,Umh√§ngetasche fasst 40 Unzen,umhaengetasche03.jpg,Taschen          ,,,,,,,,,,
-M,Umh√§ngetasche fasst 50 Unzen,umhaengetasche02.jpg,Taschen          ,,,,,,,,,,
-M,Hose,hose03.jpg,Beine                                              ,,,,,,,,,,
-M,Kniehose Brokat,hose00.jpg,Beine                                   ,,,,,,,,,,
-M,Leinenhose,hose01.jpg,Beine                                        ,,,,,,,,,,
-M,Rock,rock00.jpg,Beine                                              ,,,,,,,,,,
-M,Rock Seide,rock01.jpg,Beine                                        ,,,,,,,,,,
-M,Lederhandschuhe,handschuhe_leder00.jpg,Handschuhe                  ,,,,,,,,,,
-M,Lederhandschuhe (beige),handschuhe_leder01.jpg,Handschuhe          ,,,,,,,,,,
-M,Lederhandschuhe (lang),handschuhe_leder02.jpg,Handschuhe           ,,,,,,,,,,
-M,Barett,barett00.jpg,Kopfbedeckung                                  ,,,,,,,,,,
-M,Filzhut,filzhut00.jpg,Kopfbedeckung                                ,,,,,,,,,,
-M,Gugel,gugel00.jpg,Kopfbedeckung                                    ,,,,,,,,,,
-M,Hut,hut01.jpg,Kopfbedeckung                                        ,,,,,,,,,,
-M,Kappe,kappe01.jpg,Kopfbedeckung                                    ,,,,,,,,,,
-M,Lederhut (alt),lederhut01.jpg,Kopfbedeckung                        ,,,,,,,,,,
-M,Magierhut,magierhut00.jpg,Kopfbedeckung                            ,,,,,,,,,,
-M,Schlapphut,schlapphut00.jpg,Kopfbedeckung                          ,,,,,,,,,,
-M,Turban,turban00.jpg,Kopfbedeckung                                  ,,,,,,,,,,
-M,Gehrock aus Wolle,gehrock00.jpg,Mantel                             ,,,,,,,,,,
-M,Ledermantel,mantel_leder00.jpg,Mantel                              ,,,,,,,,,,
-M,Reitermantel,reitermantel00.jpg,Mantel                             ,,,,,,,,,,
-M,Umhang Phexenslist,umhang00.jpg,Mantel                           ,,,,,,,,,,
-M,Umhang (gr√ºn),umhang01.jpg,Mantel                                  ,,,,,,,,,,
-M,Umhang aus B√§renfell,umhang04.jpg,Mantel                           ,,,,,,,,,,
-M,Umhang aus Fell,umhang03.jpg,Mantel                                ,,,,,,,,,,
-M,Umhang aus Wolle,umhang02.jpg,Mantel                               ,,,,,,,,,,
-M,Umhang mit Kapuze,umhang05.jpg,Mantel                              ,,,,,,,,,,
-M,Umhang mit Pelz,umhang06.jpg,Mantel                                ,,,,,,,,,,
-M,Anaurak,anaurak00.jpg,Oben                                         ,,,,,,,,,,
-M,Ballkleid,ballkleid00.jpg,Oben                                     ,,,,,,,,,,
-M,Beschw√∂hrungsgewand,beschwoerung00.jpg,Oben                        ,,,,,,,,,,
-M,Boronirobe Bishdariel,robe_boroni00.jpg,Oben                       ,,,,,,,,,,
-M,Boronirobe Golgari,robe_boroni01.jpg,Oben                          ,,,,,,,,,,
-M,Hexengewand,hexengewand00.jpg,Oben                                 ,,,,,,,,,,
-M,Kleid,kleid00.jpg,Oben                                             ,,,,,,,,,,
-M,Kleid kurz,kleid01.jpg,Oben                                        ,,,,,,,,,,
-M,Robe,robe00.jpg,Oben                                               ,,,,,,,,,,
-M,Robe aus Brokat,robe_brokat00.jpg,Oben                             ,,,,,,,,,,
-M,Fellstiefel aus B√§renfell,stiefel_fell00.jpg,Schuhe                ,,,,,,,,,,
-M,Fellstiefel aus Dachsfell,stiefel_fell01.jpg,Schuhe                ,,,,,,,,,,
-M,Halbstiefel,stiefel_halb00.jpg,Schuhe                              ,,,,,,,,,,
-M,Lederschuhe,schuhe00.jpg,Schuhe                                    ,,,,,,,,,,
-M,Schn√ºrstiefel,stiefel_schnuer00.jpg,Schuhe                         ,,,,,,,,,,
-M,Spangenschuhe,schuhe_spangen00.jpg,Schuhe                          ,,,,,,,,,,
-M,Stulpenstiefel (hellbraun),stiefel_stulpen01.jpg,Schuhe            ,,,,,,,,,,
-M,Stulpenstiefel (rot),stiefel_stulpen00.jpg,Schuhe                  ,,,,,,,,,,
-M,Stulpenstiefel aus Leder (braun),stiefel_stulpen02.jpg,Schuhe      ,,,,,,,,,,
-M,Stulpenstiefel aus Leder (schwarz),stiefel_stulpen03.jpg,Schuhe    ,,,,,,,,,,
-M,Axtgeh√§nge,axtgehaenge01.jpg,Sonstiges                        ,,,,,,,,,,
-M,Axtgeh√§nge klein,axtgehaenge00.jpg,Sonstiges                  ,,,,,,,,,,
-M,Axtgurt,axtgurt01.jpg,Sonstiges                               ,,,,,,,,,,
-M,Axtgurt klein,axtgurt00.jpg,Sonstiges                         ,,,,,,,,,,
-M,Dolchscheide (braun),scheide_dolch01.jpg,Sonstiges            ,,,,,,,,,,
-M,Dolchscheide (hellbraun),scheide_dolch00.jpg,Sonstiges        ,,,,,,,,,,
-M,Dolchscheide (schwarz),scheide_dolch02.jpg,Sonstiges          ,,,,,,,,,,
-M,Lederg√ºrtel (gr√ºn),lederguertel00.jpg,Sonstiges               ,,,,,,,,,,
-M,Lederg√ºrtel (kurz),lederguertel02.jpg,Sonstiges               ,,,,,,,,,,
-M,Lederg√ºrtel (lang),lederguertel01.jpg,Sonstiges               ,,,,,,,,,,
-M,Lendentuch,lendentuch00.jpg,Sonstiges                         ,,,,,,,,,,
-M,R√ºckengurt (blau),rueckengurt01.jpg,Sonstiges                 ,,,,,,,,,,
-M,R√ºckengurt (braun),rueckengurt00.jpg,Sonstiges                ,,,,,,,,,,
-M,R√ºckengurt mit G√ºrtel (braun),rueckengurt_guertel00.jpg,Sonstiges,,,,,,,,,,
-M,R√ºckengurt mit G√ºrtel (schwarz),rueckengurt_guertel01.jpg,Sonstiges,,,,,,,,,,
-M,Schwertgurt,schwertgurt00.jpg,Sonstiges                       ,,,,,,,,,,
-M,Str√ºmpfe,struempfe00.jpg,Sonstiges                            ,,,,,,,,,,
-M,Bluse aus Leinen,bluse01.jpg,Torso                                 ,,,,,,,,,,
-M,Bluse aus Samt (rot),bluse03.jpg,Torso                             ,,,,,,,,,,
-M,Bluse aus Samt (schwarz),bluse02.jpg,Torso                         ,,,,,,,,,,
-M,Bluse aus Samt (violett),bluse04.jpg,Torso                         ,,,,,,,,,,
-M,Bluse aus Seide,bluse00.jpg,Torso                                  ,,,,,,,,,,
-M,Brokatweste,weste00.jpg,Torso                                      ,,,,,,,,,,
-M,Firnelfische Jacke,jacke_firnelf00.jpg,Torso                       ,,,,,,,,,,
-M,Hemd - Wams,hemd_wams00.jpg,Torso                                  ,,,,,,,,,,
-M,Hemd - Weste,hemd_weste00.jpg,Torso                                ,,,,,,,,,,
-M,Hemd aus Leinen,hemd_leinen01.jpg,Torso                            ,,,,,,,,,,
-M,Hemd aus Leinen (alt),hemd_leinen00.jpg,Torso                      ,,,,,,,,,,
-M,Hemd aus Seiden,hemd_seide01.jpg,Torso                             ,,,,,,,,,,
-M,Hemd aus Seiden (schwarz),hemd_seide02.jpg,Torso                   ,,,,,,,,,,
-M,Hemd aus Seiden mit Kragen,hemd_seide00.jpg,Torso                  ,,,,,,,,,,
-M,Hemd aus Wolle,hemd_wolle00.jpg,Torso                              ,,,,,,,,,,
-M,Jacke aus Bausch,jacke00.jpg,Torso                                 ,,,,,,,,,,
-M,Tunika,tunika00.jpg,Torso                                          ,,,,,,,,,,
-M,Wappenrock,wappenrock00.jpg,Torso                                  ,,,,,,,,,,
-M,Wappenrock Brokat,wappenrock01.jpg,Torso                           ,,,,,,,,,,
-M,Weste,weste02.jpg,Torso                                            ,,,,,,,,,,
-M,Weste Brokat,weste00.jpg,Torso                                     ,,,,,,,,,,
-M,Alchemistenschale,alchemistenschale00.jpg,magische Artefakte       ,,,,,,,,,,
-M,Drachenei,drachenei00.jpg,magische Artefakte                       ,,,,,,,,,,
-M,Knochenhelm,knochenhelm00.jpg,magische Artefakte                   ,,,,,,,,,,
-M,Kristallkugel,kristallkugel00.jpg,magische Artefakte               ,,,,,,,,,,
-M,Paradiesvogelfeder,paradies00.jpg,magische Artefakte               ,,,,,,,,,,
-M,Tsas Weidenstab,weidenstab00.jpg,magische Artefakte                ,,,,,,,,,,
-M,Amulett aus Stoff,amulett03.jpg,Schmuck                            ,,,,,,,,,,
-M,Amulett Drachen,amulett07.jpg,Schmuck                              ,,,,,,,,,,
-M,Amulett mit Bild,amulett06.jpg,Schmuck                             ,,,,,,,,,,
-M,Amulett Pentagramm,amulett01.jpg,Schmuck                           ,,,,,,,,,,
-M,Amulett Ring,amulett05.jpg,Schmuck                                 ,,,,,,,,,,
-M,Amulett Stern,amulett02.jpg,Schmuck                                ,,,,,,,,,,
-M,Amulett Wirbel,amulett04.jpg,Schmuck                               ,,,,,,,,,,
-M,Armreif aus Messing,armreif00.jpg,Schmuck                          ,,,,,,,,,,
-M,Armreif aus Silber,armreif01.jpg,Schmuck                           ,,,,,,,,,,
-M,Armreif aus Silber (leicht),armreif02.jpg,Schmuck                  ,,,,,,,,,,
-M,Armreif aus Silber&Gold,armreif03.jpg,Schmuck                      ,,,,,,,,,,
-M,Blattohrringe aus Silber,ohrringe00.jpg,Schmuck                    ,,,,,,,,,,
-M,Phex-Amulett,phexamulett00.jpg,Schmuck                             ,,,,,,,,,,
-M,Ring aus Gold,ring00.jpg,Schmuck                                   ,,,,,,,,,,
-M,Ring aus Silber,ring01.jpg,Schmuck                                 ,,,,,,,,,,
-M,Ringe aus Gold,ring02.jpg,Schmuck                                  ,,,,,,,,,,
-M,Schl√ºssel,schluessel00.jpg,Sonstiges                          ,,,,,,,,,,
+#Type;Name;Image;Kategorie;TP;KK-Mod;WM;INI;BF;DK;Extras;Talent1;Talent2;Talent3
+W;Achfawar;;"Speere und St‰be											";1W+4;13/4;-1/0;0;4;S;;Speere;;
+W;Dreigliederstab;;"Kettenst‰be											";1W+2;13/4;1/1;2;3;HN;z;Kettenst‰be;;
+W;Elemer S‰bel;;"S‰bel													";1W+4;12/3;0/0;0;3;N;;S‰bel;;
+W;Hauswehr;;"S‰bel														";1W+3;12/4;0/0;1;2;N;;S‰bel;Schwerter;
+W;Hornissenstachel;;"Kettenwaffen										";1W+3;14/2;-1/-2;-1;3;N;;Kettenwaffen;;
+W;Hummerschere;;"Waffenlos												";1W+2;12/4;0/-1;-1;4;H;;Raufen;;
+W;Kentema;;"Speere und St‰be												";1W+7;14/4;0/0;0;3;NS;;Bastardst‰be;;
+W;Kentema[einh‰ndig];;"Speere und St‰be									";1W+5;14/4;0/0;0;3;NS;;Bastardst‰be;;
+W;Kettenkugel;;"Kettenwaffen												";3W+0;16/2;-2/-4;-3;2;S;;Kettenwaffen;;
+W;Knochenkeule, groﬂ;;"Zweihandhiebwaffen und -flegel					";2W+2;14/2;-1/-3;-2;2;N;;Zweihandhiebwaffen;;
+W;Knochenkeule, klein;;"Hiebwaffen										";1W+2;11/4;-1/-1;0;4;N;;Hiebwaffen;;
+W;Knochenkeule, mittelgroﬂ;;"Hiebwaffen									";1W+3;11/3;0/-1;0;3;N;;Hiebwaffen;;
+W;Kophta-Szepter;;"Hiebwaffen											";1W+3;12/3;-1/-1;0;1;N;;Hiebwaffen;;
+W;Kriegsf‰cher;;"Waffenlos												";1W+2;12/5;0/1;0;3;H;;Hiebwaffen;;
+W;Kriegsf‰cher (Dornen);;"Waffenlos										";1W+2;12/5;0/1;0;1;H;;Hiebwaffen;;
+W;Kriegsf‰cher (Vollmetall);;"Waffenlos									";1W+2;12/5;0/1;0;1;H;;Hiebwaffen;;
+W;Linkhand;linkhand00.jpg;"Dolche										";1W+1;12/5;0/1;0;0;H;;Dolche;;
+W;Linkhand mit Klingenf‰nger;linkhand00.jpg;"Dolche					";1W+1;12/5;0/1;0;0;H;;Dolche;;
+W;Linkhand und Klingenbrecher;linkhand00.jpg;"Dolche					";1W+1;12/5;0/1;0;0;H;;Dolche;;
+W;Palta;;"Speere und St‰be												";1W+5;12/4;0/-2;-1;5;S;;Speere;S‰bel;
+W;Reiﬂer (Gezahnte Axt);;"Zweihandhiebwaffen und -flegel					";2W+4;13/3;0/-2;0;4;NS;;Zweihandhiebwaffen;;
+W;Runaskraja;;"Hiebwaffen												";1W+3;11/3;0/0;0;4;N;;Hiebwaffen;Dolche;
+W;Schwertlanze;;"Speere und St‰be										";1W+6;13/4;-1/-1;-2;3;NS;;Bastardst‰be;;
+W;Sichelschwert;;"Schwerter												";1W+4;11/4;0/0;1;2;N;;Schwerter;;
+W;Skorpionstachel;;"Kettenwaffen											";1W+4;15/1;-1/-3;-1;2;N;;Kettenwaffen;;
+W;Steinbeil;;"Hiebwaffen													";1W+4;13/2;0/-1;-1;5;N;;Hiebwaffen;;
+W;Steinernes Beil;;"Hiebwaffen											";1W+3;11/4;-1/-2;-1;6;N;;Hiebwaffen;;
+W;Steinmesser;;"Dolche													";1W+1;12/6;-2/-3;-2;6;H;;Dolche;;
+W;S‰gefischschwert;;"Schwerter											";1W+2;12/3;-2/1;-1;5;N;;Schwerter;;
+W;Anderthalbh‰nder;anderthalbhaender00.jpg;Anderthalbh‰nder          ;1W+5;11/4;0/0;1;2;NS;z;Anderthalbh‰nder;Zweihandschwerter/-s‰bel;
+W;Bastardschwert;bastardschwert00.jpg;Anderthalbh‰nder               ;1W+5;11/3;0/-1;0;2;NS;z;Anderthalbh‰nder;;
+W;Bastardschwert[einh‰ndig];bastardschwert00.jpg;Anderthalbh‰nder    ;1W+5;12/4;0/-1;-1;2;N;;Schwerter;;
+W;Nachtwind;;"Anderthalbh‰nder          				                    ";1W+4;11/5;0/0;2;0;N;z;Anderthalbh‰nder;Schwerter;
+W;Nachtwind[einh‰ndig];;Anderthalbh‰nder                                ;1W+4;11/5;0/0;2;0;N;;Schwerter;;
+W;Rondrakamm;rondrakamm00.jpg;Anderthalbh‰nder                       ;2W+2;12/3;0/0;0;1;NS;z;Anderthalbh‰nder;Zweihandschwerter/-s‰bel;
+W;Tuzakmesser;tuzakmesser00.jpg;Anderthalbh‰nder                     ;1W+6;12/4;0/0;1;1;NS;z;Anderthalbh‰nder;Zweihandschwerter/-s‰bel;
+W;Basiliskenzunge;basiliskenzunge00.jpg;Dolche                       ;1W+2;12/4;0/-1;-1;4;H;;Dolche;;
+W;Dolch;dolch00.jpg;Dolche                                           ;1W+1;12/5;0/-1;0;2;H;;Dolche;;
+W;Drachenzahn;;"Dolche   			                                    ";1W+2;11/4;0/0;0;0;H;;Dolche;;
+W;Eberf‰nger;;"Dolche                			                        ";1W+2;12/4;0/-1;0;1;H;;Dolche;;
+W;Jagdmesser;jagdmesser00.jpg;Dolche                                 ;1W+2;12/5;0/-2;-1;3;H;;Dolche;;
+W;Langdolch;langdolch00.jpg;Dolche                                   ;1W+2;12/4;0/0;0;1;H;;Dolche;Fechtwaffen;
+W;Hakendolch;;"Dolche                                   					";1W+1;12/4;0/1;0;-2;HN;;Dolche;;
+W;Mengbilar;mengbillar00.jpg;Dolche                                  ;1W+1;12/5;0/-3;-2;7;H;;Dolche;;
+W;Messer;messer00.jpg;Dolche                                         ;1W;12/6;-2/-3;-2;4;H;;Dolche;;
+W;Ogerf‰nger;;"Dolche                                        			";1W+2;12/4;0/-2;0;4;H;;Dolche;;
+W;Scheibendolch;;"Dolche                                     			";1W+2;11/4;0/-3;0;0;H;;Dolche;;
+W;Panzerstecher;;"Fechtwaffen                                     		";1W+4;13/3;-1/-1;0;0;N;;Fechtwaffen;;
+W;Schwerer Dolch;dolch_schwer00.jpg;Dolche                           ;1W+2;12/4;0/-1;0;1;H;;Dolche;;
+W;Vulkanglasdolch;dolch_vulkanglas00.jpg;Dolche                      ;1W-1;12/5;-2/-3;-2;6;H;;Dolche;;
+W;Waqqif;waqqif00.jpg;Dolche                                         ;1W+2;12/5;-1/-3;-2;2;H;;Dolche;S‰bel;
+W;Degen;degen00.jpg;Fechtwaffen                                      ;1W+3;12/5;0/-1;2;3;N;;Fechtwaffen;;
+W;Firnelfisches Eisigelflorett;eisigelflorett00.jpg;Fechtwaffen      ;1W+3;12/5;1/-1;3;4;N;;Fechtwaffen;;
+W;Florett;florett00.jpg;Fechtwaffen                                  ;1W+3;12/5;1/-1;3;4;N;;Fechtwaffen;;
+W;Magierdegen;;Fechtwaffen                                  ;1W+2;13/5;0/-2;1;4;N;;Fechtwaffen;;
+W;Rapier;rapier00.jpg;Fechtwaffen                                    ;1W+3;12/4;0/0;1;2;N;;Fechtwaffen;Schwerter;
+W;Stockdegen;stockdegen00.jpg;Fechtwaffen                            ;1W+3;12/5;-1/-3;0;4;N;;Fechtwaffen;;
+W;Wolfsmesser;wolfsmesser00.jpg;Fechtwaffen                          ;1W+3;12/4;0/0;1;1;N;;Fechtwaffen;S‰bel;Schwerter
+W;Beil;handbeil00.jpg;Hiebwaffen                                     ;1W+3;11/4;-1/-2;-1;5;N;;Hiebwaffen;;
+W;Brabakbengel;brabakbengel00.jpg;Hiebwaffen                         ;1W+5;13/3;0/-1;0;1;N;;Hiebwaffen;;
+W;Byakka;byakka00.jpg;Hiebwaffen                                     ;1W+5;14/2;0/-2;-1;3;N;;Hiebwaffen;;
+W;Fackel;;Hiebwaffen                                        ;1W;11/5;-2/-3;-2;8;HN;;Hiebwaffen;;
+W;Fleischerbeil;;Hiebwaffen                                 ;1W+2;11/4;-2/-3;-1;2;H;;Hiebwaffen;;
+W;Haumesser;haumesser00.jpg;Hiebwaffen                               ;1W+3;13/3;0/-2;-1;3;HN;;Hiebwaffen;S‰bel;
+W;Keule;keule00.jpg;Hiebwaffen                                       ;1W+2;11/3;0/-2;0;3;N;;Hiebwaffen;;
+W;Kn¸ppel;;Hiebwaffen                                       ;1W+1;11/4;0/-2;0;6;N;;Hiebwaffen;;
+W;Lindwurmschl‰ger;lindwurmschlaeger00.jpg;Hiebwaffen                ;1W+4;11/3;0/-1;-1;1;HN;;Hiebwaffen;;
+W;Molokdeschnaja;;Hiebwaffen                                ;1W+4;11/3;0/0;0;3;N;;Hiebwaffen;;
+W;Rabenschnabel;rabenschnabel00.jpg;Hiebwaffen                       ;1W+4;10/4;0/0;0;3;38,;;Hiebwaffen;;
+W;Rabenschnabel (Boron);rabenschnabel00.jpg;Hiebwaffen               ;1W+4;10/4;0/0;0;3;38,;;Hiebwaffen;;
+W;Schmiedehammer;;Hiebwaffen                                ;1W+4;14/2;-1/-1;-1;1;N;;Hiebwaffen;;
+W;Sichel;sichel00.jpg;Hiebwaffen                                     ;1W+2;12/5;-2/-2;-2;6;H;;Hiebwaffen;;
+W;Skraja;skraja00.jpg;Hiebwaffen                                     ;1W+3;11/3;0/0;0;4;N;;Hiebwaffen;;
+W;Sonnenszepter;;Hiebwaffen                                  ;1W+3;12/3;-1/-1;0;1;N;;Hiebwaffen;;
+W;Streitaxt;streitaxt00.jpg;Hiebwaffen                               ;1W+4;13/2;0/-1;0;2;N;;Hiebwaffen;;
+W;Streitkolben;streitkolben00.jpg;Hiebwaffen                         ;1W+4;11/3;0/-1;0;1;N;;Hiebwaffen;;
+W;Stuhlbein;;Hiebwaffen                                     ;1W;11/5;-1/-1;-1;8;HN;;Hiebwaffen;;
+W;Zwergenskraja;;Hiebwaffen                                 ;1W+3;11/3;0/0;0;1;N;;Hiebwaffen;;
+W;Glefe;glefe00.jpg;Infanteriewaffen                                 ;1W+4;13/3;0/-2;-1;5;S;;Infanteriewaffen;;
+W;Hakenspieﬂ;;Infanteriewaffen                              ;1W+3;13/4;-1/-1;0;5;S;z;Infanteriewaffen;;
+W;Hellebarde;hellebarde00.jpg;Infanteriewaffen                       ;1W+5;12/3;0/-1;0;5;S;z;Infanteriewaffen;;
+W;Korspieﬂ;korspiess00.jpg;Infanteriewaffen                          ;2W+2;12/3;0/-1;0;3;S;z;Infanteriewaffen;Speere;
+W;Neethaner Langaxt;;Infanteriewaffen                       ;2W+2;13/4;-1/-3;-2;5;S;z;Infanteriewaffen;Zweihandhiebwaffen;
+W;Pailos;;Infanteriewaffen                                  ;2W+4;14/2;-1/-3;-2;3;S;z;Infanteriewaffen;Zweihandhiebwaffen;
+W;Partisane;partisane00.jpg;Infanteriewaffen                         ;1W+5;13/3;0/-2;0;4;S;z;Infanteriewaffen;Speere;
+W;Sense;;Infanteriewaffen                                   ;1W+3;13/4;-2/-4;-2;7;S;z;Infanteriewaffen;;
+W;Sturmsense;;Infanteriewaffen                              ;1W+4;13/3;-1/-2;-1;5;S;z;Infanteriewaffen;;
+W;Warunker Hammer;;Infanteriewaffen                         ;1W+6;14/3;0/-1;-1;2;NS;z;Infanteriewaffen;Zweihandhiebwaffen;
+W;Kettenstab;;Kettenst‰be                                   ;1W+2;13/4;1/0;2;2;HN;z;Kettenst‰be;;
+W;Geiﬂel;geissel00.jpg;Kettenwaffen                      ;1W-1;14/5;0/-4;-1;5;N;;Kettenwaffen;;
+W;Morgenstern;morgenstern00.jpg;Kettenwaffen                         ;1W+5;14/2;-1/-2;-1;2;N;;Kettenwaffen;;
+W;Neunschw‰nzige;;Kettenwaffen                              ;1W+1;14/4;-1/-4;-1;5;N;;Kettenwaffen;;
+W;Ochsenherde;ochsenherde00.jpg;Kettenwaffen                         ;3W+3;17/1;-2/-4;-3;3;N;;Kettenwaffen;;
+W;Ogerschelle;ogerschelle00.jpg;Kettenwaffen                         ;2W+2;15/1;-1/-3;-2;3;N;;Kettenwaffen;;
+W;Peitsche;peitsche00.jpg;Kettenwaffen                               ;1W;14/5;0/-;0;4;S;;Peitsche;;
+W;(Lang-)Schwert;langschwert00.jpg;Schwerter                         ;1W+4;11/4;0/0;0;1;N;;Schwerter;;
+W;Arbach;;Schwerter                                         ;1W+4;12/3;0/-1;0;2;N;;S‰bel;Schwerter;
+W;Barbarenschwert;;Schwerter                                ;1W+5;12/3;0/-1;-1;4;N;;Schwerter;Hiebwaffen;
+W;Breitschwert;breitschwert00.jpg;Schwerter                          ;1W+4;12/3;0/-1;0;1;N;;Schwerter;;
+W;Kurzschwert;kurzschwert00.jpg;Schwerter                            ;1W+2;11/4;0/-1;0;1;HN;;Dolche;S‰bel;Schwerter
+W;Robbentˆter;;Schwerter                                    ;1W+3;12/4;0/0;0;2;N;;Fechtwaffen;S‰bel;Schwerter
+W;Turnierschwert;;Schwerter                                 ;1W+3A;11/5;0/0;0;3;N;;Schwerter;;
+W;Drachentˆter;;Speere und St‰be                            ;3W+5;20/1;-2/-4;-3;3;P;;Speere;;
+W;Drakoniterstab;draconiterstab00.jpg;Speere und St‰be               ;1W+1;12/4;0/0;1;5;NS;z;St‰be;;
+W;Dreizack;;Speere und St‰be                                ;1W+4;13/3;0/-1;0;5;S;z;Speere;;
+W;Dschadra;dschadra00.jpg;Speere und St‰be                           ;1W+5;12/4;0/-3;-1;6;S;;Speere;;
+W;Efferdbart;efferdbart00.jpg;Speere und St‰be                       ;1W+4;13/3;0/-1;0;3;NS;;Speere;;
+W;Jagdspieﬂ;;Speere und St‰be                               ;1W+6;12/4;0/-1;-1;3;S;;Speere;;
+W;Kampfstab;kampfstab00.jpg;Speere und St‰be                         ;1W+1;12/4;0/0;1;5;NS;z;St‰be;;
+W;Kriegslanze;lanze_krieg00.jpg;Speere und St‰be                     ;1W+3;12/5;-2/-4;-2;5;P;;Speere;;
+W;Magierstab;magierstab00.jpg;Speere und St‰be                       ;1W+1;11/5;-1/-1;0;-9;NS;;St‰be;;
+W;Magierstab (kurz);magierstab00.jpg;Speere und St‰be                ;1W;11/4;-1/-1;0;-9;N;;Hiebwaffen;;
+W;Magierstab (sehr kurz);magierstab00.jpg;Speere und St‰be           ;1W+1;11/5;-1/-1;-1;-9;NS;;Hiebwaffen;;
+W;Magierstab als Stab;magierstab00.jpg;Speere und St‰be              ;1W+1;11/5;-1/-1;0;-9;NS;;St‰be;;
+W;Magierstab mit Kristallk.;magierstab00.jpg;Speere und St‰be        ;1W+1;11/4;-1/-1;-2;-9;N;;Zweihandhiebwaffen;;
+W;Pike;;Speere und St‰be                                    ;1W+5;14/4;-1/-2;-2;6;P;z;Speere;;
+W;Speer;speer00.jpg;Speere und St‰be                                 ;1W+5;12/4;0/-2;-1;5;S;z;Speere;;
+W;Holzspeer;speer00.jpg;Speere und St‰be                             ;1W+3;12/5;-1/-3;0;5;S;z;Speere;;
+W;Holzspeer[einh‰ndig];speer00.jpg;Speere und St‰be                   ;1W+2;13/6;-1/-6;0;5;S;;Speere;;
+W;Stoﬂspeer;;Speere und St‰be                               ;2W+2;11/4;0/-1;-1;3;S;z;Speere;;
+W;Turnierlanze;lanze_turnier00.jpg;Speere und St‰be                  ;1W+2A;12/5;-2/-4;-2;8;P;;Speere;;
+W;Wurmspieﬂ;;Speere und St‰be                               ;1W+5;13/4;0/-2;0;2;S;;Infanteriewaffen;Speere;
+W;Zweililien;zweililien00.jpg;Speere und St‰be                       ;1W+3;12/4;1/-1;1;4;NS;z;St‰be;;
+D;Blasrohr;blasrohr00.jpg;Schusswaffen                               ;1W-1;(2/5/10/20/40);(0/0/0/0/-2);Blasrohr;;;;;;
+W;Amazonens‰bel;amazonensaebel00.jpg;S‰bel                           ;1W+4;11/4;0/0;1;2;N;;S‰bel;Schwerter;
+W;Entermesser;entermesser00.jpg;S‰bel                                ;1W+3;12/4;0/0;0;2;N;;S‰bel;;
+W;Khunchomer;khunchumer00.jpg;S‰bel                                  ;1W+4;12/3;0/0;0;2;N;;S‰bel;;
+W;Kusliker S‰bel;saebel_kusliker00.jpg;S‰bel                         ;1W+3;12/4;0/0;1;1;N;;S‰bel;Schwerter;
+W;S‰bel;saebel00.jpg;S‰bel                                           ;1W+3;12/4;0/0;1;2;N;;S‰bel;Schwerter;
+W;Drachenklaue;;Waffenlos                                   ;1W+2;12/3;0/0;-1;0;H;;Raufen;;
+W;Hruruzat;;Waffenlos                                       ;2WA;10/3;0/0;0;-;H;;Raufen;;
+W;Hruruzat[gegen Waffe];;Waffenlos                           ;2WA;10/3;-1/-2;0;-;H;;Raufen;;
+W;Orchidee;;Waffenlos                                       ;1W+1;12/5;-1/-2;0;3;H;;Raufen;;
+W;Raufen;;Waffenlos                                         ;1WA;10/3;0/0;0;-;H;;Raufen;;
+W;Raufen[gegen Waffe];;Waffenlos                             ;1WA;10/3;-1/-2;0;-;H;;Raufen;;
+W;Ringen;;Waffenlos                                         ;1WA;10/3;0/0;0;-;H;;Ringen;;
+W;Ringen[gegen Waffe];;Waffenlos                             ;1WA;10/3;-1/-2;0;-;H;;Ringen;;
+W;Schlagring;;Waffenlos                                     ;1W+2A;10/3;-1/-2;0;0;H;;Raufen;;
+W;Veteranenhand;;Waffenlos                                  ;1W+2;12/4;0/-1;-1;4;H;;Raufen;;
+W;Barbarenstreitaxt;barbarenstreitaxt00.jpg;Zweihandhiebwaffen und -flegel;3W+2;15/1;-1/-4;-2;3;N;z;Zweihandhiebwaffen;;
+W;Dreschflegel;dreschflegel00.jpg;Zweihandhiebwaffen und -flegel     ;1W+3;12/3;-2/-3;-2;6;S;z;Zweihandflegel;;
+W;Echsische Axt;;Zweihandhiebwaffen und -flegel             ;1W+5;12/4;0/-1;0;3;NS;z;Zweihandhiebwaffen;;
+W;Felsspalter;felsspalter00.jpg;Zweihandhiebwaffen und -flegel       ;2W+2;14/2;0/-2;-1;2;N;z;Zweihandhiebwaffen;;
+W;Gruufhai;;Zweihandhiebwaffen und -flegel                  ;1W+6;14/2;-1/-3;-2;3;N;z;Zweihandhiebwaffen;;
+W;Holzf‰lleraxt;holzfaelleraxt00.jpg;Zweihandhiebwaffen und -flegel  ;2W;12/2;-1/-4;-2;5;N;z;Zweihandhiebwaffen;;
+W;Kriegsflegel;;Zweihandhiebwaffen und -flegel              ;1W+6;12/2;-1/-2;-1;5;S;z;Zweihandflegel;;
+W;Kriegshammer;kriegshammer00.jpg;Zweihandhiebwaffen und -flegel     ;2W+3;14/2;-1/-3;-2;2;N;z;Zweihandhiebwaffen;;
+W;Orknase;orknase00.jpg;Zweihandhiebwaffen und -flegel               ;1W+5;12/2;0/-1;-1;4;N;z;Zweihandhiebwaffen;;
+W;Orknase[einh‰ndig];orknase00.jpg;Zweihandhiebwaffen und -flegel    ;1W+5;13/3;0/-1;-1;4;N;;Hiebwaffen;Zweihandhiebwaffen;
+W;Schnitter;;Zweihandhiebwaffen und -flegel                 ;1W+5;14/4;0/0;0;4;NS;z;Infanteriewaffen;Speere;Zweihandhiebwaffen
+W;Spitzhacke;;Zweihandhiebwaffen und -flegel                ;1W+6;13/2;-2/-4;-3;5;N;z;Zweihandhiebwaffen;;
+W;Vorschlaghammer;;Zweihandhiebwaffen und -flegel           ;1W+5;13/2;-2/-4;-3;5;N;z;Zweihandhiebwaffen;;
+W;Zwergenschl‰gel;;Zweihandhiebwaffen und -flegel           ;1W+5;13/3;0/-1;-1;1;N;z;Zweihandhiebwaffen;;
+W;Andergaster;andergaster00.jpg;Zweihandschwerter und -s‰bel         ;3W+2;14/2;0/-2;-3;3;S;z;Zweihandschwerter/-s‰bel;;
+W;Boronsichel;;Zweihandschwerter und -s‰bel                 ;2W+6;13/3;0/-3;-2;3;S;z;Zweihandschwerter/-s‰bel;;
+W;Doppelkhunchomer;;Zweihandschwerter und -s‰bel            ;1W+6;13/2;0/-2;-2;3;NS;z;Zweihandschwerter/-s‰bel;;
+W;Groﬂer Sklaventod;;Zweihandschwerter und -s‰bel           ;2W+4;13/2;0/-2;-2;2;NS;z;Zweihandschwerter/-s‰bel;;
+W;Richtschwert;;Zweihandschwerter und -s‰bel                ;3W+4;13/2;-2/-4;-3;5;N;z;Zweihandschwerter/-s‰bel;;
+W;Zweih‰nder;zweihaender00.jpg;Zweihandschwerter und -s‰bel          ;2W+4;12/3;0/-1;-1;2;NS;z;Zweihandschwerter/-s‰bel;;
+W;Buckler (Vollmetall);;Parierwaffe                               ;1W+1;11/4;-2/0;-1;-2;H;;Raufen;;
+W;Buckler;;"Parierwaffe                               			  ";1W;11/4;-2/-1;-1;0;H;;Raufen;;
+D;Bauchspanner-Armbrust;;"Schusswaffen									";2W+4;(15/30/70/120/200);(+4/+2/0/-1/-2);Armbrust;;;;;;
+D;Gandrasch-Armbrust, doppelt;;"Schusswaffen								";2W+8;(10/25/50/100/150);(+2/+1/0/0/0);Armbrust;;;;;;
+D;Gandrasch-Armbrust, einfach;;"Schusswaffen								";2W+2;(5/15/25/40/60);(+1/0/0/0/0);Armbrust;;;;;;
+D;Jagddiskus;;"Wurfwaffen												";2W+4;(5/10/20/30/60);(+1/0/0/0-1);Armbrust;;;;;;
+D;Palta;;"Wurfwaffen														";1W+4;(5/10/15/25/40);(+3/+2/+1/0/0);Wurfspeere;;;;;;
+D;Arbalette;arbalette00.jpg;Schusswaffen                             ;2W+5;(10/20/30/60/100);(+2/+1/0/-1/-2);Armbrust;;;;;;
+D;Arbalone;;Schusswaffen                                    ;3W+6;(15/30/60/120/250);(+4/+2/0/-1/-3);Armbrust;;;;;;
+D;Balestra;;Schusswaffen                                    ;2W+2;(10/20/30/50/75);(+2/+1/0/0/-1);Armbrust;;;;;;
+D;Balestrina;;Schusswaffen                                  ;1W+4;(2/4/8/15/25);(+2/+1/0/0/-1);Armbrust;;;;;;
+D;Ball‰ster;;Schusswaffen                                   ;1W+4;(10/20/30/60/100);(+3/+1/0/-1/-1);Armbrust;;;;;;
+D;Eisenwalder;;Schusswaffen                                 ;;1W+3;(5/10/15/20/40);Armbrust;;;;;;
+D;Elfenbogen;langbogen00.jpg;Schusswaffen                            ;1W+5;(10/25/50/100/200);(+3/+2/+1/+1/0);Bogen;;;;;;
+D;Kompositbogen;kompositbogen00.jpg;Schusswaffen                     ;1W+5;(10/20/35/50/80);(+2/+1/+1/0/0);Bogen;;;;;;
+D;Kriegsbogen;;Schusswaffen                                 ;1W+7;(10/20/40/80/150);(+3/+2/+1/0/0);Bogen;;;;;;
+D;Kurzbogen;kurzbogen00.jpg;Schusswaffen                             ;1W+4;(5/15/25/40/60);(+1/+1/0/0/-1);Bogen;;;;;;
+D;Langbogen;langbogen00.jpg;Schusswaffen                             ;1W+6;(10/25/50/100/200);(+3/+2/+1/0/-1);Bogen;;;;;;
+D;Leichte Armbrust;armbrust_leicht00.jpg;Schusswaffen                ;1W+6;(10/15/25/40/60);(+1/+1/0/0/-1);Armbrust;;;;;;
+D;Orkischer Reiterbogen;;Schusswaffen                       ;1W+5;(5/15/30/60/100);(+3/+1/0/-1/-2);Bogen;;;;;;
+D;Windenarmbrust;armbrust_schwer00.jpg;Schusswaffen                  ;2W+6;(10/30/60/100/180);(+4/+2/0/-1/-3);Armbrust;;;;;;
+W;Sklaventot;;S‰bel                                         ;1W+4;12/3;0/0;0;3;N;;S‰bel;;
+D;Borndorn;borndorn00.jpg;Wurfwaffen                                 ;1W+2;(2/4/6/8/15);(+1/0/0/0/-1);Wurfmesser;;;;;;
+D;Diskus;;Wurfwaffen                                        ;1W+3;(5/10/20/30/60);(+1/0/0/0/-1);Diskus;;;;;;
+D;Efferdbart (Wurf);efferdbart00.jpg;Wurfwaffen                      ;1W+3;(3/6/10/15/25);(+2/+1/0/-1/-2);Wurfspeere;;;;;;
+D;Fledermaus;;Wurfwaffen                                    ;1W+2;(0/5/10/15/25);(-/0/0/0/-1);Schleuder;;;;;;
+D;Granatapfel;;Wurfwaffen                                   ;4W;(0/5/10/15/20);(-/-/-/-/-);Wurfspeere;;;;;;
+D;Holzspeer;;Wurfwaffen                                     ;1W+2;(5/10/15/25/40);(+1/0/0/-1/-2);Wurfspeere;;;;;;
+D;Kampfdiskus;;Wurfwaffen                                   ;1W+5;(10/20/30/45/60);(+1/0/0/0/0);Diskus;;;;;;
+D;Lasso;;Wurfwaffen                                         ;1W+4;(0/2/5/10/15);(-/0/0/-1/-2);Schleuder;;;;;;
+D;Schleuder;;Wurfwaffen                                     ;1W+2;(0/5/15/25/40);(-/0/0/0/0);Schleuder;;;;;;
+D;Schneidzahn;schneidzahn00.jpg;Wurfwaffen                           ;1W+4;(0/5/10/15/30);(-/+1/+1/0/-1);Wurfbeile;;;;;;
+D;Schweres Wurfnetz;;Wurfwaffen                             ;1W+6;(0/0/0/5/5);(-/-/-/-/-);Schleuder;;;;;;
+D;Speer (Wurf);speer00.jpg;Wurfwaffen                                ;1W+3;(5/10/15/25/40);(+1/0/0/-1/-2);Wurfspeere;;;;;;
+D;Speerschleuder;;Wurfwaffen                                ;1W+3;(5/15/25/35/50);(+2/+1/0/0/-1);Wurfspeere;;;;;;
+D;Stabschleuder;;Wurfwaffen                                 ;1W+3;(0/5/20/40/60);(-/0/0/0/0);Wurfspeere;;;;;;
+D;Stein, Flasche;;Wurfwaffen                                ;(i);1W;(1/2/4/8/12);Wurfbeile;;;;;;
+D;Wurfbeil;wurfbeil00.jpg;Wurfwaffen                                 ;1W+3;(0/5/10/15/25);(-/+1/+1/0/-1);Wurfbeile;;;;;;
+D;Wurfdolch;wurfdolch00.jpg;Wurfwaffen                               ;1W+1;(2/4/6/8/15);(+1/0/0/0/-1);Wurfmesser;;;;;;
+D;Dolch;dolch00.jpg;Wurfwaffen                               ;1W;(1/3/5/7/10);(0/0/0/-1/-1);Wurfmesser;;;;;;
+D;Wurfkeule;;Wurfwaffen                                     ;2W+4A;(0/5/15/25/40);(-/+1/+1/+1/0);Wurfbeile;;;;;;
+D;Wurfmesser;wurfmesser00.jpg;Wurfwaffen                             ;1W;(2/4/6/8/15);(+1/0/0/0/-1);Wurfmesser;;;;;;
+D;Wurfnetz;;Wurfwaffen                                      ;1W+2;(0/0/0/5/5);(-/-/-/-/-);Schleuder;;;;;;
+D;Wurfnetz, schwer;;"Wurfwaffen								";1W+6;(0/0/0/5/5);(-/-/-/-/-);Schleuder;;;;;;
+D;Wurfscheibe;;Wurfwaffen                             ;1W+1;(2/4/8/12/20);(+1/0/0/0/0);Wurfmesser;;;;;;
+D;Wurfring;;Wurfwaffen                             ;1W+1;(2/4/8/12/20);(+1/0/0/0/0);Wurfmesser;;;;;;
+D;Wurfstern;;Wurfwaffen                             ;1W+1;(2/4/8/12/20);(+1/0/0/0/0);Wurfmesser;;;;;;
+D;Wurfspeer;wurfspeer00.jpg;Wurfwaffen                               ;1W+4;(5/10/15/25/40);(+3/+1/0/-1/-1);Wurfspeere;;;;;;
+W;Wurfspeer;wurfspeer00.jpg;Wurfwaffen                               ;1W+3;11/5;-1/-3;-2;4;N;;Speere;;
+S;Hummerschere;;"Parierwaffe									";-2/1;-1;4;P;Raufen;;;;;
+S;Kriegsf‰cher;;"Parierwaffe									";0/2;1;3;P;Raufen;;;;;
+S;Kriegsf‰cher (Dornen);;"Parierwaffe						";0/2;1;1;P;Raufen;;;;;
+S;Kriegsf‰cher (Vollmetall);;"Parierwaffe					";0/2;1;1;P;Raufen;;;;;
+S;Legion‰rsschild;;"Schilde									";-2/4;-1;2;S;Raufen;;;;;
+S;Bock;;Parierwaffe                                         ;-1/1;0;0;SP;Raufen;;;;;
+S;Buckler (Vollmetall);;Parierwaffe                               ;0/2;0;-2;SP;Raufen;;;;;
+S;Langdolch;;Parierwaffe                                   ;0/1;0;0;SP;Dolche;;;;;
+S;Hakendolch;;Parierwaffe                                   ;-1/3;0;-2;SP;Dolche;;;;;
+S;Linkhand;linkhand00.jpg;Parierwaffe                                ;0/2;1;0;P;Dolche;;;;;
+S;Linkhand mit Klingenf‰nger;linkhand00.jpg;Parierwaffe              ;0/2;1;0;P;Dolche;;;;;
+S;Linkhand und Klingenbrecher;linkhand00.jpg;Parierwaffe             ;0/2;1;0;P;Dolche;;;;;
+S;Panzerarm;;Parierwaffe                                    ;-2/1;0;-2;SP;Raufen;;;;;
+S;Buckler;buckler00.jpg;Schilde                                      ;0/1;0;0;SP;Raufen;;;;;
+S;Holzschild;holzschild00.jpg;Schilde                      ;-1/3;-1;3;S;Raufen;;;;;
+S;Holzschild (verst‰rkt);holzschild_verstaerkt01.jpg;Schilde         ;-2/3;-1;0;S;Raufen;;;;;
+S;Groﬂschild;;Schilde                                       ;-2/5;-2;2;S;Raufen;;;;;
+S;Lederschild;;Schilde                                      ;-1/3;0;5;S;Raufen;;;;;
+S;Lederschild (groﬂ);lederschild00.jpg;Schilde                       ;-1/4;-1;6;S;Raufen;;;;;
+S;Reiterschild;turnierschild00.jpg;Schilde                           ;-2/5;-2;2;S;Raufen;;;;;
+S;Thorwaler Rundschild;thorwalerschild00.jpg;Schilde                      ;-2/4;-1;3;S;Raufen;;;;;
+S;Turmschild;;Schilde                                       ;-5/7;-3;1;S;Raufen;;;;;
+S;Vollmetallbuckler;;Schilde                                ;0/2;0;-2;SP;Raufen;;;;;
+M;Octavo;octavo01.jpg;B¸cher                                         ;;;;;;;;;;
+M;Pergament;pergamente00.jpg;B¸cher                                  ;;;;;;;;;;
+M;Quarto;quarto01.jpg;B¸cher                                         ;;;;;;;;;;
+M;Essbesteck;essbesteck00.jpg;Essutensilien                          ;;;;;;;;;;
+M;Napf - Lˆffel;napf_loeffel00.jpg;Essutensilien                     ;;;;;;;;;;
+M;Teekocher;teekocher00.jpg;Essutensilien                            ;;;;;;;;;;
+M;Teller - Lˆffel aus Zinn;teller_loeffel00.jpg;Essutensilien        ;;;;;;;;;;
+M;Fernrohr;fernrohr00.jpg;Feinmechanik                               ;;;;;;;;;;
+M;Kompass;kompass00.jpg;Feinmechanik                                 ;;;;;;;;;;
+M;Pfeife;pfeife00.jpg;Freizeitbedarf                                 ;;;;;;;;;;
+M;Spielkarten;spielkarten00.jpg;Freizeitbedarf                       ;;;;;;;;;;
+M;W¸rfel - Becher;wuerfel00.jpg;Freizeitbedarf                       ;;;;;;;;;;
+M;Blendlaterne;blendlaterne00.jpg;Illumination                       ;;;;;;;;;;
+M;Feuerstein Stahl;feuerstein_stahl00.jpg;Illumination               ;;;;;;;;;;
+M;Kerzen;kerzen00.jpg;Illumination                                   ;;;;;;;;;;
+M;Kerzenlaterne;laterne00.jpg;Illumination                           ;;;;;;;;;;
+M;Pechfackeln;fackeln00.jpg;Illumination                             ;;;;;;;;;;
+M;÷llampe;oellampe00.jpg;Illumination                                ;;;;;;;;;;
+M;Flˆte;floete00.jpg;Instrumente                                     ;;;;;;;;;;
+M;Geige;geige00.jpg;Instrumente                                      ;;;;;;;;;;
+M;Laute;laute00.jpg;Instrumente                                      ;;;;;;;;;;
+M;Vierbl‰ttrige Einbeere;einbeere00.jpg;Kr‰uter                      ;;;;;;;;;;
+M;Wirselkraut;wirselkraut00.jpg;Kr‰uter                              ;;;;;;;;;;
+M;Brecheisen;brecheisen00.jpg;Werkzeuge                              ;;;;;;;;;;
+M;Phiolenk‰stchen;phiolenkaestchen00.jpg;Kisten                      ;;;;;;;;;;
+M;Schmuckk‰stchen;schmuckkasten00.jpg;Kisten                         ;;;;;;;;;;
+M;Zunderb¸chse;zunderbuechse00.jpg;Kisten                            ;;;;;;;;;;
+M;Kamm;kamm00.jpg;Kˆrperpflege                                       ;;;;;;;;;;
+M;Rasiermesser;rasiermesser00.jpg;Kˆrperpflege                       ;;;;;;;;;;
+M;Seife;seife00.jpg;Kˆrperpflege                                     ;;;;;;;;;;
+M;Proviant;proviant00.jpg;Nahrung                                    ;;;;;;;;;;
+M;Hanfseil;seil00.jpg;Reisebedarf                                    ;;;;;;;;;;
+M;Kletterseil;seil01.jpg;Reisebedarf                                 ;;;;;;;;;;
+M;Wolldecke 3 x 9 Spann;wolldecke00.jpg;Reisebedarf                  ;;;;;;;;;;
+M;Wolldecke 6 x 10 Spann;wolldecke01.jpg;Reisebedarf                 ;;;;;;;;;;
+M;Wolldecke 6 x 9 Spann;wolldecke02.jpg;Reisebedarf                  ;;;;;;;;;;
+M;Zweimannzelt;zelt00.jpg;Reisebedarf                                ;;;;;;;;;;
+M;Schreibzeug;schreibzeug00.jpg;Schreibwaren                         ;;;;;;;;;;
+M;Siegelstock mit Wachs;siegelstock_wachs01.jpg;Sonstiges        ;;;;;;;;;;
+M;Einbruchswerkzeug;einbrech00.jpg;Werkzeuge                         ;;;;;;;;;;
+M;Haken;haken00.jpg;Werkzeuge                                        ;;;;;;;;;;
+M;Nadel - Garn;nadel_garn00.jpg;Werkzeuge                            ;;;;;;;;;;
+M;N‰gel;naegel00.jpg;Werkzeuge                                       ;;;;;;;;;;
+M;Schaufel;schaufel00.jpg;Werkzeuge                                  ;;;;;;;;;;
+M;Strickleiter;strickleiter00.jpg;Werkzeuge                          ;;;;;;;;;;
+M;Wurfhaken;wurfhaken00.jpg;Werkzeuge                                ;;;;;;;;;;
+M;Blasrohrpfeile;blasrohrpfeile00.jpg;Zubehˆr                        ;;;;;;;;;;
+M;Bolzen;bolzen01.jpg;Zubehˆr                                        ;;;;;;;;;;
+M;Duftwasser 3 Flux;duftwasser00.jpg;Flaschen                        ;;;;;;;;;;
+M;Feldflasche 1 Maﬂ;feldflasche00.jpg;Flaschen                       ;;;;;;;;;;
+M;Fl‰schchen 1 Schank;flaeschchen01.jpg;Flaschen                     ;;;;;;;;;;
+M;Fl‰schchen Ω Schank;flaeschchen00.jpg;Flaschen                     ;;;;;;;;;;
+M;Glasflasche 2 Schank;flasche00.jpg;Flaschen                        ;;;;;;;;;;
+M;Lampenˆl;lampenoel00.jpg;Flaschen                                  ;;;;;;;;;;
+M;Phiole 5 Flux;phiole00.jpg;Flaschen                                ;;;;;;;;;;
+M;Schnapsflasche 1 Schank;flasche_schnaps00.jpg;Flaschen             ;;;;;;;;;;
+M;Trinkhorn 1 Schank;trinkhorn00.jpg;Flaschen                        ;;;;;;;;;;
+M;Wasserschlauch (braun) 1 Maﬂ;wasserschlauch02.jpg;Flaschen         ;;;;;;;;;;
+M;Wasserschlauch 1 Maﬂ;wasserschlauch00.jpg;Flaschen                 ;;;;;;;;;;
+M;Wasserschlauch 5 Schank;wasserschlauch01.jpg;Flaschen              ;;;;;;;;;;
+M;Korb f¸r 20 Stein;korb00.jpg;Kisten                                ;;;;;;;;;;
+M;Packkiste fasst 600 Unzen;packkiste00.jpg;Kisten                   ;;;;;;;;;;
+M;Zunderk‰stchen;zunderkasten00.jpg;Kisten                           ;;;;;;;;;;
+M;Lendenschurz;lendenschurz00.jpg;Beine                              ;;;;;;;;;;
+M;Stulpenhandschuhe;handschuhe_stulpen00.jpg;Handschuhe              ;;;;;;;;;;
+M;Lederhut;lederhut00.jpg;Kopfbedeckung                              ;;;;;;;;;;
+M;H¸ftkˆcher 20 Bolzen;koecher_hueft00.jpg;Kˆcher                    ;;;;;;;;;;
+M;H¸ftkˆcher 20 Pfeile;koecher_hueft01.jpg;Kˆcher                    ;;;;;;;;;;
+M;R¸ckenkˆcher 20 Bolzen;koecher_ruecken01.jpg;Kˆcher                ;;;;;;;;;;
+M;R¸ckenkˆcher 20 Pfeile;koecher_ruecken00.jpg;Kˆcher                ;;;;;;;;;;
+M;Holzbecher;holzbecher00.jpg;Sonstiges                         ;;;;;;;;;;
+M;Tiegel aus Elfenbein;tiegel00.jpg;Sonstiges                   ;;;;;;;;;;
+M;Trinkpokal Zinn;trinkpokal00.jpg;Sonstiges                    ;;;;;;;;;;
+M;G¸rtelrolle fasst 50 Unzen;guertelrolle00.jpg;Taschen              ;;;;;;;;;;
+M;G¸rteltasche;guerteltasche01.jpg;Taschen                           ;;;;;;;;;;
+M;G¸rteltasche fasst 40 Unzen;guerteltasche00.jpg;Taschen            ;;;;;;;;;;
+M;G¸rteltasche fasst 50 Unzen;guerteltasche01.jpg;Taschen            ;;;;;;;;;;
+M;Heilkr‰uter;heilkraeuter00.jpg;Taschen                             ;;;;;;;;;;
+M;Heilkr‰uter Groﬂ;heilkraeuter01.jpg;Taschen                        ;;;;;;;;;;
+M;Lederbeutel fasst 10 Unzen;beutel_leder01.jpg;Taschen              ;;;;;;;;;;
+M;Lederbeutel fasst 15 Unzen;beutel_leder02.jpg;Taschen              ;;;;;;;;;;
+M;Lederbeutel fasst 20 Unzen;beutel_leder00.jpg;Taschen              ;;;;;;;;;;
+M;Lederranzen fasst 200 Unzen;lederranzen00.jpg;Taschen              ;;;;;;;;;;
+M;Lederrucksack fasst 400 Unzen;rucksack_leder00.jpg;Taschen         ;;;;;;;;;;
+M;Leinenbeutel fasst 10 Unzen;beutel_leinen00.jpg;Taschen            ;;;;;;;;;;
+M;Phiolentasche;phiolentasche00.jpg;Taschen                          ;;;;;;;;;;
+M;Satteltaschen fassen je 400 Unzen;satteltaschen00.jpg;Taschen      ;;;;;;;;;;
+M;Umh‰ngetasche (alt) fasst 50 Unzen;umhaengetasche04.jpg;Taschen    ;;;;;;;;;;
+M;Umh‰ngetasche (dunkel) fasst 300 Unzen;umhaengetasche01.jpg;Taschen;;;;;;;;;;
+M;Umh‰ngetasche fasst 300 Unzen;umhaengetasche00.jpg;Taschen         ;;;;;;;;;;
+M;Umh‰ngetasche fasst 40 Unzen;umhaengetasche03.jpg;Taschen          ;;;;;;;;;;
+M;Umh‰ngetasche fasst 50 Unzen;umhaengetasche02.jpg;Taschen          ;;;;;;;;;;
+M;Hose;hose03.jpg;Beine                                              ;;;;;;;;;;
+M;Kniehose Brokat;hose00.jpg;Beine                                   ;;;;;;;;;;
+M;Leinenhose;hose01.jpg;Beine                                        ;;;;;;;;;;
+M;Rock;rock00.jpg;Beine                                              ;;;;;;;;;;
+M;Rock Seide;rock01.jpg;Beine                                        ;;;;;;;;;;
+M;Lederhandschuhe;handschuhe_leder00.jpg;Handschuhe                  ;;;;;;;;;;
+M;Lederhandschuhe (beige);handschuhe_leder01.jpg;Handschuhe          ;;;;;;;;;;
+M;Lederhandschuhe (lang);handschuhe_leder02.jpg;Handschuhe           ;;;;;;;;;;
+M;Barett;barett00.jpg;Kopfbedeckung                                  ;;;;;;;;;;
+M;Filzhut;filzhut00.jpg;Kopfbedeckung                                ;;;;;;;;;;
+M;Gugel;gugel00.jpg;Kopfbedeckung                                    ;;;;;;;;;;
+M;Hut;hut01.jpg;Kopfbedeckung                                        ;;;;;;;;;;
+M;Kappe;kappe01.jpg;Kopfbedeckung                                    ;;;;;;;;;;
+M;Lederhut (alt);lederhut01.jpg;Kopfbedeckung                        ;;;;;;;;;;
+M;Magierhut;magierhut00.jpg;Kopfbedeckung                            ;;;;;;;;;;
+M;Schlapphut;schlapphut00.jpg;Kopfbedeckung                          ;;;;;;;;;;
+M;Turban;turban00.jpg;Kopfbedeckung                                  ;;;;;;;;;;
+M;Gehrock aus Wolle;gehrock00.jpg;Mantel                             ;;;;;;;;;;
+M;Ledermantel;mantel_leder00.jpg;Mantel                              ;;;;;;;;;;
+M;Reitermantel;reitermantel00.jpg;Mantel                             ;;;;;;;;;;
+M;Umhang Phexenslist;umhang00.jpg;Mantel                           ;;;;;;;;;;
+M;Umhang (gr¸n);umhang01.jpg;Mantel                                  ;;;;;;;;;;
+M;Umhang aus B‰renfell;umhang04.jpg;Mantel                           ;;;;;;;;;;
+M;Umhang aus Fell;umhang03.jpg;Mantel                                ;;;;;;;;;;
+M;Umhang aus Wolle;umhang02.jpg;Mantel                               ;;;;;;;;;;
+M;Umhang mit Kapuze;umhang05.jpg;Mantel                              ;;;;;;;;;;
+M;Umhang mit Pelz;umhang06.jpg;Mantel                                ;;;;;;;;;;
+M;Anaurak;anaurak00.jpg;Oben                                         ;;;;;;;;;;
+M;Ballkleid;ballkleid00.jpg;Oben                                     ;;;;;;;;;;
+M;Beschwˆhrungsgewand;beschwoerung00.jpg;Oben                        ;;;;;;;;;;
+M;Boronirobe Bishdariel;robe_boroni00.jpg;Oben                       ;;;;;;;;;;
+M;Boronirobe Golgari;robe_boroni01.jpg;Oben                          ;;;;;;;;;;
+M;Hexengewand;hexengewand00.jpg;Oben                                 ;;;;;;;;;;
+M;Kleid;kleid00.jpg;Oben                                             ;;;;;;;;;;
+M;Kleid kurz;kleid01.jpg;Oben                                        ;;;;;;;;;;
+M;Robe;robe00.jpg;Oben                                               ;;;;;;;;;;
+M;Robe aus Brokat;robe_brokat00.jpg;Oben                             ;;;;;;;;;;
+M;Fellstiefel aus B‰renfell;stiefel_fell00.jpg;Schuhe                ;;;;;;;;;;
+M;Fellstiefel aus Dachsfell;stiefel_fell01.jpg;Schuhe                ;;;;;;;;;;
+M;Halbstiefel;stiefel_halb00.jpg;Schuhe                              ;;;;;;;;;;
+M;Lederschuhe;schuhe00.jpg;Schuhe                                    ;;;;;;;;;;
+M;Schn¸rstiefel;stiefel_schnuer00.jpg;Schuhe                         ;;;;;;;;;;
+M;Spangenschuhe;schuhe_spangen00.jpg;Schuhe                          ;;;;;;;;;;
+M;Stulpenstiefel (hellbraun);stiefel_stulpen01.jpg;Schuhe            ;;;;;;;;;;
+M;Stulpenstiefel (rot);stiefel_stulpen00.jpg;Schuhe                  ;;;;;;;;;;
+M;Stulpenstiefel aus Leder (braun);stiefel_stulpen02.jpg;Schuhe      ;;;;;;;;;;
+M;Stulpenstiefel aus Leder (schwarz);stiefel_stulpen03.jpg;Schuhe    ;;;;;;;;;;
+M;Axtgeh‰nge;axtgehaenge01.jpg;Sonstiges                        ;;;;;;;;;;
+M;Axtgeh‰nge klein;axtgehaenge00.jpg;Sonstiges                  ;;;;;;;;;;
+M;Axtgurt;axtgurt01.jpg;Sonstiges                               ;;;;;;;;;;
+M;Axtgurt klein;axtgurt00.jpg;Sonstiges                         ;;;;;;;;;;
+M;Dolchscheide (braun);scheide_dolch01.jpg;Sonstiges            ;;;;;;;;;;
+M;Dolchscheide (hellbraun);scheide_dolch00.jpg;Sonstiges        ;;;;;;;;;;
+M;Dolchscheide (schwarz);scheide_dolch02.jpg;Sonstiges          ;;;;;;;;;;
+M;Lederg¸rtel (gr¸n);lederguertel00.jpg;Sonstiges               ;;;;;;;;;;
+M;Lederg¸rtel (kurz);lederguertel02.jpg;Sonstiges               ;;;;;;;;;;
+M;Lederg¸rtel (lang);lederguertel01.jpg;Sonstiges               ;;;;;;;;;;
+M;Lendentuch;lendentuch00.jpg;Sonstiges                         ;;;;;;;;;;
+M;R¸ckengurt (blau);rueckengurt01.jpg;Sonstiges                 ;;;;;;;;;;
+M;R¸ckengurt (braun);rueckengurt00.jpg;Sonstiges                ;;;;;;;;;;
+M;R¸ckengurt mit G¸rtel (braun);rueckengurt_guertel00.jpg;Sonstiges;;;;;;;;;;
+M;R¸ckengurt mit G¸rtel (schwarz);rueckengurt_guertel01.jpg;Sonstiges;;;;;;;;;;
+M;Schwertgurt;schwertgurt00.jpg;Sonstiges                       ;;;;;;;;;;
+M;Str¸mpfe;struempfe00.jpg;Sonstiges                            ;;;;;;;;;;
+M;Bluse aus Leinen;bluse01.jpg;Torso                                 ;;;;;;;;;;
+M;Bluse aus Samt (rot);bluse03.jpg;Torso                             ;;;;;;;;;;
+M;Bluse aus Samt (schwarz);bluse02.jpg;Torso                         ;;;;;;;;;;
+M;Bluse aus Samt (violett);bluse04.jpg;Torso                         ;;;;;;;;;;
+M;Bluse aus Seide;bluse00.jpg;Torso                                  ;;;;;;;;;;
+M;Brokatweste;weste00.jpg;Torso                                      ;;;;;;;;;;
+M;Firnelfische Jacke;jacke_firnelf00.jpg;Torso                       ;;;;;;;;;;
+M;Hemd - Wams;hemd_wams00.jpg;Torso                                  ;;;;;;;;;;
+M;Hemd - Weste;hemd_weste00.jpg;Torso                                ;;;;;;;;;;
+M;Hemd aus Leinen;hemd_leinen01.jpg;Torso                            ;;;;;;;;;;
+M;Hemd aus Leinen (alt);hemd_leinen00.jpg;Torso                      ;;;;;;;;;;
+M;Hemd aus Seiden;hemd_seide01.jpg;Torso                             ;;;;;;;;;;
+M;Hemd aus Seiden (schwarz);hemd_seide02.jpg;Torso                   ;;;;;;;;;;
+M;Hemd aus Seiden mit Kragen;hemd_seide00.jpg;Torso                  ;;;;;;;;;;
+M;Hemd aus Wolle;hemd_wolle00.jpg;Torso                              ;;;;;;;;;;
+M;Jacke aus Bausch;jacke00.jpg;Torso                                 ;;;;;;;;;;
+M;Tunika;tunika00.jpg;Torso                                          ;;;;;;;;;;
+M;Wappenrock;wappenrock00.jpg;Torso                                  ;;;;;;;;;;
+M;Wappenrock Brokat;wappenrock01.jpg;Torso                           ;;;;;;;;;;
+M;Weste;weste02.jpg;Torso                                            ;;;;;;;;;;
+M;Weste Brokat;weste00.jpg;Torso                                     ;;;;;;;;;;
+M;Alchemistenschale;alchemistenschale00.jpg;magische Artefakte       ;;;;;;;;;;
+M;Drachenei;drachenei00.jpg;magische Artefakte                       ;;;;;;;;;;
+M;Knochenhelm;knochenhelm00.jpg;magische Artefakte                   ;;;;;;;;;;
+M;Kristallkugel;kristallkugel00.jpg;magische Artefakte               ;;;;;;;;;;
+M;Paradiesvogelfeder;paradies00.jpg;magische Artefakte               ;;;;;;;;;;
+M;Tsas Weidenstab;weidenstab00.jpg;magische Artefakte                ;;;;;;;;;;
+M;Amulett aus Stoff;amulett03.jpg;Schmuck                            ;;;;;;;;;;
+M;Amulett Drachen;amulett07.jpg;Schmuck                              ;;;;;;;;;;
+M;Amulett mit Bild;amulett06.jpg;Schmuck                             ;;;;;;;;;;
+M;Amulett Pentagramm;amulett01.jpg;Schmuck                           ;;;;;;;;;;
+M;Amulett Ring;amulett05.jpg;Schmuck                                 ;;;;;;;;;;
+M;Amulett Stern;amulett02.jpg;Schmuck                                ;;;;;;;;;;
+M;Amulett Wirbel;amulett04.jpg;Schmuck                               ;;;;;;;;;;
+M;Armreif aus Messing;armreif00.jpg;Schmuck                          ;;;;;;;;;;
+M;Armreif aus Silber;armreif01.jpg;Schmuck                           ;;;;;;;;;;
+M;Armreif aus Silber (leicht);armreif02.jpg;Schmuck                  ;;;;;;;;;;
+M;Armreif aus Silber&Gold;armreif03.jpg;Schmuck                      ;;;;;;;;;;
+M;Blattohrringe aus Silber;ohrringe00.jpg;Schmuck                    ;;;;;;;;;;
+M;Phex-Amulett;phexamulett00.jpg;Schmuck                             ;;;;;;;;;;
+M;Ring aus Gold;ring00.jpg;Schmuck                                   ;;;;;;;;;;
+M;Ring aus Silber;ring01.jpg;Schmuck                                 ;;;;;;;;;;
+M;Ringe aus Gold;ring02.jpg;Schmuck                                  ;;;;;;;;;;
+M;Schl¸ssel;schluessel00.jpg;Sonstiges                          ;;;;;;;;;;

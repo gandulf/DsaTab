@@ -1,12 +1,13 @@
 package com.dsatab.data.items;
 
-import com.dsatab.R;
 import com.dsatab.data.enums.ItemType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "item_misc")
 public class MiscSpecification extends ItemSpecification {
+
+	private static final long serialVersionUID = -3149075995866654756L;
 
 	@DatabaseField(generatedId = true)
 	protected int id;
@@ -48,25 +49,6 @@ public class MiscSpecification extends ItemSpecification {
 	@Override
 	public String getInfo() {
 		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.dsatab.data.items.ItemSpecification#getResourceId()
-	 */
-	@Override
-	public int getResourceId() {
-		if (type != null) {
-			switch (type) {
-			case Sonstiges:
-				return R.drawable.icon_misc;
-			default:
-				return R.drawable.icon_other;
-			}
-		} else {
-			return R.drawable.icon_other;
-		}
 	}
 
 }

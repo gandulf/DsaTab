@@ -94,9 +94,11 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 								exchange.setOnHeroExchangeListener(new OnHeroExchangeListener() {
 									@Override
 									public void onHeroLoaded(String path) {
-										Toast.makeText(HeroChooserActivity.this,
-												heroInfo.getName() + " wurde erfolgreich heruntergeladen",
-												Toast.LENGTH_SHORT).show();
+
+										Toast.makeText(
+												HeroChooserActivity.this,
+												getString(R.string.message_hero_successfully_downloaded,
+														heroInfo.getName()), Toast.LENGTH_SHORT).show();
 									}
 
 									@Override
@@ -166,7 +168,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 				}
 			}
 
-			mode.setSubtitle(selected + " ausgewählt");
+			mode.setSubtitle(getString(R.string.count_selected, selected));
 
 			boolean changed = false;
 

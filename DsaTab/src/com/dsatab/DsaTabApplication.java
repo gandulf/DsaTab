@@ -46,6 +46,9 @@ import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 public class DsaTabApplication extends Application implements OnSharedPreferenceChangeListener {
 
+	public static final int HS_VERSION_INT = 5310;
+	public static final String HS_VERSION = "5.3.1";
+
 	public static final String TILESOURCE_AVENTURIEN = "AVENTURIEN";
 
 	public static final String FLURRY_APP_ID = "AK17DSVJZBNH35G554YR";
@@ -203,7 +206,7 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 		File pdfsDir = getDirectory(DIR_PDFS);
 		File bgDir = getDirectory(DIR_BACKGROUNDS);
 
-		Debug.verbose("Checking dsatab herodir " + getDsaTabHeroPath());
+		Debug.verbose("Checking dsatab hero dir " + getDsaTabHeroPath());
 		File heroes = getDsaTabHeroDirectory();
 	}
 
@@ -444,8 +447,6 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 
 	public void saveHero() {
 		if (hero == null) {
-			Toast.makeText(getApplicationContext(),
-					"Held kann nicht gespeichert werden, da noch kein Held geladen wurde.", Toast.LENGTH_SHORT).show();
 			return;
 		}
 		FileOutputStream out = null;
@@ -471,7 +472,7 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 			saveHeroConfiguration();
 			Toast.makeText(this, getString(R.string.hero_saved, hero.getName()), Toast.LENGTH_SHORT).show();
 		} catch (Exception e) {
-			Toast.makeText(this, "Held konnte nicht gespeichert werden.", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, R.string.message_save_hero_failed, Toast.LENGTH_LONG).show();
 			Debug.error(e);
 		} finally {
 			if (out != null) {

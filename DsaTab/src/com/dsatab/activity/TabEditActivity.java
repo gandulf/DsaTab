@@ -97,15 +97,15 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 
 		TabHost.TabSpec spec = tabHost.newTabSpec("General");
 		spec.setContent(R.id.tab1);
-		spec.setIndicator("Allgemein");
+		spec.setIndicator(getString(R.string.tab_general));
 		tabHost.addTab(spec);
 		spec = tabHost.newTabSpec("Primary");
 		spec.setContent(R.id.tab2);
-		spec.setIndicator("Primär");
+		spec.setIndicator(getString(R.string.tab_primary));
 		tabHost.addTab(spec);
 		spec = tabHost.newTabSpec("Secondary");
 		spec.setContent(R.id.tab3);
-		spec.setIndicator("Sekundär");
+		spec.setIndicator(getString(R.string.tab_secondary));
 		tabHost.addTab(spec);
 
 		diceslider = (CheckBox) findViewById(R.id.popup_edit_diceslider);
@@ -182,8 +182,7 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 		setResult(RESULT_OK);
 
 		if (DsaTabApplication.getInstance().getHero() == null) {
-			Toast.makeText(this, "Tabs können erst editiert werden, wenn ein Held geladen wurde.", Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(this, R.string.message_can_only_edit_tabs_if_hero_loaded, Toast.LENGTH_SHORT).show();
 			setResult(RESULT_CANCELED);
 			super.finish();
 			return;
@@ -208,16 +207,16 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 
 	@Override
 	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
-		com.actionbarsherlock.view.MenuItem item = menu
-				.add(Menu.NONE, R.id.option_tab_add, Menu.NONE, "Tab hinzufügen");
+		com.actionbarsherlock.view.MenuItem item = menu.add(Menu.NONE, R.id.option_tab_add, Menu.NONE,
+				R.string.option_create_tab);
 		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 		item.setIcon(R.drawable.ic_menu_add);
 
-		item = menu.add(Menu.NONE, R.id.option_tab_delete, Menu.NONE, "Tab entfernen");
+		item = menu.add(Menu.NONE, R.id.option_tab_delete, Menu.NONE, R.string.label_delete);
 		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 		item.setIcon(Util.getThemeResourceId(this, R.attr.imgBarDelete));
 
-		item = menu.add(Menu.NONE, R.id.option_tab_reset, Menu.NONE, "Tabs zurücksetzen");
+		item = menu.add(Menu.NONE, R.id.option_tab_reset, Menu.NONE, R.string.option_reset_tabs);
 		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 		item.setIcon(R.drawable.ic_menu_revert);
 
@@ -318,7 +317,7 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 		for (Integer resId : itemIcons) {
 			portraitPaths.add(Util.getUriForResourceId(resId));
 		}
-		pdialog.setTitle("Wähle ein Icon...");
+		pdialog.setTitle(R.string.title_choose_icon);
 		pdialog.setImages(portraitPaths);
 		pdialog.setScaleType(ScaleType.FIT_CENTER);
 		pdialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -594,7 +593,7 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 			final ListItem listItem = (ListItem) parent.getItemAtPosition(position);
 			if (listItem.getType() == ListItemType.Header) {
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setTitle("Titel eingeben");
+				builder.setTitle(R.string.title_insert_title);
 				final EditText editText = new EditText(this);
 				editText.setText(listItem.getName());
 				builder.setView(editText);

@@ -45,8 +45,8 @@ public class EditListener implements View.OnClickListener, View.OnLongClickListe
 				value = baseFragment.getBeing().getAttribute(type);
 		}
 
-		if (value != null) {
-			showEditPopup(v.getContext(), value);
+		if (value != null && baseFragment.getActivity() != null) {
+			showEditPopup(baseFragment.getActivity(), value);
 		}
 
 	}
@@ -72,8 +72,8 @@ public class EditListener implements View.OnClickListener, View.OnLongClickListe
 				value = baseFragment.getBeing().getAttribute(type);
 		}
 
-		if (value != null) {
-			showEditPopup(v.getContext(), value);
+		if (value != null && baseFragment.getActivity() != null) {
+			showEditPopup(baseFragment.getActivity(), value);
 			return true;
 		}
 		return false;

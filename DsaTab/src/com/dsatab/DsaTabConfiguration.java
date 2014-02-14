@@ -16,11 +16,11 @@ import com.dsatab.fragment.AnimalFragment;
 import com.dsatab.fragment.BaseFragment;
 import com.dsatab.fragment.BodyFragment;
 import com.dsatab.fragment.CharacterFragment;
-import com.dsatab.fragment.ItemChooserFragment;
 import com.dsatab.fragment.ItemsFragment;
 import com.dsatab.fragment.ListableFragment;
 import com.dsatab.fragment.MapFragment;
 import com.dsatab.fragment.NotesEditFragment;
+import com.dsatab.fragment.item.ItemListFragment;
 
 /**
  *  
@@ -70,7 +70,7 @@ public class DsaTabConfiguration {
 		tabResourceIds.put(BodyFragment.class, R.drawable.tab_wound);
 		tabResourceIds.put(ListableFragment.class, R.drawable.tab_fight);
 		tabResourceIds.put(ItemsFragment.class, R.drawable.tab_items);
-		tabResourceIds.put(ItemChooserFragment.class, R.drawable.tab_items);
+		tabResourceIds.put(ItemListFragment.class, R.drawable.tab_items);
 		tabResourceIds.put(NotesEditFragment.class, R.drawable.tab_notes);
 		tabResourceIds.put(MapFragment.class, R.drawable.tab_map);
 		tabResourceIds.put(AnimalFragment.class, R.drawable.tab_animal);

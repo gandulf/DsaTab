@@ -26,7 +26,7 @@
 
             <TextView
                 android:id="@+id/popup_spell_castduration"
-                style="@style/TextValue.NoTouch"
+                style="?attr/textViewValueNoTouchStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right|center_vertical" >
@@ -54,7 +54,7 @@
 
             <TextView
                 android:id="@+id/popup_spell_probe"
-                style="@style/TextValue.NoTouch"
+                style="?attr/textViewValueNoTouchStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right|center_vertical" >
@@ -82,7 +82,7 @@
 
             <TextView
                 android:id="@+id/popup_spell_costs"
-                style="@style/TextValue.NoTouch"
+                style="?attr/textViewValueNoTouchStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right|center_vertical" >
@@ -110,7 +110,7 @@
 
             <TextView
                 android:id="@+id/popup_spell_target"
-                style="@style/TextValue.NoTouch"
+                style="?attr/textViewValueNoTouchStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right|center_vertical" >
@@ -138,7 +138,7 @@
 
             <TextView
                 android:id="@+id/popup_spell_range"
-                style="@style/TextValue.NoTouch"
+                style="?attr/textViewValueNoTouchStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right|center_vertical" >
@@ -167,7 +167,7 @@
 
             <TextView
                 android:id="@+id/popup_spell_effectduration"
-                style="@style/TextValue.NoTouch"
+                style="?attr/textViewValueNoTouchStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right|center_vertical" >
@@ -195,7 +195,7 @@
 
             <TextView
                 android:id="@+id/popup_spell_effect"
-                style="@style/TextValue.NoTouch"
+                style="?attr/textViewValueNoTouchStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right|center_vertical"
@@ -225,7 +225,7 @@
 
             <TextView
                 android:id="@+id/popup_spell_merkmal"
-                style="@style/TextValue.NoTouch"
+                style="?attr/textViewValueNoTouchStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -254,7 +254,7 @@
 
             <TextView
                 android:id="@+id/popup_spell_representation"
-                style="@style/TextValue.NoTouch"
+                style="?attr/textViewValueNoTouchStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right|center_vertical" >
@@ -282,7 +282,7 @@
 
             <TextView
                 android:id="@+id/popup_spell_source"
-                style="@style/TextValue.NoTouch"
+                style="?attr/textViewValueNoTouchStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right|center_vertical" >
@@ -310,7 +310,7 @@
 
             <TextView
                 android:id="@+id/popup_spell_complexity"
-                style="@style/TextValue.NoTouch"
+                style="?attr/textViewValueNoTouchStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right|center_vertical" >
@@ -353,7 +353,7 @@
 
             <TextView
                 android:id="@+id/popup_spell_comment"
-                style="@style/TextValue.NoTouch"
+                style="?attr/textViewValueNoTouchStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right|center_vertical"
@@ -383,7 +383,7 @@
 
             <TextView
                 android:id="@+id/popup_spell_variant"
-                style="@style/TextValue.NoTouch"
+                style="?attr/textViewValueNoTouchStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right|center_vertical" >

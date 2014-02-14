@@ -226,16 +226,16 @@ public enum FeatureType {
 			FeatureGroupType.Disadvantage), WahrerName("Wahrer Name", FeatureGroupType.Disadvantage), WahrerNameDschinn(
 			"Wahrer Name: Dschinn", FeatureGroupType.Disadvantage), WahrerNameDämon("Wahrer Name: Dämon",
 			FeatureGroupType.Disadvantage), Wahnvorstellungen("Wahnvorstellungen", FeatureGroupType.Disadvantage), Weltfremd(
-			"Weltfremd", FeatureGroupType.Disadvantage), WiderwärtigesAussehen("Widerwärtiges Aussehen",
-			FeatureGroupType.Disadvantage), WildeMagie("Wilde Magie", FeatureGroupType.Disadvantage), Zielschwierigkeiten(
-			"Zielschwierigkeiten", FeatureGroupType.Disadvantage), ZögerlicherZauberer("Zögerlicher Zauberer",
-			FeatureGroupType.Disadvantage), Zwergenwuchs("Zwergenwuchs", FeatureGroupType.Disadvantage), Ritualspezialisierung(
-			"Ritualspezialisierung", FeatureGroupType.SpecialFeature), Akoluth("Akoluth",
-			FeatureGroupType.SpecialFeature), Apport("Apport", FeatureGroupType.SpecialFeature), AstraleMeditation(
-			"Astrale Meditation", FeatureGroupType.SpecialFeature), Aufmerksamkeit("Aufmerksamkeit",
-			FeatureGroupType.SpecialFeature), AuraDerHeiligkeit("Aura der Heiligkeit", FeatureGroupType.SpecialFeature), AuraVerhüllen(
-			"Aura verhüllen", FeatureGroupType.SpecialFeature), Aurapanzer("Aurapanzer",
-			FeatureGroupType.SpecialFeature), Ausfall("Ausfall", FeatureGroupType.SpecialFeature), Auspendeln(
+			"Weltfremd", FeatureGroupType.Disadvantage), WeltfremdBzgl("Weltfremd bzgl.", FeatureGroupType.Disadvantage), WiderwärtigesAussehen(
+			"Widerwärtiges Aussehen", FeatureGroupType.Disadvantage), WildeMagie("Wilde Magie",
+			FeatureGroupType.Disadvantage), Zielschwierigkeiten("Zielschwierigkeiten", FeatureGroupType.Disadvantage), ZögerlicherZauberer(
+			"Zögerlicher Zauberer", FeatureGroupType.Disadvantage), Zwergenwuchs("Zwergenwuchs",
+			FeatureGroupType.Disadvantage), Ritualspezialisierung("Ritualspezialisierung",
+			FeatureGroupType.SpecialFeature), Akoluth("Akoluth", FeatureGroupType.SpecialFeature), Apport("Apport",
+			FeatureGroupType.SpecialFeature), AstraleMeditation("Astrale Meditation", FeatureGroupType.SpecialFeature), Aufmerksamkeit(
+			"Aufmerksamkeit", FeatureGroupType.SpecialFeature), AuraDerHeiligkeit("Aura der Heiligkeit",
+			FeatureGroupType.SpecialFeature), AuraVerhüllen("Aura verhüllen", FeatureGroupType.SpecialFeature), Aurapanzer(
+			"Aurapanzer", FeatureGroupType.SpecialFeature), Ausfall("Ausfall", FeatureGroupType.SpecialFeature), Auspendeln(
 			"Auspendeln", FeatureGroupType.SpecialFeature), AusweichenI("Ausweichen I", FeatureGroupType.SpecialFeature), AusweichenII(
 			"Ausweichen II", FeatureGroupType.SpecialFeature), AusweichenIII("Ausweichen III",
 			FeatureGroupType.SpecialFeature), Bannschwert("Bannschwert", FeatureGroupType.SpecialFeature), Befreiungsschlag(
@@ -1293,7 +1293,20 @@ public enum FeatureType {
 			if (attr.xmlName().equals(code)) {
 				return attr;
 			}
+
 		}
+
+		// search for old values without the prefix
+		for (FeatureType attr : FeatureType.values()) {
+			int index = attr.xmlName().indexOf(':') + 1;
+			if (index >= 0 && index < attr.xmlName().length()) {
+				String subAttr = attr.xmlName().substring(index);
+				if (subAttr.trim().equals(code)) {
+					return attr;
+				}
+			}
+		}
+
 		throw new FeatureTypeUnknownException(code);
 	}
 }

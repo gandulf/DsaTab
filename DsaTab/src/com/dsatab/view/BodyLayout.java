@@ -320,35 +320,17 @@ public class BodyLayout extends FrameLayout {
 						// do nothing
 						break;
 					}
-				} else if (lp.getArmorPosition() != null) {
-					switch (lp.getArmorPosition()) {
-					case Kopf:
-						headWidth += child.getMeasuredWidth();
-						break;
-					case Bauch:
-						torsoWidth += child.getMeasuredWidth();
-						break;
-					case Brust:
-						chestWidth += child.getMeasuredWidth();
-						break;
-					case LinkerArm:
-						leftArmWidth += child.getMeasuredWidth();
-						break;
-					case RechterArm:
-						rightArmWidth += child.getMeasuredWidth();
-						break;
-					case LinkesBein:
-						upperLegWidth += child.getMeasuredWidth();
-						break;
-					case RechtesBein:
-						lowerLegWidth += child.getMeasuredWidth();
-						break;
-					default:
-						// do nothing
-						break;
-					}
-
 				}
+				/*
+				 * else if (lp.getArmorPosition() != null) { switch (lp.getArmorPosition()) { case Kopf: headWidth +=
+				 * child.getMeasuredWidth(); break; case Bauch: torsoWidth += child.getMeasuredWidth(); break; case
+				 * Brust: chestWidth += child.getMeasuredWidth(); break; case LinkerArm: leftArmWidth +=
+				 * child.getMeasuredWidth(); break; case RechterArm: rightArmWidth += child.getMeasuredWidth(); break;
+				 * case LinkesBein: upperLegWidth += child.getMeasuredWidth(); break; case RechtesBein: lowerLegWidth +=
+				 * child.getMeasuredWidth(); break; default: // do nothing break; }
+				 * 
+				 * }
+				 */
 			}
 		}
 

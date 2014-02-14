@@ -3,5 +3,5 @@
         android:id="@+id/option_map_choose"
         android:icon="?attr/imgBarMap"
         android:showAsAction="withText|always"
-        android:title="Karte auswählen"/>
+        android:title="@string/choose_map"/>
 </menu>

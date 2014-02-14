@@ -11,6 +11,7 @@ import com.dsatab.R;
 import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemSpecification;
 import com.dsatab.util.Debug;
+import com.dsatab.util.DsaUtil;
 
 /**
  * @author Seraphim
@@ -97,24 +98,35 @@ public class ItemListItem extends CheckableRelativeLayout {
 	}
 
 	public void setItem(Item e) {
-		if (e.getSpecifications().isEmpty())
-			Debug.error("Item without spec found " + e.getName());
-		setItem(e, e.getSpecifications().get(0));
+		if (e != null) {
+			if (e.getSpecifications().isEmpty()) {
+				Debug.error("Item without spec found " + e.getName());
+				setItem(e, null);
+			} else {
+				setItem(e, e.getSpecifications().get(0));
+			}
+		} else {
+			setItem(null, null);
+		}
 	}
 
 	public void setItem(Item e, ItemSpecification spec) {
 		if (icon1 != null) {
 			icon1.setVisibility(View.VISIBLE);
-			if (e.getIconUri() != null)
+			if (e != null && e.getIconUri() != null)
 				icon1.setImageURI(e.getIconUri());
 			else if (spec != null)
-				icon1.setImageResource(spec.getResourceId());
+				icon1.setImageResource(DsaUtil.getResourceId(spec));
 			else
 				icon1.setImageResource(0);
 		}
 		// Set value for the first text field
 		if (text1 != null) {
-			text1.setText(e.getTitle());
+			if (e != null) {
+				text1.setText(e.getTitle());
+			} else {
+				text1.setText(null);
+			}
 			if (textColor != Color.TRANSPARENT)
 				text1.setTextColor(textColor);
 		}

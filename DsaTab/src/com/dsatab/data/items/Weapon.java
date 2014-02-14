@@ -18,6 +18,8 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "item_weapon")
 public class Weapon extends CloseCombatItem {
 
+	private static final long serialVersionUID = -9104544279435755450L;
+
 	@DatabaseField(generatedId = true)
 	protected int id;
 
@@ -96,45 +98,6 @@ public class Weapon extends CloseCombatItem {
 
 	public void setDistance(String distance) {
 		this.distance = distance;
-	}
-
-	@Override
-	public int getResourceId() {
-		switch (getTalentType()) {
-		case Anderthalbhänder:
-		case Zweihandschwertersäbel:
-			return R.drawable.icon_2schwert;
-		case Hiebwaffen:
-			return R.drawable.icon_hieb;
-		case Stäbe:
-			return R.drawable.icon_stab;
-		case Fechtwaffen:
-			return R.drawable.icon_fecht;
-		case Dolche:
-			return R.drawable.icon_messer;
-		case Speere:
-			return R.drawable.icon_speer;
-		case Infanteriewaffen:
-			return R.drawable.icon_halberd;
-		case Zweihandhiebwaffen:
-			if (item.getName().contains("hammer")) {
-				return R.drawable.icon_hammer;
-			} else {
-				return R.drawable.icon_2hieb;
-			}
-		case Zweihandflegel:
-			return R.drawable.icon_2hieb;
-		case Kettenstäbe:
-		case Kettenwaffen:
-			return R.drawable.icon_kettenwaffen;
-		case Raufen:
-		case Ringen:
-			return R.drawable.icon_fist;
-		case Peitsche:
-			return R.drawable.icon_whip;
-		default:
-			return R.drawable.icon_sword;
-		}
 	}
 
 	public int getKKModifier(int kk) {

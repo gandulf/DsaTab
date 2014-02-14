@@ -59,8 +59,8 @@ public class ImportHeroTaskNew extends AsyncTask<String, String, Integer> implem
 	protected void onPreExecute() {
 		super.onPreExecute();
 
-		progressDialog = ProgressDialog.show(context, "Held importieren",
-				"Daten werden von Helden-Austausch Server geladen");
+		progressDialog = ProgressDialog.show(context, context.getString(R.string.title_import_heroes),
+				context.getString(R.string.message_loading_data_from_server));
 
 		progressDialog.setCancelable(true);
 		progressDialog.setCanceledOnTouchOutside(false);
@@ -87,7 +87,7 @@ public class ImportHeroTaskNew extends AsyncTask<String, String, Integer> implem
 
 		BufferedWriter bufferedOutputStream = null;
 		try {
-			publishProgress("Verbinde mit Server...");
+			publishProgress(DsaTabApplication.getInstance().getString(R.string.message_connect_to_server));
 
 			String stringheld = Helper.postRequest(token, "action", "returnheld", "format", "heldenxml", "heldenid",
 					heroInfo.getId());
@@ -145,13 +145,12 @@ public class ImportHeroTaskNew extends AsyncTask<String, String, Integer> implem
 				if (onHeroExchangeListener != null) {
 					onHeroExchangeListener.onHeroLoaded(heroFile.getAbsolutePath());
 				} else {
-					Toast.makeText(context, "Held erfolgreich importiert.", Toast.LENGTH_SHORT).show();
+					Toast.makeText(context, R.string.message_hero_import_successful, Toast.LENGTH_SHORT).show();
 				}
 			} else {
-				Toast.makeText(
-						context,
-						"Konnte Heldendatei nicht öffnen, ungültige Datei "
-								+ (heroFile != null ? heroFile.getName() : ""), Toast.LENGTH_SHORT).show();
+				Toast.makeText(context,
+						R.string.message_invalid_hero_file + (heroFile != null ? heroFile.getName() : ""),
+						Toast.LENGTH_SHORT).show();
 			}
 
 			break;
@@ -159,18 +158,13 @@ public class ImportHeroTaskNew extends AsyncTask<String, String, Integer> implem
 			Toast.makeText(context, R.string.download_canceled, Toast.LENGTH_SHORT).show();
 			break;
 		case HeroExchange.RESULT_EMPTY:
-			Toast.makeText(context, "Konnte keine Heldendatei am Helden-Austausch Server finden.", Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(context, R.string.message_no_heo_file_found_on_server, Toast.LENGTH_SHORT).show();
 			break;
 		case HeroExchange.RESULT_ERROR:
 			if (caughtException instanceof AuthorizationException) {
-				Toast.makeText(
-						context,
-						"Token ungültig. Überprüfe ob das Token mit dem in der Helden-Software erstelltem Zugangstoken übereinstimmt.",
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, R.string.message_invalid_token_please_check, Toast.LENGTH_SHORT).show();
 			} else if (caughtException instanceof IOException) {
-				Toast.makeText(context, "Konnte keine Verbindung zum Austausch Server herstellen.", Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(context, R.string.message_connection_to_server_failed, Toast.LENGTH_SHORT).show();
 			} else {
 				Toast.makeText(context, R.string.download_error, Toast.LENGTH_SHORT).show();
 				Debug.error(caughtException);

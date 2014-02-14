@@ -4,21 +4,21 @@
         android:id="@+id/option_pick_avatar"
         android:icon="?attr/imgBarUser"
         android:showAsAction="withText|ifRoom"
-        android:title="Portrait auswählen"/>
+        android:title="@string/choose_portrait"/>
     <item
         android:id="@+id/option_view_portrait"
         android:icon="?attr/imgBarView"
         android:showAsAction="withText|ifRoom"
-        android:title="Portrait anzeigen"/>
+        android:title="@string/details"/>
     <item
         android:id="@+id/option_take_photo"
         android:icon="?attr/imgBarCamera"
         android:showAsAction="withText|ifRoom"
-        android:title="Photo aufnehmen"/>
+        android:title="@string/take_photo"/>
     <item
         android:id="@+id/option_pick_image"
         android:icon="?attr/imgBarView"
         android:showAsAction="withText|ifRoom"
-        android:title="Galerie öffnen"/>
+        android:title="@string/open_gallery"/>
 
 </menu>

@@ -20,6 +20,8 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "item_distance_weapon")
 public class DistanceWeapon extends ItemSpecification {
 
+	private static final long serialVersionUID = 7632916730968364403L;
+
 	public static final int DISTANCE_COUNT = 5;
 
 	@DatabaseField(generatedId = true)
@@ -259,27 +261,6 @@ public class DistanceWeapon extends ItemSpecification {
 		info.append(getTpDistances());
 
 		return info;
-	}
-
-	@Override
-	public int getResourceId() {
-		switch (getTalentType()) {
-		case Wurfmesser:
-			return R.drawable.icon_wurfdolch;
-		case Armbrust:
-			return R.drawable.icon_crossbow;
-		case Wurfbeile:
-			return R.drawable.icon_wurfbeil;
-		case Wurfspeere:
-			return R.drawable.icon_speer;
-		case Diskus:
-			return R.drawable.icon_diskus;
-		case Schleuder:
-			return R.drawable.icon_sling;
-		default:
-			return R.drawable.icon_bow;
-
-		}
 	}
 
 }

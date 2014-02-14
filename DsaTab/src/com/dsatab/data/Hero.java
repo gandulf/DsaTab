@@ -70,7 +70,7 @@ public class Hero extends AbstractBeing {
 		Offensive, Defensive
 	}
 
-	private String path, key;
+	private String path, key, hsVersion;
 
 	private EditableValue experience, freeExperience;
 
@@ -109,8 +109,9 @@ public class Hero extends AbstractBeing {
 	private Set<HeroInventoryChangedListener> itemListener = new HashSet<HeroInventoryChangedListener>();
 
 	@SuppressWarnings("unchecked")
-	public Hero(String path) throws IOException, JSONException {
+	public Hero(String path, String hsVersion) throws IOException, JSONException {
 		this.path = path;
+		this.hsVersion = hsVersion;
 
 		this.equippedItems = new List[MAXIMUM_SET_NUMBER];
 		this.huntingWeapons = new HuntingWeapon[MAXIMUM_SET_NUMBER];
@@ -141,6 +142,10 @@ public class Hero extends AbstractBeing {
 		this.connections = new ArrayList<Connection>();
 
 		loadHeroConfiguration();
+	}
+
+	public String getHsVersion() {
+		return hsVersion;
 	}
 
 	/**

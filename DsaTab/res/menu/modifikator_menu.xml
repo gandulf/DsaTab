@@ -4,6 +4,6 @@
         android:id="@+id/option_modifier_add"
         android:icon="?attr/imgBarModifierAdd"
         android:showAsAction="withText|ifRoom"
-        android:title="Modifikator hinzufügen"/>
+        android:title="@string/create_modificator"/>
     
 </menu>

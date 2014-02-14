@@ -1,4 +1,4 @@
-package com.dsatab.fragment;
+package com.dsatab.fragment.item;
 
 import java.lang.ref.WeakReference;
 import java.util.Arrays;
@@ -6,9 +6,14 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.Loader;
 import android.text.Editable;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -19,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
+import casidiablo.SimpleCursorLoader;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
@@ -28,43 +34,68 @@ import com.actionbarsherlock.view.ActionMode.Callback;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
-import com.dsatab.activity.ItemEditActivity;
+import com.dsatab.activity.ItemsActivity;
 import com.dsatab.data.Hero;
 import com.dsatab.data.adapter.ItemCursorAdapter;
 import com.dsatab.data.adapter.ItemTypeAdapter;
 import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.items.Item;
+import com.dsatab.fragment.BaseListFragment;
 import com.dsatab.util.Util;
 import com.dsatab.xml.DataManager;
 import com.gandulf.guilib.util.DefaultTextWatcher;
 import com.haarman.listviewanimations.view.DynamicListView;
 
-public class ItemChooserFragment extends BaseListFragment implements TabListener, OnItemClickListener {
+public class ItemListFragment extends BaseListFragment implements TabListener, OnItemClickListener,
+		LoaderCallbacks<Cursor> {
+
+	public interface OnItemSelectedListener {
+		public boolean onItemSelected(Item item);
+	}
 
 	private ItemCursorAdapter itemAdapter = null;
 
 	private DynamicListView itemList;
 
 	private Collection<ItemType> itemTypes = null;
+	private String constraint, category;
 
-	private OnItemClickListener itemClickListener;
+	private OnItemSelectedListener itemSelectedListener;
+
+	protected static class ItemCursorLoader extends SimpleCursorLoader {
+
+		private String constraint;
+		private Collection<ItemType> itemTypes = null;
+		private String category;
+
+		public ItemCursorLoader(Context context, String contraint, Collection<ItemType> itemTypes, String category) {
+			super(context);
+			this.constraint = contraint;
+			this.itemTypes = itemTypes;
+			this.category = category;
+		}
+
+		@Override
+		public Cursor loadInBackground() {
+			return DataManager.getItemsCursor(constraint, itemTypes, category);
+		}
+	}
 
 	protected static final class ItemActionMode implements ActionMode.Callback {
 
 		private WeakReference<ListView> listView;
-		private WeakReference<ItemChooserFragment> listFragment;
+		private WeakReference<ItemListFragment> listFragment;
 
-		public ItemActionMode(ItemChooserFragment fragment, ListView listView) {
-			this.listFragment = new WeakReference<ItemChooserFragment>(fragment);
+		public ItemActionMode(ItemListFragment fragment, ListView listView) {
+			this.listFragment = new WeakReference<ItemListFragment>(fragment);
 			this.listView = new WeakReference<ListView>(listView);
 		}
 
 		@Override
 		public boolean onActionItemClicked(ActionMode mode, com.actionbarsherlock.view.MenuItem menuItem) {
 			final ListView list = listView.get();
-			final ItemChooserFragment fragment = listFragment.get();
+			final ItemListFragment fragment = listFragment.get();
 			if (list == null || fragment == null)
 				return false;
 
@@ -82,7 +113,8 @@ public class ItemChooserFragment extends BaseListFragment implements TabListener
 
 							switch (menuItem.getItemId()) {
 							case R.id.option_edit:
-								ItemEditActivity.edit(fragment.getActivity(), getHero(), item);
+								ItemsActivity.edit(fragment.getActivity(), fragment.getHeroKey(), item,
+										ItemsActivity.ACTION_EDIT);
 								break;
 							case R.id.option_delete: {
 								DataManager.deleteItem(item);
@@ -111,7 +143,7 @@ public class ItemChooserFragment extends BaseListFragment implements TabListener
 		@Override
 		public void onDestroyActionMode(ActionMode mode) {
 			ListView list = listView.get();
-			ItemChooserFragment fragment = listFragment.get();
+			ItemListFragment fragment = listFragment.get();
 			if (list == null || fragment == null)
 				return;
 
@@ -124,7 +156,7 @@ public class ItemChooserFragment extends BaseListFragment implements TabListener
 		@Override
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
 			ListView list = listView.get();
-			ItemChooserFragment fragment = listFragment.get();
+			ItemListFragment fragment = listFragment.get();
 			if (list == null || fragment == null)
 				return false;
 
@@ -144,9 +176,6 @@ public class ItemChooserFragment extends BaseListFragment implements TabListener
 			return true;
 		}
 
-		protected Hero getHero() {
-			return DsaTabApplication.getInstance().getHero();
-		}
 	}
 
 	/*
@@ -160,6 +189,7 @@ public class ItemChooserFragment extends BaseListFragment implements TabListener
 		setHasOptionsMenu(true);
 
 		itemTypes = new HashSet<ItemType>();
+		itemAdapter = new ItemCursorAdapter(getActivity(), null);
 
 		ActionBar actionBar = getSherlockActivity().getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
@@ -181,13 +211,22 @@ public class ItemChooserFragment extends BaseListFragment implements TabListener
 			}
 		});
 
+		getActivity().getSupportLoaderManager().initLoader(0, null, this);
+	}
+
+	public String getHeroKey() {
+		if (getActivity() != null && getActivity().getIntent() != null)
+			return getActivity().getIntent().getStringExtra(ItemsActivity.INTENT_EXTRA_HERO);
+		else
+			return null;
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 		if (mMode == null) {
 			itemList.setItemChecked(position, false);
-			itemClickListener.onItemClick(parent, v, position, id);
+			Item item = DataManager.getItemByCursor((Cursor) itemAdapter.getItem(position));
+			itemSelectedListener.onItemSelected(item);
 		} else {
 			super.onItemClick(parent, v, position, id);
 		}
@@ -261,6 +300,7 @@ public class ItemChooserFragment extends BaseListFragment implements TabListener
 		}
 
 		mCallback = new ItemActionMode(this, itemList);
+		itemList.setAdapter(itemAdapter);
 		itemList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		super.onActivityCreated(savedInstanceState);
 	}
@@ -324,6 +364,17 @@ public class ItemChooserFragment extends BaseListFragment implements TabListener
 		super.onPrepareOptionsMenu(menu);
 	}
 
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		if (requestCode == ItemsActivity.ACTION_EDIT || requestCode == ItemsActivity.ACTION_CREATE) {
+			if (resultCode == Activity.RESULT_OK) {
+				getActivity().getSupportLoaderManager().initLoader(0, null, this);
+			}
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -332,29 +383,11 @@ public class ItemChooserFragment extends BaseListFragment implements TabListener
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.option_add) {
-			ItemEditActivity.create(getActivity(), null);
+			ItemsActivity.create(getActivity(), getHeroKey(), ItemsActivity.ACTION_CREATE);
 			return true;
 		} else {
 			return super.onOptionsItemSelected(item);
 		}
-	}
-
-	@Override
-	public void onStart() {
-		itemAdapter = new ItemCursorAdapter(getActivity(), DataManager.getItemsCursor(null, itemTypes, null));
-		itemList.setAdapter(itemAdapter);
-
-		super.onStart();
-	}
-
-	@Override
-	public void onStop() {
-
-		if (itemAdapter.getCursor() != null) {
-			itemAdapter.getCursor().close();
-		}
-
-		super.onStop();
 	}
 
 	protected void filter(Collection<ItemType> type, String category, String constraint) {
@@ -376,12 +409,27 @@ public class ItemChooserFragment extends BaseListFragment implements TabListener
 		this.itemTypes = itemType;
 	}
 
-	public AdapterView.OnItemClickListener getOnItemClickListener() {
-		return itemClickListener;
+	public OnItemSelectedListener getOnItemSelectedListener() {
+		return itemSelectedListener;
 	}
 
-	public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
-		itemClickListener = onItemClickListener;
+	public void setOnItemSelectedListener(OnItemSelectedListener onItemClickListener) {
+		itemSelectedListener = onItemClickListener;
+	}
+
+	@Override
+	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+		return new ItemCursorLoader(getActivity(), constraint, itemTypes, category);
+	}
+
+	@Override
+	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+		itemAdapter.swapCursor(data);
+	}
+
+	@Override
+	public void onLoaderReset(Loader<Cursor> loader) {
+		itemAdapter.swapCursor(null);
 	}
 
 }

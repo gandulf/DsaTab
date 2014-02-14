@@ -61,7 +61,7 @@ public class ItemContainerAdapter extends OpenArrayAdapter<ItemContainer> {
 
 			if (itemContainer.getCapacity() != 0 || itemContainer.getWeight() != 0.0f) {
 				holder.text3.setVisibility(View.VISIBLE);
-				holder.text3.setText(getContext().getResources().getString(R.string.label_capacity,
+				holder.text3.setText(getContext().getResources().getString(R.string.capacity_value,
 						itemContainer.getWeight(), itemContainer.getCapacity()));
 			} else {
 				holder.text3.setVisibility(View.GONE);

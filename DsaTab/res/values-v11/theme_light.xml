@@ -98,6 +98,12 @@
         <item name="imgActionMicrophone">@drawable/ic_action_microphone_light</item>
         <item name="imgBarActionMicrophone">@drawable/ic_action_microphone_dark</item>
         
+        <item name="textViewValueStyle">@style/TextValue</item>
+        <item name="textViewValueNoTouchStyle">@style/TextValue.NoTouch</item>
+        <item name="textViewValueLeftStyle" >@style/TextValue.Left</item>
+        <item name="textViewValueRightStyle">@style/TextValue.Right</item>
+        <item name="textViewValueSmallStyle">@style/TextValue.Small</item>
+        <item name="textViewValueSmallNoTouchStyle">@style/TextValue.Small.NoTouch</item>
         
         <item name="android:soundEffectsEnabled">false</item>       
         <item name="iconImageViewStyle">@style/Widget.IconImageView</item>        

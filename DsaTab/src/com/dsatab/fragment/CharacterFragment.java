@@ -300,7 +300,7 @@ public class CharacterFragment extends BaseAttributesFragment implements OnClick
 					}
 				} else {
 					Toast.makeText(getActivity(),
-							"Konnte Bild nicht öffnen. Verwende die Standard Gallerie um eine bild auszuwählen.",
+							"Konnte Bild nicht öffnen. Verwende die Standard Galerie um eine Bild auszuwählen.",
 							Toast.LENGTH_LONG).show();
 				}
 			}
@@ -636,7 +636,10 @@ public class CharacterFragment extends BaseAttributesFragment implements OnClick
 
 	protected void updateBaseInfo(boolean animate) {
 
-		HeroBaseInfo baseInfo = getHero().getBaseInfo();
+		HeroBaseInfo baseInfo = null;
+		if (getHero() == null) {
+			baseInfo = getHero().getBaseInfo();
+		}
 
 		boolean showDetails = preferences.getBoolean(PREF_SHOW_BASEINFO, true);
 
@@ -644,7 +647,7 @@ public class CharacterFragment extends BaseAttributesFragment implements OnClick
 			detailsSwitch.setImageResource(Util.getThemeResourceId(getActivity(), R.attr.imgExpanderClose));
 			Animation slideup = AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in);
 
-			if (TextUtils.isEmpty(baseInfo.getAussehen())) {
+			if (baseInfo == null || TextUtils.isEmpty(baseInfo.getAussehen())) {
 				findViewById(R.id.row_aussehen).setVisibility(View.GONE);
 			} else {
 				((TextView) findViewById(R.id.gen_aussehen)).setText(baseInfo.getAussehen());
@@ -653,7 +656,7 @@ public class CharacterFragment extends BaseAttributesFragment implements OnClick
 				findViewById(R.id.row_aussehen).setVisibility(View.VISIBLE);
 			}
 
-			if (TextUtils.isEmpty(baseInfo.getTitel())) {
+			if (baseInfo == null || TextUtils.isEmpty(baseInfo.getTitel())) {
 				findViewById(R.id.row_titel).setVisibility(View.GONE);
 			} else {
 				((TextView) findViewById(R.id.gen_titel)).setText(baseInfo.getTitel());
@@ -662,7 +665,7 @@ public class CharacterFragment extends BaseAttributesFragment implements OnClick
 				findViewById(R.id.row_titel).setVisibility(View.VISIBLE);
 			}
 
-			if (TextUtils.isEmpty(baseInfo.getStand())) {
+			if (baseInfo == null || TextUtils.isEmpty(baseInfo.getStand())) {
 				findViewById(R.id.row_stand).setVisibility(View.GONE);
 			} else {
 				((TextView) findViewById(R.id.gen_stand)).setText(baseInfo.getStand());
@@ -671,7 +674,7 @@ public class CharacterFragment extends BaseAttributesFragment implements OnClick
 				findViewById(R.id.row_stand).setVisibility(View.VISIBLE);
 			}
 
-			if (TextUtils.isEmpty(baseInfo.getKultur())) {
+			if (baseInfo == null || TextUtils.isEmpty(baseInfo.getKultur())) {
 				findViewById(R.id.row_kultur).setVisibility(View.GONE);
 			} else {
 				((TextView) findViewById(R.id.gen_kultur)).setText(baseInfo.getKultur());
@@ -689,13 +692,22 @@ public class CharacterFragment extends BaseAttributesFragment implements OnClick
 			findViewById(R.id.row_titel).setVisibility(View.GONE);
 		}
 
-		((TextView) findViewById(R.id.gen_groesse)).setText(baseInfo.getGroesse() + " cm");
-		((TextView) findViewById(R.id.gen_gewicht)).setText(baseInfo.getGewicht() + " Stein");
-		((TextView) findViewById(R.id.gen_rasse)).setText(baseInfo.getRasse());
-		((TextView) findViewById(R.id.gen_ausbildung)).setText(baseInfo.getAusbildung());
-		((TextView) findViewById(R.id.gen_alter)).setText(Util.toString(baseInfo.getAlter()));
-		((TextView) findViewById(R.id.gen_haar_augen)).setText(baseInfo.getHaarFarbe() + " / "
-				+ baseInfo.getAugenFarbe());
+		if (baseInfo != null) {
+			((TextView) findViewById(R.id.gen_groesse)).setText(baseInfo.getGroesse() + " cm");
+			((TextView) findViewById(R.id.gen_gewicht)).setText(baseInfo.getGewicht() + " Stein");
+			((TextView) findViewById(R.id.gen_rasse)).setText(baseInfo.getRasse());
+			((TextView) findViewById(R.id.gen_ausbildung)).setText(baseInfo.getAusbildung());
+			((TextView) findViewById(R.id.gen_alter)).setText(Util.toString(baseInfo.getAlter()));
+			((TextView) findViewById(R.id.gen_haar_augen)).setText(baseInfo.getHaarFarbe() + " / "
+					+ baseInfo.getAugenFarbe());
+		} else {
+			((TextView) findViewById(R.id.gen_groesse)).setText(null);
+			((TextView) findViewById(R.id.gen_gewicht)).setText(null);
+			((TextView) findViewById(R.id.gen_rasse)).setText(null);
+			((TextView) findViewById(R.id.gen_ausbildung)).setText(null);
+			((TextView) findViewById(R.id.gen_alter)).setText(null);
+			((TextView) findViewById(R.id.gen_haar_augen)).setText(null);
+		}
 
 	}
 

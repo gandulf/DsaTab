@@ -29,7 +29,7 @@ import com.j256.ormlite.dao.RuntimeExceptionDao;
 
 public class XmlParser {
 
-	public static final String ENCODING = "UTF-8";
+	public static final String ENCODING = "ISO-8859-1";
 
 	public static void fillItems() {
 		try {
@@ -48,7 +48,7 @@ public class XmlParser {
 			r = new BufferedReader(new InputStreamReader(DsaTabApplication.getInstance().getAssets()
 					.open("data/arts.csv"), ENCODING), 1024 * 8);
 
-			CSVReader reader = new CSVReader(r);
+			CSVReader reader = new CSVReader(r, ';', '"', 1);
 
 			RuntimeExceptionDao<ArtInfo, Integer> artDao = DsaTabApplication.getInstance().getDBHelper()
 					.getRuntimeDao(ArtInfo.class);
@@ -114,7 +114,7 @@ public class XmlParser {
 			r = new BufferedReader(new InputStreamReader(DsaTabApplication.getInstance().getAssets()
 					.open("data/spells.csv"), ENCODING), 1024 * 8);
 
-			CSVReader reader = new CSVReader(r);
+			CSVReader reader = new CSVReader(r, ';', '"', 1);
 
 			RuntimeExceptionDao<SpellInfo, Integer> spellDao = DsaTabApplication.getInstance().getDBHelper()
 					.getRuntimeDao(SpellInfo.class);
@@ -155,7 +155,7 @@ public class XmlParser {
 
 			}
 		} catch (IOException e) {
-			throw new DsaTabRuntimeException("Could nor read spells from spells.csv", e);
+			throw new DsaTabRuntimeException("Could not read spells from spells.csv", e);
 		} finally {
 			try {
 				if (r != null)
@@ -172,7 +172,7 @@ public class XmlParser {
 			r = new BufferedReader(new InputStreamReader(DsaTabApplication.getInstance().getAssets().open(file),
 					ENCODING), 1024 * 8);
 
-			CSVReader reader = new CSVReader(r);
+			CSVReader reader = new CSVReader(r, ';', '"', 1);
 			String[] lineData;
 
 			List<ArmorPosition> armorPositions = DsaTabApplication.getInstance().getConfiguration().getArmorPositions();

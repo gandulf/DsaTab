@@ -4,6 +4,6 @@
         android:id="@+id/option_delete"
         android:icon="?attr/imgBarDelete"
         android:showAsAction="withText|ifRoom"
-        android:title="Löschen"/>
+        android:title="@string/label_delete"/>
 
 </menu>

@@ -1,8 +1,7 @@
-package com.dsatab.fragment;
+package com.dsatab.fragment.item;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -25,15 +24,17 @@ import android.widget.Spinner;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.Hero;
 import com.dsatab.data.adapter.SpinnerSimpleAdapter;
 import com.dsatab.data.enums.ItemType;
-import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemSpecification;
 import com.dsatab.data.items.MiscSpecification;
+import com.dsatab.fragment.BaseFragment;
+import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Util;
 import com.dsatab.view.CardView;
 import com.dsatab.view.ItemListItem;
@@ -83,33 +84,6 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 		View root = inflater.inflate(R.layout.sheet_edit_item, container, false);
 
 		nameView = (EditText) root.findViewById(R.id.popup_edit_name);
-		titleView = (EditText) root.findViewById(R.id.popup_edit_title);
-		priceView = (EditText) root.findViewById(R.id.popup_edit_price);
-		weightView = (EditText) root.findViewById(R.id.popup_edit_weight);
-		iconView = (ImageView) root.findViewById(R.id.popup_edit_icon);
-
-		imageView = (CardView) root.findViewById(R.id.popup_edit_image);
-		imageView.setHighQuality(true);
-
-		itemView = (ItemListItem) root.findViewById(R.id.inc_gal_item_view);
-		itemView.setTextColor(Color.BLACK);
-		itemView.setBackgroundColor(getResources().getColor(R.color.Brighter));
-
-		categorySpn = (Spinner) root.findViewById(R.id.popup_edit_category);
-		imageTextOverlayView = (CheckBox) root.findViewById(R.id.popup_edit_overlay);
-
-		return root;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
-	 */
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		loadData();
-
 		nameView.addTextChangedListener(new DefaultTextWatcher() {
 
 			@Override
@@ -120,6 +94,7 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 			}
 		});
 
+		titleView = (EditText) root.findViewById(R.id.popup_edit_title);
 		titleView.addTextChangedListener(new DefaultTextWatcher() {
 
 			@Override
@@ -130,57 +105,58 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 			}
 		});
 
-		imageView.setOnClickListener(this);
-		imageTextOverlayView.setOnCheckedChangeListener(this);
+		priceView = (EditText) root.findViewById(R.id.popup_edit_price);
+		weightView = (EditText) root.findViewById(R.id.popup_edit_weight);
+		iconView = (ImageView) root.findViewById(R.id.popup_edit_icon);
 		iconView.setOnClickListener(this);
 
+		imageView = (CardView) root.findViewById(R.id.popup_edit_image);
+		imageView.setOnClickListener(this);
+		imageView.setHighQuality(true);
+
+		itemView = (ItemListItem) root.findViewById(R.id.inc_gal_item_view);
+		itemView.setTextColor(Color.BLACK);
+		itemView.setBackgroundColor(getResources().getColor(R.color.Brighter));
+
+		categorySpn = (Spinner) root.findViewById(R.id.popup_edit_category);
 		categoryAdapter = new SpinnerSimpleAdapter<String>(getActivity(), DataManager.getItemCategories());
 		categorySpn.setAdapter(categoryAdapter);
 
-		showCard(cloneItem, itemSpecification);
+		imageTextOverlayView = (CheckBox) root.findViewById(R.id.popup_edit_overlay);
+		imageTextOverlayView.setOnCheckedChangeListener(this);
 
-		super.onActivityCreated(savedInstanceState);
+		return root;
 	}
 
-	protected void loadData() {
-		Hero hero = DsaTabApplication.getInstance().getHero();
+	@Override
+	public void onResume() {
+		super.onResume();
 
-		Bundle extra = getActivity().getIntent().getExtras();
-		if (extra != null) {
-			UUID itemId = (UUID) extra.getSerializable(INTENT_EXTRA_ITEM_ID);
-			UUID equippedItemId = (UUID) extra.getSerializable(INTENT_EXTRA_EQUIPPED_ITEM_ID);
-			if (equippedItemId != null && hero != null) {
-				EquippedItem equippedItem = hero.getEquippedItem(equippedItemId);
-				if (equippedItem != null) {
-					origItem = equippedItem.getItem();
-					itemSpecification = equippedItem.getItemSpecification();
+		showCard();
+	}
 
-					cloneItem = origItem.clone();
-					for (ItemSpecification specification : cloneItem.getSpecifications()) {
-						if (specification.equals(itemSpecification)) {
-							itemSpecification = specification;
-							break;
-						}
-					}
+	public void setItem(Item item, ItemSpecification itemSpecification) {
+
+		if (item == null) {
+			origItem = new Item();
+			cloneItem = origItem;
+			this.itemSpecification = new MiscSpecification(origItem, ItemType.Sonstiges);
+			origItem.addSpecification(this.itemSpecification);
+		} else {
+
+			this.itemSpecification = itemSpecification;
+			this.origItem = item;
+			this.cloneItem = item.clone();
+
+			for (ItemSpecification specification : cloneItem.getSpecifications()) {
+				if (specification.equals(itemSpecification)) {
+					this.itemSpecification = specification;
+					break;
 				}
 			}
-			if (origItem == null && itemId != null) {
-				if (hero != null) {
-					origItem = hero.getItem(itemId);
-				}
-				if (origItem == null) {
-					origItem = DataManager.getItemById(itemId);
-				}
-				cloneItem = origItem.clone();
-				itemSpecification = cloneItem.getSpecifications().get(0);
-			}
 		}
-		if (cloneItem == null) {
-			cloneItem = new Item();
-			itemSpecification = new MiscSpecification(cloneItem, ItemType.Sonstiges);
-			cloneItem.addSpecification(itemSpecification);
-			origItem = cloneItem;
-		}
+
+		showCard();
 	}
 
 	/*
@@ -211,31 +187,39 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 
 	}
 
-	private void showCard(Item card, ItemSpecification itemSpecification) {
-		if (card != null) {
-			imageView.setItem(card);
-			itemView.setItem(card, itemSpecification);
+	private void showCard() {
+		if (cloneItem != null && imageView != null) {
+			imageView.setItem(cloneItem);
+			itemView.setItem(cloneItem, itemSpecification);
 
-			if (card.getIconUri() != null) {
-				iconView.setImageURI(card.getIconUri());
+			if (cloneItem.getIconUri() != null) {
+				iconView.setImageURI(cloneItem.getIconUri());
 			} else if (itemSpecification != null) {
-				iconView.setImageResource(itemSpecification.getResourceId());
+				iconView.setImageResource(DsaUtil.getResourceId(itemSpecification));
 			}
-			nameView.setText(card.getName());
-			if (card.hasTitle())
-				titleView.setText(card.getTitle());
+			nameView.setText(cloneItem.getName());
+			if (cloneItem.hasTitle())
+				titleView.setText(cloneItem.getTitle());
 			else
 				titleView.setText(null);
 
-			if (card.getPrice() > 0) {
-				priceView.setText(Util.toString(card.getPrice()));
+			if (cloneItem.getPrice() > 0) {
+				priceView.setText(Util.toString(cloneItem.getPrice()));
 			}
-			if (card.getWeight() > 0.0f) {
-				weightView.setText(Util.toString(card.getWeight()));
+			if (cloneItem.getWeight() > 0.0f) {
+				weightView.setText(Util.toString(cloneItem.getWeight()));
 			}
-			categorySpn.setSelection(categoryAdapter.getPosition(card.getCategory()));
-			imageTextOverlayView.setChecked(card.isImageTextOverlay());
+			categorySpn.setSelection(categoryAdapter.getPosition(cloneItem.getCategory()));
+			imageTextOverlayView.setChecked(cloneItem.isImageTextOverlay());
 		}
+	}
+
+	public Item getItem() {
+		return origItem;
+	}
+
+	public ItemSpecification getItemSpecification() {
+		return itemSpecification;
 	}
 
 	/*
@@ -247,6 +231,23 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
+
+		inflater.inflate(R.menu.menuitem_ok, menu);
+		inflater.inflate(R.menu.menuitem_cancel, menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.option_ok:
+			accept();
+			return true;
+		case R.id.option_cancel:
+			cancel();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	public Item accept() {
@@ -258,11 +259,27 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 		origItem.setImageUri(cloneItem.getImageUri());
 		origItem.setCategory((String) categorySpn.getSelectedItem());
 		origItem.setImageTextOverlay(cloneItem.isImageTextOverlay());
+
+		if (origItem.getId() != null) {
+			DataManager.updateItem(origItem);
+		} else {
+			DataManager.createItem(origItem);
+		}
+
+		if (getActivity().getIntent().hasExtra(ItemEditFragment.INTENT_EXTRA_HERO)) {
+			if (DsaTabApplication.getInstance().getHero().getItem(origItem.getId()) == null) {
+				DsaTabApplication.getInstance().getHero().addItem(origItem);
+			} else {
+				DsaTabApplication.getInstance().getHero().fireItemChangedEvent(origItem);
+			}
+		}
+
 		return origItem;
 	}
 
-	public void cancel() {
-
+	public Item cancel() {
+		cloneItem = origItem;
+		return origItem;
 	}
 
 	private void pickPortrait() {
@@ -289,7 +306,7 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 					if (cloneItem.getIconUri() != null)
 						iconView.setImageURI(cloneItem.getIconUri());
 					else
-						iconView.setImageResource(itemSpecification.getResourceId());
+						iconView.setImageResource(DsaUtil.getResourceId(itemSpecification));
 				}
 			}
 		});

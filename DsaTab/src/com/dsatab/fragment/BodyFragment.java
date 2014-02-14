@@ -1,16 +1,20 @@
 package com.dsatab.fragment;
 
+import java.io.File;
 import java.util.List;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -23,7 +27,7 @@ import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabActivity;
 import com.dsatab.activity.DsaTabPreferenceActivity;
-import com.dsatab.activity.ItemViewActivity;
+import com.dsatab.activity.ItemsActivity;
 import com.dsatab.data.ArmorAttribute;
 import com.dsatab.data.Attribute;
 import com.dsatab.data.Hero;
@@ -37,7 +41,8 @@ import com.dsatab.util.Util;
 import com.dsatab.view.BodyLayout;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
 
-public class BodyFragment extends BaseFragment implements OnClickListener, HeroInventoryChangedListener {
+public class BodyFragment extends BaseFragment implements OnClickListener, OnLongClickListener,
+		HeroInventoryChangedListener {
 
 	private BodyLayout bodyLayout;
 
@@ -83,6 +88,7 @@ public class BodyFragment extends BaseFragment implements OnClickListener, HeroI
 		bodyLayout = (BodyLayout) root.findViewById(R.id.body_layout);
 
 		bodyBackground = (ImageView) root.findViewById(R.id.body_background);
+		bodyBackground.setOnLongClickListener(this);
 
 		totalRs = (TextView) root.findViewById(R.id.body_total_rs);
 		totalBe = (TextView) root.findViewById(R.id.body_total_be);
@@ -148,6 +154,16 @@ public class BodyFragment extends BaseFragment implements OnClickListener, HeroI
 		updateView();
 	}
 
+	@Override
+	public boolean onLongClick(View v) {
+		switch (v.getId()) {
+		case R.id.body_background:
+			Util.pickImage(getActivity(), DsaTabPreferenceActivity.ACTION_PICK_BG_WOUNDS_PATH);
+			return true;
+		}
+		return false;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -179,7 +195,7 @@ public class BodyFragment extends BaseFragment implements OnClickListener, HeroI
 			if (equippedItems.isEmpty()) {
 				Toast.makeText(getActivity(), "Keine Einträge gefunden", Toast.LENGTH_SHORT).show();
 			} else if (equippedItems.size() == 1) {
-				ItemViewActivity.view(getActivity(), getHero(), equippedItems.get(0));
+				ItemsActivity.view(getActivity(), getHero().getKey(), equippedItems.get(0));
 			} else {
 				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 				builder.setTitle("Rüstung");
@@ -187,7 +203,7 @@ public class BodyFragment extends BaseFragment implements OnClickListener, HeroI
 				builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						ItemViewActivity.view(getActivity(), getHero(), adapter.getItem(which));
+						ItemsActivity.view(getActivity(), getHero().getKey(), adapter.getItem(which));
 					}
 				});
 				builder.show().setCanceledOnTouchOutside(true);
@@ -207,6 +223,22 @@ public class BodyFragment extends BaseFragment implements OnClickListener, HeroI
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == DsaTabActivity.ACTION_PREFERENCES) {
 			updateView();
+		}
+
+		if (resultCode == Activity.RESULT_OK) {
+
+			if (requestCode == DsaTabPreferenceActivity.ACTION_PICK_BG_WOUNDS_PATH) {
+				File bg = Util.handleImagePick(getActivity(), DsaTabPreferenceActivity.KEY_STYLE_BG_WOUNDS_PATH, data);
+				if (bg != null) {
+					SharedPreferences preferences = DsaTabApplication.getPreferences();
+					Editor edit = preferences.edit();
+					edit.putString(DsaTabPreferenceActivity.KEY_STYLE_BG_WOUNDS_PATH, bg.getAbsolutePath());
+					edit.commit();
+
+					Toast.makeText(getActivity(), "Hintergrundbild wurde verändert.", Toast.LENGTH_SHORT).show();
+					updateBackground();
+				}
+			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}

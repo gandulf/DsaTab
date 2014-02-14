@@ -6,14 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.dsatab.R;
-import com.dsatab.exception.ItemTypeUnknownException;
-import com.dsatab.util.Debug;
-
 public enum ItemType {
-	Waffen('W', true, R.drawable.icon_sword), Fernwaffen('D', true, R.drawable.icon_bow), Rüstung('A', true,
-			R.drawable.icon_armor), Schilde('S', true, R.drawable.icon_shield), Sonstiges('M', false,
-			R.drawable.icon_misc);
+	Waffen('W', true), Fernwaffen('D', true), Rüstung('A', true), Schilde('S', true), Sonstiges('M', false);
 
 	private static Map<ItemType, List<String>> categories;
 	static {
@@ -36,12 +30,9 @@ public enum ItemType {
 
 	private final boolean equipable;
 
-	private int iconId;
-
-	private ItemType(char c, boolean equipable, int iconId) {
+	private ItemType(char c, boolean equipable) {
 		this.character = c;
 		this.equipable = equipable;
-		this.iconId = iconId;
 	}
 
 	public List<String> getCategories() {
@@ -49,10 +40,6 @@ public enum ItemType {
 			return categories.get(this);
 		else
 			return Collections.emptyList();
-	}
-
-	public int getDrawableId() {
-		return iconId;
 	}
 
 	public char character() {
@@ -77,7 +64,6 @@ public enum ItemType {
 		case 'M':
 			return Sonstiges;
 		default:
-			Debug.error(new ItemTypeUnknownException(c));
 			return Sonstiges;
 		}
 	}

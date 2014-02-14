@@ -1,13 +1,12 @@
 package com.dsatab.cloud;
 
 import java.io.File;
-
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.widget.Toast;
-
 import com.dsatab.DsaTabApplication;
+import com.dsatab.R;
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.data.HeroFileInfo;
 import com.dsatab.util.Debug;
@@ -76,7 +75,7 @@ public class HeroExchange {
 	private boolean checkSettings() {
 		if (!isConfigured()) {
 
-			Toast.makeText(context, "Bitte zuerst das Logintoken unter Setup > Heldenaustausch Einstellungen angeben.",
+			Toast.makeText(context, R.string.message_insert_login_token_first,
 					Toast.LENGTH_LONG).show();
 
 			DsaTabPreferenceActivity.startPreferenceActivity(context);

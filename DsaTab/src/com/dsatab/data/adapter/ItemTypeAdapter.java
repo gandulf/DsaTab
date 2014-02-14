@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.dsatab.R;
 import com.dsatab.data.enums.ItemType;
+import com.dsatab.util.DsaUtil;
 
 public class ItemTypeAdapter extends SpinnerSimpleAdapter<ItemType> {
 
@@ -29,7 +30,7 @@ public class ItemTypeAdapter extends SpinnerSimpleAdapter<ItemType> {
 			TextView textView = (TextView) view;
 			ItemType e = getItem(position);
 
-			textView.setCompoundDrawablesWithIntrinsicBounds(e.getDrawableId(), 0, 0, 0);
+			textView.setCompoundDrawablesWithIntrinsicBounds(DsaUtil.getResourceId(e), 0, 0, 0);
 			textView.setCompoundDrawablePadding(getContext().getResources().getDimensionPixelSize(R.dimen.default_gap));
 			textView.setText(e.name());
 			textView.setGravity(Gravity.CENTER_VERTICAL);
@@ -46,7 +47,7 @@ public class ItemTypeAdapter extends SpinnerSimpleAdapter<ItemType> {
 			TextView textView = (TextView) view;
 			ItemType e = getItem(position);
 
-			textView.setCompoundDrawablesWithIntrinsicBounds(e.getDrawableId(), 0, 0, 0);
+			textView.setCompoundDrawablesWithIntrinsicBounds(DsaUtil.getResourceId(e), 0, 0, 0);
 			textView.setCompoundDrawablePadding(getContext().getResources().getDimensionPixelSize(R.dimen.default_gap));
 			textView.setText(e.name());
 			textView.setGravity(Gravity.CENTER_VERTICAL);

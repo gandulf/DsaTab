@@ -1,13 +1,8 @@
 package com.dsatab.activity;
 
-import java.io.File;
-
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.WindowManager;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -31,18 +26,14 @@ public class BaseFragmentActivity extends SherlockFragmentActivity {
 		Hint.showRandomHint(getClass().getSimpleName(), this);
 	}
 
+	@SuppressWarnings("deprecation")
 	protected void applyPreferencesToTheme() {
 
 		SharedPreferences pref = DsaTabApplication.getPreferences();
 		String bgPath = pref.getString(DsaTabPreferenceActivity.KEY_STYLE_BG_PATH, null);
 
 		if (bgPath != null) {
-
-			WindowManager wm = (WindowManager) DsaTabApplication.getInstance().getSystemService(Context.WINDOW_SERVICE);
-			Display display = wm.getDefaultDisplay();
-			Bitmap bg = Util.decodeBitmap(new File(bgPath), Math.max(display.getWidth(), display.getHeight()));
-			BitmapDrawable drawable = new BitmapDrawable(DsaTabApplication.getInstance().getResources(), bg);
-			getWindow().setBackgroundDrawable(drawable);
+			getWindow().setBackgroundDrawable(Drawable.createFromPath(bgPath));
 		} else {
 			getWindow().setBackgroundDrawableResource(Util.getThemeResourceId(this, android.R.attr.windowBackground));
 		}

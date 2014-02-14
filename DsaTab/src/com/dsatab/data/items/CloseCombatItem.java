@@ -12,6 +12,8 @@ import com.j256.ormlite.field.DatabaseField;
 
 public abstract class CloseCombatItem extends ItemSpecification {
 
+	private static final long serialVersionUID = 7824749310384527340L;
+
 	private static final String SEP = ",";
 
 	@DatabaseField

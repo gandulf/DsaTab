@@ -43,7 +43,7 @@
 
                 <TextView
                     android:id="@+id/gen_name"
-                    style="@style/TextValue.Small.NoTouch"
+                    style="?attr/textViewValueSmallNoTouchStyle"
                     android:layout_span="4"
                     android:ellipsize="middle"
                     android:gravity="left|center_vertical"
@@ -62,7 +62,7 @@
 
                 <TextView
                     android:id="@+id/gen_family"
-                    style="@style/TextValue.Small.NoTouch"
+                    style="?attr/textViewValueSmallNoTouchStyle"
                     android:layout_span="3"
                     android:ellipsize="middle"
                     android:gravity="left"
@@ -82,7 +82,7 @@
 
                 <TextView
                     android:id="@+id/gen_species"
-                    style="@style/TextValue.Small.NoTouch"
+                    style="?attr/textViewValueSmallNoTouchStyle"
                     android:layout_span="3"
                     android:ellipsize="middle"
                     android:gravity="left"
@@ -102,7 +102,7 @@
 
                 <TextView
                     android:id="@+id/gen_gewicht"
-                    style="@style/TextValue.Small.NoTouch"
+                    style="?attr/textViewValueSmallNoTouchStyle"
                     android:gravity="left"
                     android:paddingLeft="@dimen/default_gap"
                     android:singleLine="true" >
@@ -115,7 +115,7 @@
 
                 <TextView
                     android:id="@+id/gen_groesse"
-                    style="@style/TextValue.Small.NoTouch"
+                    style="?attr/textViewValueSmallNoTouchStyle"
                     android:gravity="left"
                     android:paddingLeft="@dimen/default_gap"
                     android:singleLine="true" >
@@ -136,7 +136,7 @@
 
                 <TextView
                     android:id="@+id/attr_gs"
-                    style="@style/TextValue.Small.NoTouch"
+                    style="?attr/textViewValueSmallNoTouchStyle"
                     android:ellipsize="none"
                     android:gravity="left"
                     android:paddingLeft="@dimen/default_gap"
@@ -178,7 +178,7 @@
 
                     <Button
                         android:id="@+id/attr_mu"
-                        style="@style/TextValue"
+                        style="?attr/textViewValueStyle"
                         android:layout_gravity="center"
                         android:layout_marginRight="@dimen/default_gap" >
                     </Button>
@@ -199,7 +199,7 @@
 
                     <Button
                         android:id="@+id/attr_kl"
-                        style="@style/TextValue"
+                        style="?attr/textViewValueStyle"
                         android:layout_gravity="center"
                         android:layout_marginRight="8dp" >
                     </Button>
@@ -220,7 +220,7 @@
 
                     <Button
                         android:id="@+id/attr_in"
-                        style="@style/TextValue"
+                        style="?attr/textViewValueStyle"
                         android:layout_gravity="center" >
                     </Button>
                 </TableRow>
@@ -240,7 +240,7 @@
 
                     <Button
                         android:id="@+id/attr_ch"
-                        style="@style/TextValue"
+                        style="?attr/textViewValueStyle"
                         android:layout_gravity="center" >
                     </Button>
                 </TableRow>
@@ -260,7 +260,7 @@
 
                     <Button
                         android:id="@+id/attr_ff"
-                        style="@style/TextValue"
+                        style="?attr/textViewValueStyle"
                         android:layout_gravity="center" >
                     </Button>
                 </TableRow>
@@ -280,7 +280,7 @@
 
                     <Button
                         android:id="@+id/attr_ge"
-                        style="@style/TextValue"
+                        style="?attr/textViewValueStyle"
                         android:layout_gravity="center" >
                     </Button>
                 </TableRow>
@@ -300,7 +300,7 @@
 
                     <Button
                         android:id="@+id/attr_ko"
-                        style="@style/TextValue"
+                        style="?attr/textViewValueStyle"
                         android:layout_gravity="center" >
                     </Button>
                 </TableRow>
@@ -320,7 +320,7 @@
 
                     <Button
                         android:id="@+id/attr_kk"
-                        style="@style/TextValue"
+                        style="?attr/textViewValueStyle"
                         android:layout_gravity="center" >
                     </Button>
                 </TableRow>
@@ -350,12 +350,12 @@
 
                     <Button
                         android:id="@+id/attr_le"
-                        style="@style/TextValue.Left" >
+                        style="?attr/textViewValueLeftStyle" >
                     </Button>
 
                     <Button
                         android:id="@+id/attr_total_le"
-                        style="@style/TextValue.Right"
+                        style="?attr/textViewValueRightStyle"
                         android:layout_marginRight="@dimen/default_gap" >
                     </Button>
                 </TableRow>
@@ -374,12 +374,12 @@
 
                     <Button
                         android:id="@+id/attr_au"
-                        style="@style/TextValue.Left" >
+                        style="?attr/textViewValueLeftStyle" >
                     </Button>
 
                     <Button
                         android:id="@+id/attr_total_au"
-                        style="@style/TextValue.Right" >
+                        style="?attr/textViewValueRightStyle" >
                     </Button>
                 </TableRow>
 
@@ -399,12 +399,12 @@
 
                     <Button
                         android:id="@+id/attr_ae"
-                        style="@style/TextValue.Left" >
+                        style="?attr/textViewValueLeftStyle" >
                     </Button>
 
                     <Button
                         android:id="@+id/attr_total_ae"
-                        style="@style/TextValue.Right" >
+                        style="?attr/textViewValueRightStyle" >
                     </Button>
                 </TableRow>
 
@@ -424,12 +424,12 @@
 
                     <Button
                         android:id="@+id/attr_ke"
-                        style="@style/TextValue.Left">
+                        style="?attr/textViewValueLeftStyle">
                     </Button>
 
                     <Button
                         android:id="@+id/attr_total_ke"
-                        style="@style/TextValue.Right">
+                        style="?attr/textViewValueRightStyle">
                     </Button>
                 </TableRow>
 
@@ -448,12 +448,12 @@
 
                     <Button
                         android:id="@+id/attr_mr"
-                        style="@style/TextValue.Left" >
+                        style="?attr/textViewValueLeftStyle" >
                     </Button>
 
                     <Button
                         android:id="@+id/attr_mr2"
-                        style="@style/TextValue.Right" >
+                        style="?attr/textViewValueRightStyle" >
                     </Button>
                 </TableRow>
 
@@ -472,7 +472,7 @@
 
                     <Button
                         android:id="@+id/attr_lo"
-                        style="@style/TextValue" />
+                        style="?attr/textViewValueStyle" />
                 </TableRow>
 
                 <TableRow
@@ -490,7 +490,7 @@
 
                     <Button
                         android:id="@+id/attr_rs"
-                        style="@style/TextValue" />
+                        style="?attr/textViewValueStyle" />
                 </TableRow>
 
                 <TableRow
@@ -508,7 +508,7 @@
                     <Button
                         android:id="@+id/attr_ini"
                         android:layout_span="2"
-                        style="@style/TextValue" />
+                        style="?attr/textViewValueStyle" />
                 </TableRow>
             </TableLayout>
         </LinearLayout>

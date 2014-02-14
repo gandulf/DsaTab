@@ -43,8 +43,7 @@ import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabActivity;
 import com.dsatab.activity.DsaTabPreferenceActivity;
-import com.dsatab.activity.ItemEditActivity;
-import com.dsatab.activity.ItemViewActivity;
+import com.dsatab.activity.ItemsActivity;
 import com.dsatab.activity.ModificatorEditActivity;
 import com.dsatab.activity.NotesEditActivity;
 import com.dsatab.data.Art;
@@ -285,10 +284,11 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 
 							switch (item.getItemId()) {
 							case R.id.option_edit:
-								ItemEditActivity.edit(fragment.getActivity(), getHero(), equippedItem);
+								ItemsActivity.edit(fragment.getActivity(), getHero().getKey(), equippedItem,
+										ItemsActivity.ACTION_EDIT);
 								break;
 							case R.id.option_view:
-								ItemViewActivity.view(fragment.getActivity(), getHero(), equippedItem);
+								ItemsActivity.view(fragment.getActivity(), getHero().getKey(), equippedItem);
 								break;
 							case R.id.option_assign_secondary: {
 								final EquippedItem equippedPrimaryWeapon = equippedItem;

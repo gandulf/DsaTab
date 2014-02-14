@@ -36,6 +36,8 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LevelListDrawable;
 import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore.Images.ImageColumns;
+import android.provider.MediaStore.Images.Media;
 import android.provider.MediaStore.MediaColumns;
 import android.text.Html;
 import android.text.Spanned;
@@ -100,6 +102,49 @@ public class Util {
 		return DsaTabApplication.getInstance().getResources()
 				.getIdentifier(name, DRAWABLE, DsaTabApplication.getInstance().getPackageName());
 
+	}
+
+	public static void pickImage(Activity activity, int action) {
+
+		Uri targetUri = Media.EXTERNAL_CONTENT_URI;
+		String folderPath = DsaTabApplication.getDirectory(DsaTabApplication.DIR_PORTRAITS).getAbsolutePath();
+		String folderBucketId = Integer.toString(folderPath.toLowerCase(Locale.GERMAN).hashCode());
+
+		targetUri = targetUri.buildUpon().appendQueryParameter(ImageColumns.BUCKET_ID, folderBucketId).build();
+
+		Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+		photoPickerIntent.setData(targetUri);
+
+		activity.startActivityForResult(Intent.createChooser(photoPickerIntent, "Bild auswählen"), action);
+	}
+
+	public static File handleImagePick(Activity activity, String prefKey, Intent data) {
+
+		Uri selectedImage = data.getData();
+		if (selectedImage != null) {
+			String[] filePathColumn = { MediaColumns.DATA, ImageColumns.BUCKET_ID };
+
+			Cursor cursor = activity.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+
+			if (cursor.moveToFirst()) {
+
+				int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+				// int bucketIndex = cursor.getColumnIndex(filePathColumn[1]);
+				String filePath = cursor.getString(columnIndex);
+				// String bucketId = cursor.getString(bucketIndex);
+
+				cursor.close();
+				if (filePath != null) {
+					File file = new File(filePath);
+					if (file.exists()) {
+						return file;
+					}
+				}
+			}
+		} else {
+			Debug.error("Intent returned from image pick did not containt uri data:" + data);
+		}
+		return null;
 	}
 
 	public static Drawable getDrawableByUri(Uri mUri) {

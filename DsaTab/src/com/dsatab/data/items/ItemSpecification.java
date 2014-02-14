@@ -58,8 +58,6 @@ public abstract class ItemSpecification implements Cloneable, Serializable {
 		this.specificationLabel = specificationLabel;
 	}
 
-	public abstract int getResourceId();
-
 	public ItemType getType() {
 		return type;
 	}

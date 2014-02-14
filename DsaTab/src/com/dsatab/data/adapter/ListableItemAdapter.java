@@ -64,6 +64,7 @@ import com.dsatab.data.modifier.Modificator;
 import com.dsatab.data.modifier.RulesModificator;
 import com.dsatab.data.modifier.WoundModificator;
 import com.dsatab.util.Debug;
+import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Util;
 import com.dsatab.view.EvadeChooserDialog;
 import com.dsatab.view.ItemListItem;
@@ -859,7 +860,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		holder.text2.setText(itemSpecification.getInfo());
 		holder.text3.setText(null);
 
-		holder.icon1.setImageResource(itemSpecification.getResourceId());
+		holder.icon1.setImageResource(DsaUtil.getResourceId(itemSpecification));
 		holder.icon1.setVisibility(View.VISIBLE);
 
 		if (itemSpecification instanceof DistanceWeapon) {

@@ -72,6 +72,8 @@ public class CustomAttribute extends Attribute implements JSONable {
 				return "Astralenergie";
 			case Karmaenergie_Aktuell:
 				return "Karmaenergie";
+			default:
+				return name;
 			}
 		}
 

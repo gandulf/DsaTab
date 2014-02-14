@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.dsatab.R;
@@ -37,8 +38,12 @@ public class ItemCursorAdapter extends SimpleCursorAdapter {
 	@Override
 	public long getItemId(int position) {
 		Cursor cursor = (Cursor) getItem(position);
-		String _id = cursor.getString(cursor.getColumnIndex("_id"));
-		return _id.hashCode();
+		if (cursor != null) {
+			String _id = cursor.getString(cursor.getColumnIndex("_id"));
+			return _id.hashCode();
+		} else {
+			return ListView.INVALID_ROW_ID;
+		}
 	}
 
 	@Override

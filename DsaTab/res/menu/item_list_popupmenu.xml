@@ -5,12 +5,12 @@
             android:id="@+id/option_view"
             android:icon="?attr/imgBarView"
             android:showAsAction="withText|ifRoom"
-            android:title="Details"/>
+            android:title="@string/details"/>
         <item
             android:id="@+id/option_move"
             android:icon="?attr/imgBarSet"
             android:showAsAction="withText|ifRoom"
-            android:title="Verschieben">
+            android:title="@string/move">
             <menu>
             </menu>
         </item>
@@ -18,30 +18,30 @@
             android:id="@+id/option_equipped"
             android:icon="?attr/imgBarSet"
             android:showAsAction="withText|ifRoom"
-            android:title="Ausrüsten">
+            android:title="@string/equip">
             <menu>
                 <item
                     android:id="@+id/option_equipped_set1"
                     android:icon="?attr/imgBarSet1"
                     android:showAsAction="withText"
-                    android:title="Set 1"/>
+                    android:title="@string/set_1"/>
                 <item
                     android:id="@+id/option_equipped_set2"
                     android:icon="?attr/imgBarSet2"
                     android:showAsAction="withText"
-                    android:title="Set 2"/>
+                    android:title="@string/set_1"/>
                 <item
                     android:id="@+id/option_equipped_set3"
                     android:icon="?attr/imgBarSet3"
                     android:showAsAction="withText"
-                    android:title="Set 3"/>
+                    android:title="@string/set_1"/>
             </menu>
         </item>
         <item
             android:id="@+id/option_delete"
             android:icon="?attr/imgBarDelete"
             android:showAsAction="withText|ifRoom"
-            android:title="Löschen"/>
+            android:title="@string/label_delete"/>
     </group>
 
 </menu>

@@ -4,25 +4,23 @@
         android:id="@+id/option_set"
         android:icon="?attr/imgBarSet"
         android:showAsAction="withText|ifRoom"
-        android:title="Set">
+        android:title="@string/set">
         <menu>
             <group android:checkableBehavior="single" >
                 <item
                     android:id="@+id/option_set1"
                     android:icon="?attr/imgBarSet1"
-                    android:showAsAction="withText|always"
-                    android:title="Set 1"/>
+                    android:title="@string/set_1"/>
                 <item
                     android:id="@+id/option_set2"
                     android:icon="?attr/imgBarSet2"
-                    android:showAsAction="withText|always"
-                    android:title="Set 2"/>
+                    android:title="@string/set_2"/>
                 <item
                     android:id="@+id/option_set3"
                     android:icon="?attr/imgBarSet3"
-                    android:showAsAction="withText|always"
-                    android:title="Set 3"/>
+                    android:title="@string/set_3"/>
             </group>
         </menu>
     </item>
+
 </menu>

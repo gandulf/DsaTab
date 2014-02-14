@@ -61,8 +61,8 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
+                    android:layout_marginLeft="@dimen/default_gap"
+                    android:layout_marginRight="@dimen/default_gap"
                     auto:layout_gravity="right|center_vertical"
                     android:text="@string/label_ounces"
                     android:textAppearance="?android:attr/textAppearanceSmall" />

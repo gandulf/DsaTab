@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.data.enums.ItemType;
 import com.dsatab.db.UriPersister;
+import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Util;
 import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
@@ -392,7 +393,7 @@ public class Item implements Serializable, Comparable<Item>, Cloneable, ItemCard
 			if (getSpecifications().isEmpty())
 				return null;
 			else
-				return Util.getUriForResourceId(getSpecifications().get(0).getResourceId());
+				return Util.getUriForResourceId(DsaUtil.getResourceId(getSpecifications().get(0)));
 		}
 	}
 

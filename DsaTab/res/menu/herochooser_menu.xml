@@ -4,21 +4,21 @@
         android:id="@+id/option_hero_import"
         android:icon="@drawable/ic_menu_account_list"
         android:showAsAction="withText|ifRoom"
-        android:title="Aus Heldenaustausch importieren"/>
+        android:title="@string/import_from_hero_exchange"/>
     <item
         android:id="@+id/option_refresh"
         android:icon="@drawable/ic_action_refresh"
         android:showAsAction="withText|ifRoom"
-        android:title="Refresh"/>
+        android:title="@string/refresh"/>
     <item
         android:id="@+id/option_items"
         android:icon="?attr/imgBarSwordAdd"
         android:showAsAction="never"
-        android:title="Gegenstände"/>
+        android:title="@string/items"/>
     <item
         android:id="@+id/option_settings"
         android:icon="@drawable/ic_menu_preferences"
         android:showAsAction="never"
-        android:title="Einstellungen"/>
+        android:title="@string/settings"/>
 
 </menu>

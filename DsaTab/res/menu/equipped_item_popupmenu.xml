@@ -3,12 +3,12 @@
     <item android:id="@+id/option_view"
           android:icon="?attr/imgBarView"
           android:showAsAction="withText|ifRoom"
-          android:title="Details" />
+          android:title="@string/details" />
     
     <item android:id="@+id/option_edit"
           android:icon="?attr/imgBarEdit"
           android:showAsAction="withText|ifRoom"
-          android:title="Bearbeiten" />
+          android:title="@string/label_edit" />
     
     <item android:id="@+id/option_assign_secondary"
           android:icon="?attr/imgBarSplit"
@@ -38,6 +38,6 @@
     <item android:id="@+id/option_delete"
           android:icon="?attr/imgBarDelete"
           android:showAsAction="withText|ifRoom"
-          android:title="Löschen" />                    
+          android:title="@string/label_delete" />                    
     
 </menu>

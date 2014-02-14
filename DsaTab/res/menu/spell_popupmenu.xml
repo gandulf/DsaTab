@@ -3,33 +3,33 @@
 		<item android:id="@+id/option_edit_spell"
 	          android:icon="?attr/imgBarEdit"
 	          android:showAsAction="withText|ifRoom"
-	          android:title="Bearbeiten" />
+	          android:title="@string/label_edit" />
 	
 		<item android:id="@+id/option_view_spell"
 	          android:icon="?attr/imgBarView"
 	          android:showAsAction="withText|ifRoom"
-	          android:title="Details" />          	          
+	          android:title="@string/details" />          	          
 		
 		<item android:id="@+id/option_mark"
             android:icon="?attr/imgBarStar"            
             android:showAsAction="withText|ifRoom"
-            android:title="Markierungen">
+            android:title="@string/selection">
 		 <menu>
         
 	        <item android:id="@+id/option_mark_favorite_spell"
 		          android:icon="?attr/imgBarStar"
 		          android:showAsAction="withText"
-		          android:title="Als Favorit markieren" />
+		          android:title="@string/mark_as_favorite" />
 		    
 		    <item android:id="@+id/option_mark_unused_spell"
 		          android:icon="?attr/imgBarStarEmpty"
 		          android:showAsAction="withText"
-		          android:title="Als ungenützt markieren" />
+		          android:title="@string/mark_as_unused" />
 		    
 		    <item android:id="@+id/option_unmark_spell"
 		          android:icon="?attr/imgBarCancel"
 		          android:showAsAction="withText"
-		          android:title="Markierung aufheben" />
+		          android:title="@string/clear_selection" />
 	    	</menu>
 		</item>
 	    

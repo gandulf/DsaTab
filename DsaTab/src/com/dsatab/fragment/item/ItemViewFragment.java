@@ -1,4 +1,4 @@
-package com.dsatab.fragment;
+package com.dsatab.fragment.item;
 
 import java.util.UUID;
 
@@ -13,23 +13,18 @@ import android.widget.TextView;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
-import com.dsatab.activity.ItemEditActivity;
+import com.dsatab.activity.ItemsActivity;
 import com.dsatab.data.Hero;
-import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemSpecification;
+import com.dsatab.fragment.BaseFragment;
+import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Util;
 import com.dsatab.view.CardView;
 import com.dsatab.view.ItemListItem;
-import com.dsatab.xml.DataManager;
 
 public class ItemViewFragment extends BaseFragment {
-
-	public static final String INTENT_EXTRA_HERO = "hero";
-	public static final String INTENT_EXTRA_ITEM_ID = "itemId";
-	public static final String INTENT_EXTRA_EQUIPPED_ITEM_ID = "equippedItemId";
 
 	private CardView imageView;
 	private ItemListItem itemView;
@@ -52,6 +47,12 @@ public class ItemViewFragment extends BaseFragment {
 		setHasOptionsMenu(true);
 	}
 
+	@Override
+	public void onResume() {
+		super.onResume();
+		showCard();
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -69,6 +70,7 @@ public class ItemViewFragment extends BaseFragment {
 		iconView = (ImageView) root.findViewById(R.id.popup_edit_icon);
 		imageView = (CardView) root.findViewById(R.id.popup_edit_image);
 		imageView.setHighQuality(true);
+		imageView.setVisibility(View.GONE);
 
 		itemView = (ItemListItem) root.findViewById(R.id.inc_gal_item_view);
 		itemView.setTextColor(Color.BLACK);
@@ -77,43 +79,6 @@ public class ItemViewFragment extends BaseFragment {
 		categoryView = (TextView) root.findViewById(R.id.popup_edit_category);
 
 		return root;
-	}
-
-	@Override
-	public void onStart() {
-		super.onStart();
-		loadData();
-		showCard(item, itemSpecification);
-	}
-
-	protected void loadData() {
-		Hero hero = DsaTabApplication.getInstance().getHero();
-		Bundle extra = getActivity().getIntent().getExtras();
-		if (extra != null) {
-			UUID itemId = (UUID) extra.getSerializable(INTENT_EXTRA_ITEM_ID);
-
-			UUID equippedItemId = (UUID) extra.getSerializable(INTENT_EXTRA_EQUIPPED_ITEM_ID);
-			if (equippedItemId != null && hero != null) {
-				EquippedItem equippedItem = hero.getEquippedItem(equippedItemId);
-				if (equippedItem != null) {
-					item = equippedItem.getItem();
-					itemSpecification = equippedItem.getItemSpecification();
-				}
-			}
-
-			if (item == null && itemId != null) {
-				if (hero != null) {
-					item = hero.getItem(itemId);
-				}
-				if (item == null) {
-					item = DataManager.getItemById(itemId);
-				}
-				if (item != null) {
-					itemSpecification = item.getSpecifications().get(0);
-				}
-			}
-		}
-
 	}
 
 	/*
@@ -132,38 +97,50 @@ public class ItemViewFragment extends BaseFragment {
 			if (itemSpecification != null) {
 				this.itemSpecification = itemSpecification;
 			} else if (!item.getSpecifications().isEmpty()) {
-				itemSpecification = item.getSpecifications().get(0);
+				this.itemSpecification = item.getSpecifications().get(0);
 			}
+		} else {
+			this.item = null;
+			this.itemSpecification = null;
 		}
-		showCard(item, itemSpecification);
+
+		showCard();
 	}
 
-	private void showCard(Item card, ItemSpecification itemSpecification) {
-		if (card != null) {
-			if (card.hasImage()) {
-				imageView.setItem(card);
+	public Item getItem() {
+		return item;
+	}
+
+	public ItemSpecification getItemSpecification() {
+		return itemSpecification;
+	}
+
+	public void showCard() {
+		if (item != null && imageView != null) {
+			if (item.hasImage()) {
+				imageView.setItem(item);
 				imageView.setVisibility(View.VISIBLE);
 			} else {
 				imageView.setItem(null);
 				imageView.setVisibility(View.GONE);
 			}
-			itemView.setItem(card, itemSpecification);
+			itemView.setItem(item, itemSpecification);
 
-			if (card.getIconUri() != null) {
-				iconView.setImageURI(card.getIconUri());
+			if (item.getIconUri() != null) {
+				iconView.setImageURI(item.getIconUri());
 			} else if (itemSpecification != null) {
-				iconView.setImageResource(itemSpecification.getResourceId());
+				iconView.setImageResource(DsaUtil.getResourceId(itemSpecification));
 			}
 
-			nameView.setText(card.getName());
-			if (card.hasTitle())
-				titleView.setText(card.getTitle());
+			nameView.setText(item.getName());
+			if (item.hasTitle())
+				titleView.setText(item.getTitle());
 			else
 				titleView.setText(null);
 
-			priceView.setText(Util.toString(card.getPrice()));
-			weightView.setText(Util.toString(card.getWeight()));
-			categoryView.setText(card.getCategory());
+			priceView.setText(Util.toString(item.getPrice()));
+			weightView.setText(Util.toString(item.getWeight()));
+			categoryView.setText(item.getCategory());
 		}
 	}
 
@@ -187,11 +164,13 @@ public class ItemViewFragment extends BaseFragment {
 
 			Bundle extra = getActivity().getIntent().getExtras();
 			if (extra != null) {
-				UUID itemId = (UUID) extra.getSerializable(INTENT_EXTRA_ITEM_ID);
-				UUID equippedItemId = (UUID) extra.getSerializable(INTENT_EXTRA_EQUIPPED_ITEM_ID);
-				ItemEditActivity.edit(getActivity(), getHero(), itemId, equippedItemId);
+				UUID itemId = (UUID) extra.getSerializable(ItemsActivity.INTENT_EXTRA_ITEM_ID);
+				UUID equippedItemId = (UUID) extra.getSerializable(ItemsActivity.INTENT_EXTRA_EQUIPPED_ITEM_ID);
+
+				String heroKey = extra.getString(ItemsActivity.INTENT_EXTRA_HERO);
+				ItemsActivity.edit(getActivity(), heroKey, itemId, equippedItemId, ItemsActivity.ACTION_EDIT);
 			} else {
-				ItemEditActivity.edit(getActivity(), getHero(), this.item);
+				ItemsActivity.edit(getActivity(), null, this.item, ItemsActivity.ACTION_EDIT);
 			}
 			return true;
 		}

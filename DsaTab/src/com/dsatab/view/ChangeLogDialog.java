@@ -45,14 +45,14 @@ public class ChangeLogDialog {
 
 	public static final String KEY_NEWS_VERSION = "newsversion";
 
-	private Activity fActivity;
+	private Activity context;
 
 	private boolean newChangelogFound = false;
 	private int lastSeenVersion = 0;
 
 	public ChangeLogDialog(Activity context) {
-		fActivity = context;
-		lastSeenVersion = getSeenVersion();
+		this.context = context;
+		this.lastSeenVersion = getSeenVersion();
 	}
 
 	// Parse a the release tag and return html code
@@ -105,8 +105,11 @@ public class ChangeLogDialog {
 		String _Result = "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />"
 				+ getStyle() + "</head><body>";
 
-		String summary = ResUtil.loadResToString(R.raw.donate, fActivity);
-		_Result += summary;
+		String summary = ResUtil.loadResToString(R.raw.donate, context);
+		if (summary != null) {
+			summary = summary.replace("{hs-version}", DsaTabApplication.HS_VERSION);
+			_Result += summary;
+		}
 
 		XmlResourceParser _xml = aResource.getXml(aResourceId);
 		try {
@@ -136,7 +139,7 @@ public class ChangeLogDialog {
 	// Call to show the changelog dialog
 	public void show(boolean forceShow) {
 		// Get resources
-		Resources resource = fActivity.getResources();
+		Resources resource = context.getResources();
 
 		// Get dialog title
 		String title = resource.getString(R.string.app_name);
@@ -151,7 +154,7 @@ public class ChangeLogDialog {
 		// Check for empty changelog
 		if (html.equals("")) {
 			// Could not load change log, message user and exit void
-			Toast.makeText(fActivity, "Could not load change log", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "Could not load change log", Toast.LENGTH_SHORT).show();
 			return;
 		}
 
@@ -164,10 +167,10 @@ public class ChangeLogDialog {
 		}
 
 		// Create webview and load html
-		WebView webView = new WebView(fActivity);
+		WebView webView = new WebView(context);
 		webView.getSettings().setDefaultTextEncodingName("utf-8");
 		webView.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
-		AlertDialog.Builder builder = new AlertDialog.Builder(fActivity).setTitle(title).setView(webView)
+		AlertDialog.Builder builder = new AlertDialog.Builder(context).setTitle(title).setView(webView)
 				.setPositiveButton(close, new Dialog.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialogInterface, int i) {
@@ -178,12 +181,12 @@ public class ChangeLogDialog {
 	}
 
 	private int getSeenVersion() {
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(fActivity);
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 		return preferences.getInt(KEY_NEWS_VERSION, 0);
 	}
 
 	private void setSeenVersion(int version) {
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(fActivity);
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
 		Editor editor = preferences.edit();
 		editor.putInt(KEY_NEWS_VERSION, version);

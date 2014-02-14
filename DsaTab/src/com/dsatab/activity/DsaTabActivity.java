@@ -19,6 +19,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -226,9 +227,40 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		DsaTabApplication.getInstance().setHero(hero);
 
 		if (hero != null) {
-			Toast.makeText(this, getString(R.string.hero_loaded, hero.getName()), Toast.LENGTH_SHORT).show();
+			checkHsVersion(hero);
+
 		}
 		onHeroLoaded(hero);
+	}
+
+	protected boolean checkHsVersion(Hero hero) {
+		String hsVersion = hero.getHsVersion();
+
+		if (TextUtils.isEmpty(hsVersion)) {
+			Toast.makeText(this, getString(R.string.hero_loaded, hero.getName()), Toast.LENGTH_SHORT).show();
+			return false;
+		}
+
+		String versionNumbers = hsVersion.replace(".", "");
+		while (versionNumbers.length() < 4) {
+			versionNumbers = versionNumbers.concat("0");
+		}
+
+		int version = Util.parseInt(versionNumbers, -1);
+
+		if (version < DsaTabApplication.HS_VERSION_INT) {
+			Toast.makeText(this,
+					"Warnung: Die Helden Xml Datei wurde nicht mit der aktuellen Helden-Software erstellt.",
+					Toast.LENGTH_LONG).show();
+			return false;
+		} else if (version > DsaTabApplication.HS_VERSION_INT) {
+			Toast.makeText(this, "Hinweis: DsaTab wurde noch nicht an die aktuellste Helden-Software angepasst.",
+					Toast.LENGTH_LONG).show();
+			return false;
+		} else {
+			Toast.makeText(this, getString(R.string.hero_loaded, hero.getName()), Toast.LENGTH_SHORT).show();
+			return true;
+		}
 	}
 
 	@Override
@@ -565,8 +597,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	protected void onHeroLoaded(Hero hero) {
 
 		if (hero == null) {
-			Toast.makeText(this, "Error: Trying to load empty hero. Please contact developer!", Toast.LENGTH_LONG)
-					.show();
+			Toast.makeText(this, R.string.message_load_hero_failed, Toast.LENGTH_LONG).show();
 			return;
 		}
 
@@ -706,23 +737,24 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
-		com.actionbarsherlock.view.MenuItem item = menu.add(Menu.NONE, R.id.option_load_hero, Menu.NONE, "Helden");
+		com.actionbarsherlock.view.MenuItem item = menu.add(Menu.NONE, R.id.option_load_hero, Menu.NONE,
+				R.string.option_heroes);
 		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 		item.setIcon(R.drawable.ic_menu_archive);
 
-		item = menu.add(Menu.NONE, R.id.option_save_hero, Menu.NONE, "Held speichern");
+		item = menu.add(Menu.NONE, R.id.option_save_hero, Menu.NONE, R.string.option_save_hero);
 		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 		item.setIcon(R.drawable.ic_menu_save);
 
-		item = menu.add(Menu.NONE, R.id.option_tabs, Menu.NONE, "Tabs anpassen");
+		item = menu.add(Menu.NONE, R.id.option_tabs, Menu.NONE, R.string.option_edit_tabs);
 		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 		item.setIcon(R.drawable.ic_menu_account_list);
 
-		item = menu.add(Menu.NONE, R.id.option_items, Menu.NONE, "Gegenstände");
+		item = menu.add(Menu.NONE, R.id.option_items, Menu.NONE, R.string.option_items);
 		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 		item.setIcon(Util.getThemeResourceId(this, R.attr.imgSwordAdd));
 
-		item = menu.add(Menu.NONE, R.id.option_settings, 99, "Einstellungen");
+		item = menu.add(Menu.NONE, R.id.option_settings, 99, R.string.settings);
 		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 		item.setIcon(R.drawable.ic_menu_preferences);
 
@@ -842,7 +874,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 			}
 			return true;
 		case R.id.option_items:
-			startActivity(new Intent(this, ItemsActivity.class));
+			ItemsActivity.view(this);
 			return true;
 		}
 

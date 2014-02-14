@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/attr_name"
-        style="@style/TextValue.Small.NoTouch"
+        style="?attr/textViewValueSmallNoTouchStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/default_gap"
@@ -29,7 +29,7 @@
 
     <TextView
         android:id="@+id/attr_le"
-        style="@style/TextValue.Small"
+        style="?attr/textViewValueSmallStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="2dp" >
@@ -45,7 +45,7 @@
 
     <TextView
         android:id="@+id/attr_au"
-        style="@style/TextValue.Small"
+        style="?attr/textViewValueSmallStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="2dp" >
@@ -61,7 +61,7 @@
 
     <TextView
         android:id="@+id/attr_ae"
-        style="@style/TextValue.Small"
+        style="?attr/textViewValueSmallStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="2dp" >
@@ -77,7 +77,7 @@
 
     <TextView
         android:id="@+id/attr_ke"
-        style="@style/TextValue.Small"
+        style="?attr/textViewValueSmallStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="2dp" >
@@ -93,7 +93,7 @@
 
     <TextView
         android:id="@+id/attr_be"
-        style="@style/TextValue.Small"
+        style="?attr/textViewValueSmallStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="2dp" >
@@ -109,7 +109,7 @@
 
     <TextView
         android:id="@+id/attr_mr"
-        style="@style/TextValue.Small"
+        style="?attr/textViewValueSmallStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="2dp" >
@@ -125,7 +125,7 @@
 
     <TextView
         android:id="@+id/attr_gs"
-        style="@style/TextValue.Small.NoTouch"
+        style="?attr/textViewValueSmallNoTouchStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="2dp" >
@@ -141,7 +141,7 @@
 
     <TextView
         android:id="@+id/attr_ws"
-        style="@style/TextValue.Small.NoTouch"
+        style="?attr/textViewValueSmallNoTouchStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="none" >
@@ -157,7 +157,7 @@
 
     <TextView
         android:id="@+id/attr_mu"
-        style="@style/TextValue.Small"
+        style="?attr/textViewValueSmallStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"        
         android:ellipsize="none"
@@ -174,7 +174,7 @@
 
     <TextView
         android:id="@+id/attr_kl"
-        style="@style/TextValue.Small"
+        style="?attr/textViewValueSmallStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"        
         android:ellipsize="none"
@@ -191,7 +191,7 @@
 
     <TextView
         android:id="@+id/attr_in"
-        style="@style/TextValue.Small"
+        style="?attr/textViewValueSmallStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"        
         android:ellipsize="none"
@@ -208,7 +208,7 @@
 
     <TextView
         android:id="@+id/attr_ch"
-        style="@style/TextValue.Small"
+        style="?attr/textViewValueSmallStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"        
         android:ellipsize="none"
@@ -225,7 +225,7 @@
 
     <TextView
         android:id="@+id/attr_ff"
-        style="@style/TextValue.Small"
+        style="?attr/textViewValueSmallStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"        
         android:ellipsize="none"
@@ -242,7 +242,7 @@
 
     <TextView
         android:id="@+id/attr_ge"
-        style="@style/TextValue.Small"
+        style="?attr/textViewValueSmallStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="none"
@@ -259,7 +259,7 @@
 
     <TextView
         android:id="@+id/attr_ko"
-        style="@style/TextValue.Small"
+        style="?attr/textViewValueSmallStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"        
         android:ellipsize="none"
@@ -276,7 +276,7 @@
 
     <TextView
         android:id="@+id/attr_kk"
-        style="@style/TextValue.Small"
+        style="?attr/textViewValueSmallStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"        
         android:ellipsize="none"

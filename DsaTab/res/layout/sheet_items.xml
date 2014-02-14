@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="?attr/imgSwordAdd"
             android:ellipsize="middle"
+            android:maxLines="2"
             android:text="@string/add_container" />
 
         <Button
@@ -41,6 +42,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="?attr/imgFilter"
             android:ellipsize="middle"
+            android:maxLines="2"
             android:text="@string/display" />
 
     </LinearLayout>

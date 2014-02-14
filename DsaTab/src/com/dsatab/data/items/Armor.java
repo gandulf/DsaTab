@@ -2,7 +2,6 @@ package com.dsatab.data.items;
 
 import java.util.Locale;
 
-import com.dsatab.R;
 import com.dsatab.data.enums.ArmorPosition;
 import com.dsatab.data.enums.ItemType;
 import com.j256.ormlite.field.DatabaseField;
@@ -185,37 +184,16 @@ public class Armor extends ItemSpecification {
 		maxRs = Math.max(maxRs, rs);
 	}
 
+	public int getMaxRs() {
+		return maxRs;
+	}
+
 	public int getTotalRs() {
 		return totalRs;
 	}
 
 	public void setTotalRs(int totalRs) {
 		this.totalRs = totalRs;
-	}
-
-	@Override
-	public int getResourceId() {
-		if (CATEGORY_HELM.equalsIgnoreCase(item.getCategory())) {
-			if (getRs(ArmorPosition.Kopf) > 5)
-				return R.drawable.icon_helm_full;
-			else if (getRs(ArmorPosition.Kopf) > 0)
-				return R.drawable.icon_helm_half;
-			else
-				return R.drawable.icon_helm;
-		} else if (CATEGORY_TORSO.equalsIgnoreCase(item.getCategory())
-				|| CATEGORY_FULL.equalsIgnoreCase(item.getCategory())) {
-			if (maxRs > 6)
-				return R.drawable.icon_armor_metal;
-			else if (maxRs > 2)
-				return R.drawable.icon_armor_chain;
-			else
-				return R.drawable.icon_armor_cloth;
-		} else if (CATEGORY_ARME.equalsIgnoreCase(item.getCategory())
-				|| CATEGORY_BEINE.equalsIgnoreCase(item.getCategory())) {
-			return R.drawable.icon_greaves;
-		} else {
-			return R.drawable.icon_armor;
-		}
 	}
 
 }

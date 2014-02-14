@@ -4,6 +4,6 @@
         android:icon="?attr/imgBarSwordAdd"
         android:showAsAction="withText|ifRoom"
         android:orderInCategory="99"
-        android:title="Behälter erstellen">
+        android:title="@string/create_container">
     </item>
 </menu>

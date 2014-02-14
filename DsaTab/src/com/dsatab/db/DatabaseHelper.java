@@ -7,7 +7,6 @@ import java.util.UUID;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.dsatab.R;
 import com.dsatab.data.ArtInfo;
@@ -19,6 +18,7 @@ import com.dsatab.data.items.MiscSpecification;
 import com.dsatab.data.items.Shield;
 import com.dsatab.data.items.Weapon;
 import com.dsatab.xml.XmlParser;
+import com.gandulf.guilib.util.Debug;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.support.ConnectionSource;
@@ -35,7 +35,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	public static final String DATABASE_NAME = "dsatab";
 	// any time you make changes to your database objects, you may have to
 	// increase the database version
-	public static final int DATABASE_VERSION = 43;
+	public static final int DATABASE_VERSION = 47;
 
 	// the DAO object we use to access the SimpleData table
 	private RuntimeExceptionDao<Item, UUID> itemRuntimeDao = null;
@@ -54,7 +54,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource) {
 		try {
-			Log.i(DatabaseHelper.class.getName(), "onCreate");
+			Debug.verbose("onCreate Database");
 			TableUtils.createTable(connectionSource, ArtInfo.class);
 			TableUtils.createTable(connectionSource, SpellInfo.class);
 
@@ -65,7 +65,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(connectionSource, Armor.class);
 			TableUtils.createTable(connectionSource, MiscSpecification.class);
 		} catch (SQLException e) {
-			Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
+			Debug.error("Can't create database", e);
 			throw new RuntimeException(e);
 		}
 
@@ -73,7 +73,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		XmlParser.fillSpells();
 		XmlParser.fillItems();
 
-		Log.i(DatabaseHelper.class.getName(), "created new entries in onCreate");
+		Debug.verbose("created new entries in onCreate");
 	}
 
 	/**
@@ -82,23 +82,42 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	 */
 	@Override
 	public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVersion, int newVersion) {
-		try {
-			Log.i(DatabaseHelper.class.getName(), "onUpgrade");
-			TableUtils.dropTable(connectionSource, ArtInfo.class, true);
-			TableUtils.dropTable(connectionSource, SpellInfo.class, true);
 
-			TableUtils.dropTable(connectionSource, Item.class, true);
-			TableUtils.dropTable(connectionSource, Weapon.class, true);
-			TableUtils.dropTable(connectionSource, Shield.class, true);
-			TableUtils.dropTable(connectionSource, DistanceWeapon.class, true);
-			TableUtils.dropTable(connectionSource, Armor.class, true);
-			TableUtils.dropTable(connectionSource, MiscSpecification.class, true);
-			// after we drop the old databases, we create the new ones
-			onCreate(db, connectionSource);
+		Debug.verbose("onUpgrade from " + oldVersion + " to " + newVersion);
+
+		try {
+			if (oldVersion < 43) {
+				recreateDatabase(db, connectionSource);
+			} else if (oldVersion < 46) {
+				TableUtils.dropTable(connectionSource, ArtInfo.class, true);
+				TableUtils.dropTable(connectionSource, SpellInfo.class, true);
+				TableUtils.createTable(connectionSource, ArtInfo.class);
+				TableUtils.createTable(connectionSource, SpellInfo.class);
+
+				XmlParser.fillArts();
+				XmlParser.fillSpells();
+			}
+
 		} catch (SQLException e) {
-			Log.e(DatabaseHelper.class.getName(), "Can't drop databases", e);
+			Debug.error("Can't drop databases", e);
 			throw new RuntimeException(e);
 		}
+	}
+
+	private void recreateDatabase(SQLiteDatabase db, ConnectionSource connectionSource) throws SQLException {
+
+		TableUtils.dropTable(connectionSource, ArtInfo.class, true);
+		TableUtils.dropTable(connectionSource, SpellInfo.class, true);
+
+		TableUtils.dropTable(connectionSource, Item.class, true);
+		TableUtils.dropTable(connectionSource, Weapon.class, true);
+		TableUtils.dropTable(connectionSource, Shield.class, true);
+		TableUtils.dropTable(connectionSource, DistanceWeapon.class, true);
+		TableUtils.dropTable(connectionSource, Armor.class, true);
+		TableUtils.dropTable(connectionSource, MiscSpecification.class, true);
+		// after we drop the old databases, we create the new ones
+		onCreate(db, connectionSource);
+
 	}
 
 	/**
