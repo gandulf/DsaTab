@@ -17,6 +17,7 @@ public class MetaTalent extends Talent implements JSONable {
 	private static final String DEPRECATED_WACHE_NAME = "Wache";
 	private static final String DEPRECATED_KRÄUTERSUCHE_NAME1 = "Kräutersuchen";
 	private static final String DEPRECATED_KRÄUTERSUCHE_NAME2 = "Kräuter Suchen";
+	private static final String DEPRECATED_PIRSCH_ANSITZ_JAGD = "PirschAnsitzJagd ";
 
 	private boolean favorite, unused;
 
@@ -32,9 +33,11 @@ public class MetaTalent extends Talent implements JSONable {
 		String type = json.getString(FIELD_META_TYPE);
 		if (DEPRECATED_KRÄUTERSUCHE_NAME1.equalsIgnoreCase(type)
 				|| DEPRECATED_KRÄUTERSUCHE_NAME2.equalsIgnoreCase(type)) {
-			this.type = TalentType.Kräutersuche;
+			this.type = TalentType.Kräutersuchen;
 		} else if (DEPRECATED_WACHE_NAME.equalsIgnoreCase(type)) {
 			this.type = TalentType.WacheHalten;
+		} else if (DEPRECATED_PIRSCH_ANSITZ_JAGD.equalsIgnoreCase(type)) {
+			this.type = TalentType.PirschUndAnsitzjagd;
 		} else {
 			this.type = TalentType.valueOf(type);
 		}
@@ -51,7 +54,7 @@ public class MetaTalent extends Talent implements JSONable {
 		case PirschUndAnsitzjagd:
 			probeInfo = ProbeInfo.parse("(MU/IN/GE)");
 			break;
-		case Kräutersuche:
+		case Kräutersuchen:
 		case NahrungSammeln:
 			probeInfo = ProbeInfo.parse("(MU/IN/FF)");
 			break;
@@ -116,7 +119,7 @@ public class MetaTalent extends Talent implements JSONable {
 			}
 			return value;
 		}
-		case Kräutersuche: {
+		case Kräutersuchen: {
 			Integer wildnis = getTalentValue(TalentType.Wildnisleben);
 			Integer sinnen = getTalentValue(TalentType.Sinnenschärfe);
 			Integer planzen = getTalentValue(TalentType.Pflanzenkunde);

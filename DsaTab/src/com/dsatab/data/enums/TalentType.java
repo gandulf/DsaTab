@@ -1,26 +1,28 @@
 package com.dsatab.data.enums;
 
+import com.dsatab.exception.TalentTypeUnknownException;
 
 public enum TalentType {
-	Anderthalbhänder("Anderthalbhänder", TalentGroupType.Nahkampf, -2), Armbrust("Armbrust", TalentGroupType.Fernkampf,
-			-5), Bastardstäbe("Bastardstäbe", TalentGroupType.Nahkampf, -2), Belagerungswaffen("Belagerungswaffen",
-			TalentGroupType.Fernkampf, null), Blasrohr("Blasrohr", TalentGroupType.Fernkampf, -5), Bogen("Bogen",
-			TalentGroupType.Fernkampf, -3), Diskus("Diskus", TalentGroupType.Fernkampf, -3), Dolche("Dolche",
-			TalentGroupType.Nahkampf, -1), Fechtwaffen("Fechtwaffen", TalentGroupType.Nahkampf, -1), Hiebwaffen(
-			"Hiebwaffen", TalentGroupType.Nahkampf, -4), Infanteriewaffen("Infanteriewaffen", TalentGroupType.Nahkampf,
-			-3), Kettenstäbe("Kettenstäbe", TalentGroupType.Nahkampf, -1), Kettenwaffen("Kettenwaffen",
-			TalentGroupType.Nahkampf, -3), Lanzenreiten("Lanzenreiten", TalentGroupType.Fernkampf, null), Peitsche(
-			"Peitsche", TalentGroupType.Nahkampf, -1), Raufen("Raufen", TalentGroupType.Nahkampf, 0), Ringen("Ringen",
-			TalentGroupType.Nahkampf, 0), Säbel("Säbel", TalentGroupType.Nahkampf, -2), Schleuder("Schleuder",
-			TalentGroupType.Fernkampf, -2), Schwerter("Schwerter", TalentGroupType.Nahkampf, -2), Speere("Speere",
-			TalentGroupType.Nahkampf, -3), Stäbe("Stäbe", TalentGroupType.Nahkampf, -2), Wurfbeile("Wurfbeile",
-			TalentGroupType.Fernkampf, -2), Wurfmesser("Wurfmesser", TalentGroupType.Fernkampf, -3), Wurfspeere(
-			"Wurfspeere", TalentGroupType.Fernkampf, -2), Zweihandflegel("Zweihandflegel", TalentGroupType.Nahkampf, -3), Zweihandhiebwaffen(
-			"Zweihandhiebwaffen", TalentGroupType.Nahkampf, -3), Zweihandschwertersäbel("Zweihandschwerter/-säbel",
-			TalentGroupType.Nahkampf, -2), Akrobatik("Akrobatik", TalentGroupType.Körperlich, null), Athletik(
-			"Athletik", TalentGroupType.Körperlich, null), Fliegen("Fliegen", TalentGroupType.Körperlich, null), Gaukeleien(
-			"Gaukeleien", TalentGroupType.Körperlich, null), Klettern("Klettern", TalentGroupType.Körperlich, null), Körperbeherrschung(
-			"Körperbeherrschung", TalentGroupType.Körperlich, null), Reiten("Reiten", TalentGroupType.Körperlich, null), Schleichen(
+	Anderthalbhänder("Anderthalbhänder", TalentGroupType.Nahkampf, null), Armbrust("Armbrust",
+			TalentGroupType.Fernkampf, null), Bastardstäbe("Bastardstäbe", TalentGroupType.Nahkampf, null), Belagerungswaffen(
+			"Belagerungswaffen", TalentGroupType.Fernkampf, null), Blasrohr("Blasrohr", TalentGroupType.Fernkampf, null), Bogen(
+			"Bogen", TalentGroupType.Fernkampf, null), Diskus("Diskus", TalentGroupType.Fernkampf, null), Dolche(
+			"Dolche", TalentGroupType.Nahkampf, null), Fechtwaffen("Fechtwaffen", TalentGroupType.Nahkampf, null), Hiebwaffen(
+			"Hiebwaffen", TalentGroupType.Nahkampf, null), Infanteriewaffen("Infanteriewaffen",
+			TalentGroupType.Nahkampf, null), Kettenstäbe("Kettenstäbe", TalentGroupType.Nahkampf, null), Kettenwaffen(
+			"Kettenwaffen", TalentGroupType.Nahkampf, null), Lanzenreiten("Lanzenreiten", TalentGroupType.Fernkampf,
+			null), Peitsche("Peitsche", TalentGroupType.Nahkampf, null), Raufen("Raufen", TalentGroupType.Nahkampf,
+			null), Ringen("Ringen", TalentGroupType.Nahkampf, null), Säbel("Säbel", TalentGroupType.Nahkampf, null), Schleuder(
+			"Schleuder", TalentGroupType.Fernkampf, null), Schwerter("Schwerter", TalentGroupType.Nahkampf, null), Speere(
+			"Speere", TalentGroupType.Nahkampf, null), Stäbe("Stäbe", TalentGroupType.Nahkampf, null), Wurfbeile(
+			"Wurfbeile", TalentGroupType.Fernkampf, null), Wurfmesser("Wurfmesser", TalentGroupType.Fernkampf, null), Wurfspeere(
+			"Wurfspeere", TalentGroupType.Fernkampf, null), Zweihandflegel("Zweihandflegel", TalentGroupType.Nahkampf,
+			null), Zweihandhiebwaffen("Zweihandhiebwaffen", TalentGroupType.Nahkampf, null), Zweihandschwertersäbel(
+			"Zweihandschwerter/-säbel", TalentGroupType.Nahkampf, null), Akrobatik("Akrobatik",
+			TalentGroupType.Körperlich, null), Athletik("Athletik", TalentGroupType.Körperlich, null), Fliegen(
+			"Fliegen", TalentGroupType.Körperlich, null), Gaukeleien("Gaukeleien", TalentGroupType.Körperlich, null), Klettern(
+			"Klettern", TalentGroupType.Körperlich, null), Körperbeherrschung("Körperbeherrschung",
+			TalentGroupType.Körperlich, null), Reiten("Reiten", TalentGroupType.Körperlich, null), Schleichen(
 			"Schleichen", TalentGroupType.Körperlich, null), Schwimmen("Schwimmen", TalentGroupType.Körperlich, null), Selbstbeherrschung(
 			"Selbstbeherrschung", TalentGroupType.Körperlich, null), SichVerstecken("Sich verstecken",
 			TalentGroupType.Körperlich, null), Singen("Singen", TalentGroupType.Körperlich, null), Sinnenschärfe(
@@ -145,7 +147,7 @@ public enum TalentType {
 			"Geister rufen", TalentGroupType.Gaben, null), GeisterBannen("Geister bannen", TalentGroupType.Gaben, null), GeisterBinden(
 			"Geister binden", TalentGroupType.Gaben, null), GeisterAufnehmen("Geister aufnehmen",
 			TalentGroupType.Gaben, null), PirschUndAnsitzjagd("Pirsch- und Ansitzjagd", TalentGroupType.Meta, null), NahrungSammeln(
-			"Nahrung sammeln", TalentGroupType.Meta, null), Kräutersuche("Kräutersuche", TalentGroupType.Meta, null), WacheHalten(
+			"Nahrung sammeln", TalentGroupType.Meta, null), Kräutersuchen("Kräutersuchen", TalentGroupType.Meta, null), WacheHalten(
 			"Wache halten", TalentGroupType.Meta, null), Ritualkenntnis("Ritualkenntnis", TalentGroupType.Gaben, null), RitualkenntnisAchazSchamane(
 			"Ritualkenntnis: Achaz-Schamane", TalentGroupType.Gaben, null), RitualkenntnisAlchimist(
 			"Ritualkenntnis: Alchimist", TalentGroupType.Gaben, null), RitualkenntnisAlhanisch(
@@ -169,10 +171,10 @@ public enum TalentType {
 			TalentGroupType.Gaben, null), RitualkenntnisSatuarisch("Ritualkenntnis: Satuarisch", TalentGroupType.Gaben,
 			null), RitualkenntnisScharlatan("Ritualkenntnis: Scharlatan", TalentGroupType.Gaben, null), RitualkenntnisTapasuul(
 			"Ritualkenntnis: Tapasuul", TalentGroupType.Gaben, null), RitualkenntnisTrollzackerSchamane(
-			"Ritualkenntnis: Trollzacker-Schamane", null, null), RitualkenntnisWaldmenschenSchamane(
-			"Ritualkenntnis: Waldmenschen-Schamane", null, null), RitualkenntnisWaldmenschenSchamaneUtulus(
-			"Ritualkenntnis: Waldmenschen-Schamane (Utulus)", null, null), RitualkenntnisWaldmenschenSchamaneTocamuyac(
-			"Ritualkenntnis: Waldmenschen-Schamane (Tocamuyac)", null, null), RitualkenntnisZaubertänzer(
+			"Ritualkenntnis: Trollzacker-Schamane", TalentGroupType.Gaben, null), RitualkenntnisWaldmenschenSchamane(
+			"Ritualkenntnis: Waldmenschen-Schamane", TalentGroupType.Gaben, null), RitualkenntnisWaldmenschenSchamaneUtulus(
+			"Ritualkenntnis: Waldmenschen-Schamane (Utulus)", TalentGroupType.Gaben, null), RitualkenntnisWaldmenschenSchamaneTocamuyac(
+			"Ritualkenntnis: Waldmenschen-Schamane (Tocamuyac)", TalentGroupType.Gaben, null), RitualkenntnisZaubertänzer(
 			"Ritualkenntnis: Zaubertänzer", TalentGroupType.Gaben, null), RitualkenntnisZaubertänzerHazaqi(
 			"Ritualkenntnis: Zaubertänzer (Hazaqi)", TalentGroupType.Gaben, null), RitualkenntnisZaubertänzerMajuna(
 			"Ritualkenntnis: Zaubertänzer (Majuna)", TalentGroupType.Gaben, null), RitualkenntnisZaubertänzernovadischeSharisad(
@@ -203,7 +205,10 @@ public enum TalentType {
 			"Liturgiekenntnis (Travia)", TalentGroupType.Gaben, null), LiturgiekenntnisTsa("Liturgiekenntnis (Tsa)",
 			TalentGroupType.Gaben, null), LiturgiekenntnisZsahh("Liturgiekenntnis (Zsahh)", TalentGroupType.Gaben, null), Prophezeien(
 			"Prophezeien", TalentGroupType.Gaben, null), Geräuschhexerei("Geräuschhexerei", TalentGroupType.Gaben, null), Magiegespür(
-			"Magiegespür", TalentGroupType.Gaben, null);
+			"Magiegespür", TalentGroupType.Gaben, null), Tierempathiespeziell("Tierempathie (speziell)",
+			TalentGroupType.Gaben, null), Tierempathiealle("Tierempathie (alle)", TalentGroupType.Gaben, null)
+
+	;
 
 	private TalentGroupType groupType;
 	private Integer be;
@@ -241,6 +246,6 @@ public enum TalentType {
 				return attr;
 			}
 		}
-		return null;
+		throw new TalentTypeUnknownException(code);
 	}
 }

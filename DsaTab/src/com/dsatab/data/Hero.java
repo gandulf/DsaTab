@@ -158,7 +158,7 @@ public class Hero extends AbstractBeing {
 		// fill metatalents
 
 		List<TalentType> metaTalentTypes = new ArrayList<TalentType>(Arrays.asList(TalentType.WacheHalten,
-				TalentType.Kräutersuche, TalentType.NahrungSammeln, TalentType.PirschUndAnsitzjagd));
+				TalentType.Kräutersuchen, TalentType.NahrungSammeln, TalentType.PirschUndAnsitzjagd));
 
 		for (MetaTalent metaTalent : configuration.getMetaTalents()) {
 			metaTalentTypes.remove(metaTalent.getType());

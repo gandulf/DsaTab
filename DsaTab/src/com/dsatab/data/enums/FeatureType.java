@@ -3,9 +3,8 @@ package com.dsatab.data.enums;
 import com.dsatab.exception.FeatureTypeUnknownException;
 
 public enum FeatureType {
-	Dschinngeboren("Dschinngeboren", FeatureGroupType.Advantage), Amtsadel("Amtsadel", FeatureGroupType.Advantage), AdligeAbstammung(
-			"Adlige Abstammung", FeatureGroupType.Advantage), AdligesErbe("Adliges Erbe", FeatureGroupType.Advantage), AffinitätZu(
-			"Affinität zu", FeatureGroupType.Advantage), AkademischeAusbildungGelehrter(
+	Amtsadel("Amtsadel", FeatureGroupType.Advantage), AdligeAbstammung("Adlige Abstammung", FeatureGroupType.Advantage), AdligesErbe(
+			"Adliges Erbe", FeatureGroupType.Advantage), AffinitätZu("Affinität zu", FeatureGroupType.Advantage), AkademischeAusbildungGelehrter(
 			"Akademische Ausbildung (Gelehrter)", FeatureGroupType.Advantage), AkademischeAusbildungKrieger(
 			"Akademische Ausbildung (Krieger)", FeatureGroupType.Advantage), AkademischeAusbildungMagier(
 			"Akademische Ausbildung (Magier)", FeatureGroupType.Advantage), Altersresistenz("Altersresistenz",
@@ -19,8 +18,8 @@ public enum FeatureType {
 			FeatureGroupType.Advantage), Beidhändig("Beidhändig", FeatureGroupType.Advantage), BeseelteKnochenkeule(
 			"Beseelte Knochenkeule", FeatureGroupType.Advantage), BesondererBesitz("Besonderer Besitz",
 			FeatureGroupType.Advantage), BreitgefächerteBildung("Breitgefächerte Bildung", FeatureGroupType.Advantage), Dämmerungssicht(
-			"Dämmerungssicht", FeatureGroupType.Advantage), EidetischesGedächtnis("Eidetisches Gedächtnis",
-			FeatureGroupType.Advantage), Eigeboren("Eigeboren", FeatureGroupType.Advantage), EisenaffineAura(
+			"Dämmerungssicht", FeatureGroupType.Advantage), Dschinngeboren("Dschinngeboren", FeatureGroupType.Advantage), EidetischesGedächtnis(
+			"Eidetisches Gedächtnis", FeatureGroupType.Advantage), Eigeboren("Eigeboren", FeatureGroupType.Advantage), EisenaffineAura(
 			"Eisenaffine Aura", FeatureGroupType.Advantage), Eisern("Eisern", FeatureGroupType.Advantage), Empathie(
 			"Empathie", FeatureGroupType.Advantage), Entfernungssinn("Entfernungssinn", FeatureGroupType.Advantage), ErerbteKnochenkeule(
 			"Ererbte Knochenkeule", FeatureGroupType.Advantage), Feenfreund("Feenfreund", FeatureGroupType.Advantage), FesteMatrix(
@@ -157,28 +156,29 @@ public enum FeatureType {
 			"Miserable Eigenschaft: Körperkraft", FeatureGroupType.Disadvantage), MiserableEigenschaftKonstitution(
 			"Miserable Eigenschaft: Konstitution", FeatureGroupType.Disadvantage), MiserableEigenschaftMut(
 			"Miserable Eigenschaft: Mut", FeatureGroupType.Disadvantage), Mondsüchtig("Mondsüchtig",
-			FeatureGroupType.Disadvantage), MoralkodexAngroschKult("Moralkodex [Angrosch-Kult]",
-			FeatureGroupType.Disadvantage), MoralkodexBadalikaner("Moralkodex [Badalikaner]",
-			FeatureGroupType.Disadvantage), MoralkodexBoronKirche("Moralkodex [Boron-Kirche]",
-			FeatureGroupType.Disadvantage), MoralkodexBundDesWahrenGlaubens("Moralkodex [Bund des wahren Glaubens]",
-			FeatureGroupType.Disadvantage), MoralkodexDreischwesternorden("Moralkodex [Dreischwesternorden]",
-			FeatureGroupType.Disadvantage), MoralkodexEfferdKirche("Moralkodex [Efferd-Kirche]",
-			FeatureGroupType.Disadvantage), MoralkodexFirunKirche("Moralkodex [Firun-Kirche]",
-			FeatureGroupType.Disadvantage), MoralkodexHesindeKirche("Moralkodex [Hesinde-Kirche]",
-			FeatureGroupType.Disadvantage), MoralkodexHSzintKult("Moralkodex [H'Szint-Kult]",
-			FeatureGroupType.Disadvantage), MoralkodexIfirnKirche("Moralkodex [Ifirn-Kirche]",
-			FeatureGroupType.Disadvantage), MoralkodexIngerimmKirche("Moralkodex [Ingerimm-Kirche]",
-			FeatureGroupType.Disadvantage), MoralkodexKorKirche("Moralkodex [Kor-Kirche]",
-			FeatureGroupType.Disadvantage), MoralkodexNandusKirche("Moralkodex [Nandus-Kirche]",
-			FeatureGroupType.Disadvantage), MoralkodexPeraineKirche("Moralkodex [Peraine-Kirche]",
-			FeatureGroupType.Disadvantage), MoralkodexPhexKirche("Moralkodex [Phex-Kirche]",
-			FeatureGroupType.Disadvantage), MoralkodexPraiosKirche("Moralkodex [Praios-Kirche]",
-			FeatureGroupType.Disadvantage), MoralkodexRahjaKirche("Moralkodex [Rahja-Kirche]",
-			FeatureGroupType.Disadvantage), MoralkodexRondraKirche("Moralkodex [Rondra-Kirche]",
-			FeatureGroupType.Disadvantage), MoralkodexSwafnirKult("Moralkodex [Swafnir-Kult]",
-			FeatureGroupType.Disadvantage), MoralkodexTraviaKirche("Moralkodex [Travia-Kirche]",
-			FeatureGroupType.Disadvantage), MoralkodexHeshinja("Moralkodex [Heshinja]", FeatureGroupType.Disadvantage), MoralkodexTsaKirche(
-			"Moralkodex [Tsa-Kirche]", FeatureGroupType.Disadvantage), MoralkodexZsahhKult("Moralkodex [Zsahh-Kult]",
+			FeatureGroupType.Disadvantage), Moralkodex("Moralkodex", FeatureGroupType.Disadvantage), MoralkodexAngroschKult(
+			"Moralkodex [Angrosch-Kult]", FeatureGroupType.Disadvantage), MoralkodexBadalikaner(
+			"Moralkodex [Badalikaner]", FeatureGroupType.Disadvantage), MoralkodexBoronKirche(
+			"Moralkodex [Boron-Kirche]", FeatureGroupType.Disadvantage), MoralkodexBundDesWahrenGlaubens(
+			"Moralkodex [Bund des wahren Glaubens]", FeatureGroupType.Disadvantage), MoralkodexDreischwesternorden(
+			"Moralkodex [Dreischwesternorden]", FeatureGroupType.Disadvantage), MoralkodexEfferdKirche(
+			"Moralkodex [Efferd-Kirche]", FeatureGroupType.Disadvantage), MoralkodexFirunKirche(
+			"Moralkodex [Firun-Kirche]", FeatureGroupType.Disadvantage), MoralkodexHesindeKirche(
+			"Moralkodex [Hesinde-Kirche]", FeatureGroupType.Disadvantage), MoralkodexHSzintKult(
+			"Moralkodex [H'Szint-Kult]", FeatureGroupType.Disadvantage), MoralkodexIfirnKirche(
+			"Moralkodex [Ifirn-Kirche]", FeatureGroupType.Disadvantage), MoralkodexIngerimmKirche(
+			"Moralkodex [Ingerimm-Kirche]", FeatureGroupType.Disadvantage), MoralkodexKorKirche(
+			"Moralkodex [Kor-Kirche]", FeatureGroupType.Disadvantage), MoralkodexNandusKirche(
+			"Moralkodex [Nandus-Kirche]", FeatureGroupType.Disadvantage), MoralkodexPeraineKirche(
+			"Moralkodex [Peraine-Kirche]", FeatureGroupType.Disadvantage), MoralkodexPhexKirche(
+			"Moralkodex [Phex-Kirche]", FeatureGroupType.Disadvantage), MoralkodexPraiosKirche(
+			"Moralkodex [Praios-Kirche]", FeatureGroupType.Disadvantage), MoralkodexRahjaKirche(
+			"Moralkodex [Rahja-Kirche]", FeatureGroupType.Disadvantage), MoralkodexRondraKirche(
+			"Moralkodex [Rondra-Kirche]", FeatureGroupType.Disadvantage), MoralkodexSwafnirKult(
+			"Moralkodex [Swafnir-Kult]", FeatureGroupType.Disadvantage), MoralkodexTraviaKirche(
+			"Moralkodex [Travia-Kirche]", FeatureGroupType.Disadvantage), MoralkodexHeshinja("Moralkodex [Heshinja]",
+			FeatureGroupType.Disadvantage), MoralkodexTsaKirche("Moralkodex [Tsa-Kirche]",
+			FeatureGroupType.Disadvantage), MoralkodexZsahhKult("Moralkodex [Zsahh-Kult]",
 			FeatureGroupType.Disadvantage), MoralkodexDDZ("Moralkodex [DDZ]", FeatureGroupType.Disadvantage), Morbidität(
 			"Morbidität", FeatureGroupType.Disadvantage), Nachtblind("Nachtblind", FeatureGroupType.Disadvantage), Nagrachwahn(
 			"Nagrachwahn", FeatureGroupType.Disadvantage), Nahrungsrestriktion("Nahrungsrestriktion",
@@ -230,12 +230,13 @@ public enum FeatureType {
 			"Widerwärtiges Aussehen", FeatureGroupType.Disadvantage), WildeMagie("Wilde Magie",
 			FeatureGroupType.Disadvantage), Zielschwierigkeiten("Zielschwierigkeiten", FeatureGroupType.Disadvantage), ZögerlicherZauberer(
 			"Zögerlicher Zauberer", FeatureGroupType.Disadvantage), Zwergenwuchs("Zwergenwuchs",
-			FeatureGroupType.Disadvantage), Ritualspezialisierung("Ritualspezialisierung",
-			FeatureGroupType.SpecialFeature), Akoluth("Akoluth", FeatureGroupType.SpecialFeature), Apport("Apport",
-			FeatureGroupType.SpecialFeature), AstraleMeditation("Astrale Meditation", FeatureGroupType.SpecialFeature), Aufmerksamkeit(
-			"Aufmerksamkeit", FeatureGroupType.SpecialFeature), AuraDerHeiligkeit("Aura der Heiligkeit",
-			FeatureGroupType.SpecialFeature), AuraVerhüllen("Aura verhüllen", FeatureGroupType.SpecialFeature), Aurapanzer(
-			"Aurapanzer", FeatureGroupType.SpecialFeature), Ausfall("Ausfall", FeatureGroupType.SpecialFeature), Auspendeln(
+			FeatureGroupType.Disadvantage), SchlechteEigenschaft("Schlechte Eigenschaft", FeatureGroupType.Disadvantage), Ritualspezialisierung(
+			"Ritualspezialisierung", FeatureGroupType.SpecialFeature), Akoluth("Akoluth",
+			FeatureGroupType.SpecialFeature), Apport("Apport", FeatureGroupType.SpecialFeature), AstraleMeditation(
+			"Astrale Meditation", FeatureGroupType.SpecialFeature), Aufmerksamkeit("Aufmerksamkeit",
+			FeatureGroupType.SpecialFeature), AuraDerHeiligkeit("Aura der Heiligkeit", FeatureGroupType.SpecialFeature), AuraVerhüllen(
+			"Aura verhüllen", FeatureGroupType.SpecialFeature), Aurapanzer("Aurapanzer",
+			FeatureGroupType.SpecialFeature), Ausfall("Ausfall", FeatureGroupType.SpecialFeature), Auspendeln(
 			"Auspendeln", FeatureGroupType.SpecialFeature), AusweichenI("Ausweichen I", FeatureGroupType.SpecialFeature), AusweichenII(
 			"Ausweichen II", FeatureGroupType.SpecialFeature), AusweichenIII("Ausweichen III",
 			FeatureGroupType.SpecialFeature), Bannschwert("Bannschwert", FeatureGroupType.SpecialFeature), Befreiungsschlag(
@@ -1005,8 +1006,9 @@ public enum FeatureType {
 			"Unterwasserkampf", FeatureGroupType.SpecialFeature), VerbotenePforten("Verbotene Pforten",
 			FeatureGroupType.SpecialFeature), VersteckteKlinge("Versteckte Klinge", FeatureGroupType.SpecialFeature), Vertrautenbindung(
 			"Vertrautenbindung", FeatureGroupType.SpecialFeature), WaffeZerbrechen("Waffe zerbrechen",
-			FeatureGroupType.SpecialFeature), Waffenmeister("Waffenmeister", FeatureGroupType.SpecialFeature), Würgegriff(
-			"Würgegriff", FeatureGroupType.SpecialFeature), Wurf("Wurf", FeatureGroupType.SpecialFeature), WaffenloserKampfstilBornländisch(
+			FeatureGroupType.SpecialFeature), Waffenmeister("Waffenmeister", FeatureGroupType.SpecialFeature), WaffenmeisterSchild(
+			"Waffenmeister (Schild)", FeatureGroupType.SpecialFeature), Würgegriff("Würgegriff",
+			FeatureGroupType.SpecialFeature), Wurf("Wurf", FeatureGroupType.SpecialFeature), WaffenloserKampfstilBornländisch(
 			"Waffenloser Kampfstil: Bornländisch", FeatureGroupType.SpecialFeature), WaffenloserKampfstilGladiatorenstil(
 			"Waffenloser Kampfstil: Gladiatorenstil", FeatureGroupType.SpecialFeature), WaffenloserKampfstilHammerfaust(
 			"Waffenloser Kampfstil: Hammerfaust", FeatureGroupType.SpecialFeature), WaffenloserKampfstilHruruzat(
@@ -1293,7 +1295,6 @@ public enum FeatureType {
 			if (attr.xmlName().equals(code)) {
 				return attr;
 			}
-
 		}
 
 		// search for old values without the prefix
@@ -1306,7 +1307,6 @@ public enum FeatureType {
 				}
 			}
 		}
-
 		throw new FeatureTypeUnknownException(code);
 	}
 }
