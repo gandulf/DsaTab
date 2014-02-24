@@ -1,8 +1,10 @@
 package com.dsatab.activity;
 
-import java.io.File;
 import java.util.Collections;
 import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
@@ -36,6 +38,7 @@ import com.dsatab.TabInfo;
 import com.dsatab.activity.menu.TabListener;
 import com.dsatab.data.Hero;
 import com.dsatab.data.HeroConfiguration;
+import com.dsatab.data.HeroFileInfo;
 import com.dsatab.data.HeroLoaderTask;
 import com.dsatab.data.Probe;
 import com.dsatab.data.adapter.TabAdapter;
@@ -57,7 +60,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 
 	protected static final String INTENT_TAB_INFO = "tabInfo";
 
-	public static final String PREF_LAST_HERO = "LAST_HERO";
+	public static final String PREF_LAST_HERO = "LAST_HERO_JSON";
 
 	private static final String KEY_HERO_PATH = "HERO_PATH";
 
@@ -88,14 +91,18 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		return DsaTabApplication.getInstance().getHero();
 	}
 
-	public final void loadHero(String heroPath) {
+	public final void loadHero(HeroFileInfo heroPath) {
+
+		if (getHero() != null && preferences.getBoolean(DsaTabPreferenceActivity.KEY_AUTO_SAVE, true)) {
+			DsaTabApplication.getInstance().saveHero(this);
+		}
 
 		loadingView.setVisibility(View.VISIBLE);
 		loadingView.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
 		viewPager.setEnabled(false);
 
 		Bundle args = new Bundle();
-		args.putString(KEY_HERO_PATH, heroPath);
+		args.putSerializable(KEY_HERO_PATH, heroPath);
 		getSupportLoaderManager().restartLoader(0, args, this);
 	}
 
@@ -189,14 +196,23 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		}
 	}
 
-	private void loadHero() {
+	private void initHero() {
 		// in case of orientation change the hero is already loaded, just recreate the menu etc...
 		if (DsaTabApplication.getInstance().getHero() != null) {
 			onHeroLoaded(DsaTabApplication.getInstance().getHero());
 		} else {
-			String heroPath = preferences.getString(PREF_LAST_HERO, null);
-			if (heroPath != null && new File(heroPath).exists()) {
-				loadHero(heroPath);
+			String heroFileInfoJson = preferences.getString(PREF_LAST_HERO, null);
+			if (heroFileInfoJson != null) {
+				try {
+					HeroFileInfo fileInfo = new HeroFileInfo(new JSONObject(heroFileInfoJson));
+					loadHero(fileInfo);
+				} catch (IllegalArgumentException e) {
+					Debug.error(e);
+					showHeroChooser();
+				} catch (JSONException e) {
+					Debug.error(e);
+					showHeroChooser();
+				}
 			} else {
 				showHeroChooser();
 			}
@@ -206,7 +222,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	@Override
 	public Loader<Hero> onCreateLoader(int id, Bundle args) {
 		// Debug.verbose("Creating loader for " + args.getString(KEY_HERO_PATH));
-		return new HeroLoaderTask(this, args.getString(KEY_HERO_PATH));
+		return new HeroLoaderTask(this, (HeroFileInfo) args.getSerializable(KEY_HERO_PATH));
 	}
 
 	@Override
@@ -228,25 +244,18 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 
 		if (hero != null) {
 			checkHsVersion(hero);
-
 		}
 		onHeroLoaded(hero);
 	}
 
 	protected boolean checkHsVersion(Hero hero) {
-		String hsVersion = hero.getHsVersion();
 
-		if (TextUtils.isEmpty(hsVersion)) {
+		if (TextUtils.isEmpty(hero.getFileInfo().getVersion())) {
 			Toast.makeText(this, getString(R.string.hero_loaded, hero.getName()), Toast.LENGTH_SHORT).show();
 			return false;
 		}
 
-		String versionNumbers = hsVersion.replace(".", "");
-		while (versionNumbers.length() < 4) {
-			versionNumbers = versionNumbers.concat("0");
-		}
-
-		int version = Util.parseInt(versionNumbers, -1);
+		int version = hero.getFileInfo().getVersionInt();
 
 		if (version < DsaTabApplication.HS_VERSION_INT) {
 			Toast.makeText(this,
@@ -282,9 +291,10 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		if (requestCode == ACTION_CHOOSE_HERO) {
 
 			if (resultCode == RESULT_OK) {
-				String heroPath = data.getStringExtra(HeroChooserActivity.INTENT_NAME_HERO_PATH);
-				Debug.verbose("HeroChooserActivity returned with path:" + heroPath);
-				loadHero(heroPath);
+				HeroFileInfo herofileInfo = (HeroFileInfo) data
+						.getSerializableExtra(HeroChooserActivity.INTENT_NAME_HERO_FILE_INFO);
+				Debug.verbose("HeroChooserActivity returned with path:" + herofileInfo);
+				loadHero(herofileInfo);
 			} else if (resultCode == RESULT_CANCELED) {
 				if (getHero() == null) {
 					finish();
@@ -380,7 +390,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		}
 
 		// TODO make sure the viewpager fragments are already initialized here!!!
-		loadHero();
+		initHero();
 
 		showNewsInfoPopup();
 	}
@@ -685,9 +695,13 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	@Override
 	protected void onDestroy() {
 		unregisterShakeDice();
+
 		DsaTabApplication.getPreferences().unregisterOnSharedPreferenceChangeListener(this);
 
-		// android.os.Debug.stopMethodTracing();
+		if (getHero() != null && preferences.getBoolean(DsaTabPreferenceActivity.KEY_AUTO_SAVE, true)) {
+			DsaTabApplication.getInstance().saveHero(this);
+		}
+
 		super.onDestroy();
 	}
 
@@ -788,12 +802,10 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 
 		item = menu.findItem(R.id.option_save_hero);
 		if (item != null) {
+			item.setVisible(!preferences.getBoolean(DsaTabPreferenceActivity.KEY_AUTO_SAVE, true));
 			item.setEnabled(getHero() != null);
 		}
-		item = menu.findItem(R.id.option_export_hero);
-		if (item != null) {
-			item.setEnabled(getHero() != null);
-		}
+
 		item = menu.findItem(R.id.option_tabs);
 		if (item != null) {
 			item.setEnabled(getHero() != null);
@@ -842,7 +854,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 			return true;
 		case R.id.option_save_hero:
 			if (getHero() != null) {
-				DsaTabApplication.getInstance().saveHero();
+				DsaTabApplication.getInstance().saveHero(this);
 			}
 			return true;
 		case R.id.option_settings:
@@ -868,9 +880,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 			return true;
 		case R.id.option_tabs:
 			if (getHero() != null) {
-				Intent editTab = new Intent(this, TabEditActivity.class);
-				editTab.putExtra(TabEditActivity.DATA_INTENT_TAB_INDEX, viewPager.getCurrentItem());
-				startActivityForResult(editTab, ACTION_EDIT_TABS);
+				TabEditActivity.edit(this, viewPager.getCurrentItem(), ACTION_EDIT_TABS);
 			}
 			return true;
 		case R.id.option_items:

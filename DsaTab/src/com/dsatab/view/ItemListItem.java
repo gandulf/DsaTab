@@ -13,10 +13,6 @@ import com.dsatab.data.items.ItemSpecification;
 import com.dsatab.util.Debug;
 import com.dsatab.util.DsaUtil;
 
-/**
- * @author Seraphim
- * 
- */
 public class ItemListItem extends CheckableRelativeLayout {
 
 	private int textColor = 0;

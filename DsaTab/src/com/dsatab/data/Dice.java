@@ -7,11 +7,20 @@ import java.util.regex.Pattern;
 
 import android.text.TextUtils;
 
-import com.dsatab.fragment.DiceSliderFragment.DiceRoll;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 
 public class Dice {
+
+	public static class DiceRoll {
+		public int dice;
+		public int result;
+
+		public DiceRoll(int dice, int result) {
+			this.dice = dice;
+			this.result = result;
+		}
+	}
 
 	private static Random rnd = new SecureRandom();
 

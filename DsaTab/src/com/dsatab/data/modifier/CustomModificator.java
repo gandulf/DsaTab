@@ -1,4 +1,4 @@
-package com.dsatab.data;
+package com.dsatab.data.modifier;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,11 +16,21 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.dsatab.DsaTabApplication;
+import com.dsatab.data.Art;
+import com.dsatab.data.Attribute;
+import com.dsatab.data.CombatDistanceTalent;
+import com.dsatab.data.CombatMeleeAttribute;
+import com.dsatab.data.CombatProbe;
+import com.dsatab.data.CombatShieldTalent;
+import com.dsatab.data.Hero;
+import com.dsatab.data.JSONable;
+import com.dsatab.data.Probe;
+import com.dsatab.data.Spell;
+import com.dsatab.data.Talent;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.items.DistanceWeapon;
 import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.items.Weapon;
-import com.dsatab.data.modifier.AbstractModificator;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;

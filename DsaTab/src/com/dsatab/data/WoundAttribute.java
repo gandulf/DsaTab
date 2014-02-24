@@ -18,18 +18,15 @@ public class WoundAttribute extends EditableValue implements JSONable {
 
 	public WoundAttribute(Hero hero, Position position) {
 		super(hero, position.getName());
-		this.hero = hero;
 		this.position = position;
 		this.modificator = new WoundModificator(hero, this, true);
 		setMinimum(0);
 		setMaximum(3);
 		setValue(0);
-
 	}
 
 	public WoundAttribute(Hero hero, JSONObject json) throws JSONException {
 		super(hero, json.getString(FIELD_POSITION));
-		this.hero = hero;
 		this.position = Position.valueOf(json.getString(FIELD_POSITION));
 		boolean active = true;
 		if (json.has(FIELD_ACTIVE))

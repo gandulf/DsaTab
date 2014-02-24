@@ -13,7 +13,7 @@ import android.widget.Spinner;
 
 import com.dsatab.R;
 import com.dsatab.data.adapter.SpinnerSimpleAdapter;
-import com.dsatab.xml.DataManager;
+import com.dsatab.db.DataManager;
 
 public class WebInfoDialog extends AlertDialog implements DialogInterface.OnClickListener, OnItemSelectedListener {
 

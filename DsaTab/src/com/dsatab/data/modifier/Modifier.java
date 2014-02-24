@@ -1,4 +1,4 @@
-package com.dsatab.data;
+package com.dsatab.data.modifier;
 
 import java.util.Collection;
 

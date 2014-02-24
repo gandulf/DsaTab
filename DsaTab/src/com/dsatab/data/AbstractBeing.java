@@ -1,6 +1,5 @@
 package com.dsatab.data;
 
-import java.io.IOException;
 import java.net.URI;
 import java.util.EnumMap;
 import java.util.HashSet;
@@ -8,15 +7,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import android.content.Context;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.SystemClock;
 import android.text.TextUtils;
-import android.view.Display;
-import android.view.WindowManager;
 
-import com.dsatab.DsaTabApplication;
 import com.dsatab.data.Hero.CombatStyle;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.FeatureType;
@@ -25,7 +19,6 @@ import com.dsatab.data.enums.TalentType;
 import com.dsatab.data.modifier.Modificator;
 import com.dsatab.util.Debug;
 import com.dsatab.view.listener.HeroChangedListener;
-import com.squareup.picasso.Picasso;
 
 public abstract class AbstractBeing {
 	private String name;
@@ -92,25 +85,6 @@ public abstract class AbstractBeing {
 			}
 		}
 		return portraitUri;
-	}
-
-	@SuppressWarnings("deprecation")
-	public Bitmap getPortrait() {
-		Bitmap portraitBitmap = null;
-		if (getPortraitUri() != null) {
-
-			WindowManager wm = (WindowManager) DsaTabApplication.getInstance().getSystemService(Context.WINDOW_SERVICE);
-			Display display = wm.getDefaultDisplay();
-
-			try {
-				portraitBitmap = Picasso.with(DsaTabApplication.getInstance().getApplicationContext())
-						.load(getPortraitUri()).resize(display.getWidth(), display.getHeight()).get();
-			} catch (IOException e) {
-				Debug.error(e);
-				return null;
-			}
-		}
-		return portraitBitmap;
 	}
 
 	public void fireValueChangedEvent(Value value) {

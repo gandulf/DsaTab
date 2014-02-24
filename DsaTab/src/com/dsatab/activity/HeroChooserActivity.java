@@ -1,6 +1,7 @@
 package com.dsatab.activity;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -9,21 +10,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
+import android.text.TextUtils;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,34 +42,45 @@ import android.widget.Toast;
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.Window;
+import com.dropbox.sync.android.DbxException;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
+import com.dsatab.cloud.AuthorizationException;
 import com.dsatab.cloud.HeroExchange;
 import com.dsatab.cloud.HeroExchange.OnHeroExchangeListener;
+import com.dsatab.cloud.HeroesSyncTask;
 import com.dsatab.data.HeroFileInfo;
+import com.dsatab.data.HeroFileInfo.StorageType;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.rokoder.android.lib.support.v4.widget.GridViewCompat;
 
-/**
- * 
- * 
- */
 public class HeroChooserActivity extends BaseActivity implements AdapterView.OnItemClickListener,
-		OnItemLongClickListener {
+		OnItemLongClickListener, LoaderManager.LoaderCallbacks<List<HeroFileInfo>>, OnClickListener {
 
-	public static final String INTENT_NAME_HERO_PATH = "heroPath";
+	static final String PREF_DONT_SHOW_CONNECT = "dont_show_connect";
+
+	static final int REQUEST_LINK_TO_DBX = 1190;
+
+	public static final String INTENT_NAME_HERO_FILE_INFO = "heroPath";
 
 	private static final String DUMMY_FILE = "Dummy.xml";
 	private static final String DUMMY_NAME = "Dummy";
 
 	private GridViewCompat list;
 	private HeroAdapter adapter;
-	private boolean dummy, writable = true;;
+	private boolean writable = true;
 
 	private ActionMode mMode;
 
 	private ActionMode.Callback mCallback;
+
+	private HeroExchange exchange;
+
+	private View loadingView;
+	private TextView empty;
+	private AlertDialog connectDialog;
 
 	private final class HeroesActionMode implements ActionMode.Callback {
 		@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -78,10 +100,8 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 
 						switch (item.getItemId()) {
 						case R.id.option_delete:
-
-							if (heroInfo.getFile() != null) {
-								Debug.verbose("Deleting " + heroInfo.getName());
-								heroInfo.getFile().delete();
+							Debug.verbose("Deleting " + heroInfo.getName());
+							if (exchange.delete(heroInfo)) {
 								adapter.remove(heroInfo);
 								notifyChanged = true;
 							} else {
@@ -91,26 +111,29 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 						case R.id.option_download:
 							if (heroInfo.isOnline()) {
 								HeroExchange exchange = new HeroExchange(HeroChooserActivity.this);
-								exchange.setOnHeroExchangeListener(new OnHeroExchangeListener() {
-									@Override
-									public void onHeroLoaded(String path) {
 
+								OnHeroExchangeListener listener = new OnHeroExchangeListener() {
+									@Override
+									public void onHeroInfoLoaded(List<HeroFileInfo> infos) {
 										Toast.makeText(
 												HeroChooserActivity.this,
 												getString(R.string.message_hero_successfully_downloaded,
 														heroInfo.getName()), Toast.LENGTH_SHORT).show();
 									}
 
-									@Override
-									public void onHeroInfoLoaded(HeroFileInfo info) {
-									}
-								});
-								exchange.importHero(heroInfo);
+								};
+								exchange.download(heroInfo, listener);
 							}
 							break;
 						case R.id.option_upload:
-							HeroExchange exchange2 = new HeroExchange(HeroChooserActivity.this);
-							exchange2.exportHero(heroInfo.getFile());
+							try {
+								exchange.upload(StorageType.Dropbox, heroInfo);
+								notifyChanged = true;
+							} catch (DbxException e) {
+								Debug.error(e);
+							} catch (IOException e) {
+								Debug.error(e);
+							}
 							break;
 						}
 					}
@@ -156,6 +179,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 			int selected = 0;
 			boolean online = false;
 			boolean deletable = false;
+			boolean uploadable = false;
 			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
@@ -163,7 +187,8 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 						selected++;
 						HeroFileInfo heroInfo = adapter.getItem(checkedPositions.keyAt(i));
 						online |= heroInfo.isOnline();
-						deletable |= heroInfo.getFile() != null;
+						deletable |= heroInfo.isDeletable();
+						uploadable |= heroInfo.getStorageType() == StorageType.FileSystem;
 					}
 				}
 			}
@@ -173,8 +198,14 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 			boolean changed = false;
 
 			MenuItem download = menu.findItem(R.id.option_download);
-			if (download != null && online != download.isEnabled()) {
-				download.setEnabled(online);
+			if (download != null && online != download.isVisible()) {
+				download.setVisible(online);
+				changed = true;
+			}
+
+			MenuItem upload = menu.findItem(R.id.option_upload);
+			if (upload != null && uploadable != upload.isVisible()) {
+				upload.setVisible(uploadable);
 				changed = true;
 			}
 
@@ -207,8 +238,12 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 		setTheme(DsaTabApplication.getInstance().getCustomTheme());
 		applyPreferencesToTheme();
 		super.onCreate(savedInstanceState);
+
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
 		setContentView(R.layout.sheet_hero_chooser);
 
+		exchange = new HeroExchange(this);
 		mCallback = new HeroesActionMode();
 
 		getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -222,38 +257,8 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 			writable = true;
 		}
 
-		// create test hero if no heroes avialable
-		if (writable && !DsaTabApplication.getInstance().hasHeroes()) {
-			dummy = true;
-
-			FileOutputStream fos = null;
-			InputStream fis = null;
-			try {
-				fos = new FileOutputStream(DsaTabApplication.getDsaTabHeroPath() + DUMMY_FILE);
-				fis = new BufferedInputStream(getAssets().open(DUMMY_FILE));
-				byte[] buffer = new byte[8 * 1024];
-				int length;
-
-				while ((length = fis.read(buffer)) >= 0) {
-					fos.write(buffer, 0, length);
-				}
-			} catch (FileNotFoundException e) {
-				Debug.error(e);
-			} catch (IOException e) {
-				Debug.error(e);
-			} finally {
-				try {
-					if (fos != null)
-						fos.close();
-
-					if (fis != null)
-						fis.close();
-				} catch (IOException e) {
-
-				}
-			}
-
-		}
+		empty = (TextView) findViewById(R.id.popup_hero_empty);
+		empty.setVisibility(View.GONE);
 
 		list = (GridViewCompat) findViewById(R.id.popup_hero_chooser_list);
 		list.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
@@ -261,40 +266,122 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 		list.setOnItemClickListener(this);
 		list.setOnItemLongClickListener(this);
 
-		loadData();
-		updateViews();
+		loadingView = findViewById(R.id.loading);
+
+		if (!exchange.isConnected(StorageType.Dropbox)
+				&& !getPreferences(MODE_PRIVATE).getBoolean(PREF_DONT_SHOW_CONNECT, false)) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			View popupcontent = getLayoutInflater().inflate(R.layout.popup_cloud, null);
+			builder.setView(popupcontent);
+			popupcontent.findViewById(R.id.connect_dropbox).setOnClickListener(this);
+
+			CheckBox show = (CheckBox) popupcontent.findViewById(R.id.cb_dont_show_again);
+			show.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					Editor editor = getPreferences(MODE_PRIVATE).edit();
+					editor.putBoolean(PREF_DONT_SHOW_CONNECT, isChecked);
+					editor.commit();
+				}
+			});
+			connectDialog = builder.show();
+			connectDialog.setCanceledOnTouchOutside(true);
+		}
+
+		refresh();
 	}
 
-	protected void loadData() {
-		List<HeroFileInfo> heroes = DsaTabApplication.getInstance().getHeroes();
-		if (heroes.size() == 1 && heroes.get(0).getName().equals(DUMMY_NAME))
-			dummy = true;
+	private void loadExampleHeroes() {
+
+		FileOutputStream fos = null;
+		InputStream fis = null;
+		try {
+			File out = new File(DsaTabApplication.getDsaTabHeroPath() + DUMMY_FILE);
+			fos = new FileOutputStream(out);
+			fis = new BufferedInputStream(getAssets().open(DUMMY_FILE));
+			byte[] buffer = new byte[8 * 1024];
+			int length;
+
+			while ((length = fis.read(buffer)) >= 0) {
+				fos.write(buffer, 0, length);
+			}
+		} catch (FileNotFoundException e) {
+			Debug.error(e);
+		} catch (IOException e) {
+			Debug.error(e);
+		} finally {
+			Util.close(fos);
+			Util.close(fis);
+		}
+
+		refresh();
+	}
+
+	@Override
+	public Loader<List<HeroFileInfo>> onCreateLoader(int id, Bundle args) {
+		return new HeroesSyncTask(this, exchange);
+	}
+
+	@Override
+	public void onLoaderReset(Loader<List<HeroFileInfo>> loader) {
+		// This is called when the last Cursor provided to onLoadFinished()
+		// above is about to be closed. We need to make sure we are no
+		// longer using it.
+		// mAdapter.swapCursor(null);
+	}
+
+	@Override
+	public void onLoadFinished(Loader<List<HeroFileInfo>> loader, List<HeroFileInfo> heroes) {
+		setSupportProgressBarIndeterminateVisibility(false);
+		loadingView.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+		loadingView.setVisibility(View.GONE);
+
+		// Swap the new cursor in. (The framework will take care of closing the
+		// old cursor once we return.)
+		if (loader instanceof HeroesSyncTask) {
+			HeroesSyncTask heroLoader = (HeroesSyncTask) loader;
+
+			for (Exception e : heroLoader.getExceptions()) {
+				if (e instanceof AuthorizationException) {
+					Toast.makeText(
+							this,
+							"Token ungültig. Überprüfe ob das Token mit dem in der Helden-Software erstelltem Zugangstoken übereinstimmt.",
+							Toast.LENGTH_SHORT).show();
+				} else if (e instanceof IOException) {
+					Toast.makeText(this, "Konnte keine Verbindung zum Austausch Server herstellen.", Toast.LENGTH_SHORT)
+							.show();
+				} else {
+					Toast.makeText(this, R.string.download_error, Toast.LENGTH_SHORT).show();
+					Debug.error(e);
+				}
+			}
+
+		}
 
 		adapter = new HeroAdapter(this, R.layout.hero_chooser_item, heroes);
 		list.setAdapter(adapter);
 
+		updateViews();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.dsatab.activity.BaseActivity#onDestroy()
-	 */
 	@Override
-	protected void onDestroy() {
-		// Util.unbindDrawables(findViewById(android.R.id.content));
-		super.onDestroy();
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.connect_dropbox:
+			exchange.syncDropbox(REQUEST_LINK_TO_DBX);
+			if (connectDialog != null) {
+				connectDialog.dismiss();
+				connectDialog = null;
+			}
+			break;
+		}
+
 	}
 
 	private void updateViews() {
-		TextView empty = (TextView) findViewById(R.id.popup_hero_empty);
-
-		if (!DsaTabApplication.getInstance().hasHeroes() || dummy) {
-
-			if (dummy)
-				list.setVisibility(View.VISIBLE);
-			else
-				list.setVisibility(View.INVISIBLE);
+		if (adapter == null && adapter.getCount() == 0) {
+			list.setVisibility(View.INVISIBLE);
 
 			empty.setVisibility(View.VISIBLE);
 			empty.setText(Util.getText(R.string.message_heroes_empty, DsaTabApplication.getDsaTabHeroPath()));
@@ -302,6 +389,15 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 			list.setVisibility(View.VISIBLE);
 			empty.setVisibility(View.GONE);
 		}
+	}
+
+	protected void refresh() {
+		setSupportProgressBarIndeterminateVisibility(true);
+
+		loadingView.setVisibility(View.VISIBLE);
+		loadingView.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
+
+		getSupportLoaderManager().restartLoader(0, null, this);
 	}
 
 	/*
@@ -342,52 +438,15 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 
 	@Override
 	public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
-
 		switch (item.getItemId()) {
 		case R.id.option_refresh:
-			loadData();
-			updateViews();
+			refresh();
 			return true;
+		case R.id.option_load_example_heroes:
+			loadExampleHeroes();
+			break;
 		case R.id.option_items:
 			startActivity(new Intent(this, ItemsActivity.class));
-			return true;
-		case R.id.option_hero_import:
-
-			HeroExchange exchange = new HeroExchange(this);
-			exchange.setOnHeroExchangeListener(new OnHeroExchangeListener() {
-				/*
-				 * (non-Javadoc)
-				 * 
-				 * @see com.dsatab.common.HeroExchange.OnHeroExchangeListener# onHeroLoaded(java.lang.String)
-				 */
-				@Override
-				public void onHeroLoaded(String path) {
-				}
-
-				/*
-				 * (non-Javadoc)
-				 * 
-				 * @see com.dsatab.common.HeroExchange.OnHeroExchangeListener#
-				 * onHeroInfoLoaded(com.dsatab.data.HeroOnlineInfo)
-				 */
-				@Override
-				public void onHeroInfoLoaded(HeroFileInfo info) {
-
-					for (int i = 0; i < adapter.getCount(); i++) {
-						HeroFileInfo heroInfo = adapter.getItem(i);
-
-						if (heroInfo.getKey() != null && heroInfo.getKey().equals(info.getKey())) {
-							heroInfo.id = info.id;
-							// heroInfo.name = info.name;
-							adapter.notifyDataSetChanged();
-							// found
-							return;
-						}
-					}
-					adapter.add(info);
-				}
-			});
-			exchange.syncHeroes();
 			return true;
 		case R.id.option_settings:
 			DsaTabPreferenceActivity.startPreferenceActivity(this);
@@ -423,8 +482,10 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 			}
 
 			TextView tv = (TextView) layout.findViewById(android.R.id.text1);
+			TextView version = (TextView) layout.findViewById(android.R.id.text2);
+			TextView tag1 = (TextView) layout.findViewById(R.id.tag1);
+			TextView tag2 = (TextView) layout.findViewById(R.id.tag2);
 			ImageView iv = (ImageView) layout.findViewById(android.R.id.icon);
-			ImageView cloud = (ImageView) layout.findViewById(R.id.hero_cloud);
 
 			HeroFileInfo hero = getItem(position);
 			tv.setText(hero.getName());
@@ -433,11 +494,45 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 				iv.setImageURI(Uri.parse(hero.getPortraitUri()));
 			}
 
-			if (hero.isOnline()) {
-				cloud.setVisibility(View.VISIBLE);
+			if (TextUtils.isEmpty(hero.getVersion())) {
+				version.setVisibility(View.GONE);
 			} else {
-				cloud.setVisibility(View.GONE);
+				version.setText("v" + hero.getVersion());
+				int v = hero.getVersionInt();
+				if (v < DsaTabApplication.HS_VERSION_INT) {
+					version.setBackgroundColor(getContext().getResources().getColor(R.color.ValueRedAlpha));
+				} else if (v > DsaTabApplication.HS_VERSION_INT) {
+					version.setBackgroundColor(getContext().getResources().getColor(R.color.ValueYellowAlpha));
+				} else {
+					version.setBackgroundColor(getContext().getResources().getColor(R.color.ValueGreenAlpha));
+				}
+				version.setVisibility(View.VISIBLE);
 			}
+
+			switch (hero.getStorageType()) {
+			case Dropbox:
+				tag1.setText("Dropbox");
+				tag1.setBackgroundColor(getContext().getResources().getColor(R.color.ValueBlueAlpha));
+				tag1.setVisibility(View.VISIBLE);
+				break;
+			case FileSystem:
+				tag1.setText("Phone");
+				tag1.setBackgroundColor(getContext().getResources().getColor(R.color.ValueYellowAlpha));
+				tag1.setVisibility(View.VISIBLE);
+				break;
+			default:
+				tag1.setVisibility(View.GONE);
+				break;
+			}
+
+			if (hero.isOnline()) {
+				tag2.setText("Austausch");
+				tag2.setBackgroundColor(getContext().getResources().getColor(R.color.ValueGreenAlpha));
+				tag2.setVisibility(View.VISIBLE);
+			} else {
+				tag2.setVisibility(View.GONE);
+			}
+
 			return layout;
 		}
 	}
@@ -451,12 +546,14 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 		if (requestCode == DsaTabActivity.ACTION_PREFERENCES) {
-			adapter = new HeroAdapter(this, R.layout.hero_chooser_item, DsaTabApplication.getInstance().getHeroes());
-			list.setAdapter(adapter);
-
-			updateViews();
-
+			refresh();
 			updateFullscreenStatus(preferences.getBoolean(DsaTabPreferenceActivity.KEY_FULLSCREEN, true));
+		} else if (requestCode == REQUEST_LINK_TO_DBX) {
+			if (resultCode == Activity.RESULT_OK) {
+				refresh();
+			} else {
+				// ... Link failed or was cancelled by the user.
+			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
@@ -479,29 +576,26 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 			list.setItemChecked(position, false);
 
 			HeroFileInfo hero = (HeroFileInfo) list.getItemAtPosition(position);
+			if (hero.getStorageType() == StorageType.HeldenAustausch) {
+				HeroExchange exchange = new HeroExchange(this);
+				OnHeroExchangeListener listener = new OnHeroExchangeListener() {
+					@Override
+					public void onHeroInfoLoaded(List<HeroFileInfo> infos) {
+						if (infos != null && !infos.isEmpty()) {
+							Intent intent = new Intent();
+							intent.putExtra(INTENT_NAME_HERO_FILE_INFO, infos.get(0));
+							setResult(RESULT_OK, intent);
+							finish();
+						}
+					}
+				};
 
-			if (hero.getFile() != null) {
+				exchange.download(hero, listener);
+			} else {
 				Intent intent = new Intent();
-				intent.putExtra(INTENT_NAME_HERO_PATH, hero.getFile().toString());
+				intent.putExtra(INTENT_NAME_HERO_FILE_INFO, hero);
 				setResult(RESULT_OK, intent);
 				finish();
-			} else {
-				HeroExchange exchange = new HeroExchange(this);
-				exchange.setOnHeroExchangeListener(new OnHeroExchangeListener() {
-					@Override
-					public void onHeroLoaded(String path) {
-						Intent intent = new Intent();
-						intent.putExtra(INTENT_NAME_HERO_PATH, path);
-						setResult(RESULT_OK, intent);
-						finish();
-					}
-
-					@Override
-					public void onHeroInfoLoaded(HeroFileInfo info) {
-					}
-				});
-
-				exchange.importHero(hero);
 			}
 		}
 	}

@@ -41,9 +41,9 @@ import com.dsatab.data.adapter.ItemCursorAdapter;
 import com.dsatab.data.adapter.ItemTypeAdapter;
 import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.items.Item;
+import com.dsatab.db.DataManager;
 import com.dsatab.fragment.BaseListFragment;
 import com.dsatab.util.Util;
-import com.dsatab.xml.DataManager;
 import com.gandulf.guilib.util.DefaultTextWatcher;
 import com.haarman.listviewanimations.view.DynamicListView;
 
@@ -216,7 +216,7 @@ public class ItemListFragment extends BaseListFragment implements TabListener, O
 
 	public String getHeroKey() {
 		if (getActivity() != null && getActivity().getIntent() != null)
-			return getActivity().getIntent().getStringExtra(ItemsActivity.INTENT_EXTRA_HERO);
+			return getActivity().getIntent().getStringExtra(ItemsActivity.INTENT_EXTRA_HERO_KEY);
 		else
 			return null;
 	}
@@ -383,7 +383,7 @@ public class ItemListFragment extends BaseListFragment implements TabListener, O
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.option_add) {
-			ItemsActivity.create(getActivity(), getHeroKey(), ItemsActivity.ACTION_CREATE);
+			ItemsActivity.insert(getActivity(), getHeroKey(), ItemsActivity.ACTION_CREATE);
 			return true;
 		} else {
 			return super.onOptionsItemSelected(item);

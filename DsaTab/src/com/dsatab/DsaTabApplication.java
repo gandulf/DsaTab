@@ -2,24 +2,20 @@ package com.dsatab;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.json.JSONException;
 import org.osmdroid.tileprovider.tilesource.ITileSource;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -34,8 +30,9 @@ import android.widget.Toast;
 
 import com.bugsense.trace.BugSenseHandler;
 import com.dsatab.activity.DsaTabPreferenceActivity;
+import com.dsatab.cloud.HeroExchange;
 import com.dsatab.data.Hero;
-import com.dsatab.data.HeroFileInfo;
+import com.dsatab.data.HeroFileInfo.FileType;
 import com.dsatab.db.DatabaseHelper;
 import com.dsatab.map.BitmapTileSource;
 import com.dsatab.util.Debug;
@@ -46,14 +43,15 @@ import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 public class DsaTabApplication extends Application implements OnSharedPreferenceChangeListener {
 
-	public static final int HS_VERSION_INT = 5310;
-	public static final String HS_VERSION = "5.3.1";
+	public static final int HS_VERSION_INT = 5330;
+	public static final String HS_VERSION = "5.3.3";
 
 	public static final String TILESOURCE_AVENTURIEN = "AVENTURIEN";
 
-	public static final String FLURRY_APP_ID = "AK17DSVJZBNH35G554YR";
-
 	public static final String BUGSENSE_API_KEY = "4b4062da";
+
+	public static final String DROPBOX_API_KEY = "fivprcmrt2bjm2c";
+	public static final String DROPBOX_API_SECRET = "ezq611w6bmie4js";
 
 	public static final String SD_CARD_PATH_PREFIX = Environment.getExternalStorageDirectory().getAbsolutePath()
 			+ File.separator;
@@ -321,20 +319,6 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 		}
 	}
 
-	public void copy(File src, File dst) throws IOException {
-		InputStream in = new FileInputStream(src);
-		OutputStream out = new FileOutputStream(dst);
-
-		// Transfer bytes from in to out
-		byte[] buf = new byte[1024];
-		int len;
-		while ((len = in.read(buf)) > 0) {
-			out.write(buf, 0, len);
-		}
-		in.close();
-		out.close();
-	}
-
 	private void cleanUp() {
 
 		// make sure we have a valid theme
@@ -365,28 +349,6 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 		this.hero = hero;
 	}
 
-	public boolean hasHeroes() {
-		boolean result = false;
-
-		File profilesDir = new File(DsaTabApplication.getDsaTabHeroPath());
-		if (!profilesDir.exists())
-			profilesDir.mkdirs();
-
-		File[] files = profilesDir.listFiles();
-		if (files != null) {
-			for (File file : files) {
-				if (file.isFile() && file.getName().toLowerCase(Locale.GERMAN).endsWith(".xml")) {
-					HeroFileInfo info = getHeroInfo(file);
-					if (info != null) {
-						result = true;
-						break;
-					}
-				}
-			}
-		}
-		return result;
-	}
-
 	/**
 	 * 
 	 */
@@ -397,91 +359,54 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 		}
 	}
 
-	public List<HeroFileInfo> getHeroes() {
-		List<HeroFileInfo> heroes = new ArrayList<HeroFileInfo>();
-
-		File heroesDir = getDsaTabHeroDirectory();
-		File[] files = heroesDir.listFiles();
-		if (files != null && heroesDir.exists() && heroesDir.canRead()) {
-			for (File file : files) {
-				if (file.isFile() && file.getName().toLowerCase(Locale.GERMAN).endsWith(".xml")) {
-					HeroFileInfo info = getHeroInfo(file);
-					if (info != null) {
-						heroes.add(info);
-					}
-				}
-			}
-		} else {
-			Debug.warning("Unable to read directory " + heroesDir.getAbsolutePath()
-					+ ". Make sure the directory exists and contains your heros");
-		}
-
-		return heroes;
-	}
-
-	private HeroFileInfo getHeroInfo(File file) {
-		try {
-			return new HeroFileInfo(file);
-		} catch (IllegalArgumentException e) {
-			return null;
-		}
-	}
-
-	public void saveHeroConfiguration() throws JSONException, IOException {
-
-		FileOutputStream out = null;
-		try {
-			out = new FileOutputStream(new File(hero.getPath() + ".dsatab"));
-			out.write(hero.getHeroConfiguration().toJSONObject().toString().getBytes());
-		} finally {
-			if (out != null) {
-				try {
-					out.close();
-				} catch (IOException e) {
-					Debug.error(e);
-				}
-			}
-		}
-
-	}
-
-	public void saveHero() {
+	public void saveHero(Activity activity) {
 		if (hero == null) {
 			return;
 		}
-		FileOutputStream out = null;
-		File destFile = new File(hero.getPath());
-		try {
-			String error = Util.checkFileWriteAccess(destFile);
-			if (error != null) {
-				Toast.makeText(this, error, Toast.LENGTH_LONG).show();
-				return;
-			}
 
-			FileInputStream fis = new FileInputStream(destFile);
-			Document dom = HeldenXmlParser.readDocument(fis);
-			fis.close();
+		try {
+			HeroExchange exchange = new HeroExchange(activity);
+
+			InputStream fis = exchange.getInputStream(hero.getFileInfo(), FileType.Hero);
+			Document dom;
+			try {
+				dom = HeldenXmlParser.readDocument(fis);
+			} finally {
+				exchange.closeStream(hero.getFileInfo(), FileType.Hero);
+				Util.close(fis);
+			}
 
 			Element heroElement = dom.getRootElement().getChild(Xml.KEY_HELD);
 			HeldenXmlParser.onPreHeroSaved(hero, heroElement);
 
-			out = new FileOutputStream(destFile);
-			HeldenXmlParser.writeHero(hero, dom, out);
-			hero.onPostHeroSaved();
+			OutputStream out = exchange.getOutputStream(hero.getFileInfo(), FileType.Hero);
+			if (out == null) {
+				Toast.makeText(this, R.string.message_save_hero_failed, Toast.LENGTH_LONG).show();
+				return;
+			}
+			try {
+				HeldenXmlParser.writeHero(hero, dom, out);
+				hero.onPostHeroSaved();
+			} finally {
+				exchange.closeStream(hero.getFileInfo(), FileType.Hero);
+				Util.close(out);
+			}
 
-			saveHeroConfiguration();
-			Toast.makeText(this, getString(R.string.hero_saved, hero.getName()), Toast.LENGTH_SHORT).show();
+			OutputStream outConfig = exchange.getOutputStream(hero.getFileInfo(), FileType.Config);
+			try {
+				outConfig.write(hero.getHeroConfiguration().toJSONObject().toString().getBytes());
+			} finally {
+				exchange.closeStream(hero.getFileInfo(), FileType.Config);
+				Util.close(outConfig);
+			}
+
+			if (!getPreferences().getBoolean(DsaTabPreferenceActivity.KEY_AUTO_SAVE, true)) {
+				Toast.makeText(this, getString(R.string.hero_saved, hero.getName()), Toast.LENGTH_SHORT).show();
+			}
+
 		} catch (Exception e) {
 			Toast.makeText(this, R.string.message_save_hero_failed, Toast.LENGTH_LONG).show();
 			Debug.error(e);
-		} finally {
-			if (out != null) {
-				try {
-					out.close();
-				} catch (IOException e) {
-					Debug.error(e);
-				}
-			}
 		}
 	}
 

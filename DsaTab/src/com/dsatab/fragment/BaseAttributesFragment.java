@@ -21,8 +21,6 @@ public abstract class BaseAttributesFragment extends BaseFragment {
 	protected TextView tfLabelSO;
 	protected TextView tfSO;
 
-	protected boolean inverseColors = false;
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -80,27 +78,22 @@ public abstract class BaseAttributesFragment extends BaseFragment {
 	}
 
 	protected void fillAttributeLabel(View tv, AttributeType type) {
-		Util.setLabel(tv, type, probeListener, editListener);
+		Util.setLabel(tv, type, getProbeListener(), getEditListener());
 	}
 
 	protected void fillAttributeValue(TextView tv, Attribute attr) {
-		fillAttributeValue(tv, attr, null, true, this.inverseColors);
-	}
-
-	protected void fillAttributeValue(TextView tv, Attribute attr, boolean inverseColors) {
-		fillAttributeValue(tv, attr, null, true, inverseColors);
+		fillAttributeValue(tv, attr, null, true);
 	}
 
 	protected void fillAttributeValue(TextView tv, AttributeType type) {
-		fillAttributeValue(tv, type, null, true, this.inverseColors);
+		fillAttributeValue(tv, type, null, true);
 	}
 
 	protected void fillAttributeValue(TextView tv, AttributeType type, boolean includeBe) {
-		fillAttributeValue(tv, type, null, includeBe, this.inverseColors);
+		fillAttributeValue(tv, type, null, includeBe);
 	}
 
-	protected void fillAttributeValue(TextView tv, AttributeType type, String prefix, boolean includeBe,
-			boolean inverseColors) {
+	protected void fillAttributeValue(TextView tv, AttributeType type, String prefix, boolean includeBe) {
 		if (tv == null)
 			return;
 
@@ -111,47 +104,45 @@ public abstract class BaseAttributesFragment extends BaseFragment {
 
 		Attribute attribute = getBeing().getAttribute(type);
 
-		fillAttributeValue(tv, attribute, prefix, includeBe, inverseColors);
+		fillAttributeValue(tv, attribute, prefix, includeBe);
 	}
 
-	protected void fillAttributeValue(TextView tv, Attribute attribute, String prefix, boolean includeBe,
-			boolean inverseColors) {
-		Util.setValue(getBeing(), tv, attribute, prefix, includeBe, inverseColors, getProbeListener(),
-				getEditListener());
+	protected void fillAttributeValue(TextView tv, Attribute attribute, String prefix, boolean includeBe) {
+		Util.setValue(getBeing(), tv, attribute, prefix, includeBe, getProbeListener(), getEditListener());
 	}
 
 	public AbstractBeing getBeing() {
 		return getHero();
 	}
 
-	protected void fillAttribute(Attribute attr, boolean inverseColors) {
+	protected void fillAttribute(Attribute attr) {
 		switch (attr.getType()) {
 		case Mut:
-			fillAttributeValue(tfMU, AttributeType.Mut, null, true, inverseColors);
+			fillAttributeValue(tfMU, AttributeType.Mut, null, true);
 			break;
 		case Klugheit:
-			fillAttributeValue(tfKL, AttributeType.Klugheit, null, true, inverseColors);
+			fillAttributeValue(tfKL, AttributeType.Klugheit, null, true);
 			break;
 		case Intuition:
-			fillAttributeValue(tfIN, AttributeType.Intuition, null, true, inverseColors);
+			fillAttributeValue(tfIN, AttributeType.Intuition, null, true);
 			break;
 		case Charisma:
-			fillAttributeValue(tfCH, AttributeType.Charisma, null, true, inverseColors);
+			fillAttributeValue(tfCH, AttributeType.Charisma, null, true);
 			break;
 		case Fingerfertigkeit:
-			fillAttributeValue(tfFF, AttributeType.Fingerfertigkeit, null, true, inverseColors);
+			fillAttributeValue(tfFF, AttributeType.Fingerfertigkeit, null, true);
 			break;
 		case Gewandtheit:
-			fillAttributeValue(tfGE, AttributeType.Gewandtheit, null, false, inverseColors);
+			fillAttributeValue(tfGE, AttributeType.Gewandtheit, null, false);
 			break;
 		case Konstitution:
-			fillAttributeValue(tfKO, AttributeType.Konstitution, null, true, inverseColors);
+			fillAttributeValue(tfKO, AttributeType.Konstitution, null, true);
 			break;
 		case Körperkraft:
-			fillAttributeValue(tfKK, AttributeType.Körperkraft, null, true, inverseColors);
+			fillAttributeValue(tfKK, AttributeType.Körperkraft, null, true);
 			break;
 		case Geschwindigkeit:
-			fillAttributeValue(tfKK, AttributeType.Körperkraft, null, true, inverseColors);
+			fillAttributeValue(tfKK, AttributeType.Körperkraft, null, true);
 		default:
 			break;
 		}

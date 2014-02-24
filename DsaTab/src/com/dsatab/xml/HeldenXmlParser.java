@@ -18,6 +18,7 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.XMLOutputter;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.xml.sax.InputSource;
 
 import android.content.Context;
@@ -33,19 +34,18 @@ import com.dsatab.data.Art;
 import com.dsatab.data.ArtInfo;
 import com.dsatab.data.Attribute;
 import com.dsatab.data.BaseCombatTalent;
-import com.dsatab.data.ChangeEvent;
 import com.dsatab.data.CombatDistanceTalent;
 import com.dsatab.data.CombatMeleeAttribute;
 import com.dsatab.data.CombatMeleeTalent;
 import com.dsatab.data.CombatShieldTalent;
 import com.dsatab.data.CombatTalent;
-import com.dsatab.data.Connection;
 import com.dsatab.data.CustomAttribute;
 import com.dsatab.data.Dice;
-import com.dsatab.data.Event;
 import com.dsatab.data.Feature;
 import com.dsatab.data.Hero;
 import com.dsatab.data.HeroBaseInfo;
+import com.dsatab.data.HeroConfiguration;
+import com.dsatab.data.HeroFileInfo;
 import com.dsatab.data.Markable;
 import com.dsatab.data.Purse;
 import com.dsatab.data.Purse.Currency;
@@ -74,6 +74,10 @@ import com.dsatab.data.items.ItemSpecification;
 import com.dsatab.data.items.MiscSpecification;
 import com.dsatab.data.items.Shield;
 import com.dsatab.data.items.Weapon;
+import com.dsatab.data.notes.ChangeEvent;
+import com.dsatab.data.notes.Connection;
+import com.dsatab.data.notes.Event;
+import com.dsatab.db.DataManager;
 import com.dsatab.exception.FeatureTypeUnknownException;
 import com.dsatab.exception.InconsistentDataException;
 import com.dsatab.exception.TalentTypeUnknownException;
@@ -113,8 +117,8 @@ public class HeldenXmlParser {
 		return dom;
 	}
 
-	public static Hero readHero(Context context, String path, InputStream in) throws JDOMException, IOException,
-			JSONException {
+	public static Hero readHero(Context context, HeroFileInfo fileInfo, InputStream in, InputStream configIn)
+			throws JDOMException, IOException, JSONException {
 
 		Hero hero = null;
 
@@ -125,7 +129,7 @@ public class HeldenXmlParser {
 			throw new InconsistentDataException("Invalid Xml file, could not find root element.");
 		}
 
-		String hsVersion = dom.getRootElement().getAttributeValue("Version");
+		String hsVersion = fileInfo.getVersion();
 		Element heroElement = dom.getRootElement().getChild(Xml.KEY_HELD);
 		// check for valid hero node
 		if (heroElement == null) {
@@ -136,10 +140,25 @@ public class HeldenXmlParser {
 		BugSenseHandler.clearCrashExtraData();
 		BugSenseHandler.addCrashExtraData("HS-Version", hsVersion);
 
-		hero = new Hero(path, hsVersion);
+		hero = new Hero(fileInfo);
+
+		// Debug.verbose("Hero successfully parsed");
+		HeroConfiguration configuration = null;
+		if (configIn != null) {
+			String data = Util.slurp(configIn, 1024);
+			if (!TextUtils.isEmpty(data)) {
+				JSONObject jsonObject = new JSONObject(new String(data));
+				configuration = new HeroConfiguration(hero, jsonObject);
+			}
+		}
+
+		if (configuration == null) {
+			configuration = new HeroConfiguration(hero);
+		}
+
+		hero.setHeroConfiguration(configuration);
 
 		hero.setName(heroElement.getAttributeValue(Xml.KEY_NAME));
-		hero.setKey(heroElement.getAttributeValue(Xml.KEY_KEY));
 		if (heroElement.getAttributeValue(Xml.KEY_PORTRAIT_PATH) != null) {
 			hero.setPortraitUri(Uri.parse(heroElement.getAttributeValue(Xml.KEY_PORTRAIT_PATH)));
 		}

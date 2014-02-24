@@ -20,6 +20,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceGroup;
@@ -34,6 +35,7 @@ import android.webkit.WebView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.view.MenuItem;
+import com.dropbox.sync.android.DbxAccountManager;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.DsaTabConfiguration;
 import com.dsatab.DsaTabConfiguration.ArmorType;
@@ -52,6 +54,10 @@ import com.gandulf.guilib.util.ResUtil;
 
 public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity implements
 		OnSharedPreferenceChangeListener {
+
+	static final int REQUEST_LINK_TO_DBX = 1190;
+	public static final int ACTION_PICK_BG_PATH = 1001;
+	public static final int ACTION_PICK_BG_WOUNDS_PATH = 1002;
 
 	public static final String KEY_PROBE_PROBABILITY = "probeProbability";
 	public static final String KEY_NOTES_VISIBILITY = "showNotes";
@@ -97,8 +103,6 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 
 	public static final String KEY_STYLE_BG_PATH = "theme.bg.path";
 	public static final String KEY_STYLE_BG_DELETE = "theme.bg.delete";
-	public static final int ACTION_PICK_BG_PATH = 1001;
-	public static final int ACTION_PICK_BG_WOUNDS_PATH = 1002;
 
 	public static final String KEY_STYLE_BG_WOUNDS_PATH = "theme.wound.bg.path";
 	public static final String KEY_STYLE_BG_WOUNDS_DELETE = "theme.wound.bg.delete";
@@ -127,6 +131,9 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 	public static final String KEY_HEADER_MR = "header_mr";
 	public static final String KEY_HEADER_GS = "header_gs";
 	public static final String KEY_HEADER_WS = "header_ws";
+
+	public static final String KEY_AUTO_SAVE = "hero_auto_save";
+	public static final String KEY_DROPBOX = "dropbox";
 
 	public static final String SCREEN_ORIENTATION_AUTO = "auto";
 	public static final String SCREEN_ORIENTATION_LANDSCAPE = "landscape";
@@ -170,10 +177,10 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 
 				if (preference != null) {
 					if (preference.getKey().equals(KEY_STYLE_BG_PATH)) {
-						handlePreferenceClick((Activity) v.getContext(), DsaTabPreferenceActivity.KEY_STYLE_BG_DELETE,
-								mgr.getSharedPreferences());
+						handlePreferenceClick((Activity) v.getContext(), preference,
+								DsaTabPreferenceActivity.KEY_STYLE_BG_DELETE, mgr.getSharedPreferences());
 					} else if (preference.getKey().equals(KEY_STYLE_BG_WOUNDS_PATH)) {
-						handlePreferenceClick((Activity) v.getContext(),
+						handlePreferenceClick((Activity) v.getContext(), preference,
 								DsaTabPreferenceActivity.KEY_STYLE_BG_WOUNDS_DELETE, mgr.getSharedPreferences());
 					}
 				}
@@ -319,7 +326,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 	 */
 	@Override
 	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-		return handlePreferenceClick(this, preference.getKey(), preference.getPreferenceManager()
+		return handlePreferenceClick(this, preference, preference.getKey(), preference.getPreferenceManager()
 				.getSharedPreferences());
 	}
 
@@ -379,6 +386,11 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 
 					Toast.makeText(this, R.string.message_background_image_changed, Toast.LENGTH_SHORT).show();
 				}
+			} else if (requestCode == REQUEST_LINK_TO_DBX) {
+				SharedPreferences preferences = DsaTabApplication.getPreferences();
+				Editor edit = preferences.edit();
+				edit.putBoolean(KEY_DROPBOX, Boolean.TRUE);
+				edit.commit();
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);
@@ -423,7 +435,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 		window.getDecorView().requestLayout();
 	}
 
-	protected static boolean handlePreferenceClick(final Activity context, final String key,
+	protected static boolean handlePreferenceClick(final Activity context, Preference preference, final String key,
 			final SharedPreferences preferences) {
 		AbstractDownloader downloader;
 		if (KEY_DOWNLOAD_ALL.equals(key)) {
@@ -588,6 +600,23 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 			edit.commit();
 			Toast.makeText(context, R.string.message_tips_reset, Toast.LENGTH_SHORT).show();
 			return true;
+		} else if (KEY_DROPBOX.equals(key)) {
+			DbxAccountManager mDbxAcctMgr = DbxAccountManager.getInstance(context.getApplicationContext(),
+					DsaTabApplication.DROPBOX_API_KEY, DsaTabApplication.DROPBOX_API_SECRET);
+
+			CheckBoxPreference cb = (CheckBoxPreference) preference;
+
+			if (cb.isChecked() && !mDbxAcctMgr.hasLinkedAccount()) {
+				Editor edit = preferences.edit();
+				edit.putBoolean(key, false);
+				edit.commit();
+				cb.setChecked(false);
+				mDbxAcctMgr.startLink(context, REQUEST_LINK_TO_DBX);
+			}
+			if (!cb.isChecked() && mDbxAcctMgr.hasLinkedAccount()) {
+				mDbxAcctMgr.unlink();
+			}
+
 		}
 
 		return false;
@@ -617,6 +646,9 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 								+ ": "
 								+ sharedPreferences.getString(KEY_SETUP_SDCARD_HERO_PATH,
 										DsaTabApplication.getDsaTabHeroPath()));
+			} else if (KEY_DROPBOX.equals(key)) {
+				CheckBoxPreference cb = (CheckBoxPreference) preference;
+				cb.setChecked(sharedPreferences.getBoolean(key, false));
 			}
 		}
 	}
@@ -713,7 +745,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 				}
 				return false;
 			} else {
-				return handlePreferenceClick(getActivity(), preference.getKey(),
+				return handlePreferenceClick(getActivity(), preference, preference.getKey(),
 						PreferenceManager.getDefaultSharedPreferences(getActivity()));
 			}
 		}

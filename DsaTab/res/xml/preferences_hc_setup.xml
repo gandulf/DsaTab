@@ -12,7 +12,14 @@
                 android:defaultValue="dsatab/"
                 android:title="@string/pref_sdcardHeroPath_title"
                 android:key="sdcardHeroPath" />
-           
+
+			<CheckBoxPreference
+	            android:defaultValue="true"            
+	            android:key="hero_auto_save"
+	            android:summaryOff="Klicke auf 'Held speichern' um Änderungen zu übernehmen."
+	            android:summaryOn="Änderungen an deinen Helden werden automatisch gespeichert."
+	            android:title="Automatisches Speichern" />
+			
         <!-- CheckBoxPreference
     			android:icon="@drawable/ic_menu_barcode"
                 android:title="Usage Statistics sammeln"
@@ -47,8 +54,16 @@
                 <EditTextPreference                	
                 	android:title="Token"
                 	android:summary="Berechtigungstoken der Heldenaustauschseite:"
-                	android:key="exchange_token" />
+                	android:key="exchange_token"
+                	android:defaultValue="4f7d52da382bbf83ecc9611241e4bf27d3754fa357113a7bbec8340711b7ea48" />
         
+                
+                <CheckBoxPreference
+                	android:title="@string/pref_dropbox_title"                	
+                	android:summaryOn="@string/pref_dropbox_description_on"
+                	android:summaryOff="@string/pref_dropbox_description_off"
+                	android:defaultValue="false"
+                	android:key="dropbox" />
         </PreferenceCategory>   
         
 	    <PreferenceCategory android:title="Portraits, Bilder, etc herunterladen"

@@ -1,45 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.dsatab.view.CheckableFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"    
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:padding="4dp"
-    android:background="?attr/listItemBackground">
+<com.dsatab.view.CheckableRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/portrait_width_small"
+    android:layout_height="@dimen/portrait_height_small"
+    android:background="?attr/listItemBackground"
+    android:padding="@dimen/default_gap" >
 
     <ImageView
         android:id="@android:id/icon"
-        android:layout_width="@dimen/portrait_width_small"
-        android:layout_height="@dimen/portrait_height_small"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:focusable="false"
         android:scaleType="centerCrop"
         android:src="@drawable/profile_picture" >
-
     </ImageView>
+
+    <LinearLayout android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@android:id/text1"
+        android:layout_alignParentRight="true"
+        android:orientation="horizontal">
     
-    <ImageView
-        android:id="@+id/hero_cloud"
+        <TextView
+        android:id="@+id/tag1"
+        style="@style/TextLabel.Mini"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_marginBottom="10dp"
+        android:background="@color/ValueGreenAlpha"
+        android:duplicateParentState="false"
         android:focusable="false"
-        android:src="@drawable/hero_cloud_dark">
-    </ImageView>
+        android:padding="@dimen/default_gap"
+        android:singleLine="true"
+        android:textColor="@android:color/primary_text_dark" >
+    </TextView>
+        
+        <TextView
+        android:id="@+id/tag2"
+        style="@style/TextLabel.Mini"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/ValueRedAlpha"
+        android:duplicateParentState="false"
+        android:focusable="false"
+        android:padding="@dimen/default_gap"
+        android:singleLine="true"
+        android:textColor="@android:color/primary_text_dark" >
+    </TextView>
+    </LinearLayout>
+    
 
     <TextView
         android:id="@android:id/text1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"        
-        android:padding="4dp"
-        android:layout_gravity="bottom|fill_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/Darker"
+        android:duplicateParentState="false"
         android:ellipsize="marquee"
         android:focusable="false"
         android:gravity="center_vertical|left"
         android:marqueeRepeatLimit="marquee_forever"
+        android:padding="@dimen/default_gap"
         android:singleLine="true"
-        android:background="@color/Darker"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@android:color/primary_text_dark" >
     </TextView>
+    
+    <TextView
+        android:id="@android:id/text2"
+        style="@style/TextLabel.Mini"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/ValueRedAlpha"
+        android:duplicateParentState="false"
+        android:focusable="false"
+        android:padding="@dimen/default_gap"
+        android:singleLine="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:textColor="@android:color/primary_text_dark" >
+    </TextView>
 
-</com.dsatab.view.CheckableFrameLayout>
+</com.dsatab.view.CheckableRelativeLayout>

@@ -195,7 +195,7 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 			if (equippedItems.isEmpty()) {
 				Toast.makeText(getActivity(), "Keine Einträge gefunden", Toast.LENGTH_SHORT).show();
 			} else if (equippedItems.size() == 1) {
-				ItemsActivity.view(getActivity(), getHero().getKey(), equippedItems.get(0));
+				ItemsActivity.view(getActivity(), getHero(), equippedItems.get(0));
 			} else {
 				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 				builder.setTitle("Rüstung");
@@ -203,7 +203,7 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 				builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						ItemsActivity.view(getActivity(), getHero().getKey(), adapter.getItem(which));
+						ItemsActivity.view(getActivity(), getHero(), adapter.getItem(which));
 					}
 				});
 				builder.show().setCanceledOnTouchOutside(true);

@@ -1,8 +1,18 @@
 package com.dsatab.test;
 
+import java.io.InputStream;
+
+import org.jdom2.Attribute;
+import org.jdom2.Document;
+import org.jdom2.filter.Filters;
+import org.jdom2.xpath.XPathExpression;
+import org.jdom2.xpath.XPathFactory;
+
 import android.test.InstrumentationTestCase;
 
 import com.dsatab.data.Hero;
+import com.dsatab.data.HeroFileInfo;
+import com.dsatab.data.HeroFileInfo.StorageType;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.FeatureType;
 import com.dsatab.data.enums.Hand;
@@ -11,14 +21,6 @@ import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.items.Weapon;
 import com.dsatab.util.Util;
 import com.dsatab.xml.HeldenXmlParser;
-
-import org.jdom2.Attribute;
-import org.jdom2.Document;
-import org.jdom2.filter.Filters;
-import org.jdom2.xpath.XPathExpression;
-import org.jdom2.xpath.XPathFactory;
-
-import java.io.InputStream;
 
 public class XmlParserTest extends InstrumentationTestCase {
 
@@ -64,7 +66,10 @@ public class XmlParserTest extends InstrumentationTestCase {
 		in.close();
 
 		in = getInstrumentation().getContext().getAssets().open("minarax_menschenfreund.xml");
-		Hero hero = HeldenXmlParser.readHero(getInstrumentation().getTargetContext(), "minarax_menschenfreund.xml", in);
+
+		HeroFileInfo fileInfo = new HeroFileInfo("Minarax Menschenfreund", "0", "minar");
+		fileInfo.setStorageType(StorageType.FileSystem);
+		Hero hero = HeldenXmlParser.readHero(getInstrumentation().getTargetContext(), fileInfo, in, null);
 		in.close();
 
 		assertNotNull(hero);

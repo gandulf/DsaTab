@@ -1,4 +1,4 @@
-package com.dsatab.data;
+package com.dsatab.data.notes;
 
 import java.util.Comparator;
 import java.util.UUID;

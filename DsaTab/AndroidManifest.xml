@@ -108,9 +108,32 @@
         service
             android:name="com.dsatab.common.ExportHeroService"
             android:exported="false" >
-        </service
+        </service
         -->
 
+
+        <!-- Dropbox BEGIN -->
+        <activity android:name="com.dropbox.sync.android.DbxAuthActivity" />
+        <activity
+            android:name="com.dropbox.client2.android.AuthActivity"
+            android:launchMode="singleTask" >
+            <intent-filter>
+                <data android:scheme="db-fivprcmrt2bjm2c" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name="com.dropbox.sync.android.DbxSyncService"
+            android:enabled="true"
+            android:exported="false"
+            android:label="Dropbox Sync" />
+
+        <!-- Dropbox END -->
         <meta-data
             android:name="android.app.default_searchable"
             android:value="com.dsatab.activity.SearchableActivity"

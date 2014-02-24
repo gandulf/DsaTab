@@ -10,15 +10,15 @@ import android.view.ViewGroup;
 import com.actionbarsherlock.app.ActionBar;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
-import com.dsatab.data.Connection;
-import com.dsatab.data.Event;
+import com.dsatab.data.notes.Connection;
+import com.dsatab.data.notes.Event;
 import com.dsatab.fragment.NotesEditFragment;
 
 public class NotesEditActivity extends BaseFragmentActivity {
 
 	private NotesEditFragment fragment;
 
-	public static void openEditEvent(Event event, String audioPath, Activity activity) {
+	public static void edit(Event event, String audioPath, Activity activity) {
 		Intent intent = new Intent(activity, NotesEditActivity.class);
 		if (event != null) {
 			intent.putExtra(NotesEditFragment.INTENT_NOTES_ITEM, event);
@@ -32,7 +32,7 @@ public class NotesEditActivity extends BaseFragmentActivity {
 		activity.startActivity(intent);
 	}
 
-	public static void openEditConnection(Connection event, Activity activity) {
+	public static void edit(Connection event, Activity activity) {
 
 		Intent intent = new Intent(activity, NotesEditActivity.class);
 		if (event != null) {

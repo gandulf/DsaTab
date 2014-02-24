@@ -5,10 +5,6 @@ import java.util.List;
 
 import org.jdom2.Element;
 
-/**
- * 
- * 
- */
 public class DomUtil {
 
 	public static Element getChildByTagName(Element parent, String subParentTagName, String tagName) {

@@ -6,11 +6,6 @@
         android:showAsAction="withText|ifRoom"
         android:title="@string/choose_portrait"/>
     <item
-        android:id="@+id/option_view_portrait"
-        android:icon="?attr/imgBarView"
-        android:showAsAction="withText|ifRoom"
-        android:title="@string/details"/>
-    <item
         android:id="@+id/option_take_photo"
         android:icon="?attr/imgBarCamera"
         android:showAsAction="withText|ifRoom"

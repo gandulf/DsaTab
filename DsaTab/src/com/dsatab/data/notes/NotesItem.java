@@ -1,4 +1,4 @@
-package com.dsatab.data;
+package com.dsatab.data.notes;
 
 import java.io.Serializable;
 import java.util.Comparator;

@@ -1,4 +1,4 @@
-package com.dsatab.xml;
+package com.dsatab.db;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

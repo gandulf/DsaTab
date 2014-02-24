@@ -1,7 +1,6 @@
 package com.dsatab.data;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,7 +16,6 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -46,15 +44,20 @@ import com.dsatab.data.items.Shield;
 import com.dsatab.data.items.Weapon;
 import com.dsatab.data.modifier.AbstractModificator;
 import com.dsatab.data.modifier.AuModificator;
+import com.dsatab.data.modifier.CustomModificator;
 import com.dsatab.data.modifier.LeModificator;
 import com.dsatab.data.modifier.Modificator;
+import com.dsatab.data.modifier.Modifier;
+import com.dsatab.data.modifier.Rules;
 import com.dsatab.data.modifier.RulesModificator;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
+import com.dsatab.data.notes.ChangeEvent;
+import com.dsatab.data.notes.Connection;
+import com.dsatab.data.notes.Event;
 import com.dsatab.exception.TalentTypeUnknownException;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
-import com.dsatab.xml.RulesParser;
 
 public class Hero extends AbstractBeing {
 
@@ -70,7 +73,7 @@ public class Hero extends AbstractBeing {
 		Offensive, Defensive
 	}
 
-	private String path, key, hsVersion;
+	private HeroFileInfo fileInfo;
 
 	private EditableValue experience, freeExperience;
 
@@ -109,9 +112,8 @@ public class Hero extends AbstractBeing {
 	private Set<HeroInventoryChangedListener> itemListener = new HashSet<HeroInventoryChangedListener>();
 
 	@SuppressWarnings("unchecked")
-	public Hero(String path, String hsVersion) throws IOException, JSONException {
-		this.path = path;
-		this.hsVersion = hsVersion;
+	public Hero(HeroFileInfo path) throws IOException, JSONException {
+		this.fileInfo = path;
 
 		this.equippedItems = new List[MAXIMUM_SET_NUMBER];
 		this.huntingWeapons = new HuntingWeapon[MAXIMUM_SET_NUMBER];
@@ -140,18 +142,14 @@ public class Hero extends AbstractBeing {
 		}
 		this.purse = new Purse();
 		this.connections = new ArrayList<Connection>();
-
-		loadHeroConfiguration();
-	}
-
-	public String getHsVersion() {
-		return hsVersion;
 	}
 
 	/**
 	 * 
 	 */
-	private void fillConfiguration() {
+	public void setHeroConfiguration(HeroConfiguration configuration) {
+		this.configuration = configuration;
+
 		// refill modificators
 		// clear modificators no make sure the user defined ones are loaded into modificators map too
 		this.modificators = null;
@@ -162,7 +160,7 @@ public class Hero extends AbstractBeing {
 		List<TalentType> metaTalentTypes = new ArrayList<TalentType>(Arrays.asList(TalentType.WacheHalten,
 				TalentType.Kräutersuche, TalentType.NahrungSammeln, TalentType.PirschUndAnsitzjagd));
 
-		for (MetaTalent metaTalent : getHeroConfiguration().getMetaTalents()) {
+		for (MetaTalent metaTalent : configuration.getMetaTalents()) {
 			metaTalentTypes.remove(metaTalent.getType());
 			addTalent(metaTalent);
 		}
@@ -174,7 +172,7 @@ public class Hero extends AbstractBeing {
 		// fill wounds
 		final List<Position> woundPositions = DsaTabApplication.getInstance().getConfiguration().getWoundPositions();
 		wounds = new EnumMap<Position, WoundAttribute>(Position.class);
-		for (WoundAttribute rs : getHeroConfiguration().getWounds()) {
+		for (WoundAttribute rs : configuration.getWounds()) {
 			if (woundPositions.contains(rs.getPosition()))
 				wounds.put(rs.getPosition(), rs);
 		}
@@ -183,42 +181,10 @@ public class Hero extends AbstractBeing {
 			WoundAttribute wound = wounds.get(pos);
 			if (wound == null) {
 				wound = new WoundAttribute(this, pos);
-				getHeroConfiguration().addWound(wound);
+				configuration.addWound(wound);
 				wounds.put(pos, wound);
 			}
 		}
-	}
-
-	protected void loadHeroConfiguration() throws IOException, JSONException {
-
-		FileInputStream fis = null;
-		try {
-
-			File file = new File(getPath() + ".dsatab");
-
-			if (file.exists() && file.canRead() && file.length() > 0) {
-				fis = new FileInputStream(file);
-
-				byte[] data = new byte[(int) file.length()];
-				fis.read(data);
-
-				JSONObject jsonObject = new JSONObject(new String(data));
-				configuration = new HeroConfiguration(this, jsonObject);
-			}
-
-			if (configuration == null) {
-				configuration = new HeroConfiguration(this);
-			}
-		} finally {
-			if (fis != null)
-				fis.close();
-		}
-
-		fillConfiguration();
-	}
-
-	public void setKey(String key) {
-		this.key = key;
 	}
 
 	public HeroBaseInfo getBaseInfo() {
@@ -315,13 +281,9 @@ public class Hero extends AbstractBeing {
 		return equippedItems[selectedSet];
 	}
 
-	public String getKey() {
-		return key;
-	}
-
 	@Override
 	protected String getId() {
-		return getKey();
+		return getFileInfo().getKey();
 	}
 
 	public int getActiveSet() {
@@ -673,7 +635,7 @@ public class Hero extends AbstractBeing {
 					spell.addFlag(com.dsatab.data.Spell.Flags.ÜbernatürlicheBegabung);
 					iter.remove();
 				} else {
-					Debug.error("Could not find spell for übernatürlichebegabung " + value);
+					Debug.error("Could not find Spell for ÜbernatürlicheBegabung " + value);
 				}
 			}
 			if (adv.getValues().isEmpty()) {
@@ -683,11 +645,8 @@ public class Hero extends AbstractBeing {
 	}
 
 	protected void prepareSystemRules(Context context) {
-		List<RulesModificator> systemRules = new ArrayList<RulesModificator>();
 		// add build in modificators for rules:
-
-		RulesParser rulesParser = new RulesParser(context, this);
-		systemRules.addAll(rulesParser.parseRules());
+		List<RulesModificator> systemRules = Rules.prepareRules(this);
 
 		SharedPreferences preferences = DsaTabApplication.getPreferences();
 		if (preferences.getBoolean(DsaTabPreferenceActivity.KEY_HOUSE_RULES_EASIER_WOUNDS, false)) {
@@ -701,7 +660,6 @@ public class Hero extends AbstractBeing {
 					mod.setDescription("Wundschwelle Glasknochen -1");
 				}
 			}
-
 		}
 
 		for (RulesModificator mod : systemRules) {
@@ -955,8 +913,8 @@ public class Hero extends AbstractBeing {
 		}
 	}
 
-	public String getPath() {
-		return path;
+	public HeroFileInfo getFileInfo() {
+		return fileInfo;
 	}
 
 	public void setBeCalculation(boolean auto) {

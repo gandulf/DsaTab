@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<color name="Darker">#AA000000</color>
+	<color name="Darker">#99333333</color>
 	<color name="Brighter">#66FFFFFF</color>
 	
 	<color name="RowEven">#11000000</color>
@@ -13,6 +13,12 @@
 	
 	<color name="ValueRed">#FFCC0000</color>
 	<color name="ValueGreen">#FF669900</color>
+	
+	<color name="ValueRedAlpha">#CCCC0000</color>
+	<color name="ValueBlueAlpha">#CC0099CC</color>
+	<color name="ValueViolettAlpha">#CC9933CC</color>
+	<color name="ValueGreenAlpha">#CC669900</color>
+	<color name="ValueYellowAlpha">#CCFF8800</color>
 		
 	<color name="delete_color_filter">#88FF0000</color>
 	<color name="accept_color_filter">#3300FF00</color>

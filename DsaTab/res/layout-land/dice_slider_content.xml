@@ -119,6 +119,16 @@
             </TableRow>
         </TableLayout>
 
+        <ImageButton
+            android:id="@+id/details_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/default_gap"
+            android:layout_marginRight="@dimen/default_gap"
+            android:layout_gravity="top"
+            android:background="@null"
+            android:src="?attr/imgExpanderClose" />
+
         <ImageView
             android:id="@+id/dice_w20"
             android:layout_width="@dimen/dice_size"
@@ -147,16 +157,6 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/default_gap"
             android:src="?attr/imgBarPlay" />
-        
-         <ImageButton
-             android:id="@+id/details_switch"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_gravity="top|right"
-             android:layout_marginBottom="@dimen/default_gap"
-             android:layout_marginRight="@dimen/default_gap"
-             android:background="@null"
-             android:src="?attr/imgExpanderClose" />
 
     </LinearLayout>
 

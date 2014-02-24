@@ -4,7 +4,6 @@ import java.util.Comparator;
 
 import com.dsatab.data.Attribute;
 import com.dsatab.data.Hero;
-import com.dsatab.data.Modifier;
 import com.dsatab.data.Probe;
 import com.dsatab.data.enums.AttributeType;
 
@@ -70,7 +69,7 @@ public abstract class AbstractModificator implements Modificator {
 	}
 
 	protected void fireModificatorChanged() {
-		if (hero.getModificators().contains(this)) {
+		if (hero != null && hero.getModificators().contains(this)) {
 			hero.fireModifierChangedEvent(this);
 		}
 	}

@@ -2,20 +2,20 @@ package com.dsatab.data.filter;
 
 import java.util.Locale;
 
-import com.dsatab.data.Connection;
-import com.dsatab.data.Event;
 import com.dsatab.data.Markable;
 import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.listable.Listable;
+import com.dsatab.data.notes.Connection;
+import com.dsatab.data.notes.Event;
 import com.dsatab.view.ListSettings;
 import com.gandulf.guilib.data.OpenArrayAdapter;
 import com.gandulf.guilib.data.OpenFilter;
 
-public class FilterableListFilter<T extends Listable> extends OpenFilter<T> {
+public class ListableListFilter<T extends Listable> extends OpenFilter<T> {
 
 	private ListSettings settings;
 
-	public FilterableListFilter(OpenArrayAdapter<T> list) {
+	public ListableListFilter(OpenArrayAdapter<T> list) {
 		super(list);
 		settings = new ListSettings();
 	}

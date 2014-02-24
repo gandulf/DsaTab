@@ -39,7 +39,6 @@ import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabActivity;
 import com.dsatab.activity.DsaTabPreferenceActivity;
-import com.dsatab.common.DsaMath;
 import com.dsatab.data.Art;
 import com.dsatab.data.Attribute;
 import com.dsatab.data.CombatDistanceTalent;
@@ -48,8 +47,8 @@ import com.dsatab.data.CombatMeleeTalent;
 import com.dsatab.data.CombatProbe;
 import com.dsatab.data.CombatTalent;
 import com.dsatab.data.Dice;
+import com.dsatab.data.Dice.DiceRoll;
 import com.dsatab.data.Hero;
-import com.dsatab.data.Modifier;
 import com.dsatab.data.Probe;
 import com.dsatab.data.Probe.ProbeType;
 import com.dsatab.data.Spell;
@@ -58,7 +57,9 @@ import com.dsatab.data.enums.FeatureType;
 import com.dsatab.data.items.DistanceWeapon;
 import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.items.Weapon;
+import com.dsatab.data.modifier.Modifier;
 import com.dsatab.util.Debug;
+import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Hint;
 import com.dsatab.util.Util;
 import com.gandulf.guilib.view.SeekBarEx;
@@ -627,7 +628,7 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 			case ThreeOfThree:
 
 				if (info.value[0] != null && info.value[1] != null && info.value[2] != null) {
-					probability = DsaMath.testTalent(info.value[0], info.value[1], info.value[2], taw);
+					probability = DsaUtil.testTalent(info.value[0], info.value[1], info.value[2], taw);
 					// Debug.verbose("Change for success is :" + probability);
 				}
 
@@ -635,13 +636,13 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 			case TwoOfThree:
 
 				if (info.value[0] != null) {
-					probability = DsaMath.testEigen(info.value[0], taw);
+					probability = DsaUtil.testEigen(info.value[0], taw);
 					// Debug.verbose("Change for success is :" + probability);
 				}
 				break;
 			case One:
 				if (info.value[0] != null) {
-					probability = DsaMath.testEigen(info.value[0], taw);
+					probability = DsaUtil.testEigen(info.value[0], taw);
 					// Debug.verbose("Change for success is :" + probability);
 				}
 				break;
@@ -1180,16 +1181,6 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 				}
 				}
 			}
-		}
-	}
-
-	public static class DiceRoll {
-		public int dice;
-		public int result;
-
-		public DiceRoll(int dice, int result) {
-			this.dice = dice;
-			this.result = result;
 		}
 	}
 

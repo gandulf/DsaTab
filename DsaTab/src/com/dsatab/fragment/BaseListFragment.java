@@ -32,6 +32,8 @@ public abstract class BaseListFragment extends BaseFragment implements OnItemLon
 
 	protected ActionMode.Callback mCallback;
 
+	protected ListSettings filterSettings;
+
 	protected ListSettings getFilterSettings() {
 		if (filterSettings == null) {
 			if (getTabPosition() >= 0 && getTabInfo() != null) {

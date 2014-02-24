@@ -2,14 +2,8 @@ package com.dsatab.common;
 
 public class DsaTabRuntimeException extends RuntimeException {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4603128387568878199L;
 
-	/**
-	 * 
-	 */
 	public DsaTabRuntimeException() {
 
 	}

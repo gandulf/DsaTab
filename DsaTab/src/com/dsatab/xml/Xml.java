@@ -2,10 +2,6 @@ package com.dsatab.xml;
 
 import org.jdom2.Element;
 
-/**
- * @author Seraphim
- * 
- */
 public abstract class Xml {
 	public static final String KEY_VALUE = "value";
 	public static final String KEY_NAME = "name";
@@ -172,6 +168,7 @@ public abstract class Xml {
 	public static final String KEY_PA = "pa";
 	public static final String KEY_TP = "tp";
 	public static final String KEY_DK = "dk";
+	public static final Object KEY_HELDEN = "helden";
 
 	public static String toString(String s) {
 		if (s == null)

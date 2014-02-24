@@ -148,10 +148,10 @@ public class MapFragment extends BaseFragment {
 			osmMapView.setBuiltInZoomControls(true);
 			osmMapView.setMultiTouchControls(true);
 
-			osmMapView.getController().setZoom(preferences.getInt(PREF_KEY_OSM_ZOOM, DEFAULT_OSM_ZOOM));
+			osmMapView.getController().setZoom(getPreferences().getInt(PREF_KEY_OSM_ZOOM, DEFAULT_OSM_ZOOM));
 
-			int latitude = preferences.getInt(PREF_KEY_OSM_LATITUDE, -1);
-			int longitude = preferences.getInt(PREF_KEY_OSM_LONGITUDE, -1);
+			int latitude = getPreferences().getInt(PREF_KEY_OSM_LATITUDE, -1);
+			int longitude = getPreferences().getInt(PREF_KEY_OSM_LONGITUDE, -1);
 			if (latitude != -1 && longitude != -1) {
 				IGeoPoint center = new GeoPoint(latitude, longitude);
 				osmMapView.getController().setCenter(center);
@@ -223,7 +223,7 @@ public class MapFragment extends BaseFragment {
 			mapFiles.add(OSM_AVENTURIEN);
 			mapNames.add("Aventurien (GoogleMaps)");
 		} else {
-			if (preferences.getBoolean(PREF_KEY_OSM_ASK, true)) {
+			if (getPreferences().getBoolean(PREF_KEY_OSM_ASK, true)) {
 				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 				builder.setTitle("Neue Aventurien Karte");
 				builder.setMessage("Es gibt jetzt eine GoogleMaps ähnliche Karte von ganz Aventurien. Willst du dir das Kartenpaket (ca. 10MB) aus dem Internet herunterladen?");
@@ -245,7 +245,7 @@ public class MapFragment extends BaseFragment {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 
-						Editor edit = preferences.edit();
+						Editor edit = getPreferences().edit();
 						edit.putBoolean(PREF_KEY_OSM_ASK, false);
 						edit.commit();
 						dialog.dismiss();
@@ -326,7 +326,7 @@ public class MapFragment extends BaseFragment {
 			// zooming functionality.
 			mAttacher.update();
 
-			String coords = preferences.getString(PREF_KEY_LAST_MAP_COORDINATES, null);
+			String coords = getPreferences().getString(PREF_KEY_LAST_MAP_COORDINATES, null);
 			if (coords != null) {
 				mAttacher.setSuppViewMatrix(Util.parseFloats(coords));
 			}
@@ -436,7 +436,7 @@ public class MapFragment extends BaseFragment {
 	@Override
 	public void onPause() {
 
-		Editor edit = preferences.edit();
+		Editor edit = getPreferences().edit();
 		edit.putString(PREF_KEY_LAST_MAP_COORDINATES, Util.toString(mAttacher.getSuppViewMatrix()));
 		if (osmMapView != null) {
 			edit.putInt(PREF_KEY_OSM_ZOOM, osmMapView.getZoomLevel());
@@ -461,13 +461,13 @@ public class MapFragment extends BaseFragment {
 	public void onResume() {
 		super.onResume();
 
-		String lastMap = preferences.getString(PREF_KEY_LAST_MAP, null);
+		String lastMap = getPreferences().getString(PREF_KEY_LAST_MAP, null);
 
 		if (osmMapView != null) {
-			osmMapView.getController().setZoom(preferences.getInt(PREF_KEY_OSM_ZOOM, DEFAULT_OSM_ZOOM));
+			osmMapView.getController().setZoom(getPreferences().getInt(PREF_KEY_OSM_ZOOM, DEFAULT_OSM_ZOOM));
 
-			int latitude = preferences.getInt(PREF_KEY_OSM_LATITUDE, -1);
-			int longitude = preferences.getInt(PREF_KEY_OSM_LONGITUDE, -1);
+			int latitude = getPreferences().getInt(PREF_KEY_OSM_LATITUDE, -1);
+			int longitude = getPreferences().getInt(PREF_KEY_OSM_LONGITUDE, -1);
 			if (latitude != -1 && longitude != -1) {
 				IGeoPoint center = new GeoPoint(latitude, longitude);
 				osmMapView.getController().setCenter(center);
@@ -493,7 +493,7 @@ public class MapFragment extends BaseFragment {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				Editor edit = preferences.edit();
+				Editor edit = getPreferences().edit();
 				edit.putString(PREF_KEY_LAST_MAP, mapFiles[which]);
 				edit.commit();
 

@@ -10,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -21,15 +19,9 @@ import com.dsatab.R;
 import com.dsatab.data.Hero;
 import com.dsatab.data.items.ItemContainer;
 import com.dsatab.util.Util;
-import com.dsatab.view.PortraitChooserDialog;
+import com.dsatab.view.PictureChooserDialog;
 
-/**
- * @author Seraphim
- * 
- */
-public class ItemContainerEditFragment extends BaseFragment implements OnItemSelectedListener, OnClickListener {
-
-	public static final String INTENT_ITEM_CHOOSER_ID = "com.dsatab.data.intent.itemContainerId";
+public class ItemContainerEditFragment extends BaseFragment implements OnClickListener {
 
 	private EditText editCapacity;
 	private EditText editName;
@@ -47,40 +39,44 @@ public class ItemContainerEditFragment extends BaseFragment implements OnItemSel
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return configureContainerView(inflater.inflate(R.layout.sheet_edit_item_container, container, false));
-	}
+		View root = configureContainerView(inflater.inflate(R.layout.sheet_edit_item_container, container, false));
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
-	 */
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-
-		editName = (EditText) findViewById(R.id.popup_edit_name);
-		editCapacity = (EditText) findViewById(R.id.popup_edit_capacity);
-		iconView = (ImageView) findViewById(R.id.popup_edit_icon);
+		editName = (EditText) root.findViewById(R.id.popup_edit_name);
+		editCapacity = (EditText) root.findViewById(R.id.popup_edit_capacity);
+		iconView = (ImageView) root.findViewById(R.id.popup_edit_icon);
 		iconView.setOnClickListener(this);
 
-		Bundle extra = getActivity().getIntent().getExtras();
-		if (extra != null) {
-			int containerId = extra.getInt(INTENT_ITEM_CHOOSER_ID, -1);
-			if (containerId >= 0) {
-				itemContainer = getHero().getItemContainer(containerId);
-			}
-		}
+		return root;
+	}
 
+	public void setItemContainer(ItemContainer itemContainer) {
 		if (itemContainer == null) {
 			itemContainer = new ItemContainer();
 		}
-		if (itemContainer.getCapacity() > 0) {
-			editCapacity.setText(Integer.toString(itemContainer.getCapacity()));
-		}
-		editName.setText(itemContainer.getName());
-		iconView.setImageURI(itemContainer.getIconUri());
+		this.itemContainer = itemContainer;
+	}
 
-		super.onActivityCreated(savedInstanceState);
+	@Override
+	public void onResume() {
+		super.onResume();
+		updateView();
+	}
+
+	private void updateView() {
+		if (editCapacity != null) {
+			if (itemContainer.getCapacity() > 0) {
+				editCapacity.setText(Integer.toString(itemContainer.getCapacity()));
+			} else {
+				editCapacity.setText(null);
+			}
+		}
+		if (editName != null) {
+			editName.setText(itemContainer.getName());
+		}
+		if (iconView != null) {
+			iconView.setImageURI(itemContainer.getIconUri());
+		}
+
 	}
 
 	/*
@@ -90,29 +86,6 @@ public class ItemContainerEditFragment extends BaseFragment implements OnItemSel
 	 */
 	@Override
 	public void onHeroLoaded(Hero hero) {
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget .AdapterView, android.view.View,
-	 * int, long)
-	 */
-	@Override
-	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-		if (parent.getId() == R.id.popup_edit_icon) {
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.widget.AdapterView.OnItemSelectedListener#onNothingSelected(android .widget.AdapterView)
-	 */
-	@Override
-	public void onNothingSelected(AdapterView<?> arg0) {
 
 	}
 
@@ -154,7 +127,7 @@ public class ItemContainerEditFragment extends BaseFragment implements OnItemSel
 	}
 
 	private void pickPortrait() {
-		final PortraitChooserDialog pdialog = new PortraitChooserDialog(getActivity());
+		final PictureChooserDialog pdialog = new PictureChooserDialog(getActivity());
 
 		List<Integer> itemIcons = DsaTabApplication.getInstance().getConfiguration().getItemIcons();
 

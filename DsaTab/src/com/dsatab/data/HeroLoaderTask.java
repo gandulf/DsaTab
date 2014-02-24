@@ -1,31 +1,35 @@
 package com.dsatab.data;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.InputStream;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.support.v4.content.AsyncTaskLoader;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.activity.DsaTabActivity;
+import com.dsatab.cloud.HeroExchange;
+import com.dsatab.data.HeroFileInfo.FileType;
 import com.dsatab.util.Debug;
+import com.dsatab.util.Util;
 import com.dsatab.xml.HeldenXmlParser;
 
 public class HeroLoaderTask extends AsyncTaskLoader<Hero> {
 
 	private Hero hero;
 
-	private String path;
+	private HeroFileInfo fileInfo;
 
 	private Exception exception;
 
-	public HeroLoaderTask(Context context, String heroPath) {
+	private HeroExchange exchange;
+
+	public HeroLoaderTask(Activity context, HeroFileInfo heroFileInfo) {
 		super(context);
-		this.path = heroPath;
+		this.fileInfo = heroFileInfo;
+		this.exchange = new HeroExchange(context);
 
 	}
 
@@ -63,28 +67,27 @@ public class HeroLoaderTask extends AsyncTaskLoader<Hero> {
 		exception = null;
 
 		// Debug.verbose("Getting hero from " + path);
-		if (path == null) {
-			Debug.error("Error: Path was null ");
+		if (fileInfo == null) {
+			Debug.error("Error: fileInfo was null ");
 			return null;
 		}
 
-		FileInputStream fis = null;
+		InputStream fis = null;
+		InputStream fisConfig = null;
 		SharedPreferences preferences = DsaTabApplication.getPreferences();
 
 		try {
-			File file = new File(path);
-			if (!file.exists()) {
-				Debug.error("Error: Hero file not found at " + file.getAbsolutePath());
-				throw new FileNotFoundException(file.getAbsolutePath());
+			fis = exchange.getInputStream(fileInfo, FileType.Hero);
+			if (fis == null) {
+				Debug.error("Error: Hero file not found at " + fileInfo);
+				throw new FileNotFoundException(fileInfo.toString());
 			}
 
-			fis = new FileInputStream(file);
-			hero = HeldenXmlParser.readHero(getContext(), path, fis);
+			fisConfig = exchange.getInputStream(fileInfo, FileType.Config);
+			hero = HeldenXmlParser.readHero(getContext(), fileInfo, fis, fisConfig);
 			if (hero != null) {
-				// Debug.verbose("Hero successfully parsed");
-
 				Editor editor = preferences.edit();
-				editor.putString(DsaTabActivity.PREF_LAST_HERO, hero.getPath());
+				editor.putString(DsaTabActivity.PREF_LAST_HERO, hero.getFileInfo().toJSONObject().toString());
 				editor.commit();
 				// Debug.verbose("Stored path of current hero in prefs:" +
 				// hero.getPath());
@@ -104,14 +107,10 @@ public class HeroLoaderTask extends AsyncTaskLoader<Hero> {
 			Debug.error(e);
 			return null;
 		} finally {
-			if (fis != null) {
-				try {
-					fis.close();
-				} catch (IOException e) {
-					Debug.error(e);
-				}
-			}
-
+			exchange.closeStream(fileInfo, FileType.Hero);
+			exchange.closeStream(fileInfo, FileType.Config);
+			Util.close(fis);
+			Util.close(fisConfig);
 		}
 	}
 

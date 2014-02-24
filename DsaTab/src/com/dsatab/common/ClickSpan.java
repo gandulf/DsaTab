@@ -1,4 +1,4 @@
-package com.dsatab.util;
+package com.dsatab.common;
 
 import android.text.style.ClickableSpan;
 import android.view.View;

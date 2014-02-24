@@ -24,6 +24,8 @@ import com.dsatab.data.Hero.CombatStyle;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.TalentGroupType;
 import com.dsatab.data.items.ItemContainer;
+import com.dsatab.data.modifier.CustomModificator;
+import com.dsatab.data.notes.Event;
 import com.dsatab.fragment.AnimalFragment;
 import com.dsatab.fragment.BaseFragment;
 import com.dsatab.fragment.BodyFragment;

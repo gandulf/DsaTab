@@ -16,18 +16,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.dsatab.R;
-import com.dsatab.data.Connection;
-import com.dsatab.data.Event;
 import com.dsatab.data.Hero;
-import com.dsatab.data.NotesItem;
 import com.dsatab.data.adapter.EventCatgoryAdapter;
 import com.dsatab.data.enums.EventCategory;
+import com.dsatab.data.notes.Connection;
+import com.dsatab.data.notes.Event;
+import com.dsatab.data.notes.NotesItem;
 import com.dsatab.util.Util;
 
-/**
- * @author Seraphim
- * 
- */
 public class NotesEditFragment extends BaseFragment implements OnItemSelectedListener {
 
 	public static final String INTENT_NOTES_ITEM = "notesItem";
@@ -62,7 +58,21 @@ public class NotesEditFragment extends BaseFragment implements OnItemSelectedLis
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return configureContainerView(inflater.inflate(R.layout.sheet_edit_notes, container, false));
+		View root = configureContainerView(inflater.inflate(R.layout.sheet_edit_notes, container, false));
+
+		editComment = (EditText) root.findViewById(R.id.popup_notes_edit_text);
+		editName = (EditText) root.findViewById(R.id.popup_notes_edit_name);
+		editSozialStatus = (EditText) root.findViewById(R.id.popup_notes_edit_so);
+
+		commentLabel = (TextView) root.findViewById(R.id.popup_notes_edit_text_label);
+		nameLabel = (TextView) root.findViewById(R.id.popup_notes_edit_name_label);
+		sozialStatusLabel = (TextView) root.findViewById(R.id.popup_notes_edit_so_label);
+
+		categorySpn = (Spinner) root.findViewById(R.id.popup_notes_spn_category);
+
+		categoryLabel = (TextView) root.findViewById(R.id.popup_notes_spn_category_label);
+
+		return root;
 	}
 
 	/*
@@ -75,22 +85,9 @@ public class NotesEditFragment extends BaseFragment implements OnItemSelectedLis
 
 		getActivity().setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
-		editComment = (EditText) findViewById(R.id.popup_notes_edit_text);
-		editName = (EditText) findViewById(R.id.popup_notes_edit_name);
-		editSozialStatus = (EditText) findViewById(R.id.popup_notes_edit_so);
-
-		commentLabel = (TextView) findViewById(R.id.popup_notes_edit_text_label);
-		nameLabel = (TextView) findViewById(R.id.popup_notes_edit_name_label);
-		sozialStatusLabel = (TextView) findViewById(R.id.popup_notes_edit_so_label);
-
-		categorySpn = (Spinner) findViewById(R.id.popup_notes_spn_category);
-
-		categoryLabel = (TextView) findViewById(R.id.popup_notes_spn_category_label);
-
 		List<EventCategory> categories = new ArrayList<EventCategory>(Arrays.asList(EventCategory.values()));
 		categories.remove(EventCategory.Heldensoftware);
 		categoryAdapter = new EventCatgoryAdapter(getActivity(), android.R.layout.simple_spinner_item, categories);
-
 		categorySpn.setAdapter(categoryAdapter);
 		categorySpn.setOnItemSelectedListener(this);
 

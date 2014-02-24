@@ -15,10 +15,6 @@ import com.dsatab.util.Util;
 
 import fr.castorflex.android.flipimageview.library.FlipImageView;
 
-/**
- * @author Seraphim
- * 
- */
 public class EquippedItemListItem extends CheckableRelativeLayout {
 
 	private int textColor = 0;

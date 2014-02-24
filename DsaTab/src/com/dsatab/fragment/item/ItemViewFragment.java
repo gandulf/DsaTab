@@ -167,10 +167,10 @@ public class ItemViewFragment extends BaseFragment {
 				UUID itemId = (UUID) extra.getSerializable(ItemsActivity.INTENT_EXTRA_ITEM_ID);
 				UUID equippedItemId = (UUID) extra.getSerializable(ItemsActivity.INTENT_EXTRA_EQUIPPED_ITEM_ID);
 
-				String heroKey = extra.getString(ItemsActivity.INTENT_EXTRA_HERO);
+				String heroKey = extra.getString(ItemsActivity.INTENT_EXTRA_HERO_KEY);
 				ItemsActivity.edit(getActivity(), heroKey, itemId, equippedItemId, ItemsActivity.ACTION_EDIT);
 			} else {
-				ItemsActivity.edit(getActivity(), null, this.item, ItemsActivity.ACTION_EDIT);
+				ItemsActivity.edit(getActivity(), (String) null, this.item, ItemsActivity.ACTION_EDIT);
 			}
 			return true;
 		}

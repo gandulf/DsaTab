@@ -6,8 +6,8 @@
 	<!--  margin of the tab pages -->
 	<dimen name="default_gap">4dp</dimen>
 	
-	<dimen name="portrait_height_small">100dp</dimen>
-	<dimen name="portrait_width_small">100dp</dimen>
+	<dimen name="portrait_height_small">220dp</dimen>
+	<dimen name="portrait_width_small">150dp</dimen>
 	
 	<dimen name="icon_button_size">56dp</dimen>
 	

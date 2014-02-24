@@ -6,8 +6,7 @@ import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 
-import com.dsatab.util.ClickSpan;
-import com.dsatab.util.ClickSpan.OnSpanClickListener;
+import com.dsatab.common.ClickSpan.OnSpanClickListener;
 
 public class StyleableSpannableStringBuilder extends SpannableStringBuilder {
 

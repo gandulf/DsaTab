@@ -84,7 +84,7 @@
     <string name="offensive">Offensiver Kampfstil</string>
     <string name="defensive">Defensiver Kampfstil</string>
     <string name="menu_unassign_item">Zuweisung aufheben</string>
-    <string name="menu_delete_item">Eintrag löschen</string>
+    <string name="menu_delete_item">Löschen</string>
     <string name="menu_assign_hunting_weapon">Als Jagdwaffe verwenden</string>
     <string name="menu_sort_items">Einträge sortieren</string>
     <string name="menu_select_version">Variante auswählen</string>
@@ -106,9 +106,9 @@
     <string name="settings">Einstellungen</string>
     <string name="menu_done">Fertig</string>
     <string name="menu_discard">Verwerfen</string>
-    <string name="menu_view_item">Eintrag betrachten</string>
-    <string name="menu_download_item">Eintrag herunterladen</string>
-    <string name="menu_upload_item">Eintrag hochladen</string>
+    <string name="menu_view_item">Betrachten</string>
+    <string name="menu_download_item">Herunterladen</string>
+    <string name="menu_upload_item">Hochladen</string>
     <string name="menu_show_comments">Kommentare einblenden</string>
     <string name="menu_hide_comments">Kommentare ausblenden</string>
     <string name="message_empty">"Keine Einträge gefunden."\n\n
@@ -289,7 +289,7 @@
 <string name="message_invalid_token_please_check">Token ungültig. Überprüfe ob das Token mit dem in der Helden-Software erstelltem Zugangstoken übereinstimmt.</string>
 <string name="portrait">Portrait</string>
 <string name="choose_animal">Tier auswählen</string>
-	
-	
-	
+<string name="pref_dropbox_title">Dropbox Synchronisation</string>
+<string name="pref_dropbox_description_off">DsaTab wir nicht mit Dropbox synchronisiert.</string>
+<string name="pref_dropbox_description_on">Dsatab ist mit deinem Dropbox Account verbunden.</string>
 </resources>

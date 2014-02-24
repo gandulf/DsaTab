@@ -8,9 +8,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,7 +25,6 @@ import com.dsatab.data.modifier.Modificator;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Hint;
 import com.dsatab.util.Util;
-import com.dsatab.view.ListSettings;
 import com.dsatab.view.listener.EditListener;
 import com.dsatab.view.listener.HeroChangedListener;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
@@ -59,24 +56,13 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 			return null;
 	}
 
-	protected SharedPreferences preferences;
+	private SharedPreferences preferences;
 
-	protected ListSettings filterSettings;
+	private ProbeListener probeListener;
 
-	protected ProbeListener probeListener;
+	private EditListener editListener;
 
-	protected EditListener editListener;
-
-	protected TargetListener targetListener;
-
-	/**
-	 * 
-	 */
-	public BaseFragment() {
-		probeListener = new ProbeListener(this);
-		editListener = new EditListener(this);
-		targetListener = new TargetListener(this);
-	}
+	private TargetListener targetListener;
 
 	protected void customizeActionModeCloseButton() {
 		int buttonId = Resources.getSystem().getIdentifier("action_mode_close_button", "id", "android");
@@ -148,7 +134,7 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 				hero.removeHeroChangedListener(this);
 			}
 			if (this instanceof HeroInventoryChangedListener) {
-				hero.addHeroInventoryChangedListener((HeroInventoryChangedListener) this);
+				hero.removeHeroInventoryChangedListener((HeroInventoryChangedListener) this);
 			}
 		}
 	}
@@ -191,33 +177,7 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
-	 * android.os.Bundle)
-	 */
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		// Debug.verbose(getClass().getName() + " createView");
-		View view = super.onCreateView(inflater, container, savedInstanceState);
-		return view;
-	}
-
-	public static View configureContainerView(View view) {
-		LinearLayout.LayoutParams params;
-
-		if (view.getLayoutParams() instanceof LinearLayout.LayoutParams) {
-			params = ((LinearLayout.LayoutParams) view.getLayoutParams());
-		} else {
-			params = new LinearLayout.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-					android.view.ViewGroup.LayoutParams.MATCH_PARENT);
-			view.setLayoutParams(params);
-		}
-
-		if (params.weight > 0)
-			params.width = 0;
-
+	public View configureContainerView(View view) {
 		return view;
 	}
 
@@ -239,17 +199,6 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 				Debug.error(new IllegalArgumentException("getActivity was null in onActivityCreated of BaseFragment"));
 			}
 		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.support.v4.app.Fragment#onCreate(android.os.Bundle)
-	 */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		preferences = DsaTabApplication.getPreferences();
 	}
 
 	public Hero getHero() {
@@ -336,15 +285,31 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 
 	}
 
+	public SharedPreferences getPreferences() {
+		if (preferences == null) {
+			preferences = DsaTabApplication.getPreferences();
+		}
+		return preferences;
+	}
+
 	public ProbeListener getProbeListener() {
+		if (probeListener == null)
+			probeListener = new ProbeListener(this);
+
 		return probeListener;
 	}
 
 	public EditListener getEditListener() {
+		if (editListener == null)
+			editListener = new EditListener(this);
+
 		return editListener;
 	}
 
 	public TargetListener getTargetListener() {
+		if (targetListener == null)
+			targetListener = new TargetListener(this);
+
 		return targetListener;
 	}
 

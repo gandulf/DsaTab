@@ -58,7 +58,7 @@ public class EditableValue implements Value {
 		} else
 			this.value = null;
 
-		if (changed)
+		if (changed && hero != null)
 			hero.fireValueChangedEvent(this);
 	}
 

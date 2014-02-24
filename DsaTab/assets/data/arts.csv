@@ -20,12 +20,12 @@ Balancierter Sprung;;;;;;;;WnM 144;;Kampf;0;GE 13, Vorteil Balanceschwanz, SFKam
 Bannung;;;;;;;;WnM 153;;Magisch;0;MU 13, Magiekunde 7
 Barbarische Drohgebärden;;;;;;;;Rakshazar 21, 22;;Kampf;0;MU 14, GE 15 | KK 15 | KO 15 | CH 15, Überreden 10
 Befreiungsschlag;;;;;;;;WdH 278 / WdS 60, 73 / WnM 144;;Kampf;0;KK 15, MU 12, SF Niederwerfen
-Behausung des Ahnen;;;;;;;;MyMa 129 / WnM 153;;Magisch (Ritual);0;\N
+Behausung des Ahnen;;;;;;;;MyMa 129 / WnM 153;;Magisch (Ritual);0;
 Beidhändiger Kampf I;;;;;;;;WdH 278 / WdS 72, 73;;Kampf;0;GE 12, SF Linkhand
 Beidhändiger Kampf II;;;;;;;;WdH 278 / WdS 72, 73;;Kampf;0;GE 15, SF Beidhändiger Kampf I
 Berittener Schütze;;;;;;;;WdH 278 / WdS 95 / WnM 144;;Kampf;0;Reiten 7, (Armbrust 7 | Blasrohr 7 | Bogen 7 | Diskus 7 | Schleuder 7 | Wurfbeile 7| Wurfmesser 7 | Wurfspeere 7)
 Beschwörerzirkel;;;;;;;;WnM 153;;Magisch;0;MU 12, CH 13
-Beschwörungsroutine;;;;;;;;WnM 153;;Magisch;0;\N
+Beschwörungsroutine;;;;;;;;WnM 153;;Magisch;0;
 Betäubungsschlag;;;;;;;;WdH 278 / WdS 61, 73 / WnM 144;;Kampf;0;SF Finte, SF Wuchtschlag
 Binden;;;;;;;;WdH 278 / WdS 67, 73 / WnM 145;;Kampf;0;IN 12, GE 12, SF Meisterparade | SF Parierwaffen I
 Blindkampf;;;;;;;;WdH 278 / WdS 73 / WnM 146;;Kampf;0;GE 12, Sinnenschärfe 15, SF Kampfgespür
@@ -50,39 +50,22 @@ Defensiver Monsterkampf III;;;;;;;;Rakshazar 22;;Kampf;0;SF Defensiver Monsterka
 Die Gestalt aus Rauch;;;;;;;;WdZ 131, 315;;Magisch;0;Ritualkenntnis (Geoden) 11
 Doppelangriff;;;;;;;;WdH 278 / WdS 61, 74;;Kampf;0;SF Beidhändiger Kampf I
 Druidenrache;;;;;;;;WdZ 107 / WdZ 131;;Magisch;0;MU 15, SF% Repräsentation
-Druidisches Dolchritual: Bann;;;;;;;;WdZ 133;;Magisch (Ritual);0;SF Merkmalskenntnis (Antimagie) | SF Merkmalskenntnis (Geisterwesen), Ritualkenntnis (Druide) 7, SF Druidisches Dolchritual: Gespür 
-Druidisches Dolchritual: Ernte;;;;;;;;WdZ 134;;Magisch (Ritual);0;Ritualkenntnis (Druiden) 0 | Ritualkenntnis (Geoden) 0, SF Druidisches Dolchritual: Gespür
-Druidisches Dolchritual: Gespür;;;;;;;;WdZ 134;;Magisch (Ritual);0;IN 12, Ritualkenntnis (Druide) 0 | Ritualkenntnis (Geode) 0, SF Druidisches Dolchritual: Weihe
-Druidisches Dolchritual: Lebenskraft;;;;;;;;WdZ 134;;Magisch (Ritual);0;Ritualkenntnis (Druide) 0 | Ritualkenntnis (Geode) 0, SF Druidisches Dolchritual: Gespür
-Druidisches Dolchritual: Leib;;;;;;;;WdZ 134;;Magisch (Ritual);0;KO 12, Ritualkenntnis (Druide) 7, SF Druidisches Dolchritual: Gespür
-Druidisches Dolchritual: Licht;;;;;;;;WdZ 134;;Magisch (Ritual);0;Ritualkenntnis (Druide) 0, Ritualkenntnis (Geodenmagie) 0, SF Druidisches Dolchritual: Gespür
-Druidisches Dolchritual: Opferdolch;;;;;;;;WdZ 134;;Magisch (Ritual);0;Ritualkenntnis (Druide) 7, SF Blutmagie, SF Druidisches Dolchritual: Lebenskraft
-Druidisches Dolchritual: Schneide;;;;;;;;WdZ 134;;Magisch (Ritual);0;SF Merkmalskenntis (Elementar (Erz)), SF Merkmalskenntnis (Elementar (Feuer)), Ritualkenntnis (Druide) 11 | Ritualkenntnis (Geode) 11, SF Druidisches Dolchritual: Gespür des Dolches
-Druidisches Dolchritual: Schutz;;;;;;;;WdZ 135;;Magisch (Ritual);0;Wildnisleben 10, Ritualkenntnis (Druide) 11 | Ritualkenntnis (Geode) 11, SF Druidisches Dolchritual: Gespür des Dolches
-Druidisches Dolchritual: Weg;;;;;;;;WdZ 135;;Magisch (Ritual);0;Ritualkenntnis (Druide) 0 | Ritualkenntnis (Geode) 0, SF Druidisches Dolchritual: Gespür
-Druidisches Dolchritual: Weihe;;;;;;;;WdZ 135;;Magisch (Ritual);0;Ritualkenntnis (Druide) 0 | Ritualkenntnis (Geode) 0
-Druidisches Dolchritual: Weisung;;;;;;;;WdZ 135;;Magisch (Ritual);0;Magiekunde 10, SF Kraftlinienmagie I, Ritualkenntnis (Druide) 11 | Ritualkenntnis (Geode) 11, SF Druidisches Dolchritual: Weg
-Druidisches Herrschaftsritual: Amulett der Herrschaft;;;;;;;;WdZ 132;;Magisch (Ritual);0;Ritualkenntnis (Druide) 7, SF Merkmalskenntnis (Herrschaft), SF Kristall der Herrschaft
-Druidisches Herrschaftsritual: Kristall der Herrschaft;;;;;;;;WdZ 132;;Magisch (Ritual);0;Ritualkenntnis (Druide) 11 | Geister binden (Ferkina-Schamane) 11 | Geister binden (Trollzacker-Schamane) 11, SF Wacht der Herrschaft
-Druidisches Herrschaftsritual: Miniatur der Herrschaft;;;;;;;;WdZ 132, 133;;Magisch (Ritual);0;Ritualkenntnis (Druide) 11 | Geister binden (Ferkina-Schamane) 11 | Geister binden (Trollzacker-Schamane) 11, SF Wacht der Herrschaft
-Druidisches Herrschaftsritual: Wachs der Herrschaft;;;;;;;;WdZ 133;;Magisch (Ritual);0;Ritualkenntnis (Druide) 7 | Geister binden (Ferkina-Schamane) 7 | Geister binden (Trollzacker-Schamane) 7
-Druidisches Herrschaftsritual: Wurzel des Blutes;;;;;;;;WdZ 133;;Magisch (Ritual);0;Ritualkenntnis (Druide) 7 | Geister binden (Ferkina-Schamane) 7 | Geister binden (Trollzacker-Schamane) 7
 Eisenhagel;;;;;;;;WdH 278 / WdS 95 / WnM 146;;Kampf;0;FF 12, Wurfmesser 10, SF Waffenspezialisierung Wurfringe | SF Waffenspezialisierung Wurfscheiben | SF Waffenspezialisierung Wurfsterne
 Eiserner Wille I;;;;;;;;WdZ 31;;Magisch;0;MU 13, IN 12, !(N Jähzorn | N Unstet | N Wilde Magie)
 Eiserner Wille II;;;;;;;;WdZ 31;;Magisch;0;SF Eiserner Wille I
 Elementarharmonisierte Aura (Eis/Humus);;;;;;;;WdZ 187;;Magisch;0;KL 15, IN 15, Magiekunde 12, V Begabung für Merkmal (Elementar (gesamt)) | V Begabung für Merkmal (Elementar (Humus)) | V Begabung für Merkmal (Elementar (Eis)) | SF Merkmalskenntnis (Elementar (Eis)) | SF Merkmalskenntnis (Elementar (gesamt)) | SF Merkmalskenntnis (Elementar (Humus)), !(V% Begabung für Merkmal (Dämonisch%) | N Affinität zu Dämonen | N Animalische Magie | N Arkanophobie | N Astraler Block | N Schwache Ausstrahlung | N Schwacher Astralkörper | N Unstet | SF% Merkmalskenntnis (Dämonisch%))
 Elementarharmonisierte Aura (Fels/Luft);;;;;;;;WdZ 187;;Magisch;0;KL 15, IN 15, Magiekunde 12, V Begabung für Merkmal (Elementar (gesamt)) | V Begabung für Merkmal (Elementar (Erz)) | V Begabung für Merkmal (Elementar (Luft)) | SF Merkmalskenntnis (Elementar (Erz)) | SF Merkmalskenntnis (Elementar (gesamt)) | SF Merkmalskenntnis (Elementar (Luft)), !(V% Begabung für Merkmal (Dämonisch%) | N Affinität zu Dämonen | N Animalische Magie | N Arkanophobie | N Astraler Block | N Schwache Ausstrahlung | N Schwacher Astralkörper | N Unstet | SF% Merkmalskenntnis (Dämonisch%))
 Elementarharmonisierte Aura (Feuer/Wasser);;;;;;;;WdZ 187;;Magisch;0;KL 15, IN 15, Magiekunde 12, V Begabung für Merkmal (Elementar (gesamt)) | V Begabung für Merkmal (Elementar (Feuer)) | V Begabung für Merkmal (Elementar (Wasser)) | SF Merkmalskenntnis (Elementar (Feuer)) | SF Merkmalskenntnis (Elementar (gesamt)) | SF Merkmalskenntnis (Elementar (Wasser)), !(V% Begabung für Merkmal (Dämonisch%) | N Affinität zu Dämonen | N Animalische Magie | N Arkanophobie | N Astraler Block | N Schwache Ausstrahlung | N Schwacher Astralkörper | N Unstet | SF% Merkmalskenntnis (Dämonisch%))
-Elfenlied: Erinnerungsmelodie;;;;;;;;WdZ 136;;Magisch (Ritual);0;\N
-Elfenlied: Freundschaftslied;;;;;;;;WdZ 136, 137;;Magisch (Ritual);0;\N
-Elfenlied: Friedenslied;;;;;;;;WdZ 136;;Magisch (Ritual);0;\N
-Elfenlied: Lied der Lieder;;;;;;;;WdZ 138;;Magisch (Ritual);0;\N
-Elfenlied: Lied der Reinheit;;;;;;;;WdZ 138;;Magisch (Ritual);0;\N
-Elfenlied: Lied des Trostes;;;;;;;;WdZ 138;;Magisch (Ritual);0;\N
-Elfenlied: Melodie der Kunstfertigkeit;;;;;;;;WdZ 137;;Magisch (Ritual);0;\N
-Elfenlied: Sorgenlied;;;;;;;;WdZ 139;;Magisch (Ritual);0;\N
-Elfenlied: Windgeflüster;;;;;;;;WdZ 138, 139;;Magisch (Ritual);0;\N
-Elfenlied: Zaubermelodie;;;;;;;;WdZ 139;;Magisch (Ritual);0;\N
+Elfenlied: Erinnerungsmelodie;;;;;;;;WdZ 136;;Magisch (Ritual);0;
+Elfenlied: Freundschaftslied;;;;;;;;WdZ 136, 137;;Magisch (Ritual);0;
+Elfenlied: Friedenslied;;;;;;;;WdZ 136;;Magisch (Ritual);0;
+Elfenlied: Lied der Lieder;;;;;;;;WdZ 138;;Magisch (Ritual);0;
+Elfenlied: Lied der Reinheit;;;;;;;;WdZ 138;;Magisch (Ritual);0;
+Elfenlied: Lied des Trostes;;;;;;;;WdZ 138;;Magisch (Ritual);0;
+Elfenlied: Melodie der Kunstfertigkeit;;;;;;;;WdZ 137;;Magisch (Ritual);0;
+Elfenlied: Sorgenlied;;;;;;;;WdZ 139;;Magisch (Ritual);0;
+Elfenlied: Windgeflüster;;;;;;;;WdZ 138, 139;;Magisch (Ritual);0;
+Elfenlied: Zaubermelodie;;;;;;;;WdZ 139;;Magisch (Ritual);0;
 Engramm;;;;;;;;WnM 154;;Magisch;0;MU 15, KL 15, CH 15, Ritualkenntnis (Optimatik) 10
 Entwaffnen;;;;;;;;WdH 278 / WdS 61, 68, 74 / WnM 146;;Kampf;0;KK 12, SF Binden
 Exorzist;;;;;;;;WdZ 185, 186;;Magisch;0;Magkiekunde 11, Beherrschungswert 12 | Liturgiekenntnis 12
@@ -105,19 +88,19 @@ Geber der Gestalt;;;;;;;;WdZ 190;;Magisch;0;Magiekunde 15, INVOCATIO MINOR 15 | 
 Gedankenschutz;;;;;;;;WdZ 31;;Magisch;0;MU 15, IN 13, SF Eiserner Wille I
 Gefäß der Sterne;;;;;;;;WdZ 10;;Magisch;0;CH 15, IN 13
 Gegenhalten;;;;;;;;WdH 279 / WdS 68, 74 / WnM 146;;Kampf;0;MU 15, GE 12, SF Meisterparade
-Geländekunde (Dschungelkundig);;;;;;;;WdH 276 / WnM 141;;Allgemein;0;\N
-Geländekunde (Eiskundig);;;;;;;;WdH 276 / WnM 141;;Allgemein;0;\N
-Geländekunde (Gebirgskundig);;;;;;;;WdH 276 / WnM 141;;Allgemein;0;\N
-Geländekunde (Höhlenkundig);;;;;;;;WdH 276 / WnM 141;;Allgemein;0;\N
-Geländekunde (Maraskankundig);;;;;;;;WdH 276 / WnM 141;;Allgemein;0;\N
-Geländekunde (Meereskundig);;;;;;;;WdH 276 / WnM 141;;Allgemein;0;\N
-Geländekunde (Steppenkundig);;;;;;;;WdH 276 / WnM 141;;Allgemein;0;\N
-Geländekunde (Sumpfkundig);;;;;;;;WdH 276 / WnM 141;;Allgemein;0;\N
-Geländekunde (Waldkundig);;;;;;;;WdH 276 / WnM 141;;Allgemein;0;\N
-Geländekunde (Wüstenkundig);;;;;;;;WdH 276 / WnM 141;;Allgemein;0;\N
+Geländekunde (Dschungelkundig);;;;;;;;WdH 276 / WnM 141;;Allgemein;0;
+Geländekunde (Eiskundig);;;;;;;;WdH 276 / WnM 141;;Allgemein;0;
+Geländekunde (Gebirgskundig);;;;;;;;WdH 276 / WnM 141;;Allgemein;0;
+Geländekunde (Höhlenkundig);;;;;;;;WdH 276 / WnM 141;;Allgemein;0;
+Geländekunde (Maraskankundig);;;;;;;;WdH 276 / WnM 141;;Allgemein;0;
+Geländekunde (Meereskundig);;;;;;;;WdH 276 / WnM 141;;Allgemein;0;
+Geländekunde (Steppenkundig);;;;;;;;WdH 276 / WnM 141;;Allgemein;0;
+Geländekunde (Sumpfkundig);;;;;;;;WdH 276 / WnM 141;;Allgemein;0;
+Geländekunde (Waldkundig);;;;;;;;WdH 276 / WnM 141;;Allgemein;0;
+Geländekunde (Wüstenkundig);;;;;;;;WdH 276 / WnM 141;;Allgemein;0;
 Geniusbeschwörung;;;;;;;;WnM 155;;Magisch;0;Passende SF Spontanzauber (Invokation oder Inspiration)
-Geodenritual: Gestalt aus Rauch;;;;;;;;WdH 276;;Magisch (Ritual);0;\N
-Geodenritual: Trank des ungehinderten Weges;;;;;;;;WdZ 131;;Magisch (Ritual);0;\N
+Geodenritual: Gestalt aus Rauch;;;;;;;;WdH 276;;Magisch (Ritual);0;
+Geodenritual: Trank des ungehinderten Weges;;;;;;;;WdZ 131;;Magisch (Ritual);0;
 Geschützmeister;;;;;;;;WdH 279 / WnM 146;;Kampf;0;FF 12, Belagerungswaffen 10, Mechanik 7
 Gezielter Stich;;;;;;;;WdH 279 / WdS 62, 74 / WnM 146;;Kampf;0;SF Finte
 Golembauer;;;;;;;;WdH 286 / WdZ 197 / VTuT 102;;Magisch;0;MU 15, Magiekunde 11, STEIN WANDLE 11 | STAUB WANDLE 11
@@ -126,30 +109,30 @@ Göttliche Anrufung II;;;;;;;;OiC 44;;Klerikal;0;V Sacredos | (SF Spähtweihe, Lit
 Göttliche Anrufung III;;;;;;;;OiC 44;;Klerikal;0;V Sacredos | (SF Spähtweihe, Liturgiekenntnis 0)
 Göttliche Anrufung IV;;;;;;;;OiC 44;;Klerikal;0;V Sacredos | (SF Spähtweihe, Liturgiekenntnis 0)
 Göttliche Anrufung V;;;;;;;;OiC 44;;Klerikal;0;V Sacredos | (SF Spähtweihe, Liturgiekenntnis 0)
-Grolmenbund;;;;;;;;OiC 44;;Magisch;0;\N
+Grolmenbund;;;;;;;;OiC 44;;Magisch;0;
 Großbeschwörung;;;;;;;;MyMa 152;;Magisch;0;ein Beschwörungszauber mit ZfW 7
 Große Meditation;;;;;;;;WdZ 10 / WnM 155;;Magisch;0;KL 12, IN 12
-Großer Exorzismus;;;;;;;;MyMa 130;;Magisch (Ritual);0;\N
+Großer Exorzismus;;;;;;;;MyMa 130;;Magisch (Ritual);0;
 Halbschwert;;;;;;;;WdH 279 / WdS 72, 74 / WnM 146;;Kampf;0;SF Aufmerksamkeit
 Hammerschlag;;;;;;;;WdH 279 / WdS 63, 74 / WnM 147;;Kampf;0;MU 15, SF Niederwerfen
-Hauch des Elements;;;;;;;;EG 155;;Petromantie;0;\N
+Hauch des Elements;;;;;;;;EG 155;;Petromantie;0;
 Heilmagie;;;;;;;;WnM 155;;Magisch;0;Leiteigenschaft 15, Heilkunde Wunden 10
-Hexenfluch: Ängste mehren;;;;;;;;WdZ 118;;Magisch (Ritual);0;\N
-Hexenfluch: Beiß auf Granit;;;;;;;;WdZ 118/ WdZ 119;;Magisch (Ritual);0;\N
-Hexenfluch: Beute;;;;;;;;WdZ 119;;Magisch (Ritual);0;\N
-Hexenfluch: Hagelschlag;;;;;;;;WdZ 119;;Magisch (Ritual);0;\N
-Hexenfluch: Hexenschuss;;;;;;;;WdZ 119;;Magisch (Ritual);0;\N
-Hexenfluch: Kornfäule;;;;;;;;WdZ 119;;Magisch (Ritual);0;\N
-Hexenfluch: Krötenkuss;;;;;;;;WdZ 119;;Magisch (Ritual);0;\N
-Hexenfluch: Mit Blindheit schlagen;;;;;;;;WdZ 119, 120;;Magisch (Ritual);0;\N
-Hexenfluch: Pech an den Hals;;;;;;;;WdZ 120;;Magisch (Ritual);0;\N
-Hexenfluch: Pestilenz;;;;;;;;WdZ 120;;Magisch (Ritual);0;\N
-Hexenfluch: Schlaf rauben;;;;;;;;WdZ 120;;Magisch (Ritual);0;\N
-Hexenfluch: Todesfluch;;;;;;;;WdZ 120;;Magisch (Ritual);0;\N
-Hexenfluch: Unfruchtbarkeit;;;;;;;;WdZ 120;;Magisch (Ritual);0;\N
-Hexenfluch: Viehverstümmelung;;;;;;;;WdZ 120;;Magisch (Ritual);0;\N
-Hexenfluch: Warzen sprießen;;;;;;;;WdZ 120, 121;;Magisch (Ritual);0;\N
-Hexenfluch: Zunge lähmen;;;;;;;;WdZ 121;;Magisch (Ritual);0;\N
+Hexenfluch: Ängste mehren;;;;;;;;WdZ 118;;Magisch (Ritual);0;
+Hexenfluch: Beiß auf Granit;;;;;;;;WdZ 118/ WdZ 119;;Magisch (Ritual);0;
+Hexenfluch: Beute;;;;;;;;WdZ 119;;Magisch (Ritual);0;
+Hexenfluch: Hagelschlag;;;;;;;;WdZ 119;;Magisch (Ritual);0;
+Hexenfluch: Hexenschuss;;;;;;;;WdZ 119;;Magisch (Ritual);0;
+Hexenfluch: Kornfäule;;;;;;;;WdZ 119;;Magisch (Ritual);0;
+Hexenfluch: Krötenkuss;;;;;;;;WdZ 119;;Magisch (Ritual);0;
+Hexenfluch: Mit Blindheit schlagen;;;;;;;;WdZ 119, 120;;Magisch (Ritual);0;
+Hexenfluch: Pech an den Hals;;;;;;;;WdZ 120;;Magisch (Ritual);0;
+Hexenfluch: Pestilenz;;;;;;;;WdZ 120;;Magisch (Ritual);0;
+Hexenfluch: Schlaf rauben;;;;;;;;WdZ 120;;Magisch (Ritual);0;
+Hexenfluch: Todesfluch;;;;;;;;WdZ 120;;Magisch (Ritual);0;
+Hexenfluch: Unfruchtbarkeit;;;;;;;;WdZ 120;;Magisch (Ritual);0;
+Hexenfluch: Viehverstümmelung;;;;;;;;WdZ 120;;Magisch (Ritual);0;
+Hexenfluch: Warzen sprießen;;;;;;;;WdZ 120, 121;;Magisch (Ritual);0;
+Hexenfluch: Zunge lähmen;;;;;;;;WdZ 121;;Magisch (Ritual);0;
 Höhere Bindung (Dämon);;;;;;;;WnM 155;;Magisch;0;Leiteigenschaft 15, Wesensbindung 11, Ritualkenntnis 11
 Höhere Bindung (Elementar);;;;;;;;WnM 155;;Magisch;0;Leiteigenschaft 15, Wesensbindung 11, Ritualkenntnis 11
 Höhere Bindung (Naturwesen);;;;;;;;WnM 155;;Magisch;0;Leiteigenschaft 15, Wesensbindung 11, Ritualkenntnis 11
@@ -162,43 +145,43 @@ Improvisierte Waffen;;;;;;;;WdH 279 / WdS 74 / WnM 147;;Kampf;0;IN 12, GE 12, Ra
 Instruktion: Alpdruck;;;;;;;;MyMa 152;;Magisch;0;SF Instruktion: Traumbesuch
 Instruktion: Alptraumwelt;;;;;;;;MyMa 152;;Magisch;0;SF Traumgänger II
 Instruktion: Analyse;;;;;;;;MyMa 152;;Magisch;0;SF Instruktion: Wahrnehmung der Quelle
-Instruktion: Antimagie;;;;;;;;MyMa 152;;Magisch;0;\N
+Instruktion: Antimagie;;;;;;;;MyMa 152;;Magisch;0;
 Instruktion: Bann der Quelle;;;;;;;;MyMa 152;;Magisch;0;SF Instruktion: Antimagie
-Instruktion: Beseelung durch Quelle;;;;;;;;MyMa 152;;Magisch;0;\N
-Instruktion: Dämonische Manifestation;;;;;;;;MyMa 152;;Magisch;0;\N
+Instruktion: Beseelung durch Quelle;;;;;;;;MyMa 152;;Magisch;0;
+Instruktion: Dämonische Manifestation;;;;;;;;MyMa 152;;Magisch;0;
 Instruktion: Elementare Manifestation;;;;;;;;MyMa 152;;Magisch;0;SF Instruktion: Elementare Reinheit
-Instruktion: Elementare Reinheit;;;;;;;;MyMa 152;;Magisch;0;\N
+Instruktion: Elementare Reinheit;;;;;;;;MyMa 152;;Magisch;0;
 Instruktion: Explosion;;;;;;;;MyMa 152;;Magisch;0;SF Instruktion: Schadenszauber
-Instruktion: Fixierung;;;;;;;;MyMa 152;;Magisch;0;\N
+Instruktion: Fixierung;;;;;;;;MyMa 152;;Magisch;0;
 Instruktion: Geistillusion;;;;;;;;MyMa 152;;Magisch;0;SF Instruktion: Verhüllung
-Instruktion: Heilung/Wiederherstellung;;;;;;;;MyMa 152;;Magisch;0;\N
-Instruktion: Hellsicht;;;;;;;;MyMa 152;;Magisch;0;\N
-Instruktion: Illusion;;;;;;;;MyMa 152;;Magisch;0;\N
-Instruktion: Infektion;;;;;;;;MyMa 152;;Magisch;0;\N
-Instruktion: Kontrolle über (Wesen);;;;;;;;MyMa 152;;Magisch;0;\N
-Instruktion: Kontrolle über Element;;;;;;;;MyMa 152;;Magisch;0;\N
-Instruktion: Kontrolle über Gefühle;;;;;;;;MyMa 152;;Magisch;0;\N
+Instruktion: Heilung/Wiederherstellung;;;;;;;;MyMa 152;;Magisch;0;
+Instruktion: Hellsicht;;;;;;;;MyMa 152;;Magisch;0;
+Instruktion: Illusion;;;;;;;;MyMa 152;;Magisch;0;
+Instruktion: Infektion;;;;;;;;MyMa 152;;Magisch;0;
+Instruktion: Kontrolle über (Wesen);;;;;;;;MyMa 152;;Magisch;0;
+Instruktion: Kontrolle über Element;;;;;;;;MyMa 152;;Magisch;0;
+Instruktion: Kontrolle über Gefühle;;;;;;;;MyMa 152;;Magisch;0;
 Instruktion: Metamagie;;;;;;;;MyMa 152;;Magisch;0;SF Instruktion: Antimagie, SF Instruktion: Transfer
-Instruktion: Objektbewegung;;;;;;;;MyMa 152;;Magisch;0;\N
+Instruktion: Objektbewegung;;;;;;;;MyMa 152;;Magisch;0;
 Instruktion: Regeneration;;;;;;;;MyMa 152;;Magisch;0;SF Instruktion: Heilung, SF Heilmagie
-Instruktion: Reinigung;;;;;;;;MyMa 152;;Magisch;0;\N
-Instruktion: Schadenszauber;;;;;;;;MyMa 152;;Magisch;0;\N
-Instruktion: Schutz vor Quelle;;;;;;;;MyMa 152;;Magisch;0;\N
-Instruktion: Transfer;;;;;;;;MyMa 152;;Magisch;0;\N
+Instruktion: Reinigung;;;;;;;;MyMa 152;;Magisch;0;
+Instruktion: Schadenszauber;;;;;;;;MyMa 152;;Magisch;0;
+Instruktion: Schutz vor Quelle;;;;;;;;MyMa 152;;Magisch;0;
+Instruktion: Transfer;;;;;;;;MyMa 152;;Magisch;0;
 Instruktion: Transformation;;;;;;;;MyMa 152;;Magisch;0;SF Instruktion: Verwandlung
 Instruktion: Transport durch Element;;;;;;;;MyMa 152;;Magisch;0;SF Instruktion: Über ein Element gehen
-Instruktion: Traumbesuch;;;;;;;;MyMa 152;;Magisch;0;\N
-Instruktion: Über Element gehen;;;;;;;;MyMa 152;;Magisch;0;\N
-Instruktion: Verhüllung;;;;;;;;MyMa 152;;Magisch;0;\N
-Instruktion: Verwandlung;;;;;;;;MyMa 152;;Magisch;0;\N
-Instruktion: Wahnsinn;;;;;;;;MyMa 152;;Magisch;0;\N
-Instruktion: Wahrnehmung der Quelle;;;;;;;;MyMa 152;;Magisch;0;\N
+Instruktion: Traumbesuch;;;;;;;;MyMa 152;;Magisch;0;
+Instruktion: Über Element gehen;;;;;;;;MyMa 152;;Magisch;0;
+Instruktion: Verhüllung;;;;;;;;MyMa 152;;Magisch;0;
+Instruktion: Verwandlung;;;;;;;;MyMa 152;;Magisch;0;
+Instruktion: Wahnsinn;;;;;;;;MyMa 152;;Magisch;0;
+Instruktion: Wahrnehmung der Quelle;;;;;;;;MyMa 152;;Magisch;0;
 Instruktionsspezialisierung;;;;;;;;WnM 156;;Magisch;0;Zugehörige Instruktions-SF, eine passende Zauberspezialisierung
-Instrumentzauber: Bindung des Instrumentes;;;;;;;;MyMa 133;;Magisch (Ritual);0;\N
-Instrumentzauber: Geballte Kraft;;;;;;;;MyMa 133;;Magisch (Ritual);0;\N
-Instrumentzauber: Liederspeicher;;;;;;;;MyMa 133;;Magisch (Ritual);0;\N
-Instrumentzauber: Schöner Klang;;;;;;;;MyMa 133;;Magisch (Ritual);0;\N
-Instrumentzauber: Zauberklänge tragen weit!;;;;;;;;MyMa 133;;Magisch (Ritual);0;\N
+Instrumentzauber: Bindung des Instrumentes;;;;;;;;MyMa 133;;Magisch (Ritual);0;
+Instrumentzauber: Geballte Kraft;;;;;;;;MyMa 133;;Magisch (Ritual);0;
+Instrumentzauber: Liederspeicher;;;;;;;;MyMa 133;;Magisch (Ritual);0;
+Instrumentzauber: Schöner Klang;;;;;;;;MyMa 133;;Magisch (Ritual);0;
+Instrumentzauber: Zauberklänge tragen weit!;;;;;;;;MyMa 133;;Magisch (Ritual);0;
 Invocatio Integra;;;;;;;;WdZ 190;;Magisch;0;INVOCATIO MAIOR 7
 Kampf im Wasser;;;;;;;;WdH 279 / WdS 74 / WnM 147;;Kampf;0;GE 12, Körperbeherrschung 7
 Kampfgespür;;;;;;;;WdH 279 / WdS 74 / WnM 147;;Kampf;0;IN 15, SF Aufmerksamkeit, SF Kampfreflexe
@@ -214,16 +197,16 @@ Keulenritual: Nähe zur Natur;;;;;;;;WdZ 167;;Magisch (Ritual);0;Geister binden 7
 Keulenritual: Opferkeule;;;;;;;;WdZ 167;;Magisch (Ritual);0;Ritualkenntnis (Schamane) 0, SF Blutmagie
 Keulenritual: Weihe der Keule;;;;;;;;WdZ 167,168;;Magisch (Ritual);0;Ritualkenntnis (Schamane) 0
 Keulenritual: Zauber der Keule;;;;;;;;WdZ 168;;Magisch (Ritual);0;Geister binden 9
-Kleiner Exorzismus;;;;;;;;MyMa 130;;Magisch (Ritual);0;\N
+Kleiner Exorzismus;;;;;;;;MyMa 130;;Magisch (Ritual);0;
 Klingensturm;;;;;;;;WdH 279 / WdS 63, 75 / WnM 147;;Kampf;0;AT 9, SF Ausfall, SF Kampfreflexe
 Klingentänzer;;;;;;;;WdH 279 / WdS 63, 75 / WnM 147;;Kampf;0;GE 15, SF Kampfgespür, SF Klingensturm, SF Klingenwand
 Klingenwand;;;;;;;;WdH 279 / WdS 68, 75 / WnM 147;;Kampf;0;PA 9, SF Defensiver Kampfstil, SF Kampfreflexe
 Kombinationszauberei;;;;;;;;WnM 156;;Magisch;0;Leiteigenschaft 15, ein Essenzbeschwörungszauber 12
-Kontakt zum Großen Geist;;;;;;;;WdH 293;;Klerikal;0;\N
-Kontrollfetisch;;;;;;;;MyMa 129;;Magisch (Ritual);0;\N
+Kontakt zum Großen Geist;;;;;;;;WdH 293;;Klerikal;0;
+Kontrollfetisch;;;;;;;;MyMa 129;;Magisch (Ritual);0;
 Konzentrationsstärke;;;;;;;;WdZ 16 / WnM 156;;Magisch;0;MU 15
 Kostendeckung;;;;;;;;WnM 156;;Magisch;0;MU 14, CH 16, IN 14
-Kostenfetisch;;;;;;;;MyMa 129;;Magisch (Ritual);0;\N
+Kostenfetisch;;;;;;;;MyMa 129;;Magisch (Ritual);0;
 Kraftkontrolle;;;;;;;;WdZ 16 / WnM 156;;Magisch;0;IN 12, CH 13
 Kraftlinienmagie I;;;;;;;;WdZ 76 / WnM 156;;Magisch;0;KL 15 | IN 15
 Kraftlinienmagie II;;;;;;;;WdZ 76 / WnM 156;;Magisch;0;SF Magiekunde 15, SF Kraftlinienmagie I
@@ -236,35 +219,35 @@ Kristallomantisches Ritual: Kristallkraft Bündeln;;;;;;;;WdZ 140, 141;;Magisch (
 Kristallomantisches Ritual: Madakristall;;;;;;;;WdZ 140;;Magisch (Ritual);0;Ritualkenntnis (Kristallomantie) 11, SF Kristallbindung, SF Matrixverständnis, SF Kugelzauber: H'sints Auge
 Kristallomantisches Ritual: Matrixkristall;;;;;;;;WdZ 140;;Magisch (Ritual);0;Ritualkenntnis (Kristallomantie) 14, SF Kristallomantisches Ritual: Thesiskristall
 Kristallomantisches Ritual: Thesiskristall;;;;;;;;WdZ 140;;Magisch (Ritual);0;Ritualkenntnis (Kristallomantie) 0, SF Kristallformung, Magiekunde 10, Gesteinskunde (Edelstein) 10
-Kristallpendel: Astrales Zeichen;;;;;;;;OiC 63;;Magisch (Ritual);0;\N
-Kristallpendel: Aura des Friedens;;;;;;;;OiC 63;;Magisch (Ritual);0;\N
-Kristallpendel: Blut der Sippe;;;;;;;;OiC 63;;Magisch (Ritual);0;\N
-Kristallpendel: Gebet der Fürsorge;;;;;;;;OiC 63;;Magisch (Ritual);0;\N
-Kristallpendel: Hilfe des Pendels;;;;;;;;OiC 63;;Magisch (Ritual);0;\N
-Kristallpendel: Licht der Hoffnung;;;;;;;;OiC 64;;Magisch (Ritual);0;\N
-Kristallpendel: Pendel der Hellsicht;;;;;;;;OiC 64;;Magisch (Ritual);0;\N
-Kristallpendel: Seelengespür;;;;;;;;OiC 64;;Magisch (Ritual);0;\N
-Kristallpendel: Stein der Weisen;;;;;;;;OiC 64;;Magisch (Ritual);0;\N
-Kristallpendel: Traumgespinste;;;;;;;;OiC 64;;Magisch (Ritual);0;\N
-Kristallpendel: Weihe des Pendels;;;;;;;;OiC 65;;Magisch (Ritual);0;\N
+Kristallpendel: Astrales Zeichen;;;;;;;;OiC 63;;Magisch (Ritual);0;
+Kristallpendel: Aura des Friedens;;;;;;;;OiC 63;;Magisch (Ritual);0;
+Kristallpendel: Blut der Sippe;;;;;;;;OiC 63;;Magisch (Ritual);0;
+Kristallpendel: Gebet der Fürsorge;;;;;;;;OiC 63;;Magisch (Ritual);0;
+Kristallpendel: Hilfe des Pendels;;;;;;;;OiC 63;;Magisch (Ritual);0;
+Kristallpendel: Licht der Hoffnung;;;;;;;;OiC 64;;Magisch (Ritual);0;
+Kristallpendel: Pendel der Hellsicht;;;;;;;;OiC 64;;Magisch (Ritual);0;
+Kristallpendel: Seelengespür;;;;;;;;OiC 64;;Magisch (Ritual);0;
+Kristallpendel: Stein der Weisen;;;;;;;;OiC 64;;Magisch (Ritual);0;
+Kristallpendel: Traumgespinste;;;;;;;;OiC 64;;Magisch (Ritual);0;
+Kristallpendel: Weihe des Pendels;;;;;;;;OiC 65;;Magisch (Ritual);0;
 Kugelzauber: Bildergalerie;;;;;;;;WdZ 112;;Magisch (Ritual);0;Ritualkenntnis (Gildenmagie) 11 | Ritualkenntnis (Kristallomantie) 11 | Ritualkenntnis (Scharlatanerie) 11
 Kugelzauber: Bilderspiel;;;;;;;;WdZ 112, 113;;Magisch (Ritual);0;Ritualkenntnis (Gildenmagie) 7 | Ritualkenntnis (Kristallomantie) 7 | Ritualkenntnis (Scharlatanerie) 7
 Kugelzauber: Bindung;;;;;;;;WdZ 113;;Magisch (Ritual);0;Ritualkenntnis (Gildenmagie) 7 | Ritualkenntnis (Kristallomantie) 7 | Ritualkenntnis (Scharlatanerie) 7
 Kugelzauber: Brennglas und Prisma;;;;;;;;WdZ 113;;Magisch (Ritual);0;Ritualkenntnis (Gildenmagie) 0 | Ritualkenntnis (Kristallomantie) 0 | Ritualkenntnis (Scharlatanerie) 0
 Kugelzauber: Farben des Geistes;;;;;;;;WdZ 113;;Magisch (Ritual);0;Ritualkenntnis (Kristallomantie) 11, SF Kugelzauber: Warnendes Leuchten
 Kugelzauber: Fernbild;;;;;;;;WdZ 113;;Magisch (Ritual);0;Ritualkenntnis (Kristallomantie) 11, SF Kugelzauber: Bilderspiel
-Kugelzauber: Geschenk des Ssad'Navv;;;;;;;;OiC 53;;Magisch (Ritual);0;\N
+Kugelzauber: Geschenk des Ssad'Navv;;;;;;;;OiC 53;;Magisch (Ritual);0;
 Kugelzauber: H'Szints Auge;;;;;;;;WdZ 113, 114;;Magisch (Ritual);0;Ritualkenntnis (Kristallomantie) 7, SF Kugelzauber: Brennglas und Prisma
 Kugelzauber: Kugel des Hellsehers;;;;;;;;WdZ 114;;Magisch (Ritual);0;Ritualkenntnis (Gildenmagie) 7 | Ritualkenntnis (Kristallomantie) 7 | Ritualkenntnis (Scharlatanerie) 7
 Kugelzauber: Kugel des Illusionisten;;;;;;;;WdZ 114;;Magisch (Ritual);0;Ritualkenntnis (Scharlatanerie) 7
 Kugelzauber: Orbitarium;;;;;;;;WdZ 114;;Magisch (Ritual);0;Ritualkenntnis (Gildenmagie) 14 | Ritualkenntnis (Kristallomantie) 14, Sternenkunde 7
 Kugelzauber: Schutz gegen Untote;;;;;;;;WdZ 114;;Magisch (Ritual);0;Ritualkenntnis (Gildenmagie) 11
-Kugelzauber: Siegel der sechafachen Ehre;;;;;;;;\N;;Magisch (Ritual);0;\N
-Kugelzauber: Untrügliche Blick des Falken;;;;;;;;OiC 54;;Magisch (Ritual);0;\N
+Kugelzauber: Siegel der sechafachen Ehre;;;;;;;;;;Magisch (Ritual);0;
+Kugelzauber: Untrügliche Blick des Falken;;;;;;;;OiC 54;;Magisch (Ritual);0;
 Kugelzauber: Wachendes Auge;;;;;;;;WdZ 114;;Magisch (Ritual);0;Ritualkenntnis (Gildenmagie) 14, Ritualkenntnis (Kristallomantie) 14 | Ritualkenntnis (Scharlatanerie) 14
 Kugelzauber: Warnendes Leuchten;;;;;;;;WdZ 114;;Magisch (Ritual);0;Ritualkenntnis (Gildenmagie) 7 | Ritualkenntnis (Kristallomantie) 7 | Ritualkenntnis (Scharlatanerie) 7
-Kugelzauber: Zauberspeicher;;;;;;;;OiC 54;;Magisch (Ritual);0;\N
-Kulturkunde (Alhanien);;;;;;;;OiC 43;;Allgemein;0;\N
+Kugelzauber: Zauberspeicher;;;;;;;;OiC 54;;Magisch (Ritual);0;
+Kulturkunde (Alhanien);;;;;;;;OiC 43;;Allgemein;0;
 Kulturkunde (Almada);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Amaunir);;;;;;;;WnM 142;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Amazonen);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
@@ -278,15 +261,15 @@ Kulturkunde (Ban'Bargui);;;;;;;;WnM 142;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Bansumiter);;;;;;;;WnM 142;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Baramunen);;;;;;;;WnM 142;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Bornland);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
-Kulturkunde (Bosparanische Nordprovinzen);;;;;;;;OiC 43;;Allgemein;0;\N
-Kulturkunde (Bosparanische Südprovinzen);;;;;;;;OiC 43;;Allgemein;0;\N
-Kulturkunde (Bosparanisches Reich);;;;;;;;OiC 43;;Allgemein;0;\N
+Kulturkunde (Bosparanische Nordprovinzen);;;;;;;;OiC 43;;Allgemein;0;
+Kulturkunde (Bosparanische Südprovinzen);;;;;;;;OiC 43;;Allgemein;0;
+Kulturkunde (Bosparanisches Reich);;;;;;;;OiC 43;;Allgemein;0;
 Kulturkunde (Brillantzwerge);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Brobim);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Bukanier);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
-Kulturkunde (Cyclopea);;;;;;;;OiC 43;;Allgemein;0;\N
-Kulturkunde (Diamantenes Sultanat);;;;;;;;OiC 43;;Allgemein;0;\N
-Kulturkunde (Emirat Al'Mada);;;;;;;;OiC 43;;Allgemein;0;\N
+Kulturkunde (Cyclopea);;;;;;;;OiC 43;;Allgemein;0;
+Kulturkunde (Diamantenes Sultanat);;;;;;;;OiC 43;;Allgemein;0;
+Kulturkunde (Emirat Al'Mada);;;;;;;;OiC 43;;Allgemein;0;
 Kulturkunde (Erzzwerge);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Ferkina);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Firnelfen);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
@@ -294,15 +277,15 @@ Kulturkunde (Fjarninger);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Gjalskerländer);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Goblins);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Grolme);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
-Kulturkunde (Haranija);;;;;;;;OiC 43;;Allgemein;0;\N
-Kulturkunde (Hjaldinger);;;;;;;;OiC 43;;Allgemein;0;\N
+Kulturkunde (Haranija);;;;;;;;OiC 43;;Allgemein;0;
+Kulturkunde (Hjaldinger);;;;;;;;OiC 43;;Allgemein;0;
 Kulturkunde (Horasreich);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Hügelzwerge);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Imperium);;;;;;;;WnM 142;;Allgemein;0;KL 10, IN 10
-Kulturkunde (Kemi);;;;;;;;OiC 43;;Allgemein;0;\N
+Kulturkunde (Kemi);;;;;;;;OiC 43;;Allgemein;0;
 Kulturkunde (Kentori);;;;;;;;WnM 142;;Allgemein;0;KL 10, IN 10
-Kulturkunde (Koschzwerge);;;;;;;;OiC 43;;Allgemein;0;\N
-Kulturkunde (Krakonier);;;;;;;;OiC 43;;Allgemein;0;\N
+Kulturkunde (Koschzwerge);;;;;;;;OiC 43;;Allgemein;0;
+Kulturkunde (Krakonier);;;;;;;;OiC 43;;Allgemein;0;
 Kulturkunde (Kynokephalen);;;;;;;;WnM 142;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Leonir);;;;;;;;WnM 142;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Loualil);;;;;;;;WnM 142;;Allgemein;0;KL 10, IN 10
@@ -322,14 +305,14 @@ Kulturkunde (Ravesaran);;;;;;;;WnM 142;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Risso);;;;;;;;WnM 142;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Satyare);;;;;;;;WnM 142;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Schwarze Lande);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
-Kulturkunde (Serrach);;;;;;;;OiC 43;;Allgemein;0;\N
+Kulturkunde (Serrach);;;;;;;;OiC 43;;Allgemein;0;
 Kulturkunde (Shingwa);;;;;;;;WnM 142;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Shinoqi);;;;;;;;WnM 142;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Stammes-Achaz);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Steppenelfen);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Südaventurien);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Svellttal);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
-Kulturkunde (Sylla);;;;;;;;OiC 43;;Allgemein;0;\N
+Kulturkunde (Sylla);;;;;;;;OiC 43;;Allgemein;0;
 Kulturkunde (Thorwal);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Tighir);;;;;;;;WnM 142;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Tocamuyac);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
@@ -339,482 +322,484 @@ Kulturkunde (Tulamidenlande);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Waldelfen);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Waldmenschen);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Wolfalben;;;;;;;;WnM 142;;Allgemein;0;KL 10, IN 10
-Kulturkunde (Wudu);;;;;;;;OiC 43;;Allgemein;0;\N
-Kulturkunde (Wüstenstämme);;;;;;;;OiC 43;;Allgemein;0;\N
+Kulturkunde (Wudu);;;;;;;;OiC 43;;Allgemein;0;
+Kulturkunde (Wüstenstämme);;;;;;;;OiC 43;;Allgemein;0;
 Kulturkunde (Zahori);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Zwerge);;;;;;;;WnM 142;;Allgemein;0;KL 10, IN 10
 Kulturkunde (Zyklopeninseln);;;;;;;;WdH 276;;Allgemein;0;KL 10, IN 10
 Linkhand;;;;;;;;WdH 280 / WdS 75 / WnM 147;;Kampf;0;KK 10, GE 10
-Liturgie: Achmad'ayan Ankhrellah Al'nurach Shaitanim;;;;;;;;WdG 261;;Klerikal (Liturgie);0;\N
-Liturgie: Aller Welt Freund;;;;;;;;WdG 282;;Klerikal (Liturgie);0;\N
-Liturgie: Allmacht der Lohe;;;;;;;;WdG 278;;Klerikal (Liturgie);0;\N
-Liturgie: Alte Schuppen;;;;;;;;WdG 287;;Klerikal (Liturgie);0;\N
-Liturgie: Am Busen der Natur;;;;;;;;WdG 282;;Klerikal (Liturgie);0;\N
-Liturgie: Anathema;;;;;;;;MyG 171;;Klerikal (Liturgie);0;\N
-Liturgie: Angroschs Opfergabe;;;;;;;;WdG 285;;Klerikal (Liturgie);0;\N
-Liturgie: Angroschs Zorn;;;;;;;;WdG 285;;Klerikal (Liturgie);0;\N
-Liturgie: Angstlinderung;;;;;;;;MyG 180;;Klerikal (Liturgie);0;\N
-Liturgie: Anrufung der Erdkraft;;;;;;;;WdG 276;;Klerikal (Liturgie);0;\N
-Liturgie: Anrufung der Winde;;;;;;;;WdG 262;;Klerikal (Liturgie);0;\N
-Liturgie: Anrufung der Winde (III);;;;;;;;WdG 262;;Klerikal (Liturgie);0;\N
-Liturgie: Anrufung der Winde (IV);;;;;;;;WdG 262;;Klerikal (Liturgie);0;\N
-Liturgie: Anrufung der Winde (V);;;;;;;;WdG 262;;Klerikal (Liturgie);0;\N
-Liturgie: Anrufung Nuiannas;;;;;;;;WdG 262;;Klerikal (Liturgie);0;\N
-Liturgie: Arcanum Interdictum;;;;;;;;WdG 258;;Klerikal (Liturgie);0;\N
-Liturgie: Argelions Bannende Hand;;;;;;;;WdG 269;;Klerikal (Liturgie);0;\N
-Liturgie: Argelions Mantel;;;;;;;;WdG 269;;Klerikal (Liturgie);0;\N
-Liturgie: Argelions Spiegel;;;;;;;;WdG 269;;Klerikal (Liturgie);0;\N
-Liturgie: Ascandears Hingabe;;;;;;;;WdG 280;;Klerikal (Liturgie);0;\N
-Liturgie: Auge der wartenden Seelen;;;;;;;;WdG 288;;Klerikal (Liturgie);0;\N
-Liturgie: Auge des Händlers;;;;;;;;WdG 273 / MyG 184;;Klerikal (Liturgie);0;\N
-Liturgie: Auge des Mondes;;;;;;;;WdG 274 / MyG 177;;Klerikal (Liturgie);0;\N
-Liturgie: Aura der Form;;;;;;;;WdG 269 / MyG 184;;Klerikal (Liturgie);0;\N
-Liturgie: Aura des Regenbogens;;;;;;;;WdG 272;;Klerikal (Liturgie);0;\N
-Liturgie: Azilas Quellgesang;;;;;;;;WdG 263;;Klerikal (Liturgie);0;\N
-Liturgie: Bann der Geisterkräfte;;;;;;;;WdG 288;;Klerikal (Liturgie);0;\N
-Liturgie: Bann der Schatten;;;;;;;;MyG 178;;Klerikal (Liturgie);0;\N
-Liturgie: Bannfluch des Heiligen Khalid;;;;;;;;WdG 266;;Klerikal (Liturgie);0;\N
-Liturgie: Bannfluch über Untote;;;;;;;;MyG 177;;Klerikal (Liturgie);0;\N
-Liturgie: Begehen der Heiligen Wasser;;;;;;;;WdG 263 / MyG 194;;Klerikal (Liturgie);0;\N
-Liturgie: Belemans Hochzeit;;;;;;;;WdG 263;;Klerikal (Liturgie);0;\N
-Liturgie: Beute erhalten;;;;;;;;MyG 191;;Klerikal (Liturgie);0;\N
-Liturgie: Bild für die Ewigkeit;;;;;;;;MyG 184;;Klerikal (Liturgie);0;\N
-Liturgie: Bindung der Schlange;;;;;;;;WdG 286, 287;;Klerikal (Liturgie);0;\N
-Liturgie: Bindung des Tieres;;;;;;;;MyG 195;;Klerikal (Liturgie);0;\N
-Liturgie: Bishdariels Angesicht;;;;;;;;WdG 266;;Klerikal (Liturgie);0;\N
-Liturgie: Bishdariels Auge;;;;;;;;WdG 266;;Klerikal (Liturgie);0;\N
-Liturgie: Bishdariels Auge (III);;;;;;;;WdG 266;;Klerikal (Liturgie);0;\N
-Liturgie: Bishdariels Auge (IV);;;;;;;;WdG 266;;Klerikal (Liturgie);0;\N
-Liturgie: Bishdariels Warnung;;;;;;;;WdG 266;;Klerikal (Liturgie);0;\N
-Liturgie: Blendstrahl;;;;;;;;MyG 178;;Klerikal (Liturgie);0;\N
-Liturgie: Blendstrahl aus Alveran;;;;;;;;WdG 258;;Klerikal (Liturgie);0;\N
-Liturgie: Blick an den klaren Himmel;;;;;;;;WdG 269;;Klerikal (Liturgie);0;\N
-Liturgie: Blick auf das Geisterwirken;;;;;;;;WdG 288;;Klerikal (Liturgie);0;\N
-Liturgie: Blick der Weberin;;;;;;;;WdG 269;;Klerikal (Liturgie);0;\N
-Liturgie: Blick des Magiers;;;;;;;;MyG 178;;Klerikal (Liturgie);0;\N
-Liturgie: Blick durch Tairachs Augen;;;;;;;;WdG 288;;Klerikal (Liturgie);0;\N
-Liturgie: Blick für das Handwerk;;;;;;;;WdG 278;;Klerikal (Liturgie);0;\N
-Liturgie: Blick in die Erinnerung;;;;;;;;WdG 288 / MyG 177;;Klerikal (Liturgie);0;\N
-Liturgie: Blick in die Flammen;;;;;;;;WdG 285;;Klerikal (Liturgie);0;\N
-Liturgie: Blitzschlag;;;;;;;;MyG 186;;Klerikal (Liturgie);0;\N
-Liturgie: Bootssegen;;;;;;;;WdG 263;;Klerikal (Liturgie);0;\N
-Liturgie: Borons süße Gnade;;;;;;;;WdG 267;;Klerikal (Liturgie);0;\N
-Liturgie: Borons süße Gnade (V);;;;;;;;WdG 267;;Klerikal (Liturgie);0;\N
-Liturgie: Buchprüfung;;;;;;;;WdG 274 / MyG 185;;Klerikal (Liturgie);0;\N
-Liturgie: Cereborns Handreichung;;;;;;;;WdG 269;;Klerikal (Liturgie);0;\N
-Liturgie: Chitinhaut;;;;;;;;MyG 182;;Klerikal (Liturgie);0;\N
-Liturgie: Daradors Bann der Schatten;;;;;;;;WdG 259;;Klerikal (Liturgie);0;\N
-Liturgie: Daradors prüfender Blick;;;;;;;;WdG 259;;Klerikal (Liturgie);0;\N
-Liturgie: Das schwarze Fell durch das Rote Blut;;;;;;;;WdG 283;;Klerikal (Liturgie);0;\N
-Liturgie: Der Gänsemutter warmes Nest;;;;;;;;WdG 264;;Klerikal (Liturgie);0;\N
-Liturgie: Des Herren Goldener Mittag;;;;;;;;WdG 259;;Klerikal (Liturgie);0;\N
-Liturgie: Dorlens Verbrüderung;;;;;;;;WdG 280;;Klerikal (Liturgie);0;\N
-Liturgie: Dreifacher Saatsegen;;;;;;;;WdG 276 / MyG 187, 188;;Klerikal (Liturgie);0;\N
-Liturgie: Dunkelheit;;;;;;;;MyG 177;;Klerikal (Liturgie);0;\N
-Liturgie: Dythlinds Wandeln im Feuer;;;;;;;;WdG 264;;Klerikal (Liturgie);0;\N
-Liturgie: Efferdsegen;;;;;;;;WdG 263;;Klerikal (Liturgie);0;\N
-Liturgie: Ehrene Kraft - lodernder Zorn;;;;;;;;WdG 285, 286;;Klerikal (Liturgie);0;\N
-Liturgie: Ehrenhafter Zweikampf;;;;;;;;WdG 261 / MyG 195;;Klerikal (Liturgie);0;\N
-Liturgie: Eidechsenhaut;;;;;;;;WdG 272;;Klerikal (Liturgie);0;\N
-Liturgie: Eidsegen;;;;;;;;WdG 251 / MyG 169;;Klerikal (Liturgie);0;\N
-Liturgie: Eidsegen (II);;;;;;;;WdG 251;;Klerikal (Liturgie);0;\N
-Liturgie: Ein Bild für die Ewigkeit;;;;;;;;WdG 283;;Klerikal (Liturgie);0;\N
-Liturgie: Ein Freund in Zeiten der Not;;;;;;;;WdG 282;;Klerikal (Liturgie);0;\N
-Liturgie: Elementwandlung;;;;;;;;WdG 287;;Klerikal (Liturgie);0;\N
-Liturgie: Entzug der Göttergaben;;;;;;;;MyG 171;;Klerikal (Liturgie);0;\N
-Liturgie: Entzug des Wissens;;;;;;;;WdG 288;;Klerikal (Liturgie);0;\N
-Liturgie: Entzug von Nandus' Gaben;;;;;;;;WdG 284;;Klerikal (Liturgie);0;\N
-Liturgie: Erheben des Untoten;;;;;;;;MyG 177;;Klerikal (Liturgie);0;\N
-Liturgie: Erlösung des Tapams;;;;;;;;WdG 288;;Klerikal (Liturgie);0;\N
-Liturgie: Ermutigung des Kämpfers;;;;;;;;MyG 182;;Klerikal (Liturgie);0;\N
-Liturgie: Erneuerung des Geborstenen;;;;;;;;WdG 278 / MyG 185;;Klerikal (Liturgie);0;\N
-Liturgie: Erneuerung des Geborstenen (V);;;;;;;;WdG 278;;Klerikal (Liturgie);0;\N
-Liturgie: Erneuerung des Verlorenen;;;;;;;;MyG 188;;Klerikal (Liturgie);0;\N
-Liturgie: Etilias Gnade;;;;;;;;WdG 267;;Klerikal (Liturgie);0;\N
-Liturgie: Etilias Zeit der Meditaion;;;;;;;;WdG 267;;Klerikal (Liturgie);0;\N
-Liturgie: Ewiger Wächter;;;;;;;;WdG 288, 289 / MyG 195, 196;;Klerikal (Liturgie);0;\N
-Liturgie: Ewiges Wissen;;;;;;;;WdG 288;;Klerikal (Liturgie);0;\N
-Liturgie: Exkommunikation;;;;;;;;WdG 255 / MyG 171;;Klerikal (Liturgie);0;\N
-Liturgie: Exkommunikation (IV);;;;;;;;WdG 255;;Klerikal (Liturgie);0;\N
-Liturgie: Exkommunikation (V);;;;;;;;WdG 255;;Klerikal (Liturgie);0;\N
-Liturgie: Exorzismus;;;;;;;;WdG 255 / MyG 171;;Klerikal (Liturgie);0;\N
-Liturgie: Exorzismus (IV);;;;;;;;WdG 255;;Klerikal (Liturgie);0;\N
-Liturgie: Exorzismus (V);;;;;;;;WdG 255;;Klerikal (Liturgie);0;\N
-Liturgie: Exorzismus (VI);;;;;;;;WdG 255;;Klerikal (Liturgie);0;\N
-Liturgie: Fest der Freude;;;;;;;;MyG 189;;Klerikal (Liturgie);0;\N
-Liturgie: Feuersegen;;;;;;;;WdG 251 / MyG 170;;Klerikal (Liturgie);0;\N
-Liturgie: Feuertaufe;;;;;;;;WdG 286;;Klerikal (Liturgie);0;\N
-Liturgie: Firuns Einsicht;;;;;;;;WdG 271;;Klerikal (Liturgie);0;\N
-Liturgie: Flagge des Friedens;;;;;;;;MyG 180;;Klerikal (Liturgie);0;\N
-Liturgie: Flagge des Regenbogens;;;;;;;;WdG 272;;Klerikal (Liturgie);0;\N
-Liturgie: Fluch des Geistes;;;;;;;;WdG 267 / OiC 58;;Klerikal (Liturgie);0;\N
-Liturgie: Freier Weg;;;;;;;;MyG 192;;Klerikal (Liturgie);0;\N
-Liturgie: Freundliche Aufnahme;;;;;;;;WdG 282;;Klerikal (Liturgie);0;\N
-Liturgie: Freundschaftsgefühle;;;;;;;;MyG 180;;Klerikal (Liturgie);0;\N
-Liturgie: Frieden der Melodie;;;;;;;;WdG 282;;Klerikal (Liturgie);0;\N
-Liturgie: Fünfte Lobpreisung des Frühlings;;;;;;;;WdG 276;;Klerikal (Liturgie);0;\N
-Liturgie: Fürbitten des Heiligen Therbun;;;;;;;;WdG 276;;Klerikal (Liturgie);0;\N
-Liturgie: Gabe an die Sterne;;;;;;;;MyG 193;;Klerikal (Liturgie);0;\N
-Liturgie: Garfans Gleißende Schwingen;;;;;;;;WdG 259;;Klerikal (Liturgie);0;\N
-Liturgie: Gebet der verborgenen Halle;;;;;;;;MyG 181;;Klerikal (Liturgie);0;\N
-Liturgie: Gebieter der Lava;;;;;;;;WdG 278;;Klerikal (Liturgie);0;\N
-Liturgie: Geburtssegen;;;;;;;;WdG 252 / MyG 171, 172;;Klerikal (Liturgie);0;\N
-Liturgie: Geisterblick;;;;;;;;MyG 177;;Klerikal (Liturgie);0;\N
-Liturgie: Geistermantel;;;;;;;;WdG 288;;Klerikal (Liturgie);0;\N
-Liturgie: Geisterreise;;;;;;;;MyG 177;;Klerikal (Liturgie);0;\N
-Liturgie: Geläutert sei Erz und Goldgestein;;;;;;;;WdG 286;;Klerikal (Liturgie);0;\N
-Liturgie: Gemeinschaft der treuen Gefährten;;;;;;;;WdG 264;;Klerikal (Liturgie);0;\N
-Liturgie: Gemeinschaft der treuen Getährten;;;;;;;;MyG 180;;Klerikal (Liturgie);0;\N
-Liturgie: Gesang der Delphine;;;;;;;;WdG 263 / MyG 194;;Klerikal (Liturgie);0;\N
-Liturgie: Gesang der Wale;;;;;;;;WdG 285;;Klerikal (Liturgie);0;\N
-Liturgie: Gesegnete Ruhe;;;;;;;;MyG 180;;Klerikal (Liturgie);0;\N
-Liturgie: Gesegneter Fang;;;;;;;;WdG 263 / MyG 194;;Klerikal (Liturgie);0;\N
-Liturgie: Gesichtsverhüllung;;;;;;;;MyG 192,193;;Klerikal (Liturgie);0;\N
-Liturgie: Geteiltes Leid;;;;;;;;WdG 284;;Klerikal (Liturgie);0;\N
-Liturgie: Gewittergrollen;;;;;;;;MyG 186;;Klerikal (Liturgie);0;\N
-Liturgie: Gift der Erkenntnis;;;;;;;;WdG 287;;Klerikal (Liturgie);0;\N
-Liturgie: Gift der Erkenntnis (III);;;;;;;;WdG 287;;Klerikal (Liturgie);0;\N
-Liturgie: Giftbann;;;;;;;;MyG 188;;Klerikal (Liturgie);0;\N
-Liturgie: Gilborns heilige Aura;;;;;;;;WdG 259;;Klerikal (Liturgie);0;\N
-Liturgie: Gleichklang des Geistes;;;;;;;;WdG 276 / MyG 172;;Klerikal (Liturgie);0;\N
-Liturgie: Glückssegen;;;;;;;;WdG 252 / MyG 170;;Klerikal (Liturgie);0;\N
-Liturgie: Glücksspielsegen;;;;;;;;MyG 189;;Klerikal (Liturgie);0;\N
-Liturgie: Goldene Rüstung;;;;;;;;WdG 259;;Klerikal (Liturgie);0;\N
-Liturgie: Goldener Blick;;;;;;;;WdG 286 / MyG 185;;Klerikal (Liturgie);0;\N
-Liturgie: Gorfangs Fluch;;;;;;;;WdG 289;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliche Beseelung rufen (I);;;;;;;;OiC 78;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliche Beseelung rufen (II);;;;;;;;OiC 78;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliche Beseelung rufen (III);;;;;;;;OiC 78;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliche Beseelung rufen (IV);;;;;;;;OiC 78;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliche Beseelung rufen (V);;;;;;;;OiC 78;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliche Essenz kanalisieren (I);;;;;;;;OiC 77;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliche Essenz kanalisieren (II);;;;;;;;OiC 77;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliche Essenz kanalisieren (III);;;;;;;;OiC 77;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliche Essenz kanalisieren (IV);;;;;;;;OiC 77;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliche Essenz kanalisieren (V);;;;;;;;OiC 77;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliche Inspiration;;;;;;;;MyG 172;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliche Macht binden (I);;;;;;;;OiC 78;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliche Macht binden (II);;;;;;;;OiC 78;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliche Macht binden (III);;;;;;;;OiC 78;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliche Macht binden (IV);;;;;;;;OiC 78;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliche Macht binden (V);;;;;;;;OiC 78;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliche Rüstung;;;;;;;;MyG 172;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliche Verständigung;;;;;;;;WdG 255 / MyG 172;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliche Verständigung (III);;;;;;;;WdG 255;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliche Verständigung (IV);;;;;;;;WdG 255;;Klerikal (Liturgie);0;\N
-Liturgie: Göttlichen Schutz erflehen (I);;;;;;;;OiC 78;;Klerikal (Liturgie);0;\N
-Liturgie: Göttlichen Schutz erflehen (II);;;;;;;;OiC 78;;Klerikal (Liturgie);0;\N
-Liturgie: Göttlichen Schutz erflehen (III);;;;;;;;OiC 78;;Klerikal (Liturgie);0;\N
-Liturgie: Göttlichen Schutz erflehen (IV);;;;;;;;OiC 78;;Klerikal (Liturgie);0;\N
-Liturgie: Göttlichen Schutz erflehen (V);;;;;;;;OiC 78;;Klerikal (Liturgie);0;\N
-Liturgie: Göttlichen Willen erzwingen (I);;;;;;;;OiC 78;;Klerikal (Liturgie);0;\N
-Liturgie: Göttlichen Willen erzwingen (II);;;;;;;;OiC 78;;Klerikal (Liturgie);0;\N
-Liturgie: Göttlichen Willen erzwingen (III);;;;;;;;OiC 78;;Klerikal (Liturgie);0;\N
-Liturgie: Göttlichen Willen erzwingen (IV);;;;;;;;OiC 78;;Klerikal (Liturgie);0;\N
-Liturgie: Göttlichen Willen erzwingen (V);;;;;;;;OiC 78;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliches Licht;;;;;;;;MyG 179;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliches Prinzip stärken (I);;;;;;;;OiC 77;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliches Prinzip stärken (II);;;;;;;;OiC 77;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliches Prinzip stärken (III);;;;;;;;OiC 77;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliches Prinzip stärken (IV);;;;;;;;OiC 77;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliches Prinzip stärken (V);;;;;;;;OiC 77;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliches Verständnis;;;;;;;;MyG 185;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliches Zeichen;;;;;;;;WdG 255 / MyG 172;;Klerikal (Liturgie);0;\N
-Liturgie: Göttliches Zeichen (III);;;;;;;;WdG 255;;Klerikal (Liturgie);0;\N
-Liturgie: Grabsegen;;;;;;;;WdG 252 / MyG 170;;Klerikal (Liturgie);0;\N
-Liturgie: Graues Siegel;;;;;;;;WdG 284;;Klerikal (Liturgie);0;\N
-Liturgie: Grispelz' Ackersegen;;;;;;;;WdG 289;;Klerikal (Liturgie);0;\N
-Liturgie: Grispelz' Fruchtbarkeit;;;;;;;;WdG 289;;Klerikal (Liturgie);0;\N
-Liturgie: Große Seelenwaschung;;;;;;;;WdG 276;;Klerikal (Liturgie);0;\N
-Liturgie: Große Weihe der Sinnlichkeit;;;;;;;;MyG 189;;Klerikal (Liturgie);0;\N
-Liturgie: Große Weihe des Heimsteins;;;;;;;;WdG 264, 265;;Klerikal (Liturgie);0;\N
-Liturgie: Großer Eidsegen;;;;;;;;WdG 255, 256;;Klerikal (Liturgie);0;\N
-Liturgie: Großer Giftbann;;;;;;;;WdG 276;;Klerikal (Liturgie);0;\N
-Liturgie: Großer Reisesegen;;;;;;;;WdG 282;;Klerikal (Liturgie);0;\N
-Liturgie: Großer Speisesegen;;;;;;;;WdG 265;;Klerikal (Liturgie);0;\N
-Liturgie: Großer Weihesegen der Waffe;;;;;;;;WdG 261, 262;;Klerikal (Liturgie);0;\N
-Liturgie: Großer Weihesegen der Waffen;;;;;;;;MyG 182,183;;Klerikal (Liturgie);0;\N
-Liturgie: Großes Tabu;;;;;;;;WdG 268 / OiC 58;;Klerikal (Liturgie);0;\N
-Liturgie: Großes Tabus;;;;;;;;WdG 289;;Klerikal (Liturgie);0;\N
-Liturgie: Gruß der Versunkenen;;;;;;;;WdG 263;;Klerikal (Liturgie);0;\N
-Liturgie: Gunst der Grazien;;;;;;;;MyG 189;;Klerikal (Liturgie);0;\N
-Liturgie: Händlersegen;;;;;;;;WdG 274;;Klerikal (Liturgie);0;\N
-Liturgie: Handwerkssegen;;;;;;;;WdG 256;;Klerikal (Liturgie);0;\N
-Liturgie: Harmonie der Melodie;;;;;;;;MyG 180;;Klerikal (Liturgie);0;\N
-Liturgie: Harmoniesegen;;;;;;;;WdG 252 / MyG 170;;Klerikal (Liturgie);0;\N
-Liturgie: Hashnabiths Flehen;;;;;;;;WdG 264;;Klerikal (Liturgie);0;\N
-Liturgie: Hauch Borons;;;;;;;;WdG 267;;Klerikal (Liturgie);0;\N
-Liturgie: Hauch der Leidenschaft;;;;;;;;WdG 280;;Klerikal (Liturgie);0;\N
-Liturgie: Hausfrieden;;;;;;;;WdG 265;;Klerikal (Liturgie);0;\N
-Liturgie: Haustrieden;;;;;;;;MyG 180, 181;;Klerikal (Liturgie);0;\N
-Liturgie: Haut des Chamäleons;;;;;;;;WdG 272;;Klerikal (Liturgie);0;\N
-Liturgie: Heilige Salbung der Peraine;;;;;;;;WdG 277;;Klerikal (Liturgie);0;\N
-Liturgie: Heilige Schmiedeglut;;;;;;;;WdG 278;;Klerikal (Liturgie);0;\N
-Liturgie: Heiliger Befehl;;;;;;;;WdG 261 / MyG 173;;Klerikal (Liturgie);0;\N
-Liturgie: Heiliger Lehenseid;;;;;;;;WdG 259;;Klerikal (Liturgie);0;\N
-Liturgie: Heiliges Liebesspiel;;;;;;;;WdG 280;;Klerikal (Liturgie);0;\N
-Liturgie: Heilung des Tapams;;;;;;;;WdG 289;;Klerikal (Liturgie);0;\N
-Liturgie: Heilungssegen;;;;;;;;WdG 253 / MyG 170;;Klerikal (Liturgie);0;\N
-Liturgie: Herbeirufung der Erdkraft;;;;;;;;MyG 188;;Klerikal (Liturgie);0;\N
-Liturgie: Herr über Feuer und Glut;;;;;;;;WdG 278;;Klerikal (Liturgie);0;\N
-Liturgie: Hesindes Fingerzeig;;;;;;;;WdG 269;;Klerikal (Liturgie);0;\N
-Liturgie: Hexagon des Vielleibigen;;;;;;;;MyG 183;;Klerikal (Liturgie);0;\N
-Liturgie: Hilfe in der Not;;;;;;;;WdG 284;;Klerikal (Liturgie);0;\N
-Liturgie: Hoftag der Sprachen;;;;;;;;WdG 284;;Klerikal (Liturgie);0;\N
-Liturgie: Hornissenangriff;;;;;;;;MyG 183;;Klerikal (Liturgie);0;\N
-Liturgie: Hornissenwacht;;;;;;;;MyG 183;;Klerikal (Liturgie);0;\N
-Liturgie: Hornissenwirbel;;;;;;;;MyG 183;;Klerikal (Liturgie);0;\N
-Liturgie: Icanarias Gaukelspiel;;;;;;;;MyG 189;;Klerikal (Liturgie);0;\N
-Liturgie: Indoktination;;;;;;;;WdG 256;;Klerikal (Liturgie);0;\N
-Liturgie: Indoktrination;;;;;;;;MyG 173;;Klerikal (Liturgie);0;\N
-Liturgie: Ingalfs Alchimie;;;;;;;;WdG 269, 270;;Klerikal (Liturgie);0;\N
-Liturgie: Ingerimms Zorn verschone uns;;;;;;;;WdG 278, 279;;Klerikal (Liturgie);0;\N
-Liturgie: Initiation;;;;;;;;WdG 256 / MyG 173;;Klerikal (Liturgie);0;\N
-Liturgie: Innere Ruhe;;;;;;;;WdG 259;;Klerikal (Liturgie);0;\N
-Liturgie: Jagdglück;;;;;;;;WdG 271 / MyG 191;;Klerikal (Liturgie);0;\N
-Liturgie: Jagdglück (IV);;;;;;;;WdG 271;;Klerikal (Liturgie);0;\N
-Liturgie: Jagdglück (V);;;;;;;;WdG 271;;Klerikal (Liturgie);0;\N
-Liturgie: Jagdsicht;;;;;;;;MyG 191;;Klerikal (Liturgie);0;\N
-Liturgie: Kälbchensegen;;;;;;;;WdG 277;;Klerikal (Liturgie);0;\N
-Liturgie: Kälbersegen;;;;;;;;MyG 196;;Klerikal (Liturgie);0;\N
-Liturgie: Kamaluqs Fluch;;;;;;;;WdG 289;;Klerikal (Liturgie);0;\N
-Liturgie: Kamaluqs unerbittlicher Speer;;;;;;;;WdG 289;;Klerikal (Liturgie);0;\N
-Liturgie: Kämpfersegen;;;;;;;;MyG 170;;Klerikal (Liturgie);0;\N
-Liturgie: Karmale Einstimmung;;;;;;;;OiC 44;;Klerikal (Liturgie);0;\N
-Liturgie: Karmale Kraftquelle;;;;;;;;OiC 44;;Klerikal (Liturgie);0;\N
-Liturgie: Khabals makelloser Leib;;;;;;;;WdG 280;;Klerikal (Liturgie);0;\N
-Liturgie: Khabals makelloser Leib (VI);;;;;;;;WdG 280;;Klerikal (Liturgie);0;\N
-Liturgie: Khablas Jugend;;;;;;;;WdG 280;;Klerikal (Liturgie);0;\N
-Liturgie: Khablas Jugend (IV);;;;;;;;WdG 280;;Klerikal (Liturgie);0;\N
-Liturgie: Kirschblütensegen;;;;;;;;WdG 272;;Klerikal (Liturgie);0;\N
-Liturgie: Kleine Liturgie des heiligen Nemekath;;;;;;;;WdG 267;;Klerikal (Liturgie);0;\N
-Liturgie: Kleine Segnung des Heimsteins;;;;;;;;WdG 265;;Klerikal (Liturgie);0;\N
-Liturgie: Kleiner Giftbann;;;;;;;;WdG 277;;Klerikal (Liturgie);0;\N
-Liturgie: Kleiner Giftbann (III);;;;;;;;WdG 277;;Klerikal (Liturgie);0;\N
-Liturgie: Kleines Tabu;;;;;;;;WdG 289;;Klerikal (Liturgie);0;\N
-Liturgie: Konsekration;;;;;;;;WdG 256 / MyG 173;;Klerikal (Liturgie);0;\N
-Liturgie: Kräftigung der Schwachen und Versehrten;;;;;;;;WdG 277;;Klerikal (Liturgie);0;\N
-Liturgie: Kräftigung der Schwachen und Versehrten (VI);;;;;;;;WdG 277;;Klerikal (Liturgie);0;\N
-Liturgie: Krankheitserkennung;;;;;;;;MyG 188;;Klerikal (Liturgie);0;\N
-Liturgie: Kräutersegen;;;;;;;;WdG 267;;Klerikal (Liturgie);0;\N
-Liturgie: Largorax' Hammer rufen;;;;;;;;WdG 286;;Klerikal (Liturgie);0;\N
-Liturgie: Leichenschau;;;;;;;;MyG 178;;Klerikal (Liturgie);0;\N
-Liturgie: Levthans Fesseln;;;;;;;;WdG 280;;Klerikal (Liturgie);0;\N
-Liturgie: Licht des Herrn;;;;;;;;WdG 259;;Klerikal (Liturgie);0;\N
-Liturgie: Licht des verborgenen Pfades;;;;;;;;WdG 279;;Klerikal (Liturgie);0;\N
-Liturgie: Lohn der Unverzagten;;;;;;;;WdG 277 / MyG 188;;Klerikal (Liturgie);0;\N
-Liturgie: Lug und Trug;;;;;;;;WdG 274;;Klerikal (Liturgie);0;\N
-Liturgie: Mannschaftssegen;;;;;;;;WdG 264 / MyG 183, 184;;Klerikal (Liturgie);0;\N
-Liturgie: Marbos Geisterblick;;;;;;;;WdG 267, 268;;Klerikal (Liturgie);0;\N
-Liturgie: Marbos Geleit;;;;;;;;WdG 267;;Klerikal (Liturgie);0;\N
-Liturgie: Markierung;;;;;;;;MyG 193;;Klerikal (Liturgie);0;\N
-Liturgie: Märtyrersegen;;;;;;;;WdG 253;;Klerikal (Liturgie);0;\N
-Liturgie: Meisterstück;;;;;;;;WdG 279;;Klerikal (Liturgie);0;\N
-Liturgie: Mondsilberzunge;;;;;;;;WdG 274;;Klerikal (Liturgie);0;\N
-Liturgie: Nandus' Schriftkenntnis;;;;;;;;WdG 274, 284;;Klerikal (Liturgie);0;\N
-Liturgie: Nebelkontrolle;;;;;;;;MyG 186;;Klerikal (Liturgie);0;\N
-Liturgie: Nebelleib;;;;;;;;MyG 186;;Klerikal (Liturgie);0;\N
-Liturgie: Nekemas Rausch;;;;;;;;WdG 267 / OiC 58;;Klerikal (Liturgie);0;\N
-Liturgie: Nemekaths Bannfluch;;;;;;;;WdG 267;;Klerikal (Liturgie);0;\N
-Liturgie: Nemekaths Geisterblick;;;;;;;;WdG 267;;Klerikal (Liturgie);0;\N
-Liturgie: Nemekaths Zwiesprache;;;;;;;;WdG 267, 268;;Klerikal (Liturgie);0;\N
-Liturgie: Neun Streiche in Einem;;;;;;;;WdG 283;;Klerikal (Liturgie);0;\N
-Liturgie: Nimmermüde Wanderschaft;;;;;;;;WdG 282;;Klerikal (Liturgie);0;\N
-Liturgie: Noionas Zuspruch;;;;;;;;WdG 268;;Klerikal (Liturgie);0;\N
-Liturgie: Obarans Bannstrahl;;;;;;;;WdG 289;;Klerikal (Liturgie);0;\N
-Liturgie: Objektsegen;;;;;;;;WdG 257 / MyG 173;;Klerikal (Liturgie);0;\N
-Liturgie: Objektsegen (II);;;;;;;;WdG 257;;Klerikal (Liturgie);0;\N
-Liturgie: Objektsegen (IV);;;;;;;;WdG 257;;Klerikal (Liturgie);0;\N
-Liturgie: Objektweihe;;;;;;;;WdG 257 / MyG 174;;Klerikal (Liturgie);0;\N
-Liturgie: Objektweihe (III);;;;;;;;WdG 257;;Klerikal (Liturgie);0;\N
-Liturgie: Objektweihe (IV);;;;;;;;WdG 257;;Klerikal (Liturgie);0;\N
-Liturgie: Objektweihe (V);;;;;;;;WdG 257;;Klerikal (Liturgie);0;\N
-Liturgie: Objektweihe (VI);;;;;;;;WdG 257;;Klerikal (Liturgie);0;\N
-Liturgie: Ordination;;;;;;;;WdG 258 / MyG 174;;Klerikal (Liturgie);0;\N
-Liturgie: Parinors Vermächtnis;;;;;;;;WdG 277;;Klerikal (Liturgie);0;\N
-Liturgie: Peraines Pflanzengespür;;;;;;;;WdG 277;;Klerikal (Liturgie);0;\N
-Liturgie: Phexens Augenzwinkern;;;;;;;;WdG 274;;Klerikal (Liturgie);0;\N
-Liturgie: Phexens Elsterflug;;;;;;;;WdG 274;;Klerikal (Liturgie);0;\N
-Liturgie: Phexens Kunstverstand;;;;;;;;WdG 274;;Klerikal (Liturgie);0;\N
-Liturgie: Phexens Meisterschlüssel;;;;;;;;WdG 274;;Klerikal (Liturgie);0;\N
-Liturgie: Phexens Nebelleib;;;;;;;;WdG 275;;Klerikal (Liturgie);0;\N
-Liturgie: Phexens Schatten;;;;;;;;WdG 275;;Klerikal (Liturgie);0;\N
-Liturgie: Phexens Sternenwurf;;;;;;;;WdG 275;;Klerikal (Liturgie);0;\N
-Liturgie: Phexens wunderbare Verständigung;;;;;;;;WdG 275;;Klerikal (Liturgie);0;\N
-Liturgie: Praios' Magiebann;;;;;;;;WdG 259;;Klerikal (Liturgie);0;\N
-Liturgie: Praios' Mahnung;;;;;;;;WdG 260;;Klerikal (Liturgie);0;\N
-Liturgie: Prophezeiung;;;;;;;;WdG 258 / MyG 174;;Klerikal (Liturgie);0;\N
-Liturgie: Purgation;;;;;;;;WdG 260;;Klerikal (Liturgie);0;\N
-Liturgie: Purgation (V);;;;;;;;WdG 260;;Klerikal (Liturgie);0;\N
-Liturgie: Quellsegen;;;;;;;;WdG 264 / MyG 194;;Klerikal (Liturgie);0;\N
-Liturgie: Rahjalinas Kuss;;;;;;;;WdG 280;;Klerikal (Liturgie);0;\N
-Liturgie: Rahjalinas Weinranke;;;;;;;;WdG 280;;Klerikal (Liturgie);0;\N
-Liturgie: Rahjas Erquickung;;;;;;;;WdG 281;;Klerikal (Liturgie);0;\N
-Liturgie: Rahjas Fest der Freude;;;;;;;;WdG 281;;Klerikal (Liturgie);0;\N
-Liturgie: Rahjas Freiheit;;;;;;;;WdG 281;;Klerikal (Liturgie);0;\N
-Liturgie: Rahjas geheiligter Wein;;;;;;;;WdG 281;;Klerikal (Liturgie);0;\N
-Liturgie: Rahjas heitere Gelassenheit;;;;;;;;WdG 281;;Klerikal (Liturgie);0;\N
-Liturgie: Rahjas Rauschsegen;;;;;;;;WdG 281;;Klerikal (Liturgie);0;\N
-Liturgie: Rahjas Schoß;;;;;;;;WdG 281;;Klerikal (Liturgie);0;\N
-Liturgie: Rahjas Sinnlichkeit;;;;;;;;WdG 281;;Klerikal (Liturgie);0;\N
-Liturgie: Rauschsegen;;;;;;;;MyG 190;;Klerikal (Liturgie);0;\N
-Liturgie: Regenbogenbrücke;;;;;;;;MyG 186;;Klerikal (Liturgie);0;\N
-Liturgie: Regenruf;;;;;;;;MyG 186;;Klerikal (Liturgie);0;\N
-Liturgie: Reichung des Amethyst;;;;;;;;WdG 281;;Klerikal (Liturgie);0;\N
-Liturgie: Reichung des Amethyst (II);;;;;;;;WdG 281;;Klerikal (Liturgie);0;\N
-Liturgie: Reichung des Amethyst (III);;;;;;;;WdG 281;;Klerikal (Liturgie);0;\N
-Liturgie: Reichung des Amethyst (V);;;;;;;;WdG 281;;Klerikal (Liturgie);0;\N
-Liturgie: Reise zu den Geistern;;;;;;;;WdG 267, 268 / OiC 58;;Klerikal (Liturgie);0;\N
-Liturgie: Reisesegen;;;;;;;;WdG 265 / MyG 174;;Klerikal (Liturgie);0;\N
-Liturgie: Reisesegen (III);;;;;;;;WdG 265;;Klerikal (Liturgie);0;\N
-Liturgie: Richtungssegen;;;;;;;;MyG 170;;Klerikal (Liturgie);0;\N
-Liturgie: Rondras Hochzeit;;;;;;;;WdG 262;;Klerikal (Liturgie);0;\N
-Liturgie: Rondras wundersame Rüstung;;;;;;;;WdG 262;;Klerikal (Liturgie);0;\N
-Liturgie: Ruf der Gefährten;;;;;;;;WdG 264;;Klerikal (Liturgie);0;\N
-Liturgie: Ruf der Gefährten (IV);;;;;;;;WdG 264;;Klerikal (Liturgie);0;\N
-Liturgie: Ruf der Tiere;;;;;;;;MyG 196;;Klerikal (Liturgie);0;\N
-Liturgie: Ruf der Winde;;;;;;;;MyG 187;;Klerikal (Liturgie);0;\N
-Liturgie: Ruf in Borons Arme;;;;;;;;WdG 268;;Klerikal (Liturgie);0;\N
-Liturgie: Ruf zur Ruhe;;;;;;;;WdG 268;;Klerikal (Liturgie);0;\N
-Liturgie: Salbung der heiligen Noiona;;;;;;;;WdG 268;;Klerikal (Liturgie);0;\N
-Liturgie: Sankt Gilborns Bannfluch;;;;;;;;WdG 260;;Klerikal (Liturgie);0;\N
-Liturgie: Schattengestalt;;;;;;;;MyG 193;;Klerikal (Liturgie);0;\N
-Liturgie: Schattenlarve;;;;;;;;WdG 275;;Klerikal (Liturgie);0;\N
-Liturgie: Schattenrüstung;;;;;;;;MyG 193;;Klerikal (Liturgie);0;\N
-Liturgie: Schiffssegen;;;;;;;;WdG 264;;Klerikal (Liturgie);0;\N
-Liturgie: Schlaf des Gesegneten;;;;;;;;WdG 268;;Klerikal (Liturgie);0;\N
-Liturgie: Schlangenstab;;;;;;;;WdG 270 / MyG 197;;Klerikal (Liturgie);0;\N
-Liturgie: Schneesturm / Eissturm;;;;;;;;MyG 191;;Klerikal (Liturgie);0;\N
-Liturgie: Schneesturm/ Eissturm;;;;;;;;WdG 271;;Klerikal (Liturgie);0;\N
-Liturgie: Schrifttum ferner Lande;;;;;;;;WdG 270;;Klerikal (Liturgie);0;\N
-Liturgie: Schutz der Natur;;;;;;;;MyG 196;;Klerikal (Liturgie);0;\N
-Liturgie: Schutz des Gelges;;;;;;;;WdG 287;;Klerikal (Liturgie);0;\N
-Liturgie: Schutz vor Hellseherei;;;;;;;;MyG 193, 194;;Klerikal (Liturgie);0;\N
-Liturgie: Schutzsegen;;;;;;;;WdG 253 / MyG 175;;Klerikal (Liturgie);0;\N
-Liturgie: Schutzsegen (II);;;;;;;;WdG 253;;Klerikal (Liturgie);0;\N
-Liturgie: Schutzsegen (III);;;;;;;;WdG 253;;Klerikal (Liturgie);0;\N
-Liturgie: Schwitzhütte;;;;;;;;WdG 289;;Klerikal (Liturgie);0;\N
-Liturgie: Seelenfrieden;;;;;;;;MyG 181;;Klerikal (Liturgie);0;\N
-Liturgie: Seelenprüfung;;;;;;;;WdG 258;;Klerikal (Liturgie);0;\N
-Liturgie: Seelenprüfung (IV);;;;;;;;WdG 258;;Klerikal (Liturgie);0;\N
-Liturgie: Seelenprüfung (V);;;;;;;;WdG 258;;Klerikal (Liturgie);0;\N
-Liturgie: Segen der Gabetaj;;;;;;;;WdG 289;;Klerikal (Liturgie);0;\N
-Liturgie: Segen der Heiligen Ardare;;;;;;;;WdG 262;;Klerikal (Liturgie);0;\N
-Liturgie: Segen der heiligen Noiona;;;;;;;;WdG 268;;Klerikal (Liturgie);0;\N
-Liturgie: Segen der heiligen Noiona (IV);;;;;;;;WdG 268;;Klerikal (Liturgie);0;\N
-Liturgie: Segen der heiligen Theria;;;;;;;;WdH 277;;Klerikal (Liturgie);0;\N
-Liturgie: Segen der heiligen Velvenya;;;;;;;;WdG 268;;Klerikal (Liturgie);0;\N
-Liturgie: Segen des Heiligen Badilak;;;;;;;;WdG 265;;Klerikal (Liturgie);0;\N
-Liturgie: Segen des Heiligen Hluthar;;;;;;;;WdG 262;;Klerikal (Liturgie);0;\N
-Liturgie: Segen des Plättlings;;;;;;;;WdG 264;;Klerikal (Liturgie);0;\N
-Liturgie: Segenreiches Wasser;;;;;;;;WdG 277;;Klerikal (Liturgie);0;\N
-Liturgie: Segensreicher Neuanfang;;;;;;;;MyG 185;;Klerikal (Liturgie);0;\N
-Liturgie: Segnung der Schlacht;;;;;;;;WdG 262;;Klerikal (Liturgie);0;\N
-Liturgie: Segnung der Stählernen Stirn;;;;;;;;WdG 262;;Klerikal (Liturgie);0;\N
-Liturgie: Segnung des Heimes;;;;;;;;WdG 265;;Klerikal (Liturgie);0;\N
-Liturgie: Sichere Wanderung im Schnee;;;;;;;;WdG 271 / MyG 191;;Klerikal (Liturgie);0;\N
-Liturgie: Sichere Wanderung im Schnee (III);;;;;;;;WdG 271;;Klerikal (Liturgie);0;\N
-Liturgie: Sichere Zuflucht;;;;;;;;MyG 181;;Klerikal (Liturgie);0;\N
-Liturgie: Sicherer Weg durch Fels;;;;;;;;WdG 279;;Klerikal (Liturgie);0;\N
-Liturgie: Sicht auf die magische Welt;;;;;;;;MyG 179;;Klerikal (Liturgie);0;\N
-Liturgie: Sicht auf Madas Welt;;;;;;;;WdG 270;;Klerikal (Liturgie);0;\N
-Liturgie: Siegel Borons;;;;;;;;WdG 268;;Klerikal (Liturgie);0;\N
-Liturgie: Simias Kelch;;;;;;;;WdG 279;;Klerikal (Liturgie);0;\N
-Liturgie: Sippenfluch;;;;;;;;WdG 289;;Klerikal (Liturgie);0;\N
-Liturgie: Speisesegen;;;;;;;;WdG 253 / MyG 175;;Klerikal (Liturgie);0;\N
-Liturgie: Speisung der Bedürftigen;;;;;;;;WdG 277;;Klerikal (Liturgie);0;\N
-Liturgie: Speisung der hungernden Seelen;;;;;;;;WdG 265 / MyG 175;;Klerikal (Liturgie);0;\N
-Liturgie: Speisung der hungernden Seelen (IV);;;;;;;;WdG 265;;Klerikal (Liturgie);0;\N
-Liturgie: Sprechende Symbole;;;;;;;;WdG 270 / MyG 185;;Klerikal (Liturgie);0;\N
-Liturgie: Sterne funkeln immerfort;;;;;;;;WdG 275;;Klerikal (Liturgie);0;\N
-Liturgie: Sternenglanz;;;;;;;;WdG 275 / MyG 194;;Klerikal (Liturgie);0;\N
-Liturgie: Sternenspur;;;;;;;;WdG 275;;Klerikal (Liturgie);0;\N
-Liturgie: Sternenstaub;;;;;;;;WdG 276;;Klerikal (Liturgie);0;\N
-Liturgie: Sühneopter;;;;;;;;MyG 175;;Klerikal (Liturgie);0;\N
-Liturgie: Sulvas Gnade;;;;;;;;WdG 282;;Klerikal (Liturgie);0;\N
-Liturgie: Swafnirs Fluke;;;;;;;;WdG 264;;Klerikal (Liturgie);0;\N
-Liturgie: Swafnirs Ruhelied;;;;;;;;WdG 285;;Klerikal (Liturgie);0;\N
-Liturgie: Tabu;;;;;;;;WdG 289, 268 / OiC 58;;Klerikal (Liturgie);0;\N
-Liturgie: Tairachs Fluch;;;;;;;;WdG 288;;Klerikal (Liturgie);0;\N
-Liturgie: Tanz der Schöpfung;;;;;;;;MyG 190;;Klerikal (Liturgie);0;\N
-Liturgie: Tarnung;;;;;;;;MyG 194;;Klerikal (Liturgie);0;\N
-Liturgie: Taya des Träumenden;;;;;;;;WdG 267 / OiC 58;;Klerikal (Liturgie);0;\N
-Liturgie: Thalionmels Schlachtgesang;;;;;;;;WdG 262;;Klerikal (Liturgie);0;\N
-Liturgie: Therbuns Erkenntnis;;;;;;;;WdG 277, 278;;Klerikal (Liturgie);0;\N
-Liturgie: Tierempathie;;;;;;;;WdG 284, 285;;Klerikal (Liturgie);0;\N
-Liturgie: Tierempathie (III);;;;;;;;WdG 284, 285;;Klerikal (Liturgie);0;\N
-Liturgie: Tiergestalt;;;;;;;;WdG 258 / MyG 175;;Klerikal (Liturgie);0;\N
-Liturgie: Tranksegen;;;;;;;;WdG 253;;Klerikal (Liturgie);0;\N
-Liturgie: Traum der Seele;;;;;;;;WdG 266 / OiC 58;;Klerikal (Liturgie);0;\N
-Liturgie: Traumsicht;;;;;;;;MyG 190;;Klerikal (Liturgie);0;\N
-Liturgie: Traviabund;;;;;;;;WdG 265;;Klerikal (Liturgie);0;\N
-Liturgie: Travianians Segen der Schwelle;;;;;;;;WdG 266;;Klerikal (Liturgie);0;\N
-Liturgie: Travias Gebet der sicheren Zuflucht;;;;;;;;WdG 266;;Klerikal (Liturgie);0;\N
-Liturgie: Travias Gebet der sicheren Zuflucht (VI);;;;;;;;WdG 266;;Klerikal (Liturgie);0;\N
-Liturgie: Travias Gebet der verborgenen Halle;;;;;;;;WdG 266;;Klerikal (Liturgie);0;\N
-Liturgie: Treuesegen;;;;;;;;MyG 182;;Klerikal (Liturgie);0;\N
-Liturgie: Trophäe erhalten;;;;;;;;WdG 271;;Klerikal (Liturgie);0;\N
-Liturgie: Tsas Ewige Jugend;;;;;;;;WdG 272;;Klerikal (Liturgie);0;\N
-Liturgie: Tsas heiliges Lebensgeschenk;;;;;;;;WdG 273;;Klerikal (Liturgie);0;\N
-Liturgie: Tsas Lebensschutz;;;;;;;;WdG 273;;Klerikal (Liturgie);0;\N
-Liturgie: Tsas segensreicher Neuanfang;;;;;;;;WdG 273;;Klerikal (Liturgie);0;\N
-Liturgie: Tsas wunderbare Erneuerung;;;;;;;;WdG 273;;Klerikal (Liturgie);0;\N
-Liturgie: Tsas wundersame Fruchtbarkeit;;;;;;;;WdG 273;;Klerikal (Liturgie);0;\N
-Liturgie: Über die Wolken;;;;;;;;WdG 283 / MyG 187;;Klerikal (Liturgie);0;\N
-Liturgie: Über die Wolken (VI);;;;;;;;WdG 283;;Klerikal (Liturgie);0;\N
-Liturgie: Ucuris Geleit;;;;;;;;WdG 260;;Klerikal (Liturgie);0;\N
-Liturgie: Unterpfand des heiligen Rhys;;;;;;;;WdG 279;;Klerikal (Liturgie);0;\N
-Liturgie: Unverstellter Blick;;;;;;;;WdG 270 / MyG 179;;Klerikal (Liturgie);0;\N
-Liturgie: Urischars Ordnender Blick;;;;;;;;WdG 260;;Klerikal (Liturgie);0;\N
-Liturgie: Vaes Tränen;;;;;;;;WdG 289;;Klerikal (Liturgie);0;\N
-Liturgie: Verborgen wie der Neumond;;;;;;;;WdG 276;;Klerikal (Liturgie);0;\N
-Liturgie: Versiegeltes Wissen;;;;;;;;WdG 284;;Klerikal (Liturgie);0;\N
-Liturgie: Verständnis der Sprachen;;;;;;;;MyG 176;;Klerikal (Liturgie);0;\N
-Liturgie: Vertrauter der Flamme;;;;;;;;WdG 279;;Klerikal (Liturgie);0;\N
-Liturgie: Vertrauter des Felsesens;;;;;;;;WdG 279;;Klerikal (Liturgie);0;\N
-Liturgie: Vertrauter des Gebirges;;;;;;;;MyG 196;;Klerikal (Liturgie);0;\N
-Liturgie: Vertreibung der Pestilenz;;;;;;;;MyG 188;;Klerikal (Liturgie);0;\N
-Liturgie: Vertreibung des Dunkelsinns;;;;;;;;WdG 261;;Klerikal (Liturgie);0;\N
-Liturgie: Vertreibung des Dunkelsinns (V);;;;;;;;WdG 261;;Klerikal (Liturgie);0;\N
-Liturgie: Visars Vergessen;;;;;;;;WdG 267 / OiC 58;;Klerikal (Liturgie);0;\N
-Liturgie: Visars Vergessen (V);;;;;;;;WdG 267 / OiC 58;;Klerikal (Liturgie);0;\N
-Liturgie: Visionssuche;;;;;;;;WdG 258 / MyG 176;;Klerikal (Liturgie);0;\N
-Liturgie: Waliburias Wehr;;;;;;;;WdG 279;;Klerikal (Liturgie);0;\N
-Liturgie: Wandeln in Hesindes Hain;;;;;;;;WdG 270, 271;;Klerikal (Liturgie);0;\N
-Liturgie: Warnung der Götter;;;;;;;;MyG 176;;Klerikal (Liturgie);0;\N
-Liturgie: Wasserreinigung;;;;;;;;MyG 194;;Klerikal (Liturgie);0;\N
-Liturgie: Wassersuche;;;;;;;;MyG 194;;Klerikal (Liturgie);0;\N
-Liturgie: Weg des Fuchses;;;;;;;;WdG 276;;Klerikal (Liturgie);0;\N
-Liturgie: Weidesegen;;;;;;;;MyG 196;;Klerikal (Liturgie);0;\N
-Liturgie: Weihe der ewigen Flamme;;;;;;;;WdG 280;;Klerikal (Liturgie);0;\N
-Liturgie: Weihe der letzten Ruhestatt;;;;;;;;WdG 268, 269 / MyG 178;;Klerikal (Liturgie);0;\N
-Liturgie: Weihgesang der Heiligen Elida von Salza;;;;;;;;WdG 264;;Klerikal (Liturgie);0;\N
-Liturgie: Weisheitssegen;;;;;;;;WdG 254 / MyG 176;;Klerikal (Liturgie);0;\N
-Liturgie: Weisung des Himmels;;;;;;;;WdG 271;;Klerikal (Liturgie);0;\N
-Liturgie: Wildwechsel;;;;;;;;MyG 191;;Klerikal (Liturgie);0;\N
-Liturgie: Wille zur Wahrheit;;;;;;;;WdG 261 / MyG 179;;Klerikal (Liturgie);0;\N
-Liturgie: Windeseile;;;;;;;;MyG 187;;Klerikal (Liturgie);0;\N
-Liturgie: Winterschlaf;;;;;;;;WdG 271 / MyG 191;;Klerikal (Liturgie);0;\N
-Liturgie: Wogen macht;;;;;;;;MyG 195;;Klerikal (Liturgie);0;\N
-Liturgie: Wort der Disziplin;;;;;;;;MyG 184;;Klerikal (Liturgie);0;\N
-Liturgie: Wort der Wahrheit;;;;;;;;WdG 261;;Klerikal (Liturgie);0;\N
-Liturgie: Wunderbarer Geschlechterwandel;;;;;;;;WdG 287, 288;;Klerikal (Liturgie);0;\N
-Liturgie: Wundersame Blütenpracht;;;;;;;;WdG 273;;Klerikal (Liturgie);0;\N
-Liturgie: Wundersame Fruchtbarkeit;;;;;;;;MyG 196;;Klerikal (Liturgie);0;\N
-Liturgie: Wundersames Wachstum;;;;;;;;MyG 188;;Klerikal (Liturgie);0;\N
-Liturgie: Wundsegen;;;;;;;;WdG 278, MyG 188;;Klerikal (Liturgie);0;\N
-Liturgie: Wundsegen (III);;;;;;;;WdG 278;;Klerikal (Liturgie);0;\N
-Liturgie: Wundsegen (IV);;;;;;;;WdG 278;;Klerikal (Liturgie);0;\N
-Liturgie: Zauberschutz;;;;;;;;MyG 179;;Klerikal (Liturgie);0;\N
-Liturgie: Zauberspiegel;;;;;;;;MyG 179;;Klerikal (Liturgie);0;\N
-Liturgie: Zerschmettern;;;;;;;;MyG 197;;Klerikal (Liturgie);0;\N
-Liturgie: Zerschmetternder Bannstrahl;;;;;;;;WdG 261 / MyG 179;;Klerikal (Liturgie);0;\N
-Liturgie: Zuflucht finden;;;;;;;;WdG 271,272 / MyG 192;;Klerikal (Liturgie);0;\N
-Liturgie: Zuflucht vor den Elementen;;;;;;;;MyG 197;;Klerikal (Liturgie);0;\N
+Liturgie: Achmad'ayan Ankhrellah Al'nurach Shaitanim;;;;;;;;WdG 261;;Klerikal (Liturgie);0;
+Liturgie: Aller Welt Freund;;;;;;;;WdG 282;;Klerikal (Liturgie);0;
+Liturgie: Allmacht der Lohe;;;;;;;;WdG 278;;Klerikal (Liturgie);0;
+Liturgie: Alte Schuppen;;;;;;;;WdG 287;;Klerikal (Liturgie);0;
+Liturgie: Am Busen der Natur;;;;;;;;WdG 282;;Klerikal (Liturgie);0;
+Liturgie: Anathema;;;;;;;;MyG 171;;Klerikal (Liturgie);0;
+Liturgie: Angroschs Opfergabe;;;;;;;;WdG 285;;Klerikal (Liturgie);0;
+Liturgie: Angroschs Zorn;;;;;;;;WdG 285;;Klerikal (Liturgie);0;
+Liturgie: Angstlinderung;;;;;;;;MyG 180;;Klerikal (Liturgie);0;
+Liturgie: Anrufung der Erdkraft;;;;;;;;WdG 276;;Klerikal (Liturgie);0;
+Liturgie: Anrufung der Winde;;;;;;;;WdG 262;;Klerikal (Liturgie);0;
+Liturgie: Anrufung der Winde (III);;;;;;;;WdG 262;;Klerikal (Liturgie);0;
+Liturgie: Anrufung der Winde (IV);;;;;;;;WdG 262;;Klerikal (Liturgie);0;
+Liturgie: Anrufung der Winde (V);;;;;;;;WdG 262;;Klerikal (Liturgie);0;
+Liturgie: Anrufung Nuiannas;;;;;;;;WdG 262;;Klerikal (Liturgie);0;
+Liturgie: Arcanum Interdictum;;;;;;;;WdG 258;;Klerikal (Liturgie);0;
+Liturgie: Argelions Bannende Hand;;;;;;;;WdG 269;;Klerikal (Liturgie);0;
+Liturgie: Argelions Mantel;;;;;;;;WdG 269;;Klerikal (Liturgie);0;
+Liturgie: Argelions Spiegel;;;;;;;;WdG 269;;Klerikal (Liturgie);0;
+Liturgie: Ascandears Hingabe;;;;;;;;WdG 280;;Klerikal (Liturgie);0;
+Liturgie: Auge der wartenden Seelen;;;;;;;;WdG 288;;Klerikal (Liturgie);0;
+Liturgie: Auge des Händlers;;;;;;;;WdG 273 / MyG 184;;Klerikal (Liturgie);0;
+Liturgie: Auge des Mondes;;;;;;;;WdG 274 / MyG 177;;Klerikal (Liturgie);0;
+Liturgie: Aura der Form;;;;;;;;WdG 269 / MyG 184;;Klerikal (Liturgie);0;
+Liturgie: Aura des Regenbogens;;;;;;;;WdG 272;;Klerikal (Liturgie);0;
+Liturgie: Azilas Quellgesang;;;;;;;;WdG 263;;Klerikal (Liturgie);0;
+Liturgie: Bann der Geisterkräfte;;;;;;;;WdG 288;;Klerikal (Liturgie);0;
+Liturgie: Bann der Schatten;;;;;;;;MyG 178;;Klerikal (Liturgie);0;
+Liturgie: Bannfluch des Heiligen Khalid;;;;;;;;WdG 266;;Klerikal (Liturgie);0;
+Liturgie: Bannfluch über Untote;;;;;;;;MyG 177;;Klerikal (Liturgie);0;
+Liturgie: Begehen der Heiligen Wasser;;;;;;;;WdG 263 / MyG 194;;Klerikal (Liturgie);0;
+Liturgie: Belemans Hochzeit;;;;;;;;WdG 263;;Klerikal (Liturgie);0;
+Liturgie: Beute erhalten;;;;;;;;MyG 191;;Klerikal (Liturgie);0;
+Liturgie: Bild für die Ewigkeit;;;;;;;;MyG 184;;Klerikal (Liturgie);0;
+Liturgie: Bindung der Schlange;;;;;;;;WdG 286, 287;;Klerikal (Liturgie);0;
+Liturgie: Bindung des Tieres;;;;;;;;MyG 195;;Klerikal (Liturgie);0;
+Liturgie: Bishdariels Angesicht;;;;;;;;WdG 266;;Klerikal (Liturgie);0;
+Liturgie: Bishdariels Auge;;;;;;;;WdG 266;;Klerikal (Liturgie);0;
+Liturgie: Bishdariels Auge (III);;;;;;;;WdG 266;;Klerikal (Liturgie);0;
+Liturgie: Bishdariels Auge (IV);;;;;;;;WdG 266;;Klerikal (Liturgie);0;
+Liturgie: Bishdariels Warnung;;;;;;;;WdG 266;;Klerikal (Liturgie);0;
+Liturgie: Blendstrahl;;;;;;;;MyG 178;;Klerikal (Liturgie);0;
+Liturgie: Blendstrahl aus Alveran;;;;;;;;WdG 258;;Klerikal (Liturgie);0;
+Liturgie: Blick an den klaren Himmel;;;;;;;;WdG 269;;Klerikal (Liturgie);0;
+Liturgie: Blick an den klaren Himmel (Sterne funkeln immerfort);;;;;;;;WdG 269;;Klerikal (Liturgie);0;
+Liturgie: Blick auf das Geisterwirken;;;;;;;;WdG 288;;Klerikal (Liturgie);0;
+Liturgie: Blick der Weberin;;;;;;;;WdG 269;;Klerikal (Liturgie);0;
+Liturgie: Blick des Magiers;;;;;;;;MyG 178;;Klerikal (Liturgie);0;
+Liturgie: Blick durch Tairachs Augen;;;;;;;;WdG 288;;Klerikal (Liturgie);0;
+Liturgie: Blick für das Handwerk;;;;;;;;WdG 278;;Klerikal (Liturgie);0;
+Liturgie: Blick in die Erinnerung;;;;;;;;WdG 288 / MyG 177;;Klerikal (Liturgie);0;
+Liturgie: Blick in die Flammen;;;;;;;;WdG 285;;Klerikal (Liturgie);0;
+Liturgie: Blitzschlag;;;;;;;;MyG 186;;Klerikal (Liturgie);0;
+Liturgie: Bootssegen;;;;;;;;WdG 263;;Klerikal (Liturgie);0;
+Liturgie: Borons süße Gnade;;;;;;;;WdG 267;;Klerikal (Liturgie);0;
+Liturgie: Borons süße Gnade (V);;;;;;;;WdG 267;;Klerikal (Liturgie);0;
+Liturgie: Buchprüfung;;;;;;;;WdG 274 / MyG 185;;Klerikal (Liturgie);0;
+Liturgie: Cereborns Handreichung;;;;;;;;WdG 269;;Klerikal (Liturgie);0;
+Liturgie: Chitinhaut;;;;;;;;MyG 182;;Klerikal (Liturgie);0;
+Liturgie: Daradors Bann der Schatten;;;;;;;;WdG 259;;Klerikal (Liturgie);0;
+Liturgie: Daradors prüfender Blick;;;;;;;;WdG 259;;Klerikal (Liturgie);0;
+Liturgie: Das schwarze Fell durch das Rote Blut;;;;;;;;WdG 283;;Klerikal (Liturgie);0;
+Liturgie: Der Gänsemutter warmes Nest;;;;;;;;WdG 264;;Klerikal (Liturgie);0;
+Liturgie: Des Herren Goldener Mittag;;;;;;;;WdG 259;;Klerikal (Liturgie);0;
+Liturgie: Dorlens Verbrüderung;;;;;;;;WdG 280;;Klerikal (Liturgie);0;
+Liturgie: Dreifacher Saatsegen;;;;;;;;WdG 276 / MyG 187, 188;;Klerikal (Liturgie);0;
+Liturgie: Dunkelheit;;;;;;;;MyG 177;;Klerikal (Liturgie);0;
+Liturgie: Dythlinds Wandeln im Feuer;;;;;;;;WdG 264;;Klerikal (Liturgie);0;
+Liturgie: Efferdsegen;;;;;;;;WdG 263;;Klerikal (Liturgie);0;
+Liturgie: Ehrene Kraft - lodernder Zorn;;;;;;;;WdG 285, 286;;Klerikal (Liturgie);0;
+Liturgie: Ehrenhafter Zweikampf;;;;;;;;WdG 261 / MyG 195;;Klerikal (Liturgie);0;
+Liturgie: Eidechsenhaut;;;;;;;;WdG 272;;Klerikal (Liturgie);0;
+Liturgie: Eidsegen;;;;;;;;WdG 251 / MyG 169;;Klerikal (Liturgie);0;
+Liturgie: Eidsegen (II);;;;;;;;WdG 251;;Klerikal (Liturgie);0;
+Liturgie: Ein Bild für die Ewigkeit;;;;;;;;WdG 283;;Klerikal (Liturgie);0;
+Liturgie: Ein Freund in Zeiten der Not;;;;;;;;WdG 282;;Klerikal (Liturgie);0;
+Liturgie: Elementwandlung;;;;;;;;WdG 287;;Klerikal (Liturgie);0;
+Liturgie: Entzug der Göttergaben;;;;;;;;MyG 171;;Klerikal (Liturgie);0;
+Liturgie: Entzug des Wissens;;;;;;;;WdG 288;;Klerikal (Liturgie);0;
+Liturgie: Entzug von Nandus' Gaben;;;;;;;;WdG 284;;Klerikal (Liturgie);0;
+Liturgie: Erheben des Untoten;;;;;;;;MyG 177;;Klerikal (Liturgie);0;
+Liturgie: Erlösung des Tapams;;;;;;;;WdG 288;;Klerikal (Liturgie);0;
+Liturgie: Ermutigung des Kämpfers;;;;;;;;MyG 182;;Klerikal (Liturgie);0;
+Liturgie: Erneuerung des Geborstenen;;;;;;;;WdG 278 / MyG 185;;Klerikal (Liturgie);0;
+Liturgie: Erneuerung des Geborstenen (V);;;;;;;;WdG 278;;Klerikal (Liturgie);0;
+Liturgie: Erneuerung des Verlorenen;;;;;;;;MyG 188;;Klerikal (Liturgie);0;
+Liturgie: Etilias Gnade;;;;;;;;WdG 267;;Klerikal (Liturgie);0;
+Liturgie: Etilias Zeit der Meditaion;;;;;;;;WdG 267;;Klerikal (Liturgie);0;
+Liturgie: Ewiger Wächter;;;;;;;;WdG 288, 289 / MyG 195, 196;;Klerikal (Liturgie);0;
+Liturgie: Ewiges Wissen;;;;;;;;WdG 288;;Klerikal (Liturgie);0;
+Liturgie: Exkommunikation;;;;;;;;WdG 255 / MyG 171;;Klerikal (Liturgie);0;
+Liturgie: Exkommunikation (IV);;;;;;;;WdG 255;;Klerikal (Liturgie);0;
+Liturgie: Exkommunikation (V);;;;;;;;WdG 255;;Klerikal (Liturgie);0;
+Liturgie: Exorzismus;;;;;;;;WdG 255 / MyG 171;;Klerikal (Liturgie);0;
+Liturgie: Exorzismus (IV);;;;;;;;WdG 255;;Klerikal (Liturgie);0;
+Liturgie: Exorzismus (V);;;;;;;;WdG 255;;Klerikal (Liturgie);0;
+Liturgie: Exorzismus (VI);;;;;;;;WdG 255;;Klerikal (Liturgie);0;
+Liturgie: Fest der Freude;;;;;;;;MyG 189;;Klerikal (Liturgie);0;
+Liturgie: Feuersegen;;;;;;;;WdG 251 / MyG 170;;Klerikal (Liturgie);0;
+Liturgie: Feuertaufe;;;;;;;;WdG 286;;Klerikal (Liturgie);0;
+Liturgie: Firuns Einsicht;;;;;;;;WdG 271;;Klerikal (Liturgie);0;
+Liturgie: Flagge des Friedens;;;;;;;;MyG 180;;Klerikal (Liturgie);0;
+Liturgie: Flagge des Regenbogens;;;;;;;;WdG 272;;Klerikal (Liturgie);0;
+Liturgie: Fluch des Geistes;;;;;;;;WdG 267 / OiC 58;;Klerikal (Liturgie);0;
+Liturgie: Freier Weg;;;;;;;;MyG 192;;Klerikal (Liturgie);0;
+Liturgie: Freundliche Aufnahme;;;;;;;;WdG 282;;Klerikal (Liturgie);0;
+Liturgie: Freundschaftsgefühle;;;;;;;;MyG 180;;Klerikal (Liturgie);0;
+Liturgie: Frieden der Melodie;;;;;;;;WdG 282;;Klerikal (Liturgie);0;
+Liturgie: Fünfte Lobpreisung des Frühlings;;;;;;;;WdG 276;;Klerikal (Liturgie);0;
+Liturgie: Fürbitten des Heiligen Therbun;;;;;;;;WdG 276;;Klerikal (Liturgie);0;
+Liturgie: Gabe an die Sterne;;;;;;;;MyG 193;;Klerikal (Liturgie);0;
+Liturgie: Garfans Gleißende Schwingen;;;;;;;;WdG 259;;Klerikal (Liturgie);0;
+Liturgie: Gebet der verborgenen Halle;;;;;;;;MyG 181;;Klerikal (Liturgie);0;
+Liturgie: Gebieter der Lava;;;;;;;;WdG 278;;Klerikal (Liturgie);0;
+Liturgie: Geburtssegen;;;;;;;;WdG 252 / MyG 171, 172;;Klerikal (Liturgie);0;
+Liturgie: Geisterblick;;;;;;;;MyG 177;;Klerikal (Liturgie);0;
+Liturgie: Geistermantel;;;;;;;;WdG 288;;Klerikal (Liturgie);0;
+Liturgie: Geisterreise;;;;;;;;MyG 177;;Klerikal (Liturgie);0;
+Liturgie: Geläutert sei Erz und Goldgestein;;;;;;;;WdG 286;;Klerikal (Liturgie);0;
+Liturgie: Gemeinschaft der treuen Gefährten;;;;;;;;WdG 264;;Klerikal (Liturgie);0;
+Liturgie: Gemeinschaft der treuen Getährten;;;;;;;;MyG 180;;Klerikal (Liturgie);0;
+Liturgie: Gesang der Delphine;;;;;;;;WdG 263 / MyG 194;;Klerikal (Liturgie);0;
+Liturgie: Gesang der Wale;;;;;;;;WdG 285;;Klerikal (Liturgie);0;
+Liturgie: Gesegnete Ruhe;;;;;;;;MyG 180;;Klerikal (Liturgie);0;
+Liturgie: Gesegneter Fang;;;;;;;;WdG 263 / MyG 194;;Klerikal (Liturgie);0;
+Liturgie: Gesichtsverhüllung;;;;;;;;MyG 192,193;;Klerikal (Liturgie);0;
+Liturgie: Geteiltes Leid;;;;;;;;WdG 284;;Klerikal (Liturgie);0;
+Liturgie: Gewittergrollen;;;;;;;;MyG 186;;Klerikal (Liturgie);0;
+Liturgie: Gift der Erkenntnis;;;;;;;;WdG 287;;Klerikal (Liturgie);0;
+Liturgie: Gift der Erkenntnis (III);;;;;;;;WdG 287;;Klerikal (Liturgie);0;
+Liturgie: Giftbann;;;;;;;;MyG 188;;Klerikal (Liturgie);0;
+Liturgie: Gilborns heilige Aura;;;;;;;;WdG 259;;Klerikal (Liturgie);0;
+Liturgie: Gleichklang des Geistes;;;;;;;;WdG 276 / MyG 172;;Klerikal (Liturgie);0;
+Liturgie: Glückssegen;;;;;;;;WdG 252 / MyG 170;;Klerikal (Liturgie);0;
+Liturgie: Glücksspielsegen;;;;;;;;MyG 189;;Klerikal (Liturgie);0;
+Liturgie: Goldene Rüstung;;;;;;;;WdG 259;;Klerikal (Liturgie);0;
+Liturgie: Goldener Blick;;;;;;;;WdG 286 / MyG 185;;Klerikal (Liturgie);0;
+Liturgie: Gorfangs Fluch;;;;;;;;WdG 289;;Klerikal (Liturgie);0;
+Liturgie: Göttliche Beseelung rufen (I);;;;;;;;OiC 78;;Klerikal (Liturgie);0;
+Liturgie: Göttliche Beseelung rufen (II);;;;;;;;OiC 78;;Klerikal (Liturgie);0;
+Liturgie: Göttliche Beseelung rufen (III);;;;;;;;OiC 78;;Klerikal (Liturgie);0;
+Liturgie: Göttliche Beseelung rufen (IV);;;;;;;;OiC 78;;Klerikal (Liturgie);0;
+Liturgie: Göttliche Beseelung rufen (V);;;;;;;;OiC 78;;Klerikal (Liturgie);0;
+Liturgie: Göttliche Essenz kanalisieren (I);;;;;;;;OiC 77;;Klerikal (Liturgie);0;
+Liturgie: Göttliche Essenz kanalisieren (II);;;;;;;;OiC 77;;Klerikal (Liturgie);0;
+Liturgie: Göttliche Essenz kanalisieren (III);;;;;;;;OiC 77;;Klerikal (Liturgie);0;
+Liturgie: Göttliche Essenz kanalisieren (IV);;;;;;;;OiC 77;;Klerikal (Liturgie);0;
+Liturgie: Göttliche Essenz kanalisieren (V);;;;;;;;OiC 77;;Klerikal (Liturgie);0;
+Liturgie: Göttliche Inspiration;;;;;;;;MyG 172;;Klerikal (Liturgie);0;
+Liturgie: Göttliche Macht binden (I);;;;;;;;OiC 78;;Klerikal (Liturgie);0;
+Liturgie: Göttliche Macht binden (II);;;;;;;;OiC 78;;Klerikal (Liturgie);0;
+Liturgie: Göttliche Macht binden (III);;;;;;;;OiC 78;;Klerikal (Liturgie);0;
+Liturgie: Göttliche Macht binden (IV);;;;;;;;OiC 78;;Klerikal (Liturgie);0;
+Liturgie: Göttliche Macht binden (V);;;;;;;;OiC 78;;Klerikal (Liturgie);0;
+Liturgie: Göttliche Rüstung;;;;;;;;MyG 172;;Klerikal (Liturgie);0;
+Liturgie: Göttliche Verständigung;;;;;;;;WdG 255 / MyG 172;;Klerikal (Liturgie);0;
+Liturgie: Göttliche Verständigung (III);;;;;;;;WdG 255;;Klerikal (Liturgie);0;
+Liturgie: Göttliche Verständigung (IV);;;;;;;;WdG 255;;Klerikal (Liturgie);0;
+Liturgie: Göttlichen Schutz erflehen (I);;;;;;;;OiC 78;;Klerikal (Liturgie);0;
+Liturgie: Göttlichen Schutz erflehen (II);;;;;;;;OiC 78;;Klerikal (Liturgie);0;
+Liturgie: Göttlichen Schutz erflehen (III);;;;;;;;OiC 78;;Klerikal (Liturgie);0;
+Liturgie: Göttlichen Schutz erflehen (IV);;;;;;;;OiC 78;;Klerikal (Liturgie);0;
+Liturgie: Göttlichen Schutz erflehen (V);;;;;;;;OiC 78;;Klerikal (Liturgie);0;
+Liturgie: Göttlichen Willen erzwingen (I);;;;;;;;OiC 78;;Klerikal (Liturgie);0;
+Liturgie: Göttlichen Willen erzwingen (II);;;;;;;;OiC 78;;Klerikal (Liturgie);0;
+Liturgie: Göttlichen Willen erzwingen (III);;;;;;;;OiC 78;;Klerikal (Liturgie);0;
+Liturgie: Göttlichen Willen erzwingen (IV);;;;;;;;OiC 78;;Klerikal (Liturgie);0;
+Liturgie: Göttlichen Willen erzwingen (V);;;;;;;;OiC 78;;Klerikal (Liturgie);0;
+Liturgie: Göttliches Licht;;;;;;;;MyG 179;;Klerikal (Liturgie);0;
+Liturgie: Göttliches Prinzip stärken (I);;;;;;;;OiC 77;;Klerikal (Liturgie);0;
+Liturgie: Göttliches Prinzip stärken (II);;;;;;;;OiC 77;;Klerikal (Liturgie);0;
+Liturgie: Göttliches Prinzip stärken (III);;;;;;;;OiC 77;;Klerikal (Liturgie);0;
+Liturgie: Göttliches Prinzip stärken (IV);;;;;;;;OiC 77;;Klerikal (Liturgie);0;
+Liturgie: Göttliches Prinzip stärken (V);;;;;;;;OiC 77;;Klerikal (Liturgie);0;
+Liturgie: Göttliches Verständnis;;;;;;;;MyG 185;;Klerikal (Liturgie);0;
+Liturgie: Göttliches Zeichen;;;;;;;;WdG 255 / MyG 172;;Klerikal (Liturgie);0;
+Liturgie: Göttliches Zeichen (III);;;;;;;;WdG 255;;Klerikal (Liturgie);0;
+Liturgie: Grabsegen;;;;;;;;WdG 252 / MyG 170;;Klerikal (Liturgie);0;
+Liturgie: Graues Siegel;;;;;;;;WdG 284;;Klerikal (Liturgie);0;
+Liturgie: Grispelz' Ackersegen;;;;;;;;WdG 289;;Klerikal (Liturgie);0;
+Liturgie: Grispelz' Fruchtbarkeit;;;;;;;;WdG 289;;Klerikal (Liturgie);0;
+Liturgie: Große Seelenwaschung;;;;;;;;WdG 276;;Klerikal (Liturgie);0;
+Liturgie: Große Weihe der Sinnlichkeit;;;;;;;;MyG 189;;Klerikal (Liturgie);0;
+Liturgie: Große Weihe des Heimsteins;;;;;;;;WdG 264, 265;;Klerikal (Liturgie);0;
+Liturgie: Großer Eidsegen;;;;;;;;WdG 255, 256;;Klerikal (Liturgie);0;
+Liturgie: Großer Giftbann;;;;;;;;WdG 276;;Klerikal (Liturgie);0;
+Liturgie: Großer Reisesegen;;;;;;;;WdG 282;;Klerikal (Liturgie);0;
+Liturgie: Großer Speisesegen;;;;;;;;WdG 265;;Klerikal (Liturgie);0;
+Liturgie: Großer Weihesegen der Waffe;;;;;;;;WdG 261, 262;;Klerikal (Liturgie);0;
+Liturgie: Großer Weihesegen der Waffen;;;;;;;;MyG 182,183;;Klerikal (Liturgie);0;
+Liturgie: Großes Tabu;;;;;;;;WdG 268 / OiC 58;;Klerikal (Liturgie);0;
+Liturgie: Großes Tabus;;;;;;;;WdG 289;;Klerikal (Liturgie);0;
+Liturgie: Gruß der Versunkenen;;;;;;;;WdG 263;;Klerikal (Liturgie);0;
+Liturgie: Gunst der Grazien;;;;;;;;MyG 189;;Klerikal (Liturgie);0;
+Liturgie: Händlersegen;;;;;;;;WdG 274;;Klerikal (Liturgie);0;
+Liturgie: Handwerkssegen;;;;;;;;WdG 256;;Klerikal (Liturgie);0;
+Liturgie: Harmonie der Melodie;;;;;;;;MyG 180;;Klerikal (Liturgie);0;
+Liturgie: Harmoniesegen;;;;;;;;WdG 252 / MyG 170;;Klerikal (Liturgie);0;
+Liturgie: Hashnabiths Flehen;;;;;;;;WdG 264;;Klerikal (Liturgie);0;
+Liturgie: Hauch Borons;;;;;;;;WdG 267;;Klerikal (Liturgie);0;
+Liturgie: Hauch der Leidenschaft;;;;;;;;WdG 280;;Klerikal (Liturgie);0;
+Liturgie: Hausfrieden;;;;;;;;WdG 265;;Klerikal (Liturgie);0;
+Liturgie: Haustrieden;;;;;;;;MyG 180, 181;;Klerikal (Liturgie);0;
+Liturgie: Haut des Chamäleons;;;;;;;;WdG 272;;Klerikal (Liturgie);0;
+Liturgie: Heilige Salbung der Peraine;;;;;;;;WdG 277;;Klerikal (Liturgie);0;
+Liturgie: Heilige Schmiedeglut;;;;;;;;WdG 278;;Klerikal (Liturgie);0;
+Liturgie: Heiliger Befehl;;;;;;;;WdG 261 / MyG 173;;Klerikal (Liturgie);0;
+Liturgie: Heiliger Lehenseid;;;;;;;;WdG 259;;Klerikal (Liturgie);0;
+Liturgie: Heiliges Liebesspiel;;;;;;;;WdG 280;;Klerikal (Liturgie);0;
+Liturgie: Heilung des Tapams;;;;;;;;WdG 289;;Klerikal (Liturgie);0;
+Liturgie: Heilungssegen;;;;;;;;WdG 253 / MyG 170;;Klerikal (Liturgie);0;
+Liturgie: Herbeirufung der Erdkraft;;;;;;;;MyG 188;;Klerikal (Liturgie);0;
+Liturgie: Herr über Feuer und Glut;;;;;;;;WdG 278;;Klerikal (Liturgie);0;
+Liturgie: Hesindes Fingerzeig;;;;;;;;WdG 269;;Klerikal (Liturgie);0;
+Liturgie: Hexagon des Vielleibigen;;;;;;;;MyG 183;;Klerikal (Liturgie);0;
+Liturgie: Hilfe in der Not;;;;;;;;WdG 284;;Klerikal (Liturgie);0;
+Liturgie: Hoftag der Sprachen;;;;;;;;WdG 284;;Klerikal (Liturgie);0;
+Liturgie: Hornissenangriff;;;;;;;;MyG 183;;Klerikal (Liturgie);0;
+Liturgie: Hornissenwacht;;;;;;;;MyG 183;;Klerikal (Liturgie);0;
+Liturgie: Hornissenwirbel;;;;;;;;MyG 183;;Klerikal (Liturgie);0;
+Liturgie: Icanarias Gaukelspiel;;;;;;;;MyG 189;;Klerikal (Liturgie);0;
+Liturgie: Indoktination;;;;;;;;WdG 256;;Klerikal (Liturgie);0;
+Liturgie: Indoktrination;;;;;;;;MyG 173;;Klerikal (Liturgie);0;
+Liturgie: Ingalfs Alchimie;;;;;;;;WdG 269, 270;;Klerikal (Liturgie);0;
+Liturgie: Ingerimms Zorn verschone uns;;;;;;;;WdG 278, 279;;Klerikal (Liturgie);0;
+Liturgie: Initiation;;;;;;;;WdG 256 / MyG 173;;Klerikal (Liturgie);0;
+Liturgie: Innere Ruhe;;;;;;;;WdG 259;;Klerikal (Liturgie);0;
+Liturgie: Jagdglück;;;;;;;;WdG 271 / MyG 191;;Klerikal (Liturgie);0;
+Liturgie: Jagdglück (IV);;;;;;;;WdG 271;;Klerikal (Liturgie);0;
+Liturgie: Jagdglück (V);;;;;;;;WdG 271;;Klerikal (Liturgie);0;
+Liturgie: Jagdsicht;;;;;;;;MyG 191;;Klerikal (Liturgie);0;
+Liturgie: Kälbchensegen;;;;;;;;WdG 277;;Klerikal (Liturgie);0;
+Liturgie: Kälbersegen;;;;;;;;MyG 196;;Klerikal (Liturgie);0;
+Liturgie: Kamaluqs Fluch;;;;;;;;WdG 289;;Klerikal (Liturgie);0;
+Liturgie: Kamaluqs unerbittlicher Speer;;;;;;;;WdG 289;;Klerikal (Liturgie);0;
+Liturgie: Kämpfersegen;;;;;;;;MyG 170;;Klerikal (Liturgie);0;
+Liturgie: Karmale Einstimmung;;;;;;;;OiC 44;;Klerikal (Liturgie);0;
+Liturgie: Karmale Kraftquelle;;;;;;;;OiC 44;;Klerikal (Liturgie);0;
+Liturgie: Khabals makelloser Leib;;;;;;;;WdG 280;;Klerikal (Liturgie);0;
+Liturgie: Khabals makelloser Leib (VI);;;;;;;;WdG 280;;Klerikal (Liturgie);0;
+Liturgie: Khablas Jugend;;;;;;;;WdG 280;;Klerikal (Liturgie);0;
+Liturgie: Khablas Jugend (IV);;;;;;;;WdG 280;;Klerikal (Liturgie);0;
+Liturgie: Kirschblütensegen;;;;;;;;WdG 272;;Klerikal (Liturgie);0;
+Liturgie: Kleine Liturgie des heiligen Nemekath;;;;;;;;WdG 267;;Klerikal (Liturgie);0;
+Liturgie: Kleine Segnung des Heimsteins;;;;;;;;WdG 265;;Klerikal (Liturgie);0;
+Liturgie: Kleiner Giftbann;;;;;;;;WdG 277;;Klerikal (Liturgie);0;
+Liturgie: Kleiner Giftbann (III);;;;;;;;WdG 277;;Klerikal (Liturgie);0;
+Liturgie: Kleines Tabu;;;;;;;;WdG 289;;Klerikal (Liturgie);0;
+Liturgie: Konsekration;;;;;;;;WdG 256 / MyG 173;;Klerikal (Liturgie);0;
+Liturgie: Kräftigung der Schwachen und Versehrten;;;;;;;;WdG 277;;Klerikal (Liturgie);0;
+Liturgie: Kräftigung der Schwachen und Versehrten (VI);;;;;;;;WdG 277;;Klerikal (Liturgie);0;
+Liturgie: Krankheitserkennung;;;;;;;;MyG 188;;Klerikal (Liturgie);0;
+Liturgie: Kräutersegen;;;;;;;;WdG 267;;Klerikal (Liturgie);0;
+Liturgie: Largorax' Hammer rufen;;;;;;;;WdG 286;;Klerikal (Liturgie);0;
+Liturgie: Leichenschau;;;;;;;;MyG 178;;Klerikal (Liturgie);0;
+Liturgie: Levthans Fesseln;;;;;;;;WdG 280;;Klerikal (Liturgie);0;
+Liturgie: Licht des Herrn;;;;;;;;WdG 259;;Klerikal (Liturgie);0;
+Liturgie: Licht des verborgenen Pfades;;;;;;;;WdG 279;;Klerikal (Liturgie);0;
+Liturgie: Lohn der Unverzagten;;;;;;;;WdG 277 / MyG 188;;Klerikal (Liturgie);0;
+Liturgie: Lug und Trug;;;;;;;;WdG 274;;Klerikal (Liturgie);0;
+Liturgie: Mannschaftssegen;;;;;;;;WdG 264 / MyG 183, 184;;Klerikal (Liturgie);0;
+Liturgie: Marbos Geisterblick;;;;;;;;WdG 267, 268;;Klerikal (Liturgie);0;
+Liturgie: Marbos Geleit;;;;;;;;WdG 267;;Klerikal (Liturgie);0;
+Liturgie: Markierung;;;;;;;;MyG 193;;Klerikal (Liturgie);0;
+Liturgie: Märtyrersegen;;;;;;;;WdG 253;;Klerikal (Liturgie);0;
+Liturgie: Meisterstück;;;;;;;;WdG 279;;Klerikal (Liturgie);0;
+Liturgie: Mondsilberzunge;;;;;;;;WdG 274;;Klerikal (Liturgie);0;
+Liturgie: Nandus' Schriftkenntnis;;;;;;;;WdG 274, 284;;Klerikal (Liturgie);0;
+Liturgie: Nebelkontrolle;;;;;;;;MyG 186;;Klerikal (Liturgie);0;
+Liturgie: Nebelleib;;;;;;;;MyG 186;;Klerikal (Liturgie);0;
+Liturgie: Nekemas Rausch;;;;;;;;WdG 267 / OiC 58;;Klerikal (Liturgie);0;
+Liturgie: Nemekaths Bannfluch;;;;;;;;WdG 267;;Klerikal (Liturgie);0;
+Liturgie: Nemekaths Geisterblick;;;;;;;;WdG 267;;Klerikal (Liturgie);0;
+Liturgie: Nemekaths Zwiesprache;;;;;;;;WdG 267, 268;;Klerikal (Liturgie);0;
+Liturgie: Neun Streiche in Einem;;;;;;;;WdG 283;;Klerikal (Liturgie);0;
+Liturgie: Nimmermüde Wanderschaft;;;;;;;;WdG 282;;Klerikal (Liturgie);0;
+Liturgie: Noionas Zuspruch;;;;;;;;WdG 268;;Klerikal (Liturgie);0;
+Liturgie: Obarans Bannstrahl;;;;;;;;WdG 289;;Klerikal (Liturgie);0;
+Liturgie: Objektsegen;;;;;;;;WdG 257 / MyG 173;;Klerikal (Liturgie);0;
+Liturgie: Objektsegen (II);;;;;;;;WdG 257;;Klerikal (Liturgie);0;
+Liturgie: Objektsegen (IV);;;;;;;;WdG 257;;Klerikal (Liturgie);0;
+Liturgie: Objektweihe;;;;;;;;WdG 257 / MyG 174;;Klerikal (Liturgie);0;
+Liturgie: Objektweihe (III);;;;;;;;WdG 257;;Klerikal (Liturgie);0;
+Liturgie: Objektweihe (IV);;;;;;;;WdG 257;;Klerikal (Liturgie);0;
+Liturgie: Objektweihe (V);;;;;;;;WdG 257;;Klerikal (Liturgie);0;
+Liturgie: Objektweihe (VI);;;;;;;;WdG 257;;Klerikal (Liturgie);0;
+Liturgie: Ordination;;;;;;;;WdG 258 / MyG 174;;Klerikal (Liturgie);0;
+Liturgie: Parinors Vermächtnis;;;;;;;;WdG 277;;Klerikal (Liturgie);0;
+Liturgie: Peraines Pflanzengespür;;;;;;;;WdG 277;;Klerikal (Liturgie);0;
+Liturgie: Phexens Augenzwinkern;;;;;;;;WdG 274;;Klerikal (Liturgie);0;
+Liturgie: Phexens Elsterflug;;;;;;;;WdG 274;;Klerikal (Liturgie);0;
+Liturgie: Phexens Kunstverstand;;;;;;;;WdG 274;;Klerikal (Liturgie);0;
+Liturgie: Phexens Kunstverstand (Blick für das Handwerk);;;;;;;;WdG 274;;Klerikal (Liturgie);0;
+Liturgie: Phexens Meisterschlüssel;;;;;;;;WdG 274;;Klerikal (Liturgie);0;
+Liturgie: Phexens Nebelleib;;;;;;;;WdG 275;;Klerikal (Liturgie);0;
+Liturgie: Phexens Schatten;;;;;;;;WdG 275;;Klerikal (Liturgie);0;
+Liturgie: Phexens Sternenwurf;;;;;;;;WdG 275;;Klerikal (Liturgie);0;
+Liturgie: Phexens wunderbare Verständigung;;;;;;;;WdG 275;;Klerikal (Liturgie);0;
+Liturgie: Praios' Magiebann;;;;;;;;WdG 259;;Klerikal (Liturgie);0;
+Liturgie: Praios' Mahnung;;;;;;;;WdG 260;;Klerikal (Liturgie);0;
+Liturgie: Prophezeiung;;;;;;;;WdG 258 / MyG 174;;Klerikal (Liturgie);0;
+Liturgie: Purgation;;;;;;;;WdG 260;;Klerikal (Liturgie);0;
+Liturgie: Purgation (V);;;;;;;;WdG 260;;Klerikal (Liturgie);0;
+Liturgie: Quellsegen;;;;;;;;WdG 264 / MyG 194;;Klerikal (Liturgie);0;
+Liturgie: Rahjalinas Kuss;;;;;;;;WdG 280;;Klerikal (Liturgie);0;
+Liturgie: Rahjalinas Weinranke;;;;;;;;WdG 280;;Klerikal (Liturgie);0;
+Liturgie: Rahjas Erquickung;;;;;;;;WdG 281;;Klerikal (Liturgie);0;
+Liturgie: Rahjas Fest der Freude;;;;;;;;WdG 281;;Klerikal (Liturgie);0;
+Liturgie: Rahjas Freiheit;;;;;;;;WdG 281;;Klerikal (Liturgie);0;
+Liturgie: Rahjas geheiligter Wein;;;;;;;;WdG 281;;Klerikal (Liturgie);0;
+Liturgie: Rahjas heitere Gelassenheit;;;;;;;;WdG 281;;Klerikal (Liturgie);0;
+Liturgie: Rahjas Rauschsegen;;;;;;;;WdG 281;;Klerikal (Liturgie);0;
+Liturgie: Rahjas Schoß;;;;;;;;WdG 281;;Klerikal (Liturgie);0;
+Liturgie: Rahjas Sinnlichkeit;;;;;;;;WdG 281;;Klerikal (Liturgie);0;
+Liturgie: Rauschsegen;;;;;;;;MyG 190;;Klerikal (Liturgie);0;
+Liturgie: Regenbogenbrücke;;;;;;;;MyG 186;;Klerikal (Liturgie);0;
+Liturgie: Regenruf;;;;;;;;MyG 186;;Klerikal (Liturgie);0;
+Liturgie: Reichung des Amethyst;;;;;;;;WdG 281;;Klerikal (Liturgie);0;
+Liturgie: Reichung des Amethyst (II);;;;;;;;WdG 281;;Klerikal (Liturgie);0;
+Liturgie: Reichung des Amethyst (III);;;;;;;;WdG 281;;Klerikal (Liturgie);0;
+Liturgie: Reichung des Amethyst (V);;;;;;;;WdG 281;;Klerikal (Liturgie);0;
+Liturgie: Reise zu den Geistern;;;;;;;;WdG 267, 268 / OiC 58;;Klerikal (Liturgie);0;
+Liturgie: Reisesegen;;;;;;;;WdG 265 / MyG 174;;Klerikal (Liturgie);0;
+Liturgie: Reisesegen (III);;;;;;;;WdG 265;;Klerikal (Liturgie);0;
+Liturgie: Richtungssegen;;;;;;;;MyG 170;;Klerikal (Liturgie);0;
+Liturgie: Rondras Hochzeit;;;;;;;;WdG 262;;Klerikal (Liturgie);0;
+Liturgie: Rondras wundersame Rüstung;;;;;;;;WdG 262;;Klerikal (Liturgie);0;
+Liturgie: Ruf der Gefährten;;;;;;;;WdG 264;;Klerikal (Liturgie);0;
+Liturgie: Ruf der Gefährten (IV);;;;;;;;WdG 264;;Klerikal (Liturgie);0;
+Liturgie: Ruf der Tiere;;;;;;;;MyG 196;;Klerikal (Liturgie);0;
+Liturgie: Ruf der Winde;;;;;;;;MyG 187;;Klerikal (Liturgie);0;
+Liturgie: Ruf in Borons Arme;;;;;;;;WdG 268;;Klerikal (Liturgie);0;
+Liturgie: Ruf zur Ruhe;;;;;;;;WdG 268;;Klerikal (Liturgie);0;
+Liturgie: Salbung der heiligen Noiona;;;;;;;;WdG 268;;Klerikal (Liturgie);0;
+Liturgie: Sankt Gilborns Bannfluch;;;;;;;;WdG 260;;Klerikal (Liturgie);0;
+Liturgie: Schattengestalt;;;;;;;;MyG 193;;Klerikal (Liturgie);0;
+Liturgie: Schattenlarve;;;;;;;;WdG 275;;Klerikal (Liturgie);0;
+Liturgie: Schattenrüstung;;;;;;;;MyG 193;;Klerikal (Liturgie);0;
+Liturgie: Schiffssegen;;;;;;;;WdG 264;;Klerikal (Liturgie);0;
+Liturgie: Schlaf des Gesegneten;;;;;;;;WdG 268;;Klerikal (Liturgie);0;
+Liturgie: Schlangenstab;;;;;;;;WdG 270 / MyG 197;;Klerikal (Liturgie);0;
+Liturgie: Schneesturm / Eissturm;;;;;;;;MyG 191;;Klerikal (Liturgie);0;
+Liturgie: Schneesturm/ Eissturm;;;;;;;;WdG 271;;Klerikal (Liturgie);0;
+Liturgie: Schrifttum ferner Lande;;;;;;;;WdG 270;;Klerikal (Liturgie);0;
+Liturgie: Schutz der Natur;;;;;;;;MyG 196;;Klerikal (Liturgie);0;
+Liturgie: Schutz des Gelges;;;;;;;;WdG 287;;Klerikal (Liturgie);0;
+Liturgie: Schutz vor Hellseherei;;;;;;;;MyG 193, 194;;Klerikal (Liturgie);0;
+Liturgie: Schutzsegen;;;;;;;;WdG 253 / MyG 175;;Klerikal (Liturgie);0;
+Liturgie: Schutzsegen (II);;;;;;;;WdG 253;;Klerikal (Liturgie);0;
+Liturgie: Schutzsegen (III);;;;;;;;WdG 253;;Klerikal (Liturgie);0;
+Liturgie: Schwitzhütte;;;;;;;;WdG 289;;Klerikal (Liturgie);0;
+Liturgie: Seelenfrieden;;;;;;;;MyG 181;;Klerikal (Liturgie);0;
+Liturgie: Seelenprüfung;;;;;;;;WdG 258;;Klerikal (Liturgie);0;
+Liturgie: Seelenprüfung (IV);;;;;;;;WdG 258;;Klerikal (Liturgie);0;
+Liturgie: Seelenprüfung (V);;;;;;;;WdG 258;;Klerikal (Liturgie);0;
+Liturgie: Segen der Gabetaj;;;;;;;;WdG 289;;Klerikal (Liturgie);0;
+Liturgie: Segen der Heiligen Ardare;;;;;;;;WdG 262;;Klerikal (Liturgie);0;
+Liturgie: Segen der heiligen Noiona;;;;;;;;WdG 268;;Klerikal (Liturgie);0;
+Liturgie: Segen der heiligen Noiona (IV);;;;;;;;WdG 268;;Klerikal (Liturgie);0;
+Liturgie: Segen der heiligen Theria;;;;;;;;WdH 277;;Klerikal (Liturgie);0;
+Liturgie: Segen der heiligen Velvenya;;;;;;;;WdG 268;;Klerikal (Liturgie);0;
+Liturgie: Segen des Heiligen Badilak;;;;;;;;WdG 265;;Klerikal (Liturgie);0;
+Liturgie: Segen des Heiligen Hluthar;;;;;;;;WdG 262;;Klerikal (Liturgie);0;
+Liturgie: Segen des Plättlings;;;;;;;;WdG 264;;Klerikal (Liturgie);0;
+Liturgie: Segenreiches Wasser;;;;;;;;WdG 277;;Klerikal (Liturgie);0;
+Liturgie: Segensreicher Neuanfang;;;;;;;;MyG 185;;Klerikal (Liturgie);0;
+Liturgie: Segnung der Schlacht;;;;;;;;WdG 262;;Klerikal (Liturgie);0;
+Liturgie: Segnung der Stählernen Stirn;;;;;;;;WdG 262;;Klerikal (Liturgie);0;
+Liturgie: Segnung des Heimes;;;;;;;;WdG 265;;Klerikal (Liturgie);0;
+Liturgie: Sichere Wanderung im Schnee;;;;;;;;WdG 271 / MyG 191;;Klerikal (Liturgie);0;
+Liturgie: Sichere Wanderung im Schnee (III);;;;;;;;WdG 271;;Klerikal (Liturgie);0;
+Liturgie: Sichere Zuflucht;;;;;;;;MyG 181;;Klerikal (Liturgie);0;
+Liturgie: Sicherer Weg durch Fels;;;;;;;;WdG 279;;Klerikal (Liturgie);0;
+Liturgie: Sicht auf die magische Welt;;;;;;;;MyG 179;;Klerikal (Liturgie);0;
+Liturgie: Sicht auf Madas Welt;;;;;;;;WdG 270;;Klerikal (Liturgie);0;
+Liturgie: Siegel Borons;;;;;;;;WdG 268;;Klerikal (Liturgie);0;
+Liturgie: Simias Kelch;;;;;;;;WdG 279;;Klerikal (Liturgie);0;
+Liturgie: Sippenfluch;;;;;;;;WdG 289;;Klerikal (Liturgie);0;
+Liturgie: Speisesegen;;;;;;;;WdG 253 / MyG 175;;Klerikal (Liturgie);0;
+Liturgie: Speisung der Bedürftigen;;;;;;;;WdG 277;;Klerikal (Liturgie);0;
+Liturgie: Speisung der hungernden Seelen;;;;;;;;WdG 265 / MyG 175;;Klerikal (Liturgie);0;
+Liturgie: Speisung der hungernden Seelen (IV);;;;;;;;WdG 265;;Klerikal (Liturgie);0;
+Liturgie: Sprechende Symbole;;;;;;;;WdG 270 / MyG 185;;Klerikal (Liturgie);0;
+Liturgie: Sterne funkeln immerfort;;;;;;;;WdG 275;;Klerikal (Liturgie);0;
+Liturgie: Sternenglanz;;;;;;;;WdG 275 / MyG 194;;Klerikal (Liturgie);0;
+Liturgie: Sternenspur;;;;;;;;WdG 275;;Klerikal (Liturgie);0;
+Liturgie: Sternenstaub;;;;;;;;WdG 276;;Klerikal (Liturgie);0;
+Liturgie: Sühneopter;;;;;;;;MyG 175;;Klerikal (Liturgie);0;
+Liturgie: Sulvas Gnade;;;;;;;;WdG 282;;Klerikal (Liturgie);0;
+Liturgie: Swafnirs Fluke;;;;;;;;WdG 264;;Klerikal (Liturgie);0;
+Liturgie: Swafnirs Ruhelied;;;;;;;;WdG 285;;Klerikal (Liturgie);0;
+Liturgie: Tabu;;;;;;;;WdG 289, 268 / OiC 58;;Klerikal (Liturgie);0;
+Liturgie: Tairachs Fluch;;;;;;;;WdG 288;;Klerikal (Liturgie);0;
+Liturgie: Tanz der Schöpfung;;;;;;;;MyG 190;;Klerikal (Liturgie);0;
+Liturgie: Tarnung;;;;;;;;MyG 194;;Klerikal (Liturgie);0;
+Liturgie: Taya des Träumenden;;;;;;;;WdG 267 / OiC 58;;Klerikal (Liturgie);0;
+Liturgie: Thalionmels Schlachtgesang;;;;;;;;WdG 262;;Klerikal (Liturgie);0;
+Liturgie: Therbuns Erkenntnis;;;;;;;;WdG 277, 278;;Klerikal (Liturgie);0;
+Liturgie: Tierempathie;;;;;;;;WdG 284, 285;;Klerikal (Liturgie);0;
+Liturgie: Tierempathie (III);;;;;;;;WdG 284, 285;;Klerikal (Liturgie);0;
+Liturgie: Tiergestalt;;;;;;;;WdG 258 / MyG 175;;Klerikal (Liturgie);0;
+Liturgie: Tranksegen;;;;;;;;WdG 253;;Klerikal (Liturgie);0;
+Liturgie: Traum der Seele;;;;;;;;WdG 266 / OiC 58;;Klerikal (Liturgie);0;
+Liturgie: Traumsicht;;;;;;;;MyG 190;;Klerikal (Liturgie);0;
+Liturgie: Traviabund;;;;;;;;WdG 265;;Klerikal (Liturgie);0;
+Liturgie: Travianians Segen der Schwelle;;;;;;;;WdG 266;;Klerikal (Liturgie);0;
+Liturgie: Travias Gebet der sicheren Zuflucht;;;;;;;;WdG 266;;Klerikal (Liturgie);0;
+Liturgie: Travias Gebet der sicheren Zuflucht (VI);;;;;;;;WdG 266;;Klerikal (Liturgie);0;
+Liturgie: Travias Gebet der verborgenen Halle;;;;;;;;WdG 266;;Klerikal (Liturgie);0;
+Liturgie: Treuesegen;;;;;;;;MyG 182;;Klerikal (Liturgie);0;
+Liturgie: Trophäe erhalten;;;;;;;;WdG 271;;Klerikal (Liturgie);0;
+Liturgie: Tsas Ewige Jugend;;;;;;;;WdG 272;;Klerikal (Liturgie);0;
+Liturgie: Tsas heiliges Lebensgeschenk;;;;;;;;WdG 273;;Klerikal (Liturgie);0;
+Liturgie: Tsas Lebensschutz;;;;;;;;WdG 273;;Klerikal (Liturgie);0;
+Liturgie: Tsas segensreicher Neuanfang;;;;;;;;WdG 273;;Klerikal (Liturgie);0;
+Liturgie: Tsas wunderbare Erneuerung;;;;;;;;WdG 273;;Klerikal (Liturgie);0;
+Liturgie: Tsas wundersame Fruchtbarkeit;;;;;;;;WdG 273;;Klerikal (Liturgie);0;
+Liturgie: Über die Wolken;;;;;;;;WdG 283 / MyG 187;;Klerikal (Liturgie);0;
+Liturgie: Über die Wolken (VI);;;;;;;;WdG 283;;Klerikal (Liturgie);0;
+Liturgie: Ucuris Geleit;;;;;;;;WdG 260;;Klerikal (Liturgie);0;
+Liturgie: Unterpfand des heiligen Rhys;;;;;;;;WdG 279;;Klerikal (Liturgie);0;
+Liturgie: Unverstellter Blick;;;;;;;;WdG 270 / MyG 179;;Klerikal (Liturgie);0;
+Liturgie: Urischars Ordnender Blick;;;;;;;;WdG 260;;Klerikal (Liturgie);0;
+Liturgie: Vaes Tränen;;;;;;;;WdG 289;;Klerikal (Liturgie);0;
+Liturgie: Verborgen wie der Neumond;;;;;;;;WdG 276;;Klerikal (Liturgie);0;
+Liturgie: Versiegeltes Wissen;;;;;;;;WdG 284;;Klerikal (Liturgie);0;
+Liturgie: Verständnis der Sprachen;;;;;;;;MyG 176;;Klerikal (Liturgie);0;
+Liturgie: Vertrauter der Flamme;;;;;;;;WdG 279;;Klerikal (Liturgie);0;
+Liturgie: Vertrauter des Felsesens;;;;;;;;WdG 279;;Klerikal (Liturgie);0;
+Liturgie: Vertrauter des Gebirges;;;;;;;;MyG 196;;Klerikal (Liturgie);0;
+Liturgie: Vertreibung der Pestilenz;;;;;;;;MyG 188;;Klerikal (Liturgie);0;
+Liturgie: Vertreibung des Dunkelsinns;;;;;;;;WdG 261;;Klerikal (Liturgie);0;
+Liturgie: Vertreibung des Dunkelsinns (V);;;;;;;;WdG 261;;Klerikal (Liturgie);0;
+Liturgie: Visars Vergessen;;;;;;;;WdG 267 / OiC 58;;Klerikal (Liturgie);0;
+Liturgie: Visars Vergessen (V);;;;;;;;WdG 267 / OiC 58;;Klerikal (Liturgie);0;
+Liturgie: Visionssuche;;;;;;;;WdG 258 / MyG 176;;Klerikal (Liturgie);0;
+Liturgie: Waliburias Wehr;;;;;;;;WdG 279;;Klerikal (Liturgie);0;
+Liturgie: Wandeln in Hesindes Hain;;;;;;;;WdG 270, 271;;Klerikal (Liturgie);0;
+Liturgie: Warnung der Götter;;;;;;;;MyG 176;;Klerikal (Liturgie);0;
+Liturgie: Wasserreinigung;;;;;;;;MyG 194;;Klerikal (Liturgie);0;
+Liturgie: Wassersuche;;;;;;;;MyG 194;;Klerikal (Liturgie);0;
+Liturgie: Weg des Fuchses;;;;;;;;WdG 276;;Klerikal (Liturgie);0;
+Liturgie: Weidesegen;;;;;;;;MyG 196;;Klerikal (Liturgie);0;
+Liturgie: Weihe der ewigen Flamme;;;;;;;;WdG 280;;Klerikal (Liturgie);0;
+Liturgie: Weihe der letzten Ruhestatt;;;;;;;;WdG 268, 269 / MyG 178;;Klerikal (Liturgie);0;
+Liturgie: Weihgesang der Heiligen Elida von Salza;;;;;;;;WdG 264;;Klerikal (Liturgie);0;
+Liturgie: Weisheitssegen;;;;;;;;WdG 254 / MyG 176;;Klerikal (Liturgie);0;
+Liturgie: Weisung des Himmels;;;;;;;;WdG 271;;Klerikal (Liturgie);0;
+Liturgie: Wildwechsel;;;;;;;;MyG 191;;Klerikal (Liturgie);0;
+Liturgie: Wille zur Wahrheit;;;;;;;;WdG 261 / MyG 179;;Klerikal (Liturgie);0;
+Liturgie: Windeseile;;;;;;;;MyG 187;;Klerikal (Liturgie);0;
+Liturgie: Winterschlaf;;;;;;;;WdG 271 / MyG 191;;Klerikal (Liturgie);0;
+Liturgie: Wogen macht;;;;;;;;MyG 195;;Klerikal (Liturgie);0;
+Liturgie: Wort der Disziplin;;;;;;;;MyG 184;;Klerikal (Liturgie);0;
+Liturgie: Wort der Wahrheit;;;;;;;;WdG 261;;Klerikal (Liturgie);0;
+Liturgie: Wunderbarer Geschlechterwandel;;;;;;;;WdG 287, 288;;Klerikal (Liturgie);0;
+Liturgie: Wundersame Blütenpracht;;;;;;;;WdG 273;;Klerikal (Liturgie);0;
+Liturgie: Wundersame Fruchtbarkeit;;;;;;;;MyG 196;;Klerikal (Liturgie);0;
+Liturgie: Wundersames Wachstum;;;;;;;;MyG 188;;Klerikal (Liturgie);0;
+Liturgie: Wundsegen;;;;;;;;WdG 278, MyG 188;;Klerikal (Liturgie);0;
+Liturgie: Wundsegen (III);;;;;;;;WdG 278;;Klerikal (Liturgie);0;
+Liturgie: Wundsegen (IV);;;;;;;;WdG 278;;Klerikal (Liturgie);0;
+Liturgie: Zauberschutz;;;;;;;;MyG 179;;Klerikal (Liturgie);0;
+Liturgie: Zauberspiegel;;;;;;;;MyG 179;;Klerikal (Liturgie);0;
+Liturgie: Zerschmettern;;;;;;;;MyG 197;;Klerikal (Liturgie);0;
+Liturgie: Zerschmetternder Bannstrahl;;;;;;;;WdG 261 / MyG 179;;Klerikal (Liturgie);0;
+Liturgie: Zuflucht finden;;;;;;;;WdG 271,272 / MyG 192;;Klerikal (Liturgie);0;
+Liturgie: Zuflucht vor den Elementen;;;;;;;;MyG 197;;Klerikal (Liturgie);0;
 Liturgiekenntnis (Angrosch);;;;;;;;WdG 238;;Klerikal;0;V Geweiht | SF Spätweihe | SF Akoluth
 Liturgiekenntnis (Aves);;;;;;;;WdG 238;;Klerikal;0;V Geweiht | SF Spätweihe | SF Akoluth
 Liturgiekenntnis (Boron);;;;;;;;WdG 238;;Klerikal;0;V Geweiht | SF Spätweihe | SF Akoluth
-Liturgiekenntnis (Dunkle Zeiten);;;;;;;;OiC;;Klerikal;0;\N
+Liturgiekenntnis (Dunkle Zeiten);;;;;;;;OiC;;Klerikal;0;
 Liturgiekenntnis (Efferd);;;;;;;;WdG 238;;Klerikal;0;V Geweiht | SF Spätweihe | SF Akoluth
 Liturgiekenntnis (Firun);;;;;;;;WdG 238;;Klerikal;0;V Geweiht | SF Spätweihe | SF Akoluth
 Liturgiekenntnis (Hesinde);;;;;;;;WdG 238;;Klerikal;0;V Geweiht | SF Spätweihe | SF Akoluth
@@ -834,7 +819,7 @@ Liturgiekenntnis (Travia);;;;;;;;WdG 238;;Klerikal;0;V Geweiht | SF Spätweihe | 
 Liturgiekenntnis (Tsa);;;;;;;;WdG 238;;Klerikal;0;V Geweiht | SF Spätweihe | SF Akoluth
 Liturgiekenntnis (Zsahh);;;;;;;;WdG 238;;Klerikal;0;V Geweiht | SF Spätweihe | SF Akoluth
 Lockeres Zaubern;;;;;;;;WdZ 76;;Magisch;0;IN 16, V Unbeschwertes Zaubern
-Macht der Elemente;III;speziell;;;;;;EG 155;;Petromantie;0;\N
+Macht der Elemente;III;speziell;;;;;;EG 155;;Petromantie;0;
 Magische Verbindung;;;;;;;;WnM 156;;Magisch;0;V Tierempathie, Ritualkenntnis (Satudur) 0
 Magischer Experte (Antimagier);;;;;;;;WnM 156;;Magisch;0;Leiteigenschaft 16, passende Quellenkenntnis, Essenzbeschwörung der Quelle 14, Zauberspezialisierung auf mindestens 2 der Dienste, alle 3 zugehörigen Instruktions-SF
 Magischer Experte (Baumeister);;;;;;;;WnM 156;;Magisch;0;Leiteigenschaft 16, passende Quellenkenntnis, Essenzbeschwörung der Quelle 14, Zauberspezialisierung auf mindestens 2 der Dienste, alle 3 zugehörigen Instruktions-SF
@@ -851,8 +836,8 @@ Matrixverständnis;;;;;;;;WdZ 24;;Magisch;0;IN 15, SF% Repräsentation
 Mehrfachangriff;;;;;;;;WnM 148;;Kampf;0;SF Mehrhändiger Kampf
 Mehrhändiger Kampf I;;;;;;;;WnM 148;;Kampf;0;GE 15, SF Linkhand
 Mehrhändiger Kampf II;;;;;;;;WnM 148;;Kampf;0;Vorteil: Zusätzliches Armpaar
-Mehrhändiger Kampf III;;;;;;;;WnM 148;;Kampf;0;\N
-Meister der Improvisation;;;;;;;;WdH 276;;Allgemein;0;\N
+Mehrhändiger Kampf III;;;;;;;;WnM 148;;Kampf;0;
+Meister der Improvisation;;;;;;;;WdH 276;;Allgemein;0;
 Meisterliche Regeneration;;;;;;;;WdZ 10 / WnM 156;;Magisch;0;SF Regeneration II
 Meisterliche Zauberkontrolle I;;;;;;;;WdZ 16;;Magisch;0;MU 12, KL 15, SF Zauberkontrolle
 Meisterliche Zauberkontrolle II;;;;;;;;WdZ 16;;Magisch;0;MU 12, KL 15, SF Zauberkontrolle
@@ -913,7 +898,7 @@ Nertar'Cha I;;;;;;;;WnM 148;;Kampf;0;IN 12, KO 12 oder KK 12/IN 15
 Nertar'Cha II;;;;;;;;WnM 148;;Kampf;0;Nertar'Cha I, Vorteil Nertaryumi
 Niederwerfen;;;;;;;;WdH 280 / WdS 63, 75;;Kampf;0;SF Wuchtschlag
 Objektritual: Apport;;;;;;;;WdZ 106 / MyMa 111 / WnM 151;;Magisch (Ritual);0;MU 12, KL 12, IN 13, CH 13, (SF Druidisches Dolchritual: Weihe | SF Kristallomantisches Ritual: Kristallbindung | SF Kugelzauber: Bindung | SF Schalenzauber: Weihe der Schale | SF Schlangenring-Zauber: Weihe der Schlange | SF Schuppenbeutel: Bindung des Schuppenbeutels | SF Stabzauber: Bindung | SF Siegel: Bindung des Siegels | SF Speerzauber: Bindung des Speeres | SF Instrumentzauber: Bindung des Instrumentes | SF Schlangenszepter: Bindung | SF Szepter: Bindung | SF Kristallpendel: Weihe des Pendels | (SF Keulenritual: Weihe der Keule, Geister binden 11, Geister rufen 11))
-Objektritual: Bannklinge;;;;;;;;MyMa 111 / WnM 153;;Magisch (Ritual);0;\N
+Objektritual: Bannklinge;;;;;;;;MyMa 111 / WnM 153;;Magisch (Ritual);0;
 Objektritual: Bannschwert;;;;;;;;WdZ 106, 107;;Magisch (Ritual);0;Ritualkenntnis (Druide) 0, Ritualkenntnis (Geode) 0, Ritualkenntnis (Hexen) 0, Ritualkenntnis (Gildenmagie) 0, Ritualkenntnis (Kristallomantie) 0, Ritualkenntnis (Schamanismus) 0
 Odûn-Gabe: Blut des Odûn;;;;;;;;WdZ 168;;Magisch;0;SF Odûn-Gabe: Haut des Odûn, Ritualkenntnis (Durro-Dun) 10
 Odûn-Gabe: Hauch des Odûn;;;;;;;;WdZ 169;;Magisch;0;MU 12, IN 12, Ritualkenntnis (Durro-Dun) 3
@@ -926,193 +911,193 @@ Parierwaffen II;;;;;;;;WdH 280, 70, 71, 75 / WnM 148;;Kampf;0;GE 15, SF Parierwa
 Permanentzauberer;;;;;;;;WnM 157;;Magisch;0;CH 15, SF Spontanzauberei (Wirkungsdauer)
 Pfadgespür;;;;; mind. 2 Jahre Lernzeit innerhalb eines Limbischen Pfads;;;Rakshazar 22;;Kampf;0;Gabe Magiegespür oder sonstige magische Wahrnehmung
 Reaktivierungsgespür (Arkanoglyphen);;;;;;;;WdA 139;;Magisch;0;SF Zauberzeichen
-Reaktivierungsgespür (Runenkunde);;;;;;;;\N;;Magisch;0;\N
+Reaktivierungsgespür (Runenkunde);;;;;;;;;;Magisch;0;
 Regeneration I;;;;;;;;WdZ 10 / WnM 157;;Magisch;0;IN 12
 Regeneration II;;;;;;;;WdZ 10 / WnM 157;;Magisch;0;IN 15, SF Regeneration I
 Reiterkampf;;;;;;;;WdH 280 / WdS 101 / WnM 149;;Kampf;0;Reiten 7
 Reiterkampf (Streitwagen);;;;;;;;WdH 280 / WdS 101;;Kampf;0;Fahrzeug lenken 7
-Repräsentation (Achaz-Kristallomantisch);;;;;;;;\N;;Magisch;0;\N
-Repräsentation (Alhanisch);;;;;;;;OiC 43;;Magisch;0;\N
-Repräsentation (Borbaradianisch);;;;;;;;\N;;Magisch;0;\N
-Repräsentation (Druidisch);;;;;;;;WdZ 318;;Magisch;0;\N
-Repräsentation (Druidisch-Geodisch);;;;;;;;OiC 43;;Magisch;0;\N
-Repräsentation (Elfisch);;;;;;;;WdZ 321;;Magisch;0;\N
-Repräsentation (Geodisch);;;;;;;;WdZ 314;;Magisch;0;\N
-Repräsentation (Gildenmagisch);;;;;;;;WdZ 259;;Magisch;0;\N
-Repräsentation (Grolmisch);;;;;;;;OiC 43;;Magisch;0;\N
-Repräsentation (Güldenländisch);;;;;;;;OiC 43;;Magisch;0;\N
-Repräsentation (Hexisch);;;;;;;;WdZ 259, 309;;Magisch;0;\N
-Repräsentation (Kophtanisch);;;;;;;;OiC 43;;Magisch;0;\N
-Repräsentation (Mudramulisch);;;;;;;;OiC 43;;Magisch;0;\N
-Repräsentation (Satuarisch);;;;;;;;OiC 43;;Magisch;0;\N
-Repräsentation (Scharlatanisch);;;;;;;;\N;;Magisch;0;\N
-Repräsentation (Schelmisch);;;;;;;;WdZ 327;;Magisch;0;\N
-Ritualkenntnis (Achaz-Schamane);;;;;;;;\N;;Klerikal;0;\N
-Ritualkenntnis (Alchimie);;;;;;;;\N;;Magisch;0;\N
-Ritualkenntnis (Alhanisch);;;;;;;;OiC 43;;Magisch;0;\N
-Ritualkenntnis (Derwische);;;;;;;;\N;;Magisch;0;\N
-Ritualkenntnis (Druiden);;;;;;;;\N;;Magisch;0;\N
-Ritualkenntnis (Durro-Dûn);;;;;;;;\N;;Magisch;0;\N
-Ritualkenntnis (Ferkina-Schamane);;;;;;;;\N;;Klerikal;0;\N
-Ritualkenntnis (Geoden);;;;;;;;\N;;Magisch;0;\N
-Ritualkenntnis (Gildenmagie);;;;;;;;\N;;Magisch;0;\N
-Ritualkenntnis (Gjalsker-Schamane);;;;;;;;\N;;Klerikal;0;\N
-Ritualkenntnis (Goblin-Schamanin);;;;;;;;\N;;Klerikal;0;\N
-Ritualkenntnis (Güldenländisch);;;;;;;;OiC 43;;Magisch;0;\N
-Ritualkenntnis (Hexenmagie);;;;;;;;\N;;Magisch;0;\N
-Ritualkenntnis (Kophtanisch);;;;;;;;OiC 43;;Magisch;0;\N
-Ritualkenntnis (Kristallomantie);;;;;;;;\N;;Magisch;0;\N
-Ritualkenntnis (Mudramulisch);;;;;;;;OiC 43;;Magisch;0;\N
-Ritualkenntnis (Nivesen-Schamane);;;;;;;;\N;;Klerikal;0;\N
-Ritualkenntnis (Ork-Schamane);;;;;;;;\N;;Klerikal;0;\N
-Ritualkenntnis (Satuarisch);;;;;;;;OiC 43;;Magisch;0;\N
-Ritualkenntnis (Scharlatanerie);;;;;;;;\N;;Magisch;0;\N
-Ritualkenntnis (Tapasuul);;;;;;;;OiC 43;;Klerikal;0;\N
-Ritualkenntnis (Trollzacker-Schamane);;;;;;;;\N;;Klerikal;0;\N
-Ritualkenntnis (Waldmenschen-Schamane);;;;;;;;\N;;Klerikal;0;\N
-Ritualkenntnis (Zaubertänze);;;;;;;;\N;;Magisch;0;\N
-Ritualkenntnis (Zibilja);;;;;;;;\N;;Magisch;0;\N
+Repräsentation (Achaz-Kristallomantisch);;;;;;;;;;Magisch;0;
+Repräsentation (Alhanisch);;;;;;;;OiC 43;;Magisch;0;
+Repräsentation (Borbaradianisch);;;;;;;;;;Magisch;0;
+Repräsentation (Druidisch);;;;;;;;WdZ 318;;Magisch;0;
+Repräsentation (Druidisch-Geodisch);;;;;;;;OiC 43;;Magisch;0;
+Repräsentation (Elfisch);;;;;;;;WdZ 321;;Magisch;0;
+Repräsentation (Geodisch);;;;;;;;WdZ 314;;Magisch;0;
+Repräsentation (Gildenmagisch);;;;;;;;WdZ 259;;Magisch;0;
+Repräsentation (Grolmisch);;;;;;;;OiC 43;;Magisch;0;
+Repräsentation (Güldenländisch);;;;;;;;OiC 43;;Magisch;0;
+Repräsentation (Hexisch);;;;;;;;WdZ 259, 309;;Magisch;0;
+Repräsentation (Kophtanisch);;;;;;;;OiC 43;;Magisch;0;
+Repräsentation (Mudramulisch);;;;;;;;OiC 43;;Magisch;0;
+Repräsentation (Satuarisch);;;;;;;;OiC 43;;Magisch;0;
+Repräsentation (Scharlatanisch);;;;;;;;;;Magisch;0;
+Repräsentation (Schelmisch);;;;;;;;WdZ 327;;Magisch;0;
+Ritualkenntnis (Achaz-Schamane);;;;;;;;;;Klerikal;0;
+Ritualkenntnis (Alchimie);;;;;;;;;;Magisch;0;
+Ritualkenntnis (Alhanisch);;;;;;;;OiC 43;;Magisch;0;
+Ritualkenntnis (Derwische);;;;;;;;;;Magisch;0;
+Ritualkenntnis (Druiden);;;;;;;;;;Magisch;0;
+Ritualkenntnis (Durro-Dûn);;;;;;;;;;Magisch;0;
+Ritualkenntnis (Ferkina-Schamane);;;;;;;;;;Klerikal;0;
+Ritualkenntnis (Geoden);;;;;;;;;;Magisch;0;
+Ritualkenntnis (Gildenmagie);;;;;;;;;;Magisch;0;
+Ritualkenntnis (Gjalsker-Schamane);;;;;;;;;;Klerikal;0;
+Ritualkenntnis (Goblin-Schamanin);;;;;;;;;;Klerikal;0;
+Ritualkenntnis (Güldenländisch);;;;;;;;OiC 43;;Magisch;0;
+Ritualkenntnis (Hexenmagie);;;;;;;;;;Magisch;0;
+Ritualkenntnis (Kophtanisch);;;;;;;;OiC 43;;Magisch;0;
+Ritualkenntnis (Kristallomantie);;;;;;;;;;Magisch;0;
+Ritualkenntnis (Mudramulisch);;;;;;;;OiC 43;;Magisch;0;
+Ritualkenntnis (Nivesen-Schamane);;;;;;;;;;Klerikal;0;
+Ritualkenntnis (Ork-Schamane);;;;;;;;;;Klerikal;0;
+Ritualkenntnis (Satuarisch);;;;;;;;OiC 43;;Magisch;0;
+Ritualkenntnis (Scharlatanerie);;;;;;;;;;Magisch;0;
+Ritualkenntnis (Tapasuul);;;;;;;;OiC 43;;Klerikal;0;
+Ritualkenntnis (Trollzacker-Schamane);;;;;;;;;;Klerikal;0;
+Ritualkenntnis (Waldmenschen-Schamane);;;;;;;;;;Klerikal;0;
+Ritualkenntnis (Zaubertänze);;;;;;;;;;Magisch;0;
+Ritualkenntnis (Zibilja);;;;;;;;;;Magisch;0;
 Rosstäuscher;;;;;;;;WdH 277 / WnM 144;;Allgemein;0;Reiten 7, Sich Verkleiden 7, Abrichten 7, Überreden 7
-Runen: Alfenbannrune;;;;;;;;WdA 161;;Magisch;0;\N
-Runen: Bärenrune;;;;;;;;WdA 161;;Magisch;0;\N
-Runen: Blutrune;;;;;;;;WdA 161;;Magisch;0;\N
-Runen: Drachenrune;;;;;;;;WdA 162;;Magisch;0;\N
-Runen: Entgifterrune;;;;;;;;WdA 162;;Magisch;0;\N
-Runen: Felsenrune;;;;;;;;WdA 162;;Magisch;0;\N
-Runen: Finsterrune;;;;;;;;WdA 162;;Magisch;0;\N
-Runen: Friedensrune;;;;;;;;WdA 163;;Magisch;0;\N
-Runen: Furchtrune;;;;;;;;WdA 163;;Magisch;0;\N
-Runen: Geisterbannrune;;;;;;;;WdA 163;;Magisch;0;\N
-Runen: Lebensrune;;;;;;;;WdA 163;;Magisch;0;\N
-Runen: Nebelrune;;;;;;;;WdA 163;;Magisch;0;\N
-Runen: Orkanstimmenrune;;;;;;;;WdA 164;;Magisch;0;\N
-Runen: Ottarune;;;;;;;;WdA 164;;Magisch;0;\N
-Runen: Pfeilrune;;;;;;;;WdA 164;;Magisch;0;\N
-Runen: Rauschrune;;;;;;;;WdA 165;;Magisch;0;\N
-Runen: Salzwasserrune;;;;;;;;WdA 165;;Magisch;0;\N
-Runen: Schicksalsrune;;;;;;;;WdA 165;;Magisch;0;\N
-Runen: Waberlohenrune;;;;;;;;WdA 165;;Magisch;0;\N
-Runen: Waffenrune;;;;;;;;WdA 165;;Magisch;0;\N
-Runen: Wogensturmrune;;;;;;;;WdA 166;;Magisch;0;\N
-Runen: Zukunftsrune;;;;;;;;WdA 166;;Magisch;0;\N
+Runen: Alfenbannrune;;;;;;;;WdA 161;;Magisch;0;
+Runen: Bärenrune;;;;;;;;WdA 161;;Magisch;0;
+Runen: Blutrune;;;;;;;;WdA 161;;Magisch;0;
+Runen: Drachenrune;;;;;;;;WdA 162;;Magisch;0;
+Runen: Entgifterrune;;;;;;;;WdA 162;;Magisch;0;
+Runen: Felsenrune;;;;;;;;WdA 162;;Magisch;0;
+Runen: Finsterrune;;;;;;;;WdA 162;;Magisch;0;
+Runen: Friedensrune;;;;;;;;WdA 163;;Magisch;0;
+Runen: Furchtrune;;;;;;;;WdA 163;;Magisch;0;
+Runen: Geisterbannrune;;;;;;;;WdA 163;;Magisch;0;
+Runen: Lebensrune;;;;;;;;WdA 163;;Magisch;0;
+Runen: Nebelrune;;;;;;;;WdA 163;;Magisch;0;
+Runen: Orkanstimmenrune;;;;;;;;WdA 164;;Magisch;0;
+Runen: Ottarune;;;;;;;;WdA 164;;Magisch;0;
+Runen: Pfeilrune;;;;;;;;WdA 164;;Magisch;0;
+Runen: Rauschrune;;;;;;;;WdA 165;;Magisch;0;
+Runen: Salzwasserrune;;;;;;;;WdA 165;;Magisch;0;
+Runen: Schicksalsrune;;;;;;;;WdA 165;;Magisch;0;
+Runen: Waberlohenrune;;;;;;;;WdA 165;;Magisch;0;
+Runen: Waffenrune;;;;;;;;WdA 165;;Magisch;0;
+Runen: Wogensturmrune;;;;;;;;WdA 166;;Magisch;0;
+Runen: Zukunftsrune;;;;;;;;WdA 166;;Magisch;0;
 Runenkunde;;;;;;;;WdH 289 / WdZ 59;;Magisch;0;FF 12, Singen 5, Sprachen Kennen (Hjaldingisch) 9, Lesen/Schreiben (Hjaldingische Runen) 9
 Rüstungsgewöhnung II;;;;;;;;WdH 280 / WdS 76;;Kampf;0;KK 12, SF Rüstungsgewöhnung I
 Rüstungsgewöhnung III;;;;;;;;WdH 280 / WdS 76;;Kampf;0;KK 15, SF Rüstungsgewöhnung II
 Sachkundig;;;;;;;;WnM 144;;Allgemein;0;passendes Talent 7
 Salasandra;;;;;;;;WdZ 75;;Magisch;0;V Zweistimmiger Gesang
-Satudurlied: Beflügelung des Spiels;;;;;;;;MyMa 134 / WnM 157;;Magisch (Ritual);0;\N
-Satudurlied: Bilderspiel;;;;;;;;MyMa 134 / WnM 157;;Magisch (Ritual);0;\N
-Satudurlied: Das große Fest;;;;;;;;MyMa 135 / WnM 157;;Magisch (Ritual);0;\N
-Satudurlied: Das große Weinlied;;;;;;;;MyMa 135 / WnM 157;;Magisch (Ritual);0;\N
-Satudurlied: Das kleine Weinlied;;;;;;;;MyMa 134 / WnM 157;;Magisch (Ritual);0;\N
-Satudurlied: Das Spiel der Sinne;;;;;;;;MyMa 134 / WnM 157;;Magisch (Ritual);0;\N
-Satudurlied: Satyaras Segen;;;;;;;;MyMa 135 / WnM 157;;Magisch (Ritual);0;\N
+Satudurlied: Beflügelung des Spiels;;;;;;;;MyMa 134 / WnM 157;;Magisch (Ritual);0;
+Satudurlied: Bilderspiel;;;;;;;;MyMa 134 / WnM 157;;Magisch (Ritual);0;
+Satudurlied: Das große Fest;;;;;;;;MyMa 135 / WnM 157;;Magisch (Ritual);0;
+Satudurlied: Das große Weinlied;;;;;;;;MyMa 135 / WnM 157;;Magisch (Ritual);0;
+Satudurlied: Das kleine Weinlied;;;;;;;;MyMa 134 / WnM 157;;Magisch (Ritual);0;
+Satudurlied: Das Spiel der Sinne;;;;;;;;MyMa 134 / WnM 157;;Magisch (Ritual);0;
+Satudurlied: Satyaras Segen;;;;;;;;MyMa 135 / WnM 157;;Magisch (Ritual);0;
 Schalenzauber: Allegorische Analyse;;;;;;;;WdZ 115;;Magisch (Ritual);0;SF Schalenzauber: Weihe der Schale
 Schalenzauber: Chymische Hochzeit;;;;;;;;WdZ 116;;Magisch (Ritual);0;Alchimie 10, SF Schalenzauber: Allegorische Analyse
 Schalenzauber: Feuer und Eis;;;;;;;;WdZ 116;;Magisch (Ritual);0;SF Schalenzauber: Weihe der Schale
 Schalenzauber: Mandricons Bindung;;;;;;;;WdZ 116;;Magisch (Ritual);0;Magiekunde 7, SF Schalenzauber: Weihe der Schale
-Schalenzauber: Satinavs Bannung;;;;;;;;OiC 54;;Magisch (Ritual);0;\N
+Schalenzauber: Satinavs Bannung;;;;;;;;OiC 54;;Magisch (Ritual);0;
 Schalenzauber: Transmutation der Elemente;;;;;;;;WdZ 116;;Magisch (Ritual);0;Alchimie 10, Magiekunde 7, SF Schalenzauber: Mandricons Bindung
 Schalenzauber: Weihe der Schale;;;;;;;;WdZ 116;;Magisch (Ritual);0;Alchimie 7, Ritualkenntnis (Alchimie) 0 | Ritualkenntnis (Gildenmagie) 0 | Ritualkenntnis (Hexe) 0 | Ritualkenntnis (Kristallomantie) 0
-Schamanenritual: Abvenenum reine Speise;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Adlerschwinge Wolfsgestalt;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Anrufung des Yaq-Hai;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Arngrimms Höhle;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Attributo;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Aufmerksamer Wächter;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Blick in die Vergangenheit;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Blick in Liskas Auge;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Blick ins Geisterreich;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Blick ins Geisterreich (II);;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Blick ins Geisterreich (III);;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Blutsbund;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Brazoragh Ghorkai - Brazoraghs Hieb;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Ergochai Tairachi -Tairachs Sklaven;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Exorzismus;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Exorzismus (III);;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Exorzismus (IV);;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Exorzismus (V);;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Farben des Krieges;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Fluch der Pestilenz;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Fluch der Verwirrung;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Freie Seelenfahrt;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Gaben der Erde;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Geisterbote;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Geisterkerker;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Geistheilung;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Geleit des Nipakau;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Gesang der Wölfe;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Gharyak Maruki;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Großer Geisterbann;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Großer Geisterbann (III);;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Großer Geisterbann (IV);;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Großer Geisterbann (V);;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Großer Geisterbann (VI);;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Hairuf;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Halluzination;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Harmlose Gestalt;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Haselbusch und Ginsterkraut;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Heimführung der Herde;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Herr über das Tierreich;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Herz des Tieres;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Hilferuf;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Hilferuf (III);;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Invocatio minor;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Jagdfieber;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Khurkachai Tairachi -Tairachs Krieger;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Kraft der Tayas;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Kraft des Tieres;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Macht der Elemente;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Macht des Blutes;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Magischer Raub;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Mailam Rekdais Segen;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Mammutruf;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Manifesto Element;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: M'char Utrak Rikaii - Rikais Alchimie;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Ogerruf;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Pfad der Blutrache;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Rat der Ahnen;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Regentanz;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Reinigen des Wassers;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Reißgrams Fährte;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Reitender Geist;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Rikais Verderben;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Rinderruf;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Ruf des Schamanen;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Sanftmut;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Schlangenfluch;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Schlangenfluch (V);;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Schlangengeist;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Schlingerruf;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Schomas Kraft;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Schutz der Jurte;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Schützende Rotte;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Seelenwanderung;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Seeschlangenruf;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Siedendes Blut;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Stimme des Nipakau;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Tabuzone;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Tauschplatz;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Tiere aus Farben;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Tiergedanken;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Tränke meine Herde;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Tschumbi;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Visars Krieger;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Visars Sklaven;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Weckruf;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Weg des Windes;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Wegzeichen;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Weidegründe finden;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Wettermeisterschaft;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Wild finden;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Wildschweinruf;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Wolfsfluch;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Wolfsfluch (V);;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Wolfsruf;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Zauberklinge Geisterspeer;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Zeichen setzen;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Zorn des Berglöwen;;;;;;;;\N;;Magisch (Ritual);0;\N
-Schamanenritual: Zwingtanz;;;;;;;;\N;;Magisch (Ritual);0;\N
+Schamanenritual: Abvenenum reine Speise;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Adlerschwinge Wolfsgestalt;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Anrufung des Yaq-Hai;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Arngrimms Höhle;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Attributo;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Aufmerksamer Wächter;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Blick in die Vergangenheit;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Blick in Liskas Auge;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Blick ins Geisterreich;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Blick ins Geisterreich (II);;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Blick ins Geisterreich (III);;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Blutsbund;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Brazoragh Ghorkai - Brazoraghs Hieb;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Ergochai Tairachi -Tairachs Sklaven;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Exorzismus;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Exorzismus (III);;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Exorzismus (IV);;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Exorzismus (V);;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Farben des Krieges;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Fluch der Pestilenz;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Fluch der Verwirrung;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Freie Seelenfahrt;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Gaben der Erde;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Geisterbote;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Geisterkerker;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Geistheilung;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Geleit des Nipakau;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Gesang der Wölfe;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Gharyak Maruki;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Großer Geisterbann;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Großer Geisterbann (III);;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Großer Geisterbann (IV);;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Großer Geisterbann (V);;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Großer Geisterbann (VI);;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Hairuf;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Halluzination;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Harmlose Gestalt;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Haselbusch und Ginsterkraut;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Heimführung der Herde;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Herr über das Tierreich;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Herz des Tieres;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Hilferuf;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Hilferuf (III);;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Invocatio minor;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Jagdfieber;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Khurkachai Tairachi -Tairachs Krieger;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Kraft der Tayas;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Kraft des Tieres;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Macht der Elemente;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Macht des Blutes;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Magischer Raub;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Mailam Rekdais Segen;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Mammutruf;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Manifesto Element;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: M'char Utrak Rikaii - Rikais Alchimie;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Ogerruf;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Pfad der Blutrache;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Rat der Ahnen;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Regentanz;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Reinigen des Wassers;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Reißgrams Fährte;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Reitender Geist;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Rikais Verderben;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Rinderruf;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Ruf des Schamanen;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Sanftmut;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Schlangenfluch;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Schlangenfluch (V);;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Schlangengeist;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Schlingerruf;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Schomas Kraft;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Schutz der Jurte;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Schützende Rotte;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Seelenwanderung;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Seeschlangenruf;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Siedendes Blut;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Stimme des Nipakau;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Tabuzone;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Tauschplatz;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Tiere aus Farben;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Tiergedanken;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Tränke meine Herde;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Tschumbi;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Visars Krieger;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Visars Sklaven;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Weckruf;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Weg des Windes;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Wegzeichen;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Weidegründe finden;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Wettermeisterschaft;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Wild finden;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Wildschweinruf;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Wolfsfluch;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Wolfsfluch (V);;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Wolfsruf;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Zauberklinge Geisterspeer;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Zeichen setzen;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Zorn des Berglöwen;;;;;;;;;;Magisch (Ritual);0;
+Schamanenritual: Zwingtanz;;;;;;;;;;Magisch (Ritual);0;
 Scharfschütze (Armbrust);;;;;;;;WdH 281 / WdS 95 / WnM 149;;Kampf;0;Armbrust 7
 Scharfschütze (Bela);;;;;;;;WnM 149;;Kampf;0;Bela 7
 Scharfschütze (Belagerungswaffen);;;;;;;;WdH 281 / WdS 95 / WnM 149;;Kampf;0;Belagerungswaffen 7
@@ -1138,15 +1123,15 @@ Schlangenring-Zauber: Wasserbann;;;;;;;;WdZ 128;;Magisch (Ritual);0;Ritualkenntn
 Schlangenring-Zauber: Weg durch Sumus Leib;;;;;;;;WdZ 130;;Magisch (Ritual);0;Ritualkenntnis (Geoden) 14, SF Schlangenring-Zauber: Macht des Lebens
 Schlangenring-Zauber: Weihe der Schlange;;;;;;;;WdZ 130;;Magisch (Ritual);0;Ritualkenntnis (Geoden) 0
 Schlangenring-Zauber: Wirbelnder Luftschild;;;;;;;;WdZ 130;;Magisch (Ritual);0;Ritualkenntnis (Geoden) 7, SF Schlangenring-Zauber: Geodischer Wasserbann
-Schlangenszepter: Bindung;;;;;;;;OiC 55;;Magisch;0;\N
-Schlangenszepter: Ruf der fliegenden Schlange;;;;;;;;OiC 55;;Magisch;0;\N
+Schlangenszepter: Bindung;;;;;;;;OiC 55;;Magisch;0;
+Schlangenszepter: Ruf der fliegenden Schlange;;;;;;;;OiC 55;;Magisch;0;
 Schnellladen (Armbrust);;;;;;;;WdH 281 / WdS 95 / WnM 149;;Kampf;0;FF 12, KK 12, Armbrust 7
 Schnellladen (Bogen);;;;;;;;WdH 281 / WdS 95 / WnM 149;;Kampf;0;FF 12, KK 12, Bogen 7
 Schnellziehen;;;;;;;;WdH 281 / WdS 76, 95 / WnM 150;;Kampf;0;GE 12, FF 10
 Schuppenbeutel: Bindung des Schuppenbeutels;;;;;;;;WdZ 141;;Magisch;0;Ritualkenntnis (Kristallomantie) 0
 Schuppenbeutel: Ewige Wegzehrung;;;;;;;;WdZ 141;;Magisch;0;Ritualkenntnis (Kristallomantie) 0, UNBERÜHRT VON SATINAV 11
 Schuppenbeutel: Suchende Finger;;;;;;;;WdZ 141, 142;;Magisch;0;Ritualkenntnis (Kristallomantie) 0
-Seele der Gemeinschaft;;;;;;;;OiC 44;;Magisch;0;\N
+Seele der Gemeinschaft;;;;;;;;OiC 44;;Magisch;0;
 Semipermanenz I;;;;;;;;WdZ 55;;Magisch;0;ARCANOVI 14, 20 ZfW-Punkte in Temporal
 Semipermanenz II;;;;;;;;WdZ 55;;Magisch;0;ARCANOVI (SEMIPERMANENT) 10, Magiekunde 16
 Shindramatha-Ritual (Lebender Astralspeicher);;;;;;;;WnM 158 / WnM 158;;Magisch (Ritual);0;Ritualkenntnis 7
@@ -1154,37 +1139,38 @@ Shindramatharitual: Fluch der Schlange;;;;;;;;MyMa 135 / WnM 158;;Magisch (Ritua
 Shindramatharitual: Form der Schlange;;;;;;;;MyMa 135 / WnM 158;;Magisch (Ritual);0;Ritualkenntnis 3
 Shindramatharitual: Kristallkraft bündeln;;;;;;;;MyMa 135 / WnM 158;;Magisch (Ritual);0;Ritualkenntnis 7
 Shindramatharitual: Lebender Zauberspeicher;;;;;;;;MyMa 135 / WnM 158;;Magisch (Ritual);0;Ritualkenntnis 11
-Siegel: Bindung des Siegels;;;;;;;;MyMa 120 / WnM 158;;Magisch (Ritual);0;\N
-Siegel: Magisches Siegel;;;;;;;;MyMa 120 / WnM 158;;Magisch (Ritual);0;\N
-Siegel: Siegeletikett;;;;;;;;MyMa 120 / WnM 158;;Magisch (Ritual);0;\N
-Siegel: Siegelschutz;;;;;;;;MyMa 120 / WnM 158;;Magisch (Ritual);0;\N
-Siegel: Verschlüsselung des Siegels;;;;;;;;MyMa 121 / WnM 158;;Magisch (Ritual);0;\N
+Siegel: Bindung des Siegels;;;;;;;;MyMa 120 / WnM 158;;Magisch (Ritual);0;
+Siegel: Magisches Siegel;;;;;;;;MyMa 120 / WnM 158;;Magisch (Ritual);0;
+Siegel: Siegeletikett;;;;;;;;MyMa 120 / WnM 158;;Magisch (Ritual);0;
+Siegel: Siegelschutz;;;;;;;;MyMa 120 / WnM 158;;Magisch (Ritual);0;
+Siegel: Verschlüsselung des Siegels;;;;;;;;MyMa 121 / WnM 158;;Magisch (Ritual);0;
 Signaturkenntnis;;;;;;;;WdZ 55;;Magisch;0;KL 15, IN 15, ANALYS ARCANSTRUKTUR 15 | ODEM ARCANUM 15 | OCULUS ASTRALIS 15
 Siminiagefälliges Wissen;;;;;;;;WnM 144;;Allgemein;0;KL 12, IN 12
 Simultanzaubern;;;;;;;;WdZ 16;;Magisch;0;KL 15, SF% Repräsentation
 Späte Ausbildung I;;;;;;;;WnM 158;;Magisch;0;CH 15, MU 13, KL 13, IN 13, eine Repräsentation außer der natürlichen 
 Späte Ausbildung II;;;;;;;;WnM 158;;Magisch;0;CH 16, MU 14, KL 14, IN 14
-Spätweihe Dunkle Zeiten;;;;;;;;OiC 43;;Klerikal;0;\N
-Spätweihe Namenloser;;;;;;;;WdG 238;;Klerikal;0;\N
-Speerzauber: Auge des Speeres;;;;;;;;MyMa 123 / WnM 158;;Magisch (Ritual);0;\N
-Speerzauber: Bindung des Speeres;;;;;;;;MyMa 123;;Magisch (Ritual);0;\N
-Speerzauber: Bündnis der Speere;;;;;;;;MyMa 123, 124;;Magisch (Ritual);0;\N
-Speerzauber: Kraft des Speeres;;;;;;;;MyMa 124;;Magisch (Ritual);0;\N
-Speerzauber: Licht des Speeres;;;;;;;;MyMa 124;;Magisch (Ritual);0;\N
-Speerzauber: Schutz des Speeres;;;;;;;;MyMa 123;;Magisch (Ritual);0;\N
-Speerzauber: Strafe des Speeres;;;;;;;;MyMa 124;;Magisch (Ritual);0;\N
+Spätweihe Dunkle Zeiten;;;;;;;;OiC 43;;Klerikal;0;
+Spätweihe Namenloser;;;;;;;;WdG 238;;Klerikal;0;
+Speerzauber: Auge des Speeres;;;;;;;;MyMa 123 / WnM 158;;Magisch (Ritual);0;
+Speerzauber: Bindung des Speeres;;;;;;;;MyMa 123;;Magisch (Ritual);0;
+Speerzauber: Bündnis der Speere;;;;;;;;MyMa 123, 124;;Magisch (Ritual);0;
+Speerzauber: Kraft des Speeres;;;;;;;;MyMa 124;;Magisch (Ritual);0;
+Speerzauber: Licht des Speeres;;;;;;;;MyMa 124;;Magisch (Ritual);0;
+Speerzauber: Schutz des Speeres;;;;;;;;MyMa 123;;Magisch (Ritual);0;
+Speerzauber: Strafe des Speeres;;;;;;;;MyMa 124;;Magisch (Ritual);0;
 Spießgespann;;;;;;;;WdH 281 / WdS 76 / WnM 150;;Kampf;0;Speere 10, SF Sturmangriff
 Spontanfetisch;;;;;;;;MyMa 129;;Magisch;0;Ritualkenntnis (animistische Tradition) 7
 Spontanzeichen (Arkanoglyphen);;;;;;;;WdA 138;;Magisch;0;SF Zauberzeichen
-Spontanzeichen (Runenkunde);;;;;;;;\N;;Magisch;0;\N
+Spontanzeichen (Runenkunde);;;;;;;;;;Magisch;0;
 Stabzauber: Analyse des Elements;;;;;;;;MyMa 114 / WnM 158;;Magisch (Ritual);0;SF Instruktion: Analyse
 Stabzauber: Astral-/Lebensraub;;;;;;;;MyMa 114 / WnM 158;;Magisch (Ritual);0;Ritualkenntnis (Optimatik) 13
 Stabzauber: Astral-/Lebenstransfer;;;;;;;;MyMa 114 / WnM 158;;Magisch (Ritual);0;SF Instruktion: Transfer
-Stabzauber: Astralschild;;;;;;;;OiC 52;;Magisch (Ritual);0;\N
+Stabzauber: Astralschild;;;;;;;;OiC 52;;Magisch (Ritual);0;
 Stabzauber: Bannfokus;;;;;;;;MyMa 114 / WnM 158;;Magisch (Ritual);0;Ritualkenntnis (Optimatik) 11
 Stabzauber: Bindung;;;;;;;;WdZ 109 / MyMa 114;;Magisch (Ritual);0;Ritualkenntnis (Gildenmagie) 3
 Stabzauber: Blendung;;;;;;;;MyMa 114 / WnM 158;;Magisch (Ritual);0;Ritualkenntnis (Optimatik) 9
 Stabzauber: Doppeltes Maß/Stabverlängerung;;;;;;;;WdZ 109 / MyMa 115 / WnM 158;;Magisch (Ritual);0;Ritualkenntnis (Gildenmagie) 7
+Stabzauber: Stabverlängerung;;;;;;;;WdZ 109 / MyMa 115 / WnM 158;;Magisch (Ritual);0;Ritualkenntnis (Gildenmagie) 7
 Stabzauber: Elementarklinge;;;;;;;;MyMa 115 / WnM 158;;Magisch (Ritual);0;Ritualkenntnis (Optimatik) 11
 Stabzauber: Elementarwahrnehmung;;;;;;;;MyMa 115 / WnM 158;;Magisch (Ritual);0;Ritualkenntnis (Optimatik) 3, SF Instruktion: Wahrnehmung
 Stabzauber: Entwässerung;;;;;;;;WnM 158;;Magisch (Ritual);0;Ritualkenntnis (Optimatik) 10
@@ -1198,18 +1184,18 @@ Stabzauber: Geistesband;;;;;;;;MyMa 116 / WnM 158;;Magisch (Ritual);0;Ritualkenn
 Stabzauber: Halbes Maß;;;;;;;;WnM 158;;Magisch (Ritual);0;Ritualkenntnis (Optimatik) 7
 Stabzauber: Hammer des Magus;;;;;;;;WdZ 110 / MyMa 116 / WnM 159;;Magisch (Ritual);0;Ritualkenntnis (Gildenmagie) 7
 Stabzauber: Kraftfokus;;;;;;;;WdZ 110 / MyMa 116 / WnM 159;;Magisch (Ritual);0;Ritualkenntnis (Gildenmagie) 11
-Stabzauber: Langer Arm;;;;;;;;OiC 52;;Magisch (Ritual);0;\N
+Stabzauber: Langer Arm;;;;;;;;OiC 52;;Magisch (Ritual);0;
 Stabzauber: Leuchtfeuer;;;;;;;;MyMa 116 / WnM 159;;Magisch (Ritual);0;Ritualkenntnis (Optimatik) 9
 Stabzauber: Lichtzauber;;;;;;;;MyMa 116 / WnM 159;;Magisch (Ritual);0;Ritualkenntnis (Optimatik) 5
 Stabzauber: Merkmalsfokus;;;;;;;;WdZ 110;;Magisch (Ritual);0;Ritualkenntnis (Gildenmagie) 11, SF Stabzauber: Kraftfokus
 Stabzauber: Mitverwandlung;;;;;;;;MyMa 117 / WnM 159;;Magisch (Ritual);0;Ritualkenntnis (Optimatik) 5
 Stabzauber: Modifikationsfokus;;;;;;;;WdZ 110;;Magisch (Ritual);0;Ritualkenntnis (Gildenmagie) 11, SF Stabzauber: Kraftfokus
 Stabzauber: Notruf;;;;;;;;MyMa 117 / WnM 159;;Magisch (Ritual);0;Ritualkenntnis (Optimatik) 9, SF Instruktion: Reinigung
-Stabzauber: Reinigung;;;;;;;;MyMa 117;;Magisch (Ritual);0;\N
+Stabzauber: Reinigung;;;;;;;;MyMa 117;;Magisch (Ritual);0;
 Stabzauber: Resistenz;;;;;;;;MyMa 117 / WnM 159;;Magisch (Ritual);0;Ritualkenntnis (Optimatik) 13
 Stabzauber: Schild vor (Chimären, Untoten, Dämonen, Elementaren, Totenwesen, Konstrukten, Zaubern);;;;;;;;MyMa 117 / WnM 159;;Magisch (Ritual);0;Ritualkenntnis (Optimatik) 12, SF Instruktion: Schutz vor Quelle
 Stabzauber: Schuppenhaut;;;;;;;;WdZ 110, 111;;Magisch (Ritual);0;Ritualkenntnis (Gildenmagie) 14
-Stabzauber: Schutz gegen Untote;;;;;;;;OiC 52;;Magisch (Ritual);0;\N
+Stabzauber: Schutz gegen Untote;;;;;;;;OiC 52;;Magisch (Ritual);0;
 Stabzauber: Seil des Adepten;;;;;;;;WdZ 111 / MyMa 117 / WnM 159;;Magisch (Ritual);0;Ritualkenntnis (Gildenmagie) 7
 Stabzauber: Seil des Magus;;;;;;;;MyMa 117 / WnM 159;;Magisch (Ritual);0;Ritualkenntnis (Optimatik) 13
 Stabzauber: Sensorspeicher;;;;;;;;MyMa 117, 118 / WnM 159;;Magisch (Ritual);0;Ritualkenntnis (Optimatik) 12
@@ -1228,74 +1214,69 @@ Stabzauber: Zauberparade;;;;;;;;MyMa 119 / WnM 159;;Magisch (Ritual);0;Ritualken
 Stabzauber: Zauberspeicher;;;;;;;;WdZ 111 / MyMa 119 / WnM 159;;Magisch (Ritual);0;Ritualkenntnis (Gildenmagie) 11, SF Stabzauber: Kraftfokus
 Standfest;;;;;;;;WdH 277 / WnM 144;;Allgemein;0;GE 12
 Stapeleffekt;;;;;;;;WdZ 55;;Magisch;0;ARCANOVI 7
-Stimme des Felsens;;;;;;;;EG 155;;Petromantie;0;\N
-Strafe: Alles in deinem Mund wird zu (Element);;;;;;;;MyMa 131 / WnM 159;;Magisch (Ritual);0;\N
-Strafe: Angst vor (Umschreibung einer Schlechten Eigenschaft) sei in deinem Herzen!;;;;;;;;MyMa 131 / WnM 159;;Magisch (Ritual);0;\N
-Strafe: Das (Licht der Sonne, die Stimme des Freundes, ...) sei dir genommen!;;;;;;;;MyMa 131 / WnM 159;;Magisch (Ritual);0;\N
-Strafe: Dein Weg sei mit Unglück gepflastert!;;;;;;;;MyMa 131;;Magisch (Ritual);0;\N
-Strafe: Gehorche der Stimme der Magie!;;;;;;;;MyMa 131 / WnM 159;;Magisch (Ritual);0;\N
-Strafe: Gehorche der Weisung der Geister!;;;;;;;;MyMa 131 / WnM 159;;Magisch (Ritual);0;\N
-Strafe: Hässlich sollst Du sein!;;;;;;;;MyMa 131 / WnM 159;;Magisch (Ritual);0;\N
-Strafe: Kein (Mensch/Tier/Amaun/...) mehr wird deine Gegenwart ertragen!;;;;;;;;MyMa 131 / WnM 159;;Magisch (Ritual);0;\N
-Strafe: Keine Ruhe wirst du finden!;;;;;;;;MyMa 131 / WnM 159;;Magisch (Ritual);0;\N
-Strafe: Pein beuge dich!;;;;;;;;MyMa 131 / WnM 159;;Magisch (Ritual);0;\N
-Strafe: Schlage Wurzeln!;;;;;;;;MyMa 131 / WnM 159;;Magisch (Ritual);0;\N
-Strafe: Schweige!;;;;;;;;MyMa 131 / WnM 159;;Magisch (Ritual);0;\N
-Strafe: Sei dem Tode geweiht!;;;;;;;;MyMa 131 / WnM 159;;Magisch (Ritual);0;\N
-Strafe: Sei unfruchtbar, Frevler!;;;;;;;;MyMa 131 / WnM 159;;Magisch (Ritual);0;\N
+Stimme des Felsens;;;;;;;;EG 155;;Petromantie;0;
+Strafe: Alles in deinem Mund wird zu (Element);;;;;;;;MyMa 131 / WnM 159;;Magisch (Ritual);0;
+Strafe: Angst vor (Umschreibung einer Schlechten Eigenschaft) sei in deinem Herzen!;;;;;;;;MyMa 131 / WnM 159;;Magisch (Ritual);0;
+Strafe: Das (Licht der Sonne, die Stimme des Freundes, ...) sei dir genommen!;;;;;;;;MyMa 131 / WnM 159;;Magisch (Ritual);0;
+Strafe: Dein Weg sei mit Unglück gepflastert!;;;;;;;;MyMa 131;;Magisch (Ritual);0;
+Strafe: Gehorche der Stimme der Magie!;;;;;;;;MyMa 131 / WnM 159;;Magisch (Ritual);0;
+Strafe: Gehorche der Weisung der Geister!;;;;;;;;MyMa 131 / WnM 159;;Magisch (Ritual);0;
+Strafe: Hässlich sollst Du sein!;;;;;;;;MyMa 131 / WnM 159;;Magisch (Ritual);0;
+Strafe: Kein (Mensch/Tier/Amaun/...) mehr wird deine Gegenwart ertragen!;;;;;;;;MyMa 131 / WnM 159;;Magisch (Ritual);0;
+Strafe: Keine Ruhe wirst du finden!;;;;;;;;MyMa 131 / WnM 159;;Magisch (Ritual);0;
+Strafe: Pein beuge dich!;;;;;;;;MyMa 131 / WnM 159;;Magisch (Ritual);0;
+Strafe: Schlage Wurzeln!;;;;;;;;MyMa 131 / WnM 159;;Magisch (Ritual);0;
+Strafe: Schweige!;;;;;;;;MyMa 131 / WnM 159;;Magisch (Ritual);0;
+Strafe: Sei dem Tode geweiht!;;;;;;;;MyMa 131 / WnM 159;;Magisch (Ritual);0;
+Strafe: Sei unfruchtbar, Frevler!;;;;;;;;MyMa 131 / WnM 159;;Magisch (Ritual);0;
 Sturmangriff;;;;;;;;WdH 281 / WdS 64, 76 / WnM 150;;Kampf;0;MU 12, SF Wuchtschlag
-Szepter: Bindung;;;;;;;;OiC 59;;Magisch (Ritual);0;\N
-Szepter: Fliegenleib;;;;;;;;OiC 59;;Magisch (Ritual);0;\N
-Szepter: Golemdiener;;;;;;;;OiC 59;;Magisch (Ritual);0;\N
-Szepter: Herrscher der Djinnim;;;;;;;;OiC 60;;Magisch (Ritual);0;\N
-Szepter: Herrscher der Ifriitim;;;;;;;;OiC 60;;Magisch (Ritual);0;\N
-Szepter: Kraft der Kophtanim;;;;;;;;OiC 60;;Magisch (Ritual);0;\N
-Szepter: Schutz der Ahnen;;;;;;;;OiC 60;;Magisch (Ritual);0;\N
-Szepter: Stimme der Macht;;;;;;;;OiC 60;;Magisch (Ritual);0;\N
-Szepter: Vermächtnis der Kophtanim;;;;;;;;OiC 61;;Magisch (Ritual);0;\N
-Szepter: Waffe des Geistes;;;;;;;;OiC 61;;Magisch (Ritual);0;\N
-Tabuzone;II;Z;;;;;;EG 155;;Petromantie;0;\N
+Szepter: Bindung;;;;;;;;OiC 59;;Magisch (Ritual);0;
+Szepter: Fliegenleib;;;;;;;;OiC 59;;Magisch (Ritual);0;
+Szepter: Golemdiener;;;;;;;;OiC 59;;Magisch (Ritual);0;
+Szepter: Herrscher der Djinnim;;;;;;;;OiC 60;;Magisch (Ritual);0;
+Szepter: Herrscher der Ifriitim;;;;;;;;OiC 60;;Magisch (Ritual);0;
+Szepter: Kraft der Kophtanim;;;;;;;;OiC 60;;Magisch (Ritual);0;
+Szepter: Schutz der Ahnen;;;;;;;;OiC 60;;Magisch (Ritual);0;
+Szepter: Stimme der Macht;;;;;;;;OiC 60;;Magisch (Ritual);0;
+Szepter: Vermächtnis der Kophtanim;;;;;;;;OiC 61;;Magisch (Ritual);0;
+Szepter: Waffe des Geistes;;;;;;;;OiC 61;;Magisch (Ritual);0;
+Tabuzone;II;Z;;;;;;EG 155;;Petromantie;0;
 Tanz der Mada;;;;;;;;WdZ 76 / WnM 159;;Magisch;0;!(N Unstet)
-Tapasuul: Blut für Visar;;;;;;;;OiC 61;;Magisch (Ritual);0;\N
-Tapasuul: Ein Herz für Visar;;;;;;;;OiC 61;;Magisch (Ritual);0;\N
-Tapasuul: Gestalt des Tapam;;;;;;;;OiC 61;;Magisch (Ritual);0;\N
-Tapasuul: Kerker des Satuul;;;;;;;;OiC 62;;Magisch (Ritual);0;\N
-Tapasuul: Kraft des Tapam;;;;;;;;OiC 62;;Magisch (Ritual);0;\N
+Tapasuul: Blut für Visar;;;;;;;;OiC 61;;Magisch (Ritual);0;
+Tapasuul: Ein Herz für Visar;;;;;;;;OiC 61;;Magisch (Ritual);0;
+Tapasuul: Gestalt des Tapam;;;;;;;;OiC 61;;Magisch (Ritual);0;
+Tapasuul: Kerker des Satuul;;;;;;;;OiC 62;;Magisch (Ritual);0;
+Tapasuul: Kraft des Tapam;;;;;;;;OiC 62;;Magisch (Ritual);0;
 Tod von Links;;;;;;;;WdH 281 / WdS 65, 77 / WnM 150;;Kampf;0;SF Beidhändiger Kampf I, SF Parierwaffen II
 Todesstoß;;;;;;;;WdH 281 / WdS 65, 77 / WnM 150;;Kampf;0;MU 15, SF Gezielter Stich
-Trank des ungehinderten Weges;;;;;;;;WdZ 131;;Magisch;0;\N
+Trank des ungehinderten Weges;;;;;;;;WdZ 131;;Magisch;0;
 Traumgänger I;;;;;;;;WdH 291 / WnM 159;;Magisch;0;IN 12
-Traumgänger II;;;;;;;;WnM 159;;Magisch;0;\N
+Traumgänger II;;;;;;;;WnM 159;;Magisch;0;
 Triopta: Astralspeicher I;;;;;;;;WnM 159 / MyMa 121;;Magisch (Ritual);0;Ritualkenntnis (Optimatik) 11, SF Tritopta: Bindung
 Triopta: Astralspeicher II;;;;;;;;WnM 159 / MyMa 122;;Magisch (Ritual);0;Ritualkenntnis (Optimatik) 12, SF Triopta: Zauberspeicher I
 Triopta: Astralspeicher III;;;;;;;;WnM 159 / MyMa 122;;Magisch (Ritual);0;Ritualkenntnis (Optimatik) 15, SF Triopta: Zauberspeicher II
 Triopta: Bindung;;;;;;;;WnM 158 / MyMa 121;;Magisch (Ritual);0;Ritualkenntnis (Optimatik) 3
 Triopta: Zauberspeicher I;;;;;;;;WnM 159 / MyMa 121;;Magisch (Ritual);0;Ritualkenntnis (Optimatik) 9, SF Triopta: Astralspeicher I
 Triopta: Zauberspeicher II;;;;;;;;WnM 159 / MyMa 122;;Magisch (Ritual);0;Ritualkenntnis (Optimatik) 12, SF Triopta: Astralspeicher II
-Trollruf;;;;;;;;EG 155;;Petromantie;0;\N
-Trommelzauber: Rastullahs Güte;;;;;;;;WdZ 174;;Magisch (Ritual);0;Ritualkenntnis (Derwische) 11
-Trommelzauber: Ruf des Krieges;;;;;;;;WdZ 174;;Magisch (Ritual);0;Ritualkenntnis (Derwische) 3
-Trommelzauber: Schutz Rastullahs;;;;;;;;WdZ 174;;Magisch (Ritual);0;Ritualkenntnis (Derwische) 11
-Trommelzauber: Sturm der Wüste;;;;;;;;WdZ 174;;Magisch (Ritual);0;Ritualkenntnis (Derwische) 7
-Trommelzauber: Zorn des Gottgefälligen;;;;;;;;WdZ 174;;Magisch (Ritual);0;Ritualkenntnis (Derwische) 9, MU 14
+Trollruf;;;;;;;;EG 155;;Petromantie;0;
 Turnierreiterei;;;;;;;;WdH 281 / WdS 101 / WnM 150;;Kampf;0;Reiten 10, SF Reiterkampf
-Übernahme der Besessenheit;;;;;;;;MyMa 130;;Magisch (Ritual);0;\N
+Übernahme der Besessenheit;;;;;;;;MyMa 130;;Magisch (Ritual);0;
 Umreißen;;;;;;;;WdH 282 / WdS 65, 77 / WnM 150;;Kampf;0;KK 12, SF Finte
 Unterwasserkampf;;;;;;;;WdH 282 / WdS 77 / WnM 150;;Kampf;0;Schwimmen 10
 Verbotene Pforten;;;;;;;;WdZ 33 / WnM 160;;Magisch;0;MU 12
 Verstärkungsfetisch;;;;;;;;MyMa 129;;Magisch;0;Ritualkenntnis (animistische Tradition) 5
-Vertrautenbindung;;;;;;;;\N;;Magisch;0;Ritualkenntnis (Hexe) 0 | Ritualkenntnis (Geode) 0 | Ritualkenntnis (Zibilja) 0 | Ritualkenntnis (Goblin Schamanin) 0
-Vertrautenmagie: Dinge aufspüren;;;;;;;;MyMa 126;;Magisch (Ritual);0;\N
-Vertrautenmagie: Erster unter Gleichen;;;;;;;;MyMa 126, 127;;Magisch (Ritual);0;\N
-Vertrautenmagie: Gefährte in neuer Gestalt;;;;;;;;MyMa 127;;Magisch (Ritual);0;\N
-Vertrautenmagie: Meister finden;;;;;;;;MyMa 127;;Magisch (Ritual);0;\N
-Vertrautenmagie: Schlaf rauben;;;;;;;;MyMa 127;;Magisch (Ritual);0;\N
-Vertrautenmagie: Stimmungssinn;;;;;;;;MyMa 127;;Magisch (Ritual);0;\N
-Vertrautenmagie: Tarnung;;;;;;;;MyMa 127;;Magisch (Ritual);0;\N
-Vertrautenmagie: Tiersinne;;;;;;;;MyMa 127;;Magisch (Ritual);0;\N
-Vertrautenmagie: Ungesehener Beobachter;;;;;;;;MyMa 127, 128;;Magisch (Ritual);0;\N
-Vertrautenmagie: Wachsame Augen;;;;;;;;MyMa 128;;Magisch (Ritual);0;\N
-Vertrautenmagie: Zwiegespräch;;;;;;;;MyMa 128;;Magisch (Ritual);0;\N
+Vertrautenbindung;;;;;;;;;;Magisch;0;Ritualkenntnis (Hexe) 0 | Ritualkenntnis (Geode) 0 | Ritualkenntnis (Zibilja) 0 | Ritualkenntnis (Goblin Schamanin) 0
+Vertrautenmagie: Dinge aufspüren;;;;;;;;MyMa 126;;Magisch (Ritual);0;
+Vertrautenmagie: Erster unter Gleichen;;;;;;;;MyMa 126, 127;;Magisch (Ritual);0;
+Vertrautenmagie: Gefährte in neuer Gestalt;;;;;;;;MyMa 127;;Magisch (Ritual);0;
+Vertrautenmagie: Meister finden;;;;;;;;MyMa 127;;Magisch (Ritual);0;
+Vertrautenmagie: Schlaf rauben;;;;;;;;MyMa 127;;Magisch (Ritual);0;
+Vertrautenmagie: Stimmungssinn;;;;;;;;MyMa 127;;Magisch (Ritual);0;
+Vertrautenmagie: Tarnung;;;;;;;;MyMa 127;;Magisch (Ritual);0;
+Vertrautenmagie: Tiersinne;;;;;;;;MyMa 127;;Magisch (Ritual);0;
+Vertrautenmagie: Ungesehener Beobachter;;;;;;;;MyMa 127, 128;;Magisch (Ritual);0;
+Vertrautenmagie: Wachsame Augen;;;;;;;;MyMa 128;;Magisch (Ritual);0;
+Vertrautenmagie: Zwiegespräch;;;;;;;;MyMa 128;;Magisch (Ritual);0;
 Vielfache Ladungen;;;;;;;;WdZ 55;;Magisch;0;ARCANOVI 14
 Vielfalt der Geister;;;;;;;;WnM 160;;Magisch;0;IN 14, CH 14, Ritualkenntnis (animistische Tradition) 8
 Waffe zerbrechen;;;;;;;;WdH 282 / WdS 71, 77 / WnM 150;;Kampf;0;KK 12, PA 9
@@ -1318,38 +1299,38 @@ Waffenlose Kampftechnik (Srhj);;;;;;;;Rakshazar 26;;Kampf;0;Raufen 9
 Waffenlose Kampftechnik (Thalassischer Stil);;;;;;;;WnM 151, 186;;Kampf;0;Ringen 7, SF Unterwasserkampf
 Waffenlose Kampftechnik (Unauer Schule/Cyclopeisches Ringen/Echsenzwinger);;;;;;;;WdH 282 / WdS 90 / OiC 44;;Kampf;0;Ringen 7
 Waffenlose Kampftechnik (Uruksha);;;;;;;;Rakshazar 26, 27;;Kampf;0;Ringen 7, Raufen 5
-Waffenloses Manöver (Anspringen);;;;;;;;WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Auspendeln);;;;;;;;WdH 282 / WdS 90 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Beinarbeit);;;;;;;;WdH 282 / WdS 90 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Biss);;;;;;;;WdH 282 / WdS 90 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Block);;;;;;;;WdH 282 / WdS 91 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Doppelschlag);;;;;;;;WdH 282 / WdS 91 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Eisenarm);;;;;;;;WdH 282 / WdS 91 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Fußfeger);;;;;;;;WdH 282 / WdS 91 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Gerade);;;;;;;;WdH 282 / WdS 91 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Griff);;;;;;;;WdH 282 / WdS 91 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Halten);;;;;;;;WdH 282 / WdS 91 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Handkante);;;;;;;;WdH 282 / WdS 91 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Hoher Tritt);;;;;;;;WdH 282 / WdS 91 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Klammer);;;;;;;;WdH 282 / WdS 91 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Knaufschlag);;;;;;;;WdH 282 / WdS 91 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Knie);;;;;;;;WdH 282 / WdS 91;;Kampf;0;\N
-Waffenloses Manöver (Kopfstoß);;;;;;;;WdH 282 / WdS 91;;Kampf;0;\N
-Waffenloses Manöver (Kreuzblock);;;;;;;;WdH 282 / WdS 91 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Niederringen);;;;;;;;WdH 282 / WdS 91 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Schmetterschlag);;;;;;;;WdH 282 / WdS 92 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Schmutzige Tricks);;;;;;;;WdH 282 / WdS 92 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Schwanzfeger);;;;;;;;WdH 282 / WdS 92 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Schwanzschlag);;;;;;;;WdH 282 / WdS 92 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Schwinger);;;;;;;;WdH 282 / WdS 92 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Schwitzkasten);;;;;;;;WdH 282 / WdS 92 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Sprung);;;;;;;;WdH 282 / WdS 92 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Sprungtritt);;;;;;;;WdH 282 / WdS 92 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Tritt);;;;;;;;WdH 282 / WdS 92 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Umstoßen);;;;;;;;WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Versteckte Klinge);;;;;;;;WdH 282 / WdS 92 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Wurf);;;;;;;;WdH 282 / WdS 93 / WnM 151;;Kampf;0;\N
-Waffenloses Manöver (Würgegriff);;;;;;;;WdH 282 / WdS 93 / WnM 151;;Kampf;0;\N
+Waffenloses Manöver (Anspringen);;;;;;;;WnM 151;;Kampf;0;
+Waffenloses Manöver (Auspendeln);;;;;;;;WdH 282 / WdS 90 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Beinarbeit);;;;;;;;WdH 282 / WdS 90 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Biss);;;;;;;;WdH 282 / WdS 90 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Block);;;;;;;;WdH 282 / WdS 91 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Doppelschlag);;;;;;;;WdH 282 / WdS 91 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Eisenarm);;;;;;;;WdH 282 / WdS 91 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Fußfeger);;;;;;;;WdH 282 / WdS 91 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Gerade);;;;;;;;WdH 282 / WdS 91 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Griff);;;;;;;;WdH 282 / WdS 91 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Halten);;;;;;;;WdH 282 / WdS 91 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Handkante);;;;;;;;WdH 282 / WdS 91 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Hoher Tritt);;;;;;;;WdH 282 / WdS 91 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Klammer);;;;;;;;WdH 282 / WdS 91 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Knaufschlag);;;;;;;;WdH 282 / WdS 91 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Knie);;;;;;;;WdH 282 / WdS 91;;Kampf;0;
+Waffenloses Manöver (Kopfstoß);;;;;;;;WdH 282 / WdS 91;;Kampf;0;
+Waffenloses Manöver (Kreuzblock);;;;;;;;WdH 282 / WdS 91 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Niederringen);;;;;;;;WdH 282 / WdS 91 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Schmetterschlag);;;;;;;;WdH 282 / WdS 92 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Schmutzige Tricks);;;;;;;;WdH 282 / WdS 92 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Schwanzfeger);;;;;;;;WdH 282 / WdS 92 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Schwanzschlag);;;;;;;;WdH 282 / WdS 92 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Schwinger);;;;;;;;WdH 282 / WdS 92 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Schwitzkasten);;;;;;;;WdH 282 / WdS 92 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Sprung);;;;;;;;WdH 282 / WdS 92 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Sprungtritt);;;;;;;;WdH 282 / WdS 92 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Tritt);;;;;;;;WdH 282 / WdS 92 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Umstoßen);;;;;;;;WnM 151;;Kampf;0;
+Waffenloses Manöver (Versteckte Klinge);;;;;;;;WdH 282 / WdS 92 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Wurf);;;;;;;;WdH 282 / WdS 93 / WnM 151;;Kampf;0;
+Waffenloses Manöver (Würgegriff);;;;;;;;WdH 282 / WdS 93 / WnM 151;;Kampf;0;
 Windmühle;;;;;;;;WdH 283 / WdS 71,77 / WnM 152;;Kampf;0;SF Gegenhalten, SF Wuchtschlag
 Wuchtschlag;;;;;;;;WdH 283 / WdS 65, 77 / WnM 152;;Kampf;0;KK 12
 Wundheiler;;;;;;;;WnM 144;;Allgemein;0;Anatomie 10, Heilkunde Wunden 10
@@ -1357,103 +1338,21 @@ Zauber bereithalten;;;;;;;;WdZ 16;;Magisch;0;MU 12, KL 12, SF Zauberkontrolle
 Zauber unterbrechen;;;;;;;;WdZ 17;;Magisch;0;MU 15, KL 15, SF Zauber bereithalten, SF Konzentrationsstärke
 Zauberkontrolle;;;;;;;;WdZ 17;;Magisch;0;KL 12, SF% Repräsentation
 Zauberroutine;;;;;;;;WdZ 17;;Magisch;0;SF Zauberkontrolle
-Zaubertanz: Firuns Jagd;;;;;;;;WdZ 142;;Magisch;0;\N
-Zaubertanz: Madayana;;;;;;;;WdZ 142, 143;;Magisch;0;\N
-Zaubertanz: Rahjas Begehren;;;;;;;;WdZ 143;;Magisch;0;\N
-Zaubertanz: Selinata;;;;;;;;WdZ 143;;Magisch;0;\N
-Zaubertanz: Tanz der Bilder;;;;;;;;WdZ 143;;Magisch;0;\N
-Zaubertanz: Tanz der Erlösung;;;;;;;;WdZ 143;;Magisch;0;\N
-Zaubertanz: Tanz der Ermutigung;;;;;;;;WdZ 143, 144;;Magisch;0;\N
-Zaubertanz: Tanz der Freude;;;;;;;;WdZ 144;;Magisch;0;\N
-Zaubertanz: Tanz der Gemeinschaft;;;;;;;;WdZ 144;;Magisch;0;\N
-Zaubertanz: Tanz der Liebe;;;;;;;;WdZ 144;;Magisch;0;\N
-Zaubertanz: Tanz der Unantastbarkeit;;;;;;;;WdZ 144;;Magisch;0;\N
-Zaubertanz: Tanz der Wahrheit;;;;;;;;WdZ 144, 145;;Magisch;0;\N
-Zaubertanz: Tanz der Weisheit;;;;;;;;WdZ 145;;Magisch;0;\N
-Zaubertanz: Tanz des Ungehorsams;;;;;;;;WdZ 145;;Magisch;0;\N
-Zaubertanz: Tanz ohne Ende;;;;;;;;WdZ 145;;Magisch;0;\N
-Zauberzeichen;;;;;;;;WdH 292 / WdZ 59;;Magisch;0;KL 12, IN 12, FF 12, Ritualkenntnis (Alchimie) 0 | Geister binden 0 | Ritualkenntnis (Gildenmagie) 0 | Ritualkenntnis (Kristallomantie) 0 | Ritualkenntnis (Zibilja) 0
-Zauberzeichen: Auge der Ewigen Wacht;;;;;;;;WdA 144;;Magisch;0;\N
-Zauberzeichen: Auge des Basilisken;;;;;;;;WdA 144;;Magisch;0;\N
-Zauberzeichen: Auge des Mondes;;;;;;;;WdA 144;;Magisch;0;\N
-Zauberzeichen: Bann- und Schutzkreis gegen Chimären;;;;;;;;WdA 156;;Magisch;0;\N
-Zauberzeichen: Bann- und Schutzkreis gegen Elementare;;;;;;;;WdA 156;;Magisch;0;\N
-Zauberzeichen: Bann- und Schutzkreis gegen gehörnte Dämonen;;;;;;;;WdA 157;;Magisch;0;\N
-Zauberzeichen: Bann- und Schutzkreis gegen Geisterwesen;;;;;;;;WdA 157;;Magisch;0;\N
-Zauberzeichen: Bann- und Schutzkreis gegen niedere Dämonen;;;;;;;;WdA 157;;Magisch;0;\N
-Zauberzeichen: Fallensiegel;;;;;;;;WdA 144;;Magisch;0;\N
-Zauberzeichen: Fanal der Herrschaft;;;;;;;;WdA 144;;Magisch;0;\N
-Zauberzeichen: Fixierungszeichen;;;;;;;;WdA 145;;Magisch;0;\N
-Zauberzeichen: Gezücht des Meisters;;;;;;;;WdA 145;;Magisch;0;\N
-Zauberzeichen: Glyphe der Elementaren Attraktion;;;;;;;;WdA 145;;Magisch;0;\N
-Zauberzeichen: Glyphe der Elementaren Bannung;;;;;;;;WdA 146;;Magisch;0;\N
-Zauberzeichen: Glyphe des verfluchten Goldes;;;;;;;;WdA 146;;Magisch;0;\N
-Zauberzeichen: Hermetisches Siegel;;;;;;;;WdA 146;;Magisch;0;\N
-Zauberzeichen: Hypnotisches Zeichen;;;;;;;;WdA 146;;Magisch;0;\N
-Zauberzeichen: Leuchtendes Zeichen;;;;;;;;WdA 147;;Magisch;0;\N
-Zauberzeichen: Markierung des Todes;;;;;;;;WdA 147;;Magisch;0;\N
-Zauberzeichen: Schutzkreis gegen Reptilien;;;;;;;;WdA 158;;Magisch;0;\N
-Zauberzeichen: Schutzkreis gegen Traumgänger;;;;;;;;WdA 158;;Magisch;0;\N
-Zauberzeichen: Schutzkreis gegen Ungeziefer;;;;;;;;WdA 158;;Magisch;0;\N
-Zauberzeichen: Schutzkreis gegen Untote;;;;;;;;WdA 159;;Magisch;0;\N
-Zauberzeichen: Siegel der Seelenruhe;;;;;;;;WdA 147;;Magisch;0;\N
-Zauberzeichen: Siegel der Stille;;;;;;;;WdA 147;;Magisch;0;\N
-Zauberzeichen: Siegel der zweiten Haut;;;;;;;;WdA 148;;Magisch;0;\N
-Zauberzeichen: Sigille der Schatten;;;;;;;;WdA 148;;Magisch;0;\N
-Zauberzeichen: Sigille des unsichtbaren Trägers;;;;;;;;WdA 148;;Magisch;0;\N
-Zauberzeichen: Sigille des unsichtbaren Weges;;;;;;;;WdA 149;;Magisch;0;\N
-Zauberzeichen: Singendes Zeichen;;;;;;;;WdA 149;;Magisch;0;\N
-Zauberzeichen: Ungesehenes Zeichen;;;;;;;;WdA 149;;Magisch;0;\N
-Zauberzeichen: Verderben des Magiers;;;;;;;;WdA 149;;Magisch;0;\N
-Zauberzeichen: Verständigungszeichen;;;;;;;;WdA 149;;Magisch;0;\N
-Zauberzeichen: Wimmelndes Zeichen;;;;;;;;WdA 150;;Magisch;0;\N
-Zauberzeichen: Wunschglyphe;;;;;;;;WdA 150;;Magisch;0;\N
-Zauberzeichen: Zähne des Feuers;;;;;;;;WdA 150;;Magisch;0;\N
-Zauberzeichen: Zeichen der Zauberschmiede;;;;;;;;WdA 150;;Magisch;0;\N
-Zauberzeichen: Zeichen des Handwerks;;;;;;;;WdA 151;;Magisch;0;\N
-Zauberzeichen: Zeichen des Stillstands;;;;;;;;WdA 151;;Magisch;0;\N
-Zauberzeichen: Zeichen des versperrten Blicks;;;;;;;;WdA 151;;Magisch;0;\N
-Zauberzeichen: Zeichen gegen Magie;;;;;;;;WdA 151;;Magisch;0;\N
-Zauberzeichen: Zusatzzeichen Kraftquellenspeisung;;;;;;;;WdA 152;;Magisch;0;\N
-Zauberzeichen: Zusatzzeichen Magiewiderstand;;;;;;;;WdA 152;;Magisch;0;\N
-Zauberzeichen: Zusatzzeichen Potenzierung;;;;;;;;WdA 152;;Magisch;0;\N
-Zauberzeichen: Zusatzzeichen Satinavs Siegel;;;;;;;;WdA 152;;Magisch;0;\N
-Zauberzeichen: Zusatzzeichen Schutzsiegel;;;;;;;;WdA 153;;Magisch;0;\N
-Zauberzeichen: Zusatzzeichen Tarnung;;;;;;;;WdA 153;;Magisch;0;\N
-Zauberzeichen: Zusatzzeichen Verkleinerung;;;;;;;;WdA 153;;Magisch;0;\N
-Zauberzeichen: Zusatzzeichen Zielbeschränkung;;;;;;;;WdA 153;;Magisch;0;\N
-Zibilja-Ritual: Bienenfleiß;;;;;;;;WdZ 146;;Magisch (Ritual);0;\N
-Zibilja-Ritual: Bienenkönigin;;;;;;;;WdZ 146;;Magisch (Ritual);0;\N
-Zibilja-Ritual: Bienenschwarm;;;;;;;;WdZ 146;;Magisch (Ritual);0;\N
-Zibilja-Ritual: Bienentanz;;;;;;;;WdZ 146;;Magisch (Ritual);0;\N
-Zibilja-Ritual: Mackestopp;;;;;;;;WdZ 147;;Magisch (Ritual);0;\N
-Zibilja-Ritual: Ruf des Bienenstocks;;;;;;;;WdZ 147;;Magisch (Ritual);0;SF Unsichtbare Chronik
-Zibilja-Ritual: Schwarmseele;;;;;;;;WdZ 147;;Magisch (Ritual);0;\N
-Zibilja-Ritual: Siegel der Ewigen Ruhe;;;;;;;;WdZ 147, 148;;Magisch (Ritual);0;Ritualkenntnis (Zibilja) 0, SF Zauberzeichen
-Zibilja-Ritual: Traumseherin;;;;;;;;WdZ 148;;Magisch (Ritual);0;\N
-Zibilja-Ritual: Traumwissen;;;;;;;;WdZ 148;;Magisch (Ritual);0;\N
-Zibilja-Ritual: Unsichtbare Chronik;;;;;;;;WdZ 148;;Magisch (Ritual);0;\N
-Zibilja-Ritual: Wachshaut;;;;;;;;WdZ 148;;Magisch (Ritual);0;\N
-Zibilja-Ritual: Weisheit der Schrift;;;;;;;;WdZ 148;;Magisch (Ritual);0;\N
-Zibilja-Ritual: Winterlager;;;;;;;;WdZ 148, 149;;Magisch (Ritual);0;\N
 Zwangskontrolle;;;;;;;;WnM 160;;Magisch;0;MU 15, CH 15
 Akoluth;;;;;;;;WdH 292, 239;;Klerikal;1;Götter/Kulte 5, EIGENSCHAFTSVORAUSSETZUNGEN DER KIRCHE-1
 Berufsgeheimnis;;;;;;;;WdH 275, 276 / WnM 140;;Allgemein;1;Handwerkstalent auf 15 | bis zwei passenden Hilfstalente auf jeweils  7+
 Kulturkunde (Andere);;;;;;;;WdH 276;;Allgemein;1;KL 10, IN 10
 Massenbeschwörung;;;;;;;;WnM 157;;Magisch;1;Eine Wesensbeschwörung 7
-Ortskenntnis;;;;;;;;WdH 276, 277;;Allgemein;1;\N
+Ortskenntnis;;;;;;;;WdH 276, 277;;Allgemein;1;
 Rüstungsgewöhnung I;;;;;;;;WdH 280 / WdS 76 / WnM 149;;Kampf;1;KK 10
-Schamanenritual: Hauch des Elements;;;;;;;;\N;;Magisch (Ritual);1;\N
+Schamanenritual: Hauch des Elements;;;;;;;;;;Magisch (Ritual);1;
 Schutzzeichen;;;;;;;;WnM 158;;Magisch;1;KL 12, IN 12, FF 12
 Spätweihe Alveranische Gottheit;;;;;;;;WdG 238;;Klerikal;1;CH 11
 Spätweihe Nichtalveranische Gottheit;;;;;;;;WdG 238;;Klerikal;1;CH 11
-Stabzauber: Dienstfokus;;;;;;;;MyMa 114 / WnM 158;;Magisch (Ritual);1;Ritualkenntnis (Optimatik) 11
-Stabzauber: Spontanfokus;;;;;;;;MyMa 118 / WnM 159;;Magisch (Ritual);1;Ritualkenntnis (Optimatik) 11
-Stabzauber: Tierhaut;;;;;;;;MyMa 118 / WnM 159;;Magisch (Ritual);1;Ritualkenntnis (Optimatik) 14
-Talentspezialisierung;;;;;;;;WdH 277 / WnM 144;;Allgemein;1;\N
+Talentspezialisierung;;;;;;;;WdH 277 / WnM 144;;Allgemein;1;
 Tierischer Begleiter;;;;;;;;WdZ 76;;Magisch;1;V Zweistimmiger Gesang
-Waffenmeister;;;;;;;;WdH 282 / WdS 77, 190 / WnM 150;;Kampf;1;\N
-Waffenspezialisierung;;;;;;;;WdH 283 / WdS 77 / WnM151;;Kampf;1;\N
+Waffenmeister;;;;;;;;WdH 282 / WdS 77, 190 / WnM 150;;Kampf;1;
+Waffenspezialisierung;;;;;;;;WdH 283 / WdS 77 / WnM151;;Kampf;1;
 Zauberspezialisierung;;;;;;;;WdZ 17;;Magisch;1;SF% Repräsentation
 Hesindes Macht (Tanz der Erlösung);;;;;;; Haz6, Nov5, Tul5, Maj4; WdZ143; MU/CH/CH; Antimagie, Einfluss, Herrschaft;;
 Marhibos Hand (Tanz der Erlösung);;;;;;; Haz6, Nov5, Tul5, Maj4; WdZ143; MU/CH/CH; Antimagie, Einfluss, Herrschaft;;
@@ -1840,3 +1739,188 @@ Zeichen setzen;II;speziell;;;;;;;;;;
 Zerschmetternder Bannstrahl;V;P;S;S(10);Bannstrahl trifft Opfer, unheilige Wesen zerfallen zu Staub, Paktierer erleiden LkP*+15 SP, Verlust aller AsP;augenblicklich;Praios, Kamaluq;WdG 261;;;;
 Zorn des Berglöwen;II;S;;;;;;;;;;
 Zuflucht finden;II;G;s/F;G;Geweihter findet zum nächsten sicheren Lagerplatz oder Zufluchtsort ;max. LkP* Std.;Firun, Ifirn, Tr., Aves, Hw.;WdG 271;;;;
+Zaubertanz: Firuns Jagd;;;;;;;;WdZ 142;;Magisch;0;
+Zaubertanz: Madayana;;;;;;;;WdZ 142, 143;;Magisch;0;
+Zaubertanz: Rahjas Begehren;;;;;;;;WdZ 143;;Magisch;0;
+Zaubertanz: Selinata;;;;;;;;WdZ 143;;Magisch;0;
+Zaubertanz: Tanz der Bilder;;;;;;;;WdZ 143;;Magisch;0;
+Zaubertanz: Tanz der Erlösung;;;;;;;;WdZ 143;;Magisch;0;
+Zaubertanz: Tanz der Ermutigung;;;;;;;;WdZ 143, 144;;Magisch;0;
+Zaubertanz: Tanz der Freude;;;;;;;;WdZ 144;;Magisch;0;
+Zaubertanz: Tanz der Gemeinschaft;;;;;;;;WdZ 144;;Magisch;0;
+Zaubertanz: Tanz der Liebe;;;;;;;;WdZ 144;;Magisch;0;
+Zaubertanz: Tanz der Unantastbarkeit;;;;;;;;WdZ 144;;Magisch;0;
+Zaubertanz: Tanz der Wahrheit;;;;;;;;WdZ 144, 145;;Magisch;0;
+Zaubertanz: Tanz der Weisheit;;;;;;;;WdZ 145;;Magisch;0;
+Zaubertanz: Tanz des Ungehorsams;;;;;;;;WdZ 145;;Magisch;0;
+Zaubertanz: Tanz ohne Ende;;;;;;;;WdZ 145;;Magisch;0;
+Zauberzeichen;;;;;;;;WdH 292 / WdZ 59;;Magisch;0;KL 12, IN 12, FF 12, Ritualkenntnis (Alchimie) 0 | Geister binden 0 | Ritualkenntnis (Gildenmagie) 0 | Ritualkenntnis (Kristallomantie) 0 | Ritualkenntnis (Zibilja) 0
+Zauberzeichen: Auge der Ewigen Wacht;;;;;;;;WdA 144;;Magisch;0;
+Zauberzeichen: Auge des Basilisken;;;;;;;;WdA 144;;Magisch;0;
+Zauberzeichen: Auge des Mondes;;;;;;;;WdA 144;;Magisch;0;
+Zauberzeichen: Bann- und Schutzkreis gegen Chimären;;;;;;;;WdA 156;;Magisch;0;
+Zauberzeichen: Bann- und Schutzkreis gegen Elementare;;;;;;;;WdA 156;;Magisch;0;
+Zauberzeichen: Bann- und Schutzkreis gegen gehörnte Dämonen;;;;;;;;WdA 157;;Magisch;0;
+Zauberzeichen: Bann- und Schutzkreis gegen Geisterwesen;;;;;;;;WdA 157;;Magisch;0;
+Zauberzeichen: Bann- und Schutzkreis gegen niedere Dämonen;;;;;;;;WdA 157;;Magisch;0;
+Zauberzeichen: Fallensiegel;;;;;;;;WdA 144;;Magisch;0;
+Zauberzeichen: Fanal der Herrschaft;;;;;;;;WdA 144;;Magisch;0;
+Zauberzeichen: Fixierungszeichen;;;;;;;;WdA 145;;Magisch;0;
+Zauberzeichen: Gezücht des Meisters;;;;;;;;WdA 145;;Magisch;0;
+Zauberzeichen: Glyphe der Elementaren Attraktion;;;;;;;;WdA 145;;Magisch;0;
+Zauberzeichen: Glyphe der Elementaren Bannung;;;;;;;;WdA 146;;Magisch;0;
+Zauberzeichen: Glyphe des verfluchten Goldes;;;;;;;;WdA 146;;Magisch;0;
+Zauberzeichen: Hermetisches Siegel;;;;;;;;WdA 146;;Magisch;0;
+Zauberzeichen: Hypnotisches Zeichen;;;;;;;;WdA 146;;Magisch;0;
+Zauberzeichen: Leuchtendes Zeichen;;;;;;;;WdA 147;;Magisch;0;
+Zauberzeichen: Markierung des Todes;;;;;;;;WdA 147;;Magisch;0;
+Zauberzeichen: Schutzkreis gegen Reptilien;;;;;;;;WdA 158;;Magisch;0;
+Zauberzeichen: Schutzkreis gegen Traumgänger;;;;;;;;WdA 158;;Magisch;0;
+Zauberzeichen: Schutzkreis gegen Ungeziefer;;;;;;;;WdA 158;;Magisch;0;
+Zauberzeichen: Schutzkreis gegen Untote;;;;;;;;WdA 159;;Magisch;0;
+Zauberzeichen: Siegel der Seelenruhe;;;;;;;;WdA 147;;Magisch;0;
+Zauberzeichen: Siegel der Stille;;;;;;;;WdA 147;;Magisch;0;
+Zauberzeichen: Siegel der zweiten Haut;;;;;;;;WdA 148;;Magisch;0;
+Zauberzeichen: Sigille der Schatten;;;;;;;;WdA 148;;Magisch;0;
+Zauberzeichen: Sigille des unsichtbaren Trägers;;;;;;;;WdA 148;;Magisch;0;
+Zauberzeichen: Sigille des unsichtbaren Weges;;;;;;;;WdA 149;;Magisch;0;
+Zauberzeichen: Singendes Zeichen;;;;;;;;WdA 149;;Magisch;0;
+Zauberzeichen: Ungesehenes Zeichen;;;;;;;;WdA 149;;Magisch;0;
+Zauberzeichen: Verderben des Magiers;;;;;;;;WdA 149;;Magisch;0;
+Zauberzeichen: Verständigungszeichen;;;;;;;;WdA 149;;Magisch;0;
+Zauberzeichen: Wimmelndes Zeichen;;;;;;;;WdA 150;;Magisch;0;
+Zauberzeichen: Wunschglyphe;;;;;;;;WdA 150;;Magisch;0;
+Zauberzeichen: Zähne des Feuers;;;;;;;;WdA 150;;Magisch;0;
+Zauberzeichen: Zeichen der Zauberschmiede;;;;;;;;WdA 150;;Magisch;0;
+Zauberzeichen: Zeichen des Handwerks;;;;;;;;WdA 151;;Magisch;0;
+Zauberzeichen: Zeichen des Stillstands;;;;;;;;WdA 151;;Magisch;0;
+Zauberzeichen: Zeichen des versperrten Blicks;;;;;;;;WdA 151;;Magisch;0;
+Zauberzeichen: Zeichen gegen Magie;;;;;;;;WdA 151;;Magisch;0;
+Zauberzeichen: Zusatzzeichen Kraftquellenspeisung;;;;;;;;WdA 152;;Magisch;0;
+Zauberzeichen: Zusatzzeichen Magiewiderstand;;;;;;;;WdA 152;;Magisch;0;
+Zauberzeichen: Zusatzzeichen Potenzierung;;;;;;;;WdA 152;;Magisch;0;
+Zauberzeichen: Zusatzzeichen Satinavs Siegel;;;;;;;;WdA 152;;Magisch;0;
+Zauberzeichen: Zusatzzeichen Schutzsiegel;;;;;;;;WdA 153;;Magisch;0;
+Zauberzeichen: Zusatzzeichen Tarnung;;;;;;;;WdA 153;;Magisch;0;
+Zauberzeichen: Zusatzzeichen Verkleinerung;;;;;;;;WdA 153;;Magisch;0;
+Zauberzeichen: Zusatzzeichen Zielbeschränkung;;;;;;;;WdA 153;;Magisch;0;
+Zibilja-Ritual: Bienenfleiß;;;;;;;;WdZ 146;;Magisch (Ritual);0;
+Zibilja-Ritual: Bienenkönigin;;;;;;;;WdZ 146;;Magisch (Ritual);0;
+Zibilja-Ritual: Bienenschwarm;;;;;;;;WdZ 146;;Magisch (Ritual);0;
+Zibilja-Ritual: Bienentanz;;;;;;;;WdZ 146;;Magisch (Ritual);0;
+Zibilja-Ritual: Mackestopp;;;;;;;;WdZ 147;;Magisch (Ritual);0;
+Zibilja-Ritual: Ruf des Bienenstocks;;;;;;;;WdZ 147;;Magisch (Ritual);0;SF Unsichtbare Chronik
+Zibilja-Ritual: Schwarmseele;;;;;;;;WdZ 147;;Magisch (Ritual);0;
+Zibilja-Ritual: Siegel der Ewigen Ruhe;;;;;;;;WdZ 147, 148;;Magisch (Ritual);0;Ritualkenntnis (Zibilja) 0, SF Zauberzeichen
+Zibilja-Ritual: Traumseherin;;;;;;;;WdZ 148;;Magisch (Ritual);0;
+Zibilja-Ritual: Traumwissen;;;;;;;;WdZ 148;;Magisch (Ritual);0;
+Zibilja-Ritual: Unsichtbare Chronik;;;;;;;;WdZ 148;;Magisch (Ritual);0;
+Zibilja-Ritual: Wachshaut;;;;;;;;WdZ 148;;Magisch (Ritual);0;
+Zibilja-Ritual: Weisheit der Schrift;;;;;;;;WdZ 148;;Magisch (Ritual);0;
+Zibilja-Ritual: Winterlager;;;;;;;;WdZ 148, 149;;Magisch (Ritual);0;
+Trommelzauber: Rastullahs Güte;;;;;;;;WdZ 174;;Magisch (Ritual);0;Ritualkenntnis (Derwische) 11
+Trommelzauber: Ruf des Krieges;;;;;;;;WdZ 174;;Magisch (Ritual);0;Ritualkenntnis (Derwische) 3
+Trommelzauber: Schutz Rastullahs;;;;;;;;WdZ 174;;Magisch (Ritual);0;Ritualkenntnis (Derwische) 11
+Trommelzauber: Sturm der Wüste;;;;;;;;WdZ 174;;Magisch (Ritual);0;Ritualkenntnis (Derwische) 7
+Trommelzauber: Zorn des Gottgefälligen;;;;;;;;WdZ 174;;Magisch (Ritual);0;Ritualkenntnis (Derwische) 9, MU 14
+Runen: Alfenbannrune
+Runen: Blutrune
+Runen: Bärenrune
+Runen: Drachenrune
+Runen: Entgifterrune
+Runen: Felsenrune
+Runen: Finsterrune
+Runen: Friedensrune
+Runen: Furchtrune
+Runen: Geisterbannrune
+Runen: Lebensrune
+Runen: Nebelrune
+Runen: Orkanstimmenrune
+Runen: Ottarune
+Runen: Pfeilrune
+Runen: Rauschrune
+Runen: Salzwasserrune
+Runen: Schicksalsrune
+Runen: Waberlohenrune
+Runen: Waffenrune
+Runen: Wogensturmrune
+Runen: Zukunftsrune
+Schalenzauber: Allegorische Analyse
+Schalenzauber: Chymische Hochzeit
+Schalenzauber: Feuer und Eis
+Schalenzauber: Mandricons Bindung
+Schalenzauber: Transmutation der Elemente
+Schalenzauber: Weihe der Schale
+Schlangenring-Zauber: Herr der Flammen
+Schlangenring-Zauber: Kräfte der Natur
+Schlangenring-Zauber: Launen des Windes
+Schlangenring-Zauber: Macht des Lebens
+Schlangenring-Zauber: Macht über den Regen
+Schlangenring-Zauber: Magnetismus
+Schlangenring-Zauber: Seelenfeuer
+Schlangenring-Zauber: Wasserbann
+Schlangenring-Zauber: Weg durch Sumus Leib
+Schlangenring-Zauber: Weihe der Schlange
+Schlangenring-Zauber: Wirbelnder Luftschild
+Schuppenbeutel: Bindung des Schuppenbeutels
+Schuppenbeutel: Ewige Wegzehrung
+Schuppenbeutel: Suchende Finger
+Stabzauber: Bindung
+Stabzauber: Fackel
+Stabzauber: Flammenschwert
+Stabzauber: Hammer des Magus
+Stabzauber: Kraftfokus
+Stabzauber: Merkmalsfokus
+Stabzauber: Modifikationsfokus
+Stabzauber: Schuppenhaut
+Stabzauber: Seil
+Stabzauber: Stabverlängerung
+Stabzauber: Zauberspeicher
+Stabzauber: Dienstfokus;;;;;;;;MyMa 114 / WnM 158;;Magisch (Ritual);1;Ritualkenntnis (Optimatik) 11
+Stabzauber: Spontanfokus;;;;;;;;MyMa 118 / WnM 159;;Magisch (Ritual);1;Ritualkenntnis (Optimatik) 11
+Stabzauber: Tierhaut;;;;;;;;MyMa 118 / WnM 159;;Magisch (Ritual);1;Ritualkenntnis (Optimatik) 14
+Kristallomantisches Ritual: Kristallbindung
+Kristallomantisches Ritual: Kristallformung
+Kristallomantisches Ritual: Madakristall
+Kristallomantisches Ritual: Matrixkristall
+Kristallomantisches Ritual: Thesiskristall
+Kugelzauber: Bildergalerie
+Kugelzauber: Bilderspiel
+Kugelzauber: Bindung
+Kugelzauber: Brennglas und Prisma
+Kugelzauber: Farben des Geistes
+Kugelzauber: Fernbild
+Kugelzauber: H&apos;Szints Auge
+Kugelzauber: Kugel des Hellsehers
+Kugelzauber: Kugel des Illusionisten
+Kugelzauber: Orbitarium
+Kugelzauber: Schutz gegen Untote
+Kugelzauber: Wachendes Auge
+Kugelzauber: Warnendes Leuchten
+Druidisches Dolchritual: Bann;;;;;;;;WdZ 133;;Magisch (Ritual);0;SF Merkmalskenntnis (Antimagie) | SF Merkmalskenntnis (Geisterwesen), Ritualkenntnis (Druide) 7, SF Druidisches Dolchritual: Gespür 
+Druidisches Dolchritual: Ernte;;;;;;;;WdZ 134;;Magisch (Ritual);0;Ritualkenntnis (Druiden) 0 | Ritualkenntnis (Geoden) 0, SF Druidisches Dolchritual: Gespür
+Druidisches Dolchritual: Gespür;;;;;;;;WdZ 134;;Magisch (Ritual);0;IN 12, Ritualkenntnis (Druide) 0 | Ritualkenntnis (Geode) 0, SF Druidisches Dolchritual: Weihe
+Druidisches Dolchritual: Lebenskraft;;;;;;;;WdZ 134;;Magisch (Ritual);0;Ritualkenntnis (Druide) 0 | Ritualkenntnis (Geode) 0, SF Druidisches Dolchritual: Gespür
+Druidisches Dolchritual: Leib;;;;;;;;WdZ 134;;Magisch (Ritual);0;KO 12, Ritualkenntnis (Druide) 7, SF Druidisches Dolchritual: Gespür
+Druidisches Dolchritual: Licht;;;;;;;;WdZ 134;;Magisch (Ritual);0;Ritualkenntnis (Druide) 0, Ritualkenntnis (Geodenmagie) 0, SF Druidisches Dolchritual: Gespür
+Druidisches Dolchritual: Opferdolch;;;;;;;;WdZ 134;;Magisch (Ritual);0;Ritualkenntnis (Druide) 7, SF Blutmagie, SF Druidisches Dolchritual: Lebenskraft
+Druidisches Dolchritual: Schneide;;;;;;;;WdZ 134;;Magisch (Ritual);0;SF Merkmalskenntis (Elementar (Erz)), SF Merkmalskenntnis (Elementar (Feuer)), Ritualkenntnis (Druide) 11 | Ritualkenntnis (Geode) 11, SF Druidisches Dolchritual: Gespür des Dolches
+Druidisches Dolchritual: Schutz;;;;;;;;WdZ 135;;Magisch (Ritual);0;Wildnisleben 10, Ritualkenntnis (Druide) 11 | Ritualkenntnis (Geode) 11, SF Druidisches Dolchritual: Gespür des Dolches
+Druidisches Dolchritual: Weg;;;;;;;;WdZ 135;;Magisch (Ritual);0;Ritualkenntnis (Druide) 0 | Ritualkenntnis (Geode) 0, SF Druidisches Dolchritual: Gespür
+Druidisches Dolchritual: Weihe;;;;;;;;WdZ 135;;Magisch (Ritual);0;Ritualkenntnis (Druide) 0 | Ritualkenntnis (Geode) 0
+Druidisches Dolchritual: Weisung;;;;;;;;WdZ 135;;Magisch (Ritual);0;Magiekunde 10, SF Kraftlinienmagie I, Ritualkenntnis (Druide) 11 | Ritualkenntnis (Geode) 11, SF Druidisches Dolchritual: Weg
+Druidisches Herrschaftsritual: Amulett der Herrschaft;;;;;;;;WdZ 132;;Magisch (Ritual);0;Ritualkenntnis (Druide) 7, SF Merkmalskenntnis (Herrschaft), SF Kristall der Herrschaft
+Druidisches Herrschaftsritual: Kristall der Herrschaft;;;;;;;;WdZ 132;;Magisch (Ritual);0;Ritualkenntnis (Druide) 11 | Geister binden (Ferkina-Schamane) 11 | Geister binden (Trollzacker-Schamane) 11, SF Wacht der Herrschaft
+Druidisches Herrschaftsritual: Miniatur der Herrschaft;;;;;;;;WdZ 132, 133;;Magisch (Ritual);0;Ritualkenntnis (Druide) 11 | Geister binden (Ferkina-Schamane) 11 | Geister binden (Trollzacker-Schamane) 11, SF Wacht der Herrschaft
+Druidisches Herrschaftsritual: Wachs der Herrschaft;;;;;;;;WdZ 133;;Magisch (Ritual);0;Ritualkenntnis (Druide) 7 | Geister binden (Ferkina-Schamane) 7 | Geister binden (Trollzacker-Schamane) 7
+Druidisches Herrschaftsritual: Wurzel des Blutes;;;;;;;;WdZ 133;;Magisch (Ritual);0;Ritualkenntnis (Druide) 7 | Geister binden (Ferkina-Schamane) 7 | Geister binden (Trollzacker-Schamane) 7
+Keulenritual: Bann der Keule
+Keulenritual: Geist der Keule
+Keulenritual: Gespür der Keule
+Keulenritual: Hilfe der Keule
+Keulenritual: Härte der Keule
+Keulenritual: Kraft der Keule
+Keulenritual: Nähe zur Natur
+Keulenritual: Opferkeule
+Keulenritual: Weihe der Keule
+Keulenritual: Zauber der Keule

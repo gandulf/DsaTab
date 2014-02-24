@@ -9,7 +9,6 @@ import com.dsatab.data.CombatMeleeAttribute;
 import com.dsatab.data.CombatProbe;
 import com.dsatab.data.CombatShieldTalent;
 import com.dsatab.data.Hero;
-import com.dsatab.data.Modifier;
 import com.dsatab.data.Probe;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;

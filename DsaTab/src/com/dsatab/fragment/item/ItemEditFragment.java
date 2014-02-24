@@ -33,13 +33,13 @@ import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemSpecification;
 import com.dsatab.data.items.MiscSpecification;
+import com.dsatab.db.DataManager;
 import com.dsatab.fragment.BaseFragment;
 import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Util;
 import com.dsatab.view.CardView;
 import com.dsatab.view.ItemListItem;
-import com.dsatab.view.PortraitChooserDialog;
-import com.dsatab.xml.DataManager;
+import com.dsatab.view.PictureChooserDialog;
 import com.gandulf.guilib.util.DefaultTextWatcher;
 
 public class ItemEditFragment extends BaseFragment implements OnClickListener, OnCheckedChangeListener {
@@ -48,7 +48,7 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 
 	public static final String INTENT_EXTRA_ITEM_ID = "itemId";
 	public static final String INTENT_EXTRA_EQUIPPED_ITEM_ID = "equippedItemId";
-	public static final String INTENT_EXTRA_HERO = "hero";
+	public static final String INTENT_EXTRA_HERO_KEY = "heroKey";
 
 	private CardView imageView;
 	private ItemListItem itemView;
@@ -266,7 +266,7 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 			DataManager.createItem(origItem);
 		}
 
-		if (getActivity().getIntent().hasExtra(ItemEditFragment.INTENT_EXTRA_HERO)) {
+		if (getActivity().getIntent().hasExtra(ItemEditFragment.INTENT_EXTRA_HERO_KEY)) {
 			if (DsaTabApplication.getInstance().getHero().getItem(origItem.getId()) == null) {
 				DsaTabApplication.getInstance().getHero().addItem(origItem);
 			} else {
@@ -283,7 +283,7 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 	}
 
 	private void pickPortrait() {
-		final PortraitChooserDialog pdialog = new PortraitChooserDialog(getActivity());
+		final PictureChooserDialog pdialog = new PictureChooserDialog(getActivity());
 
 		List<Integer> itemIcons = DsaTabApplication.getInstance().getConfiguration().getItemIcons();
 

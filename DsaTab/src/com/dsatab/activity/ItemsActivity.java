@@ -21,18 +21,18 @@ import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemCard;
 import com.dsatab.data.items.ItemSpecification;
+import com.dsatab.db.DataManager;
 import com.dsatab.fragment.item.ItemEditFragment;
 import com.dsatab.fragment.item.ItemListFragment;
 import com.dsatab.fragment.item.ItemListFragment.OnItemSelectedListener;
 import com.dsatab.fragment.item.ItemViewFragment;
-import com.dsatab.xml.DataManager;
 
 public class ItemsActivity extends BaseFragmentActivity implements OnItemSelectedListener {
 
 	public static final int ACTION_EDIT = 1014;
 	public static final int ACTION_CREATE = 1015;
 
-	public static final String INTENT_EXTRA_HERO = "hero";
+	public static final String INTENT_EXTRA_HERO_KEY = "heroKey";
 	public static final String INTENT_EXTRA_ITEM_ID = "itemId";
 	public static final String INTENT_EXTRA_EQUIPPED_ITEM_ID = "equippedItemId";
 	private static final String INTENT_EXTRA_ITEM_TYPES = "itemTypes";
@@ -52,7 +52,7 @@ public class ItemsActivity extends BaseFragmentActivity implements OnItemSelecte
 		context.startActivity(intent);
 	}
 
-	public static void view(Context context, String heroKey, ItemCard itemCard) {
+	public static void view(Context context, Hero hero, ItemCard itemCard) {
 		if (itemCard != null && context != null) {
 
 			Item item = itemCard.getItem();
@@ -64,8 +64,8 @@ public class ItemsActivity extends BaseFragmentActivity implements OnItemSelecte
 			} else {
 				intent.putExtra(INTENT_EXTRA_ITEM_ID, item.getId());
 			}
-			if (heroKey != null) {
-				intent.putExtra(INTENT_EXTRA_HERO, heroKey);
+			if (hero != null) {
+				intent.putExtra(INTENT_EXTRA_HERO_KEY, hero.getFileInfo().getKey());
 			}
 
 			context.startActivity(intent);
@@ -81,11 +81,11 @@ public class ItemsActivity extends BaseFragmentActivity implements OnItemSelecte
 		context.startActivityForResult(intent, requestCode);
 	}
 
-	public static void create(Activity context, String heroKey, int requestCode) {
+	public static void insert(Activity context, String heroKey, int requestCode) {
 		Intent intent = new Intent(context, ItemsActivity.class);
 		intent.setAction(Intent.ACTION_INSERT);
 		if (heroKey != null) {
-			intent.putExtra(ItemEditFragment.INTENT_EXTRA_HERO, heroKey);
+			intent.putExtra(ItemEditFragment.INTENT_EXTRA_HERO_KEY, heroKey);
 		}
 		context.startActivityForResult(intent, requestCode);
 	}
@@ -101,10 +101,17 @@ public class ItemsActivity extends BaseFragmentActivity implements OnItemSelecte
 				intent.putExtra(ItemEditFragment.INTENT_EXTRA_ITEM_ID, item.getId());
 			}
 			if (heroKey != null) {
-				intent.putExtra(ItemEditFragment.INTENT_EXTRA_HERO, heroKey);
+				intent.putExtra(ItemEditFragment.INTENT_EXTRA_HERO_KEY, heroKey);
 			}
 			context.startActivityForResult(intent, requestCode);
 		}
+	}
+
+	public static void edit(Activity context, Hero hero, ItemCard itemCard, int requestCode) {
+		if (hero != null)
+			edit(context, hero.getFileInfo().getKey(), itemCard, requestCode);
+		else
+			edit(context, (String) null, itemCard, requestCode);
 	}
 
 	public static void edit(Activity context, String heroKey, UUID itemID, UUID equippedItemId, int requestCode) {
@@ -117,7 +124,7 @@ public class ItemsActivity extends BaseFragmentActivity implements OnItemSelecte
 			intent.putExtra(ItemEditFragment.INTENT_EXTRA_ITEM_ID, itemID);
 		}
 		if (heroKey != null) {
-			intent.putExtra(ItemEditFragment.INTENT_EXTRA_HERO, heroKey);
+			intent.putExtra(ItemEditFragment.INTENT_EXTRA_HERO_KEY, heroKey);
 		}
 		context.startActivityForResult(intent, requestCode);
 	}

@@ -117,7 +117,7 @@ public class Talent extends MarkableElement implements Value, Listable {
 	@Override
 	public Integer getProbeValue(int i) {
 
-		if (probeInfo.getAttributeTypes() != null) {
+		if (hero != null && probeInfo.getAttributeTypes() != null) {
 			AttributeType type = probeInfo.getAttributeTypes()[i];
 			return hero.getModifiedValue(type, false, false);
 		} else {
@@ -140,7 +140,7 @@ public class Talent extends MarkableElement implements Value, Listable {
 		Integer oldValue = getValue();
 		this.value = value;
 
-		if (oldValue != this.value)
+		if (oldValue != this.value && hero != null)
 			hero.fireValueChangedEvent(this);
 	}
 

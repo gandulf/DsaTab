@@ -2,10 +2,6 @@ package com.dsatab.data.enums;
 
 import com.dsatab.R;
 
-/**
- * @author Seraphim
- * 
- */
 public enum EventCategory {
 	Misc(R.drawable.m_icon_misc), Abenteuer(R.drawable.m_icon_abenteuer, true), Held(R.drawable.m_icon_held, true), Bekanntschaft(
 			R.drawable.m_icon_bekanntschaft, true), Freundschaft(R.drawable.m_icon_freundschaft, true), Tat(

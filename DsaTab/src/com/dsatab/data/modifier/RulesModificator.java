@@ -4,18 +4,12 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import android.text.TextUtils;
-import bsh.EvalError;
-import bsh.Interpreter;
-
-import com.dsatab.common.DsaTabRuntimeException;
 import com.dsatab.data.Art;
 import com.dsatab.data.Attribute;
 import com.dsatab.data.CombatMeleeAttribute;
 import com.dsatab.data.CombatMeleeTalent;
 import com.dsatab.data.CombatProbe;
 import com.dsatab.data.Hero;
-import com.dsatab.data.Modifier;
 import com.dsatab.data.Probe;
 import com.dsatab.data.Spell;
 import com.dsatab.data.Talent;
@@ -26,7 +20,6 @@ import com.dsatab.data.items.Armor;
 import com.dsatab.data.items.DistanceWeapon;
 import com.dsatab.data.items.Shield;
 import com.dsatab.data.items.Weapon;
-import com.dsatab.util.Util;
 
 public class RulesModificator extends AbstractModificator {
 
@@ -49,13 +42,10 @@ public class RulesModificator extends AbstractModificator {
 	private String description;
 
 	private Integer modifier;
-	private String modifierExpression;
 
 	private boolean dynamic = false;
 
-	private Modifier modifierObject;
-
-	private Interpreter interpreter;
+	protected Modifier modifierObject;
 
 	/**
 	 * 
@@ -68,20 +58,6 @@ public class RulesModificator extends AbstractModificator {
 
 		modifierObject = new Modifier(modifier, title, description);
 
-	}
-
-	protected Interpreter getInterpreter() throws EvalError {
-		if (interpreter == null) {
-			interpreter = new Interpreter(); // Construct an interpreter
-			interpreter.getNameSpace().importClass(Util.class.getName());
-			interpreter.getNameSpace().importPackage(com.dsatab.data.Value.class.getPackage().getName());
-			interpreter.getNameSpace().importPackage(com.dsatab.data.enums.AttributeType.class.getPackage().getName());
-			interpreter.getNameSpace().importPackage(com.dsatab.data.items.Item.class.getPackage().getName());
-
-			interpreter.set("hero", hero); // Set variables
-		}
-
-		return interpreter;
 	}
 
 	@Override
@@ -115,10 +91,20 @@ public class RulesModificator extends AbstractModificator {
 		return modificatorTypes;
 	}
 
+	public void setAffectedItemSpecifications(String... affectedItemSpecifications) {
+		this.affectedItemSpecifications = affectedItemSpecifications;
+		Arrays.sort(this.affectedItemSpecifications);
+	}
+
 	public void setAffectedItemSpecifications(List<String> affectedItemSpecifications) {
 		this.affectedItemSpecifications = affectedItemSpecifications.toArray(new String[affectedItemSpecifications
 				.size()]);
 		Arrays.sort(this.affectedItemSpecifications);
+	}
+
+	public void setAffectedTalentNames(String... affectedTalentNames) {
+		this.affectedTalentNames = affectedTalentNames;
+		Arrays.sort(this.affectedTalentNames);
 	}
 
 	public void setAffectedTalentNames(List<String> affectedTalentNames) {
@@ -136,9 +122,19 @@ public class RulesModificator extends AbstractModificator {
 		Arrays.sort(this.affectedArtNames);
 	}
 
+	public void setAffectedAttributeTypes(AttributeType... affectedAttributeTypes) {
+		this.affectedAttributeTypes = affectedAttributeTypes;
+		Arrays.sort(this.affectedAttributeTypes);
+	}
+
 	public void setAffectedAttributeTypes(List<AttributeType> affectedAttributeTypes) {
 		this.affectedAttributeTypes = affectedAttributeTypes.toArray(new AttributeType[affectedAttributeTypes.size()]);
 		Arrays.sort(this.affectedAttributeTypes);
+	}
+
+	public void setAffectedTalentTypes(TalentType... affectedTalentTypes) {
+		this.affectedTalentTypes = affectedTalentTypes;
+		Arrays.sort(this.affectedTalentTypes);
 	}
 
 	public void setAffectedTalentTypes(List<TalentType> affectedTalentTypes) {
@@ -146,9 +142,19 @@ public class RulesModificator extends AbstractModificator {
 		Arrays.sort(this.affectedTalentTypes);
 	}
 
+	public void setRequiredSpecialFeatures(FeatureType... requiredSpecialFeatures) {
+		this.requiredSpecialFeatures = requiredSpecialFeatures;
+		Arrays.sort(this.requiredSpecialFeatures);
+	}
+
 	public void setRequiredSpecialFeatures(List<FeatureType> requiredSpecialFeatures) {
 		this.requiredSpecialFeatures = requiredSpecialFeatures.toArray(new FeatureType[requiredSpecialFeatures.size()]);
 		Arrays.sort(this.requiredSpecialFeatures);
+	}
+
+	public void setExcludeSpecialFeatures(FeatureType... excludeSpecialFeatures) {
+		this.excludeSpecialFeatures = excludeSpecialFeatures;
+		Arrays.sort(this.excludeSpecialFeatures);
 	}
 
 	public void setExcludeSpecialFeatures(List<FeatureType> excludeSpecialFeatures) {
@@ -191,18 +197,6 @@ public class RulesModificator extends AbstractModificator {
 
 	public boolean isDynamic() {
 		return dynamic;
-	}
-
-	public String getModifierExpression() {
-		return modifierExpression;
-	}
-
-	public void setModifierExpression(String modifierExpression) {
-		if (TextUtils.isEmpty(modifierExpression)) {
-			this.modifierExpression = null;
-		} else {
-			this.modifierExpression = modifierExpression;
-		}
 	}
 
 	/*
@@ -337,32 +331,32 @@ public class RulesModificator extends AbstractModificator {
 	}
 
 	protected void handleModifierExpression(Probe probe, AttributeType type) {
-		if (modifierExpression != null) {
-			try {
-				Interpreter i = getInterpreter();
-				i.set("attributeType", type);
-				i.set("probe", probe);
-				if (probe instanceof CombatProbe) {
-					CombatProbe combatProbe = (CombatProbe) probe;
-					i.set("equippedItem", combatProbe.getEquippedItem());
-					i.set("item", combatProbe.getEquippedItem().getItem());
-					i.set("talent", combatProbe.getCombatTalent());
-					i.set("weapon", combatProbe.getEquippedItem().getItemSpecification());
-				}
-
-				// Eval a statement and get the result
-				Object result = i.eval(modifierExpression);
-				if (result == null) {
-					throw new IllegalArgumentException("modifierExpression '" + modifierExpression
-							+ "' does not return value");
-				} else {
-					modifierObject.setModifier(Util.parseInteger(result.toString()));
-				}
-			} catch (EvalError e) {
-				throw new DsaTabRuntimeException(e);
-			}
-
-		}
+		// if (modifierExpression != null) {
+		// try {
+		// Interpreter i = getInterpreter();
+		// i.set("attributeType", type);
+		// i.set("probe", probe);
+		// if (probe instanceof CombatProbe) {
+		// CombatProbe combatProbe = (CombatProbe) probe;
+		// i.set("equippedItem", combatProbe.getEquippedItem());
+		// i.set("item", combatProbe.getEquippedItem().getItem());
+		// i.set("talent", combatProbe.getCombatTalent());
+		// i.set("weapon", combatProbe.getEquippedItem().getItemSpecification());
+		// }
+		//
+		// // Eval a statement and get the result
+		// Object result = i.eval(modifierExpression);
+		// if (result == null) {
+		// throw new IllegalArgumentException("modifierExpression '" + modifierExpression
+		// + "' does not return value");
+		// } else {
+		// modifierObject.setModifier(Util.parseInteger(result.toString()));
+		// }
+		// } catch (EvalError e) {
+		// throw new DsaTabRuntimeException(e);
+		// }
+		//
+		// }
 	}
 
 	/*

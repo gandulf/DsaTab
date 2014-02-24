@@ -3,9 +3,11 @@ package com.dsatab.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SlidingPaneLayout;
@@ -45,7 +47,7 @@ import com.dsatab.util.Util;
 import com.dsatab.view.ListSettings;
 import com.dsatab.view.ListSettings.ListItem;
 import com.dsatab.view.ListSettings.ListItemType;
-import com.dsatab.view.PortraitChooserDialog;
+import com.dsatab.view.PictureChooserDialog;
 import com.gandulf.guilib.data.OpenArrayAdapter;
 import com.gandulf.guilib.util.DefaultTextWatcher;
 import com.haarman.listviewanimations.itemmanipulation.AnimateAdapter;
@@ -73,6 +75,13 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 	private DynamicListView tabsList;
 	private TabsAdapter tabsAdapter;
 	private AnimateAdapter<TabInfo> animateAdapter;
+
+	public static void edit(Activity activity, int tabIndex, int requestCode) {
+		Intent editTab = new Intent(activity, TabEditActivity.class);
+		editTab.putExtra(TabEditActivity.DATA_INTENT_TAB_INDEX, tabIndex);
+		editTab.setAction(Intent.ACTION_EDIT);
+		activity.startActivityForResult(editTab, requestCode);
+	}
 
 	/** Called when the activity is first created. */
 	@Override
@@ -201,11 +210,6 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 	}
 
 	@Override
-	protected void onResume() {
-		super.onResume();
-	}
-
-	@Override
 	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
 		com.actionbarsherlock.view.MenuItem item = menu.add(Menu.NONE, R.id.option_tab_add, Menu.NONE,
 				R.string.option_create_tab);
@@ -309,7 +313,7 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 	}
 
 	private void pickIcon() {
-		final PortraitChooserDialog pdialog = new PortraitChooserDialog(this);
+		final PictureChooserDialog pdialog = new PictureChooserDialog(this);
 
 		List<Integer> itemIcons = DsaTabApplication.getInstance().getConfiguration().getTabIcons();
 

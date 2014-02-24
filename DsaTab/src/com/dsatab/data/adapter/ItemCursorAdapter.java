@@ -11,9 +11,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.dsatab.R;
+import com.dsatab.db.DataManager;
 import com.dsatab.util.Util;
 import com.dsatab.view.ItemListItem;
-import com.dsatab.xml.DataManager;
 
 import fr.castorflex.android.flipimageview.library.FlipImageView;
 import fr.castorflex.android.flipimageview.library.FlipImageView.FlippableViewHolder;

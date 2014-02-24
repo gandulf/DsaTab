@@ -4,21 +4,32 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.dsatab.R;
+import com.squareup.picasso.Picasso;
 
 public class PortraitViewDialog extends AlertDialog implements DialogInterface.OnClickListener {
 
-	public PortraitViewDialog(Context context, String title, Bitmap portrait) {
+	private ImageView imageView;
+
+	public PortraitViewDialog(Context context, String title, Uri portraitUri) {
 		super(context);
-		init(title, portrait);
+		init(title);
+		load(portraitUri);
 	}
 
-	private void init(String title, Bitmap portrait) {
+	public PortraitViewDialog(Context context, String title, Bitmap portrait) {
+		super(context);
+		init(title);
+		load(portrait);
+	}
+
+	private void init(String title) {
 		setTitle(title);
 
 		setCanceledOnTouchOutside(true);
@@ -26,16 +37,25 @@ public class PortraitViewDialog extends AlertDialog implements DialogInterface.O
 		RelativeLayout popupcontent = (RelativeLayout) LayoutInflater.from(getContext()).inflate(
 				R.layout.popup_portrait_view, null, false);
 		popupcontent.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-		setView(popupcontent);
 
-		final ImageView image = (ImageView) popupcontent.findViewById(R.id.portrait_view);
-		if (portrait != null)
-			image.setImageBitmap(portrait);
-		else
-			image.setImageResource(R.drawable.profile_picture);
+		imageView = (ImageView) popupcontent.findViewById(R.id.portrait_view);
+
+		setView(popupcontent);
 
 		setButton(BUTTON_NEUTRAL, getContext().getString(R.string.label_ok), this);
 
+	}
+
+	private void load(Uri portraitUri) {
+		Picasso.with(getContext()).load(portraitUri).skipMemoryCache().placeholder(R.drawable.profile_picture)
+				.into(imageView);
+	}
+
+	private void load(Bitmap portrait) {
+		if (portrait != null)
+			imageView.setImageBitmap(portrait);
+		else
+			imageView.setImageResource(R.drawable.profile_picture);
 	}
 
 	/*

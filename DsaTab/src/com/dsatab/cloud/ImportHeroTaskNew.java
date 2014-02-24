@@ -1,10 +1,11 @@
 package com.dsatab.cloud;
 
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,7 +17,10 @@ import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.cloud.HeroExchange.OnHeroExchangeListener;
 import com.dsatab.data.HeroFileInfo;
+import com.dsatab.data.HeroFileInfo.FileType;
+import com.dsatab.data.HeroFileInfo.StorageType;
 import com.dsatab.util.Debug;
+import com.dsatab.util.Util;
 
 public class ImportHeroTaskNew extends AsyncTask<String, String, Integer> implements OnCancelListener {
 
@@ -27,19 +31,21 @@ public class ImportHeroTaskNew extends AsyncTask<String, String, Integer> implem
 	private String token = null;
 
 	private HeroFileInfo heroInfo;
-	private File heroFile = null;
 
 	private Context context;
 
 	private OnHeroExchangeListener onHeroExchangeListener;
 
+	private HeroExchange exchange;
+
 	/**
 		 * 
 		 */
-	public ImportHeroTaskNew(Context context, HeroFileInfo heroInfo, String token) {
+	public ImportHeroTaskNew(Activity context, HeroFileInfo heroInfo, String token) {
 		this.context = context;
 		this.heroInfo = heroInfo;
 		this.token = token;
+		this.exchange = new HeroExchange(context);
 	}
 
 	public OnHeroExchangeListener getOnHeroExchangeListener() {
@@ -76,14 +82,9 @@ public class ImportHeroTaskNew extends AsyncTask<String, String, Integer> implem
 	protected Integer doInBackground(String... params) {
 
 		boolean cancel = false;
-		// Create a directory in the SDCard to store the files
-		File baseDir = new File(DsaTabApplication.getDsaTabPath());
-		if (!baseDir.exists()) {
-			baseDir.mkdirs();
-		}
 
-		Helper.disableSSLCheck(); // nur für die Testphase, bis ein gültiges
-									// Zertifikate vorhanden ist
+		// nur für die Testphase, bis ein gültiges Zertifikate vorhanden ist
+		Helper.disableSSLCheck();
 
 		BufferedWriter bufferedOutputStream = null;
 		try {
@@ -92,30 +93,23 @@ public class ImportHeroTaskNew extends AsyncTask<String, String, Integer> implem
 			String stringheld = Helper.postRequest(token, "action", "returnheld", "format", "heldenxml", "heldenid",
 					heroInfo.getId());
 
-			if (heroInfo.getFile() == null) {
-				heroFile = new File(baseDir, heroInfo.getId() + ".xml");
-			} else {
-				heroFile = heroInfo.getFile();
-			}
-
 			// Create a file output stream
-			bufferedOutputStream = new BufferedWriter(new FileWriter(heroFile.getAbsolutePath()));
+			bufferedOutputStream = new BufferedWriter(new OutputStreamWriter(exchange.getOutputStream(heroInfo,
+					FileType.Hero)));
 			bufferedOutputStream.write(stringheld);
 
 			// Flush and close the buffers
 			bufferedOutputStream.flush();
 
+			exchange.closeStream(heroInfo, FileType.Hero);
+
+			heroInfo.setStorageType(StorageType.FileSystem);
 		} catch (Exception e) {
 			Debug.error(e);
 			caughtException = e;
 			return HeroExchange.RESULT_ERROR;
 		} finally {
-			if (bufferedOutputStream != null) {
-				try {
-					bufferedOutputStream.close();
-				} catch (IOException e) {
-				}
-			}
+			Util.close(bufferedOutputStream);
 		}
 
 		if (isCancelled() || cancel)
@@ -141,15 +135,16 @@ public class ImportHeroTaskNew extends AsyncTask<String, String, Integer> implem
 
 		switch (result) {
 		case HeroExchange.RESULT_OK:
-			if (heroFile != null && heroFile.isFile() && heroFile.getName().endsWith(".xml")) {
+
+			String path = heroInfo.getPath(FileType.Hero);
+			if (path != null && path.endsWith(".xml")) {
 				if (onHeroExchangeListener != null) {
-					onHeroExchangeListener.onHeroLoaded(heroFile.getAbsolutePath());
+					onHeroExchangeListener.onHeroInfoLoaded(Arrays.asList(heroInfo));
 				} else {
 					Toast.makeText(context, R.string.message_hero_import_successful, Toast.LENGTH_SHORT).show();
 				}
 			} else {
-				Toast.makeText(context,
-						R.string.message_invalid_hero_file + (heroFile != null ? heroFile.getName() : ""),
+				Toast.makeText(context, R.string.message_invalid_hero_file + (path != null ? path : ""),
 						Toast.LENGTH_SHORT).show();
 			}
 

@@ -5,11 +5,11 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.WindowManager;
 
-import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.util.Util;
 
-public class BaseActivity extends SherlockActivity {
+public class BaseActivity extends SherlockFragmentActivity {
 
 	protected SharedPreferences preferences;
 

@@ -1,5 +1,7 @@
 package com.dsatab.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +15,22 @@ import com.dsatab.fragment.ItemContainerEditFragment;
 
 public class ItemContainerEditActivity extends BaseFragmentActivity {
 
+	public static final String INTENT_ITEM_CHOOSER_ID = "com.dsatab.data.intent.itemContainerId";
+
 	private ItemContainerEditFragment fragment;
+
+	public static void insert(Activity activity) {
+		Intent intent = new Intent(activity, ItemContainerEditActivity.class);
+		intent.setAction(Intent.ACTION_INSERT);
+		activity.startActivity(intent);
+	}
+
+	public static void edit(Activity activity, ItemContainer itemContainer) {
+		Intent intent = new Intent(activity, ItemContainerEditActivity.class);
+		intent.setAction(Intent.ACTION_EDIT);
+		intent.putExtra(INTENT_ITEM_CHOOSER_ID, itemContainer.getId());
+		activity.startActivity(intent);
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -62,6 +79,18 @@ public class ItemContainerEditActivity extends BaseFragmentActivity {
 				| ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
 		actionBar.setCustomView(customActionBarView, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
 				ViewGroup.LayoutParams.MATCH_PARENT));
+
+		//
+
+		ItemContainer itemContainer = null;
+		Bundle extra = getIntent().getExtras();
+		if (extra != null) {
+			int containerId = extra.getInt(INTENT_ITEM_CHOOSER_ID, -1);
+			if (containerId >= 0) {
+				itemContainer = DsaTabApplication.getInstance().getHero().getItemContainer(containerId);
+			}
+		}
+		fragment.setItemContainer(itemContainer);
 	}
 
 }

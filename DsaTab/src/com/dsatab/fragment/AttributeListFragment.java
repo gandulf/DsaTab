@@ -33,7 +33,7 @@ public class AttributeListFragment extends BaseAttributesFragment implements Her
 	 * 
 	 */
 	public AttributeListFragment() {
-		this.inverseColors = true;
+
 	}
 
 	/*
@@ -167,26 +167,26 @@ public class AttributeListFragment extends BaseAttributesFragment implements Her
 			case Fingerfertigkeit:
 			case Gewandtheit:
 			case Charisma:
-				fillAttribute(attr, true);
+				fillAttribute(attr);
 				break;
 			case Lebensenergie_Aktuell:
-				fillAttributeValue(tfLE, AttributeType.Lebensenergie_Aktuell, null, true, true);
+				fillAttributeValue(tfLE, AttributeType.Lebensenergie_Aktuell, null, true);
 				break;
 			case Ausdauer_Aktuell:
-				fillAttributeValue(tfAU, AttributeType.Ausdauer_Aktuell, null, true, true);
+				fillAttributeValue(tfAU, AttributeType.Ausdauer_Aktuell, null, true);
 				break;
 			case Karmaenergie_Aktuell:
-				fillAttributeValue(tfKE, AttributeType.Karmaenergie_Aktuell, null, true, true);
+				fillAttributeValue(tfKE, AttributeType.Karmaenergie_Aktuell, null, true);
 				break;
 			case Astralenergie_Aktuell:
-				fillAttributeValue(tfAE, AttributeType.Astralenergie_Aktuell, null, true, true);
+				fillAttributeValue(tfAE, AttributeType.Astralenergie_Aktuell, null, true);
 				break;
 			case Behinderung:
-				fillAttributeValue(tfBE, AttributeType.Behinderung, null, true, true);
-				fillAttributeValue(tfGS, AttributeType.Geschwindigkeit, null, true, true);
+				fillAttributeValue(tfBE, AttributeType.Behinderung, null, true);
+				fillAttributeValue(tfGS, AttributeType.Geschwindigkeit, null, true);
 				break;
 			case Geschwindigkeit:
-				fillAttributeValue(tfGS, AttributeType.Geschwindigkeit, null, true, true);
+				fillAttributeValue(tfGS, AttributeType.Geschwindigkeit, null, true);
 				break;
 			default:
 				break;
@@ -254,14 +254,14 @@ public class AttributeListFragment extends BaseAttributesFragment implements Her
 
 	protected void fillAttributesList() {
 
-		fillAttributeValue(tfMU, AttributeType.Mut, null, true, true);
-		fillAttributeValue(tfKL, AttributeType.Klugheit, null, true, true);
-		fillAttributeValue(tfIN, AttributeType.Intuition, null, true, true);
-		fillAttributeValue(tfCH, AttributeType.Charisma, null, true, true);
-		fillAttributeValue(tfFF, AttributeType.Fingerfertigkeit, null, true, true);
-		fillAttributeValue(tfGE, AttributeType.Gewandtheit, null, false, true);
-		fillAttributeValue(tfKO, AttributeType.Konstitution, null, true, true);
-		fillAttributeValue(tfKK, AttributeType.Körperkraft, null, true, true);
+		fillAttributeValue(tfMU, AttributeType.Mut, null, true);
+		fillAttributeValue(tfKL, AttributeType.Klugheit, null, true);
+		fillAttributeValue(tfIN, AttributeType.Intuition, null, true);
+		fillAttributeValue(tfCH, AttributeType.Charisma, null, true);
+		fillAttributeValue(tfFF, AttributeType.Fingerfertigkeit, null, true);
+		fillAttributeValue(tfGE, AttributeType.Gewandtheit, null, false);
+		fillAttributeValue(tfKO, AttributeType.Konstitution, null, true);
+		fillAttributeValue(tfKK, AttributeType.Körperkraft, null, true);
 
 		fillAttributeLabel(tfLabelMU, AttributeType.Mut);
 		fillAttributeLabel(tfLabelKL, AttributeType.Klugheit);
@@ -272,13 +272,13 @@ public class AttributeListFragment extends BaseAttributesFragment implements Her
 		fillAttributeLabel(tfLabelKO, AttributeType.Konstitution);
 		fillAttributeLabel(tfLabelKK, AttributeType.Körperkraft);
 
-		fillAttributeValue(tfLE, AttributeType.Lebensenergie_Aktuell, null, true, true);
+		fillAttributeValue(tfLE, AttributeType.Lebensenergie_Aktuell, null, true);
 		fillAttributeLabel(tfLabelLE, AttributeType.Lebensenergie_Aktuell);
 
-		fillAttributeValue(tfAU, AttributeType.Ausdauer_Aktuell, null, true, true);
+		fillAttributeValue(tfAU, AttributeType.Ausdauer_Aktuell, null, true);
 		fillAttributeLabel(tfLabelAU, AttributeType.Ausdauer_Aktuell);
 
-		fillAttributeValue(tfMR, AttributeType.Magieresistenz, null, true, true);
+		fillAttributeValue(tfMR, AttributeType.Magieresistenz, null, true);
 		fillAttributeLabel(tfLabelMR, AttributeType.Magieresistenz);
 
 		final Hero hero = getHero();
@@ -287,8 +287,8 @@ public class AttributeListFragment extends BaseAttributesFragment implements Her
 				|| hero.getAttributeValue(AttributeType.Karmaenergie) == 0) {
 			tfKE.setVisibility(View.GONE);
 			tfLabelKE.setVisibility(View.GONE);
-		} else if (preferences.getBoolean(DsaTabPreferenceActivity.KEY_HEADER_KE, true)) {
-			fillAttributeValue(tfKE, AttributeType.Karmaenergie_Aktuell, null, true, true);
+		} else if (getPreferences().getBoolean(DsaTabPreferenceActivity.KEY_HEADER_KE, true)) {
+			fillAttributeValue(tfKE, AttributeType.Karmaenergie_Aktuell, null, true);
 			fillAttributeLabel(tfLabelKE, AttributeType.Karmaenergie_Aktuell);
 			tfKE.setVisibility(View.VISIBLE);
 			tfLabelKE.setVisibility(View.VISIBLE);
@@ -298,17 +298,17 @@ public class AttributeListFragment extends BaseAttributesFragment implements Her
 				|| hero.getAttributeValue(AttributeType.Astralenergie) == 0) {
 			tfAE.setVisibility(View.GONE);
 			tfLabelAE.setVisibility(View.GONE);
-		} else if (preferences.getBoolean(DsaTabPreferenceActivity.KEY_HEADER_AE, true)) {
-			fillAttributeValue(tfAE, AttributeType.Astralenergie_Aktuell, null, true, true);
+		} else if (getPreferences().getBoolean(DsaTabPreferenceActivity.KEY_HEADER_AE, true)) {
+			fillAttributeValue(tfAE, AttributeType.Astralenergie_Aktuell, null, true);
 			fillAttributeLabel(tfLabelAE, AttributeType.Astralenergie_Aktuell);
 			tfAE.setVisibility(View.VISIBLE);
 			tfLabelAE.setVisibility(View.VISIBLE);
 		}
 
 		fillAttributeLabel(tfLabelGS, AttributeType.Geschwindigkeit);
-		fillAttributeValue(tfGS, AttributeType.Geschwindigkeit, null, true, true);
+		fillAttributeValue(tfGS, AttributeType.Geschwindigkeit, null, true);
 
-		fillAttributeValue(tfBE, AttributeType.Behinderung, null, true, true);
+		fillAttributeValue(tfBE, AttributeType.Behinderung, null, true);
 		fillAttributeLabel(tfLabelBE, AttributeType.Behinderung);
 
 		if (tfWS != null) {

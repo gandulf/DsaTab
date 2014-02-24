@@ -8,9 +8,9 @@ import android.text.TextUtils;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.listable.Listable;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
+import com.dsatab.db.DataManager;
 import com.dsatab.exception.SpellUnknownException;
 import com.dsatab.util.Debug;
-import com.dsatab.xml.DataManager;
 
 public class Spell extends MarkableElement implements Value, Listable {
 
@@ -33,7 +33,6 @@ public class Spell extends MarkableElement implements Value, Listable {
 
 	private String comments;
 	private String variant;
-
 	private String zauberSpezialisierung;
 
 	public enum Flags {

@@ -2,9 +2,16 @@ package com.dsatab.util;
 
 import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -47,7 +54,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -386,6 +392,36 @@ public class Util {
 		return error;
 	}
 
+	public static void close(OutputStream stream) {
+		if (stream != null) {
+			try {
+				stream.close();
+			} catch (IOException e) {
+				Debug.error(e);
+			}
+		}
+	}
+
+	public static void close(Writer stream) {
+		if (stream != null) {
+			try {
+				stream.close();
+			} catch (IOException e) {
+				Debug.error(e);
+			}
+		}
+	}
+
+	public static void close(InputStream stream) {
+		if (stream != null) {
+			try {
+				stream.close();
+			} catch (IOException e) {
+				Debug.error(e);
+			}
+		}
+	}
+
 	public static String join(String... strings) {
 		StringBuilder sb = new StringBuilder();
 
@@ -414,34 +450,6 @@ public class Util {
 			floats[i] = Float.parseFloat(st.nextToken());
 		}
 		return floats;
-	}
-
-	public static void unbindDrawables(View view) {
-		if (view.getBackground() != null) {
-			view.getBackground().setCallback(null);
-			// if (view.getBackground() instanceof BitmapDrawable) {
-			// BitmapDrawable bm = (BitmapDrawable) view.getBackground();
-			// bm.getBitmap().recycle();
-			// }
-		}
-		if (view instanceof ViewGroup) {
-			for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
-				unbindDrawables(((ViewGroup) view).getChildAt(i));
-			}
-			// AdapterViews, ListViews and potentially other ViewGroups
-			// don’t support the removeAllViews operation
-			if (view instanceof AdapterView) {
-				// do nothing
-			} else {
-				try {
-					((ViewGroup) view).removeAllViews();
-				} catch (UnsupportedOperationException mayHappen) {
-					// AdapterViews, ListViews and potentially other ViewGroups
-					// don’t support the removeAllViews operation
-				}
-			}
-		}
-
 	}
 
 	public static boolean notifyDatasetChanged(AdapterView<?> list) {
@@ -656,10 +664,6 @@ public class Util {
 	}
 
 	public static void setTextColor(TextView tf, Value value, int modifier) {
-		setTextColor(tf, value, modifier, false);
-	}
-
-	public static void setTextColor(TextView tf, Value value, int modifier, boolean inverse) {
 		if (value.getValue() != null) {
 			if (modifier < 0 || (value.getReferenceValue() != null && value.getValue() < value.getReferenceValue()))
 				tf.setTextColor(DsaTabApplication.getInstance().getResources().getColor(R.color.ValueRed));
@@ -706,22 +710,14 @@ public class Util {
 	}
 
 	public static void setText(TextView tf, Value value, String prefix) {
-		setText(tf, value, prefix, false);
+		setText(tf, value != null ? value.getValue() : null, 0, prefix);
 	}
 
-	public static void setText(TextView tf, Value value, String prefix, boolean inverseColors) {
-		setText(tf, value != null ? value.getValue() : null, 0, prefix, inverseColors);
-	}
-
-	public static void setText(TextView tf, Value value, int modifier, String prefix, boolean inverse) {
-		setText(tf, value != null ? value.getValue() : null, modifier, prefix, inverse);
+	public static void setText(TextView tf, Value value, int modifier, String prefix) {
+		setText(tf, value != null ? value.getValue() : null, modifier, prefix);
 	}
 
 	public static void setText(TextView tf, Integer value, int modifier, String prefix) {
-		setText(tf, value, modifier, prefix, false);
-	}
-
-	public static void setText(TextView tf, Integer value, int modifier, String prefix, boolean inverse) {
 		if (tf != null) {
 			if (value != null) {
 
@@ -740,11 +736,11 @@ public class Util {
 	}
 
 	public static void setValue(AbstractBeing being, TextView tv, Attribute attribute, String prefix,
-			boolean includeBe, boolean inverseColors, ProbeListener probeListener, EditListener editListener) {
+			boolean includeBe, ProbeListener probeListener, EditListener editListener) {
 		if (attribute != null) {
 
 			int modifier = being.getModifier(attribute, includeBe, true);
-			Util.setText(tv, attribute, modifier, prefix, inverseColors);
+			Util.setText(tv, attribute, modifier, prefix);
 			tv.setTag(attribute);
 
 			if (!tv.isLongClickable()) {
@@ -1178,6 +1174,30 @@ public class Util {
 		return null;
 	}
 
+	public static File saveBitmap(Bitmap pic, String photoName) {
+		FileOutputStream fOut = null;
+		try {
+			fOut = DsaTabApplication.getInstance().openFileOutput(photoName, Context.MODE_PRIVATE);
+			pic.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
+			fOut.flush();
+
+			File outputfile = DsaTabApplication.getInstance().getFileStreamPath(photoName);
+			return outputfile;
+		} catch (FileNotFoundException e) {
+			Debug.error(e);
+		} catch (IOException e) {
+			Debug.error(e);
+		} finally {
+			if (fOut != null) {
+				try {
+					fOut.close();
+				} catch (IOException e) {
+				}
+			}
+		}
+		return null;
+	}
+
 	public static Uri retrieveBitmapUri(Context context, Intent data) {
 		return data.getData();
 	}
@@ -1266,6 +1286,43 @@ public class Util {
 			jsonArray.put(index++, value.name());
 		}
 		out.put(name, jsonArray);
+	}
+
+	public void copy(File src, File dst) throws IOException {
+		InputStream in = new FileInputStream(src);
+		OutputStream out = new FileOutputStream(dst);
+
+		// Transfer bytes from in to out
+		byte[] buf = new byte[1024];
+		int len;
+		while ((len = in.read(buf)) > 0) {
+			out.write(buf, 0, len);
+		}
+		in.close();
+		out.close();
+	}
+
+	public static String slurp(final InputStream is, final int bufferSize) {
+		final char[] buffer = new char[bufferSize];
+		final StringBuilder out = new StringBuilder();
+		try {
+			final Reader in = new InputStreamReader(is, "UTF-8");
+			try {
+				for (;;) {
+					int rsz = in.read(buffer, 0, buffer.length);
+					if (rsz < 0)
+						break;
+					out.append(buffer, 0, rsz);
+				}
+			} finally {
+				in.close();
+			}
+		} catch (UnsupportedEncodingException ex) {
+			/* ... */
+		} catch (IOException ex) {
+			/* ... */
+		}
+		return out.toString();
 	}
 
 }

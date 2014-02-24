@@ -27,13 +27,13 @@ import com.gandulf.guilib.util.Debug;
 
 public class HttpRequest {
 
-	AndroidHttpClient httpClient;
-	HttpContext localContext;
+	private AndroidHttpClient httpClient;
+	private HttpContext localContext;
 	private String ret;
 
-	HttpResponse response = null;
-	HttpPost httpPost = null;
-	HttpGet httpGet = null;
+	private HttpResponse response = null;
+	private HttpPost httpPost = null;
+	private HttpGet httpGet = null;
 
 	public HttpRequest() {
 		HttpParams myParams = new BasicHttpParams();

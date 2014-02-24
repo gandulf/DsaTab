@@ -49,12 +49,8 @@ import com.dsatab.activity.NotesEditActivity;
 import com.dsatab.data.Art;
 import com.dsatab.data.Attribute;
 import com.dsatab.data.CombatTalent;
-import com.dsatab.data.Connection;
-import com.dsatab.data.CustomModificator;
-import com.dsatab.data.Event;
 import com.dsatab.data.Hero;
 import com.dsatab.data.MetaTalent;
-import com.dsatab.data.NotesItem;
 import com.dsatab.data.Probe;
 import com.dsatab.data.Purse.Currency;
 import com.dsatab.data.Spell;
@@ -79,7 +75,12 @@ import com.dsatab.data.listable.HeaderListItem;
 import com.dsatab.data.listable.Listable;
 import com.dsatab.data.listable.PurseListable;
 import com.dsatab.data.modifier.AbstractModificator;
+import com.dsatab.data.modifier.CustomModificator;
 import com.dsatab.data.modifier.Modificator;
+import com.dsatab.data.notes.Connection;
+import com.dsatab.data.notes.Event;
+import com.dsatab.data.notes.NotesItem;
+import com.dsatab.db.DataManager;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.dsatab.view.ArtInfoDialog;
@@ -93,7 +94,6 @@ import com.dsatab.view.ListSettings.ListItemType;
 import com.dsatab.view.SpellInfoDialog;
 import com.dsatab.view.listener.EditListener;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
-import com.dsatab.xml.DataManager;
 import com.haarman.listviewanimations.itemmanipulation.AnimateAdapter;
 import com.haarman.listviewanimations.itemmanipulation.OnAnimateCallback;
 import com.haarman.listviewanimations.view.DynamicListView;
@@ -284,11 +284,11 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 
 							switch (item.getItemId()) {
 							case R.id.option_edit:
-								ItemsActivity.edit(fragment.getActivity(), getHero().getKey(), equippedItem,
+								ItemsActivity.edit(fragment.getActivity(), getHero(), equippedItem,
 										ItemsActivity.ACTION_EDIT);
 								break;
 							case R.id.option_view:
-								ItemsActivity.view(fragment.getActivity(), getHero().getKey(), equippedItem);
+								ItemsActivity.view(fragment.getActivity(), getHero(), equippedItem);
 								break;
 							case R.id.option_assign_secondary: {
 								final EquippedItem equippedPrimaryWeapon = equippedItem;
@@ -1030,7 +1030,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 									notifyNotesChanged = true;
 								}
 							} else if (item.getItemId() == R.id.option_edit) {
-								NotesEditActivity.openEditEvent(event, null, fragment.getActivity());
+								NotesEditActivity.edit(event, null, fragment.getActivity());
 
 								mode.finish();
 								break;
@@ -1041,7 +1041,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 								adapter.animateDismiss(checkedPositions.keyAt(i));
 								notifyNotesChanged = true;
 							} else if (item.getItemId() == R.id.option_edit) {
-								NotesEditActivity.openEditConnection(connection, fragment.getActivity());
+								NotesEditActivity.edit(connection, fragment.getActivity());
 
 								mode.finish();
 								break;
@@ -1326,7 +1326,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 
 					File directory = new File(dir);
 					if (directory.exists()) {
-						Editor edit = preferences.edit();
+						Editor edit = getPreferences().edit();
 						edit.putString(DsaTabPreferenceActivity.KEY_SETUP_SDCARD_DOCUMENTS_PATH, dir);
 						edit.commit();
 
@@ -1342,7 +1342,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 			return true;
 
 		} else if (item.getItemId() == R.id.option_note_add) {
-			NotesEditActivity.openEditEvent(null, null, getActivity());
+			NotesEditActivity.edit(null, null, getActivity());
 			return true;
 		} else if (item.getItemId() == R.id.option_note_record) {
 			recordEvent();
@@ -1697,7 +1697,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 							.currentTimeMillis() + ".3gp");
 					currentAudio.renameTo(nowAudio);
 
-					NotesEditActivity.openEditEvent(null, nowAudio.getAbsolutePath(), getActivity());
+					NotesEditActivity.edit(null, nowAudio.getAbsolutePath(), getActivity());
 				}
 			});
 

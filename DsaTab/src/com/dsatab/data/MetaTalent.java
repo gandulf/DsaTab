@@ -3,10 +3,10 @@ package com.dsatab.data;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.dsatab.common.DsaMath;
 import com.dsatab.data.enums.TalentType;
 import com.dsatab.data.items.EquippedItem;
 import com.dsatab.util.Debug;
+import com.dsatab.util.DsaUtil;
 
 public class MetaTalent extends Talent implements JSONable {
 
@@ -103,10 +103,10 @@ public class MetaTalent extends Talent implements JSONable {
 			// " schleich " + schleichen + " tierk " + tierkunde + " fernk " +
 			// distance);
 
-			Integer minValue = DsaMath.min(wildnis, fährtensuche, schleichen, tierkunde, distance);
+			Integer minValue = DsaUtil.min(wildnis, fährtensuche, schleichen, tierkunde, distance);
 
 			// Debug.verbose("Minium value is " + minValue);
-			int value = Math.round(DsaMath.sum(wildnis, fährtensuche, schleichen, tierkunde, distance) / 5.0f);
+			int value = Math.round(DsaUtil.sum(wildnis, fährtensuche, schleichen, tierkunde, distance) / 5.0f);
 
 			// Debug.verbose("Sum value/5 is " + value);
 			if (minValue == null)
@@ -121,8 +121,8 @@ public class MetaTalent extends Talent implements JSONable {
 			Integer sinnen = getTalentValue(TalentType.Sinnenschärfe);
 			Integer planzen = getTalentValue(TalentType.Pflanzenkunde);
 
-			Integer minValue = DsaMath.min(wildnis, sinnen, planzen);
-			int value = Math.round(DsaMath.sum(wildnis, sinnen, planzen) / 3.0f);
+			Integer minValue = DsaUtil.min(wildnis, sinnen, planzen);
+			int value = Math.round(DsaUtil.sum(wildnis, sinnen, planzen) / 3.0f);
 
 			if (minValue == null)
 				return null;
@@ -136,8 +136,8 @@ public class MetaTalent extends Talent implements JSONable {
 			Integer sinnen = getTalentValue(TalentType.Sinnenschärfe);
 			Integer planzen = getTalentValue(TalentType.Pflanzenkunde);
 
-			Integer minValue = DsaMath.min(wildnis, sinnen, planzen);
-			int value = Math.round(DsaMath.sum(wildnis, sinnen, planzen) / 3.0f);
+			Integer minValue = DsaUtil.min(wildnis, sinnen, planzen);
+			int value = Math.round(DsaUtil.sum(wildnis, sinnen, planzen) / 3.0f);
 
 			if (minValue == null)
 				return null;
@@ -156,8 +156,8 @@ public class MetaTalent extends Talent implements JSONable {
 			Debug.verbose("selbst " + selbst + " sinnen " + sinnen + " schleich " + schleichen + " versteck "
 					+ verstecken + " wildn " + wildnis);
 
-			Integer minValue = DsaMath.min(selbst, sinnen, schleichen, verstecken, wildnis);
-			int value = Math.round(DsaMath.sum(selbst, selbst, selbst, sinnen, sinnen, sinnen, sinnen, schleichen,
+			Integer minValue = DsaUtil.min(selbst, sinnen, schleichen, verstecken, wildnis);
+			int value = Math.round(DsaUtil.sum(selbst, selbst, selbst, sinnen, sinnen, sinnen, sinnen, schleichen,
 					verstecken, wildnis) / 10.0f);
 
 			if (minValue == null)

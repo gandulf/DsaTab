@@ -1,15 +1,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/option_hero_import"
-        android:icon="@drawable/ic_menu_account_list"
-        android:showAsAction="withText|ifRoom"
-        android:title="@string/import_from_hero_exchange"/>
-    <item
         android:id="@+id/option_refresh"
         android:icon="@drawable/ic_action_refresh"
         android:showAsAction="withText|ifRoom"
         android:title="@string/refresh"/>
+    
+    <item
+        android:id="@+id/option_load_example_heroes"
+        android:icon="@drawable/ic_action_file_dark"
+        android:showAsAction="never"
+        android:title="Beispiel Helden laden"/>
+    
     <item
         android:id="@+id/option_items"
         android:icon="?attr/imgBarSwordAdd"

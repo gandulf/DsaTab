@@ -34,11 +34,8 @@ import com.dsatab.data.Attribute;
 import com.dsatab.data.CombatDistanceTalent;
 import com.dsatab.data.CombatMeleeTalent;
 import com.dsatab.data.CombatProbe;
-import com.dsatab.data.CustomModificator;
-import com.dsatab.data.Event;
 import com.dsatab.data.Hero;
 import com.dsatab.data.Markable;
-import com.dsatab.data.NotesItem;
 import com.dsatab.data.Purse.Currency;
 import com.dsatab.data.Purse.PurseUnit;
 import com.dsatab.data.Spell;
@@ -47,7 +44,7 @@ import com.dsatab.data.Talent.Flags;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.Hand;
 import com.dsatab.data.enums.UsageType;
-import com.dsatab.data.filter.FilterableListFilter;
+import com.dsatab.data.filter.ListableListFilter;
 import com.dsatab.data.items.Armor;
 import com.dsatab.data.items.DistanceWeapon;
 import com.dsatab.data.items.EquippedItem;
@@ -60,9 +57,12 @@ import com.dsatab.data.listable.HeaderListItem;
 import com.dsatab.data.listable.Listable;
 import com.dsatab.data.listable.PurseListable;
 import com.dsatab.data.modifier.AbstractModificator;
+import com.dsatab.data.modifier.CustomModificator;
 import com.dsatab.data.modifier.Modificator;
 import com.dsatab.data.modifier.RulesModificator;
 import com.dsatab.data.modifier.WoundModificator;
+import com.dsatab.data.notes.Event;
+import com.dsatab.data.notes.NotesItem;
 import com.dsatab.util.Debug;
 import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Util;
@@ -82,7 +82,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 
 	private Hero hero;
 
-	private FilterableListFilter<Listable> filter;
+	private ListableListFilter<Listable> filter;
 
 	private ProbeListener probeListener;
 	private EditListener editListener;
@@ -238,9 +238,9 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 	 * @see android.widget.ArrayAdapter#getFilter()
 	 */
 	@Override
-	public FilterableListFilter<Listable> getFilter() {
+	public ListableListFilter<Listable> getFilter() {
 		if (filter == null) {
-			filter = new FilterableListFilter<Listable>(this);
+			filter = new ListableListFilter<Listable>(this);
 		}
 		return filter;
 	}
@@ -612,7 +612,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 			viewHolder.text.setText(attribute.getType().code());
 			Util.setLabel(viewHolder.text, attribute.getType(), probeListener, editListener);
 
-			Util.setValue(hero, viewHolder.value, attribute, null, false, false, probeListener, editListener);
+			Util.setValue(hero, viewHolder.value, attribute, null, false, probeListener, editListener);
 
 			return convertView;
 		}

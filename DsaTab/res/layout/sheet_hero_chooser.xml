@@ -1,39 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/popup_hero_chooser_layout"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:alwaysDrawnWithCache="false"
-    android:layout_margin="@dimen/default_gap">
+    android:layout_height="fill_parent" >
 
-    <TextView 
-        android:id="@+id/popup_hero_chooser_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/existing_heroes"
-        style="?android:attr/listSeparatorTextViewStyle">
-    </TextView>
-    
-    <com.rokoder.android.lib.support.v4.widget.GridViewCompat
-        android:id="@+id/popup_hero_chooser_list"
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/popup_hero_chooser_title"
-        android:columnWidth="@dimen/portrait_width_small"
-        android:gravity="center"
-        android:numColumns="auto_fit"
-        android:stretchMode="columnWidth" />
+        android:layout_margin="@dimen/default_gap"
+        android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/popup_hero_empty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:drawableTop="?attr/imgEmpty"
-        android:gravity="center"
-        android:text="@string/message_heroes_empty" >
-    </TextView>
+        <TextView
+            android:id="@+id/popup_hero_chooser_title"
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/existing_heroes" >
+        </TextView>
 
-</RelativeLayout>
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+
+            <com.rokoder.android.lib.support.v4.widget.GridViewCompat
+                android:id="@+id/popup_hero_chooser_list"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:columnWidth="@dimen/portrait_width_small"
+                android:gravity="center"
+                android:numColumns="auto_fit"
+                android:stretchMode="columnWidth" />
+
+            <TextView
+                android:id="@+id/popup_hero_empty"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawableTop="?attr/imgEmpty"
+                android:gravity="center"
+                android:text="@string/message_heroes_empty" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/Darker"
+        android:visibility="gone" >
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true" />
+    </FrameLayout>
+
+</FrameLayout>

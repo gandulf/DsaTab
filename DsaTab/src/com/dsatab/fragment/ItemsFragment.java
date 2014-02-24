@@ -47,11 +47,11 @@ import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemCard;
 import com.dsatab.data.items.ItemContainer;
+import com.dsatab.db.DataManager;
 import com.dsatab.util.Debug;
 import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Util;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
-import com.dsatab.xml.DataManager;
 import com.haarman.listviewanimations.itemmanipulation.AnimateAdapter;
 import com.haarman.listviewanimations.itemmanipulation.OnAnimateCallback;
 import com.haarman.listviewanimations.view.DynamicListView;
@@ -139,12 +139,11 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 									notifyChanged = false;
 									break;
 								case R.id.option_view:
-									ItemsActivity.view(fragment.getActivity(), getHero().getKey(), selectedItem);
+									ItemsActivity.view(fragment.getActivity(), getHero(), selectedItem);
 									mode.finish();
 									return true;
 								case R.id.option_edit:
-									ItemsActivity.edit(fragment.getActivity(), getHero().getKey(), selectedItem,
-											ACTION_EDIT);
+									ItemsActivity.edit(fragment.getActivity(), getHero(), selectedItem, ACTION_EDIT);
 									mode.finish();
 									return true;
 								case R.id.option_equipped:
@@ -334,15 +333,12 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 							adapter.animateDismiss(checkedPositions.keyAt(i));
 							break;
 						case R.id.option_edit: {
-							Intent intent = new Intent(fragment.getActivity(), ItemContainerEditActivity.class);
-							intent.putExtra(ItemContainerEditFragment.INTENT_ITEM_CHOOSER_ID, itemContainer.getId());
-							fragment.startActivity(intent);
+							ItemContainerEditActivity.edit(fragment.getActivity(), itemContainer);
 							mode.finish();
 							return true;
 						}
 						case R.id.option_add: {
-							Intent intent = new Intent(fragment.getActivity(), ItemContainerEditActivity.class);
-							fragment.startActivity(intent);
+							ItemContainerEditActivity.insert(fragment.getActivity());
 							mode.finish();
 							return true;
 						}
@@ -816,7 +812,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 			if (mMode == null) {
 				itemGridCompat.setItemChecked(position, false);
 				itemList.setItemChecked(position, false);
-				ItemsActivity.view(getActivity(), getHero().getKey(), itemGridAdapter.getItem(position));
+				ItemsActivity.view(getActivity(), getHero(), itemGridAdapter.getItem(position));
 			} else {
 				super.onItemClick(parent, view, position, id);
 			}
