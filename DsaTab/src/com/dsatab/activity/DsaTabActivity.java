@@ -22,9 +22,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -33,9 +36,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.TabInfo;
@@ -485,7 +485,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 
 		viewPager.setOnPageChangeListener(null);
 
-		ActionBar bar = getSupportActionBar();
+		getSupportActionBar();
 		List<TabInfo> tabs;
 		if (getHeroConfiguration() != null)
 			tabs = getHeroConfiguration().getTabs();
@@ -813,18 +813,18 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
-		com.actionbarsherlock.view.MenuItem item;
+		MenuItem item;
 
 		item = menu.add(Menu.NONE, R.id.option_save_hero, Menu.NONE, R.string.option_save_hero);
-		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+		MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_NEVER);
 		item.setIcon(R.drawable.ic_menu_save);
 
 		item = menu.add(Menu.NONE, R.id.option_tabs, Menu.NONE, R.string.option_edit_tabs);
-		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+		MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_NEVER);
 		item.setIcon(R.drawable.ic_menu_account_list);
 
 		item = menu.add(Menu.NONE, R.id.option_settings, 99, R.string.settings);
-		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+		MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_NEVER);
 		item.setIcon(R.drawable.ic_menu_preferences);
 
 		return super.onCreateOptionsMenu(menu);
@@ -837,7 +837,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	 */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		com.actionbarsherlock.view.MenuItem item = menu.findItem(R.id.option_set);
+		MenuItem item = menu.findItem(R.id.option_set);
 		if (item != null) {
 			item.setEnabled(getHero() != null);
 			if (getHero() != null) {

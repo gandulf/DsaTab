@@ -12,8 +12,12 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.view.ActionMode;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
@@ -22,9 +26,6 @@ import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.ActionMode;
-import com.actionbarsherlock.view.Menu;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.common.ClickSpan;
@@ -61,7 +62,7 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
 
 	private final class PortraitActionMode implements ActionMode.Callback {
 		@Override
-		public boolean onActionItemClicked(ActionMode mode, com.actionbarsherlock.view.MenuItem item) {
+		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 			if (getBaseActivity() != null) {
 				switch (item.getItemId()) {
 				case R.id.option_take_photo:
@@ -287,7 +288,7 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
 				return false;
 
 			if (mMode == null) {
-				mMode = ((SherlockFragmentActivity) getActivity()).startActionMode(mCallback);
+				mMode = ((ActionBarActivity) getActivity()).startSupportActionMode(mCallback);
 				customizeActionModeCloseButton();
 				mMode.invalidate();
 				resizePortaiView();

@@ -3,12 +3,11 @@ package com.dsatab.activity.menu;
 import java.lang.ref.WeakReference;
 
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar.Tab;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.Tab;
 import com.dsatab.activity.DsaTabActivity;
 
-public class TabListener implements ActionBar.TabListener {
+public class TabListener implements android.support.v7.app.ActionBar.TabListener {
 
 	private final WeakReference<DsaTabActivity> mActivityRef;
 
@@ -30,7 +29,8 @@ public class TabListener implements ActionBar.TabListener {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.actionbarsherlock.app.ActionBar.TabListener#onTabSelected(com. actionbarsherlock.app.ActionBar.Tab, android.support.v4.app.FragmentTransaction)
+	 * @see com.actionbarsherlock.app.ActionBar.TabListener#onTabSelected(com. actionbarsherlock.app.ActionBar.Tab,
+	 * android.support.v4.app.FragmentTransaction)
 	 */
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {

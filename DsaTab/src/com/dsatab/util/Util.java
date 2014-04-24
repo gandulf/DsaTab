@@ -47,6 +47,7 @@ import android.os.Environment;
 import android.provider.MediaStore.Images.ImageColumns;
 import android.provider.MediaStore.Images.Media;
 import android.provider.MediaStore.MediaColumns;
+import android.support.v4.view.MenuItemCompat;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.SpannedString;
@@ -54,6 +55,8 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Adapter;
@@ -64,8 +67,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.common.StyleableSpannableStringBuilder;
@@ -1123,14 +1124,12 @@ public class Util {
 
 	public static void inflateAcceptAbortMenu(Context context, Menu menu) {
 
-		com.actionbarsherlock.view.MenuItem item = menu.add(Menu.NONE, R.id.option_accept, Menu.NONE,
-				android.R.string.ok);
-
-		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+		MenuItem item = menu.add(Menu.NONE, R.id.option_accept, Menu.NONE, android.R.string.ok);
+		MenuItemCompat.setShowAsAction(item, MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 		item.setIcon(Util.getThemeResourceId(context, R.attr.imgBarAccept));
 
 		item = menu.add(Menu.NONE, R.id.option_cancel, Menu.NONE, android.R.string.cancel);
-		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+		MenuItemCompat.setShowAsAction(item, MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 		item.setIcon(Util.getThemeResourceId(context, R.attr.imgBarCancel));
 	}
 

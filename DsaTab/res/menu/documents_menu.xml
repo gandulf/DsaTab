@@ -1,10 +1,10 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <group android:id="@+id/group_documents" >
         <item
             android:id="@+id/option_documents_choose"
             android:icon="?attr/imgBarFilter"
-            android:showAsAction="withText|always"
+            app:showAsAction="withText|always"
             android:title="@string/choose_folder"/>
     </group>
 

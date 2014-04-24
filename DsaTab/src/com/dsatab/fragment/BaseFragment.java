@@ -8,13 +8,13 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.dsatab.DsaTabApplication;
-import com.dsatab.R;
 import com.dsatab.TabInfo;
 import com.dsatab.activity.DsaTabActivity;
 import com.dsatab.data.AbstractBeing;
@@ -32,7 +32,7 @@ import com.dsatab.view.listener.HeroLoader;
 import com.dsatab.view.listener.ProbeListener;
 import com.dsatab.view.listener.TargetListener;
 
-public abstract class BaseFragment extends SherlockFragment implements HeroLoader, HeroChangedListener,
+public abstract class BaseFragment extends Fragment implements HeroLoader, HeroChangedListener,
 		OnSharedPreferenceChangeListener {
 
 	public static final String TAB_POSITION = "TAB_POSITION";
@@ -67,17 +67,13 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 	protected void customizeActionModeCloseButton() {
 		int buttonId = Resources.getSystem().getIdentifier("action_mode_close_button", "id", "android");
 		View v = getActivity().findViewById(buttonId);
-		if (v == null) {
-			buttonId = R.id.abs__action_mode_close_button;
-			v = getActivity().findViewById(buttonId);
-		}
 		if (v == null)
 			return;
 		LinearLayout ll = (LinearLayout) v;
 		if (ll.getChildCount() > 1 && ll.getChildAt(1) != null) {
 			TextView tv = (TextView) ll.getChildAt(1);
 			tv.setTextColor(getResources().getColor(android.R.color.white));
-			tv.setBackgroundResource(Util.getThemeResourceId(getActivity(), R.attr.actionBarItemBackground));
+			tv.setBackgroundResource(Util.getThemeResourceId(getActivity(), android.R.attr.actionBarItemBackground));
 		}
 	}
 
@@ -330,4 +326,11 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 		return targetListener;
 	}
 
+	public ActionBarActivity getActionBarActivity() {
+		if (getActivity() instanceof ActionBarActivity) {
+			return (ActionBarActivity) getActivity();
+		} else {
+			return null;
+		}
+	}
 }

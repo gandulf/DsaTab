@@ -16,8 +16,14 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.view.ActionMode;
+import android.support.v7.view.ActionMode.Callback;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -27,13 +33,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.ActionMode;
-import com.actionbarsherlock.view.ActionMode.Callback;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.SubMenu;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.ItemContainerEditActivity;
@@ -106,7 +105,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 
 		@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 		@Override
-		public boolean onActionItemClicked(ActionMode mode, com.actionbarsherlock.view.MenuItem item) {
+		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 			boolean notifyChanged = false;
 
 			AbsListView list = listView.get();
@@ -186,7 +185,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 
 			mode.getMenuInflater().inflate(R.menu.item_list_popupmenu, menu);
 
-			com.actionbarsherlock.view.MenuItem move = menu.findItem(R.id.option_move);
+			MenuItem move = menu.findItem(R.id.option_move);
 			SubMenu moveMenu = move.getSubMenu();
 			int order = 4;
 			for (ItemContainer itemContainer : getHero().getItemContainers()) {
@@ -234,9 +233,9 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 			// only moveable if we are not on a set
 			boolean isMoveable = !isSetIndex(fragment.getCurrentContainerId());
 
-			com.actionbarsherlock.view.MenuItem move = menu.findItem(R.id.option_move);
-			com.actionbarsherlock.view.MenuItem view = menu.findItem(R.id.option_view);
-			com.actionbarsherlock.view.MenuItem equipped = menu.findItem(R.id.option_equipped);
+			MenuItem move = menu.findItem(R.id.option_move);
+			MenuItem view = menu.findItem(R.id.option_view);
+			MenuItem equipped = menu.findItem(R.id.option_equipped);
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
 					if (checkedPositions.valueAt(i)) {
@@ -312,7 +311,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		}
 
 		@Override
-		public boolean onActionItemClicked(ActionMode mode, com.actionbarsherlock.view.MenuItem item) {
+		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 			final ListView list = listView.get();
 			final ItemsFragment fragment = listFragment.get();
 			final AnimateAdapter<ItemContainer> adapter = animateAdapter.get();
@@ -631,15 +630,15 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 			return true;
 		case R.id.option_itemgrid_set1:
 			showScreen(0);
-			getSherlockActivity().supportInvalidateOptionsMenu();
+			getActivity().supportInvalidateOptionsMenu();
 			return true;
 		case R.id.option_itemgrid_set2:
 			showScreen(1);
-			getSherlockActivity().supportInvalidateOptionsMenu();
+			getActivity().supportInvalidateOptionsMenu();
 			return true;
 		case R.id.option_itemgrid_set3:
 			showScreen(2);
-			getSherlockActivity().supportInvalidateOptionsMenu();
+			getActivity().supportInvalidateOptionsMenu();
 			return true;
 		case R.id.option_add_container:
 			Intent intent = new Intent(getActivity(), ItemContainerEditActivity.class);
@@ -659,7 +658,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 				ItemContainer itemContainer = getHero().getItemContainer(item.getItemId());
 				int index = containerAdapter.indexOf(itemContainer);
 				showScreen(index);
-				getSherlockActivity().supportInvalidateOptionsMenu();
+				getActivity().supportInvalidateOptionsMenu();
 				return true;
 			}
 			return super.onOptionsItemSelected(item);
@@ -735,7 +734,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 
 					if (mMode == null) {
 						if (mContainerCallback != null) {
-							mMode = ((SherlockFragmentActivity) getActivity()).startActionMode(mContainerCallback);
+							mMode = getActionBarActivity().startSupportActionMode(mContainerCallback);
 							customizeActionModeCloseButton();
 							mMode.invalidate();
 						} else {
@@ -940,7 +939,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 			itemListAdapter.setNotifyOnChange(true);
 			itemListAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
 
-			getSherlockActivity().supportInvalidateOptionsMenu();
+			getActivity().supportInvalidateOptionsMenu();
 		}
 	}
 
@@ -1062,8 +1061,8 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		Debug.trace("onItemContainerAdded " + itemContainer);
 
 		containerAdapter.add(itemContainer);
-		if (getSherlockActivity() != null) {
-			getSherlockActivity().supportInvalidateOptionsMenu();
+		if (getActivity() != null) {
+			getActivity().supportInvalidateOptionsMenu();
 		}
 	}
 
@@ -1078,8 +1077,8 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		Debug.trace("onItemContainerRemoved " + itemContainer);
 
 		containerAdapter.remove(itemContainer);
-		if (getSherlockActivity() != null) {
-			getSherlockActivity().supportInvalidateOptionsMenu();
+		if (getActivity() != null) {
+			getActivity().supportInvalidateOptionsMenu();
 		}
 	}
 

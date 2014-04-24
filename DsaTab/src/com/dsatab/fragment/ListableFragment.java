@@ -21,9 +21,15 @@ import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.view.ActionMode;
+import android.support.v7.view.ActionMode.Callback;
 import android.text.TextUtils;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
@@ -33,11 +39,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.view.ActionMode;
-import com.actionbarsherlock.view.ActionMode.Callback;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.SubMenu;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.CustomProbeEditActivity;
@@ -121,7 +122,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 		}
 
 		@Override
-		public boolean onActionItemClicked(ActionMode mode, com.actionbarsherlock.view.MenuItem item) {
+		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 			boolean notifyChanged = false;
 
 			ListView list = listView.get();
@@ -266,7 +267,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 		}
 
 		@Override
-		public boolean onActionItemClicked(ActionMode mode, com.actionbarsherlock.view.MenuItem item) {
+		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 			boolean notifyChanged = false;
 
 			ListView list = listView.get();
@@ -402,7 +403,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 		}
 
 		@Override
-		public boolean onActionItemClicked(ActionMode mode, com.actionbarsherlock.view.MenuItem item) {
+		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 			final ListView list = listView.get();
 			final ListableFragment fragment = listFragment.get();
 			if (list == null || fragment == null)
@@ -716,7 +717,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 		}
 
 		@Override
-		public boolean onActionItemClicked(ActionMode mode, com.actionbarsherlock.view.MenuItem item) {
+		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 			boolean notifyChanged = false;
 
 			ListView list = listView.get();
@@ -790,8 +791,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see com.actionbarsherlock.view.ActionMode.Callback#onPrepareActionMode
-		 * (com.actionbarsherlock.view.ActionMode, com.actionbarsherlock.view.Menu)
+		 * @see ActionMode.Callback#onPrepareActionMode (ActionMode, Menu)
 		 */
 		@Override
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
@@ -873,7 +873,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 		}
 
 		@Override
-		public boolean onActionItemClicked(ActionMode mode, com.actionbarsherlock.view.MenuItem item) {
+		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 			boolean notifyChanged = false;
 
 			ListView list = listView.get();
@@ -1022,7 +1022,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 		}
 
 		@Override
-		public boolean onActionItemClicked(ActionMode mode, com.actionbarsherlock.view.MenuItem item) {
+		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 			boolean notifyChanged = false;
 			ListView list = listView.get();
 			BaseListFragment fragment = listFragment.get();
@@ -1147,7 +1147,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 		}
 
 		@Override
-		public boolean onActionItemClicked(ActionMode mode, com.actionbarsherlock.view.MenuItem item) {
+		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 			boolean notifyNotesChanged = false;
 
 			ListView list = listView.get();
@@ -1222,8 +1222,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see com.actionbarsherlock.view.ActionMode.Callback#onPrepareActionMode
-		 * (com.actionbarsherlock.view.ActionMode, com.actionbarsherlock.view.Menu)
+		 * @see ActionMode.Callback#onPrepareActionMode (ActionMode, Menu)
 		 */
 		@Override
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
@@ -1234,7 +1233,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 
 			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
 
-			com.actionbarsherlock.view.MenuItem view = menu.findItem(R.id.option_delete);
+			MenuItem view = menu.findItem(R.id.option_delete);
 			int selected = 0;
 			boolean allDeletable = true;
 			if (checkedPositions != null) {
@@ -1370,10 +1369,10 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 	 * (non-Javadoc)
 	 * 
 	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu,
-	 * com.actionbarsherlock.view.MenuInflater)
+	 * MenuInflater)
 	 */
 	@Override
-	public void onCreateOptionsMenu(Menu menu, com.actionbarsherlock.view.MenuInflater inflater) {
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 
 		ListSettings listSettings = getListSettings();
@@ -1511,7 +1510,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 	 * @see com.actionbarsherlock.app.SherlockFragment#onOptionsItemSelected(com. actionbarsherlock.view.MenuItem)
 	 */
 	@Override
-	public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item) {
 
 		if (item.getGroupId() == MENU_FILTER_GROUP) {
 

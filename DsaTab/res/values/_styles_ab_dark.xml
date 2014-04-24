@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!-- File created by the Android Action Bar Style Generator
 
      Copyright (C) 2011 The Android Open Source Project
@@ -20,7 +19,7 @@
 
 <resources>
 
-    <style name="Theme.Dsatabdark" parent="@style/Theme.AppCompat.Dark">
+    <style name="Theme.Dsatabdark" parent="@style/Theme.AppCompat">
         <item name="actionBarItemBackground">@drawable/selectable_background_dsatabdark</item>
         <item name="popupMenuStyle">@style/PopupMenu.Dsatabdark</item>
         <item name="dropDownListViewStyle">@style/DropDownListView.Dsatabdark</item>
@@ -30,48 +29,50 @@
         <item name="actionModeBackground">@drawable/cab_background_top_dsatabdark</item>
         <item name="actionModeSplitBackground">@drawable/cab_background_bottom_dsatabdark</item>
         <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Dsatabdark</item>
+
+        
     </style>
 
-    <style name="ActionBar.Solid.Dsatabdark" parent="@style/Widget.Sherlock.ActionBar.Solid">
+    <style name="ActionBar.Solid.Dsatabdark" parent="@style/Widget.AppCompat.ActionBar.Solid">
         <item name="background">@drawable/ab_solid_dsatabdark</item>
         <item name="backgroundStacked">@drawable/ab_stacked_solid_dsatabdark</item>
         <item name="backgroundSplit">@drawable/ab_bottom_solid_dsatabdark</item>
         <item name="progressBarStyle">@style/ProgressBar.Dsatabdark</item>
     </style>
 
-    <style name="ActionBar.Transparent.Dsatabdark" parent="@style/Widget.Sherlock.ActionBar">
+    <style name="ActionBar.Transparent.Dsatabdark" parent="@style/Widget.AppCompat.ActionBar">
         <item name="background">@drawable/ab_transparent_dsatabdark</item>
         <item name="progressBarStyle">@style/ProgressBar.Dsatabdark</item>
     </style>
 	
-    <style name="PopupMenu.Dsatabdark" parent="@style/Widget.Sherlock.ListPopupWindow">	
+    <style name="PopupMenu.Dsatabdark" parent="@style/Widget.AppCompat.PopupMenu">	
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_dsatabdark</item>	
     </style>
 	
-    <style name="DropDownListView.Dsatabdark" parent="@style/Widget.Sherlock.ListView.DropDown">
+    <style name="DropDownListView.Dsatabdark" parent="@style/Widget.AppCompat.ListView.DropDown">
         <item name="android:listSelector">@drawable/selectable_background_dsatabdark</item>
     </style>
 
-    <style name="ActionBarTabStyle.Dsatabdark" parent="@style/Widget.Sherlock.ActionBar.TabView">
+    <style name="ActionBarTabStyle.Dsatabdark" parent="@style/Widget.AppCompat.ActionBar.TabView">
         <item name="android:background">@drawable/tab_indicator_ab_dsatabdark</item>
     </style>
 	
-    <style name="DropDownNav.Dsatabdark" parent="@style/Widget.Sherlock.Spinner.DropDown.ActionBar">
+    <style name="DropDownNav.Dsatabdark" parent="@style/Widget.AppCompat.Spinner.DropDown.ActionBar">
         <item name="android:background">@drawable/spinner_background_ab_dsatabdark</item>
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_dsatabdark</item>
         <item name="android:dropDownSelector">@drawable/selectable_background_dsatabdark</item>
     </style>
     
-    <style name="ProgressBar.Dsatabdark" parent="@style/Widget.Sherlock.ProgressBar.Horizontal">
+    <style name="ProgressBar.Dsatabdark" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_horizontal_dsatabdark</item>
     </style>
     
-    <style name="ActionButton.CloseMode.Dsatabdark" parent="@style/Widget.Sherlock.ActionButton.CloseMode">
+    <style name="ActionButton.CloseMode.Dsatabdark" parent="@style/Widget.AppCompat.ActionButton.CloseMode">
         <item name="android:background">@drawable/btn_cab_done_dsatabdark</item>
     </style>
     
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
-    <style name="Theme.Dsatabdark.Widget" parent="@style/Theme.Sherlock">
+    <style name="Theme.Dsatabdark.Widget" parent="@style/Theme.AppCompat">
         <item name="popupMenuStyle">@style/PopupMenu.Dsatabdark</item>
         <item name="dropDownListViewStyle">@style/DropDownListView.Dsatabdark</item>
     </style>

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.TabInfo;
@@ -38,7 +38,7 @@ import com.haarman.listviewanimations.itemmanipulation.OnDismissCallback;
 import com.haarman.listviewanimations.itemmanipulation.SwipeDismissAdapter;
 import com.haarman.listviewanimations.view.DynamicListView;
 
-public class TabListableConfigFragment extends SherlockFragment implements View.OnClickListener, OnItemClickListener,
+public class TabListableConfigFragment extends Fragment implements View.OnClickListener, OnItemClickListener,
 		OnItemSelectedListener, OnCheckedChangeListener, OnAnimateCallback {
 
 	private TabInfo info;

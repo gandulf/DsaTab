@@ -11,10 +11,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.dsatab.R;
 import com.dsatab.TabInfo;
 import com.dsatab.view.ListSettings;
@@ -22,8 +24,7 @@ import com.dsatab.view.ListSettings.FilterType;
 import com.dsatab.view.listener.FilterChangedListener;
 import com.gandulf.guilib.util.Debug;
 
-public class DualPaneFragment extends SherlockFragment implements FilterChangedListener,
-		OnSharedPreferenceChangeListener {
+public class DualPaneFragment extends Fragment implements FilterChangedListener, OnSharedPreferenceChangeListener {
 
 	private static final String TABINFO = "TABINFO";
 
@@ -104,13 +105,12 @@ public class DualPaneFragment extends SherlockFragment implements FilterChangedL
 	 * com.actionbarsherlock.view.MenuInflater)
 	 */
 	@Override
-	public void onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu,
-			com.actionbarsherlock.view.MenuInflater inflater) {
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 
 		for (Fragment f : fragments) {
-			if (f instanceof SherlockFragment && f.isAdded() && f.isMenuVisible())
-				((SherlockFragment) f).onCreateOptionsMenu(menu, inflater);
+			if (f != null && f.isAdded() && f.isMenuVisible())
+				f.onCreateOptionsMenu(menu, inflater);
 		}
 	}
 
@@ -120,12 +120,12 @@ public class DualPaneFragment extends SherlockFragment implements FilterChangedL
 	 * @see android.support.v4.app.Fragment#onOptionsItemSelected(android.view.MenuItem )
 	 */
 	@Override
-	public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item) {
 		boolean handled = false;
 
 		for (Fragment f : fragments) {
-			if (f instanceof SherlockFragment) {
-				handled |= ((SherlockFragment) f).onOptionsItemSelected(item);
+			if (f != null) {
+				handled |= f.onOptionsItemSelected(item);
 				if (handled)
 					return true;
 			}

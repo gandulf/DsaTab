@@ -18,6 +18,7 @@ repositories {
 
 dependencies {
     compile "com.android.support:gridlayout-v7:19+"
+    compile "com.android.support:appcombat-v7:19+"
     compile "net.simonvt.numberpicker:library:1.0.1@aar"
     compile project(':guiLib')
     compile fileTree(dir: 'libs', include: '*.jar')

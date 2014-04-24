@@ -3,14 +3,14 @@ package com.dsatab.activity;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.WindowManager;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.util.Hint;
 import com.dsatab.util.Util;
 
-public class BaseFragmentActivity extends SherlockFragmentActivity {
+public class BaseFragmentActivity extends ActionBarActivity {
 
 	/*
 	 * (non-Javadoc)

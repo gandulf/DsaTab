@@ -3,8 +3,13 @@ package com.dsatab.fragment;
 import java.util.List;
 
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -12,10 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.SubMenu;
 import com.dsatab.R;
 import com.dsatab.common.StyleableSpannableStringBuilder;
 import com.dsatab.data.AbstractBeing;
@@ -49,7 +50,8 @@ public class AnimalFragment extends BaseProfileFragment {
 
 		if (getHero().getAnimals().size() > 1) {
 			SubMenu subMenu = menu.addSubMenu(Menu.NONE, ANIMAL_MENU_ID, 0, R.string.choose_animal);
-			subMenu.getItem().setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+			MenuItemCompat.setShowAsAction(subMenu.getItem(), MenuItemCompat.SHOW_AS_ACTION_ALWAYS
+					| MenuItemCompat.SHOW_AS_ACTION_WITH_TEXT);
 			subMenu.setIcon(Util.getThemeResourceId(getActivity(), R.attr.imgBarSet));
 			for (int i = 0; i < getHero().getAnimals().size(); i++) {
 				Animal animal = getHero().getAnimals().get(i);

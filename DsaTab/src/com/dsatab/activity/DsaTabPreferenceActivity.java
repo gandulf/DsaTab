@@ -6,8 +6,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.saik0.android.unifiedpreference.UnifiedPreferenceActivity;
 import net.saik0.android.unifiedpreference.UnifiedPreferenceFragment;
-import net.saik0.android.unifiedpreference.UnifiedSherlockPreferenceActivity;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -27,6 +27,7 @@ import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -34,7 +35,6 @@ import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.view.MenuItem;
 import com.dropbox.sync.android.DbxAccountManager;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.DsaTabConfiguration;
@@ -52,8 +52,7 @@ import com.gandulf.guilib.download.AbstractDownloader;
 import com.gandulf.guilib.download.DownloaderWrapper;
 import com.gandulf.guilib.util.ResUtil;
 
-public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity implements
-		OnSharedPreferenceChangeListener {
+public class DsaTabPreferenceActivity extends UnifiedPreferenceActivity implements OnSharedPreferenceChangeListener {
 
 	static final int REQUEST_LINK_TO_DBX = 1190;
 	public static final int ACTION_PICK_BG_PATH = 1001;
@@ -262,8 +261,8 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 
 		super.onCreate(savedInstanceState);
 
-		getSupportActionBar().setDisplayShowHomeEnabled(true);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		// TODO getSupportActionBar().setDisplayShowHomeEnabled(true);
+		// TODO getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		SharedPreferences preferences = DsaTabApplication.getPreferences();
 		preferences.registerOnSharedPreferenceChangeListener(this);

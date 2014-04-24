@@ -22,12 +22,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v7.view.ActionMode;
 import android.text.TextUtils;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -38,10 +42,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.view.ActionMode;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.Window;
 import com.dropbox.sync.android.DbxException;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
@@ -85,7 +85,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 	private final class HeroesActionMode implements ActionMode.Callback {
 		@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 		@Override
-		public boolean onActionItemClicked(ActionMode mode, com.actionbarsherlock.view.MenuItem item) {
+		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 			boolean notifyChanged = false;
 			if (list == null || adapter == null) {
 				return false;
@@ -418,7 +418,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 
-		com.actionbarsherlock.view.MenuItem menuItem = menu.findItem(R.id.option_hero_import);
+		MenuItem menuItem = menu.findItem(R.id.option_hero_import);
 		if (menuItem != null) {
 			ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 			if (connMgr != null) {
@@ -441,13 +441,13 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 	 * @see com.actionbarsherlock.app.SherlockActivity#onCreateOptionsMenu(com.actionbarsherlock.view.Menu)
 	 */
 	@Override
-	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
-		getSupportMenuInflater().inflate(R.menu.herochooser_menu, menu);
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.herochooser_menu, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.option_refresh:
 			refresh();
@@ -634,7 +634,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 		if (hasCheckedElement) {
 			if (mMode == null) {
 				if (mCallback != null) {
-					mMode = startActionMode(mCallback);
+					mMode = startSupportActionMode(mCallback);
 					mMode.invalidate();
 				} else {
 					return false;

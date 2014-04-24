@@ -1,19 +1,19 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/option_pick_avatar"
         android:icon="?attr/imgBarUser"
-        android:showAsAction="withText|ifRoom"
+        app:showAsAction="withText|ifRoom"
         android:title="@string/choose_portrait"/>
     <item
         android:id="@+id/option_take_photo"
         android:icon="?attr/imgBarCamera"
-        android:showAsAction="withText|ifRoom"
+        app:showAsAction="withText|ifRoom"
         android:title="@string/take_photo"/>
     <item
         android:id="@+id/option_pick_image"
         android:icon="?attr/imgBarView"
-        android:showAsAction="withText|ifRoom"
+        app:showAsAction="withText|ifRoom"
         android:title="@string/open_gallery"/>
 
 </menu>

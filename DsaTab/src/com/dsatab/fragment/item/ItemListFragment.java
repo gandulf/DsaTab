@@ -14,9 +14,18 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBar.Tab;
+import android.support.v7.app.ActionBar.TabListener;
+import android.support.v7.view.ActionMode;
+import android.support.v7.view.ActionMode.Callback;
 import android.text.Editable;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -26,14 +35,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import casidiablo.SimpleCursorLoader;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.ActionBar.TabListener;
-import com.actionbarsherlock.view.ActionMode;
-import com.actionbarsherlock.view.ActionMode.Callback;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.dsatab.R;
 import com.dsatab.activity.ItemsActivity;
 import com.dsatab.data.Hero;
@@ -93,7 +94,7 @@ public class ItemListFragment extends BaseListFragment implements TabListener, O
 		}
 
 		@Override
-		public boolean onActionItemClicked(ActionMode mode, com.actionbarsherlock.view.MenuItem menuItem) {
+		public boolean onActionItemClicked(ActionMode mode, MenuItem menuItem) {
 			final ListView list = listView.get();
 			final ItemListFragment fragment = listFragment.get();
 			if (list == null || fragment == null)
@@ -191,7 +192,7 @@ public class ItemListFragment extends BaseListFragment implements TabListener, O
 		itemTypes = new HashSet<ItemType>();
 		itemAdapter = new ItemCursorAdapter(getActivity(), null);
 
-		ActionBar actionBar = getSherlockActivity().getSupportActionBar();
+		ActionBar actionBar = getActionBarActivity().getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
 		final ItemTypeAdapter adapter = new ItemTypeAdapter(actionBar.getThemedContext(),
@@ -279,7 +280,7 @@ public class ItemListFragment extends BaseListFragment implements TabListener, O
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 
-		ActionBar actionBar = getSherlockActivity().getSupportActionBar();
+		ActionBar actionBar = getActionBarActivity().getSupportActionBar();
 		ItemType itemType = null;
 		if (!itemTypes.isEmpty()) {
 			itemType = itemTypes.iterator().next();
@@ -329,11 +330,12 @@ public class ItemListFragment extends BaseListFragment implements TabListener, O
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-		com.actionbarsherlock.view.MenuItem item = menu.add(Menu.NONE, R.id.option_search, Menu.NONE, "Suche");
-		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+		MenuItem item = menu.add(Menu.NONE, R.id.option_search, Menu.NONE, "Suche");
+		MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM
+				| MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
 		item.setIcon(Util.getThemeResourceId(getActivity(), R.attr.imgBarSearch));
 
-		final AutoCompleteTextView searchView = new AutoCompleteTextView(getSherlockActivity().getSupportActionBar()
+		final AutoCompleteTextView searchView = new AutoCompleteTextView(getActionBarActivity().getSupportActionBar()
 				.getThemedContext());
 		searchView.setCompoundDrawablesWithIntrinsicBounds(Util.getThemeResourceId(getActivity(), R.attr.imgBarSearch),
 				0, 0, 0);
@@ -345,8 +347,7 @@ public class ItemListFragment extends BaseListFragment implements TabListener, O
 		});
 		searchView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 
-		item.setActionView(searchView);
-
+		MenuItemCompat.setActionView(item, searchView);
 		// --
 
 		inflater.inflate(R.menu.menuitem_add, menu);

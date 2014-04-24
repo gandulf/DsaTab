@@ -19,7 +19,7 @@
 
 <resources>
 
-    <style name="Theme.Dsatabdark" parent="@style/Theme.Sherlock">
+    <style name="Theme.Dsatabdark" parent="@style/Theme.AppCompat">
         <item name="android:actionBarItemBackground">@drawable/selectable_background_dsatabdark</item>
         <item name="android:popupMenuStyle">@style/PopupMenu.Dsatabdark</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Dsatabdark</item>
@@ -33,20 +33,20 @@
         
     </style>
 
-    <style name="ActionBar.Solid.Dsatabdark" parent="@style/Widget.Sherlock.ActionBar.Solid">
+    <style name="ActionBar.Solid.Dsatabdark" parent="@style/Widget.AppCompat.ActionBar.Solid">
         <item name="android:background">@drawable/ab_solid_dsatabdark</item>
         <item name="android:backgroundStacked">@drawable/ab_stacked_solid_dsatabdark</item>
         <item name="android:backgroundSplit">@drawable/ab_bottom_solid_dsatabdark</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Dsatabdark</item>
     </style>
 
-    <style name="ActionBar.Transparent.Dsatabdark" parent="@style/Widget.Sherlock.ActionBar">
+    <style name="ActionBar.Transparent.Dsatabdark" parent="@style/Widget.AppCompat.ActionBar">
         <item name="android:background">@drawable/ab_transparent_dsatabdark</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Dsatabdark</item>
     </style>
     
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
-    <style name="Theme.Dsatabdark.Widget" parent="@style/Theme.Sherlock">
+    <style name="Theme.Dsatabdark.Widget" parent="@style/Theme.AppCompat">
         <item name="android:popupMenuStyle">@style/PopupMenu.Dsatabdark</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Dsatabdark</item>
     </style>

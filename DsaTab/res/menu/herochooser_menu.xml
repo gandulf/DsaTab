@@ -1,26 +1,26 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/option_refresh"
         android:icon="@drawable/ic_action_refresh"
-        android:showAsAction="withText|ifRoom"
+        app:showAsAction="withText|ifRoom"
         android:title="@string/refresh"/>
     
     <item
         android:id="@+id/option_load_example_heroes"
         android:icon="@drawable/ic_action_file_dark"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:title="Beispiel Helden laden"/>
     
     <item
         android:id="@+id/option_items"
         android:icon="?attr/imgBarSwordAdd"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:title="@string/items"/>
     <item
         android:id="@+id/option_settings"
         android:icon="@drawable/ic_menu_preferences"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:title="@string/settings"/>
 
 </menu>

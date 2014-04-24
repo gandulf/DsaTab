@@ -1,8 +1,8 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/option_add_container"
         android:icon="?attr/imgBarSwordAdd"
-        android:showAsAction="withText|ifRoom"
+        app:showAsAction="withText|ifRoom"
         android:orderInCategory="99"
         android:title="@string/create_container">
     </item>

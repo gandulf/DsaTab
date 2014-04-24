@@ -7,6 +7,7 @@ import java.util.List;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.Spinner;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.CustomProbe;
@@ -28,7 +28,7 @@ import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 import com.dsatab.util.Util;
 import com.dsatab.view.PictureChooserDialog;
 
-public class CustomProbeEditFragment extends SherlockFragment implements OnClickListener, OnItemSelectedListener {
+public class CustomProbeEditFragment extends Fragment implements OnClickListener, OnItemSelectedListener {
 
 	private EditText editName, editDescription, editFooter;
 	private EditText editAttrs, editBe, editValue;

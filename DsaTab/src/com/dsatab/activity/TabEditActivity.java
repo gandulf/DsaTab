@@ -9,8 +9,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SlidingPaneLayout;
+import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -28,9 +32,6 @@ import android.widget.TabWidget;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.TabInfo;
@@ -187,18 +188,20 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
-		com.actionbarsherlock.view.MenuItem item = menu.add(Menu.NONE, R.id.option_tab_add, Menu.NONE,
-				R.string.option_create_tab);
-		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuItem item = menu.add(Menu.NONE, R.id.option_tab_add, Menu.NONE, R.string.option_create_tab);
+		MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM
+				| MenuItemCompat.SHOW_AS_ACTION_WITH_TEXT);
 		item.setIcon(R.drawable.ic_menu_add);
 
 		item = menu.add(Menu.NONE, R.id.option_tab_delete, Menu.NONE, R.string.label_delete);
-		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+		MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM
+				| MenuItemCompat.SHOW_AS_ACTION_WITH_TEXT);
 		item.setIcon(Util.getThemeResourceId(this, R.attr.imgBarDelete));
 
 		item = menu.add(Menu.NONE, R.id.option_tab_reset, Menu.NONE, R.string.option_reset_tabs);
-		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+		MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM
+				| MenuItemCompat.SHOW_AS_ACTION_WITH_TEXT);
 		item.setIcon(R.drawable.ic_menu_revert);
 
 		return true;
@@ -227,7 +230,7 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.actionbarsherlock.app.SherlockFragmentActivity#onPrepareOptionsMenu (com.actionbarsherlock.view.Menu)
+	 * @see com.actionbarsherlock.app.SherlockFragmentActivity#onPrepareOptionsMenu (Menu)
 	 */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {

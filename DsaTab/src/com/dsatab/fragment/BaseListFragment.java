@@ -5,6 +5,9 @@ import java.util.List;
 
 import android.annotation.TargetApi;
 import android.os.Build;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.view.ActionMode;
+import android.support.v7.view.ActionMode.Callback;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.Adapter;
@@ -15,9 +18,6 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.ActionMode;
-import com.actionbarsherlock.view.ActionMode.Callback;
 import com.dsatab.view.ListSettings;
 import com.dsatab.view.ListSettings.FilterType;
 import com.dsatab.view.listener.FilterChangedListener;
@@ -90,7 +90,7 @@ public abstract class BaseListFragment extends BaseFragment implements OnItemLon
 			if (mMode == null) {
 				Callback callback = getActionModeCallback(checkedObjects);
 				if (callback != null) {
-					mMode = ((SherlockFragmentActivity) getActivity()).startActionMode(callback);
+					mMode = ((ActionBarActivity) getActivity()).startSupportActionMode(callback);
 					customizeActionModeCloseButton();
 					mMode.invalidate();
 				}
