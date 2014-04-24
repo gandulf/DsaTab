@@ -35,6 +35,7 @@
         android:layout_centerVertical="true"
         android:layout_toRightOf="@android:id/icon1"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:minWidth="150dp"
         android:textStyle="bold" />
 
     <TextView

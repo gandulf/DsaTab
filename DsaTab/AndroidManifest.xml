@@ -77,6 +77,10 @@
             android:label="@string/item_container_edit_title"
             android:logo="@android:drawable/ic_menu_edit" />
         <activity
+            android:name="com.dsatab.activity.CustomProbeEditActivity"
+            android:label="Probe bearbeiten"
+            android:logo="@android:drawable/ic_menu_edit" />
+        <activity
             android:name="com.dsatab.activity.HeroChooserActivity"
             android:label="@string/hero_chooser_title" />
         <activity

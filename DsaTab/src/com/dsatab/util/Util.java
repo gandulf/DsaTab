@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
@@ -1254,12 +1255,12 @@ public class Util {
 		return deviceDisplayMetrics.heightPixels;
 	}
 
-	public static void putArray(JSONObject out, List<? extends JSONable> list, String name) throws JSONException {
+	public static void putArray(JSONObject out, Collection<? extends JSONable> list, String name) throws JSONException {
 		JSONArray jsonArray = new JSONArray();
 		int index = 0;
-		final int count = list.size();
-		for (int i = 0; i < count; i++) {
-			JSONObject jsonObject = list.get(i).toJSONObject();
+		Iterator<? extends JSONable> iter = list.iterator();
+		while (iter.hasNext()) {
+			JSONObject jsonObject = iter.next().toJSONObject();
 			if (jsonObject != null) {
 				jsonArray.put(index++, jsonObject);
 			}

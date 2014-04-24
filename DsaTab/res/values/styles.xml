@@ -109,13 +109,4 @@
         <item name="flipDrawable">@drawable/dsa_list_checked</item>
     </style>
 
-    <style name="BodyItemImage" parent="@android:style/Widget.ImageButton">
-        <item name="android:background">@drawable/border_patch</item>
-        <item name="android:layout_margin">2.5dp</item>
-        <item name="android:layout_height">fill_parent</item>
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:scaleType">fitXY</item>
-    </style>
-
 </resources>

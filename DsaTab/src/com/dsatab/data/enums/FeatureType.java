@@ -30,11 +30,11 @@ public enum FeatureType {
 			FeatureGroupType.Advantage), GeweihtGravesh("Geweiht [Gravesh]", FeatureGroupType.Advantage), GeweihtnichtalveranischeGottheit(
 			"Geweiht [nicht-alveranische Gottheit]", FeatureGroupType.Advantage), GeweihtHRanga("Geweiht [H'Ranga]",
 			FeatureGroupType.Advantage), GeweihtzwölfgöttlicheKirche("Geweiht [zwölfgöttliche Kirche]",
-			FeatureGroupType.Advantage), GöttergeschenkFuchs("Göttergeschenk: Fuchs", FeatureGroupType.Advantage), Glück(
-			"Glück", FeatureGroupType.Advantage), GlückImSpiel("Glück im Spiel", FeatureGroupType.Advantage), Gutaussehend(
-			"Gutaussehend", FeatureGroupType.Advantage), GuterRuf("Guter Ruf", FeatureGroupType.Advantage), GutesGedächtnis(
-			"Gutes Gedächtnis", FeatureGroupType.Advantage), Halbzauberer("Halbzauberer", FeatureGroupType.Advantage), HerausragendeBalance(
-			"Herausragende Balance", FeatureGroupType.Advantage), HerausragendeEigenschaft("Herausragende Eigenschaft",
+			FeatureGroupType.Advantage), Glück("Glück", FeatureGroupType.Advantage), GlückImSpiel("Glück im Spiel",
+			FeatureGroupType.Advantage), Gutaussehend("Gutaussehend", FeatureGroupType.Advantage), GuterRuf(
+			"Guter Ruf", FeatureGroupType.Advantage), GutesGedächtnis("Gutes Gedächtnis", FeatureGroupType.Advantage), Halbzauberer(
+			"Halbzauberer", FeatureGroupType.Advantage), HerausragendeBalance("Herausragende Balance",
+			FeatureGroupType.Advantage), HerausragendeEigenschaft("Herausragende Eigenschaft",
 			FeatureGroupType.Advantage), HerausragendeEigenschaftCharisma("Herausragende Eigenschaft: Charisma",
 			FeatureGroupType.Advantage), HerausragendeEigenschaftFingerfertigkeit(
 			"Herausragende Eigenschaft: Fingerfertigkeit", FeatureGroupType.Advantage), HerausragendeEigenschaftGewandtheit(
@@ -99,8 +99,17 @@ public enum FeatureType {
 			"Trendeln", FeatureGroupType.Advantage), Trittsicherheit("Trittsicherheit", FeatureGroupType.Advantage), Wasserliebend(
 			"Wasserliebend", FeatureGroupType.Advantage), WeicheGänge("Weiche Gänge", FeatureGroupType.Advantage), Zäh(
 			"Zäh", FeatureGroupType.Advantage), Zugkraft("Zugkraft", FeatureGroupType.Advantage), Zugkraft1(
-			"Zugkraft 1", FeatureGroupType.Advantage), Zugkraft2("Zugkraft 2", FeatureGroupType.Advantage), Aberglaube(
-			"Aberglaube", FeatureGroupType.Disadvantage), Agrimothwahn("Agrimothwahn", FeatureGroupType.Disadvantage), Albino(
+			"Zugkraft 1", FeatureGroupType.Advantage), Zugkraft2("Zugkraft 2", FeatureGroupType.Advantage), GöttergeschenkDelfin(
+			"Göttergeschenk: Delfin", FeatureGroupType.Advantage), GöttergeschenkEidechse("Göttergeschenk: Eidechse",
+			FeatureGroupType.Advantage), GöttergeschenkFirunsbär("Göttergeschenk: Firunsbär",
+			FeatureGroupType.Advantage), GöttergeschenkFuchs("Göttergeschenk: Fuchs", FeatureGroupType.Advantage), GöttergeschenkGans(
+			"Göttergeschenk: Gans", FeatureGroupType.Advantage), GöttergeschenkGreif("Göttergeschenk: Greif",
+			FeatureGroupType.Advantage), GöttergeschenkHammerAmboss("Göttergeschenk: Hammer/Amboss",
+			FeatureGroupType.Advantage), GöttergeschenkRabe("Göttergeschenk: Rabe", FeatureGroupType.Advantage), GöttergeschenkSchlange(
+			"Göttergeschenk: Schlange", FeatureGroupType.Advantage), GöttergeschenkSchwert("Göttergeschenk: Schwert",
+			FeatureGroupType.Advantage), GöttergeschenkStorch("Göttergeschenk: Storch", FeatureGroupType.Advantage), GöttergeschenkStute(
+			"Göttergeschenk: Stute", FeatureGroupType.Advantage), Aberglaube("Aberglaube",
+			FeatureGroupType.Disadvantage), Agrimothwahn("Agrimothwahn", FeatureGroupType.Disadvantage), Albino(
 			"Albino", FeatureGroupType.Disadvantage), AngstVorInsekten("Angst vor Insekten",
 			FeatureGroupType.Disadvantage), AngstVorMenschenmassen("Angst vor Menschenmassen",
 			FeatureGroupType.Disadvantage), AngstVorSpinnen("Angst vor Spinnen", FeatureGroupType.Disadvantage), AngstVorReptilien(

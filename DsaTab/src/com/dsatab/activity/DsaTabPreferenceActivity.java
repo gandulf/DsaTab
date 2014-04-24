@@ -83,8 +83,7 @@ public class DsaTabPreferenceActivity extends UnifiedSherlockPreferenceActivity 
 	public static final String KEY_SETUP_SDCARD_PATH = "sdcardPath";
 
 	public static final String KEY_SETUP_SDCARD_PATH_PREFIX = KEY_SETUP_SDCARD_PATH + ".";
-	public static final String KEY_SETUP_SDCARD_DOCUMENTS_PATH = KEY_SETUP_SDCARD_PATH_PREFIX
-			+ DsaTabApplication.DIR_PDFS;
+
 	public static final String KEY_SETUP_SDCARD_HERO_PATH = "sdcardHeroPath";
 
 	public static final String KEY_DOWNLOAD_SCREEN = "downloadMediaScreen";

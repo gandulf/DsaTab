@@ -6,20 +6,37 @@ import java.util.List;
 
 public enum Position {
 
-	Head_Up("Kopf Oben"), Head_Side("Kopf seitl."), Head_Face("Gesicht"), Neck("Hals"), LeftShoulder("Linke Schulter"), LeftUpperArm(
-			"Linker Oberarm"), LeftLowerArm("Linker Unterarm"), RightShoulder("Rechte Schulter"), RightUpperArm(
-			"Rechter Oberarm"), RightLowerArm("Rechter Unterarm"), Brust("Brust"), Bauch("Bauch"), Ruecken("Rücken"), Pelvis(
-			"Becken"), UpperLeg("Oberschenkel"), LowerLeg("Unterschenkel"), Kopf("Kopf"), LinkeHand("Linke Hand"), RechteHand(
-			"Rechte Hand"), LinkesBein("Linkes Bein"), RechtesBein("Rechtes Bein");
+	Head_Up("Kopf Oben"), Head_Side("Kopf seitl."), Head_Face("Gesicht"), Neck("Hals"), LeftShoulder("Linke Schulter",
+			"Schulter L"), LeftUpperArm("Linker Oberarm", "Oberarm L"), LeftLowerArm("Linker Unterarm", "Unterarm L"), RightShoulder(
+			"Rechte Schulter", "Schulter R"), RightUpperArm("Rechter Oberarm", "Oberarm R"), RightLowerArm(
+			"Rechter Unterarm", "Unterarm R"), Brust("Brust"), Bauch("Bauch"), Ruecken("Rücken"), Pelvis("Becken"), UpperLeg(
+			"Oberschenkel"), LowerLeg("Unterschenkel"), Kopf("Kopf"), LinkeHand("Linke Hand", "Hand L"), RechteHand(
+			"Rechte Hand", "Hand R"), LinkesBein("Linkes Bein", "Bein L"), RechtesBein("Rechtes Bein", "Bein R");
 
 	protected String name;
+	protected String nameShort;
+
+	private Position(String name, String nameShort) {
+		this.name = name;
+		this.nameShort = nameShort;
+	}
 
 	private Position(String name) {
 		this.name = name;
+		this.nameShort = name;
 	}
 
 	public String getName() {
 		return name;
+	}
+
+	public String getNameSort() {
+		return nameShort;
+	}
+
+	@Override
+	public String toString() {
+		return getName();
 	}
 
 	public static List<Position> WOUND_POSITIONS = new ArrayList<Position>(Arrays.asList(Position.Kopf, Position.Bauch,

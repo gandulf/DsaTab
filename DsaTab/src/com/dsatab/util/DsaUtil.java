@@ -229,6 +229,7 @@ public class DsaUtil {
 			return R.drawable.icon_kettenwaffen;
 		case Raufen:
 		case Ringen:
+			return R.drawable.icon_fist;
 		case Peitsche:
 			return R.drawable.icon_whip;
 		default:
@@ -270,7 +271,7 @@ public class DsaUtil {
 				return R.drawable.icon_helm;
 		} else if (Armor.CATEGORY_TORSO.equalsIgnoreCase(item.getCategory())
 				|| Armor.CATEGORY_FULL.equalsIgnoreCase(item.getCategory())) {
-			if (armor.getMaxRs() > 6)
+			if (armor.getMaxRs() >= 5)
 				return R.drawable.icon_armor_metal;
 			else if (armor.getMaxRs() > 2)
 				return R.drawable.icon_armor_chain;

@@ -15,10 +15,8 @@ public class CombatMeleeAttribute extends BaseProbe implements Value {
 
 	private String name;
 
-	private AbstractBeing being;
-
 	public CombatMeleeAttribute(AbstractBeing being, String name) {
-		this.being = being;
+		super(being);
 		this.name = name;
 	}
 

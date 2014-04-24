@@ -114,12 +114,13 @@ public class GridItemAdapter extends OpenArrayAdapter<ItemCard> {
 			cardView = new CardView(getContext());
 			if (cardView.getBackground() != null)
 				cardView.getBackground().mutate();
-			// cardView.setLayoutParams(new GridView.LayoutParams(width,
-			// height));
+
 			cardView.setLayoutParams(new AbsListView.LayoutParams(width, height));
 			cardView.setMinimumWidth(width);
 			cardView.setMinimumHeight(height);
 		}
+		int padding = getContext().getResources().getDimensionPixelSize(R.dimen.default_gap);
+		cardView.setPadding(padding, padding, padding, padding);
 		cardView.setItem(item);
 		return cardView;
 	}

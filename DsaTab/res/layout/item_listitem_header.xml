@@ -2,8 +2,6 @@
 <com.dsatab.view.CheckableRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:background="?attr/listItemBackground"
     android:paddingRight="6dp"
     android:paddingLeft="6dp">
     
@@ -13,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
+        android:focusable="true"
         android:ellipsize="end" />
 
 </com.dsatab.view.CheckableRelativeLayout>

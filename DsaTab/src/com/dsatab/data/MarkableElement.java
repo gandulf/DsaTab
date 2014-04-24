@@ -4,6 +4,10 @@ public abstract class MarkableElement extends BaseProbe implements Markable {
 
 	private boolean unused, favorite;
 
+	public MarkableElement(AbstractBeing being) {
+		super(being);
+	}
+
 	@Override
 	public boolean isUnused() {
 		return unused;

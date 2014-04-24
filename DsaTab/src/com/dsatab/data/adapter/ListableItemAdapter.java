@@ -5,26 +5,38 @@ import java.util.List;
 
 import net.simonvt.numberpicker.NumberPicker;
 import net.simonvt.numberpicker.NumberPicker.OnValueChangeListener;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.TextUtils.TruncateAt;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
+import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabActivity;
 import com.dsatab.common.StyleableSpannableStringBuilder;
@@ -34,15 +46,19 @@ import com.dsatab.data.Attribute;
 import com.dsatab.data.CombatDistanceTalent;
 import com.dsatab.data.CombatMeleeTalent;
 import com.dsatab.data.CombatProbe;
+import com.dsatab.data.CustomProbe;
 import com.dsatab.data.Hero;
 import com.dsatab.data.Markable;
+import com.dsatab.data.Probe;
 import com.dsatab.data.Purse.Currency;
 import com.dsatab.data.Purse.PurseUnit;
 import com.dsatab.data.Spell;
 import com.dsatab.data.Talent;
 import com.dsatab.data.Talent.Flags;
+import com.dsatab.data.WoundAttribute;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.Hand;
+import com.dsatab.data.enums.Position;
 import com.dsatab.data.enums.UsageType;
 import com.dsatab.data.filter.ListableListFilter;
 import com.dsatab.data.items.Armor;
@@ -53,9 +69,11 @@ import com.dsatab.data.items.ItemSpecification;
 import com.dsatab.data.items.Shield;
 import com.dsatab.data.items.Weapon;
 import com.dsatab.data.listable.FileListable;
+import com.dsatab.data.listable.FooterListItem;
 import com.dsatab.data.listable.HeaderListItem;
 import com.dsatab.data.listable.Listable;
 import com.dsatab.data.listable.PurseListable;
+import com.dsatab.data.listable.WoundListItem;
 import com.dsatab.data.modifier.AbstractModificator;
 import com.dsatab.data.modifier.CustomModificator;
 import com.dsatab.data.modifier.Modificator;
@@ -70,6 +88,7 @@ import com.dsatab.view.EvadeChooserDialog;
 import com.dsatab.view.ItemListItem;
 import com.dsatab.view.ListSettings;
 import com.dsatab.view.listener.EditListener;
+import com.dsatab.view.listener.OnActionListener;
 import com.dsatab.view.listener.ProbeListener;
 import com.dsatab.view.listener.TargetListener;
 import com.gandulf.guilib.data.OpenArrayAdapter;
@@ -78,12 +97,14 @@ import com.gandulf.guilib.view.SeekBarEx;
 import fr.castorflex.android.flipimageview.library.FlipImageView;
 import fr.castorflex.android.flipimageview.library.FlipImageView.FlippableViewHolder;
 
-public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements OnSeekBarChangeListener {
+public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements OnSeekBarChangeListener,
+		OnCheckedChangeListener, OnClickListener {
 
 	private Hero hero;
 
 	private ListableListFilter<Listable> filter;
 
+	private OnActionListener actionListener;
 	private ProbeListener probeListener;
 	private EditListener editListener;
 	private TargetListener targetListener;
@@ -104,6 +125,9 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 	private static final int ITEM_TYPE_HEADER = 6;
 	private static final int ITEM_TYPE_NOTES = 7;
 	private static final int ITEM_TYPE_PURSE = 8;
+	private static final int ITEM_TYPE_FOOTER = 9;
+	private static final int ITEM_TYPE_WOUND = 10;
+	private static final int ITEM_TYPE_PROBE = 11;
 
 	private DsaTabActivity main;
 
@@ -184,7 +208,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 	 */
 	@Override
 	public int getViewTypeCount() {
-		return 9;
+		return 12;
 	}
 
 	/*
@@ -227,6 +251,12 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 			return ITEM_TYPE_NOTES;
 		} else if (item instanceof PurseListable) {
 			return ITEM_TYPE_PURSE;
+		} else if (item instanceof FooterListItem) {
+			return ITEM_TYPE_FOOTER;
+		} else if (item instanceof WoundListItem) {
+			return ITEM_TYPE_WOUND;
+		} else if (item instanceof Probe) {
+			return ITEM_TYPE_PROBE;
 		} else {
 			return IGNORE_ITEM_VIEW_TYPE;
 		}
@@ -269,12 +299,21 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		this.editListener = editListener;
 	}
 
+	public OnActionListener getActionListener() {
+		return actionListener;
+	}
+
+	public void setActionListener(OnActionListener actionListener) {
+		this.actionListener = actionListener;
+	}
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
 		if (convertView == null) {
 
 			switch (getItemViewType(position)) {
+
 			case ITEM_TYPE_VIEW: {
 				convertView = (ItemListItem) inflater.inflate(R.layout.item_listitem_view, parent, false);
 
@@ -291,6 +330,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				convertView.setTag(holder);
 				break;
 			}
+			case ITEM_TYPE_PROBE:
 			case ITEM_TYPE_EDIT: {
 				convertView = (ItemListItem) inflater.inflate(R.layout.item_listitem_equippeditem, parent, false);
 				ViewHolder holder = new ViewHolder();
@@ -366,7 +406,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				convertView.setTag(holder);
 				break;
 			}
-			case ITEM_TYPE_PURSE:
+			case ITEM_TYPE_PURSE: {
 				convertView = inflater.inflate(R.layout.item_listitem_purse, parent, false);
 				PurseViewHolder holder = new PurseViewHolder();
 
@@ -388,7 +428,63 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				convertView.setTag(holder);
 				break;
 			}
+			case ITEM_TYPE_FOOTER: {
+				convertView = inflater.inflate(R.layout.item_listitem_footer, parent, false);
+				FooterViewHolder holder = new FooterViewHolder();
 
+				convertView.setTag(holder);
+				break;
+
+			}
+			case ITEM_TYPE_WOUND: {
+				convertView = inflater.inflate(R.layout.item_listitem_wound, parent, false);
+				WoundViewHolder holder = new WoundViewHolder();
+
+				int width = parent.getWidth();
+				int buttonSize = getContext().getResources().getDimensionPixelSize(R.dimen.icon_button_size);
+				int gap = getContext().getResources().getDimensionPixelSize(R.dimen.default_gap);
+				int halfgap = gap / 2;
+				int buttonCount = width / (buttonSize + gap);
+
+				// <ToggleButton
+				// android:id="@+id/wound1"
+				// android:layout_width="@dimen/icon_button_size"
+				// android:layout_height="@dimen/icon_button_size"
+				// android:layout_marginRight="@dimen/default_gap"
+				// android:textOn=""
+				// android:textOff=""
+				// android:background="@drawable/icon_wound_btn" />
+
+				holder.wounds = new ToggleButton[buttonCount];
+				for (int i = 0; i < buttonCount; i++) {
+					ToggleButton woundButton = new ToggleButton(getContext());
+					woundButton.setBackgroundResource(R.drawable.bg_wound_btn);
+					LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(buttonSize, buttonSize);
+					params.gravity = Gravity.CENTER;
+					params.rightMargin = halfgap;
+					params.leftMargin = halfgap;
+					params.topMargin = halfgap;
+					params.bottomMargin = halfgap;
+
+					woundButton.setLayoutParams(params);
+					woundButton.setTextOff("");
+					woundButton.setPadding(halfgap, halfgap, halfgap, halfgap);
+					woundButton.setLines(2);
+					woundButton.setEllipsize(TruncateAt.MIDDLE);
+					woundButton.setTextColor(Color.WHITE);
+					woundButton.setTextOn("");
+					woundButton.setTextSize(11.0f);
+
+					woundButton.setChecked(false);
+					woundButton.setOnClickListener(this);
+					holder.wounds[i] = woundButton;
+					((ViewGroup) convertView).addView(woundButton);
+				}
+
+				convertView.setTag(holder);
+				break;
+			}
+			}
 		}
 
 		FlippableViewHolder.prepare(position, convertView, (ListView) parent);
@@ -415,6 +511,12 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 			convertView = prepareView((NotesItem) item, position, convertView, parent);
 		} else if (item instanceof PurseListable) {
 			convertView = prepareView((PurseListable) item, position, convertView, parent);
+		} else if (item instanceof FooterListItem) {
+			convertView = prepareView((FooterListItem) item, position, convertView, parent);
+		} else if (item instanceof WoundListItem) {
+			convertView = prepareView((WoundListItem) item, position, convertView, parent);
+		} else if (item instanceof CustomProbe) {
+			convertView = prepareView((CustomProbe) item, position, convertView, parent);
 		}
 
 		if (item instanceof Markable) {
@@ -425,6 +527,147 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 
 		return convertView;
 
+	}
+
+	private View prepareView(CustomProbe probe, int position, View convertView, ViewGroup parent) {
+		ViewHolder holder = (ViewHolder) convertView.getTag();
+
+		StyleableSpannableStringBuilder title = new StyleableSpannableStringBuilder();
+		title.append(probe.getName());
+		Util.appendValue(hero, title, probe, null, true);
+		holder.text1.setText(title);
+
+		holder.text2.setText("");
+		if (!TextUtils.isEmpty(probe.getDescription())) {
+			holder.text2.append(probe.getDescription());
+			holder.text2.append(" ");
+		}
+
+		String attrs = probe.getProbeInfo().getAttributesString();
+		if (!TextUtils.isEmpty(attrs)) {
+			holder.text2.append(attrs);
+			holder.text2.append(" ");
+		}
+		String be = probe.getProbeInfo().getBe();
+		if (!TextUtils.isEmpty(be)) {
+			holder.text2.append(be);
+		}
+
+		holder.text3.setText(probe.getFooter());
+
+		holder.icon1.setVisibility(View.VISIBLE);
+		holder.icon1.setImageURI(probe.getIconUri());
+		holder.icon1.setOnClickListener(probeListener);
+		holder.icon1.setTag(probe);
+
+		holder.icon2.setVisibility(View.GONE);
+
+		Util.applyRowStyle(convertView, position);
+		return convertView;
+	}
+
+	protected View prepareView(WoundListItem item, int position, View convertView, ViewGroup parent) {
+		WoundViewHolder holder = (WoundViewHolder) convertView.getTag();
+
+		for (int i = 0; i < holder.wounds.length; i++) {
+			holder.wounds[i].setOnCheckedChangeListener(null);
+		}
+
+		int offset = 0;
+		switch (DsaTabApplication.getInstance().getConfiguration().getWoundType()) {
+		case Standard:
+
+			for (WoundAttribute attr : hero.getWounds().values()) {
+
+				for (int i = 0; i < attr.getValue() && offset + i < holder.wounds.length; i++) {
+					holder.wounds[offset + i].setChecked(true);
+					holder.wounds[offset + i].setTag(attr);
+				}
+				offset += attr.getValue();
+			}
+
+			for (int i = offset; i < holder.wounds.length; i++) {
+				holder.wounds[i].setChecked(false);
+				holder.wounds[i].setTag(null);
+			}
+			break;
+		case Trefferzonen:
+			for (WoundAttribute attr : hero.getWounds().values()) {
+
+				for (int i = 0; i < attr.getValue() && offset + i < holder.wounds.length; i++) {
+					holder.wounds[offset + i].setTextOn(attr.getPosition().getNameSort());
+					holder.wounds[offset + i].setTextOff(attr.getPosition().getNameSort());
+					holder.wounds[offset + i].setChecked(true);
+					holder.wounds[offset + i].setTag(attr);
+				}
+				offset += attr.getValue();
+			}
+
+			for (int i = offset; i < holder.wounds.length; i++) {
+				holder.wounds[i].setTextOn("");
+				holder.wounds[i].setTextOff("");
+				holder.wounds[i].setChecked(false);
+				holder.wounds[i].setTag(null);
+			}
+
+			break;
+		}
+
+		for (int i = 0; i < holder.wounds.length; i++) {
+			holder.wounds[i].setOnCheckedChangeListener(this);
+		}
+
+		return convertView;
+	}
+
+	@Override
+	public void onClick(View v) {
+
+		if (v.getTag() == null && v instanceof ToggleButton) {
+
+			final ToggleButton button = (ToggleButton) v;
+
+			switch (DsaTabApplication.getInstance().getConfiguration().getWoundType()) {
+			case Standard:
+				WoundAttribute attr = hero.getWounds().get(Position.Kopf);
+				attr.addValue(1);
+				button.setTag(attr);
+				break;
+			case Trefferzonen:
+				button.setChecked(false);
+				final List<Position> positions = DsaTabApplication.getInstance().getConfiguration().getWoundPositions();
+
+				AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+				ArrayAdapter<Position> typeAdapter = new ArrayAdapter<Position>(getContext(),
+						android.R.layout.simple_list_item_1, positions);
+				builder.setTitle("Typ auswählen");
+				builder.setAdapter(typeAdapter, new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						Position position = (Position) positions.get(which);
+						WoundAttribute attr = hero.getWounds().get(position);
+						button.setChecked(true);
+						attr.addValue(1);
+						button.setTag(attr);
+					}
+				});
+
+				builder.show().setCanceledOnTouchOutside(true);
+				break;
+			}
+		}
+	}
+
+	@Override
+	public void onCheckedChanged(final CompoundButton button, final boolean checked) {
+		if (button.getTag() instanceof WoundAttribute) {
+			WoundAttribute attribute = (WoundAttribute) button.getTag();
+			if (checked)
+				attribute.addValue(1);
+			else
+				attribute.addValue(-1);
+		}
 	}
 
 	protected View prepareView(PurseListable item, int position, View convertView, ViewGroup parent) {
@@ -484,6 +727,97 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		return convertView;
 	}
 
+	protected View prepareView(FooterListItem item, int position, View convertView, ViewGroup parent) {
+		FooterViewHolder holder = (FooterViewHolder) convertView.getTag();
+
+		ViewGroup container = (ViewGroup) convertView;
+		container.removeAllViews();
+
+		switch (item.getType()) {
+		case Document:
+			Button browse = (Button) inflater.inflate(R.layout._button_borderless, container, false);
+			browse.setText(R.string.choose_folder);
+			browse.setCompoundDrawablesWithIntrinsicBounds(Util.getThemeResourceId(getContext(), R.attr.imgFilter), 0,
+					0, 0);
+			browse.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					if (actionListener != null)
+						actionListener.onAction(OnActionListener.ACTION_DOCUMENTS_CHOOSE);
+
+				}
+			});
+			container.addView(browse);
+			break;
+		case Modificator:
+			Button add = (Button) inflater.inflate(R.layout._button_borderless, container, false);
+			add.setText(R.string.create_modificator);
+			add.setCompoundDrawablesWithIntrinsicBounds(Util.getThemeResourceId(getContext(), R.attr.imgModifierAdd),
+					0, 0, 0);
+			add.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					if (actionListener != null)
+						actionListener.onAction(OnActionListener.ACTION_MODIFICATOR_ADD);
+
+				}
+			});
+			container.addView(add);
+			break;
+		case Probe:
+			Button addProbe = (Button) inflater.inflate(R.layout._button_borderless, container, false);
+			addProbe.setText(R.string.create_custom_probe);
+			addProbe.setCompoundDrawablesWithIntrinsicBounds(Util.getThemeResourceId(getContext(), R.attr.imgSwordAdd),
+					0, 0, 0);
+			addProbe.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					if (actionListener != null)
+						actionListener.onAction(OnActionListener.ACTION_CUSTOM_PROBE_ADD);
+
+				}
+			});
+			container.addView(addProbe);
+			break;
+		case Notes:
+			Button noteAdd = (Button) inflater.inflate(R.layout._button_borderless, container, false);
+			noteAdd.setText(R.string.create_note);
+			noteAdd.setCompoundDrawablesWithIntrinsicBounds(Util.getThemeResourceId(getContext(), R.attr.imgNoteAdd),
+					0, 0, 0);
+			noteAdd.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					if (actionListener != null)
+						actionListener.onAction(OnActionListener.ACTION_NOTES_ADD);
+
+				}
+			});
+			container.addView(noteAdd);
+
+			Button noteRecord = (Button) inflater.inflate(R.layout._button_borderless, container, false);
+			noteRecord.setText(R.string.record_note);
+			noteRecord.setCompoundDrawablesWithIntrinsicBounds(
+					Util.getThemeResourceId(getContext(), R.attr.imgNoteRecord), 0, 0, 0);
+			noteRecord.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					if (actionListener != null)
+						actionListener.onAction(OnActionListener.ACTION_NOTES_RECORD);
+
+				}
+			});
+			container.addView(noteRecord);
+			break;
+		}
+
+		return convertView;
+	}
+
 	protected View prepareView(NotesItem e, int position, View convertView, ViewGroup parent) {
 		EventViewHolder holder = (EventViewHolder) convertView.getTag();
 
@@ -536,14 +870,23 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 			holder.active.setVisibility(View.GONE);
 		}
 
+		holder.flip.setFlippable(true);
+		holder.flip.setClickable(true);
+		holder.flip.setFocusable(true);
 		holder.flip.setBackgroundResource(0);
 		holder.flip.setScaleType(ScaleType.CENTER);
 		if (item instanceof WoundModificator) {
+			holder.flip.setFlippable(false);
+			holder.flip.setClickable(false);
+			holder.flip.setFocusable(false);
 			if (item.isActive())
 				holder.flip.setImageResource(R.drawable.icon_wound_selected);
 			else
 				holder.flip.setImageResource(R.drawable.icon_wound_normal);
 		} else if (item instanceof RulesModificator) {
+			holder.flip.setFlippable(false);
+			holder.flip.setClickable(false);
+			holder.flip.setFocusable(false);
 			holder.flip.setImageResource(Util.getThemeResourceId(getContext(), R.attr.imgSettings));
 		} else if (item instanceof CustomModificator) {
 			holder.flip.setImageResource(Util.getThemeResourceId(getContext(), R.attr.imgModifier));
@@ -685,7 +1028,8 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 
 		if (art.hasCustomProbe() && !TextUtils.isEmpty(art.getProbeInfo().getAttributesString())) {
 			holder.text3.setText(art.getProbeInfo().getAttributesString());
-		} else if (!TextUtils.isEmpty(artInfo.getProbe()) && art.getProbeInfo().getAttributeTypes() == null) {
+		} else if (!TextUtils.isEmpty(artInfo.getProbe())
+				&& TextUtils.isEmpty(art.getProbeInfo().getAttributesString())) {
 			holder.text3.setText(artInfo.getProbe());
 		} else {
 			if (artInfo != null && !TextUtils.isEmpty(artInfo.getEffectDuration()))
@@ -1066,6 +1410,14 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 
 	private static class HeaderViewHolder {
 		TextView text1;
+	}
+
+	private static class FooterViewHolder {
+
+	}
+
+	private static class WoundViewHolder {
+		ToggleButton[] wounds;
 	}
 
 	private static class EventViewHolder extends FlippableViewHolder {

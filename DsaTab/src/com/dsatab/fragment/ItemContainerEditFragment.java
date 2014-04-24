@@ -14,14 +14,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
+import com.actionbarsherlock.app.SherlockFragment;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
-import com.dsatab.data.Hero;
 import com.dsatab.data.items.ItemContainer;
 import com.dsatab.util.Util;
 import com.dsatab.view.PictureChooserDialog;
 
-public class ItemContainerEditFragment extends BaseFragment implements OnClickListener {
+public class ItemContainerEditFragment extends SherlockFragment implements OnClickListener {
 
 	private EditText editCapacity;
 	private EditText editName;
@@ -39,7 +39,7 @@ public class ItemContainerEditFragment extends BaseFragment implements OnClickLi
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View root = configureContainerView(inflater.inflate(R.layout.sheet_edit_item_container, container, false));
+		View root = inflater.inflate(R.layout.sheet_edit_item_container, container, false);
 
 		editName = (EditText) root.findViewById(R.id.popup_edit_name);
 		editCapacity = (EditText) root.findViewById(R.id.popup_edit_capacity);
@@ -76,16 +76,6 @@ public class ItemContainerEditFragment extends BaseFragment implements OnClickLi
 		if (iconView != null) {
 			iconView.setImageURI(itemContainer.getIconUri());
 		}
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.dsatab.fragment.BaseFragment#onHeroLoaded(com.dsatab.data.Hero)
-	 */
-	@Override
-	public void onHeroLoaded(Hero hero) {
 
 	}
 

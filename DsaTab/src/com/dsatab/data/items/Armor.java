@@ -10,6 +10,8 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "item_armor")
 public class Armor extends ItemSpecification {
 
+	private static final long serialVersionUID = -6158237518512387722L;
+
 	public static final String CATEGORY_ARME = "Arme";
 	public static final String CATEGORY_BEINE = "Beine";
 	public static final String CATEGORY_HELM = "Helm";

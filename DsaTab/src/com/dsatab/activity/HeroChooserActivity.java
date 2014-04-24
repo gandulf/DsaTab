@@ -32,7 +32,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -54,6 +53,7 @@ import com.dsatab.data.HeroFileInfo;
 import com.dsatab.data.HeroFileInfo.StorageType;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
+import com.gandulf.guilib.data.OpenArrayAdapter;
 import com.rokoder.android.lib.support.v4.widget.GridViewCompat;
 
 public class HeroChooserActivity extends BaseActivity implements AdapterView.OnItemClickListener,
@@ -266,6 +266,14 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 		list.setOnItemClickListener(this);
 		list.setOnItemLongClickListener(this);
 
+		adapter = new HeroAdapter(this, R.layout.hero_chooser_item, new ArrayList<HeroFileInfo>());
+		try {
+			adapter.addAll(exchange.getHeroes(StorageType.FileSystem, StorageType.Dropbox));
+		} catch (Exception e) {
+			Debug.error(e);
+		}
+		list.setAdapter(adapter);
+
 		loadingView = findViewById(R.id.loading);
 
 		if (!exchange.isConnected(StorageType.Dropbox)
@@ -334,8 +342,10 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 	@Override
 	public void onLoadFinished(Loader<List<HeroFileInfo>> loader, List<HeroFileInfo> heroes) {
 		setSupportProgressBarIndeterminateVisibility(false);
-		loadingView.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-		loadingView.setVisibility(View.GONE);
+		if (loadingView.getVisibility() != View.GONE) {
+			loadingView.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+			loadingView.setVisibility(View.GONE);
+		}
 
 		// Swap the new cursor in. (The framework will take care of closing the
 		// old cursor once we return.)
@@ -359,8 +369,8 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 
 		}
 
-		adapter = new HeroAdapter(this, R.layout.hero_chooser_item, heroes);
-		list.setAdapter(adapter);
+		adapter.clear();
+		adapter.addAll(heroes);
 
 		updateViews();
 	}
@@ -394,8 +404,8 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 	protected void refresh() {
 		setSupportProgressBarIndeterminateVisibility(true);
 
-		loadingView.setVisibility(View.VISIBLE);
-		loadingView.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
+		// loadingView.setVisibility(View.VISIBLE);
+		// loadingView.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
 
 		getSupportLoaderManager().restartLoader(0, null, this);
 	}
@@ -459,7 +469,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 		return super.onOptionsItemSelected(item);
 	}
 
-	static class HeroAdapter extends ArrayAdapter<HeroFileInfo> {
+	static class HeroAdapter extends OpenArrayAdapter<HeroFileInfo> {
 
 		LayoutInflater layoutInflater;
 

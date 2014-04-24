@@ -1,7 +1,9 @@
 package com.dsatab.data;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
-import java.util.regex.Matcher;
+import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
 import android.text.TextUtils;
@@ -12,15 +14,25 @@ import com.dsatab.util.Util;
 
 public class ProbeInfo implements Cloneable {
 
-	// e.g.: MU/IN/KL (+5) or (MU/IN/KL) or +5
-	private static final Pattern PROBE_PATTERN = Pattern.compile(
-			"(\\(?([a-z-]{2})/([a-z-]{2})/([a-z-]{2})\\)?)?\\(?([+-]\\d+)?\\)?", Pattern.CASE_INSENSITIVE);
+	// e.g.: MU/IN/KL (+5) or (MU/IN/KL) or +5 or MU IN KL or 10/MU/9
 
-	private AttributeType[] attributeTypes;
+	private static final String pattern_post = "\\(?([+-]\\d+)?\\)?"; // (-+5)
+
+	private static final String pattern_mu = "([0-9A-Za-z-]+)\\s*[/ ]?\\s*"; // MU/
+
+	private static final Pattern PROBE_PATTERN_ATTR_ = Pattern.compile(
+			"(\\(?([0-9a-z-]{2})\\s*[/ ]\\s*([0-9a-z-]{2})\\s*[/ ]\\s*([0-9a-z-]{2})\\)?)?" + pattern_post,
+			Pattern.CASE_INSENSITIVE);
+
+	private static final Pattern PROBE_PATTERN_ATTR = Pattern.compile(
+			"(\\(?(" + pattern_mu + ")*\\)?)?" + pattern_post, Pattern.CASE_INSENSITIVE);
+
+	private List<Object> attributeValues;
 	private String attributesString;
 
 	/**
-	 * Returns the probe modification positive values means the probe is more difficult, negative values simplifies the probe
+	 * Returns the probe modification positive values means the probe is more difficult, negative values simplifies the
+	 * probe
 	 * 
 	 * @return
 	 */
@@ -37,31 +49,43 @@ public class ProbeInfo implements Cloneable {
 
 	public ProbeInfo() {
 		beFlag = BE_FLAG_NONE;
+		attributeValues = new ArrayList<Object>(3);
 	}
 
-	public AttributeType[] getAttributeTypes() {
-		return attributeTypes;
+	public List<Object> getAttributeValues() {
+		return attributeValues;
 	}
 
 	public void applyProbePattern(String s) {
 		attributesString = null;
-		attributeTypes = null;
+		attributeValues.clear();
+
 		if (!TextUtils.isEmpty(s)) {
 			// remove all whitespaces from string
-			s = s.replace(" ", "");
+			s = s.replace("/", " ");
+			s = s.replace("(", " ");
+			s = s.replace(")", " ");
+			s = s.replace("+", " +");
+			s = s.replace("-", " -");
 
-			Matcher matcher = PROBE_PATTERN.matcher(s);
+			StringTokenizer st = new StringTokenizer(s, " ");
+			while (st.hasMoreTokens()) {
 
-			if (matcher.matches()) {
-				if (!TextUtils.isEmpty(matcher.group(1))) {
-					attributeTypes = new AttributeType[3];
-					attributeTypes[0] = AttributeType.byCode(matcher.group(2));
-					attributeTypes[1] = AttributeType.byCode(matcher.group(3));
-					attributeTypes[2] = AttributeType.byCode(matcher.group(4));
+				String v = st.nextToken().trim();
+
+				if (!TextUtils.isEmpty(v)) {
+
+					if (v.startsWith("+") || v.startsWith("-")) {
+						erschwernis = Util.parseInteger(v);
+					} else {
+						AttributeType type = AttributeType.byCode(v);
+						if (type != null) {
+							attributeValues.add(type);
+						} else {
+							attributeValues.add(Util.parseInteger(v));
+						}
+					}
 				}
-				erschwernis = Util.parseInteger(matcher.group(5));
-			} else {
-				Debug.warning("No probe match found for " + s);
 			}
 		}
 	}
@@ -83,7 +107,10 @@ public class ProbeInfo implements Cloneable {
 	}
 
 	public void applyBePattern(String beModifier) {
-		bePattern = beModifier;
+		if (beModifier != null)
+			bePattern = beModifier.toUpperCase(Locale.GERMAN);
+		else
+			bePattern = null;
 
 		if (TextUtils.isEmpty(beModifier)) {
 			beFlag = BE_FLAG_NONE;
@@ -95,6 +122,13 @@ public class ProbeInfo implements Cloneable {
 				try {
 					int beMinus = Util.parseInteger(beModifier.substring(3));
 					beFlag = BE_FLAG_SUBTRACTION + Math.abs(beMinus);
+				} catch (NumberFormatException e) {
+					Debug.error(e);
+				}
+			} else if (beModifier.startsWith("BE+")) {
+				try {
+					int beAdd = Util.parseInteger(beModifier.substring(3));
+					beFlag = BE_FLAG_ADDITION + Math.abs(beAdd);
 				} catch (NumberFormatException e) {
 					Debug.error(e);
 				}
@@ -136,7 +170,8 @@ public class ProbeInfo implements Cloneable {
 	}
 
 	/**
-	 * Returns the probe modification positive values means the probe is more difficult, negative values simplifies the probe
+	 * Returns the probe modification positive values means the probe is more difficult, negative values simplifies the
+	 * probe
 	 * 
 	 * @return
 	 */
@@ -145,40 +180,41 @@ public class ProbeInfo implements Cloneable {
 	}
 
 	public String getAttributesString() {
-		if (attributeTypes == null)
+		if (attributeValues.isEmpty())
 			return null;
 		else {
 			if (attributesString == null) {
+
 				StringBuilder sb = new StringBuilder();
 				sb.append("(");
-				if (attributeTypes[0] == null)
-					sb.append("--");
-				else
-					sb.append(attributeTypes[0].code());
 
-				sb.append("/");
-				if (attributeTypes[1] == null)
-					sb.append("--");
-				else
-					sb.append(attributeTypes[1].code());
+				for (int i = 0; i < attributeValues.size(); i++) {
+					if (i > 0)
+						sb.append("/");
 
-				sb.append("/");
-				if (attributeTypes[2] == null)
-					sb.append("--");
-				else
-					sb.append(attributeTypes[2].code());
+					Object o = attributeValues.get(i);
+
+					if (o instanceof AttributeType) {
+						sb.append(((AttributeType) o).code());
+					} else if (o != null) {
+						sb.append(o.toString());
+					} else {
+						sb.append("--");
+					}
+				}
 
 				sb.append(")");
 
 				attributesString = sb.toString();
+
 			}
 			return attributesString;
 		}
 	}
 
-	public void setAttributeTypes(AttributeType[] attributeTypes) {
-		this.attributeTypes = attributeTypes;
+	public void clearAttributeValues() {
 		this.attributesString = null;
+		attributeValues.clear();
 	}
 
 	public void setErschwernis(Integer erschwernis) {
@@ -188,13 +224,13 @@ public class ProbeInfo implements Cloneable {
 	@Override
 	public String toString() {
 
-		if (attributeTypes != null && erschwernis != null)
+		if (!attributeValues.isEmpty() && erschwernis != null)
 			return getAttributesString() + " " + Util.toProbe(erschwernis);
 
-		if (attributeTypes != null && erschwernis == null)
+		if (!attributeValues.isEmpty() && erschwernis == null)
 			return getAttributesString();
 
-		if (attributeTypes == null && erschwernis != null)
+		if (attributeValues.isEmpty() && erschwernis != null)
 			return Util.toProbe(erschwernis);
 
 		return null;

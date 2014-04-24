@@ -19,7 +19,7 @@
 
 <resources>
 
-    <style name="Theme.Dsatablight" parent="@style/Theme.Sherlock.Light.DarkActionBar">
+    <style name="Theme.Dsatablight" parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <item name="actionBarItemBackground">@drawable/selectable_background_dsatablight</item>
         <item name="popupMenuStyle">@style/PopupMenu.Dsatablight</item>
         <item name="dropDownListViewStyle">@style/DropDownListView.Dsatablight</item>

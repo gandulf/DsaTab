@@ -35,7 +35,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	public static final String DATABASE_NAME = "dsatab";
 	// any time you make changes to your database objects, you may have to
 	// increase the database version
-	public static final int DATABASE_VERSION = 47;
+	public static final int DATABASE_VERSION = 52;
 
 	// the DAO object we use to access the SimpleData table
 	private RuntimeExceptionDao<Item, UUID> itemRuntimeDao = null;
@@ -86,17 +86,18 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		Debug.verbose("onUpgrade from " + oldVersion + " to " + newVersion);
 
 		try {
-			if (oldVersion < 43) {
-				recreateDatabase(db, connectionSource);
-			} else if (oldVersion < 46) {
-				TableUtils.dropTable(connectionSource, ArtInfo.class, true);
-				TableUtils.dropTable(connectionSource, SpellInfo.class, true);
-				TableUtils.createTable(connectionSource, ArtInfo.class);
-				TableUtils.createTable(connectionSource, SpellInfo.class);
-
-				XmlParser.fillArts();
-				XmlParser.fillSpells();
-			}
+			recreateDatabase(db, connectionSource);
+			// if (oldVersion < 43) {
+			// recreateDatabase(db, connectionSource);
+			// } else {
+			// TableUtils.dropTable(connectionSource, ArtInfo.class, true);
+			// TableUtils.dropTable(connectionSource, SpellInfo.class, true);
+			// TableUtils.createTable(connectionSource, ArtInfo.class);
+			// TableUtils.createTable(connectionSource, SpellInfo.class);
+			//
+			// XmlParser.fillArts();
+			// XmlParser.fillSpells();
+			// }
 
 		} catch (SQLException e) {
 			Debug.error("Can't drop databases", e);

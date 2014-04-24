@@ -26,7 +26,6 @@ public class BaseFragmentActivity extends SherlockFragmentActivity {
 		Hint.showRandomHint(getClass().getSimpleName(), this);
 	}
 
-	@SuppressWarnings("deprecation")
 	protected void applyPreferencesToTheme() {
 
 		SharedPreferences pref = DsaTabApplication.getPreferences();

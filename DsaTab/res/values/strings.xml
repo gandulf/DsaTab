@@ -112,11 +112,7 @@
     <string name="menu_show_comments">Kommentare einblenden</string>
     <string name="menu_hide_comments">Kommentare ausblenden</string>
     <string name="message_empty">"Keine Einträge gefunden."\n\n
-"Um diesen Tab zu entfernen, wähle den Menüpunkt <b>Tabs anpassen</b>."</string>
-    <string name="message_spell_empty">"Keine Zaubersprüche gefunden."\n\n
-"Um diesen Tab zu entfernen, wähle den Menüpunkt <b>Tabs anpassen</b>."</string>
-    <string name="message_art_empty">"Keine Künste gefunden."\n\n
-"Um diesen Tab zu entfernen, wähle den Menüpunkt <b>Tabs anpassen</b>."</string>
+"Um diesen Tab zu entfernen, wähle den Menüpunkt <b>Tabs anpassen</b>,\noder klicke auf diese Nachricht."</string>    
     <string name="message_documents_empty">"Keine Dokumente gefunden."\n\n
 "Kopiere sie auf deine SD-Karte unter \""<b>%1$s</b>"\"."</string>
     <string name="message_map_empty">"Kein Kartenmaterial gefunden."\n\n
@@ -276,13 +272,13 @@
 <string name="message_can_only_edit_tabs_if_hero_loaded">Tabs können erst editiert werden, wenn ein Held geladen wurde.</string>
 <string name="option_create_tab">Tab hinzufügen</string>
 <string name="option_reset_tabs">Tabs zurücksetzen</string>
-<string name="title_choose_icon">Wähle ein Icon...</string>
+<string name="title_choose_icon">Wähle ein Icon&#8230;</string>
 <string name="title_insert_title">Titel eingeben</string>
 <string name="message_insert_login_token_first">Bitte zuerst das Logintoken unter Setup > Heldenaustausch Einstellungen angeben.</string>
 <string name="message_connection_to_server_failed">Konnte keine Verbindung zum Austausch Server herstellen.</string>
 <string name="title_import_heroes">Held importieren</string>
 <string name="message_loading_data_from_server">Daten werden von Helden-Austausch Server geladen</string>
-<string name="message_connect_to_server">Verbinde mit Server...</string>
+<string name="message_connect_to_server">Verbinde mit Server&#8230;</string>
 <string name="message_hero_import_successful">Held erfolgreich importiert.</string>
 <string name="message_invalid_hero_file">Konnte Heldendatei nicht öffnen, ungültige Datei </string>
 <string name="message_no_heo_file_found_on_server">Konnte keine Heldendatei am Helden-Austausch Server finden.</string>
@@ -292,4 +288,7 @@
 <string name="pref_dropbox_title">Dropbox Synchronisation</string>
 <string name="pref_dropbox_description_off">DsaTab wir nicht mit Dropbox synchronisiert.</string>
 <string name="pref_dropbox_description_on">Dsatab ist mit deinem Dropbox Account verbunden.</string>
+<string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="create_custom_probe">Probe hinzufügen</string>
 </resources>

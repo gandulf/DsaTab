@@ -79,14 +79,14 @@ public class EquippedItem implements ItemCard, Listable {
 
 	public CombatProbe getCombatProbeAttacke() {
 		if (at == null) {
-			at = new CombatProbe(this, true);
+			at = new CombatProbe(hero, this, true);
 		}
 		return at;
 	}
 
 	public CombatProbe getCombatProbeDefense() {
 		if (pa == null) {
-			pa = new CombatProbe(this, false);
+			pa = new CombatProbe(hero, this, false);
 		}
 		return pa;
 	}

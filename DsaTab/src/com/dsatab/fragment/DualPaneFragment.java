@@ -233,7 +233,14 @@ public class DualPaneFragment extends SherlockFragment implements FilterChangedL
 
 	@Override
 	public void setUserVisibleHint(boolean value) {
-		super.setUserVisibleHint(value);
+		try {
+			super.setUserVisibleHint(value);
+		} catch (Exception e1) {
+			// TODO find a better way to handle exception
+			// if we call this to soon on the fragment before its added a
+			// npe
+			// is thrown ignore this here.
+		}
 
 		for (Fragment left : fragments) {
 			try {

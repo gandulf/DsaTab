@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.items.ItemCard;
+import com.dsatab.util.Util;
 import com.gandulf.guilib.util.Debug;
 import com.squareup.picasso.Picasso;
 
@@ -75,7 +76,7 @@ public class CardView extends ImageView implements Checkable {
 	private void init() {
 
 		setDrawingCacheEnabled(false);
-		setBackgroundResource(R.drawable.border_patch);
+		setBackgroundResource(Util.getThemeResourceId(getContext(), R.attr.listItemBackground));
 		setScaleType(ScaleType.CENTER_INSIDE);
 
 		textBox = new Rect();
@@ -127,7 +128,6 @@ public class CardView extends ImageView implements Checkable {
 		if (item != null) {
 			if (item.hasImage()) {
 				Debug.verbose("Loading image from " + item.getImageUri().toString());
-
 				if (highQuality) {
 					Picasso.with(getContext()).load(item.getImageUri().toString()).placeholder(R.drawable.item_card)
 							.resize(HQ_IMAGE_SIZE, HQ_IMAGE_SIZE).centerInside().into(this);

@@ -41,6 +41,10 @@ public class CombatShieldTalent extends BaseCombatTalent {
 		this.value = 0;
 	}
 
+	protected Hero getHero() {
+		return (Hero) being;
+	}
+
 	@Override
 	public String getName() {
 		switch (usageType) {
@@ -53,12 +57,12 @@ public class CombatShieldTalent extends BaseCombatTalent {
 	}
 
 	@Override
-	public Probe getAttack() {
+	public BaseCombatTalent getAttack() {
 		return null;
 	}
 
 	@Override
-	public Probe getDefense() {
+	public BaseCombatTalent getDefense() {
 		return this;
 	}
 
@@ -94,7 +98,8 @@ public class CombatShieldTalent extends BaseCombatTalent {
 		int baseValue = 0;
 
 		if (UsageType.Paradewaffe == usageType) {
-			if (hero != null) {
+			if (getHero() != null) {
+				Hero hero = getHero();
 				// der basiswert eine paradewaffe ist der paradewert der
 				// geführten
 				// hauptwaffe -/+ evtl. parierwaffen WdS 75
@@ -109,7 +114,7 @@ public class CombatShieldTalent extends BaseCombatTalent {
 							&& equippedWeapon.getTalent().getDefense() != null) {
 						baseValue = equippedWeapon.getTalent().getDefense().getValue();
 
-						int weaponPaMod = hero.getModifier(new CombatProbe(equippedWeapon, false));
+						int weaponPaMod = hero.getModifier(new CombatProbe(hero, equippedWeapon, false));
 						baseValue += weaponPaMod;
 
 					} else {
@@ -120,7 +125,7 @@ public class CombatShieldTalent extends BaseCombatTalent {
 				}
 			}
 		} else {
-			baseValue = hero.getAttributeValue(AttributeType.pa);
+			baseValue = getHero().getAttributeValue(AttributeType.pa);
 		}
 
 		return baseValue;

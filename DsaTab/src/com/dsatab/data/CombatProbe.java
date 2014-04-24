@@ -23,7 +23,9 @@ public class CombatProbe extends BaseProbe {
 
 	private Integer tpModifier;
 
-	public CombatProbe(EquippedItem item, boolean attack) {
+	public CombatProbe(AbstractBeing being, EquippedItem item, boolean attack) {
+		super(being);
+
 		this.equippedItem = item;
 		this.attack = attack;
 
@@ -42,7 +44,7 @@ public class CombatProbe extends BaseProbe {
 		// distance talents actually have probe values (MU/FF/KK) but they are
 		// not used in case of a attack
 		if (probe instanceof CombatDistanceTalent) {
-			this.probeInfo.setAttributeTypes(null);
+			this.probeInfo.clearAttributeValues();
 		}
 
 		if (combatTalent instanceof CombatShieldTalent && equippedItem.getSecondaryItem() != null) {

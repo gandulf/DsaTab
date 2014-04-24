@@ -1,5 +1,6 @@
 package com.dsatab.activity;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,34 +15,37 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.TabInfo;
-import com.dsatab.activity.menu.TabListener;
 import com.dsatab.data.Hero;
 import com.dsatab.data.HeroConfiguration;
 import com.dsatab.data.HeroFileInfo;
 import com.dsatab.data.HeroLoaderTask;
 import com.dsatab.data.Probe;
-import com.dsatab.data.adapter.TabAdapter;
+import com.dsatab.data.adapter.TabDrawerAdapter;
+import com.dsatab.data.adapter.TabDrawerAdapter.DrawerItem;
 import com.dsatab.data.adapter.TabPagerAdapter;
 import com.dsatab.fragment.AttributeListFragment;
 import com.dsatab.fragment.BaseFragment;
@@ -54,9 +58,12 @@ import com.dsatab.view.listener.ShakeListener;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 public class DsaTabActivity extends BaseFragmentActivity implements OnClickListener, OnPageChangeListener,
-		LoaderManager.LoaderCallbacks<Hero>, OnSharedPreferenceChangeListener {
+		LoaderManager.LoaderCallbacks<Hero>, OnSharedPreferenceChangeListener, ListView.OnItemClickListener {
 
 	public static boolean newsShown = false;
+
+	private static final int DRAWER_ID_HEROES = 1;
+	private static final int DRAWER_ID_ITEMS = 2;
 
 	protected static final String INTENT_TAB_INFO = "tabInfo";
 
@@ -69,6 +76,8 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	protected static final int ACTION_CHOOSE_HERO = 1004;
 	public static final int ACTION_EDIT_MODIFICATOR = 1005;
 	public static final int ACTION_EDIT_TABS = 1006;
+	public static final int ACTION_EDIT_NOTES = 1007;
+	public static final int ACTION_EDIT_CUSTOM_PROBES = 1008;
 
 	private static final String KEY_TAB_INFO = "tabInfo";
 
@@ -86,6 +95,11 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	private View loadingView;
 
 	private TabPagerAdapter viewPagerAdapter;
+
+	private DrawerLayout mDrawerLayout;
+	private ListView mDrawerList;
+	private ActionBarDrawerToggle mDrawerToggle;
+	private TabDrawerAdapter tabDrawerAdapter;
 
 	public Hero getHero() {
 		return DsaTabApplication.getInstance().getHero();
@@ -142,10 +156,6 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	@Override
 	public void onPageSelected(int position) {
 
-		if (getSupportActionBar().getSelectedNavigationIndex() != position) {
-			getSupportActionBar().setSelectedNavigationItem(position);
-			supportInvalidateOptionsMenu();
-		}
 		if (getHeroConfiguration() != null) {
 			tabInfo = getHeroConfiguration().getTab(position);
 			updatePage(tabInfo);
@@ -340,7 +350,8 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		preferences = DsaTabApplication.getPreferences();
 
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
-		getSupportActionBar().setDisplayShowHomeEnabled(false);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setHomeButtonEnabled(true);
 
 		DsaTabApplication.getPreferences().registerOnSharedPreferenceChangeListener(this);
 
@@ -388,11 +399,77 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 			return;
 		}
+		initDrawer();
 
 		// TODO make sure the viewpager fragments are already initialized here!!!
 		initHero();
-
 		showNewsInfoPopup();
+	}
+
+	private void initDrawer() {
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
+		tabDrawerAdapter = new TabDrawerAdapter(getSupportActionBar().getThemedContext(), new ArrayList<DrawerItem>());
+		// Set the adapter for the list view
+		mDrawerList.setAdapter(tabDrawerAdapter);
+
+		// Set the list's click listener
+		mDrawerList.setOnItemClickListener(this);
+		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+
+		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, R.string.drawer_open,
+				R.string.drawer_close) {
+
+			/** Called when a drawer has settled in a completely closed state. */
+			public void onDrawerClosed(View view) {
+				super.onDrawerClosed(view);
+				// getActionBar().setTitle(getS);
+			}
+
+			/** Called when a drawer has settled in a completely open state. */
+			public void onDrawerOpened(View drawerView) {
+				super.onDrawerOpened(drawerView);
+				// getActionBar().setTitle(mDrawerTitle);
+			}
+		};
+
+		// Set the drawer toggle as the DrawerListener
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+	}
+
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		// Sync the toggle state after onRestoreInstanceState has occurred.
+		mDrawerToggle.syncState();
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+		DrawerItem item = (DrawerItem) parent.getItemAtPosition(position);
+
+		switch (item.getId()) {
+		case DRAWER_ID_HEROES:
+			showHeroChooser();
+			break;
+		case DRAWER_ID_ITEMS:
+			ItemsActivity.view(this);
+			break;
+		default:
+			showTab(position - 1);
+			break;
+		}
+
+		mDrawerLayout.closeDrawer(mDrawerList);
 	}
 
 	/**
@@ -415,35 +492,15 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		else
 			tabs = Collections.emptyList();
 
-		if (Util.getWidth(this) > 900) {
-			// TABS INIT
-			bar.removeAllTabs();
-			for (int i = 0; i < tabs.size(); i++) {
-				TabInfo tabInfo = tabs.get(i);
-				Drawable d = Util.getDrawableByUri(tabInfo.getIconUri());
-				d.setBounds(0, 0, getResources().getDimensionPixelSize(R.dimen.abs__dropdownitem_icon_width),
-						getResources().getDimensionPixelSize(R.dimen.abs__dropdownitem_icon_width));
-
-				bar.addTab(bar.newTab().setIcon(d).setTabListener(new TabListener(this, i)));
-			}
-			getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		} else {
-			// LIST INIT
-			/** Create an array adapter to populate dropdownlist */
-			Context context = getSupportActionBar().getThemedContext();
-			TabAdapter adapter = new TabAdapter(context, tabs);
-
-			/** Defining Navigation listener */
-			ActionBar.OnNavigationListener navigationListener = new OnNavigationListener() {
-				@Override
-				public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-					viewPager.setCurrentItem(itemPosition);
-					return true;
-				}
-			};
-			bar.setListNavigationCallbacks(adapter, navigationListener);
-			getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		tabDrawerAdapter.clear();
+		tabDrawerAdapter.add(new DrawerItem("Tabs"));
+		for (TabInfo tabInfo : tabs) {
+			tabDrawerAdapter.add(new DrawerItem(tabInfo));
 		}
+
+		tabDrawerAdapter.add(new DrawerItem("System"));
+		tabDrawerAdapter.add(new DrawerItem(DRAWER_ID_HEROES, "HELDEN", R.drawable.ic_action_user_dark));
+		tabDrawerAdapter.add(new DrawerItem(DRAWER_ID_ITEMS, "GEGENSTÄNDE", R.drawable.dsa_sword_add_dark));
 
 		viewPager.setOnPageChangeListener(this);
 		for (int i = 0; i < tabs.size(); i++) {
@@ -488,6 +545,11 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		} else {
 			return false;
 		}
+	}
+
+	public void notifyTabsChanged() {
+		refreshTabInfo();
+		setupTabs();
 	}
 
 	/**
@@ -751,10 +813,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
-		com.actionbarsherlock.view.MenuItem item = menu.add(Menu.NONE, R.id.option_load_hero, Menu.NONE,
-				R.string.option_heroes);
-		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-		item.setIcon(R.drawable.ic_menu_archive);
+		com.actionbarsherlock.view.MenuItem item;
 
 		item = menu.add(Menu.NONE, R.id.option_save_hero, Menu.NONE, R.string.option_save_hero);
 		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
@@ -763,10 +822,6 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		item = menu.add(Menu.NONE, R.id.option_tabs, Menu.NONE, R.string.option_edit_tabs);
 		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 		item.setIcon(R.drawable.ic_menu_account_list);
-
-		item = menu.add(Menu.NONE, R.id.option_items, Menu.NONE, R.string.option_items);
-		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-		item.setIcon(Util.getThemeResourceId(this, R.attr.imgSwordAdd));
 
 		item = menu.add(Menu.NONE, R.id.option_settings, 99, R.string.settings);
 		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
@@ -847,6 +902,17 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+
+		// Pass the event to ActionBarDrawerToggle, if it returns
+		// true, then it has handled the app icon touch event
+		if ((item != null) && (item.getItemId() == 16908332)) {
+			if (this.mDrawerLayout.isDrawerVisible(8388611))
+				this.mDrawerLayout.closeDrawer(8388611);
+			else {
+				this.mDrawerLayout.openDrawer(8388611);
+			}
+			return true;
+		}
 
 		switch (item.getItemId()) {
 		case R.id.option_load_hero:

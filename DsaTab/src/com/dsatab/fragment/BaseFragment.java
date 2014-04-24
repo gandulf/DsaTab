@@ -285,6 +285,23 @@ public abstract class BaseFragment extends SherlockFragment implements HeroLoade
 
 	}
 
+	protected void removeTab() {
+		TabInfo tabInfo = null;
+		for (TabInfo ti : getHero().getHeroConfiguration().getTabs()) {
+			if (ti.getId().equals(getTabInfo().getId())) {
+				tabInfo = ti;
+			}
+		}
+		if (tabInfo != null) {
+			tabInfo.setActivityClazz(getTabPosition(), null);
+
+			if (tabInfo.isEmpty()) {
+				getHero().getHeroConfiguration().getTabs().remove(tabInfo);
+			}
+			getBaseActivity().notifyTabsChanged();
+		}
+	}
+
 	public SharedPreferences getPreferences() {
 		if (preferences == null) {
 			preferences = DsaTabApplication.getPreferences();

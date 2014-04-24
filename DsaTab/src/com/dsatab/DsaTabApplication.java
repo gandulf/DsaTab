@@ -123,6 +123,13 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 		return heroDir;
 	}
 
+	public static void setDirectory(String name, File dir) {
+		Editor edit = getPreferences().edit();
+		edit.putString(DsaTabPreferenceActivity.KEY_SETUP_SDCARD_PATH_PREFIX + name, dir.getAbsolutePath());
+		edit.commit();
+
+	}
+
 	public static File getDirectory(String name) {
 		File dirFile = null;
 		if (getPreferences().contains(DsaTabPreferenceActivity.KEY_SETUP_SDCARD_PATH_PREFIX + name)) {

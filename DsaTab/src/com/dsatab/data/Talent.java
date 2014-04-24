@@ -3,7 +3,6 @@ package com.dsatab.data;
 import java.util.Comparator;
 import java.util.EnumSet;
 
-import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.TalentType;
 import com.dsatab.data.listable.Listable;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
@@ -23,8 +22,6 @@ public class Talent extends MarkableElement implements Value, Listable {
 
 	};
 
-	protected Hero hero;
-
 	protected Integer value;
 
 	protected Integer complexity;
@@ -39,9 +36,8 @@ public class Talent extends MarkableElement implements Value, Listable {
 
 	private EnumSet<Flags> flags = EnumSet.noneOf(Flags.class);
 
-	public Talent(Hero hero) {
-		super();
-		this.hero = hero;
+	public Talent(AbstractBeing hero) {
+		super(hero);
 	}
 
 	@Override
@@ -115,17 +111,6 @@ public class Talent extends MarkableElement implements Value, Listable {
 	}
 
 	@Override
-	public Integer getProbeValue(int i) {
-
-		if (hero != null && probeInfo.getAttributeTypes() != null) {
-			AttributeType type = probeInfo.getAttributeTypes()[i];
-			return hero.getModifiedValue(type, false, false);
-		} else {
-			return null;
-		}
-	}
-
-	@Override
 	public Integer getProbeBonus() {
 		return getValue();
 	}
@@ -140,8 +125,8 @@ public class Talent extends MarkableElement implements Value, Listable {
 		Integer oldValue = getValue();
 		this.value = value;
 
-		if (oldValue != this.value && hero != null)
-			hero.fireValueChangedEvent(this);
+		if (oldValue != this.value && being != null)
+			being.fireValueChangedEvent(this);
 	}
 
 	@Override

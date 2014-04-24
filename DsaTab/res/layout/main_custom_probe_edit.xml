@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <fragment
+        android:id="@+id/fragment_custom_probe_edit"
+        android:name="com.dsatab.fragment.CustomProbeEditFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        class="com.dsatab.fragment.CustomProbeEditFragment"
+        tools:layout="@layout/sheet_edit_custom_probe">
+    </fragment>
+
+</RelativeLayout>

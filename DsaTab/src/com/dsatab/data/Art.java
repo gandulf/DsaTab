@@ -8,7 +8,6 @@ import android.text.TextUtils;
 
 import com.dsatab.common.DsaTabRuntimeException;
 import com.dsatab.data.enums.ArtGroupType;
-import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.TalentType;
 import com.dsatab.data.listable.Listable;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
@@ -57,8 +56,6 @@ public class Art extends MarkableElement implements Value, Listable {
 
 	};
 
-	private AbstractBeing being;
-
 	private ArtGroupType groupType;
 
 	private ArtInfo info;
@@ -74,8 +71,7 @@ public class Art extends MarkableElement implements Value, Listable {
 	private boolean customProbe;
 
 	public Art(AbstractBeing being, String name) {
-		super();
-		this.being = being;
+		super(being);
 		setName(name);
 	}
 
@@ -229,8 +225,10 @@ public class Art extends MarkableElement implements Value, Listable {
 		}
 
 		if (getArtTalent() != null) {
-			customProbe = !Arrays.equals(probeInfo.getAttributeTypes(), getArtTalent().getProbeInfo()
-					.getAttributeTypes());
+			Object[] a1 = probeInfo.getAttributeValues().toArray();
+			Object[] a2 = getArtTalent().getProbeInfo().getAttributeValues().toArray();
+
+			customProbe = !Arrays.equals(a1, a2);
 		} else {
 			customProbe = true;
 		}
@@ -270,9 +268,8 @@ public class Art extends MarkableElement implements Value, Listable {
 
 	@Override
 	public Integer getProbeValue(int i) {
-		if (probeInfo.getAttributeTypes() != null) {
-			AttributeType type = probeInfo.getAttributeTypes()[i];
-			return being.getModifiedValue(type, false, false);
+		if (super.getProbeValue(i) != null) {
+			return super.getProbeValue(i);
 		} else if (getArtTalent() != null) {
 			return getArtTalent().getProbeValue(i);
 		} else {
@@ -282,7 +279,10 @@ public class Art extends MarkableElement implements Value, Listable {
 
 	@Override
 	public Integer getProbeBonus() {
-		return getValue();
+		if (getArtTalent() != null)
+			return getArtTalent().getProbeBonus();
+		else
+			return null;
 	}
 
 	@Override

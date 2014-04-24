@@ -13,8 +13,10 @@ A;Panzerhandschuhe links;plattenzeug_links00.jpg;Arme                ;2;0;0;0;0;
 A;Panzerhandschuhe rechts;plattenzeug_rechts00.jpg;Arme              ;2;0;0;0;0;0;2;0;0;1;2;0;Z;7
 A;Plattenarm links;plattenzeug_links00.jpg;Arme                      ;2;0;0;0;0;5;0;0;0;1;2;0;Z;7
 A;Plattenarm rechts;plattenzeug_rechts00.jpg;Arme                    ;2;0;0;0;0;0;5;0;0;1;2;0;Z;7
+A;Plattenarme (Paar);plattenzeug_rechts00.jpg;Arme                    ;2;0;0;0;0;5;5;0;0;1;2;0;Z;7
 A;Plattenschulter links;plattenzeug_links00.jpg;Arme                 ;2;0;0;1;0;2;0;0;0;1;2;0;Z;7
-A;Plattenschulter rechts;plattenzeug_rechts00.jpg;Arme               ;2;0;1;0;0;0;2;0;0;1;2;0;Z;7
+A;Plattenschulter rechts;plattenzeug_rechts00.jpg;Arme               ;2;0;0;1;0;0;2;0;0;1;2;0;Z;7
+A;Plattenschultern (Paar);plattenzeug_rechts00.jpg;Arme               ;2;0;0;1;0;2;2;0;0;1;2;0;Z;7
 A;Beinschienen (links), Leder;lederzeug_beine_links00.jpg;Beine    ;1;0;0;0;0;0;0;1;0;0;1;0;Z;4
 A;Beinschienen (rechts), Leder;lederzeug_beine_rechts00.jpg;Beine  ;1;0;0;0;0;0;0;0;1;0;1;0;Z;4
 A;Beinschienen, Bronze;plattenzeug_beine00.jpg;Beine               ;1;0;0;0;0;0;0;2;2;0;1;0;Z;
@@ -25,6 +27,7 @@ A;Kettenbeinling (links);;"Beine                             		 ";1;0;0;0;0;0;0;
 A;Kettenbeinling (rechts);;"Beine                            		 ";1;0;0;0;0;0;0;0;4;0;1;0;Z;5
 A;Lederhose;lederhose00.jpg;Beine                                    ;0;0;0;0;1;0;0;1;1;0;0;0;Z;
 A;Panzerbein;plattenzeug_beine00.jpg;Beine                           ;2;0;0;0;0;0;0;4;4;1;2;0;Z;
+A;Panzerbeine (Paar);plattenzeug_beine00.jpg;Beine                           ;2;0;0;0;0;0;0;4;4;1;2;0;Z;1
 A;Panzerschuh;plattenzeug_beine00.jpg;Beine                          ;1;0;0;0;0;0;0;1;1;0;0;0;Z;
 A;Streifenschurz;lendenschurz00.jpg;Beine                            ;0;0;0;0;2;0;0;2;2;1;1;1;Z;
 A;Baburiner Hut;;"Helm                                       		 ";1;4;0;1;0;0;0;0;0;1;2;1;Z;

@@ -5,7 +5,18 @@ import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 public interface Probe {
 
 	public enum ProbeType {
-		ThreeOfThree, TwoOfThree, One
+		/**
+		 * The probe consists of three dices which all are taken into consideration for the probe
+		 */
+		ThreeOfThree,
+		/**
+		 * The probe consists of three dices but only the best two are taken into account
+		 */
+		TwoOfThree,
+		/**
+		 * The probe consists of one dice which counts
+		 */
+		One
 	};
 
 	public ProbeType getProbeType();
@@ -27,10 +38,10 @@ public interface Probe {
 	 */
 	public Integer getProbeBonus();
 
-	public int getModCache();
+	public int getModifierCache();
 
-	public void setModCache(int cacheValue);
+	public void setModifierCache(int cacheValue);
 
-	public void clearCache();
+	public void clearModifierCache();
 
 }

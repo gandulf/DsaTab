@@ -345,10 +345,14 @@ public class HeroExchange {
 	 * @throws Exception
 	 */
 	public List<HeroFileInfo> getHeroes() throws Exception {
+		return getHeroes(StorageType.FileSystem, StorageType.Dropbox, StorageType.HeldenAustausch);
+	}
+
+	public List<HeroFileInfo> getHeroes(StorageType... storageTypes) throws Exception {
 		List<HeroFileInfo> heroes = new ArrayList<HeroFileInfo>();
-		heroes.addAll(getHeroes(StorageType.FileSystem));
-		heroes.addAll(getHeroes(StorageType.Dropbox));
-		heroes.addAll(getHeroes(StorageType.HeldenAustausch));
+		for (StorageType type : storageTypes) {
+			heroes.addAll(getHeroesByType(type));
+		}
 
 		List<HeroFileInfo> result = new ArrayList<HeroFileInfo>();
 		for (HeroFileInfo fileInfo : heroes) {
@@ -364,7 +368,7 @@ public class HeroExchange {
 		return result;
 	}
 
-	public List<HeroFileInfo> getHeroes(StorageType storageType) throws Exception {
+	protected List<HeroFileInfo> getHeroesByType(StorageType storageType) throws Exception {
 		List<HeroFileInfo> heroes = new ArrayList<HeroFileInfo>();
 
 		switch (storageType) {

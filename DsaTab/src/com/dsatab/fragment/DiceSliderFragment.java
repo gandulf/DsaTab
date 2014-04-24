@@ -666,7 +666,8 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		Probe probe = probeData.probe;
 
 		return (probe instanceof CombatDistanceTalent || probe instanceof CombatMeleeAttribute || (probe.getProbeInfo()
-				.getAttributeTypes() == null && info.value[0] == info.value[1] && info.value[1] == info.value[2]));
+				.getAttributeValues().isEmpty()
+				&& info.value[0] == info.value[1] && info.value[1] == info.value[2]));
 	}
 
 	private void updateView(ProbeData info) {

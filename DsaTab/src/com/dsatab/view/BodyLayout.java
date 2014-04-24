@@ -8,9 +8,10 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.dsatab.R;
 import com.dsatab.data.ArmorAttribute;
@@ -56,13 +57,14 @@ public class BodyLayout extends FrameLayout {
 	private int rsWidthMeasureSpec, rsHeightMeasureSpec;
 	private int woundWidthMeasureSpec, woundHeightMeasureSpec;
 
-	private int woundHeight;
+	private int woundSizePx;
 
 	private Map<ArmorPosition, TextView> armorButtons = new HashMap<ArmorPosition, TextView>(
 			ArmorPosition.values().length);
-	private Map<Position, ImageButton[]> woundButtons = new HashMap<Position, ImageButton[]>(Position.values().length);
+	private Map<Position, ToggleButton[]> woundButtons = new HashMap<Position, ToggleButton[]>(Position.values().length);
 
-	private OnClickListener onArmorClickListener, onWoundClickListener;
+	private OnClickListener onArmorClickListener;
+	private OnCheckedChangeListener onWoundClickListener;
 	private OnLongClickListener onArmorLongClickListener;
 
 	public static class LayoutParams extends FrameLayout.LayoutParams {
@@ -137,29 +139,42 @@ public class BodyLayout extends FrameLayout {
 		requestLayout();
 	}
 
+	public void setWoundAttribute(WoundAttribute attr) {
+		ToggleButton[] buttons = woundButtons.get(attr.getPosition());
+
+		if (buttons == null) {
+			buttons = new ToggleButton[MAX_WOUNDS];
+			woundButtons.put(attr.getPosition(), buttons);
+		}
+		int selectedButtons = 0;
+
+		for (int i = 0; i < MAX_WOUNDS; i++) {
+			ToggleButton ib = buttons[i];
+			if (ib == null) {
+				ib = addWoundButton(attr);
+				buttons[i] = ib;
+			}
+			selectedButtons += ib.isChecked() ? 1 : 0;
+
+			ib.setOnCheckedChangeListener(null);
+		}
+
+		if (selectedButtons != attr.getValue()) {
+			for (int i = 0; i < MAX_WOUNDS; i++) {
+				ToggleButton ib = buttons[i];
+				ib.setChecked(attr.getValue() > i);
+			}
+		}
+
+		for (int i = 0; i < MAX_WOUNDS; i++) {
+			buttons[i].setOnCheckedChangeListener(onWoundClickListener);
+		}
+	}
+
 	public void setWoundAttributes(Map<Position, WoundAttribute> attributes) {
 
 		for (WoundAttribute attr : attributes.values()) {
-
-			ImageButton[] buttons = woundButtons.get(attr.getPosition());
-
-			if (buttons == null) {
-				buttons = new ImageButton[MAX_WOUNDS];
-				woundButtons.put(attr.getPosition(), buttons);
-			}
-
-			for (int i = 0; i < MAX_WOUNDS; i++) {
-				ImageButton ib = buttons[i];
-
-				if (ib == null) {
-					ib = addWoundButton(attr);
-					buttons[i] = ib;
-				}
-
-				ib.setSelected(attr.getValue() > i);
-				ib.setBackgroundResource(R.drawable.icon_wound_btn);
-			}
-
+			setWoundAttribute(attr);
 		}
 		requestLayout();
 	}
@@ -183,8 +198,9 @@ public class BodyLayout extends FrameLayout {
 		rsWidthMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
 		rsHeightMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
 
-		woundWidthMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
-		woundHeightMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+		woundSizePx = getContext().getResources().getDimensionPixelSize(R.dimen.icon_button_size);
+		woundWidthMeasureSpec = MeasureSpec.makeMeasureSpec(woundSizePx, MeasureSpec.EXACTLY);
+		woundHeightMeasureSpec = MeasureSpec.makeMeasureSpec(woundSizePx, MeasureSpec.EXACTLY);
 	}
 
 	public OnLongClickListener getOnArmorLongClickListener() {
@@ -211,27 +227,30 @@ public class BodyLayout extends FrameLayout {
 		}
 	}
 
-	public OnClickListener getOnWoundClickListener() {
+	public OnCheckedChangeListener getOnWoundClickListener() {
 		return onWoundClickListener;
 	}
 
-	public void setOnWoundClickListener(OnClickListener onWoundClickListener) {
+	public void setOnWoundClickListener(OnCheckedChangeListener onWoundClickListener) {
 		this.onWoundClickListener = onWoundClickListener;
 
-		for (ImageButton[] btns : woundButtons.values()) {
-			for (ImageButton btn : btns) {
-				btn.setOnClickListener(onWoundClickListener);
+		for (ToggleButton[] btns : woundButtons.values()) {
+			for (ToggleButton btn : btns) {
+				btn.setOnCheckedChangeListener(onWoundClickListener);
 			}
 		}
 	}
 
-	protected ImageButton addWoundButton(WoundAttribute attr) {
-		ImageButton woundButton = new ImageButton(getContext());
+	protected ToggleButton addWoundButton(WoundAttribute attr) {
+		ToggleButton woundButton = new ToggleButton(getContext());
 		woundButton.setTag(attr);
-		woundButton.setBackgroundResource(R.drawable.icon_wound_btn);
-		woundButton.setOnClickListener(onWoundClickListener);
+		woundButton.setBackgroundResource(R.drawable.bg_wound_btn);
+		woundButton.setTextOff("");
+		woundButton.setTextOn("");
+		woundButton.setChecked(false);
+		woundButton.setOnCheckedChangeListener(onWoundClickListener);
 
-		addView(woundButton, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, attr.getPosition()));
+		addView(woundButton, new LayoutParams(woundSizePx, woundSizePx, attr.getPosition()));
 		return woundButton;
 	}
 
@@ -262,9 +281,8 @@ public class BodyLayout extends FrameLayout {
 		for (int i = 0; i < count; i++) {
 			View child = getChildAt(i);
 			// wound
-			if (child instanceof ImageButton) {
+			if (child instanceof ToggleButton) {
 				child.measure(woundWidthMeasureSpec, woundHeightMeasureSpec);
-				woundHeight = child.getMeasuredHeight();
 			} else if (child instanceof TextView) // armorbutton
 				child.measure(rsWidthMeasureSpec, rsHeightMeasureSpec);
 		}
@@ -419,49 +437,49 @@ public class BodyLayout extends FrameLayout {
 						case Kopf:
 							cl = (int) (width * OFFSET_HEAD_X) - (child.getMeasuredWidth() / 2);
 							cr = cl + child.getMeasuredWidth();
-							ct = (int) (height * (OFFSET_HEAD_Y) + woundHeight);
+							ct = (int) (height * (OFFSET_HEAD_Y) + woundSizePx);
 							cb = ct + child.getMeasuredHeight();
 							break;
 						case Bauch:
 							cl = (int) (width * OFFSET_STOMACH_X) - (child.getMeasuredWidth() / 2);
 							cr = cl + child.getMeasuredWidth();
-							ct = (int) (height * (OFFSET_STOMACH_Y) + woundHeight);
+							ct = (int) (height * (OFFSET_STOMACH_Y) + woundSizePx);
 							cb = ct + child.getMeasuredHeight();
 							break;
 						case Brust:
 							cl = (int) (width * OFFSET_CHEST_X) - (child.getMeasuredWidth() / 2);
 							cr = cl + child.getMeasuredWidth();
-							ct = (int) (height * (OFFSET_CHEST_Y) + woundHeight);
+							ct = (int) (height * (OFFSET_CHEST_Y) + woundSizePx);
 							cb = ct + child.getMeasuredHeight();
 							break;
 						case Ruecken:
 							cl = (int) (width * OFFSET_BACK_X) - (child.getMeasuredWidth() / 2);
 							cr = cl + child.getMeasuredWidth();
-							ct = (int) (height * (OFFSET_BACK_Y) + woundHeight);
+							ct = (int) (height * (OFFSET_BACK_Y) + woundSizePx);
 							cb = ct + child.getMeasuredHeight();
 							break;
 						case LinkerArm:
 							cl = (int) (width * OFFSET_LEFT_ARM_X) - (child.getMeasuredWidth() / 2);
 							cr = cl + child.getMeasuredWidth();
-							ct = (int) (height * (OFFSET_LEFT_ARM_Y) + woundHeight);
+							ct = (int) (height * (OFFSET_LEFT_ARM_Y) + woundSizePx);
 							cb = ct + child.getMeasuredHeight();
 							break;
 						case RechterArm:
 							cl = (int) (width * OFFSET_RIGHT_ARM_X) - (child.getMeasuredWidth() / 2);
 							cr = cl + child.getMeasuredWidth();
-							ct = (int) (height * (OFFSET_RIGHT_ARM_Y) + woundHeight);
+							ct = (int) (height * (OFFSET_RIGHT_ARM_Y) + woundSizePx);
 							cb = ct + child.getMeasuredHeight();
 							break;
 						case LinkesBein:
 							cl = (int) (width * OFFSET_UPPER_LEG_X) - (child.getMeasuredWidth() / 2);
 							cr = cl + child.getMeasuredWidth();
-							ct = (int) (height * (OFFSET_UPPER_LEG_Y) + woundHeight);
+							ct = (int) (height * (OFFSET_UPPER_LEG_Y) + woundSizePx);
 							cb = ct + child.getMeasuredHeight();
 							break;
 						case RechtesBein:
 							cl = (int) (width * OFFSET_LOWER_LEG_X) - (child.getMeasuredWidth() / 2);
 							cr = cl + child.getMeasuredWidth();
-							ct = (int) (height * (OFFSET_LOWER_LEG_Y) + woundHeight);
+							ct = (int) (height * (OFFSET_LOWER_LEG_Y) + woundSizePx);
 							cb = ct + child.getMeasuredHeight();
 							break;
 						default:

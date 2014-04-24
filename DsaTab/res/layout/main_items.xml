@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragment_item_chooser"
-        android:name="com.dsatab.fragment.ItemChooserFragment"
+        android:name="com.dsatab.fragment.item.ItemListFragment"
         android:layout_width="350dp"
         android:layout_height="match_parent"        
         class="com.dsatab.fragment.item.ItemListFragment"

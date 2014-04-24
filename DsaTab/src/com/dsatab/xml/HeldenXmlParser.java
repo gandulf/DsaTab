@@ -619,7 +619,7 @@ public class HeldenXmlParser {
 			attr.setType(AttributeType.valueOfTrim(attributeElement.getAttributeValue(Xml.KEY_NAME)));
 			attr.setValue(Util.parseInteger(attributeElement.getAttributeValue(Xml.KEY_VALUE)));
 			attr.setMod(Util.parseInteger(attributeElement.getAttributeValue(Xml.KEY_MOD)));
-			// all animal attributes are absolte
+			// all animal attributes are absolute
 			attr.setAbsolute(true);
 			animal.addAttribute(attr);
 		}
@@ -724,7 +724,9 @@ public class HeldenXmlParser {
 						feature.setComment(kommentar.getAttributeValue(Xml.KEY_KOMMENTAR));
 					}
 				} catch (FeatureTypeUnknownException e) {
-					Debug.error(e);
+					Debug.warning(e);
+					// heldensofteare comments add values to key which makes it hard so find, so we just ignore them for
+					// now
 				}
 			}
 

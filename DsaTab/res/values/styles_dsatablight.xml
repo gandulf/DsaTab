@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- File created by the Android Action Bar Style Generator
+
+     Copyright (C) 2011 The Android Open Source Project
+     Copyright (C) 2012 readyState Software Ltd
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<resources>
+
+    <style name="Theme.Dsatablight" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="actionBarItemBackground">@drawable/selectable_background_dsatablight</item>
+        <item name="popupMenuStyle">@style/PopupMenu.Dsatablight</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Dsatablight</item>
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Dsatablight</item>
+        <item name="actionDropDownStyle">@style/DropDownNav.Dsatablight</item>
+        <item name="actionBarStyle">@style/ActionBar.Solid.Dsatablight</item>
+        <item name="actionModeBackground">@drawable/cab_background_top_dsatablight</item>
+        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_dsatablight</item>
+        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Dsatablight</item>
+
+                <!-- Light.DarkActionBar specific -->
+        <item name="actionBarWidgetTheme">@style/Theme.Dsatablight.Widget</item>
+
+    </style>
+
+    <style name="ActionBar.Solid.Dsatablight" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="background">@drawable/ab_solid_dsatablight</item>
+        <item name="backgroundStacked">@drawable/ab_stacked_solid_dsatablight</item>
+        <item name="backgroundSplit">@drawable/ab_bottom_solid_dsatablight</item>
+        <item name="progressBarStyle">@style/ProgressBar.Dsatablight</item>
+    </style>
+
+    <style name="ActionBar.Transparent.Dsatablight" parent="@style/Widget.AppCompat.ActionBar">
+        <item name="background">@drawable/ab_transparent_dsatablight</item>
+        <item name="progressBarStyle">@style/ProgressBar.Dsatablight</item>
+    </style>
+	
+    <style name="PopupMenu.Dsatablight" parent="@style/Widget.AppCompat.PopupMenu">	
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_dsatablight</item>	
+    </style>
+	
+    <style name="DropDownListView.Dsatablight" parent="@style/Widget.AppCompat.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_dsatablight</item>
+    </style>
+
+    <style name="ActionBarTabStyle.Dsatablight" parent="@style/Widget.AppCompat.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab_dsatablight</item>
+    </style>
+	
+    <style name="DropDownNav.Dsatablight" parent="@style/Widget.AppCompat.Spinner.DropDown.ActionBar">
+        <item name="android:background">@drawable/spinner_background_ab_dsatablight</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_dsatablight</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_dsatablight</item>
+    </style>
+    
+    <style name="ProgressBar.Dsatablight" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_dsatablight</item>
+    </style>
+    
+    <style name="ActionButton.CloseMode.Dsatablight" parent="@style/Widget.AppCompat.ActionButton.CloseMode">
+        <item name="android:background">@drawable/btn_cab_done_dsatablight</item>
+    </style>
+    
+    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
+    <style name="Theme.Dsatablight.Widget" parent="@style/Theme.AppCompat">
+        <item name="popupMenuStyle">@style/PopupMenu.Dsatablight</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Dsatablight</item>
+    </style>
+
+</resources>

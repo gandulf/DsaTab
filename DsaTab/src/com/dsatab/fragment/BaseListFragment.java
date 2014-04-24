@@ -26,23 +26,23 @@ import com.haarman.listviewanimations.view.OnItemCheckedListener;
 import com.rokoder.android.lib.support.v4.widget.GridViewCompat;
 
 public abstract class BaseListFragment extends BaseFragment implements OnItemLongClickListener, OnItemClickListener,
-		FilterChangedListener, OnItemCheckedListener {
+		FilterChangedListener, OnItemCheckedListener, View.OnClickListener {
 
 	protected ActionMode mMode;
 
 	protected ActionMode.Callback mCallback;
 
-	protected ListSettings filterSettings;
+	protected ListSettings listSettings;
 
-	protected ListSettings getFilterSettings() {
-		if (filterSettings == null) {
+	protected ListSettings getListSettings() {
+		if (listSettings == null) {
 			if (getTabPosition() >= 0 && getTabInfo() != null) {
 				// update filter settings to be correct type just to be sure
-				getTabInfo().updateFilterSettings();
-				filterSettings = getTabInfo().getFilterSettings(getTabPosition());
+				getTabInfo().updateListSettings();
+				listSettings = getTabInfo().getListSettings(getTabPosition());
 			}
 		}
-		return filterSettings;
+		return listSettings;
 	}
 
 	/*
@@ -166,6 +166,16 @@ public abstract class BaseListFragment extends BaseFragment implements OnItemLon
 		return mCallback;
 	}
 
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case android.R.id.empty:
+			removeTab();
+			break;
+		}
+
+	}
+
 	protected void refreshEmptyView(Adapter adapter, String emptyText) {
 		View emptyView = findViewById(android.R.id.empty);
 		if (emptyView != null) {
@@ -179,6 +189,7 @@ public abstract class BaseListFragment extends BaseFragment implements OnItemLon
 				emptyView.setVisibility(View.GONE);
 				findViewById(android.R.id.list).setVisibility(View.VISIBLE);
 			}
+			emptyView.setOnClickListener(this);
 		}
 
 	}

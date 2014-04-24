@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,6 +56,7 @@ public class HeroConfiguration {
 	private static final String FIELD_LE_MODIFIER = "leModifier";
 	private static final String FIELD_AU_MODIFIER = "auModifier";
 	private static final String FIELD_VERSION = "version";
+	private static final String FIELD_CUSTOM_PROBES = "customProbes";
 
 	private List<TabInfo> tabInfos;
 
@@ -64,6 +66,7 @@ public class HeroConfiguration {
 	private Set<CustomAttribute> attributes;
 	private Set<MetaTalent> metaTalents;
 	private List<Event> events;
+	private List<CustomProbe> customProbes;
 
 	private List<ItemContainer> itemContainers;
 
@@ -88,6 +91,7 @@ public class HeroConfiguration {
 		attributes = new HashSet<CustomAttribute>();
 		metaTalents = new HashSet<MetaTalent>();
 		events = new ArrayList<Event>();
+		customProbes = new ArrayList<CustomProbe>();
 		combatStyle = CombatStyle.Offensive;
 		beCalculation = true;
 
@@ -247,6 +251,18 @@ public class HeroConfiguration {
 				properties.put(key, map.optString(key));
 			}
 		}
+
+		if (in.has(FIELD_CUSTOM_PROBES)) {
+			array = in.getJSONArray(FIELD_CUSTOM_PROBES);
+			customProbes = new ArrayList<CustomProbe>(array.length());
+			for (int i = 0; i < array.length(); i++) {
+				JSONObject tab = array.getJSONObject(i);
+				CustomProbe info = new CustomProbe(this.hero, tab);
+				customProbes.add(info);
+			}
+		} else {
+			customProbes = new ArrayList<CustomProbe>();
+		}
 	}
 
 	public String getProperty(String key) {
@@ -310,6 +326,26 @@ public class HeroConfiguration {
 		return metaTalents;
 	}
 
+	public CustomProbe getCustomProbe(String name) {
+		for (CustomProbe customProbe : customProbes) {
+			if (Util.equalsOrNull(customProbe.getName(), name))
+				return customProbe;
+		}
+		return null;
+	}
+
+	public List<CustomProbe> getCustomProbes() {
+		return customProbes;
+	}
+
+	public CustomProbe getCustomProbe(UUID id) {
+		for (CustomProbe customProbe : customProbes) {
+			if (Util.equalsOrNull(customProbe.getId(), id))
+				return customProbe;
+		}
+		return null;
+	}
+
 	public List<CustomModificator> getModificators() {
 		return modificators;
 	}
@@ -324,6 +360,14 @@ public class HeroConfiguration {
 
 	public void removeWound(WoundAttribute wound) {
 		wounds.remove(wound);
+	}
+
+	public void addCustomProbe(CustomProbe probe) {
+		customProbes.add(probe);
+	}
+
+	public void removeCustomProbe(CustomProbe probe) {
+		customProbes.remove(probe);
 	}
 
 	public CombatStyle getCombatStyle() {
@@ -425,16 +469,16 @@ public class HeroConfiguration {
 			TabInfo tabInfo = new TabInfo(CharacterFragment.class, ListableFragment.class,
 					getTabResourceId(CharacterFragment.class), true, false);
 			tabInfo.setTitle("Talente");
-			listSettings = (ListSettings) tabInfo.getFilterSettings(1);
+			listSettings = (ListSettings) tabInfo.getListSettings(1);
 			listSettings.addListItem(new ListItem(ListItemType.Talent));
 			tabInfos.add(tabInfo);
 
 			tabInfo = new TabInfo(ListableFragment.class, ListableFragment.class, R.drawable.tab_magic);
 			tabInfo.setTitle("Zauber und Künste");
-			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
+			listSettings = (ListSettings) tabInfo.getListSettings(0);
 			listSettings.addListItem(new ListItem(AttributeType.Astralenergie_Aktuell));
 			listSettings.addListItem(new ListItem(ListItemType.Spell));
-			listSettings = (ListSettings) tabInfo.getFilterSettings(1);
+			listSettings = (ListSettings) tabInfo.getListSettings(1);
 			listSettings.addListItem(new ListItem(AttributeType.Karmaenergie_Aktuell));
 			listSettings.addListItem(new ListItem(ListItemType.Talent, TalentGroupType.Gaben.name()));
 			listSettings.addListItem(new ListItem(ListItemType.Header, "Künste"));
@@ -443,27 +487,30 @@ public class HeroConfiguration {
 
 			tabInfo = new TabInfo(ListableFragment.class, BodyFragment.class, R.drawable.tab_fight);
 			tabInfo.setTitle("Kampf");
-			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
+			listSettings = (ListSettings) tabInfo.getListSettings(0);
 			listSettings.addListItem(new ListItem(AttributeType.Lebensenergie_Aktuell));
 			listSettings.addListItem(new ListItem(AttributeType.Ausdauer_Aktuell));
 			listSettings.addListItem(new ListItem(AttributeType.Initiative_Aktuell));
 			listSettings.addListItem(new ListItem(ListItemType.Header, "Gegenstände"));
 			listSettings.addListItem(new ListItem(ListItemType.EquippedItem));
 			listSettings.addListItem(new ListItem(AttributeType.Ausweichen));
+			listSettings.addListItem(new ListItem(ListItemType.Wound));
+			listSettings.addListItem(new ListItem(ListItemType.Probe));
 			listSettings.addListItem(new ListItem(ListItemType.Header, "Modifikatoren"));
 			listSettings.addListItem(new ListItem(ListItemType.Modificator));
 			tabInfos.add(tabInfo);
 
 			tabInfo = new TabInfo(ItemsFragment.class, getTabResourceId(ItemsFragment.class), false, true);
-			tabInfo.setTitle("Notizen");
+			tabInfo.setTitle("Gegenstände");
 			tabInfos.add(tabInfo);
 
 			tabInfo = new TabInfo(ListableFragment.class, ListableFragment.class, R.drawable.tab_notes, false, false);
-			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
+			tabInfo.setTitle("Notizen");
+			listSettings = (ListSettings) tabInfo.getListSettings(0);
 			listSettings.addListItem(new ListItem(ListItemType.Notes));
 			listSettings.addListItem(new ListItem(ListItemType.Header, "Dokumente"));
 			listSettings.addListItem(new ListItem(ListItemType.Document));
-			listSettings = (ListSettings) tabInfo.getFilterSettings(1);
+			listSettings = (ListSettings) tabInfo.getListSettings(1);
 			listSettings.addListItem(new ListItem(ListItemType.Purse));
 			tabInfos.add(tabInfo);
 
@@ -483,20 +530,20 @@ public class HeroConfiguration {
 
 			tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_talents);
 			tabInfo.setTitle("Talente");
-			ListSettings listSettings = (ListSettings) tabInfo.getFilterSettings(0);
+			ListSettings listSettings = (ListSettings) tabInfo.getListSettings(0);
 			listSettings.addListItem(new ListItem(ListItemType.Talent));
 			tabInfos.add(tabInfo);
 
 			tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_magic);
 			tabInfo.setTitle("Zauber");
-			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
+			listSettings = (ListSettings) tabInfo.getListSettings(0);
 			listSettings.addListItem(new ListItem(AttributeType.Astralenergie_Aktuell));
 			listSettings.addListItem(new ListItem(ListItemType.Spell));
 			tabInfos.add(tabInfo);
 
 			tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_art);
 			tabInfo.setTitle("Künste");
-			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
+			listSettings = (ListSettings) tabInfo.getListSettings(0);
 			listSettings.addListItem(new ListItem(AttributeType.Karmaenergie_Aktuell));
 			listSettings.addListItem(new ListItem(ListItemType.Talent, TalentGroupType.Gaben.name()));
 			listSettings.addListItem(new ListItem(ListItemType.Header, "Künste"));
@@ -509,13 +556,15 @@ public class HeroConfiguration {
 
 			tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_fight);
 			tabInfo.setTitle("Kampf");
-			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
+			listSettings = (ListSettings) tabInfo.getListSettings(0);
 			listSettings.addListItem(new ListItem(AttributeType.Lebensenergie_Aktuell));
 			listSettings.addListItem(new ListItem(AttributeType.Ausdauer_Aktuell));
 			listSettings.addListItem(new ListItem(AttributeType.Initiative_Aktuell));
 			listSettings.addListItem(new ListItem(ListItemType.Header, "Gegenstände"));
 			listSettings.addListItem(new ListItem(ListItemType.EquippedItem));
 			listSettings.addListItem(new ListItem(AttributeType.Ausweichen));
+			listSettings.addListItem(new ListItem(ListItemType.Wound));
+			listSettings.addListItem(new ListItem(ListItemType.Probe));
 			listSettings.addListItem(new ListItem(ListItemType.Header, "Modifikatoren"));
 			listSettings.addListItem(new ListItem(ListItemType.Modificator));
 			tabInfos.add(tabInfo);
@@ -526,7 +575,7 @@ public class HeroConfiguration {
 
 			tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_notes, false, false);
 			tabInfo.setTitle("Notizen");
-			listSettings = (ListSettings) tabInfo.getFilterSettings(0);
+			listSettings = (ListSettings) tabInfo.getListSettings(0);
 			listSettings.addListItem(new ListItem(ListItemType.Notes));
 			listSettings.addListItem(new ListItem(ListItemType.Header, "Dokumente"));
 			listSettings.addListItem(new ListItem(ListItemType.Document));
@@ -572,9 +621,10 @@ public class HeroConfiguration {
 		Util.putArray(out, tabInfos, FIELD_TABS_PORTRAIT);
 		Util.putArray(out, modificators, FIELD_MODIFICATORS);
 		Util.putArray(out, wounds, FIELD_WOUNDS);
-		Util.putArray(out, new ArrayList<CustomAttribute>(attributes), FIELD_ATTRIBUTES);
-		Util.putArray(out, new ArrayList<MetaTalent>(metaTalents), FIELD_META_TALENTS);
+		Util.putArray(out, attributes, FIELD_ATTRIBUTES);
+		Util.putArray(out, metaTalents, FIELD_META_TALENTS);
 		Util.putArray(out, events, FIELD_EVENTS);
+		Util.putArray(out, customProbes, FIELD_CUSTOM_PROBES);
 
 		out.put(FIELD_COMBAT_STYLE, combatStyle.name());
 		out.put(FIELD_BE_CALCULATION, beCalculation);

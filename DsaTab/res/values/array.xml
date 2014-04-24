@@ -102,7 +102,11 @@
 	<item>Steilwurf nach oben +8</item>
 	<item>Seitenwind +4</item>
 	<item>Starker Seitenwind +8</item>
-	<item>Schnellschuß +2</item>
+	<item>Schnellschuß +2</item>	
+	
+	<item>Halbe Deckung +2</item>
+	<item>Dreiviertel Deckung +4</item>
+	
 	<item>Kampfgetümmel (2 Pers.) +4</item>
 	<item>Kampfgetümmel (3 Pers.) +6</item>
 </array>
@@ -121,7 +125,11 @@
 	<item>8</item>
 	<item>4</item>
 	<item>8</item>
+	<item>2</item>	
+	
 	<item>2</item>
+	<item>4</item>
+	
 	<item>4</item>
 	<item>6</item>
 </array>

@@ -16,11 +16,13 @@ import android.os.Parcelable;
 
 import com.dsatab.data.Art;
 import com.dsatab.data.Attribute;
+import com.dsatab.data.CustomProbe;
 import com.dsatab.data.JSONable;
 import com.dsatab.data.Markable;
 import com.dsatab.data.Spell;
 import com.dsatab.data.Talent;
 import com.dsatab.data.Value;
+import com.dsatab.data.WoundAttribute;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.EventCategory;
 import com.dsatab.data.items.EquippedItem;
@@ -300,7 +302,7 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
 	}
 
 	public enum ListItemType {
-		Header, Talent, Spell, Art, Attribute, EquippedItem, Modificator, Document, Notes, Purse
+		Header, Talent, Spell, Art, Attribute, EquippedItem, Modificator, Document, Notes, Purse, Wound, Probe
 	}
 
 	public static class ListItem implements JSONable, Parcelable {
@@ -414,6 +416,10 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
 			return ListItemType.Document;
 		} else if (o instanceof PurseListable) {
 			return ListItemType.Purse;
+		} else if (o instanceof WoundAttribute) {
+			return ListItemType.Wound;
+		} else if (o instanceof CustomProbe) {
+			return ListItemType.Probe;
 		} else {
 			return null;
 		}
@@ -441,6 +447,8 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
 			} else {
 				return null;
 			}
+		} else if (o instanceof CustomProbe) {
+			return ((CustomProbe) o).getName();
 		} else {
 			return null;
 		}

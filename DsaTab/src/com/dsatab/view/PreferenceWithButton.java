@@ -19,17 +19,17 @@ public class PreferenceWithButton extends Preference {
 
 	public PreferenceWithButton(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		setWidgetLayoutResource(R.layout.widget_switch_button);
+		setWidgetLayoutResource(R.layout.widget_delete_button);
 	}
 
 	public PreferenceWithButton(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		setWidgetLayoutResource(R.layout.widget_switch_button);
+		setWidgetLayoutResource(R.layout.widget_delete_button);
 	}
 
 	public PreferenceWithButton(Context context) {
 		super(context);
-		setWidgetLayoutResource(R.layout.widget_switch_button);
+		setWidgetLayoutResource(R.layout.widget_delete_button);
 	}
 
 	/*

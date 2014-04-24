@@ -20,7 +20,7 @@
 
 <resources>
 
-    <style name="Theme.Dsatabdark" parent="@style/Theme.Sherlock">
+    <style name="Theme.Dsatabdark" parent="@style/Theme.AppCompat.Dark">
         <item name="actionBarItemBackground">@drawable/selectable_background_dsatabdark</item>
         <item name="popupMenuStyle">@style/PopupMenu.Dsatabdark</item>
         <item name="dropDownListViewStyle">@style/DropDownListView.Dsatabdark</item>

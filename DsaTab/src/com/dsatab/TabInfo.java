@@ -36,6 +36,7 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 	private static final String FIELD_ATTRIBUTE_LIST = "attributeList";
 	private static final String FIELD_FILTER_SETTINGS = "filterSettings";
 	private static final String FIELD_TITLE = "title";
+	private static final String FIELD_ID = "id";
 
 	@SuppressWarnings("unchecked")
 	private Class<? extends BaseFragment>[] activityClazz = new Class[MAX_TABS_PER_PAGE];
@@ -47,7 +48,7 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 	private transient UUID id;
 	private Uri iconUri;
 
-	private ListSettings[] filterSettings;
+	private ListSettings[] listSettings;
 
 	private static final int indexToResourceId(int index) {
 		if (index < 0 || index >= DsaTabApplication.getInstance().getConfiguration().getTabIcons().size())
@@ -71,13 +72,13 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		this.activityClazz[0] = activityClazz1;
 		this.activityClazz[1] = activityClazz2;
 
-		this.filterSettings = new ListSettings[MAX_TABS_PER_PAGE];
+		this.listSettings = new ListSettings[MAX_TABS_PER_PAGE];
 		this.iconUri = Util.getUriForResourceId(tabResourceId);
 		this.diceSlider = diceSlider;
 		this.attributeList = attributeList;
 		this.id = UUID.randomUUID();
 
-		updateFilterSettings();
+		updateListSettings();
 	}
 
 	public TabInfo(Class<? extends BaseFragment> activityClazz1, Class<? extends BaseFragment> activityClazz2,
@@ -108,16 +109,16 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 			this.iconUri = Uri.parse(uriString);
 		}
 		this.diceSlider = in.readInt() == 0 ? false : true;
-		this.id = UUID.randomUUID();
+		this.id = UUID.fromString(in.readString());
 
 		List<ListSettings> list = new ArrayList<ListSettings>(MAX_TABS_PER_PAGE);
 		in.readTypedList(list, ListSettings.CREATOR);
-		this.filterSettings = new ListSettings[list.size()];
-		this.filterSettings = list.toArray(filterSettings);
+		this.listSettings = new ListSettings[list.size()];
+		this.listSettings = list.toArray(listSettings);
 
 		this.attributeList = in.readInt() == 0 ? false : true;
 		this.title = in.readString();
-		updateFilterSettings();
+		updateListSettings();
 	}
 
 	/**
@@ -138,6 +139,11 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		if (in.has(FIELD_TAB_ICON_URI)) {
 			iconUri = Uri.parse(in.getString(FIELD_TAB_ICON_URI));
 		}
+
+		if (in.has(FIELD_ID))
+			this.id = UUID.fromString(in.optString(FIELD_ID));
+		else
+			this.id = UUID.randomUUID();
 
 		if (in.has(FIELD_DICE_SLIDER))
 			diceSlider = in.getBoolean(FIELD_DICE_SLIDER);
@@ -176,7 +182,7 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		if (in.has(FIELD_ATTRIBUTE_LIST)) {
 			attributeList = in.optBoolean(FIELD_ATTRIBUTE_LIST, true);
 		}
-		filterSettings = new ListSettings[MAX_TABS_PER_PAGE];
+		listSettings = new ListSettings[MAX_TABS_PER_PAGE];
 		if (!in.isNull(FIELD_FILTER_SETTINGS)) {
 			JSONArray jsonArray = in.getJSONArray(FIELD_FILTER_SETTINGS);
 
@@ -185,7 +191,7 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 
 				if (filterJson != null) {
 					if (filterJson.has(ListSettings.class.getName())) {
-						filterSettings[i] = new ListSettings(filterJson.getJSONObject(ListSettings.class.getName()));
+						listSettings[i] = new ListSettings(filterJson.getJSONObject(ListSettings.class.getName()));
 					}
 				}
 			}
@@ -195,7 +201,7 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 			title = in.optString(FIELD_TITLE);
 		}
 
-		updateFilterSettings();
+		updateListSettings();
 	}
 
 	private String compatibleFragmentName(String className) {
@@ -271,7 +277,7 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 
 	public void setActivityClazz(int pos, Class<? extends BaseFragment> activityClazz) {
 		this.activityClazz[pos] = activityClazz;
-		updateFilterSettings(pos);
+		updateListSettings(pos);
 	}
 
 	public Uri getIconUri() {
@@ -308,6 +314,14 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		return diceSlider;
 	}
 
+	public boolean isEmpty() {
+		boolean empty = true;
+		for (Class<?> clazz : activityClazz) {
+			empty &= clazz == null;
+		}
+		return empty;
+	}
+
 	public void setDiceSlider(boolean diceSlider) {
 		this.diceSlider = diceSlider;
 	}
@@ -331,44 +345,44 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 
 	}
 
-	public void updateFilterSettings() {
+	public void updateListSettings() {
 		for (int i = 0; i < activityClazz.length; i++) {
-			updateFilterSettings(i);
+			updateListSettings(i);
 		}
 	}
 
-	private void updateFilterSettings(int i) {
+	private void updateListSettings(int i) {
 		if (activityClazz[i] != null) {
 			if (BaseListFragment.class.isAssignableFrom(activityClazz[i])) {
-				if (!(filterSettings[i] instanceof ListSettings)) {
-					filterSettings[i] = new ListSettings();
+				if (!(listSettings[i] instanceof ListSettings)) {
+					listSettings[i] = new ListSettings();
 				}
 			} else {
-				filterSettings[i] = null;
+				listSettings[i] = null;
 			}
 		} else {
-			filterSettings[i] = null;
+			listSettings[i] = null;
 		}
 	}
 
-	public ListSettings getFilterSettings(int pos) {
-		if (filterSettings[pos] == null) {
-			updateFilterSettings();
+	public ListSettings getListSettings(int pos) {
+		if (listSettings[pos] == null) {
+			updateListSettings();
 		}
-		return filterSettings[pos];
+		return listSettings[pos];
 	}
 
-	public ListSettings getFilterSettings(BaseFragment baseFragment) {
+	public ListSettings getListSettings(BaseFragment baseFragment) {
 		for (int i = 0; i < activityClazz.length; i++) {
 			if (activityClazz[i] == baseFragment.getClass()) {
-				return getFilterSettings(i);
+				return getListSettings(i);
 			}
 		}
 		return null;
 	}
 
 	public ListSettings[] getListSettings() {
-		return filterSettings;
+		return listSettings;
 	}
 
 	/*
@@ -409,7 +423,8 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		else
 			dest.writeString(null);
 		dest.writeInt(diceSlider ? 1 : 0);
-		dest.writeTypedList(Arrays.asList(filterSettings));
+		dest.writeString(id.toString());
+		dest.writeTypedList(Arrays.asList(listSettings));
 		dest.writeInt(attributeList ? 1 : 0);
 		dest.writeString(getTitle());
 	}
@@ -437,17 +452,19 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 			out.put(FIELD_TAB_ICON_URI, iconUri.toString());
 		}
 
+		out.put(FIELD_ID, id.toString());
+
 		out.put(FIELD_DICE_SLIDER, diceSlider);
 
 		out.put(FIELD_ATTRIBUTE_LIST, attributeList);
 
-		if (filterSettings != null) {
+		if (listSettings != null) {
 
 			JSONArray jsonArray = new JSONArray();
-			for (int i = 0; i < filterSettings.length; i++) {
-				if (filterSettings[i] != null) {
+			for (int i = 0; i < listSettings.length; i++) {
+				if (listSettings[i] != null) {
 					JSONObject json = new JSONObject();
-					json.put(filterSettings[i].getClass().getName(), filterSettings[i].toJSONObject());
+					json.put(listSettings[i].getClass().getName(), listSettings[i].toJSONObject());
 					jsonArray.put(i, json);
 				}
 			}
@@ -468,6 +485,17 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 	public String toString() {
 		return "TabInfo :" + activityClazz;
 	}
+
+	/*
+	 * @Override public boolean equals(Object o) { if (o == null) return false; if (o == this) return true; if (!(o
+	 * instanceof TabInfo)) return false;
+	 * 
+	 * TabInfo tabinfo = (TabInfo) o;
+	 * 
+	 * return tabinfo.id.equals(id); }
+	 * 
+	 * @Override public int hashCode() { return id.hashCode(); }
+	 */
 
 	/*
 	 * (non-Javadoc)

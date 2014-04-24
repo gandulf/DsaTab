@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/slidepanel"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent">
 
     <com.haarman.listviewanimations.view.DynamicListView
         android:id="@+id/popup_tab_list"
-        android:layout_width="350dp"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_weight="0"
         android:background="?attr/listShadowBackground"
@@ -15,7 +15,7 @@
 
     <TabHost
         android:id="@android:id/tabhost"
-        android:layout_width="match_parent"
+        android:layout_width="500dp"
         android:layout_height="match_parent"
         android:layout_weight="1" >
 
@@ -71,63 +71,32 @@
 
                     <CheckBox
                         android:id="@+id/popup_edit_diceslider"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/show_dice" >
                     </CheckBox>
 
                     <CheckBox
                         android:id="@+id/popup_edit_attributelist"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/show_header" >
                     </CheckBox>
                 </LinearLayout>
 
-                <LinearLayout
+                <fragment
                     android:id="@+id/tab2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical" >
+                    class="com.dsatab.fragment.TabListableConfigFragment"
+                    android:tag="list1" />
 
-                    <Spinner
-                        android:id="@+id/popup_edit_primary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:minHeight="?android:attr/listPreferredItemHeight" >
-                    </Spinner>
-
-                    <LinearLayout
-                        android:id="@+id/popup_edit_primary_addon"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical" >
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
+                <fragment
                     android:id="@+id/tab3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical" >
-
-                    <Spinner
-                        android:id="@+id/popup_edit_secondary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:minHeight="?android:attr/listPreferredItemHeight" >
-                    </Spinner>
-
-                    <LinearLayout
-                        android:id="@+id/popup_edit_secondary_addon"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical" >
-                    </LinearLayout>
-                </LinearLayout>
+                    class="com.dsatab.fragment.TabListableConfigFragment"
+                    android:tag="list2" />
             </FrameLayout>
         </LinearLayout>
     </TabHost>

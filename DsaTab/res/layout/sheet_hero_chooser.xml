@@ -29,6 +29,7 @@
                 android:columnWidth="@dimen/portrait_width_small"
                 android:gravity="center"
                 android:numColumns="auto_fit"
+                android:drawSelectorOnTop="true"
                 android:stretchMode="columnWidth" />
 
             <TextView

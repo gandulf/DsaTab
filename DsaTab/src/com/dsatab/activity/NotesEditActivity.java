@@ -18,8 +18,9 @@ public class NotesEditActivity extends BaseFragmentActivity {
 
 	private NotesEditFragment fragment;
 
-	public static void edit(Event event, String audioPath, Activity activity) {
+	public static void edit(Event event, String audioPath, Activity activity, int requestCode) {
 		Intent intent = new Intent(activity, NotesEditActivity.class);
+		intent.setAction(Intent.ACTION_EDIT);
 		if (event != null) {
 			intent.putExtra(NotesEditFragment.INTENT_NOTES_ITEM, event);
 			intent.putExtra(NotesEditFragment.INTENT_NAME_EVENT_TEXT, event.getComment());
@@ -29,12 +30,13 @@ public class NotesEditActivity extends BaseFragmentActivity {
 		if (audioPath != null) {
 			intent.putExtra(NotesEditFragment.INTENT_NAME_AUDIO_PATH, audioPath);
 		}
-		activity.startActivity(intent);
+		activity.startActivityForResult(intent, requestCode);
 	}
 
-	public static void edit(Connection event, Activity activity) {
+	public static void edit(Connection event, Activity activity, int requestCode) {
 
 		Intent intent = new Intent(activity, NotesEditActivity.class);
+		intent.setAction(Intent.ACTION_EDIT);
 		if (event != null) {
 			intent.putExtra(NotesEditFragment.INTENT_NOTES_ITEM, event);
 			intent.putExtra(NotesEditFragment.INTENT_NAME_EVENT_TEXT, event.getDescription());
@@ -42,7 +44,13 @@ public class NotesEditActivity extends BaseFragmentActivity {
 			intent.putExtra(NotesEditFragment.INTENT_NAME_EVENT_SOZIALSTATUS, event.getSozialStatus());
 			intent.putExtra(NotesEditFragment.INTENT_NAME_EVENT_CATEGORY, event.getCategory());
 		}
-		activity.startActivity(intent);
+		activity.startActivityForResult(intent, requestCode);
+	}
+
+	public static void insert(Activity activity, int requestCode) {
+		Intent intent = new Intent(activity, NotesEditActivity.class);
+		intent.setAction(Intent.ACTION_INSERT);
+		activity.startActivityForResult(intent, requestCode);
 	}
 
 	/*

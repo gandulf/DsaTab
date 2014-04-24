@@ -16,10 +16,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -42,13 +44,13 @@ import com.dsatab.view.BodyLayout;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
 
 public class BodyFragment extends BaseFragment implements OnClickListener, OnLongClickListener,
-		HeroInventoryChangedListener {
+		HeroInventoryChangedListener, OnCheckedChangeListener {
 
 	private BodyLayout bodyLayout;
 
-	TextView totalRs, totalBe;
+	private TextView totalRs, totalBe;
 
-	ImageView bodyBackground;
+	private ImageView bodyBackground;
 
 	/*
 	 * (non-Javadoc)
@@ -164,6 +166,21 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 		return false;
 	}
 
+	@Override
+	public void onCheckedChanged(CompoundButton v, boolean checked) {
+		// wounds
+		if (v.getTag() instanceof WoundAttribute) {
+			ToggleButton iv = (ToggleButton) v;
+			WoundAttribute attribute = (WoundAttribute) v.getTag();
+
+			if (checked) {
+				attribute.addValue(1);
+			} else {
+				attribute.addValue(-1);
+			}
+		}
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -172,22 +189,8 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 	@Override
 	public void onClick(View v) {
 
-		// wounds
-		if (v.getTag() instanceof WoundAttribute) {
-
-			ImageView iv = (ImageButton) v;
-			WoundAttribute attribute = (WoundAttribute) v.getTag();
-
-			if (iv.isSelected()) {
-				attribute.setValue(attribute.getValue() - 1);
-			} else {
-				attribute.setValue(attribute.getValue() + 1);
-			}
-			iv.setSelected(!iv.isSelected());
-			iv.setBackgroundResource(R.drawable.icon_wound_btn);
-		}
 		// armor
-		else if (v.getTag() instanceof ArmorAttribute) {
+		if (v.getTag() instanceof ArmorAttribute) {
 			ArmorAttribute value = (ArmorAttribute) v.getTag();
 
 			final List<EquippedItem> equippedItems = getHero().getArmor(value.getPosition());
@@ -282,6 +285,9 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 		if (value instanceof ArmorAttribute) {
 			ArmorAttribute rs = (ArmorAttribute) value;
 			bodyLayout.setArmorAttribute(rs);
+		} else if (value instanceof WoundAttribute) {
+			WoundAttribute ws = (WoundAttribute) value;
+			bodyLayout.setWoundAttribute(ws);
 		} else if (value instanceof Attribute) {
 			Attribute attribute = (Attribute) value;
 
@@ -369,7 +375,6 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 	 */
 	@Override
 	public void onItemContainerAdded(ItemContainer itemContainer) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -381,7 +386,6 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 	 */
 	@Override
 	public void onItemContainerRemoved(ItemContainer itemContainer) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -393,7 +397,6 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 	 */
 	@Override
 	public void onItemContainerChanged(ItemContainer itemContainer) {
-		// TODO Auto-generated method stub
 
 	}
 

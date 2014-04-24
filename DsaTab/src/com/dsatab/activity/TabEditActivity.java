@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,16 +17,12 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
@@ -39,42 +34,34 @@ import com.actionbarsherlock.view.MenuItem;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.TabInfo;
-import com.dsatab.data.adapter.ListItemConfigAdapter;
-import com.dsatab.data.adapter.SpinnerSimpleAdapter;
-import com.dsatab.fragment.BaseFragment;
-import com.dsatab.fragment.ListableFragment;
+import com.dsatab.fragment.TabListableConfigFragment;
 import com.dsatab.util.Util;
-import com.dsatab.view.ListSettings;
-import com.dsatab.view.ListSettings.ListItem;
-import com.dsatab.view.ListSettings.ListItemType;
 import com.dsatab.view.PictureChooserDialog;
 import com.gandulf.guilib.data.OpenArrayAdapter;
 import com.gandulf.guilib.util.DefaultTextWatcher;
 import com.haarman.listviewanimations.itemmanipulation.AnimateAdapter;
 import com.haarman.listviewanimations.itemmanipulation.OnAnimateCallback;
-import com.haarman.listviewanimations.itemmanipulation.OnDismissCallback;
 import com.haarman.listviewanimations.itemmanipulation.SwipeDismissAdapter;
 import com.haarman.listviewanimations.view.DynamicListView;
 
-public class TabEditActivity extends BaseFragmentActivity implements OnItemClickListener, OnItemSelectedListener,
-		OnCheckedChangeListener, OnClickListener, OnAnimateCallback {
+public class TabEditActivity extends BaseFragmentActivity implements OnItemClickListener, OnClickListener,
+		OnCheckedChangeListener, OnAnimateCallback {
 
 	public static final String DATA_INTENT_TAB_INDEX = "tab.tabIndex";
-
-	private Spinner spinner1, spinner2;
 
 	private ImageView iconView;
 
 	private CheckBox diceslider, attribteList;
 	private EditText editTitle;
 
-	private LinearLayout addons[] = new LinearLayout[TabInfo.MAX_TABS_PER_PAGE];
-
 	private TabInfo currentInfo = null;
 
 	private DynamicListView tabsList;
 	private TabsAdapter tabsAdapter;
 	private AnimateAdapter<TabInfo> animateAdapter;
+
+	private TabListableConfigFragment list1;
+	private TabListableConfigFragment list2;
 
 	public static void edit(Activity activity, int tabIndex, int requestCode) {
 		Intent editTab = new Intent(activity, TabEditActivity.class);
@@ -123,11 +110,6 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 		attribteList = (CheckBox) findViewById(R.id.popup_edit_attributelist);
 		attribteList.setOnCheckedChangeListener(this);
 
-		addons[0] = (LinearLayout) findViewById(R.id.popup_edit_primary_addon);
-		addons[1] = (LinearLayout) findViewById(R.id.popup_edit_secondary_addon);
-
-		spinner1 = (Spinner) findViewById(R.id.popup_edit_primary);
-
 		editTitle = (EditText) findViewById(R.id.popup_edit_title);
 		editTitle.addTextChangedListener(new DefaultTextWatcher() {
 
@@ -159,14 +141,6 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 		animateAdapter.setAbsListView(tabsList);
 		tabsList.setAdapter(animateAdapter);
 
-		SpinnerSimpleAdapter<String> adapter = new SpinnerSimpleAdapter<String>(this, BaseFragment.activities);
-		spinner1.setAdapter(adapter);
-		spinner1.setOnItemSelectedListener(this);
-
-		spinner2 = (Spinner) findViewById(R.id.popup_edit_secondary);
-		spinner2.setAdapter(adapter);
-		spinner2.setOnItemSelectedListener(this);
-
 		iconView = (ImageView) findViewById(R.id.popup_edit_icon);
 		iconView.setOnClickListener(this);
 
@@ -197,6 +171,9 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 			return;
 		}
 
+		list1 = (TabListableConfigFragment) getSupportFragmentManager().findFragmentByTag("list1");
+		list2 = (TabListableConfigFragment) getSupportFragmentManager().findFragmentByTag("list2");
+
 		if (tabsAdapter.getCount() > 0) {
 
 			int index = getIntent().getExtras().getInt(DATA_INTENT_TAB_INDEX, 0);
@@ -225,6 +202,26 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 		item.setIcon(R.drawable.ic_menu_revert);
 
 		return true;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.widget.CompoundButton.OnCheckedChangeListener#onCheckedChanged (android.widget.CompoundButton,
+	 * boolean)
+	 */
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		if (currentInfo != null) {
+			switch (buttonView.getId()) {
+			case R.id.popup_edit_diceslider:
+				currentInfo.setDiceSlider(isChecked);
+				break;
+			case R.id.popup_edit_attributelist:
+				currentInfo.setAttributeList(isChecked);
+				break;
+			}
+		}
 	}
 
 	/*
@@ -281,12 +278,6 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 	protected void selectTabInfo(TabInfo info) {
 		currentInfo = info;
 		if (info != null) {
-			Class<? extends BaseFragment> clazz1 = info.getActivityClazz(0);
-			spinner1.setSelection(BaseFragment.activityValues.indexOf(clazz1));
-
-			Class<? extends BaseFragment> clazz2 = info.getActivityClazz(1);
-			spinner2.setSelection(BaseFragment.activityValues.indexOf(clazz2));
-
 			diceslider.setChecked(info.isDiceSlider());
 			attribteList.setChecked(info.isAttributeList());
 
@@ -301,13 +292,13 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 			editTitle.setText(null);
 		}
 
-		spinner1.setEnabled(info != null);
-		spinner2.setEnabled(info != null);
+		editTitle.setEnabled(info != null);
 		diceslider.setEnabled(info != null);
 		attribteList.setEnabled(info != null);
 		iconView.setEnabled(info != null);
 
-		updateTabInfoSettings(info);
+		list1.setTabInfo(info, 0);
+		list2.setTabInfo(info, 1);
 
 		supportInvalidateOptionsMenu();
 	}
@@ -335,96 +326,6 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 			}
 		});
 		pdialog.show();
-
-	}
-
-	protected void updateTabInfoSettings(final TabInfo info) {
-		CheckBox check;
-		if (info != null && info.getListSettings() != null) {
-			for (int i = 0; i < info.getListSettings().length; i++) {
-
-				addons[i].removeAllViews();
-
-				if (info.getListSettings()[i] != null) {
-					final ListSettings listSettings = info.getListSettings()[i];
-
-					getLayoutInflater().inflate(R.layout._edit_tabinfo_list, addons[i]);
-
-					check = (CheckBox) addons[i].findViewById(R.id.popup_edit_show_normal);
-					check.setTag(listSettings);
-					check.setOnCheckedChangeListener(this);
-
-					check.setChecked(listSettings.isShowNormal());
-
-					check = (CheckBox) addons[i].findViewById(R.id.popup_edit_show_favorites);
-					check.setTag(listSettings);
-					check.setOnCheckedChangeListener(this);
-					check.setChecked(listSettings.isShowFavorite());
-
-					check = (CheckBox) addons[i].findViewById(R.id.popup_edit_show_unused);
-					check.setTag(listSettings);
-					check.setOnCheckedChangeListener(this);
-					check.setChecked(listSettings.isShowUnused());
-
-					check = (CheckBox) addons[i].findViewById(R.id.popup_edit_include_modifiers);
-					check.setTag(listSettings);
-					check.setOnCheckedChangeListener(this);
-					check.setChecked(listSettings.isIncludeModifiers());
-
-					View listTitle = addons[i].findViewById(R.id.popup_edit_list_title);
-
-					final DynamicListView list = (DynamicListView) addons[i].findViewById(android.R.id.list);
-
-					if (info.getActivityClazz(i) == ListableFragment.class) {
-						listTitle.setVisibility(View.VISIBLE);
-						list.setVisibility(View.VISIBLE);
-						final ListItemConfigAdapter listAdapter = new ListItemConfigAdapter(this, DsaTabApplication
-								.getInstance().getHero(), listSettings.getListItems());
-
-						SwipeDismissAdapter swipeAdapter = new SwipeDismissAdapter(listAdapter,
-								new OnDismissCallback() {
-									@Override
-									public void onDismiss(AbsListView list, int[] reverseSortedPositions) {
-										for (int position : reverseSortedPositions) {
-											listAdapter.remove(position);
-											listSettings.getListItems().remove(position);
-										}
-									}
-								});
-
-						swipeAdapter.setAbsListView(list);
-						final AnimateAdapter<ListItem> animateAdapter = new AnimateAdapter<ListSettings.ListItem>(
-								swipeAdapter, this);
-						animateAdapter.setAbsListView(list);
-						list.setDivider(null);
-						list.setAdapter(animateAdapter);
-						list.setOnItemClickListener(this);
-
-						final Spinner listItemType = (Spinner) addons[i].findViewById(R.id.popup_edit_list_type);
-						SpinnerSimpleAdapter<ListItemType> typeAdapter = new SpinnerSimpleAdapter<ListSettings.ListItemType>(
-								this, ListItemType.values());
-						listItemType.setAdapter(typeAdapter);
-						ImageButton listItemAdd = (ImageButton) addons[i].findViewById(R.id.popup_edit_list_add);
-						listItemAdd.setOnClickListener(new OnClickListener() {
-							@Override
-							public void onClick(View v) {
-								ListItem newListItem = new ListItem((ListItemType) listItemType.getSelectedItem());
-								animateAdapter.animateShow(listAdapter.getCount());
-								listAdapter.add(newListItem);
-								listSettings.getListItems().add(newListItem);
-							}
-						});
-					} else {
-						listTitle.setVisibility(View.GONE);
-						list.setVisibility(View.GONE);
-					}
-				}
-			}
-		} else {
-			for (int i = 0; i < addons.length; i++) {
-				addons[i].removeAllViews();
-			}
-		}
 
 	}
 
@@ -487,85 +388,6 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.widget.CompoundButton.OnCheckedChangeListener#onCheckedChanged (android.widget.CompoundButton,
-	 * boolean)
-	 */
-	@Override
-	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		if (currentInfo != null) {
-			ListSettings listFilterSettings;
-			switch (buttonView.getId()) {
-
-			case R.id.popup_edit_diceslider:
-				currentInfo.setDiceSlider(isChecked);
-				break;
-			case R.id.popup_edit_attributelist:
-				currentInfo.setAttributeList(isChecked);
-				break;
-			case R.id.popup_edit_show_favorites:
-				listFilterSettings = (ListSettings) buttonView.getTag();
-				listFilterSettings.setShowFavorite(isChecked);
-				break;
-			case R.id.popup_edit_show_unused:
-				listFilterSettings = (ListSettings) buttonView.getTag();
-				listFilterSettings.setShowUnused(isChecked);
-				break;
-			case R.id.popup_edit_show_normal:
-				listFilterSettings = (ListSettings) buttonView.getTag();
-				listFilterSettings.setShowNormal(isChecked);
-				break;
-			case R.id.popup_edit_include_modifiers:
-				listFilterSettings = (ListSettings) buttonView.getTag();
-				listFilterSettings.setIncludeModifiers(isChecked);
-				break;
-			}
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.widget.AdapterView.OnItemSelectedListener#onItemSelected(android .widget.AdapterView,
-	 * android.view.View, int, long)
-	 */
-	@Override
-	public void onItemSelected(AdapterView<?> adapter, View view, int position, long id) {
-		if (currentInfo != null) {
-			if (adapter == spinner1) {
-				Class<? extends BaseFragment> clazz1 = BaseFragment.activityValues.get(spinner1
-						.getSelectedItemPosition());
-				currentInfo.setActivityClazz(0, clazz1);
-				updateTabInfoSettings(currentInfo);
-			} else if (adapter == spinner2) {
-				Class<? extends BaseFragment> clazz2 = BaseFragment.activityValues.get(spinner2
-						.getSelectedItemPosition());
-				currentInfo.setActivityClazz(1, clazz2);
-				updateTabInfoSettings(currentInfo);
-			}
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.widget.AdapterView.OnItemSelectedListener#onNothingSelected(android .widget.AdapterView)
-	 */
-	@Override
-	public void onNothingSelected(AdapterView<?> adapter) {
-		if (currentInfo != null) {
-			if (adapter == spinner1) {
-				currentInfo.setActivityClazz(0, null);
-				updateTabInfoSettings(currentInfo);
-			} else if (adapter == spinner2) {
-				currentInfo.setActivityClazz(1, null);
-				updateTabInfoSettings(currentInfo);
-			}
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see android.view.View.OnClickListener#onClick(android.view.View)
 	 */
 	@Override
@@ -591,38 +413,6 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 		case R.id.popup_tab_list:
 			TabInfo info = tabsAdapter.getItem(position);
 			selectTabInfo(info);
-			break;
-		// list of config items for list
-		case android.R.id.list:
-			final ListItem listItem = (ListItem) parent.getItemAtPosition(position);
-			if (listItem.getType() == ListItemType.Header) {
-				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setTitle(R.string.title_insert_title);
-				final EditText editText = new EditText(this);
-				editText.setText(listItem.getName());
-				builder.setView(editText);
-
-				DialogInterface.OnClickListener clickListener = new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						switch (which) {
-						case DialogInterface.BUTTON_POSITIVE:
-							listItem.setName(editText.getText().toString());
-							Util.hideKeyboard(editText);
-							Util.notifyDatasetChanged(parent);
-							break;
-						case DialogInterface.BUTTON_NEGATIVE:
-							Util.hideKeyboard(editText);
-							break;
-						}
-					}
-				};
-
-				builder.setPositiveButton(android.R.string.ok, clickListener);
-				builder.setNegativeButton(android.R.string.cancel, clickListener);
-				builder.show();
-			}
 			break;
 		}
 	}

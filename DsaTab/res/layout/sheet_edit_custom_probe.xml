@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
+    xmlns:guilib="http://schemas.android.com/apk/com.gandulf.guilib"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:padding="@dimen/default_gap" >
+
+    <android.support.v7.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        auto:columnCount="2"
+        auto:orientation="vertical"
+        auto:useDefaultMargins="true" >
+
+        <ImageView
+            android:id="@+id/popup_edit_icon"
+            style="?attr/android:spinnerStyle"
+            android:layout_width="@dimen/icon_button_size"
+            android:layout_height="@dimen/icon_button_size"
+            auto:layout_column="0"
+            auto:layout_gravity="bottom|right"
+            auto:layout_row="0"
+             />
+
+        <EditText
+            android:id="@+id/popup_edit_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            auto:layout_column="1"
+            auto:layout_gravity="bottom|fill_horizontal"
+            auto:layout_row="0"
+            android:hint="@string/label_name"
+            android:inputType="text" >
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/popup_edit_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            auto:layout_column="0"
+            auto:layout_columnSpan="2"
+            android:hint="Beschreibung"
+            android:inputType="text">
+        </EditText>
+        <EditText
+            android:id="@+id/popup_edit_footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            
+            auto:layout_column="0"
+            auto:layout_columnSpan="2"
+            android:hint="Fußnote"
+            android:inputType="text">
+        </EditText>
+        
+        <TextView
+            
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            auto:layout_columnSpan="2"
+            android:text="Probe" />
+
+        <EditText
+            android:id="@+id/popup_edit_attributes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            
+            auto:layout_column="0"
+            auto:layout_columnSpan="2"
+            android:hint="Attribute (MU/KL/IN)"
+            android:inputType="text">
+        </EditText>
+        
+        <EditText
+            android:id="@+id/popup_edit_be"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            
+            auto:layout_column="0"
+            auto:layout_columnSpan="2"
+            android:hint="BE (BE-2)"
+            android:inputType="text">
+        </EditText>
+        
+        <EditText
+            android:id="@+id/popup_edit_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            
+            auto:layout_column="0"
+            auto:layout_columnSpan="2"
+            android:hint="Wert"
+            android:inputType="number">
+        </EditText>
+        
+        <TextView
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            auto:layout_columnSpan="2"
+            android:labelFor="@+id/popup_edit_probe_type"
+            android:text="Probenart" />
+
+        <Spinner
+            android:id="@+id/popup_edit_probe_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            auto:layout_columnSpan="2"
+            auto:layout_gravity="fill_horizontal" >
+        </Spinner>
+        
+        <TextView
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            auto:layout_columnSpan="2"
+            android:labelFor="@+id/popup_edit_modificator_type"
+            android:text="Betroffene Modifikatoren" />
+
+        <Spinner
+            android:id="@+id/popup_edit_modificator_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            auto:layout_columnSpan="2"
+            auto:layout_gravity="fill_horizontal" >
+        </Spinner>
+        
+        <android.support.v7.widget.Space
+            android:id="@+id/space1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            auto:layout_column="0"
+            auto:layout_columnSpan="2"
+            auto:layout_gravity="left|top"
+            />
+    </android.support.v7.widget.GridLayout>
+
+</ScrollView>

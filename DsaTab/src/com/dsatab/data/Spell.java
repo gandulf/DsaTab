@@ -5,7 +5,6 @@ import java.util.EnumSet;
 
 import android.text.TextUtils;
 
-import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.listable.Listable;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 import com.dsatab.db.DataManager;
@@ -27,7 +26,6 @@ public class Spell extends MarkableElement implements Value, Listable {
 
 	};
 
-	private Hero hero;
 	private Integer value;
 	private SpellInfo info;
 
@@ -42,8 +40,7 @@ public class Spell extends MarkableElement implements Value, Listable {
 	private EnumSet<Flags> flags = EnumSet.noneOf(Flags.class);
 
 	public Spell(Hero hero, String name) {
-		super();
-		this.hero = hero;
+		super(hero);
 		setName(name);
 	}
 
@@ -116,19 +113,9 @@ public class Spell extends MarkableElement implements Value, Listable {
 		setValue(getReferenceValue());
 	}
 
-	@Override
-	public Integer getProbeValue(int i) {
-		if (probeInfo.getAttributeTypes() != null) {
-			AttributeType type = probeInfo.getAttributeTypes()[i];
-			return hero.getModifiedValue(type, false, false);
-		} else {
-			return null;
-		}
-	}
-
 	public void fireValueChangedEvent() {
-		if (hero != null) {
-			hero.fireValueChangedEvent(this);
+		if (being != null) {
+			being.fireValueChangedEvent(this);
 		}
 	}
 
@@ -148,7 +135,7 @@ public class Spell extends MarkableElement implements Value, Listable {
 		this.value = value;
 
 		if (oldValue != this.value)
-			hero.fireValueChangedEvent(this);
+			being.fireValueChangedEvent(this);
 	}
 
 	@Override

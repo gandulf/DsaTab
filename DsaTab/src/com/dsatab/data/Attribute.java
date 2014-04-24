@@ -13,8 +13,6 @@ public class Attribute extends BaseProbe implements Value, Cloneable, Listable {
 
 	protected AttributeType type;
 
-	protected AbstractBeing being;
-
 	protected Integer referenceValue;
 
 	protected Integer originalBaseValue;
@@ -28,7 +26,7 @@ public class Attribute extends BaseProbe implements Value, Cloneable, Listable {
 	private boolean lazyInit = false;
 
 	public Attribute(AbstractBeing hero) {
-		this.being = hero;
+		super(hero);
 	}
 
 	public AttributeType getType() {

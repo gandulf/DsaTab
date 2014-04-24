@@ -750,7 +750,7 @@ public class Hero extends AbstractBeing {
 	}
 
 	public void clearModifiersCache(Probe probe) {
-		probe.clearCache();
+		probe.clearModifierCache();
 	}
 
 	void fireModifierRemovedEvent(Modificator modifier) {
@@ -1071,14 +1071,14 @@ public class Hero extends AbstractBeing {
 
 	public int getModifier(Probe probe, boolean includeBe, boolean includeLeAu) {
 		int result = 0;
-		if (probe.getModCache() == Integer.MIN_VALUE) {
+		if (probe.getModifierCache() == Integer.MIN_VALUE) {
 			Integer[] outMod = new Integer[1];
 			populateModifiers(probe, null, outMod);
 			result = outMod[0];
 
-			probe.setModCache(result);
+			probe.setModifierCache(result);
 		} else {
-			result = probe.getModCache();
+			result = probe.getModifierCache();
 		}
 
 		if (includeBe) {
@@ -1584,7 +1584,6 @@ public class Hero extends AbstractBeing {
 				totalRs = (float) Math.ceil(totalRs / 20);
 				be += (totalRs - stars);
 				break;
-
 			}
 
 			case GesamtRuestung: {

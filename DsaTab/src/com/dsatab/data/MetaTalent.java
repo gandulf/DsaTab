@@ -46,6 +46,10 @@ public class MetaTalent extends Talent implements JSONable {
 		init();
 	}
 
+	protected Hero getHero() {
+		return (Hero) being;
+	}
+
 	/**
 	 * 
 	 */
@@ -74,17 +78,6 @@ public class MetaTalent extends Talent implements JSONable {
 	 */
 	@Override
 	public Integer getValue() {
-		return getProbeBonus();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.dsatab.data.Talent#getProbeBonus()
-	 */
-	@Override
-	public Integer getProbeBonus() {
-
 		switch (type) {
 		case PirschUndAnsitzjagd: {
 			Integer wildnis = getTalentValue(TalentType.Wildnisleben);
@@ -93,7 +86,7 @@ public class MetaTalent extends Talent implements JSONable {
 			Integer tierkunde = getTalentValue(TalentType.Tierkunde);
 			Integer distance = 0;
 
-			EquippedItem huntingWeapon = hero.getHuntingWeapon();
+			EquippedItem huntingWeapon = getHero().getHuntingWeapon();
 			if (huntingWeapon != null) {
 				if (huntingWeapon.getTalent() instanceof CombatDistanceTalent) {
 					CombatDistanceTalent distanceTalent = (CombatDistanceTalent) huntingWeapon.getTalent();
@@ -173,10 +166,21 @@ public class MetaTalent extends Talent implements JSONable {
 		default:
 			return null;
 		}
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.dsatab.data.Talent#getProbeBonus()
+	 */
+	@Override
+	public Integer getProbeBonus() {
+		return getValue();
 	}
 
 	private int getTalentValue(TalentType talentName) {
-		Talent talent = hero.getTalent(talentName);
+		Talent talent = getHero().getTalent(talentName);
 
 		if (talent == null)
 			return 0;
