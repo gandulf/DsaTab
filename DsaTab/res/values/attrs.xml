@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
                 
-    <declare-styleable name="Theme">
+    <declare-styleable name="DsaTabTheme">
         
         <attr name="textViewValueStyle" format="reference"/>
         <attr name="textViewValueNoTouchStyle" format="reference"/>
@@ -108,8 +108,7 @@
         <attr name="imgModifierAdd" format="reference"/>
         
         <attr name="imgBarModifier" format="reference"/>
-        <attr name="imgBarModifierAdd" format="reference"/>
-        
+        <attr name="imgBarModifierAdd" format="reference"/>        
         
         <attr name="imgActionMicrophone" format="reference"/>
         <attr name="imgBarActionMicrophone" format="reference"/>

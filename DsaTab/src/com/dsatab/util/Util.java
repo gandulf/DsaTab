@@ -1125,11 +1125,13 @@ public class Util {
 	public static void inflateAcceptAbortMenu(Context context, Menu menu) {
 
 		MenuItem item = menu.add(Menu.NONE, R.id.option_accept, Menu.NONE, android.R.string.ok);
-		MenuItemCompat.setShowAsAction(item, MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+		MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM
+				| MenuItemCompat.SHOW_AS_ACTION_WITH_TEXT);
 		item.setIcon(Util.getThemeResourceId(context, R.attr.imgBarAccept));
 
 		item = menu.add(Menu.NONE, R.id.option_cancel, Menu.NONE, android.R.string.cancel);
-		MenuItemCompat.setShowAsAction(item, MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+		MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM
+				| MenuItemCompat.SHOW_AS_ACTION_WITH_TEXT);
 		item.setIcon(Util.getThemeResourceId(context, R.attr.imgBarCancel));
 	}
 

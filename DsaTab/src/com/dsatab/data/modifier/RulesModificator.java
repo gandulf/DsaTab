@@ -86,6 +86,10 @@ public class RulesModificator extends AbstractModificator {
 		}
 		if (affectedTalentTypes != null) {
 			modificatorTypes.add(ModificatorType.CombatTalent);
+			// since raufen and ringen is handled like weapons in the fight screen we have to check for weapons too
+			if (Arrays.binarySearch(affectedTalentTypes, TalentType.Raufen) >= 0
+					|| Arrays.binarySearch(affectedTalentTypes, TalentType.Ringen) >= 0)
+				modificatorTypes.add(ModificatorType.Weapon);
 		}
 
 		return modificatorTypes;

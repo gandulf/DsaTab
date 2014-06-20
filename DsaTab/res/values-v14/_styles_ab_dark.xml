@@ -29,8 +29,6 @@
         <item name="android:actionModeBackground">@drawable/cab_background_top_dsatabdark</item>
         <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_dsatabdark</item>
         <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Dsatabdark</item>
-        
-        
     </style>
 
     <style name="ActionBar.Solid.Dsatabdark" parent="@style/Widget.AppCompat.ActionBar.Solid">

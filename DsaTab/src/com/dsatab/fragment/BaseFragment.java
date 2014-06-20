@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dsatab.DsaTabApplication;
+import com.dsatab.R;
 import com.dsatab.TabInfo;
 import com.dsatab.activity.DsaTabActivity;
 import com.dsatab.data.AbstractBeing;
@@ -73,7 +74,7 @@ public abstract class BaseFragment extends Fragment implements HeroLoader, HeroC
 		if (ll.getChildCount() > 1 && ll.getChildAt(1) != null) {
 			TextView tv = (TextView) ll.getChildAt(1);
 			tv.setTextColor(getResources().getColor(android.R.color.white));
-			tv.setBackgroundResource(Util.getThemeResourceId(getActivity(), android.R.attr.actionBarItemBackground));
+			tv.setBackgroundResource(Util.getThemeResourceId(getActivity(), R.attr.actionBarItemBackground));
 		}
 	}
 

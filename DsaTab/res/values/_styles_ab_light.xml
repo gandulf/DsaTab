@@ -30,7 +30,7 @@
         <item name="actionModeSplitBackground">@drawable/cab_background_bottom_dsatablight</item>
         <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Dsatablight</item>
 
-                <!-- Light.DarkActionBar specific -->
+        <!-- Light.DarkActionBar specific -->
         <item name="actionBarWidgetTheme">@style/Theme.Dsatablight.Widget</item>
 
     </style>

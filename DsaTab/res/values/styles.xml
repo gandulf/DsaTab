@@ -33,7 +33,7 @@
     </style>
     
     <style name="TextValue.Left.Dark">
-        </style>
+    </style>
 
     <style name="TextValue.Right">
         <item name="android:background">@drawable/btn_touch_light_right</item>
@@ -41,9 +41,7 @@
     </style>
     
     <style name="TextValue.Right.Dark">
-        </style>
-
-    
+    </style>  
 
     <style name="TextValue.NoTouch">
         <item name="android:background">@null</item>

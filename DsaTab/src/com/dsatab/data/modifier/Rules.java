@@ -144,9 +144,10 @@ public class Rules {
 		RulesModificator waffenlosKampfstilRaufen = new RulesModificator(hero, "Waffenloser Kampfstil",
 				"Raufen Waffenloser Kampfstil +1/+1", 1);
 		waffenlosKampfstilRaufen.setAffectedTalentTypes(TalentType.Raufen);
+
 		waffenlosKampfstilRaufen.setRequiredSpecialFeatures(FeatureType.WaffenloserKampfstilGladiatorenstil,
 				FeatureType.WaffenloserKampfstilGladiatorenstilDDZ, FeatureType.WaffenloserKampfstilHammerfaust,
-				FeatureType.WaffenloserKampfstilHruruzat);
+				FeatureType.WaffenloserKampfstilHruruzat, FeatureType.WaffenloserKampfstilMercenario);
 		rules.add(waffenlosKampfstilRaufen);
 
 		RulesModificator waffenlosKampfstilRingen = new RulesModificator(hero, "Waffenloser Kampfstil",

@@ -7,8 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.saik0.android.unifiedpreference.UnifiedPreferenceActivity;
-import net.saik0.android.unifiedpreference.UnifiedPreferenceFragment;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -18,7 +16,6 @@ import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -26,7 +23,6 @@ import android.preference.Preference;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
-import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -41,6 +37,7 @@ import com.dsatab.DsaTabConfiguration;
 import com.dsatab.DsaTabConfiguration.ArmorType;
 import com.dsatab.DsaTabConfiguration.WoundType;
 import com.dsatab.R;
+import com.dsatab.fragment.BasePreferenceFragment;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Hint;
 import com.dsatab.util.Util;
@@ -274,7 +271,7 @@ public class DsaTabPreferenceActivity extends UnifiedPreferenceActivity implemen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see net.saik0.android.unifiedpreference.UnifiedSherlockPreferenceActivity #onPostCreate(android.os.Bundle)
+	 * @see net.saik0.android.unifiedpreference.UnifiedPreferenceActivity #onPostCreate(android.os.Bundle)
 	 */
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
@@ -433,7 +430,7 @@ public class DsaTabPreferenceActivity extends UnifiedPreferenceActivity implemen
 		window.getDecorView().requestLayout();
 	}
 
-	protected static boolean handlePreferenceClick(final Activity context, Preference preference, final String key,
+	public static boolean handlePreferenceClick(final Activity context, Preference preference, final String key,
 			final SharedPreferences preferences) {
 		AbstractDownloader downloader;
 		if (KEY_DOWNLOAD_ALL.equals(key)) {
@@ -621,7 +618,7 @@ public class DsaTabPreferenceActivity extends UnifiedPreferenceActivity implemen
 
 	}
 
-	protected static void handlePreferenceChange(Preference preference, SharedPreferences sharedPreferences, String key) {
+	public static void handlePreferenceChange(Preference preference, SharedPreferences sharedPreferences, String key) {
 
 		if (preference != null) {
 			if (KEY_THEME.equals(key)) {
@@ -647,104 +644,6 @@ public class DsaTabPreferenceActivity extends UnifiedPreferenceActivity implemen
 			} else if (KEY_DROPBOX.equals(key)) {
 				CheckBoxPreference cb = (CheckBoxPreference) preference;
 				cb.setChecked(sharedPreferences.getBoolean(key, false));
-			}
-		}
-	}
-
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	public static abstract class BasePreferenceFragment extends UnifiedPreferenceFragment implements
-			OnSharedPreferenceChangeListener {
-
-		/**
-		 * 
-		 */
-		public BasePreferenceFragment() {
-			// always make sure the res arg is set
-			if (getArguments() == null) {
-				Bundle bundle = new Bundle();
-				bundle.putInt(ARG_PREFERENCE_RES, getPreferenceResourceId());
-				setArguments(bundle);
-			}
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see android.preference.PreferenceFragment#onStart()
-		 */
-		@Override
-		public void onStart() {
-			super.onStart();
-
-			// initPreferences(getPreferenceManager(), getPreferenceScreen());
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see android.preference.PreferenceFragment#onCreate(android.os.Bundle)
-		 */
-		@Override
-		public void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-
-			initPreferences(getPreferenceManager(), getPreferenceScreen());
-			onBindPreferenceSummariesToValues();
-
-			SharedPreferences preferences = DsaTabApplication.getPreferences();
-			preferences.registerOnSharedPreferenceChangeListener(this);
-
-		}
-
-		public abstract int getPreferenceResourceId();
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see android.preference.PreferenceFragment#onDestroy()
-		 */
-		@Override
-		public void onDestroy() {
-			super.onDestroy();
-			SharedPreferences preferences = DsaTabApplication.getPreferences();
-			preferences.unregisterOnSharedPreferenceChangeListener(this);
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see android.content.SharedPreferences.OnSharedPreferenceChangeListener
-		 * #onSharedPreferenceChanged(android.content.SharedPreferences, java.lang.String)
-		 */
-		@Override
-		public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-			handlePreferenceChange(findPreference(key), sharedPreferences, key);
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see android.preference.PreferenceFragment#onPreferenceTreeClick(android .preference.PreferenceScreen,
-		 * android.preference.Preference)
-		 */
-		@Override
-		public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-			if (!TextUtils.isEmpty(preference.getFragment())) {
-				try {
-					BasePreferenceFragment fragment = (BasePreferenceFragment) Class.forName(preference.getFragment())
-							.newInstance();
-					Bundle args = new Bundle();
-					args.putInt(UnifiedPreferenceFragment.ARG_PREFERENCE_RES, fragment.getPreferenceResourceId());
-					fragment.setArguments(args);
-					((DsaTabPreferenceActivity) getActivity()).startPreferenceFragment(fragment, true);
-					return true;
-				} catch (Exception e) {
-					Debug.error(e);
-				}
-				return false;
-			} else {
-				return handlePreferenceClick(getActivity(), preference, preference.getKey(),
-						PreferenceManager.getDefaultSharedPreferences(getActivity()));
 			}
 		}
 	}
