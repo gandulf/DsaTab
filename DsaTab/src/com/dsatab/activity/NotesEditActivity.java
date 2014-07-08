@@ -68,7 +68,7 @@ public class NotesEditActivity extends BaseFragmentActivity {
 		fragment = (NotesEditFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_notes_edit);
 
 		// Inflate a "Done/Discard" custom action bar view.
-		LayoutInflater inflater = LayoutInflater.from(this);
+		LayoutInflater inflater = LayoutInflater.from(getSupportActionBar().getThemedContext());
 		final View customActionBarView = inflater.inflate(R.layout.actionbar_custom_view_done_discard, null);
 		customActionBarView.findViewById(R.id.actionbar_done).setOnClickListener(new View.OnClickListener() {
 			@Override

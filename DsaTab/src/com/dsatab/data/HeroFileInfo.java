@@ -257,7 +257,12 @@ public class HeroFileInfo implements JSONable, Serializable {
 			versionNumbers = versionNumbers.concat("0");
 		}
 
-		int version = Util.parseInt(versionNumbers, -1);
+		int version;
+		try {
+			version = Util.parseInt(versionNumbers, -1);
+		} catch (NumberFormatException e) {
+			version = -1;
+		}
 
 		return version;
 	}

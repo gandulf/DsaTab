@@ -36,15 +36,6 @@
             android:maxLines="2"
             android:text="@string/add_container" />
 
-        <Button
-            android:id="@+id/container_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableLeft="?attr/imgFilter"
-            android:ellipsize="middle"
-            android:maxLines="2"
-            android:text="@string/display" />
-
     </LinearLayout>
 
     <com.haarman.listviewanimations.view.DynamicListView

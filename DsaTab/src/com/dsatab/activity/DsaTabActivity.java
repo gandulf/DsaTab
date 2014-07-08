@@ -15,6 +15,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -204,6 +205,15 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 				}
 			}
 		}
+
+		getSupportActionBar().setTitle(tabInfo.getTitle());
+		if (tabInfo.getIconUri() != null) {
+			Drawable d = Util.getDrawableByUri(tabInfo.getIconUri());
+			getSupportActionBar().setIcon(d);
+		} else {
+			getSupportActionBar().setIcon(R.drawable.icon);
+		}
+
 	}
 
 	private void initHero() {
@@ -267,7 +277,13 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 
 		int version = hero.getFileInfo().getVersionInt();
 
-		if (version < DsaTabApplication.HS_VERSION_INT) {
+		if (version < 0) {
+			Toast.makeText(
+					this,
+					"Warnung: Unbekannte Helden-Software Version. Es kann keine vollständige Kompatibilität gewährleistet werden.",
+					Toast.LENGTH_LONG).show();
+			return false;
+		} else if (version < DsaTabApplication.HS_VERSION_INT) {
 			Toast.makeText(this,
 					"Warnung: Die Helden Xml Datei wurde nicht mit der aktuellen Helden-Software erstellt.",
 					Toast.LENGTH_LONG).show();
@@ -349,7 +365,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 
 		preferences = DsaTabApplication.getPreferences();
 
-		getSupportActionBar().setDisplayShowTitleEnabled(false);
+		getSupportActionBar().setDisplayShowTitleEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
 
@@ -443,13 +459,17 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		// Sync the toggle state after onRestoreInstanceState has occurred.
-		mDrawerToggle.syncState();
+		if (mDrawerToggle != null) {
+			mDrawerToggle.syncState();
+		}
 	}
 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
-		mDrawerToggle.onConfigurationChanged(newConfig);
+		if (mDrawerToggle != null) {
+			mDrawerToggle.onConfigurationChanged(newConfig);
+		}
 	}
 
 	@Override

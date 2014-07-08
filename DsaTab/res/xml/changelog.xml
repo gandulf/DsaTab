@@ -1,10 +1,11 @@
 <changelog>    
-<release version="4.2" versioncode="75">    
+<release version="4.2" versioncode="81">    
     <change>Held wird nun automatisch gespeichert. Kann unter Einstellungen abgeschaltet werden</change>
     <change>Flexible Tabs, der Inhalt von Listen kann nun unter 'Tabs anpassen' frei definiert werden</change>
     <change>Ggenstände Verwaltung überarbeitet (Liste statt Gallery)</change>
     <change>Theme an Kitkat angepasst</change>
     <change>Native Auswahl für Zahlen von Android übernommen</change>
+    <change>Tab Navigation wurde durch Sidebox ersetzt</change>
 </release>
 <release version="4.1.6" versioncode="73">    
     <fix>Tiere/Begleiter Support mit eigenem Tab</fix>

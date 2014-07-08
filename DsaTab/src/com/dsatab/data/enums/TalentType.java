@@ -206,7 +206,8 @@ public enum TalentType {
 			TalentGroupType.Gaben, null), LiturgiekenntnisZsahh("Liturgiekenntnis (Zsahh)", TalentGroupType.Gaben, null), Prophezeien(
 			"Prophezeien", TalentGroupType.Gaben, null), Geräuschhexerei("Geräuschhexerei", TalentGroupType.Gaben, null), Magiegespür(
 			"Magiegespür", TalentGroupType.Gaben, null), Tierempathiespeziell("Tierempathie (speziell)",
-			TalentGroupType.Gaben, null), Tierempathiealle("Tierempathie (alle)", TalentGroupType.Gaben, null)
+			TalentGroupType.Gaben, null), Tierempathiealle("Tierempathie (alle)", TalentGroupType.Gaben, null), Empathie(
+			"Empathie", TalentGroupType.Gaben, null)
 
 	;
 

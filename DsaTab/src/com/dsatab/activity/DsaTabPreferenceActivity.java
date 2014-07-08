@@ -351,6 +351,11 @@ public class DsaTabPreferenceActivity extends UnifiedPreferenceActivity implemen
 		super.onStop();
 	}
 
+	@Override
+	protected boolean isValidFragment(String fragmentName) {
+		return fragmentName.startsWith(DsaTabApplication.getInstance().getPackageName());
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 

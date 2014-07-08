@@ -147,7 +147,7 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 
 		// Inflate a "Done" custom action bar view to serve as the "Up"
 		// affordance.
-		LayoutInflater inflater = LayoutInflater.from(this);
+		LayoutInflater inflater = LayoutInflater.from(getSupportActionBar().getThemedContext());
 		final View customActionBarView = inflater.inflate(R.layout.actionbar_custom_view_done, null);
 		customActionBarView.findViewById(R.id.actionbar_done).setOnClickListener(new View.OnClickListener() {
 			@Override

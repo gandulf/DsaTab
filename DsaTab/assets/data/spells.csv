@@ -183,7 +183,7 @@ Komm Kobold Komm;"	LCD142";"	IN/IN/CH";"	C";"	Sch 7";"	Herbeirufung";;;;;;
 Körperlose Reise;"	LCD143";"	MU/KL/IN";"	E";"	Dru 3| Ach, Geo, Hex, Mag 2";"	Limbus, Verständigung";;;;;;
 Krabbelnder Schrecken;"	LCD144";"	MU/MU/CH";"	C";"	Hex 3| Bor, Mag 2";"	Herbeirufung, Dämonisch (Mishkara)";;;;;;
 Kraft des Erzes;"	LCD145";"	KL/KO/KK";"	D";"	Geo 5| Ach, Dru 3| Mag 2(Dru)";"	Elementar (Erz), Objekt";;;;;;
-Kraft des Humus;EG 104, 105;IN/CH/KO;D;;Elementar (Humus), Heilung;;;;;;
+Kraft des Humus;"EG104", 105;"IN/CH/KO";D;;"Elementar (Humus)","Heilung";;;;;;
 Krähenruf;"	LCD146";"	MU/CH/CH";"	C";"	Hex 6";"	Einfluss, Herbeirufung, Limbus";;;;;;
 Krötensprung;"	LCD148";"	IN/GE/KK";"	B";"	Hex 4| Ach, Elf 3";"	Eigenschaften";;;;;;
 Kulminatio Kugelblitz;"	LCD149";"	MU/IN/FF";"	D";"	Mag 2| Ach 1";"	Schaden";;;;;;

@@ -6,41 +6,48 @@
     		unified:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsRulesFragment"
     		unified:icon="?attr/imgSettings"
     		unified:title="Regeln"
+    		android:title="Regeln"
     		unified:summary="Einstellungen die Regeln von DSA betreffend."
     		unified:preferenceRes="@xml/preferences_hc_rules" />
     
 	<header unified:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsDisplayFragment"
             unified:icon="?attr/imgView"
             unified:title="Darstellung"
+            android:title="Darstellung"
             unified:summary="Einstellungen die Darstellung von DsaTab betreffend."
             unified:preferenceRes="@xml/preferences_hc_display" />
 	
 	<header unified:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsDiceSliderFragment"
             unified:icon="?attr/imgView"
             unified:title="Würfelleiste"
+            android:title="Würfelleiste"
             unified:summary="Darstellung und Verhalten der Würfelleite konfigurieren"
             unified:preferenceRes="@xml/preferences_hc_diceslider" />
 	
 	<header unified:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsHeaderFragment"
             unified:icon="?attr/imgView"
             unified:title="Kopfzeile"
+            android:title="Kopfzeile"
             unified:summary="Darstellung und Kopfzeile konfigurieren"
             unified:preferenceRes="@xml/preferences_hc_header" />
 	
 	<header unified:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsSetupFragment"
             unified:icon="?attr/imgSettings"
             unified:title="Setup"
+            android:title="Setup"
             unified:summary="Systemeinstellungen DsaTab betreffend." 
             unified:preferenceRes="@xml/preferences_hc_setup" />
     
 	<header unified:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsInfoFragment"
             unified:icon="?attr/imgInfo"
             unified:title="Informationen"
+            android:title="Informationen"
             unified:summary="Alle möglichen Informationen rund um DsaTab."
             unified:preferenceRes="@xml/preferences_hc_info" />                            
      
     <header unified:icon="?attr/imgLove"
             unified:title="Spenden"
+            android:title="Spenden"
             unified:summary="Bringt dich direkt zur Spendenseite.">
         <intent android:action="android.intent.action.VIEW"
                 android:data="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=gandulf%2ek%40gmx%2enet&amp;lc=DE&amp;item_name=Gandulf&amp;item_number=DsaTab&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted" />

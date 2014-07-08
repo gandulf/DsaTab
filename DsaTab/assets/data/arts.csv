@@ -238,6 +238,7 @@ Kugelzauber: Farben des Geistes;;;;;;;;WdZ 113;;Magisch (Ritual);0;Ritualkenntni
 Kugelzauber: Fernbild;;;;;;;;WdZ 113;;Magisch (Ritual);0;Ritualkenntnis (Kristallomantie) 11, SF Kugelzauber: Bilderspiel
 Kugelzauber: Geschenk des Ssad'Navv;;;;;;;;OiC 53;;Magisch (Ritual);0;
 Kugelzauber: H'Szints Auge;;;;;;;;WdZ 113, 114;;Magisch (Ritual);0;Ritualkenntnis (Kristallomantie) 7, SF Kugelzauber: Brennglas und Prisma
+Kugelzauber: H&apos;Szints Auge
 Kugelzauber: Kugel des Hellsehers;;;;;;;;WdZ 114;;Magisch (Ritual);0;Ritualkenntnis (Gildenmagie) 7 | Ritualkenntnis (Kristallomantie) 7 | Ritualkenntnis (Scharlatanerie) 7
 Kugelzauber: Kugel des Illusionisten;;;;;;;;WdZ 114;;Magisch (Ritual);0;Ritualkenntnis (Scharlatanerie) 7
 Kugelzauber: Orbitarium;;;;;;;;WdZ 114;;Magisch (Ritual);0;Ritualkenntnis (Gildenmagie) 14 | Ritualkenntnis (Kristallomantie) 14, Sternenkunde 7
@@ -590,6 +591,7 @@ Liturgie: Lohn der Unverzagten;;;;;;;;WdG 277 / MyG 188;;Klerikal (Liturgie);0;
 Liturgie: Lug und Trug;;;;;;;;WdG 274;;Klerikal (Liturgie);0;
 Liturgie: Mannschaftssegen;;;;;;;;WdG 264 / MyG 183, 184;;Klerikal (Liturgie);0;
 Liturgie: Marbos Geisterblick;;;;;;;;WdG 267, 268;;Klerikal (Liturgie);0;
+Liturgie: Marbos Geisterblick (Nemekaths Geisterblick);;;;;;;;WdG 267, 268;;Klerikal (Liturgie);0;
 Liturgie: Marbos Geleit;;;;;;;;WdG 267;;Klerikal (Liturgie);0;
 Liturgie: Markierung;;;;;;;;MyG 193;;Klerikal (Liturgie);0;
 Liturgie: Märtyrersegen;;;;;;;;WdG 253;;Klerikal (Liturgie);0;
@@ -1828,48 +1830,6 @@ Trommelzauber: Ruf des Krieges;;;;;;;;WdZ 174;;Magisch (Ritual);0;Ritualkenntnis
 Trommelzauber: Schutz Rastullahs;;;;;;;;WdZ 174;;Magisch (Ritual);0;Ritualkenntnis (Derwische) 11
 Trommelzauber: Sturm der Wüste;;;;;;;;WdZ 174;;Magisch (Ritual);0;Ritualkenntnis (Derwische) 7
 Trommelzauber: Zorn des Gottgefälligen;;;;;;;;WdZ 174;;Magisch (Ritual);0;Ritualkenntnis (Derwische) 9, MU 14
-Runen: Alfenbannrune
-Runen: Blutrune
-Runen: Bärenrune
-Runen: Drachenrune
-Runen: Entgifterrune
-Runen: Felsenrune
-Runen: Finsterrune
-Runen: Friedensrune
-Runen: Furchtrune
-Runen: Geisterbannrune
-Runen: Lebensrune
-Runen: Nebelrune
-Runen: Orkanstimmenrune
-Runen: Ottarune
-Runen: Pfeilrune
-Runen: Rauschrune
-Runen: Salzwasserrune
-Runen: Schicksalsrune
-Runen: Waberlohenrune
-Runen: Waffenrune
-Runen: Wogensturmrune
-Runen: Zukunftsrune
-Schalenzauber: Allegorische Analyse
-Schalenzauber: Chymische Hochzeit
-Schalenzauber: Feuer und Eis
-Schalenzauber: Mandricons Bindung
-Schalenzauber: Transmutation der Elemente
-Schalenzauber: Weihe der Schale
-Schlangenring-Zauber: Herr der Flammen
-Schlangenring-Zauber: Kräfte der Natur
-Schlangenring-Zauber: Launen des Windes
-Schlangenring-Zauber: Macht des Lebens
-Schlangenring-Zauber: Macht über den Regen
-Schlangenring-Zauber: Magnetismus
-Schlangenring-Zauber: Seelenfeuer
-Schlangenring-Zauber: Wasserbann
-Schlangenring-Zauber: Weg durch Sumus Leib
-Schlangenring-Zauber: Weihe der Schlange
-Schlangenring-Zauber: Wirbelnder Luftschild
-Schuppenbeutel: Bindung des Schuppenbeutels
-Schuppenbeutel: Ewige Wegzehrung
-Schuppenbeutel: Suchende Finger
 Stabzauber: Bindung
 Stabzauber: Fackel
 Stabzauber: Flammenschwert
@@ -1889,19 +1849,6 @@ Kristallomantisches Ritual: Kristallformung
 Kristallomantisches Ritual: Madakristall
 Kristallomantisches Ritual: Matrixkristall
 Kristallomantisches Ritual: Thesiskristall
-Kugelzauber: Bildergalerie
-Kugelzauber: Bilderspiel
-Kugelzauber: Bindung
-Kugelzauber: Brennglas und Prisma
-Kugelzauber: Farben des Geistes
-Kugelzauber: Fernbild
-Kugelzauber: H&apos;Szints Auge
-Kugelzauber: Kugel des Hellsehers
-Kugelzauber: Kugel des Illusionisten
-Kugelzauber: Orbitarium
-Kugelzauber: Schutz gegen Untote
-Kugelzauber: Wachendes Auge
-Kugelzauber: Warnendes Leuchten
 Druidisches Dolchritual: Bann;;;;;;;;WdZ 133;;Magisch (Ritual);0;SF Merkmalskenntnis (Antimagie) | SF Merkmalskenntnis (Geisterwesen), Ritualkenntnis (Druide) 7, SF Druidisches Dolchritual: Gespür 
 Druidisches Dolchritual: Ernte;;;;;;;;WdZ 134;;Magisch (Ritual);0;Ritualkenntnis (Druiden) 0 | Ritualkenntnis (Geoden) 0, SF Druidisches Dolchritual: Gespür
 Druidisches Dolchritual: Gespür;;;;;;;;WdZ 134;;Magisch (Ritual);0;IN 12, Ritualkenntnis (Druide) 0 | Ritualkenntnis (Geode) 0, SF Druidisches Dolchritual: Weihe
@@ -1919,13 +1866,3 @@ Druidisches Herrschaftsritual: Kristall der Herrschaft;;;;;;;;WdZ 132;;Magisch (
 Druidisches Herrschaftsritual: Miniatur der Herrschaft;;;;;;;;WdZ 132, 133;;Magisch (Ritual);0;Ritualkenntnis (Druide) 11 | Geister binden (Ferkina-Schamane) 11 | Geister binden (Trollzacker-Schamane) 11, SF Wacht der Herrschaft
 Druidisches Herrschaftsritual: Wachs der Herrschaft;;;;;;;;WdZ 133;;Magisch (Ritual);0;Ritualkenntnis (Druide) 7 | Geister binden (Ferkina-Schamane) 7 | Geister binden (Trollzacker-Schamane) 7
 Druidisches Herrschaftsritual: Wurzel des Blutes;;;;;;;;WdZ 133;;Magisch (Ritual);0;Ritualkenntnis (Druide) 7 | Geister binden (Ferkina-Schamane) 7 | Geister binden (Trollzacker-Schamane) 7
-Keulenritual: Bann der Keule
-Keulenritual: Geist der Keule
-Keulenritual: Gespür der Keule
-Keulenritual: Hilfe der Keule
-Keulenritual: Härte der Keule
-Keulenritual: Kraft der Keule
-Keulenritual: Nähe zur Natur
-Keulenritual: Opferkeule
-Keulenritual: Weihe der Keule
-Keulenritual: Zauber der Keule

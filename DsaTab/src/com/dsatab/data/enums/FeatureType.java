@@ -1306,16 +1306,27 @@ public enum FeatureType {
 			}
 		}
 
-		// search for old values without the prefix
+		// search for old values without the prefix, Rüstungsgewöhnung I (Kettenmantel) == Rüstungsgewöhnung I
+		int index = code.indexOf("(");
+		String shortCode = null;
+		if (index >= 0) {
+			shortCode = code.substring(0, index).trim();
+		}
+
 		for (FeatureType attr : FeatureType.values()) {
-			int index = attr.xmlName().indexOf(':') + 1;
+			index = attr.xmlName().indexOf(':') + 1;
 			if (index >= 0 && index < attr.xmlName().length()) {
 				String subAttr = attr.xmlName().substring(index);
 				if (subAttr.trim().equals(code)) {
 					return attr;
 				}
 			}
+
+			if (attr.xmlName().equals(shortCode)) {
+				return attr;
+			}
 		}
+
 		throw new FeatureTypeUnknownException(code);
 	}
 }

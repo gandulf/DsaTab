@@ -76,8 +76,6 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	private AnimateAdapter<ItemContainer> animateAdapter;
 	private ItemContainerAdapter containerAdapter;
 
-	private Button containerTypeButton;
-
 	private GridViewCompat itemGridCompat;
 	private GridItemAdapter itemGridAdapter;
 
@@ -114,6 +112,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 				return false;
 
 			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
 					if (checkedPositions.valueAt(i)) {
@@ -495,8 +494,6 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 			Intent intent = new Intent(getActivity(), ItemContainerEditActivity.class);
 			startActivity(intent);
 			break;
-		case R.id.container_type:
-			toggleScreenType();
 		}
 	}
 
@@ -514,10 +511,12 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		SubMenu gridSet = menu.findItem(R.id.option_itemgrid_set).getSubMenu();
 
 		int order = Hero.MAXIMUM_SET_NUMBER;
-		for (ItemContainer itemContainer : getHero().getItemContainers()) {
-			MenuItem item = gridSet.add(R.id.option_group_container, itemContainer.getId(), order++,
-					itemContainer.getName()).setIcon(Util.getDrawableByUri(itemContainer.getIconUri()));
-			item.setCheckable(true);
+		if (getHero() != null) {
+			for (ItemContainer itemContainer : getHero().getItemContainers()) {
+				MenuItem item = gridSet.add(R.id.option_group_container, itemContainer.getId(), order++,
+						itemContainer.getName()).setIcon(Util.getDrawableByUri(itemContainer.getIconUri()));
+				item.setCheckable(true);
+			}
 		}
 		inflater.inflate(R.menu.menuitem_add_container, gridSet);
 
@@ -551,11 +550,13 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		}
 
 		int order = Hero.MAXIMUM_SET_NUMBER;
-		for (ItemContainer itemContainer : getHero().getItemContainers()) {
-			if (gridSet.findItem(itemContainer.getId()) == null) {
-				MenuItem item = gridSet.add(R.id.option_group_container, itemContainer.getId(), order++,
-						itemContainer.getName()).setIcon(Util.getDrawableByUri(itemContainer.getIconUri()));
-				item.setCheckable(true);
+		if (getHero() != null) {
+			for (ItemContainer itemContainer : getHero().getItemContainers()) {
+				if (gridSet.findItem(itemContainer.getId()) == null) {
+					MenuItem item = gridSet.add(R.id.option_group_container, itemContainer.getId(), order++,
+							itemContainer.getName()).setIcon(Util.getDrawableByUri(itemContainer.getIconUri()));
+					item.setCheckable(true);
+				}
 			}
 		}
 
@@ -654,12 +655,13 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 			return true;
 		default:
 			if (item.getGroupId() == R.id.option_group_container) {
-
-				ItemContainer itemContainer = getHero().getItemContainer(item.getItemId());
-				int index = containerAdapter.indexOf(itemContainer);
-				showScreen(index);
-				getActivity().supportInvalidateOptionsMenu();
-				return true;
+				if (getHero() != null) {
+					ItemContainer itemContainer = getHero().getItemContainer(item.getItemId());
+					int index = containerAdapter.indexOf(itemContainer);
+					showScreen(index);
+					getActivity().supportInvalidateOptionsMenu();
+					return true;
+				}
 			}
 			return super.onOptionsItemSelected(item);
 		}
@@ -684,10 +686,6 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		Button containerAdd = (Button) root.findViewById(R.id.container_add);
 		if (containerAdd != null)
 			containerAdd.setOnClickListener(this);
-
-		containerTypeButton = (Button) root.findViewById(R.id.container_type);
-		if (containerTypeButton != null)
-			containerTypeButton.setOnClickListener(this);
 
 		mItemGridCallback = new ItemsActionMode(this, itemGridCompat);
 		mItemListCallback = new ItemsActionMode(this, itemList);
@@ -882,13 +880,9 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		if (TYPE_GRID.equals(mScreenType)) {
 			itemGridCompat.setVisibility(View.VISIBLE);
 			itemList.setVisibility(View.GONE);
-			if (containerTypeButton != null)
-				containerTypeButton.setText("Liste anzeigen");
 		} else {
 			itemGridCompat.setVisibility(View.GONE);
 			itemList.setVisibility(View.VISIBLE);
-			if (containerTypeButton != null)
-				containerTypeButton.setText("Grid anzeigen");
 		}
 	}
 

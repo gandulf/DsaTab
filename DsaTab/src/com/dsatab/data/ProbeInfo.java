@@ -76,13 +76,23 @@ public class ProbeInfo implements Cloneable {
 				if (!TextUtils.isEmpty(v)) {
 
 					if (v.startsWith("+") || v.startsWith("-")) {
-						erschwernis = Util.parseInteger(v);
+						try {
+							erschwernis = Util.parseInteger(v);
+						} catch (NumberFormatException e) {
+							Debug.error("Couldn't parse Erschwernis '" + v + "' of probePattern '" + s + "'", e);
+							erschwernis = 0;
+						}
 					} else {
 						AttributeType type = AttributeType.byCode(v);
 						if (type != null) {
 							attributeValues.add(type);
 						} else {
-							attributeValues.add(Util.parseInteger(v));
+							try {
+								attributeValues.add(Util.parseInteger(v));
+							} catch (NumberFormatException e) {
+								Debug.error("Couldn't parse AttributeValue '" + v + "' of probePattern '" + s + "'", e);
+								attributeValues.add(0);
+							}
 						}
 					}
 				}

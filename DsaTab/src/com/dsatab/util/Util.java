@@ -475,7 +475,7 @@ public class Util {
 		return sb.toString().trim();
 	}
 
-	public static Integer parseInteger(String s) {
+	public static Integer parseInteger(String s) throws NumberFormatException {
 
 		if (s == null)
 			return null;
@@ -498,7 +498,7 @@ public class Util {
 		return i;
 	}
 
-	public static int parseInt(String s, int defaultValue) {
+	public static int parseInt(String s, int defaultValue) throws NumberFormatException {
 		if (s == null)
 			return defaultValue;
 
@@ -517,11 +517,11 @@ public class Util {
 
 	}
 
-	public static int parseInt(String s) {
+	public static int parseInt(String s) throws NumberFormatException {
 		return parseInt(s, 0);
 	}
 
-	public static Long parseLong(String s) {
+	public static Long parseLong(String s) throws NumberFormatException {
 
 		if (s == null)
 			return null;
