@@ -207,9 +207,13 @@ public enum TalentType {
 			"Prophezeien", TalentGroupType.Gaben, null), Geräuschhexerei("Geräuschhexerei", TalentGroupType.Gaben, null), Magiegespür(
 			"Magiegespür", TalentGroupType.Gaben, null), Tierempathiespeziell("Tierempathie (speziell)",
 			TalentGroupType.Gaben, null), Tierempathiealle("Tierempathie (alle)", TalentGroupType.Gaben, null), Empathie(
-			"Empathie", TalentGroupType.Gaben, null)
+			"Empathie", TalentGroupType.Gaben, null);
 
-	;
+	private static final String DEPRECATED_WACHE_NAME = "Wache";
+	private static final String DEPRECATED_KRÄUTERSUCHE_NAME1 = "Kräutersuchen";
+	private static final String DEPRECATED_KRÄUTERSUCHE_NAME2 = "Kräuter Suchen";
+	private static final String DEPRECATED_KRÄUTERSUCHE_NAME3 = "Kräutersuche";
+	private static final String DEPRECATED_PIRSCH_ANSITZ_JAGD = "PirschAnsitzJagd ";
 
 	private TalentGroupType groupType;
 	private Integer be;
@@ -235,6 +239,21 @@ public enum TalentType {
 
 	public Integer getBe() {
 		return be;
+	}
+
+	public static TalentType byValue(String type) {
+		if (DEPRECATED_KRÄUTERSUCHE_NAME1.equalsIgnoreCase(type)
+				|| DEPRECATED_KRÄUTERSUCHE_NAME2.equalsIgnoreCase(type)
+				|| DEPRECATED_KRÄUTERSUCHE_NAME3.equalsIgnoreCase(type)) {
+			return TalentType.Kräutersuchen;
+		} else if (DEPRECATED_WACHE_NAME.equalsIgnoreCase(type)) {
+			return TalentType.WacheHalten;
+		} else if (DEPRECATED_PIRSCH_ANSITZ_JAGD.equalsIgnoreCase(type)) {
+			return TalentType.PirschUndAnsitzjagd;
+		} else {
+			return TalentType.valueOf(type);
+		}
+
 	}
 
 	public static TalentType byXmlName(String code) {

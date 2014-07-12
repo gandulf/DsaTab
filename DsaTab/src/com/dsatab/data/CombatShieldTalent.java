@@ -28,16 +28,10 @@ public class CombatShieldTalent extends BaseCombatTalent {
 	private String equippedName;
 
 	public CombatShieldTalent(Hero hero, UsageType usageType, int set, String equippedName) {
-		super(hero);
+		super(hero, usageType == UsageType.Paradewaffe ? TalentType.Dolche : TalentType.Raufen);
 		this.usageType = usageType;
 		this.set = set;
 		this.equippedName = equippedName;
-
-		if (UsageType.Paradewaffe == usageType)
-			setType(TalentType.Dolche);
-		else
-			setType(TalentType.Raufen);
-
 		this.value = 0;
 	}
 

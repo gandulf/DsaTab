@@ -396,14 +396,16 @@ public class HeroExchange {
 			if (mDbxAcctMgr.hasLinkedAccount()) {
 				DbxFileSystem dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr.getLinkedAccount());
 
-				List<DbxFileInfo> files = dbxFs.listFolder(getDropboxBasePath());
+				if (dbxFs.isFolder(getDropboxBasePath())) {
+					List<DbxFileInfo> files = dbxFs.listFolder(getDropboxBasePath());
 
-				for (DbxFileInfo fileInfo : files) {
-					if (fileInfo.path.getName().endsWith(HeroFileInfo.HERO_FILE_EXTENSION)) {
-						HeroFileInfo info = new HeroFileInfo(fileInfo.path, null, this);
+					for (DbxFileInfo fileInfo : files) {
+						if (fileInfo.path.getName().endsWith(HeroFileInfo.HERO_FILE_EXTENSION)) {
+							HeroFileInfo info = new HeroFileInfo(fileInfo.path, null, this);
 
-						if (info != null) {
-							heroes.add(info);
+							if (info != null) {
+								heroes.add(info);
+							}
 						}
 					}
 				}

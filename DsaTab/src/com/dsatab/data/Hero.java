@@ -1757,9 +1757,8 @@ public class Hero extends AbstractBeing {
 			// add missing combat talents with a value of base.
 			if (talentType != null) {
 				if (talentType.type() == TalentGroupType.Fernkampf) {
-					CombatDistanceTalent distanceTalent = new CombatDistanceTalent(this);
+					CombatDistanceTalent distanceTalent = new CombatDistanceTalent(this, talentType);
 					distanceTalent.setValue(-4);
-					distanceTalent.setType(talentType);
 					talent = distanceTalent;
 				} else {
 					CombatMeleeAttribute at = new CombatMeleeAttribute(this, CombatMeleeAttribute.ATTACKE);

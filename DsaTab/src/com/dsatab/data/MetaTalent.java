@@ -14,35 +14,15 @@ public class MetaTalent extends Talent implements JSONable {
 	private static final String FIELD_FAVORITE = "favorite";
 	private static final String FIELD_UNUSED = "unused";
 
-	private static final String DEPRECATED_WACHE_NAME = "Wache";
-	private static final String DEPRECATED_KRÄUTERSUCHE_NAME1 = "Kräutersuchen";
-	private static final String DEPRECATED_KRÄUTERSUCHE_NAME2 = "Kräuter Suchen";
-	private static final String DEPRECATED_KRÄUTERSUCHE_NAME3 = "Kräutersuche";
-	private static final String DEPRECATED_PIRSCH_ANSITZ_JAGD = "PirschAnsitzJagd ";
-
 	private boolean favorite, unused;
 
 	public MetaTalent(Hero hero, TalentType type) {
-		super(hero);
-
-		this.type = type;
+		super(hero, type);
 		init();
 	}
 
 	public MetaTalent(Hero hero, JSONObject json) throws JSONException {
-		super(hero);
-		String type = json.getString(FIELD_META_TYPE);
-		if (DEPRECATED_KRÄUTERSUCHE_NAME1.equalsIgnoreCase(type)
-				|| DEPRECATED_KRÄUTERSUCHE_NAME2.equalsIgnoreCase(type)
-				|| DEPRECATED_KRÄUTERSUCHE_NAME3.equalsIgnoreCase(type)) {
-			this.type = TalentType.Kräutersuchen;
-		} else if (DEPRECATED_WACHE_NAME.equalsIgnoreCase(type)) {
-			this.type = TalentType.WacheHalten;
-		} else if (DEPRECATED_PIRSCH_ANSITZ_JAGD.equalsIgnoreCase(type)) {
-			this.type = TalentType.PirschUndAnsitzjagd;
-		} else {
-			this.type = TalentType.valueOf(type);
-		}
+		super(hero, TalentType.byValue(json.getString(FIELD_META_TYPE)));
 		this.favorite = json.getBoolean(FIELD_FAVORITE);
 		this.unused = json.getBoolean(FIELD_UNUSED);
 		init();

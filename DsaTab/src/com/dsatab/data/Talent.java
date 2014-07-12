@@ -36,8 +36,9 @@ public class Talent extends MarkableElement implements Value, Listable {
 
 	private EnumSet<Flags> flags = EnumSet.noneOf(Flags.class);
 
-	public Talent(AbstractBeing hero) {
+	public Talent(AbstractBeing hero, TalentType type) {
 		super(hero);
+		setType(type);
 	}
 
 	@Override
@@ -49,7 +50,7 @@ public class Talent extends MarkableElement implements Value, Listable {
 		return type;
 	}
 
-	public void setType(TalentType type) {
+	protected void setType(TalentType type) {
 		this.type = type;
 	}
 

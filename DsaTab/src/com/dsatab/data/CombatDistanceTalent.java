@@ -10,8 +10,8 @@ public class CombatDistanceTalent extends BaseCombatTalent implements Value {
 
 	private Integer referenceValue;
 
-	public CombatDistanceTalent(Hero hero) {
-		super(hero);
+	public CombatDistanceTalent(Hero hero, TalentType type) {
+		super(hero, type);
 	}
 
 	@Override

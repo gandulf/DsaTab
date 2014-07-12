@@ -295,6 +295,7 @@ public abstract class BaseFragment extends Fragment implements HeroLoader, HeroC
 			if (tabInfo.isEmpty()) {
 				getHero().getHeroConfiguration().getTabs().remove(tabInfo);
 			}
+			unloadHero(getHero());
 			getBaseActivity().notifyTabsChanged();
 		}
 	}

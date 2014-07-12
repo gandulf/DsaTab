@@ -1194,7 +1194,7 @@ public class HeldenXmlParser {
 
 		List<Element> talentList = DomUtil.getChildrenByTagName(heroElement, Xml.KEY_TALENTLISTE, Xml.KEY_TALENT);
 		Talent talent = null;
-		boolean found = false;
+
 		for (int i = 0; i < talentList.size(); i++) {
 			Element element = talentList.get(i);
 
@@ -1206,8 +1206,6 @@ public class HeldenXmlParser {
 			}
 			int talentValue = Util.parseInt(element.getAttributeValue(Xml.KEY_VALUE));
 
-			found = false;
-
 			// combattalenttypes have to be handled special!!!
 			if (talentType.type() == TalentGroupType.Nahkampf || talentType.type() == TalentGroupType.Fernkampf) {
 				// add Peitsche as CombatTalent although
@@ -1218,7 +1216,7 @@ public class HeldenXmlParser {
 
 					talent = new CombatMeleeTalent(hero, talentType, at, null);
 				} else if (talentType.type() == TalentGroupType.Fernkampf) {
-					talent = new CombatDistanceTalent(hero);
+					talent = new CombatDistanceTalent(hero, talentType);
 				} else {
 					Element combatElement;
 					for (Iterator<Element> iter = combatAttributesList.iterator(); iter.hasNext();) {
@@ -1248,13 +1246,12 @@ public class HeldenXmlParser {
 			}
 
 			if (talent == null) {
-				talent = new Talent(hero);
+				talent = new Talent(hero, talentType);
 			}
 			talent.setUnused(Boolean.parseBoolean(element.getAttributeValue(Xml.KEY_UNUSED)));
 			talent.setFavorite(Boolean.parseBoolean(element.getAttributeValue(Xml.KEY_FAVORITE)));
 			talent.setProbePattern(element.getAttributeValue(Xml.KEY_PROBE));
 			talent.setProbeBe(element.getAttributeValue(Xml.KEY_BE));
-			talent.setType(talentType);
 			talent.setValue(talentValue);
 			talent.setComplexity(Util.parseInteger(element.getAttributeValue(Xml.KEY_K)));
 
