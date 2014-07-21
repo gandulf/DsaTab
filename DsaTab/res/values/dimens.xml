@@ -9,10 +9,12 @@
 	<dimen name="portrait_height_small">220dp</dimen>
 	<dimen name="portrait_width_small">150dp</dimen>
 	
-	<dimen name="icon_button_size">56dp</dimen>
+	<dimen name="icon_button_size">48dp</dimen>
+	<dimen name="icon_button_size_plain">32dp</dimen>
 	
 	<dimen name="dice_size">72dp</dimen>
 	<dimen name="dices_size">48dp</dimen>
+	<dimen name="dices_size_with_2gap">56dp</dimen>
 	
 	<dimen name="workspace_cell_width">120dip</dimen>
     <dimen name="workspace_cell_height">180dip</dimen>

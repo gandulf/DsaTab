@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" android:constantSize="true">
+
+    <item android:state_pressed="true">
+        <layer-list>
+            <!-- White Top color -->
+            <item android:top="5dp" android:right="0dp" android:bottom="3dp" android:left="3dp">
+                <shape android:shape="rectangle">
+                    <solid android:color="#222222" />
+                    <corners android:topLeftRadius="14dp" android:bottomLeftRadius="14dp" />
+                    <stroke android:width="1dp" android:color="#999999" />
+                </shape>
+			</item>
+        </layer-list>
+    </item>
+    <item >
+        <layer-list >
+            <!-- Bottom 2dp Shadow -->
+            <item android:top="3dp" android:right="0dp" android:bottom="3dp" android:left="3dp">
+                <shape android:shape="rectangle">
+                    <solid android:color="#666666" />
+                    <corners android:topLeftRadius="14dp" android:bottomLeftRadius="14dp" />
+                </shape>
+			</item>
+            <!-- White Top color -->
+            <item android:top="3dp" android:right="0dp" android:bottom="5dp" android:left="3dp">
+                <shape android:shape="rectangle">
+                    <solid android:color="#333333" />
+                    <corners android:topLeftRadius="14dp" android:bottomLeftRadius="14dp" />
+                    <stroke android:width="1dp" android:color="#999999" />
+                </shape>
+			</item>
+        </layer-list>
+	</item>
+
+</selector>

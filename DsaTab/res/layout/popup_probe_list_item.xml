@@ -5,17 +5,17 @@
 
     <TextView
         android:id="@+id/popup_probelist_item_text1"
-        style="@style/TextLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:ellipsize="end"
         android:gravity="center_vertical"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/label_talentname" />
 
     <TextView
         android:id="@+id/popup_probelist_item_text2"
-        style="?attr/textViewValueNoTouchStyle"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="right|center_vertical" />

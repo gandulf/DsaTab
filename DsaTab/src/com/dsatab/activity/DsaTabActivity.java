@@ -15,23 +15,24 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.LightingColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.animation.Animation;
+import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -47,24 +48,27 @@ import com.dsatab.data.HeroLoaderTask;
 import com.dsatab.data.Probe;
 import com.dsatab.data.adapter.TabDrawerAdapter;
 import com.dsatab.data.adapter.TabDrawerAdapter.DrawerItem;
-import com.dsatab.data.adapter.TabPagerAdapter;
+import com.dsatab.data.adapter.TabDrawerAdapter.DrawerItemType;
 import com.dsatab.fragment.AttributeListFragment;
 import com.dsatab.fragment.BaseFragment;
 import com.dsatab.fragment.DiceSliderFragment;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.dsatab.view.ChangeLogDialog;
-import com.dsatab.view.MyViewPager;
 import com.dsatab.view.listener.ShakeListener;
+import com.gandulf.guilib.util.ResUtil;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
-public class DsaTabActivity extends BaseFragmentActivity implements OnClickListener, OnPageChangeListener,
-		LoaderManager.LoaderCallbacks<Hero>, OnSharedPreferenceChangeListener, ListView.OnItemClickListener {
+public class DsaTabActivity extends BaseFragmentActivity implements LoaderManager.LoaderCallbacks<Hero>,
+		OnSharedPreferenceChangeListener, ListView.OnItemClickListener {
 
 	public static boolean newsShown = false;
 
-	private static final int DRAWER_ID_HEROES = 1;
-	private static final int DRAWER_ID_ITEMS = 2;
+	private static final int DRAWER_ID_NONE = -1;
+	private static final int DRAWER_ID_HEROES = -2;
+	private static final int DRAWER_ID_ITEMS = -3;
+	private static final int DRAWER_ID_SETTINGS = -4;
+	private static final int DRAWER_ID_TABS = -5;
 
 	protected static final String INTENT_TAB_INFO = "tabInfo";
 
@@ -89,13 +93,12 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 
 	private ShakeListener mShaker;
 
-	private MyViewPager viewPager;
+	private ViewGroup fragmentContainerLeft;
+	private ViewGroup fragmentContainerRight;
 
 	private TabInfo tabInfo;
 
 	private View loadingView;
-
-	private TabPagerAdapter viewPagerAdapter;
 
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
@@ -114,7 +117,6 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 
 		loadingView.setVisibility(View.VISIBLE);
 		loadingView.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
-		viewPager.setEnabled(false);
 
 		Bundle args = new Bundle();
 		args.putSerializable(KEY_HERO_PATH, heroPath);
@@ -129,87 +131,67 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		return true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.support.v4.view.ViewPager.OnPageChangeListener#onPageScrolled (int, float, int)
-	 */
-	@Override
-	public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.support.v4.view.ViewPager.OnPageChangeListener# onPageScrollStateChanged(int)
-	 */
-	@Override
-	public void onPageScrollStateChanged(int state) {
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.support.v4.view.ViewPager.OnPageChangeListener#onPageSelected (int)
-	 */
-	@Override
-	public void onPageSelected(int position) {
-
-		if (getHeroConfiguration() != null) {
-			tabInfo = getHeroConfiguration().getTab(position);
-			updatePage(tabInfo);
-		}
-
-		Fragment fragment = viewPagerAdapter.getFragment(position);
-		if (fragment != null) {
-			fragment.setUserVisibleHint(true);
-		}
-	}
-
-	private void updatePage(TabInfo tabInfo) {
+	private void updatePage(TabInfo tabInfo, FragmentTransaction ft) {
 
 		if (diceSliderFragment != null && diceSliderFragment.isAdded() && diceSliderFragment.getView() != null) {
-			if (tabInfo.isDiceSlider()) {
-				if (diceSliderFragment.getView().getVisibility() == View.GONE) {
-					diceSliderFragment.getView().setVisibility(View.VISIBLE);
+			if (tabInfo != null && tabInfo.isDiceSlider()) {
+				ft.show(diceSliderFragment);
 
-					Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_in_bottom);
-					diceSliderFragment.getView().startAnimation(animation);
-				}
+				// if (diceSliderFragment.getView().getVisibility() == View.GONE) {
+				// diceSliderFragment.getView().setVisibility(View.VISIBLE);
+				//
+				// Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_in_bottom);
+				// diceSliderFragment.getView().startAnimation(animation);
+				// }
 
 			} else {
-				if (diceSliderFragment.getView().getVisibility() == View.VISIBLE) {
-					Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_out_bottom);
-					diceSliderFragment.getView().startAnimation(animation);
-					diceSliderFragment.getView().setVisibility(View.GONE);
-				}
+				ft.hide(diceSliderFragment);
+				// if (diceSliderFragment.getView().getVisibility() == View.VISIBLE) {
+				// Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_out_bottom);
+				// diceSliderFragment.getView().startAnimation(animation);
+				// diceSliderFragment.getView().setVisibility(View.GONE);
+				// }
 			}
 		}
 
 		if (attributeFragment != null && attributeFragment.isAdded() && attributeFragment.getView() != null) {
-			if (tabInfo.isAttributeList()) {
-				if (attributeFragment.getView().getVisibility() == View.GONE) {
-					attributeFragment.getView().setVisibility(View.VISIBLE);
+			if (tabInfo != null && tabInfo.isAttributeList()) {
 
-					Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_in_top);
-					attributeFragment.getView().startAnimation(animation);
-				}
+				ft.show(attributeFragment);
+				// if (attributeFragment.getView().getVisibility() == View.GONE) {
+				// attributeFragment.getView().setVisibility(View.VISIBLE);
+				//
+				// Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_in_top);
+				// attributeFragment.getView().startAnimation(animation);
+				// }
 
 			} else {
-				if (attributeFragment.getView().getVisibility() == View.VISIBLE) {
-					Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_out_top);
-					attributeFragment.getView().startAnimation(animation);
-					attributeFragment.getView().setVisibility(View.GONE);
-				}
+				ft.hide(attributeFragment);
+				// if (attributeFragment.getView().getVisibility() == View.VISIBLE) {
+				// Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_out_top);
+				// attributeFragment.getView().startAnimation(animation);
+				// attributeFragment.getView().setVisibility(View.GONE);
+				// }
 			}
 		}
 
-		getSupportActionBar().setTitle(tabInfo.getTitle());
-		if (tabInfo.getIconUri() != null) {
-			Drawable d = Util.getDrawableByUri(tabInfo.getIconUri());
-			getSupportActionBar().setIcon(d);
+		if (tabInfo != null) {
+			getSupportActionBar().setTitle(tabInfo.getTitle());
+			if (tabInfo.getIconUri() != null) {
+				Drawable d = ResUtil.getDrawableByUri(this, tabInfo.getIconUri());
+				if (d != null) {
+					d = d.mutate();
+					d.setBounds(0, 0, 200, 200);
+					if (tabInfo.getColor() != Color.TRANSPARENT) {
+						d.setColorFilter(new LightingColorFilter(tabInfo.getColor(), 1));
+					}
+					getSupportActionBar().setIcon(d);
+				} else {
+					getSupportActionBar().setIcon(R.drawable.icon);
+				}
+			} else {
+				getSupportActionBar().setIcon(R.drawable.icon);
+			}
 		} else {
 			getSupportActionBar().setIcon(R.drawable.icon);
 		}
@@ -249,7 +231,6 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	public void onLoadFinished(Loader<Hero> loader, Hero hero) {
 		loadingView.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
 		loadingView.setVisibility(View.GONE);
-		viewPager.setEnabled(true);
 
 		// Swap the new cursor in. (The framework will take care of closing the
 		// old cursor once we return.)
@@ -337,19 +318,26 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 			}
 		} else if (requestCode == ACTION_EDIT_TABS) {
 			if (resultCode == Activity.RESULT_OK) {
-				setupTabs();
+				setupNavigationDrawer();
 			}
 		}
 
 		// notify other listeners (fragments, heroes)
-		if (viewPagerAdapter != null) {
-			Fragment fragment = viewPagerAdapter.getFragment(viewPager.getCurrentItem());
-			if (fragment != null) {
-				fragment.onActivityResult(requestCode, resultCode, data);
+		for (int i = 0; i < TabInfo.MAX_TABS_PER_PAGE; i++) {
+			if (getCurrentFragment(i) != null) {
+				getCurrentFragment(i).onActivityResult(requestCode, resultCode, data);
 			}
 		}
 
 		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	protected Fragment getCurrentFragment(int index) {
+		if (tabInfo != null) {
+			return getSupportFragmentManager().findFragmentByTag(tabInfo.getId().toString() + index);
+		} else {
+			return null;
+		}
 	}
 
 	/*
@@ -376,7 +364,8 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 
 		setContentView(R.layout.main_tab_view);
 
-		viewPager = (MyViewPager) findViewById(R.id.viewpager);
+		fragmentContainerLeft = (ViewGroup) findViewById(R.id.pane_left);
+		fragmentContainerRight = (ViewGroup) findViewById(R.id.pane_right);
 		loadingView = findViewById(R.id.loading);
 
 		SlidingUpPanelLayout slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.slidepanel);
@@ -416,9 +405,8 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 			return;
 		}
 		initDrawer();
-
-		// TODO make sure the viewpager fragments are already initialized here!!!
 		initHero();
+		setupNavigationDrawer();
 		showNewsInfoPopup();
 	}
 
@@ -426,7 +414,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
-		tabDrawerAdapter = new TabDrawerAdapter(getSupportActionBar().getThemedContext(), new ArrayList<DrawerItem>());
+		tabDrawerAdapter = new TabDrawerAdapter(this, new ArrayList<DrawerItem>());
 		// Set the adapter for the list view
 		mDrawerList.setAdapter(tabDrawerAdapter);
 
@@ -484,8 +472,16 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		case DRAWER_ID_ITEMS:
 			ItemsActivity.view(this);
 			break;
+		case DRAWER_ID_SETTINGS:
+			DsaTabPreferenceActivity.startPreferenceActivity(this);
+			break;
+		case DRAWER_ID_TABS:
+			if (getHero() != null) {
+				TabEditActivity.edit(this, getHeroConfiguration().getTabs().indexOf(tabInfo), ACTION_EDIT_TABS);
+			}
+			break;
 		default:
-			showTab(position - 1);
+			showTab(item.getId());
 			break;
 		}
 
@@ -495,16 +491,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	/**
 	 * 
 	 */
-	private void setupTabs() {
-		if (viewPagerAdapter == null) {
-			viewPagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), getHeroConfiguration());
-			viewPager.setAdapter(viewPagerAdapter);
-		} else {
-			viewPagerAdapter.setHeroConfiguration(getSupportFragmentManager(), getHeroConfiguration());
-		}
-
-		viewPager.setOnPageChangeListener(null);
-
+	private void setupNavigationDrawer() {
 		getSupportActionBar();
 		List<TabInfo> tabs;
 		if (getHeroConfiguration() != null)
@@ -513,23 +500,29 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 			tabs = Collections.emptyList();
 
 		tabDrawerAdapter.clear();
-		tabDrawerAdapter.add(new DrawerItem("Tabs"));
-		for (TabInfo tabInfo : tabs) {
-			tabDrawerAdapter.add(new DrawerItem(tabInfo));
+
+		if (getHero() != null) {
+			tabDrawerAdapter.add(new DrawerItem(DRAWER_ID_NONE, getHero().getName(), getHero().getPortraitUri(),
+					Color.RED, DrawerItemType.Profile));
+		}
+		if (!tabs.isEmpty()) {
+			int tabIndex = 0;
+			for (TabInfo tabInfo : tabs) {
+				tabDrawerAdapter.add(new DrawerItem(tabIndex++, tabInfo));
+			}
 		}
 
 		tabDrawerAdapter.add(new DrawerItem("System"));
-		tabDrawerAdapter.add(new DrawerItem(DRAWER_ID_HEROES, "HELDEN", R.drawable.ic_action_user_dark));
-		tabDrawerAdapter.add(new DrawerItem(DRAWER_ID_ITEMS, "GEGENSTÄNDE", R.drawable.dsa_sword_add_dark));
-
-		viewPager.setOnPageChangeListener(this);
-		for (int i = 0; i < tabs.size(); i++) {
-			TabInfo tabInfo = tabs.get(i);
-			if (tabInfo == this.tabInfo) {
-				viewPager.setCurrentItem(i);
-				break;
-			}
+		if (getHero() != null) {
+			tabDrawerAdapter.add(new DrawerItem(DRAWER_ID_TABS, getString(R.string.option_edit_tabs),
+					R.drawable.ic_menu_moreoverflow, Color.TRANSPARENT, DrawerItemType.System));
 		}
+		tabDrawerAdapter.add(new DrawerItem(DRAWER_ID_HEROES, "HELDEN", R.drawable.dsa_group, Color.TRANSPARENT,
+				DrawerItemType.System));
+		tabDrawerAdapter.add(new DrawerItem(DRAWER_ID_ITEMS, "GEGENSTÄNDE", R.drawable.dsa_items, Color.TRANSPARENT,
+				DrawerItemType.System));
+		tabDrawerAdapter.add(new DrawerItem(DRAWER_ID_SETTINGS, "EINSTELLUNGEN", R.drawable.ic_menu_preferences,
+				Color.TRANSPARENT, DrawerItemType.System));
 	}
 
 	private void showNewsInfoPopup() {
@@ -549,27 +542,10 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		return tabConfig;
 	}
 
-	protected boolean showNextTab() {
-		if (tabInfo != null && getHeroConfiguration() != null) {
-			int index = getHeroConfiguration().getTabs().indexOf(tabInfo);
-			return showTab(index + 1);
-		} else {
-			return false;
-		}
-	}
-
-	protected boolean showPreviousTab() {
-		if (tabInfo != null && getHeroConfiguration() != null) {
-			int index = getHeroConfiguration().getTabs().indexOf(tabInfo);
-			return showTab(index - 1);
-		} else {
-			return false;
-		}
-	}
-
-	public void notifyTabsChanged() {
-		refreshTabInfo();
-		setupTabs();
+	public void notifyTabsChanged(TabInfo tabInfo) {
+		this.tabInfo = refreshTabInfo();
+		setupNavigationDrawer();
+		showTab(tabInfo, true);
 	}
 
 	/**
@@ -639,37 +615,103 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	}
 
 	public boolean showTab(int index) {
-
 		if (getHeroConfiguration() != null && index >= 0 && index < getHeroConfiguration().getTabs().size()) {
-			if (viewPager.getCurrentItem() != index)
-				viewPager.setCurrentItem(index, false);
+			return showTab(getHeroConfiguration().getTab(index), false);
+		} else {
+			return false;
+		}
+	}
+
+	protected boolean showTab(TabInfo newTabInfo, boolean forceRefresh) {
+
+		if (newTabInfo != null && getHeroConfiguration() != null && (forceRefresh || !newTabInfo.equals(tabInfo))) {
+
+			this.tabInfo = newTabInfo;
+			String tag = newTabInfo.getId().toString();
+
+			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+			for (int i = 0; i < TabInfo.MAX_TABS_PER_PAGE; i++) {
+				int containerId;
+				ViewGroup fragmentContainer;
+				if (i == 0) {
+					containerId = R.id.pane_left;
+					fragmentContainer = fragmentContainerLeft;
+				} else {
+					containerId = R.id.pane_right;
+					fragmentContainer = fragmentContainerRight;
+				}
+
+				// detach old fragment
+				Fragment oldFragment = getSupportFragmentManager().findFragmentById(containerId);
+				if (oldFragment != null) {
+					ft.detach(oldFragment);
+				}
+
+				Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag + i);
+				if (fragment == null) {
+					fragment = newTabInfo.getFragment(i);
+					if (fragment != null) {
+						Debug.verbose("Creating new fragment and adding it" + tag + " " + fragment);
+
+						fragmentContainer.setVisibility(View.VISIBLE);
+						ft.add(containerId, fragment, tag + i);
+					} else {
+						fragmentContainer.setVisibility(View.GONE);
+					}
+				} else {
+					Debug.verbose("Reusing fragment " + tag + " " + fragment);
+					fragmentContainer.setVisibility(View.VISIBLE);
+					ft.attach(fragment);
+				}
+
+			}
+			// ft.addToBackStack(tag);
+
+			updatePage(tabInfo, ft);
+			ft.commitAllowingStateLoss();
+
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	protected boolean showTab(TabInfo newTabInfo) {
+	public void replaceFragment(String tag, Fragment oldFragment, Fragment newFragment) {
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
-		if (newTabInfo != null && getHeroConfiguration() != null) {
-			viewPager.setCurrentItem(getHeroConfiguration().getTabs().indexOf(newTabInfo));
-			return true;
-		} else {
-			return false;
-		}
-	}
+		ViewGroup fragmentContainer = null;
+		int containerId = 0;
+		for (int i = 0; i < TabInfo.MAX_TABS_PER_PAGE; i++) {
+			if (i == 0) {
+				containerId = R.id.pane_left;
+				fragmentContainer = fragmentContainerLeft;
+			} else {
+				containerId = R.id.pane_right;
+				fragmentContainer = fragmentContainerRight;
+			}
 
-	@Override
-	public void onClick(View v) {
-
-		if (v.getTag() instanceof TabInfo) {
-			TabInfo tabInfo = (TabInfo) v.getTag();
-
-			// no need to reselect the current tab
-			if (this.tabInfo != tabInfo) {
-				showTab(tabInfo);
+			// detach old fragment
+			Fragment fragment = getSupportFragmentManager().findFragmentById(containerId);
+			if (fragment != null && oldFragment == fragment) {
+				ft.detach(oldFragment);
+				break;
 			}
 		}
+
+		if (newFragment != null) {
+			fragmentContainer.setVisibility(View.VISIBLE);
+			ft.add(containerId, newFragment, tag);
+		} else {
+			fragmentContainer.setVisibility(View.GONE);
+		}
+
+		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+		ft.addToBackStack(tag);
+
+		updatePage(null, ft);
+		ft.commitAllowingStateLoss();
+
 	}
 
 	/*
@@ -679,8 +721,8 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 	 */
 	@Override
 	public void onBackPressed() {
-		if (diceSliderFragment != null && diceSliderFragment.isSliderVisible()) {
-			diceSliderFragment.setSliderVisible(false);
+		if (diceSliderFragment != null && diceSliderFragment.isVisible() && diceSliderFragment.isSliderOpened()) {
+			diceSliderFragment.setSliderOpened(false);
 		} else {
 			super.onBackPressed();
 		}
@@ -693,13 +735,8 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 			return;
 		}
 
-		TabInfo oldInfo = tabInfo;
-		tabInfo = refreshTabInfo();
-		setupTabs();
-
-		if (tabInfo != oldInfo) {
-			showTab(tabInfo);
-		}
+		setupNavigationDrawer();
+		showTab(refreshTabInfo(), true);
 
 		if (attributeFragment != null && attributeFragment.isAdded()) {
 			attributeFragment.loadHero(hero);
@@ -708,8 +745,6 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		if (diceSliderFragment != null && diceSliderFragment.isAdded()) {
 			diceSliderFragment.loadHero(hero);
 		}
-
-		updatePage(tabInfo);
 	}
 
 	public boolean checkProbe(Probe probe) {
@@ -757,16 +792,6 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 			mShaker = null;
 			Debug.warning(e);
 		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Activity#onStart()
-	 */
-	@Override
-	protected void onStart() {
-		super.onStart();
 	}
 
 	/*
@@ -820,16 +845,6 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		super.onResume();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Activity#onStop()
-	 */
-	@Override
-	protected void onStop() {
-		super.onStop();
-	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -838,14 +853,6 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		item = menu.add(Menu.NONE, R.id.option_save_hero, Menu.NONE, R.string.option_save_hero);
 		MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_NEVER);
 		item.setIcon(R.drawable.ic_menu_save);
-
-		item = menu.add(Menu.NONE, R.id.option_tabs, Menu.NONE, R.string.option_edit_tabs);
-		MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_NEVER);
-		item.setIcon(R.drawable.ic_menu_account_list);
-
-		item = menu.add(Menu.NONE, R.id.option_settings, 99, R.string.settings);
-		MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_NEVER);
-		item.setIcon(R.drawable.ic_menu_preferences);
 
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -943,9 +950,6 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 				DsaTabApplication.getInstance().saveHero(this);
 			}
 			return true;
-		case R.id.option_settings:
-			DsaTabPreferenceActivity.startPreferenceActivity(this);
-			return true;
 		case R.id.option_set1:
 			if (getHero() != null) {
 				getHero().setActiveSet(0);
@@ -963,14 +967,6 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 				getHero().setActiveSet(2);
 				item.setChecked(true);
 			}
-			return true;
-		case R.id.option_tabs:
-			if (getHero() != null) {
-				TabEditActivity.edit(this, viewPager.getCurrentItem(), ACTION_EDIT_TABS);
-			}
-			return true;
-		case R.id.option_items:
-			ItemsActivity.view(this);
 			return true;
 		}
 
@@ -998,7 +994,6 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		// super.onRestoreInstanceState(savedInstanceState);
 		if (savedInstanceState.containsKey(KEY_TAB_INFO))
 			tabInfo = savedInstanceState.getParcelable(KEY_TAB_INFO);
-
 	}
 
 	/*
@@ -1042,11 +1037,10 @@ public class DsaTabActivity extends BaseFragmentActivity implements OnClickListe
 		}
 
 		// notify other listeners (fragments, heroes)
-		if (viewPagerAdapter != null) {
-			for (Fragment fragment : viewPagerAdapter.getFragments()) {
-				if (fragment instanceof OnSharedPreferenceChangeListener) {
-					((OnSharedPreferenceChangeListener) fragment).onSharedPreferenceChanged(sharedPreferences, key);
-				}
+		for (int i = 0; i < TabInfo.MAX_TABS_PER_PAGE; i++) {
+			if (getCurrentFragment(i) instanceof OnSharedPreferenceChangeListener) {
+				((OnSharedPreferenceChangeListener) getCurrentFragment(i)).onSharedPreferenceChanged(sharedPreferences,
+						key);
 			}
 		}
 

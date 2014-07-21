@@ -21,8 +21,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
+import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +38,7 @@ import com.dsatab.db.DataManager;
 import com.dsatab.util.Debug;
 import com.dsatab.util.PhotoPicker;
 import com.dsatab.util.Util;
-import com.dsatab.view.PictureChooserDialog;
+import com.dsatab.view.ImageChooserDialog;
 import com.dsatab.view.PortraitViewDialog;
 import com.dsatab.view.WebInfoDialog;
 import com.squareup.picasso.Picasso;
@@ -77,7 +77,7 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
 							ACTION_GALERY);
 					break;
 				case R.id.option_pick_avatar:
-					PictureChooserDialog.pickPortrait(getBaseActivity(), getHero());
+					ImageChooserDialog.pickPortrait(getBaseActivity(), getHero());
 					break;
 				}
 			}
@@ -220,7 +220,7 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
 			PortraitViewDialog viewDialog = new PortraitViewDialog(getActivity(), getBeing().getName(), portraitUri);
 			viewDialog.show();
 		} else {
-			PictureChooserDialog.pickPortrait(getBaseActivity(), getBeing());
+			ImageChooserDialog.pickPortrait(getBaseActivity(), getBeing());
 		}
 	}
 
@@ -239,7 +239,7 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
 	}
 
 	protected void resizePortaiView() {
-		LayoutParams layoutParams = (LayoutParams) portraitView.getLayoutParams();
+		ViewGroup.LayoutParams layoutParams = (ViewGroup.LayoutParams) portraitView.getLayoutParams();
 		int imageWidth = portraitView.getWidth(), imageHeight = portraitView.getHeight();
 
 		if (portraitView.getDrawable().getIntrinsicWidth() > 0)
@@ -255,7 +255,7 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
 	}
 
 	protected void resetPortaitView() {
-		LayoutParams layoutParams = (LayoutParams) portraitView.getLayoutParams();
+		ViewGroup.LayoutParams layoutParams = (ViewGroup.LayoutParams) portraitView.getLayoutParams();
 		layoutParams.width = DsaTabApplication.getInstance().getResources()
 				.getDimensionPixelSize(R.dimen.portrait_width_small);
 		layoutParams.height = android.view.ViewGroup.LayoutParams.MATCH_PARENT;

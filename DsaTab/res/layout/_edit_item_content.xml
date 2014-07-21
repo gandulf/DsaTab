@@ -19,7 +19,7 @@
         auto:layout_gravity="bottom|right"
         auto:layout_row="0" />
 
-    <EditText
+    <com.thebnich.floatinghintedittext.FloatingHintEditText
         android:id="@+id/popup_edit_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,9 +30,9 @@
         android:inputType="text" >
 
         <requestFocus />
-    </EditText>
+    </com.thebnich.floatinghintedittext.FloatingHintEditText>
 
-    <EditText
+    <com.thebnich.floatinghintedittext.FloatingHintEditText
         android:id="@+id/popup_edit_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
         auto:layout_gravity="fill_horizontal"
         auto:layout_row="5" >
 
-        <EditText
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
             android:id="@+id/popup_edit_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
             android:text="@string/label_kreuzer"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
-        <EditText
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
             android:id="@+id/popup_edit_weight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

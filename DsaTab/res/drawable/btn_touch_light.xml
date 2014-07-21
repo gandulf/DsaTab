@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:state_pressed="true">
-        <shape>
-            <gradient android:angle="90" android:centerColor="#11000000" android:endColor="#00000000" android:startColor="#33000000" />
-            <stroke android:width="2dp" android:color="#99000000" />
-            <corners android:radius="20dp" />
-        </shape>        
-    </item>    
-    <item>
-        <shape>
-            <gradient android:angle="90" android:centerColor="#11000000" android:endColor="#00000000" android:startColor="#33000000" />
-            <stroke android:width="2dp" android:color="#33000000" />
-            <corners android:radius="20dp" />
-        </shape>
-        </item>
-
+<selector xmlns:android="http://schemas.android.com/apk/res/android" android:constantSize="true">
+    <item android:state_pressed="true" android:drawable="@drawable/_btn_touch_light_pressed" />
+    <item android:state_checked="true" android:drawable="@drawable/_btn_touch_light_checked" />
+    <item android:drawable="@drawable/_btn_touch_light" />
 </selector>

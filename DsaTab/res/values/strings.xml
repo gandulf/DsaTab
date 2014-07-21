@@ -205,7 +205,7 @@
 	<string name="label_info">Info</string>
 	<string name="label_active">Aktiv</string>
 	<string name="modifier_rule_hint">Regeln z.B.: MU+2, KL-1</string>
-	<string name="modifier_rule_help">Regeln im Format &amp;quot;MU+2, KL-1, Zauber+1, Talente+2, Eigenschaften+1, AT+1, PA+1, INI+2, AW+2, MR+1&amp;quot; eingeben. Kein Leerzeichen zwischen Eigenschaft und +/-. Um TP anzupassen entweder den Namen der Waffe, des Talentes, des Zaubers,&#8230; oder AT/FK gefolgt von TP eingeben z.B.: AT TP+2, Langdolch TP+1, Dolche TP-1.</string>
+	<string name="modifier_rule_help">Regeln im Format "MU+2, KL-1, Zauber+1, Talente+2, Eigenschaften+1, AT+1, PA+1, INI+2, AW+2, MR+1" eingeben. Kein Leerzeichen zwischen Eigenschaft und +/-. Um TP anzupassen entweder den Namen der Waffe, des Talentes, des Zaubers,&#8230; oder AT/FK gefolgt von TP eingeben z.B.: AT TP+2, Langdolch TP+1, Dolche TP-1.</string>
 	<string name="label_category">Kategorie</string>
 	<string name="existing_heroes">Vorhandene Helden</string>
 	<string name="containers">Behälter</string>
@@ -245,6 +245,7 @@
 <string name="create_modificator">Modifikator hinzufügen</string>
 <string name="create_note">Notiz hinzufügen</string>
 <string name="record_note">Notiz aufnehmen</string>
+<string name="record">Aufnehmen</string>
 <string name="choose_portrait">Portrait auswählen</string>
 <string name="take_photo">Photo aufnehmen</string>
 <string name="open_gallery">Galerie öffnen</string>

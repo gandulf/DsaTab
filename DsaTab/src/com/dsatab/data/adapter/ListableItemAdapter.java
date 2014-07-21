@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.TextUtils.TruncateAt;
+import android.util.FloatMath;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
@@ -365,9 +367,9 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				// probe
 				holder.text3 = (TextView) convertView.findViewById(R.id.talent_list_item_text3);
 				// value / at
-				holder.text4 = (TextView) convertView.findViewById(R.id.talent_list_item_text4);
+				holder.text4 = (Button) convertView.findViewById(R.id.talent_list_item_text4);
 				// pa
-				holder.text5 = (TextView) convertView.findViewById(R.id.talent_list_item_text5);
+				holder.text5 = (Button) convertView.findViewById(R.id.talent_list_item_text5);
 				holder.indicator = (ImageView) convertView.findViewById(R.id.talent_list_item_indicator);
 				convertView.setTag(holder);
 				break;
@@ -390,6 +392,8 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 
 				HeaderViewHolder holder = new HeaderViewHolder();
 				holder.text1 = (TextView) convertView.findViewById(android.R.id.text1);
+				holder.button1 = (ImageButton) convertView.findViewById(android.R.id.button1);
+				holder.button2 = (ImageButton) convertView.findViewById(android.R.id.button2);
 				convertView.setTag(holder);
 				break;
 			}
@@ -441,10 +445,11 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				WoundViewHolder holder = new WoundViewHolder();
 
 				int width = parent.getWidth();
+				width -= (parent.getPaddingLeft() + parent.getPaddingRight());
 				int buttonSize = getContext().getResources().getDimensionPixelSize(R.dimen.icon_button_size);
 				int gap = getContext().getResources().getDimensionPixelSize(R.dimen.default_gap);
 				int halfgap = gap / 2;
-				int buttonCount = width / (buttonSize + gap);
+				int buttonCount = (int) FloatMath.floor(((float) width / (buttonSize + gap)));
 
 				// <ToggleButton
 				// android:id="@+id/wound1"
@@ -688,6 +693,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		} else {
 			holder.currencySpinner.setVisibility(View.GONE);
 			holder.currencySpinner.setOnItemSelectedListener(null);
+
 			holder.header.setVisibility(View.VISIBLE);
 			holder.header.setText(currency.xmlName());
 		}
@@ -704,6 +710,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 
 			holder.picker[i].setValue(hero.getPurse().getCoins(units.get(i)));
 			holder.picker[i].setOnValueChangedListener(onPurseValueChangeListener);
+			holder.picker[i].setWrapSelectorWheel(false);
 
 			holder.labels[i].setVisibility(View.VISIBLE);
 			holder.labels[i].setText(units.get(i).xmlName());
@@ -724,6 +731,82 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 
 		holder.text1.setText(item.getTitle());
 		holder.text1.setFocusable(true);
+
+		if (item.getType() != null) {
+			switch (item.getType()) {
+			case Document:
+				holder.button1.setImageResource(Util.getThemeResourceId(getContext(), R.attr.imgFilter));
+				holder.button1.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						if (actionListener != null)
+							actionListener.onAction(OnActionListener.ACTION_DOCUMENTS_CHOOSE);
+
+					}
+				});
+				holder.button1.setVisibility(View.VISIBLE);
+				break;
+			case Modificator:
+				holder.button1.setImageResource(R.drawable.dsa_modifier_add);
+				holder.button1.setOnClickListener(new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						if (actionListener != null)
+							actionListener.onAction(OnActionListener.ACTION_MODIFICATOR_ADD);
+
+					}
+				});
+
+				holder.button1.setVisibility(View.VISIBLE);
+				break;
+			case Probe:
+				holder.button1.setImageResource(R.drawable.dsa_dice_add);
+				holder.button1.setOnClickListener(new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						if (actionListener != null)
+							actionListener.onAction(OnActionListener.ACTION_CUSTOM_PROBE_ADD);
+
+					}
+				});
+				holder.button1.setVisibility(View.VISIBLE);
+				break;
+			case Notes:
+				holder.button1.setImageResource(R.drawable.dsa_notes_add);
+				holder.button1.setOnClickListener(new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						if (actionListener != null)
+							actionListener.onAction(OnActionListener.ACTION_NOTES_ADD);
+
+					}
+				});
+				holder.button1.setVisibility(View.VISIBLE);
+
+				holder.button2.setImageResource(R.drawable.dsa_speech_add);
+				holder.button2.setOnClickListener(new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						if (actionListener != null)
+							actionListener.onAction(OnActionListener.ACTION_NOTES_RECORD);
+
+					}
+				});
+				holder.button2.setVisibility(View.VISIBLE);
+				break;
+			default:
+				holder.button1.setVisibility(View.GONE);
+				holder.button2.setVisibility(View.GONE);
+				break;
+			}
+		} else {
+			holder.button1.setVisibility(View.GONE);
+			holder.button2.setVisibility(View.GONE);
+		}
 		return convertView;
 	}
 
@@ -753,8 +836,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		case Modificator:
 			Button add = (Button) inflater.inflate(R.layout._button_borderless, container, false);
 			add.setText(R.string.create_modificator);
-			add.setCompoundDrawablesWithIntrinsicBounds(Util.getThemeResourceId(getContext(), R.attr.imgModifierAdd),
-					0, 0, 0);
+			add.setCompoundDrawablesWithIntrinsicBounds(R.drawable.dsa_modifier_add, 0, 0, 0);
 			add.setOnClickListener(new View.OnClickListener() {
 
 				@Override
@@ -769,8 +851,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		case Probe:
 			Button addProbe = (Button) inflater.inflate(R.layout._button_borderless, container, false);
 			addProbe.setText(R.string.create_custom_probe);
-			addProbe.setCompoundDrawablesWithIntrinsicBounds(Util.getThemeResourceId(getContext(), R.attr.imgSwordAdd),
-					0, 0, 0);
+			addProbe.setCompoundDrawablesWithIntrinsicBounds(R.drawable.dsa_dice_add, 0, 0, 0);
 			addProbe.setOnClickListener(new View.OnClickListener() {
 
 				@Override
@@ -785,8 +866,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		case Notes:
 			Button noteAdd = (Button) inflater.inflate(R.layout._button_borderless, container, false);
 			noteAdd.setText(R.string.create_note);
-			noteAdd.setCompoundDrawablesWithIntrinsicBounds(Util.getThemeResourceId(getContext(), R.attr.imgNoteAdd),
-					0, 0, 0);
+			noteAdd.setCompoundDrawablesWithIntrinsicBounds(R.drawable.dsa_notes_add, 0, 0, 0);
 			noteAdd.setOnClickListener(new View.OnClickListener() {
 
 				@Override
@@ -800,8 +880,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 
 			Button noteRecord = (Button) inflater.inflate(R.layout._button_borderless, container, false);
 			noteRecord.setText(R.string.record_note);
-			noteRecord.setCompoundDrawablesWithIntrinsicBounds(
-					Util.getThemeResourceId(getContext(), R.attr.imgNoteRecord), 0, 0, 0);
+			noteRecord.setCompoundDrawablesWithIntrinsicBounds(R.drawable.dsa_speech_add, 0, 0, 0);
 			noteRecord.setOnClickListener(new View.OnClickListener() {
 
 				@Override
@@ -831,8 +910,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				if (e instanceof Event) {
 					if (((Event) e).getAudioPath() != null) {
 						holder.icon2.setVisibility(View.VISIBLE);
-						holder.icon2
-								.setImageResource(Util.getThemeResourceId(getContext(), R.attr.imgActionMicrophone));
+						holder.icon2.setImageResource(R.drawable.dsa_speech);
 					} else {
 						holder.icon2.setVisibility(View.GONE);
 					}
@@ -863,8 +941,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 			AbstractModificator modificator = (AbstractModificator) item;
 			holder.active.setVisibility(View.VISIBLE);
 			holder.active.setChecked(modificator.isActive());
-			holder.active.setClickable(false);
-			holder.active.setFocusable(false);
+			holder.active.setClickable(true);
 			holder.active.setTag(modificator);
 		} else {
 			holder.active.setVisibility(View.GONE);
@@ -872,13 +949,11 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 
 		holder.flip.setFlippable(true);
 		holder.flip.setClickable(true);
-		holder.flip.setFocusable(true);
 		holder.flip.setBackgroundResource(0);
 		holder.flip.setScaleType(ScaleType.CENTER);
 		if (item instanceof WoundModificator) {
 			holder.flip.setFlippable(false);
 			holder.flip.setClickable(false);
-			holder.flip.setFocusable(false);
 			if (item.isActive())
 				holder.flip.setImageResource(R.drawable.icon_wound_selected);
 			else
@@ -886,10 +961,9 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		} else if (item instanceof RulesModificator) {
 			holder.flip.setFlippable(false);
 			holder.flip.setClickable(false);
-			holder.flip.setFocusable(false);
-			holder.flip.setImageResource(Util.getThemeResourceId(getContext(), R.attr.imgSettings));
+			holder.flip.setImageResource(R.drawable.ic_menu_preferences);
 		} else if (item instanceof CustomModificator) {
-			holder.flip.setImageResource(Util.getThemeResourceId(getContext(), R.attr.imgModifier));
+			holder.flip.setImageResource(R.drawable.dsa_modifier);
 		}
 
 		if (item != null) {
@@ -908,10 +982,10 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		ViewHolder holder = (ViewHolder) convertView.getTag();
 		holder.icon1.setOnClickListener(getProbeListener());
 		holder.icon1.setOnLongClickListener(getEditListener());
-		holder.icon1.setImageResource(R.drawable.icon_ausweichen);
+		holder.icon1.setImageResource(R.drawable.dsa_ausweichen);
 		holder.icon1.setVisibility(View.VISIBLE);
 
-		holder.icon2.setImageResource(R.drawable.icon_target);
+		holder.icon2.setImageResource(R.drawable.dsa_archery_target);
 		holder.icon2.setVisibility(View.VISIBLE);
 		holder.icon2.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -971,7 +1045,11 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 
 		if (spell.getValue() != null) {
 			int modifier = hero.getModifier(spell);
+			Util.setVisibility(holder.text4, spell.getValue() != null, holder.text1);
 			Util.setText(holder.text4, spell.getValue(), modifier, null);
+			holder.text4.setOnClickListener(null);
+			holder.text4.setClickable(false);
+			holder.text4.setFocusable(false);
 		} else {
 			Debug.warning(spell.getName() + " has no value");
 		}
@@ -1040,8 +1118,9 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		if (art.getProbeInfo().getErschwernis() != null) {
 			holder.text4.setText(Util.toProbe(art.getProbeInfo().getErschwernis()));
 			holder.text4.setVisibility(View.VISIBLE);
-		} else
+		} else {
 			holder.text4.setVisibility(View.INVISIBLE);
+		}
 
 		if (holder.indicator != null) {
 			if (art.hasFlag(Art.Flags.Begabung)) {
@@ -1139,6 +1218,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				Util.setText(holder.text4, distanceTalent.getValue(), modifier, null);
 				holder.text4.setOnClickListener(null);
 				holder.text4.setClickable(false);
+				holder.text4.setFocusable(false);
 				Util.setVisibility(holder.text4, true, holder.text1);
 			} else {
 				Util.setVisibility(holder.text4, false, holder.text1);
@@ -1149,10 +1229,14 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 			if (filter.getSettings().isIncludeModifiers()) {
 				modifier = hero.getModifier(talent);
 			}
+
+			Util.setVisibility(holder.text4, talent.getValue() != null, holder.text1);
 			Util.setText(holder.text4, talent.getValue(), modifier, null);
 			holder.text4.setOnClickListener(null);
-			holder.text4.setClickable(false); // hide text5 and expand text1
-												// with its width
+			holder.text4.setClickable(false);
+			holder.text4.setFocusable(false);
+
+			// hide text5 and expand text1 with its width
 			Util.setVisibility(holder.text5, false, holder.text1);
 		}
 
@@ -1210,7 +1294,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		if (itemSpecification instanceof DistanceWeapon) {
 			DistanceWeapon distanceWeapon = (DistanceWeapon) itemSpecification;
 
-			holder.icon2.setImageResource(R.drawable.icon_target);
+			holder.icon2.setImageResource(R.drawable.dsa_archery_target);
 			holder.icon2.setVisibility(View.VISIBLE);
 
 			if (equippedItem.getTalent() != null) {
@@ -1246,7 +1330,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 			if (equippedItem.getUsageType() == UsageType.Paradewaffe)
 				holder.icon2.setImageURI(item.getIconUri());
 			else
-				holder.icon2.setImageResource(R.drawable.icon_shield);
+				holder.icon2.setImageResource(R.drawable.dsa_shield_round);
 
 			holder.icon2.setVisibility(View.VISIBLE);
 			if (equippedItem.getTalent() != null) {
@@ -1266,7 +1350,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		} else if (itemSpecification instanceof Weapon) {
 			Weapon weapon = (Weapon) itemSpecification;
 
-			holder.icon2.setImageResource(R.drawable.icon_shield);
+			holder.icon2.setImageResource(R.drawable.dsa_shield_round);
 			holder.icon2.setVisibility(View.VISIBLE);
 			if (equippedItem.getTalent() != null) {
 
@@ -1399,7 +1483,8 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 	}
 
 	private static class TalentViewHolder {
-		TextView text1, text2, text3, text4, text5;
+		TextView text1, text2, text3;
+		Button text4, text5;
 		ImageView indicator;
 	}
 
@@ -1410,6 +1495,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 
 	private static class HeaderViewHolder {
 		TextView text1;
+		ImageButton button1, button2;;
 	}
 
 	private static class FooterViewHolder {

@@ -5,11 +5,10 @@
 
     <TextView
         android:id="@android:id/text1"
-        style="@style/TextLabel"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_gravity="center_vertical"
-        
         android:singleLine="true"
         android:gravity="center_vertical"
         android:text="@string/label_manual" />
@@ -23,7 +22,7 @@
     
     <TextView
         android:id="@android:id/text2"
-        style="?attr/textViewValueNoTouchStyle"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="right|center_vertical" />

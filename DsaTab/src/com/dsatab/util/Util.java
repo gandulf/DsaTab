@@ -41,6 +41,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.LevelListDrawable;
 import android.net.Uri;
 import android.os.Environment;
@@ -53,7 +54,6 @@ import android.text.Spanned;
 import android.text.SpannedString;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -112,6 +112,15 @@ public class Util {
 
 	}
 
+	public static LayerDrawable mergeDrawables(Context context, int drawable1, int drawable2) {
+		Resources r = context.getResources();
+		Drawable[] layers = new Drawable[2];
+		layers[0] = r.getDrawable(drawable1);
+		layers[1] = r.getDrawable(drawable2);
+		LayerDrawable layerDrawable = new LayerDrawable(layers);
+		return layerDrawable;
+	}
+
 	public static void pickImage(Activity activity, int action) {
 
 		Uri targetUri = Media.EXTERNAL_CONTENT_URI;
@@ -153,31 +162,6 @@ public class Util {
 			Debug.error("Intent returned from image pick did not containt uri data:" + data);
 		}
 		return null;
-	}
-
-	public static Drawable getDrawableByUri(Uri mUri) {
-		Drawable d = null;
-		if (mUri != null) {
-			String scheme = mUri.getScheme();
-
-			if (ContentResolver.SCHEME_ANDROID_RESOURCE.equals(scheme) || ContentResolver.SCHEME_CONTENT.equals(scheme)
-					|| ContentResolver.SCHEME_FILE.equals(scheme)) {
-				try {
-					d = Drawable.createFromStream(
-							DsaTabApplication.getInstance().getContentResolver().openInputStream(mUri), null);
-				} catch (Exception e) {
-					Log.w("Util", "Unable to open content: " + mUri, e);
-				}
-			} else {
-				d = Drawable.createFromPath(mUri.toString());
-			}
-
-			if (d == null) {
-				System.out.println("resolveUri failed on bad uri: " + mUri);
-			}
-		}
-
-		return d;
 	}
 
 	public static class FileNameComparator implements Comparator<File> {

@@ -1,12 +1,15 @@
 package com.dsatab.data;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.EnumSet;
 
 import android.text.TextUtils;
+import android.text.style.RelativeSizeSpan;
 
 import com.dsatab.common.DsaTabRuntimeException;
+import com.dsatab.common.StyleableSpannableStringBuilder;
 import com.dsatab.data.enums.ArtGroupType;
 import com.dsatab.data.enums.TalentType;
 import com.dsatab.data.listable.Listable;
@@ -16,7 +19,9 @@ import com.dsatab.exception.ArtUnknownException;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 
-public class Art extends MarkableElement implements Value, Listable {
+public class Art extends MarkableElement implements Value, Listable, Serializable {
+
+	private static final long serialVersionUID = -5687191215575499537L;
 
 	public static final String LITURGIE_PREFIX = "Liturgie: ";
 	public static final String RITUAL_PREFIX = "Ritual: ";
@@ -73,6 +78,12 @@ public class Art extends MarkableElement implements Value, Listable {
 	public Art(AbstractBeing being, String name) {
 		super(being);
 		setName(name);
+	}
+
+	public void fireValueChangedEvent() {
+		if (being != null) {
+			being.fireValueChangedEvent(this);
+		}
 	}
 
 	/*
@@ -153,6 +164,16 @@ public class Art extends MarkableElement implements Value, Listable {
 			return info.getName();
 		else
 			return null;
+	}
+
+	public CharSequence getTitle() {
+		StyleableSpannableStringBuilder sb = new StyleableSpannableStringBuilder();
+
+		sb.append(getFullName());
+		if (hasFlag(Art.Flags.Begabung)) {
+			sb.appendWithStyle(new RelativeSizeSpan(0.5f), " (Begabung)");
+		}
+		return sb;
 	}
 
 	public void setName(String name) {

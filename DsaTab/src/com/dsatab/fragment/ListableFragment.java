@@ -13,7 +13,6 @@ import java.util.UUID;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -73,7 +72,6 @@ import com.dsatab.data.items.ItemContainer;
 import com.dsatab.data.items.Shield;
 import com.dsatab.data.items.Weapon;
 import com.dsatab.data.listable.FileListable;
-import com.dsatab.data.listable.FooterListItem;
 import com.dsatab.data.listable.HeaderListItem;
 import com.dsatab.data.listable.Listable;
 import com.dsatab.data.listable.PurseListable;
@@ -87,7 +85,7 @@ import com.dsatab.data.notes.NotesItem;
 import com.dsatab.db.DataManager;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
-import com.dsatab.view.ArtInfoDialog;
+import com.dsatab.view.ArtInfoFragment;
 import com.dsatab.view.DirectoryChooserDialogHelper;
 import com.dsatab.view.DirectoryChooserDialogHelper.Result;
 import com.dsatab.view.EquippedItemChooserDialog;
@@ -95,7 +93,7 @@ import com.dsatab.view.ListSettings;
 import com.dsatab.view.ListSettings.FilterType;
 import com.dsatab.view.ListSettings.ListItem;
 import com.dsatab.view.ListSettings.ListItemType;
-import com.dsatab.view.SpellInfoDialog;
+import com.dsatab.view.SpellInfoFragment;
 import com.dsatab.view.listener.EditListener;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
 import com.haarman.listviewanimations.itemmanipulation.AnimateAdapter;
@@ -707,15 +705,6 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 			this.listView = new WeakReference<ListView>(listView);
 		}
 
-		/**
-		 * @param probe
-		 */
-		private void showInfo(Art probe, BaseFragment fragment) {
-			ArtInfoDialog liturgieInfo = new ArtInfoDialog(fragment.getActivity(), fragment.getHero());
-			liturgieInfo.setArt(probe);
-			liturgieInfo.show();
-		}
-
 		@Override
 		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 			boolean notifyChanged = false;
@@ -749,7 +738,8 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 								notifyChanged = true;
 								break;
 							case R.id.option_view_art:
-								showInfo(art, fragment);
+								fragment.getBaseActivity().replaceFragment("artInfo", fragment,
+										ArtInfoFragment.newInstance(art));
 								mode.finish();
 								return true;
 							default:
@@ -863,15 +853,6 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 			this.listView = new WeakReference<ListView>(listView);
 		}
 
-		/**
-		 * @param probe
-		 */
-		private void showInfo(Spell probe, Context context) {
-			SpellInfoDialog spellInfo = new SpellInfoDialog(context);
-			spellInfo.setSpell(probe);
-			spellInfo.show();
-		}
-
 		@Override
 		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 			boolean notifyChanged = false;
@@ -891,12 +872,9 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 							Spell spell = (Spell) obj;
 
 							switch (item.getItemId()) {
-							case R.id.option_edit_spell:
-								EditListener.showEditPopup(fragment.getActivity(), spell);
-								mode.finish();
-								return true;
 							case R.id.option_view_spell:
-								showInfo(spell, fragment.getActivity());
+								fragment.getBaseActivity().replaceFragment("spellInfo", fragment,
+										SpellInfoFragment.newInstance(spell));
 								mode.finish();
 								return true;
 							case R.id.option_mark_favorite_spell:
@@ -975,20 +953,11 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 			boolean changed = false;
 
 			if (selected != 1) {
-				if (menu.findItem(R.id.option_edit_spell).isEnabled()) {
-					menu.findItem(R.id.option_edit_spell).setEnabled(false);
-					changed = true;
-				}
-
 				if (menu.findItem(R.id.option_view_spell).isEnabled()) {
 					menu.findItem(R.id.option_view_spell).setEnabled(false);
 					changed = true;
 				}
 			} else {
-				if (!menu.findItem(R.id.option_edit_spell).isEnabled()) {
-					menu.findItem(R.id.option_edit_spell).setEnabled(true);
-					changed = true;
-				}
 				if (!menu.findItem(R.id.option_view_spell).isEnabled()) {
 					menu.findItem(R.id.option_view_spell).setEnabled(true);
 					changed = true;
@@ -1385,6 +1354,10 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 				inflater.inflate(R.menu.modifikator_menu, menu);
 			}
 
+			if (listSettings.hasListItem(ListItemType.Probe) && menu.findItem(R.id.option_probe_add) == null) {
+				inflater.inflate(R.menu.probe_menu, menu);
+			}
+
 			if (listSettings.hasListItem(ListItemType.Document) && menu.findItem(R.id.option_documents_choose) == null) {
 				inflater.inflate(R.menu.documents_menu, menu);
 			}
@@ -1530,6 +1503,8 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 			return onAction(ACTION_MODIFICATOR_ADD);
 		} else if (item.getItemId() == R.id.option_documents_choose) {
 			return onAction(ACTION_DOCUMENTS_CHOOSE);
+		} else if (item.getItemId() == R.id.option_probe_add) {
+			return onAction(ACTION_CUSTOM_PROBE_ADD);
 		} else if (item.getItemId() == R.id.option_note_add) {
 			return onAction(ACTION_NOTES_ADD);
 		} else if (item.getItemId() == R.id.option_note_record) {
@@ -1662,24 +1637,25 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 
 		if (getListSettings().isAffected(value)) {
 			itemListAdapter.notifyDataSetChanged();
-		}
+		} else {
 
-		if (value instanceof Attribute) {
-			Attribute attr = (Attribute) value;
+			if (value instanceof Attribute) {
+				Attribute attr = (Attribute) value;
 
-			switch (attr.getType()) {
-			case Behinderung: {
-				itemListAdapter.notifyDataSetChanged();
-				break;
-			}
-			case Körperkraft:
-				if (getListSettings().hasListItem(ListItemType.EquippedItem)) {
+				switch (attr.getType()) {
+				case Behinderung: {
 					itemListAdapter.notifyDataSetChanged();
+					break;
 				}
-				break;
-			default:
-				// do nothing
-				break;
+				case Körperkraft:
+					if (getListSettings().hasListItem(ListItemType.EquippedItem)) {
+						itemListAdapter.notifyDataSetChanged();
+					}
+					break;
+				default:
+					// do nothing
+					break;
+				}
 			}
 		}
 	}
@@ -1740,6 +1716,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 					break;
 				case Attribute:
 					if (TextUtils.isEmpty(listItem.getName())) {
+						itemListAdapter.add(new HeaderListItem(ListItemType.Attribute));
 						itemListAdapter.addAll(hero.getAttributes().values());
 					} else {
 						try {
@@ -1774,6 +1751,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 					break;
 				case EquippedItem:
 					if (TextUtils.isEmpty(listItem.getName())) {
+						itemListAdapter.add(new HeaderListItem(ListItemType.EquippedItem));
 						itemListAdapter.addAll(hero.getEquippedItems());
 
 						addWaffenloseTalente();
@@ -1786,19 +1764,27 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 					break;
 				case Modificator:
 					if (TextUtils.isEmpty(listItem.getName())) {
+						itemListAdapter.add(new HeaderListItem(ListItemType.Modificator));
 						itemListAdapter.addAll(hero.getUserModificators());
 					} else {
 						itemListAdapter.add(hero.getUserModificators(listItem.getName()));
 					}
-					itemListAdapter.add(new FooterListItem(ListItemType.Modificator));
+					// itemListAdapter.add(new FooterListItem(ListItemType.Modificator));
 					break;
 				case Header:
-					itemListAdapter.add(new HeaderListItem(listItem.getName()));
+					try {
+						ListItemType subType = ListItemType.valueOf(listItem.getName());
+						itemListAdapter.add(new HeaderListItem(subType.title(), subType));
+					} catch (Exception e) {
+						itemListAdapter.add(new HeaderListItem(listItem.getName()));
+					}
 					break;
 				case Wound:
+					itemListAdapter.add(new HeaderListItem(ListItemType.Wound));
 					itemListAdapter.add(new WoundListItem());
 					break;
 				case Document:
+					itemListAdapter.add(new HeaderListItem(ListItemType.Document));
 					File pdfsDir = null;
 
 					String dir = getHero().getHeroConfiguration().getProperty(
@@ -1827,10 +1813,11 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 						}
 					}
 
-					itemListAdapter.add(new FooterListItem(ListItemType.Document));
+					// itemListAdapter.add(new FooterListItem(ListItemType.Document));
 					break;
 				case Notes:
 					if (TextUtils.isEmpty(listItem.getName())) {
+						itemListAdapter.add(new HeaderListItem(ListItemType.Notes));
 						itemListAdapter.addAll(getHero().getEvents());
 						itemListAdapter.addAll(getHero().getConnections());
 					} else {
@@ -1845,10 +1832,11 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 							}
 						}
 					}
-					itemListAdapter.add(new FooterListItem(ListItemType.Notes));
+					// itemListAdapter.add(new FooterListItem(ListItemType.Notes));
 					break;
 				case Purse:
 					if (TextUtils.isEmpty(listItem.getName())) {
+						itemListAdapter.add(new HeaderListItem(ListItemType.Purse));
 						PurseListable purseListable = new PurseListable(null);
 						itemListAdapter.add(purseListable);
 					} else {
@@ -1860,8 +1848,9 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 
 				case Probe:
 					if (TextUtils.isEmpty(listItem.getName())) {
+						itemListAdapter.add(new HeaderListItem(ListItemType.Probe));
 						itemListAdapter.addAll(hero.getHeroConfiguration().getCustomProbes());
-						itemListAdapter.add(new FooterListItem(ListItemType.Probe));
+						// itemListAdapter.add(new FooterListItem(ListItemType.Probe));
 					} else {
 						CustomProbe probe = hero.getHeroConfiguration().getCustomProbe(listItem.getName());
 						if (probe != null) {

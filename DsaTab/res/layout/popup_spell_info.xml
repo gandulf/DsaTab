@@ -4,399 +4,239 @@
     android:layout_height="fill_parent"
     android:fillViewport="true" >
 
-    <TableLayout
+    <LinearLayout
         android:id="@+id/popup_spell_table"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:paddingLeft="@dimen/default_gap"
-        android:paddingRight="@dimen/default_gap"
-        android:shrinkColumns="1"
-        android:stretchColumns="0,1" >
+        android:paddingRight="@dimen/default_gap" >
 
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+        <TextView
+            android:id="@+id/popup_spell_title"
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="" >
+        </TextView>
+        
+        
+        <net.simonvt.numberpicker.NumberPicker
+            android:id="@+id/popup_edit_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-            <TextView
-                style="@style/TextLabel.Popup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_cast_duration" >
-            </TextView>
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
+            android:id="@+id/popup_spell_castduration"
+            style="?attr/textViewValueNoTouchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_cast_duration" />
 
-            <TextView
-                android:id="@+id/popup_spell_castduration"
-                style="?attr/textViewValueNoTouchStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="right|center_vertical" >
-            </TextView>
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
+            android:id="@+id/popup_spell_castduration_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_cast_duration"
+            android:inputType="text"
+            android:visibility="gone" />
 
-            <EditText
-                android:id="@+id/popup_spell_castduration_edit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="text"
-                android:visibility="gone" />
-        </TableRow>
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
+            android:id="@+id/popup_spell_probe"
+            style="?attr/textViewValueNoTouchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_probe" />
 
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
+            android:id="@+id/popup_spell_probe_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_probe"
+            android:inputType="text"
+            android:visibility="gone" />
 
-            <TextView
-                style="@style/TextLabel.Popup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_probe" >
-            </TextView>
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
+            android:id="@+id/popup_spell_costs"
+            style="?attr/textViewValueNoTouchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_costs" />
 
-            <TextView
-                android:id="@+id/popup_spell_probe"
-                style="?attr/textViewValueNoTouchStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="right|center_vertical" >
-            </TextView>
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
+            android:id="@+id/popup_spell_costs_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_costs"
+            android:inputType="text"
+            android:visibility="gone" />
 
-            <EditText
-                android:id="@+id/popup_spell_probe_edit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="text"
-                android:visibility="gone" />
-        </TableRow>
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
+            android:id="@+id/popup_spell_target"
+            style="?attr/textViewValueNoTouchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_target" >
+        </com.thebnich.floatinghintedittext.FloatingHintTextView>
 
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
+            android:id="@+id/popup_spell_target_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_target"
+            android:inputType="text"
+            android:visibility="gone" />
 
-            <TextView
-                style="@style/TextLabel.Popup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_costs" >
-            </TextView>
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
+            android:id="@+id/popup_spell_range"
+            style="?attr/textViewValueNoTouchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_range" >
+        </com.thebnich.floatinghintedittext.FloatingHintTextView>
 
-            <TextView
-                android:id="@+id/popup_spell_costs"
-                style="?attr/textViewValueNoTouchStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="right|center_vertical" >
-            </TextView>
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
+            android:id="@+id/popup_spell_range_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_range"
+            android:inputType="text"
+            android:visibility="gone" />
 
-            <EditText
-                android:id="@+id/popup_spell_costs_edit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="text"
-                android:visibility="gone" />
-        </TableRow>
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
+            android:id="@+id/popup_spell_effectduration"
+            style="?attr/textViewValueNoTouchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_effect_duration" >
+        </com.thebnich.floatinghintedittext.FloatingHintTextView>
 
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
+            android:id="@+id/popup_spell_effectduration_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_effect_duration"
+            android:inputType="text"
+            android:visibility="gone" />
 
-            <TextView
-                style="@style/TextLabel.Popup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_target" >
-            </TextView>
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
+            android:id="@+id/popup_spell_effect"
+            style="?attr/textViewValueNoTouchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_effect" >
+        </com.thebnich.floatinghintedittext.FloatingHintTextView>
 
-            <TextView
-                android:id="@+id/popup_spell_target"
-                style="?attr/textViewValueNoTouchStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="right|center_vertical" >
-            </TextView>
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
+            android:id="@+id/popup_spell_effect_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_effect"
+            android:inputType="text"
+            android:visibility="gone" />
 
-            <EditText
-                android:id="@+id/popup_spell_target_edit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="text"
-                android:visibility="gone" />
-        </TableRow>
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
+            android:id="@+id/popup_spell_merkmal"
+            style="?attr/textViewValueNoTouchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_feature" />
 
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
+            android:id="@+id/popup_spell_merkmal_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_feature"
+            android:inputType="text"
+            android:visibility="gone" />
 
-            <TextView
-                style="@style/TextLabel.Popup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_range" >
-            </TextView>
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
+            android:id="@+id/popup_spell_representation"
+            style="?attr/textViewValueNoTouchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_representation" >
+        </com.thebnich.floatinghintedittext.FloatingHintTextView>
 
-            <TextView
-                android:id="@+id/popup_spell_range"
-                style="?attr/textViewValueNoTouchStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="right|center_vertical" >
-            </TextView>
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
+            android:id="@+id/popup_spell_representation_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_representation"
+            android:inputType="text"
+            android:visibility="gone" />
 
-            <EditText
-                android:id="@+id/popup_spell_range_edit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="text"
-                android:visibility="gone" />
-        </TableRow>
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
+            android:id="@+id/popup_spell_source"
+            style="?attr/textViewValueNoTouchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_source" >
+        </com.thebnich.floatinghintedittext.FloatingHintTextView>
 
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
+            android:id="@+id/popup_spell_source_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_source"
+            android:inputType="text"
+            android:visibility="gone" />
 
-            <TextView
-                style="@style/TextLabel.Popup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="@dimen/default_gap"
-                android:text="@string/label_effect_duration" >
-            </TextView>
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
+            android:id="@+id/popup_spell_complexity"
+            style="?attr/textViewValueNoTouchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_complexity" >
+        </com.thebnich.floatinghintedittext.FloatingHintTextView>
 
-            <TextView
-                android:id="@+id/popup_spell_effectduration"
-                style="?attr/textViewValueNoTouchStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="right|center_vertical" >
-            </TextView>
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
+            android:id="@+id/popup_spell_complexity_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_complexity"
+            android:inputType="text"
+            android:visibility="gone" />
 
-            <EditText
-                android:id="@+id/popup_spell_effectduration_edit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="text"
-                android:visibility="gone" />
-        </TableRow>
+        <TextView
+            android:id="@+id/popup_spell_hero_values"
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_character_specific_values" >
+        </TextView>
 
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
+            android:id="@+id/popup_spell_comment"
+            style="?attr/textViewValueNoTouchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_comment" >
+        </com.thebnich.floatinghintedittext.FloatingHintTextView>
 
-            <TextView
-                style="@style/TextLabel.Popup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_effect" >
-            </TextView>
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
+            android:id="@+id/popup_spell_comment_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_comment"
+            android:inputType="text"
+            android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/popup_spell_effect"
-                style="?attr/textViewValueNoTouchStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="right|center_vertical"
-                android:textStyle="normal" >
-            </TextView>
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
+            android:id="@+id/popup_spell_variant"
+            style="?attr/textViewValueNoTouchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_variant" >
+        </com.thebnich.floatinghintedittext.FloatingHintTextView>
 
-            <EditText
-                android:id="@+id/popup_spell_effect_edit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="text"
-                android:visibility="gone" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                style="@style/TextLabel.Popup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="@dimen/default_gap"
-                android:text="@string/label_feature" >
-            </TextView>
-
-            <TextView
-                android:id="@+id/popup_spell_merkmal"
-                style="?attr/textViewValueNoTouchStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="right|center_vertical" />
-
-            <EditText
-                android:id="@+id/popup_spell_merkmal_edit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="text"
-                android:visibility="gone" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                style="@style/TextLabel.Popup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="@dimen/default_gap"
-                android:text="@string/label_representation" >
-            </TextView>
-
-            <TextView
-                android:id="@+id/popup_spell_representation"
-                style="?attr/textViewValueNoTouchStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="right|center_vertical" >
-            </TextView>
-
-            <EditText
-                android:id="@+id/popup_spell_representation_edit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="text"
-                android:visibility="gone" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                style="@style/TextLabel.Popup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_source" >
-            </TextView>
-
-            <TextView
-                android:id="@+id/popup_spell_source"
-                style="?attr/textViewValueNoTouchStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="right|center_vertical" >
-            </TextView>
-
-            <EditText
-                android:id="@+id/popup_spell_source_edit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="text"
-                android:visibility="gone" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                style="@style/TextLabel.Popup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_complexity" >
-            </TextView>
-
-            <TextView
-                android:id="@+id/popup_spell_complexity"
-                style="?attr/textViewValueNoTouchStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="right|center_vertical" >
-            </TextView>
-
-            <EditText
-                android:id="@+id/popup_spell_complexity_edit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="text"
-                android:visibility="gone" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/popup_spell_hero_values_row"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                style="?android:attr/listSeparatorTextViewStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_span="3"
-                android:text="@string/label_character_specific_values" >
-            </TextView>
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/popup_spell_row_comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                style="@style/TextLabel.Popup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_comment" >
-            </TextView>
-
-            <TextView
-                android:id="@+id/popup_spell_comment"
-                style="?attr/textViewValueNoTouchStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="right|center_vertical"
-                android:textStyle="normal" >
-            </TextView>
-
-            <EditText
-                android:id="@+id/popup_spell_comment_edit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="text"
-                android:visibility="gone" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/popup_spell_row_variant"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                style="@style/TextLabel.Popup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_variant" >
-            </TextView>
-
-            <TextView
-                android:id="@+id/popup_spell_variant"
-                style="?attr/textViewValueNoTouchStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="right|center_vertical" >
-            </TextView>
-
-            <EditText
-                android:id="@+id/popup_spell_variant_edit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="text"
-                android:visibility="gone" />
-        </TableRow>
-    </TableLayout>
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
+            android:id="@+id/popup_spell_variant_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_variant"
+            android:inputType="text"
+            android:visibility="gone" />
+    </LinearLayout>
 
 </ScrollView>

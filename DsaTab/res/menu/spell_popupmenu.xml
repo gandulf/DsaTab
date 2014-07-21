@@ -1,9 +1,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:id="@+id/group_spell">
-		<item android:id="@+id/option_edit_spell"
-	          android:icon="?attr/imgBarEdit"
-	          app:showAsAction="withText|ifRoom"
-	          android:title="@string/label_edit" />
 	
 		<item android:id="@+id/option_view_spell"
 	          android:icon="?attr/imgBarView"

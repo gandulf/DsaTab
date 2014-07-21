@@ -52,7 +52,7 @@ public class AnimalFragment extends BaseProfileFragment {
 			SubMenu subMenu = menu.addSubMenu(Menu.NONE, ANIMAL_MENU_ID, 0, R.string.choose_animal);
 			MenuItemCompat.setShowAsAction(subMenu.getItem(), MenuItemCompat.SHOW_AS_ACTION_ALWAYS
 					| MenuItemCompat.SHOW_AS_ACTION_WITH_TEXT);
-			subMenu.setIcon(Util.getThemeResourceId(getActivity(), R.attr.imgBarSet));
+			subMenu.setIcon(R.drawable.dsa_cat);
 			for (int i = 0; i < getHero().getAnimals().size(); i++) {
 				Animal animal = getHero().getAnimals().get(i);
 				subMenu.add(ANIMAL_GROUP_ID, i, i, animal.getTitle());
@@ -338,14 +338,14 @@ public class AnimalFragment extends BaseProfileFragment {
 
 				if (animalAttack.getAttack() != null) {
 					listItem.icon1.setVisibility(View.VISIBLE);
-					listItem.icon1.setImageResource(R.drawable.icon_attack);
+					listItem.icon1.setImageResource(R.drawable.dsa_claws);
 					listItem.icon1.setTag(animalAttack.getAttack());
 					listItem.icon1.setOnClickListener(getProbeListener());
 				}
 
 				if (animalAttack.getDefense() != null) {
 					listItem.icon2.setVisibility(View.VISIBLE);
-					listItem.icon2.setImageResource(R.drawable.icon_shield);
+					listItem.icon2.setImageResource(R.drawable.dsa_shield_round);
 					listItem.icon2.setTag(animalAttack.getDefense());
 					listItem.icon2.setOnClickListener(getProbeListener());
 				}

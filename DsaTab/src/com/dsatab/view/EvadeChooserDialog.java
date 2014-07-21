@@ -203,7 +203,7 @@ public class EvadeChooserDialog extends AlertDialog implements android.view.View
 		iconLeft.setVisibility(View.VISIBLE);
 		iconLeft.setClickable(true);
 		iconLeft.setFocusable(true);
-		iconLeft.setImageResource(R.drawable.icon_ausweichen);
+		iconLeft.setImageResource(R.drawable.dsa_ausweichen);
 
 		popupcontent.findViewById(android.R.id.icon2).setVisibility(View.GONE);
 
@@ -225,7 +225,8 @@ public class EvadeChooserDialog extends AlertDialog implements android.view.View
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget .AdapterView, android.view.View, int, long)
+	 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget .AdapterView, android.view.View,
+	 * int, long)
 	 */
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {

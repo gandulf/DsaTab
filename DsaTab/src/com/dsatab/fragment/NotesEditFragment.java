@@ -37,7 +37,7 @@ public class NotesEditFragment extends BaseFragment implements OnItemSelectedLis
 
 	private EventCatgoryAdapter categoryAdapter;
 
-	private TextView categoryLabel, commentLabel, nameLabel, sozialStatusLabel;
+	private TextView categoryLabel;
 	private EditText editComment;
 	private EditText editName;
 	private EditText editSozialStatus;
@@ -63,10 +63,6 @@ public class NotesEditFragment extends BaseFragment implements OnItemSelectedLis
 		editComment = (EditText) root.findViewById(R.id.popup_notes_edit_text);
 		editName = (EditText) root.findViewById(R.id.popup_notes_edit_name);
 		editSozialStatus = (EditText) root.findViewById(R.id.popup_notes_edit_so);
-
-		commentLabel = (TextView) root.findViewById(R.id.popup_notes_edit_text_label);
-		nameLabel = (TextView) root.findViewById(R.id.popup_notes_edit_name_label);
-		sozialStatusLabel = (TextView) root.findViewById(R.id.popup_notes_edit_so_label);
 
 		categorySpn = (Spinner) root.findViewById(R.id.popup_notes_spn_category);
 
@@ -140,18 +136,18 @@ public class NotesEditFragment extends BaseFragment implements OnItemSelectedLis
 
 			if (category == EventCategory.Bekanntschaft) {
 				editSozialStatus.setVisibility(View.VISIBLE);
-				sozialStatusLabel.setVisibility(View.VISIBLE);
+
 			} else {
 				editSozialStatus.setVisibility(View.GONE);
-				sozialStatusLabel.setVisibility(View.GONE);
+
 			}
 
 			if (category.hasName()) {
 				editName.setVisibility(View.VISIBLE);
-				nameLabel.setVisibility(View.VISIBLE);
+
 			} else {
 				editName.setVisibility(View.GONE);
-				nameLabel.setVisibility(View.GONE);
+
 			}
 		}
 

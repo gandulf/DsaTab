@@ -1,17 +1,22 @@
 package com.dsatab.data;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.EnumSet;
 
 import android.text.TextUtils;
+import android.text.style.RelativeSizeSpan;
 
+import com.dsatab.common.StyleableSpannableStringBuilder;
 import com.dsatab.data.listable.Listable;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 import com.dsatab.db.DataManager;
 import com.dsatab.exception.SpellUnknownException;
 import com.dsatab.util.Debug;
 
-public class Spell extends MarkableElement implements Value, Listable {
+public class Spell extends MarkableElement implements Value, Listable, Serializable {
+
+	private static final long serialVersionUID = 1278111102609178789L;
 
 	public static final Comparator<Spell> NAME_COMPARATOR = new Comparator<Spell>() {
 		/*
@@ -47,6 +52,37 @@ public class Spell extends MarkableElement implements Value, Listable {
 	@Override
 	public String getName() {
 		return info.getName();
+	}
+
+	public CharSequence getTitle() {
+		StyleableSpannableStringBuilder sb = new StyleableSpannableStringBuilder();
+		sb.append(getName());
+
+		StringBuilder addons = new StringBuilder();
+		if (hasFlag(Spell.Flags.ZauberSpezialisierung) || !TextUtils.isEmpty(getZauberSpezialisierung())) {
+
+			addons.append(", Spez.");
+			if (!TextUtils.isEmpty(getZauberSpezialisierung())) {
+				addons.append(" " + getZauberSpezialisierung());
+			}
+		}
+		if (hasFlag(Spell.Flags.Hauszauber)) {
+			addons.append(", Hauszauber");
+		}
+		if (hasFlag(Spell.Flags.ÜbernatürlicheBegabung)) {
+			addons.append(", Übernat. Begabung");
+		}
+		if (hasFlag(Spell.Flags.Begabung)) {
+			addons.append(", Begabung");
+		}
+		if (addons.length() > 0) {
+			addons.delete(0, 2);
+			addons.append(")");
+			addons.insert(0, " (");
+			sb.appendWithStyle(new RelativeSizeSpan(0.5f), addons);
+		}
+
+		return sb;
 	}
 
 	public void setName(String name) {

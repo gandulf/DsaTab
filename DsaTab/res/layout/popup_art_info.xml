@@ -1,238 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:fillViewport="true"
-	android:layout_height="fill_parent">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true" >
 
-    
-	<TableLayout android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:stretchColumns="0,1"
-		android:paddingLeft="@dimen/default_gap" android:paddingRight="@dimen/default_gap"
-		android:shrinkColumns="1" android:id="@+id/popup_liturgie_table">
-		
-		<TableRow android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content" android:text="@string/label_type"
-				style="@style/TextLabel.Popup" android:layout_height="wrap_content"></TextView>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/default_gap"
+        android:paddingRight="@dimen/default_gap" >
 
-			<TextView
-			    android:id="@+id/popup_liturgie_type"
-			    style="?attr/textViewValueNoTouchStyle"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:gravity="right|center_vertical" >
-</TextView>
-		</TableRow>
-		
-		<TableRow android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content" android:text="@string/label_target"
-				style="@style/TextLabel.Popup" android:layout_height="wrap_content"></TextView>
+        <TextView
+            android:id="@+id/popup_liturgie_title"
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="" >
+        </TextView>
+        
+        <net.simonvt.numberpicker.NumberPicker
+            android:id="@+id/popup_edit_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-			<TextView
-			    android:id="@+id/popup_liturgie_target"
-			    style="?attr/textViewValueNoTouchStyle"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:gravity="right|center_vertical" >
-</TextView>
-			
-			<EditText
-                android:id="@+id/popup_liturgie_target_edit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                
-                android:inputType="text"
-                android:visibility="gone" />
-		</TableRow>
-		
-		<TableRow android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content" android:text="@string/label_range"
-				style="@style/TextLabel.Popup" android:layout_height="wrap_content"></TextView>
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
+            android:id="@+id/popup_liturgie_type"
+            style="?attr/textViewValueNoTouchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_type" >
+        </com.thebnich.floatinghintedittext.FloatingHintTextView>
 
-			<TextView
-			    android:id="@+id/popup_liturgie_range"
-			    style="?attr/textViewValueNoTouchStyle"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:gravity="right|center_vertical" >
-</TextView>
-			
-			<EditText
-                android:id="@+id/popup_liturgie_range_edit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                
-                android:inputType="text"
-                android:visibility="gone" />
-		</TableRow>
-		
-		<TableRow android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content" android:text="@string/label_ritual_duration"
-				style="@style/TextLabel.Popup" android:layout_height="wrap_content"></TextView>
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
+            android:id="@+id/popup_liturgie_target"
+            style="?attr/textViewValueNoTouchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_target" >
+        </com.thebnich.floatinghintedittext.FloatingHintTextView>
 
-			<TextView
-			    android:id="@+id/popup_liturgie_castduration"
-			    style="?attr/textViewValueNoTouchStyle"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:gravity="right|center_vertical" >
-</TextView>
-			
-			<EditText
-                android:id="@+id/popup_liturgie_castduration_edit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                
-                android:inputType="text"
-                android:visibility="gone" />
-		</TableRow>
-		
-		<TableRow android:layout_height="wrap_content"
-			android:layout_width="wrap_content">
-			<TextView android:layout_height="wrap_content"
-				android:layout_width="wrap_content" style="@style/TextLabel.Popup"
-				android:text="@string/label_effect"></TextView>
-			<TextView android:layout_height="wrap_content"
-				android:layout_width="wrap_content" style="?attr/textViewValueNoTouchStyle"
-				android:id="@+id/popup_liturgie_effect"
-				 android:singleLine="false" android:gravity="right|center_vertical"></TextView>
-			
-			<EditText
-                android:id="@+id/popup_liturgie_effect_edit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                
-                android:inputType="text"
-                android:visibility="gone" />
-		</TableRow>
-		
-		<TableRow android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content" android:text="@string/label_effect_duration"
-				android:paddingRight="@dimen/default_gap" style="@style/TextLabel.Popup"
-				android:layout_height="wrap_content"></TextView>
-			<TextView android:layout_width="wrap_content" 
-				style="?attr/textViewValueNoTouchStyle" android:layout_height="wrap_content"
-				android:id="@+id/popup_liturgie_effectduration" android:gravity="right|center_vertical"></TextView>
-			
-			<EditText
-                android:id="@+id/popup_liturgie_effectduration_edit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                
-                android:inputType="text"
-                android:visibility="gone" />
-		</TableRow>
-		
-		<TableRow android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content" android:text="@string/label_probe"
-				style="@style/TextLabel.Popup" android:layout_height="wrap_content"></TextView>
-			<TextView android:layout_width="wrap_content" android:id="@+id/popup_liturgie_probe"
-				style="?attr/textViewValueNoTouchStyle" android:layout_height="wrap_content"
-				android:gravity="right|center_vertical"></TextView>
-			
-			<EditText
-                android:id="@+id/popup_liturgie_probe_edit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                
-                android:inputType="text"
-                android:visibility="gone" />
-		</TableRow>
-		
-		<TableRow android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:text="@string/label_costs"
-				style="@style/TextLabel.Popup"></TextView>
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
+            android:id="@+id/popup_liturgie_target_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_target"
+            android:inputType="text"
+            android:visibility="gone" />
 
-			<TextView
-			    android:id="@+id/popup_liturgie_costs"
-			    style="?attr/textViewValueNoTouchStyle"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:gravity="right|center_vertical" >
-</TextView>
-			
-			<EditText
-                android:id="@+id/popup_liturgie_costs_edit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                
-                android:inputType="text"
-                android:visibility="gone" />
-		</TableRow>
-		
-		<TableRow android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:text="@string/label_origins"
-				style="@style/TextLabel.Popup"></TextView>
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
+            android:id="@+id/popup_liturgie_range"
+            style="?attr/textViewValueNoTouchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_range" >
+        </com.thebnich.floatinghintedittext.FloatingHintTextView>
 
-			<TextView
-			    android:id="@+id/popup_liturgie_origin"
-			    style="?attr/textViewValueNoTouchStyle"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:gravity="right|center_vertical" >
-</TextView>
-			<EditText
-                android:id="@+id/popup_liturgie_origin_edit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                
-                android:inputType="text"
-                android:visibility="gone" />
-		</TableRow>
-		
-		    <TableRow android:layout_height="wrap_content" android:layout_width="wrap_content">
-			<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/label_source" style="@style/TextLabel.Popup"></TextView>
-			<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/popup_liturgie_source" style="?attr/textViewValueNoTouchStyle" android:gravity="right|center_vertical"></TextView>
-			<EditText
-                android:id="@+id/popup_liturgie_source_edit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                
-                android:inputType="text"
-                android:visibility="gone" />
-		</TableRow>
-		
-		<TableRow android:layout_height="wrap_content" android:layout_width="wrap_content">
-			<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/label_feature" android:paddingRight="5dp" style="@style/TextLabel.Popup"></TextView>
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
+            android:id="@+id/popup_liturgie_range_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_range"
+            android:inputType="text"
+            android:visibility="gone" />
 
-			<TextView
-			    android:id="@+id/popup_liturgie_merkmal"
-			    style="?attr/textViewValueNoTouchStyle"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:gravity="right|center_vertical" >
-</TextView>
-			<EditText
-                android:id="@+id/popup_liturgie_merkmal_edit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                
-                android:inputType="text"
-                android:visibility="gone" />
-		</TableRow>
-		
-	</TableLayout>
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
+            android:id="@+id/popup_liturgie_castduration"
+            style="?attr/textViewValueNoTouchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_ritual_duration" >
+        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
+            android:id="@+id/popup_liturgie_castduration_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_ritual_duration"
+            android:inputType="text"
+            android:visibility="gone" />
+
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
+            android:id="@+id/popup_liturgie_effect"
+            style="?attr/textViewValueNoTouchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_effect"
+            android:singleLine="false" >
+        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
+            android:id="@+id/popup_liturgie_effect_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_effect"
+            android:inputType="text"
+            android:visibility="gone" />
+
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
+            android:id="@+id/popup_liturgie_effectduration"
+            style="?attr/textViewValueNoTouchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_effect_duration" >
+        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
+            android:id="@+id/popup_liturgie_effectduration_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_effect_duration"
+            android:inputType="text"
+            android:visibility="gone" />
+
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
+            android:id="@+id/popup_liturgie_probe"
+            style="?attr/textViewValueNoTouchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_probe" >
+        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
+            android:id="@+id/popup_liturgie_probe_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_probe"
+            android:inputType="text"
+            android:visibility="gone" />
+
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
+            android:id="@+id/popup_liturgie_costs"
+            style="?attr/textViewValueNoTouchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_costs" >
+        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
+            android:id="@+id/popup_liturgie_costs_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_costs"
+            android:inputType="text"
+            android:visibility="gone" />
+
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
+            android:id="@+id/popup_liturgie_origin"
+            style="?attr/textViewValueNoTouchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_origins" >
+        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
+            android:id="@+id/popup_liturgie_origin_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_origins"
+            android:inputType="text"
+            android:visibility="gone" />
+
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
+            android:id="@+id/popup_liturgie_source"
+            style="?attr/textViewValueNoTouchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_source" >
+        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
+            android:id="@+id/popup_liturgie_source_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_source"
+            android:inputType="text"
+            android:visibility="gone" />
+
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
+            android:id="@+id/popup_liturgie_merkmal"
+            style="?attr/textViewValueNoTouchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_feature" >
+        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
+            android:id="@+id/popup_liturgie_merkmal_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_feature"
+            android:inputType="text"
+            android:visibility="gone" />
+    </LinearLayout>
+
 </ScrollView>
-
-		
-
-
-

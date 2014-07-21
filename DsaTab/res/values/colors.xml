@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="accent">#33b5e5</color>
+    <color name="accent_checked">#CC33b5e5</color>
+    
 	<color name="Darker">#99333333</color>
 	<color name="Brighter">#66FFFFFF</color>
 	
-	<color name="RowEven">#11000000</color>
-	<color name="RowOdd">#11FFFFFF</color>
-	<color name="RowFavoriteEven">#44005500</color>
-	<color name="RowFavoriteOdd">#44AAFFAA</color>	
-	<color name="RowUnusedEven">#44550000</color>
-	<color name="RowUnusedOdd">#44FFAAAA</color>
+	<color name="RowOdd">#09000000</color>
+	<color name="RowEven">#09FFFFFF</color>
+	<color name="RowFavoriteOdd">#442baf2b</color>
+	<color name="RowFavoriteEven">#4442bd41</color>	
+	<color name="RowUnusedOdd">#44e84e40</color>
+	<color name="RowUnusedEven">#44f36c60</color>
 	
-	<color name="ValueRed">#FFCC0000</color>
-	<color name="ValueGreen">#FF669900</color>
+	<color name="ValueRed">#FFe51c23</color>
+	<color name="ValueGreen">#259b24</color>
 	
-	<color name="ValueRedAlpha">#CCCC0000</color>
-	<color name="ValueBlueAlpha">#CC0099CC</color>
-	<color name="ValueViolettAlpha">#CC9933CC</color>
-	<color name="ValueGreenAlpha">#CC669900</color>
-	<color name="ValueYellowAlpha">#CCFF8800</color>
+	<color name="ValueRedAlpha">#CCe51c23</color>
+	<color name="ValueBlueAlpha">#CC5677fc</color>
+	<color name="ValueViolettAlpha">#CC9c27b0</color>
+	<color name="ValueGreenAlpha">#CC259b24</color>
+	<color name="ValueYellowAlpha">#CCffeb3b</color>
 		
-	<color name="delete_color_filter">#88FF0000</color>
-	<color name="accept_color_filter">#3300FF00</color>
-	<color name="reject_color_filter">#33FF0000</color>
-	
-	<!--  Actionbar colors -->
-	<color name="pressed_dsatablight">#CCcc0000</color>
-	<color name="pressed_dsatabdark">#CCcc0000</color>
-	<!--  Actionbar colors -->
+	<color name="delete_color_filter">#88e51c23</color>
+	<color name="accept_color_filter">#33259b24</color>
+	<color name="reject_color_filter">#33e51c23</color>
+		
 </resources>

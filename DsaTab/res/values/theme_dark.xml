@@ -2,7 +2,12 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto">
     
-    <style name="DsaTabTheme.Dark" parent="@style/DsaTabTheme.__Dark">                
+    <style name="DsaTabTheme.Dark" parent="@style/Theme.AppCompat">                
+        
+        <item name="android:buttonStyle">@style/Widget.Button.Dark</item>
+        <item name="android:imageButtonStyle">@style/Widget.Button.Dark</item>
+        <item name="android:buttonStyleSmall">@style/Widget.Button.Small.Dark</item>
+        
         
         <item name="imgChainTop">@drawable/chain_top_dark</item>
         <item name="imgChainBottom">@drawable/chain_bottom_dark</item>
@@ -24,9 +29,6 @@
         <item name="imgLove">@drawable/ic_action_love_dark</item>
         <item name="imgBarLove">@drawable/ic_action_love_dark</item>
         
-        <item name="imgSettings">@drawable/ic_action_settings_dark</item>
-        <item name="imgBarSettings">@drawable/ic_action_settings_dark</item>
-        
         <item name="imgAccept">@drawable/ic_action_done_dark</item>
         <item name="imgBarAccept">@drawable/ic_action_done_dark</item>
         
@@ -39,10 +41,7 @@
         <item name="imgStar">@drawable/ic_action_star_dark</item>               
         <item name="imgBarStar">@drawable/ic_action_star_dark</item>
         <item name="imgStarEmpty">@drawable/ic_action_star_empty_dark</item>               
-        <item name="imgBarStarEmpty">@drawable/ic_action_star_empty_dark</item>
-        
-        <item name="imgPlay">@drawable/dsa_play_dark</item>               
-        <item name="imgBarPlay">@drawable/dsa_play_dark</item>        
+        <item name="imgBarStarEmpty">@drawable/ic_action_star_empty_dark</item>                
         
         <item name="imgInfo">@drawable/dsa_info_dark</item>               
         <item name="imgBarInfo">@drawable/dsa_info_dark</item>
@@ -52,9 +51,6 @@
         
         <item name="imgUser">@drawable/ic_action_user_dark</item>
         <item name="imgBarUser">@drawable/ic_action_user_dark</item>
-        
-        <item name="imgMap">@drawable/ic_action_map_dark</item>
-        <item name="imgBarMap">@drawable/ic_action_map_dark</item>
         
         <item name="imgSplit">@drawable/ic_action_split_dark</item>
         <item name="imgBarSplit">@drawable/ic_action_split_dark</item>
@@ -68,53 +64,40 @@
         <item name="imgSearch">@drawable/ic_menu_search_holo_dark</item>
         <item name="imgBarSearch">@drawable/ic_menu_search_holo_dark</item>
         
-        <item name="imgNoteAdd">@drawable/dsa_note_add_dark</item>
-        <item name="imgBarNoteAdd">@drawable/dsa_note_add_dark</item>
-        
-        <item name="imgNoteRecord">@drawable/dsa_note_record_dark</item>
-        <item name="imgBarNoteRecord">@drawable/dsa_note_record_dark</item>
-        
         <item name="imgFilter">@drawable/ic_menu_find_holo_dark</item>
         <item name="imgBarFilter">@drawable/ic_menu_find_holo_dark</item>
         
-        <item name="imgSwordAdd">@drawable/dsa_sword_add_dark</item>
-        <item name="imgBarSwordAdd">@drawable/dsa_sword_add_dark</item>
+        <item name="imgSet">@drawable/dsa_set</item>
+        <item name="imgSet1">@drawable/dsa_set1</item>
+        <item name="imgSet2">@drawable/dsa_set2</item>
+        <item name="imgSet3">@drawable/dsa_set3</item>
         
-        <item name="imgSet">@drawable/dsa_set_dark</item>
-        <item name="imgSet1">@drawable/dsa_set1_dark</item>
-        <item name="imgSet2">@drawable/dsa_set2_dark</item>
-        <item name="imgSet3">@drawable/dsa_set3_dark</item>
-        
-        <item name="imgBarSet">@drawable/dsa_set_dark</item>
-        <item name="imgBarSet1">@drawable/dsa_set1_dark</item>
-        <item name="imgBarSet2">@drawable/dsa_set2_dark</item>
-        <item name="imgBarSet3">@drawable/dsa_set3_dark</item>
-        
-        <item name="imgModifier">@drawable/dsa_modifier_dark</item>
-        <item name="imgModifierAdd">@drawable/dsa_modifier_add_dark</item>
-        
-        <item name="imgBarModifier">@drawable/dsa_modifier_dark</item>
-        <item name="imgBarModifierAdd">@drawable/dsa_modifier_add_dark</item>
-        
-        <item name="imgBarActionMicrophone">@drawable/ic_action_microphone_dark</item>
-        <item name="imgActionMicrophone">@drawable/ic_action_microphone_dark</item>              
-                
-        <item name="textViewValueStyle">@style/TextValue.Dark</item>
-        <item name="textViewValueNoTouchStyle">@style/TextValue.NoTouch.Dark</item>
-        <item name="textViewValueLeftStyle" >@style/TextValue.Left.Dark</item>
-        <item name="textViewValueRightStyle">@style/TextValue.Right.Dark</item>
-        <item name="textViewValueSmallStyle">@style/TextValue.Small.Dark</item>
-        <item name="textViewValueSmallNoTouchStyle">@style/TextValue.Small.NoTouch.Dark</item>
+        <item name="imgBarSet">@drawable/dsa_set</item>
+        <item name="imgBarSet1">@drawable/dsa_set1</item>
+        <item name="imgBarSet2">@drawable/dsa_set2</item>
+        <item name="imgBarSet3">@drawable/dsa_set3</item>
+                      
+                        
+        <item name="textViewValueNoTouchStyle">@style/TextValue.NoTouch</item>
+        <item name="buttonStyleLeft" >@style/Widget.Button.Left.Dark</item>
+        <item name="buttonStyleRight">@style/Widget.Button.Right.Dark</item>
+        <item name="textViewValueSmallNoTouchStyle">@style/TextValue.NoTouch.Small</item>
         
         <item name="android:soundEffectsEnabled">false</item>
-        <item name="iconImageViewStyle">@style/Widget.IconImageView</item>        
+        <item name="iconImageViewStyle">@style/Widget.IconImageView</item>
+                
         <item name="listItemBackground">@drawable/list_background_holo_dark</item>
-        <item name="listShadowBackground">@drawable/dsa_listshadow_bg_dark</item>                
-        <item name="selectableBackground">@drawable/_list_selector_holo_dark</item>
+        <item name="listShadowBackground">@drawable/sliding_listshadow_bg_dark</item>                
+        <item name="selectableBackground">@drawable/abc_list_selector_holo_dark</item>
         <item name="imgDividerVertical">@drawable/divider_vertical_holo_dark</item>        
         <item name="flipImageViewStyle">@style/FlipImageView.Checked</item>
         <item name="numberPickerStyle">@style/NPWidget.Holo.NumberPicker</item>        
         <item name="showcaseViewStyle">@style/ShowcaseView</item>
+        
+        <item name="floatingHintEditTextStyle">@style/Widget.FloatingHintEditText</item>
+        <item name="floatingHintTextViewStyle">@style/Widget.FloatingHintTextView</item>
+        
+        <item name="dropShadowBackground">@drawable/container_dropshadow_dark</item>
         
     </style>
     

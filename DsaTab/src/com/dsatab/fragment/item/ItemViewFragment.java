@@ -138,8 +138,8 @@ public class ItemViewFragment extends BaseFragment {
 			else
 				titleView.setText(null);
 
-			priceView.setText(Util.toString(item.getPrice()));
-			weightView.setText(Util.toString(item.getWeight()));
+			priceView.setText(Util.toString(item.getPrice()) + " " + getString(R.string.label_kreuzer));
+			weightView.setText(Util.toString(item.getWeight()) + " " + getString(R.string.label_ounces));
 			categoryView.setText(item.getCategory());
 		}
 	}

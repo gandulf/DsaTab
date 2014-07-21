@@ -1,5 +1,8 @@
 package com.dsatab;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -32,8 +35,9 @@ public class DsaTabConfiguration {
 
 	private Context context;
 
-	private List<Integer> tabIcons;
 	private List<Integer> itemIcons;
+
+	private static List<String> IGNORE_ICONS = Arrays.asList("dsa_set");
 
 	public enum WoundType {
 		Standard("Standard"), Trefferzonen("Trefferzonen");
@@ -66,42 +70,34 @@ public class DsaTabConfiguration {
 	public DsaTabConfiguration(Context context) {
 		this.context = context;
 
-		tabResourceIds.put(CharacterFragment.class, R.drawable.tab_character);
-		tabResourceIds.put(BodyFragment.class, R.drawable.tab_wound);
-		tabResourceIds.put(ListableFragment.class, R.drawable.tab_fight);
-		tabResourceIds.put(ItemsFragment.class, R.drawable.tab_items);
-		tabResourceIds.put(ItemListFragment.class, R.drawable.tab_items);
-		tabResourceIds.put(NotesEditFragment.class, R.drawable.tab_notes);
-		tabResourceIds.put(MapFragment.class, R.drawable.tab_map);
-		tabResourceIds.put(AnimalFragment.class, R.drawable.tab_animal);
+		tabResourceIds.put(CharacterFragment.class, R.drawable.dsa_character);
+		tabResourceIds.put(BodyFragment.class, R.drawable.dsa_heart);
+		tabResourceIds.put(ListableFragment.class, R.drawable.dsa_fight);
+		tabResourceIds.put(ItemsFragment.class, R.drawable.dsa_items);
+		tabResourceIds.put(ItemListFragment.class, R.drawable.dsa_items);
+		tabResourceIds.put(NotesEditFragment.class, R.drawable.dsa_notes);
+		tabResourceIds.put(MapFragment.class, R.drawable.dsa_map);
+		tabResourceIds.put(AnimalFragment.class, R.drawable.dsa_cat);
 
-		// DO NOT CHANGE ORDER OF ICONS BECAUSE IT IS stored in tabconfiguration
-		// as tabResourceIndex, ALWAYS ADD AT THE LASt POSITION!!!
-		tabIcons = Arrays.asList(R.drawable.tab_character, R.drawable.tab_coins, R.drawable.tab_fight,
-				R.drawable.tab_items, R.drawable.tab_magic, R.drawable.tab_liturige, R.drawable.tab_map,
-				R.drawable.tab_notes, R.drawable.tab_talents, R.drawable.tab_wound, R.drawable.tab_pdf,
-				R.drawable.tab_art, R.drawable.tab_animal);
+		itemIcons = new ArrayList<Integer>();
+		Field[] allFields = R.drawable.class.getDeclaredFields();
+		for (Field field : allFields) {
+			if (Modifier.isPublic(field.getModifiers()) && Modifier.isStatic(field.getModifiers())) {
+				String fieldName = field.getName();
+				if (fieldName.startsWith("dsa_") && !fieldName.endsWith("_add") && !fieldName.endsWith("_light")
+						&& !fieldName.endsWith("_dark") && !IGNORE_ICONS.contains(fieldName)) {
+					try {
+						itemIcons.add(field.getInt(null));
+					} catch (IllegalAccessException e) {
+					} catch (IllegalArgumentException e) {
+					}
+				}
+			}
+		}
 
-		// DO NOT CHANGE ORDER OF ICONS BECAUSE IT IS stored in tabconfiguration
-		// as tabResourceIndex, ALWAYS ADD AT THE LASt POSITION!!!
-		itemIcons = Arrays.asList(R.drawable.icon_2hieb, R.drawable.icon_2schwert, R.drawable.icon_armor_chain,
-				R.drawable.icon_armor_cloth, R.drawable.icon_armor_metal, R.drawable.icon_armor,
-				R.drawable.icon_attack, R.drawable.icon_ausweichen, R.drawable.icon_bags, R.drawable.icon_bow,
-				R.drawable.icon_crossbow, R.drawable.icon_diskus, R.drawable.icon_fecht, R.drawable.icon_fist,
-				R.drawable.icon_greaves, R.drawable.icon_halberd, R.drawable.icon_hammer, R.drawable.icon_helm_full,
-				R.drawable.icon_helm_half, R.drawable.icon_helm, R.drawable.icon_hieb, R.drawable.icon_kettenwaffen,
-				R.drawable.icon_longbow, R.drawable.icon_longsword, R.drawable.icon_messer,
-				R.drawable.icon_metal_shield, R.drawable.icon_misc_multi, R.drawable.icon_misc, R.drawable.icon_net,
-				R.drawable.icon_shield, R.drawable.icon_sling, R.drawable.icon_special, R.drawable.icon_speer,
-				R.drawable.icon_stab, R.drawable.icon_steel_armor, R.drawable.icon_sword, R.drawable.icon_whip,
-				R.drawable.icon_wurfbeil, R.drawable.icon_wurfdolch);
 	}
 
-	public List<Integer> getTabIcons() {
-		return tabIcons;
-	}
-
-	public List<Integer> getItemIcons() {
+	public List<Integer> getDsaIcons() {
 		return itemIcons;
 	}
 
@@ -110,10 +106,6 @@ public class DsaTabConfiguration {
 			return tabResourceIds.get(clazz);
 		} else
 			return 0;
-	}
-
-	public int getIndexOfTabResourceId(int resourceId) {
-		return tabIcons.indexOf(resourceId);
 	}
 
 	public List<ArmorPosition> getArmorPositions() {

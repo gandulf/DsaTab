@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import com.dsatab.data.Art;
 import com.dsatab.data.Attribute;
@@ -302,7 +303,19 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
 	}
 
 	public enum ListItemType {
-		Header, Talent, Spell, Art, Attribute, EquippedItem, Modificator, Document, Notes, Purse, Wound, Probe
+		Header(""), Talent("Talente"), Spell("Zauber"), Art("Künste"), Attribute("Eigenschaften"), EquippedItem(
+				"Gegenstände"), Modificator("Modifikatoren"), Document("Dokumente"), Notes("Notizen"), Purse(
+				"Geldbörse"), Wound("Wunden"), Probe("Proben");
+
+		private ListItemType(String title) {
+			this.title = title;
+		}
+
+		private String title;
+
+		public String title() {
+			return this.title;
+		}
 	}
 
 	public static class ListItem implements JSONable, Parcelable {
@@ -325,6 +338,11 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
 		public ListItem(ListItemType type, String name) {
 			this.type = type;
 			this.name = name;
+		}
+
+		public ListItem(ListItemType type, ListItemType subType) {
+			this.type = type;
+			this.name = subType.name();
 		}
 
 		public ListItem(JSONObject json) {
@@ -457,7 +475,8 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
 
 	public boolean hasListItem(ListItemType type, String name) {
 		for (ListItem listItem : listItems) {
-			if (listItem.getType() == type && (listItem.getName() == null || listItem.getName().equals(name)))
+			if (listItem.getType() == type
+					&& (TextUtils.isEmpty(listItem.getName()) || listItem.getName().equals(name)))
 				return true;
 		}
 		return false;

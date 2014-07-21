@@ -14,7 +14,6 @@ import com.dsatab.TabInfo;
 import com.dsatab.data.HeroConfiguration;
 import com.dsatab.fragment.DualPaneFragment;
 import com.dsatab.fragment.EmptyFragment;
-import com.gandulf.guilib.util.Debug;
 
 public class TabPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -70,22 +69,18 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
 			f = mPageReferenceMap.get(pos);
 		}
 		if (f == null) {
-			try {
-				TabInfo tabInfo = tabInfos.get(pos);
-				if (tabInfo.getTabCount() == 0) {
-					f = new EmptyFragment();
-				} else if (tabInfo.getTabCount() == 1) {
-					f = tabInfo.getFragment();
-				} else {
-					f = DualPaneFragment.makeInstance(tabInfos.get(pos));
-				}
-				ensurePageSize(pos);
-				mPageReferenceMap.set(pos, f);
-			} catch (InstantiationException e) {
-				Debug.error(e);
-			} catch (IllegalAccessException e) {
-				Debug.error(e);
+
+			TabInfo tabInfo = tabInfos.get(pos);
+			if (tabInfo.getTabCount() == 0) {
+				f = new EmptyFragment();
+			} else if (tabInfo.getTabCount() == 1) {
+				f = tabInfo.getFragment();
+			} else {
+				f = DualPaneFragment.makeInstance(tabInfos.get(pos));
 			}
+			ensurePageSize(pos);
+			mPageReferenceMap.set(pos, f);
+
 		}
 		return f;
 	}

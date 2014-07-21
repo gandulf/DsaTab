@@ -28,7 +28,6 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 	public static final int MAX_TABS_PER_PAGE = 2;
 
 	private static final String FIELD_ACTIVITY_CLAZZ = "activityClazz";
-	private static final String FIELD_TAB_RESOURCE_INDEX = "tabResourceId";
 	private static final String FIELD_TAB_ICON_URI = "iconUri";
 	private static final String FIELD_PRIMARY_ACTIVITY_CLAZZ = "activityClazz1";
 	private static final String FIELD_SECONDARY_ACTIVITY_CLAZZ = "activityClazz2";
@@ -47,24 +46,9 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 
 	private transient UUID id;
 	private Uri iconUri;
+	private int color;
 
 	private ListSettings[] listSettings;
-
-	private static final int indexToResourceId(int index) {
-		if (index < 0 || index >= DsaTabApplication.getInstance().getConfiguration().getTabIcons().size())
-			index = 0;
-
-		return DsaTabApplication.getInstance().getConfiguration().getTabIcons().get(index);
-	}
-
-	private static final int resourceIdToIndex(int id) {
-		int index = DsaTabApplication.getInstance().getConfiguration().getTabIcons().indexOf(id);
-
-		if (index < 0 || index >= DsaTabApplication.getInstance().getConfiguration().getTabIcons().size())
-			return 0;
-		else
-			return index;
-	}
 
 	public TabInfo(Class<? extends BaseFragment> activityClazz1, Class<? extends BaseFragment> activityClazz2,
 			int tabResourceId, boolean diceSlider, boolean attributeList) {
@@ -130,12 +114,6 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 	@SuppressWarnings("unchecked")
 	public TabInfo(JSONObject in) throws JSONException, ClassNotFoundException {
 
-		// backwardcompat for resourceindex
-		if (in.has(FIELD_TAB_RESOURCE_INDEX)) {
-			int tabResourceIndex = in.getInt(FIELD_TAB_RESOURCE_INDEX);
-			int resourceId = indexToResourceId(tabResourceIndex);
-			iconUri = Util.getUriForResourceId(resourceId);
-		}
 		if (in.has(FIELD_TAB_ICON_URI)) {
 			iconUri = Uri.parse(in.getString(FIELD_TAB_ICON_URI));
 		}
@@ -252,7 +230,7 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		return activityClazz;
 	}
 
-	public BaseFragment getFragment() throws InstantiationException, IllegalAccessException {
+	public BaseFragment getFragment() {
 		BaseFragment fragment = null;
 		for (int i = 0; i < activityClazz.length; i++) {
 			fragment = getFragment(i);
@@ -263,14 +241,19 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		return fragment;
 	}
 
-	public BaseFragment getFragment(int pos) throws InstantiationException, IllegalAccessException {
+	public BaseFragment getFragment(int pos) {
 		BaseFragment fragment = null;
-		if (activityClazz[pos] != null) {
-			fragment = activityClazz[pos].newInstance();
-			Bundle args = new Bundle();
-			args.putParcelable(BaseFragment.TAB_INFO, this);
-			args.putInt(BaseFragment.TAB_POSITION, pos);
-			fragment.setArguments(args);
+		try {
+			if (activityClazz[pos] != null) {
+				fragment = activityClazz[pos].newInstance();
+				Bundle args = new Bundle();
+				args.putParcelable(BaseFragment.TAB_INFO, this);
+				args.putInt(BaseFragment.TAB_POSITION, pos);
+				fragment.setArguments(args);
+			}
+		} catch (Exception e) {
+			Debug.error(e);
+			return null;
 		}
 		return fragment;
 	}
@@ -282,6 +265,15 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 
 	public Uri getIconUri() {
 		return iconUri;
+	}
+
+	public int getColor() {
+		// color = Color.RED;
+		return color;
+	}
+
+	public void setColor(int color) {
+		this.color = color;
 	}
 
 	public String getTitle() {

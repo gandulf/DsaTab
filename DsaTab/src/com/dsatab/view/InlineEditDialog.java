@@ -54,6 +54,7 @@ public class InlineEditDialog extends AlertDialog implements DialogInterface.OnC
 			Integer currentValue = value.getValue();
 			numberPicker.setMinValue(value.getMinimum());
 			numberPicker.setMaxValue(value.getMaximum());
+
 			if (currentValue != null) {
 				numberPicker.setValue(currentValue);
 			} else {
@@ -182,6 +183,7 @@ public class InlineEditDialog extends AlertDialog implements DialogInterface.OnC
 
 		numberPicker = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_text);
 		numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+		numberPicker.setWrapSelectorWheel(false);
 
 		combatStyleBtn = (ToggleButton) popupcontent.findViewById(R.id.popup_edit_combat_style);
 		combatStyleBtn.setTextOn(getContext().getText(R.string.offensive));

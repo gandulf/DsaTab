@@ -14,12 +14,12 @@
      limitations under the License.
 -->
 <set xmlns:android="http://schemas.android.com/apk/res/android"
-android:interpolator="@anim/cycle_7" android:shareInterpolator="true">
+android:interpolator="@anim/cycle_4" android:shareInterpolator="true">
 
-	<translate android:fromXDelta="-5" android:toXDelta="5" android:duration="2000"/>
+	<translate android:fromXDelta="-5" android:toXDelta="5" android:duration="1000"/>
 	
 	<rotate android:fromDegrees="-3" android:toDegrees="3" 
 		android:interpolator="@android:anim/anticipate_interpolator"
-		android:pivotX="50%" android:pivotY="50%" android:duration="2000"/>
+		android:pivotX="50%" android:pivotY="50%" android:duration="1000"/>
 	
 </set>

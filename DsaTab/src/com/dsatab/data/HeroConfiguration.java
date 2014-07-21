@@ -473,7 +473,7 @@ public class HeroConfiguration {
 			listSettings.addListItem(new ListItem(ListItemType.Talent));
 			tabInfos.add(tabInfo);
 
-			tabInfo = new TabInfo(ListableFragment.class, ListableFragment.class, R.drawable.tab_magic);
+			tabInfo = new TabInfo(ListableFragment.class, ListableFragment.class, R.drawable.dsa_spells);
 			tabInfo.setTitle("Zauber und Künste");
 			listSettings = (ListSettings) tabInfo.getListSettings(0);
 			listSettings.addListItem(new ListItem(AttributeType.Astralenergie_Aktuell));
@@ -481,22 +481,20 @@ public class HeroConfiguration {
 			listSettings = (ListSettings) tabInfo.getListSettings(1);
 			listSettings.addListItem(new ListItem(AttributeType.Karmaenergie_Aktuell));
 			listSettings.addListItem(new ListItem(ListItemType.Talent, TalentGroupType.Gaben.name()));
-			listSettings.addListItem(new ListItem(ListItemType.Header, "Künste"));
+			listSettings.addListItem(new ListItem(ListItemType.Header, ListItemType.Art));
 			listSettings.addListItem(new ListItem(ListItemType.Art));
 			tabInfos.add(tabInfo);
 
-			tabInfo = new TabInfo(ListableFragment.class, BodyFragment.class, R.drawable.tab_fight);
+			tabInfo = new TabInfo(ListableFragment.class, BodyFragment.class, R.drawable.dsa_fight);
 			tabInfo.setTitle("Kampf");
 			listSettings = (ListSettings) tabInfo.getListSettings(0);
 			listSettings.addListItem(new ListItem(AttributeType.Lebensenergie_Aktuell));
 			listSettings.addListItem(new ListItem(AttributeType.Ausdauer_Aktuell));
 			listSettings.addListItem(new ListItem(AttributeType.Initiative_Aktuell));
-			listSettings.addListItem(new ListItem(ListItemType.Header, "Gegenstände"));
 			listSettings.addListItem(new ListItem(ListItemType.EquippedItem));
 			listSettings.addListItem(new ListItem(AttributeType.Ausweichen));
 			listSettings.addListItem(new ListItem(ListItemType.Wound));
 			listSettings.addListItem(new ListItem(ListItemType.Probe));
-			listSettings.addListItem(new ListItem(ListItemType.Header, "Modifikatoren"));
 			listSettings.addListItem(new ListItem(ListItemType.Modificator));
 			tabInfos.add(tabInfo);
 
@@ -504,11 +502,10 @@ public class HeroConfiguration {
 			tabInfo.setTitle("Gegenstände");
 			tabInfos.add(tabInfo);
 
-			tabInfo = new TabInfo(ListableFragment.class, ListableFragment.class, R.drawable.tab_notes, false, false);
+			tabInfo = new TabInfo(ListableFragment.class, ListableFragment.class, R.drawable.dsa_notes, false, false);
 			tabInfo.setTitle("Notizen");
 			listSettings = (ListSettings) tabInfo.getListSettings(0);
 			listSettings.addListItem(new ListItem(ListItemType.Notes));
-			listSettings.addListItem(new ListItem(ListItemType.Header, "Dokumente"));
 			listSettings.addListItem(new ListItem(ListItemType.Document));
 			listSettings = (ListSettings) tabInfo.getListSettings(1);
 			listSettings.addListItem(new ListItem(ListItemType.Purse));
@@ -528,25 +525,25 @@ public class HeroConfiguration {
 			tabInfo.setTitle("Charakter");
 			tabInfos.add(tabInfo);
 
-			tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_talents);
+			tabInfo = new TabInfo(ListableFragment.class, R.drawable.dsa_talents);
 			tabInfo.setTitle("Talente");
 			ListSettings listSettings = (ListSettings) tabInfo.getListSettings(0);
 			listSettings.addListItem(new ListItem(ListItemType.Talent));
 			tabInfos.add(tabInfo);
 
-			tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_magic);
+			tabInfo = new TabInfo(ListableFragment.class, R.drawable.dsa_spells);
 			tabInfo.setTitle("Zauber");
 			listSettings = (ListSettings) tabInfo.getListSettings(0);
 			listSettings.addListItem(new ListItem(AttributeType.Astralenergie_Aktuell));
 			listSettings.addListItem(new ListItem(ListItemType.Spell));
 			tabInfos.add(tabInfo);
 
-			tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_art);
+			tabInfo = new TabInfo(ListableFragment.class, R.drawable.dsa_arts);
 			tabInfo.setTitle("Künste");
 			listSettings = (ListSettings) tabInfo.getListSettings(0);
 			listSettings.addListItem(new ListItem(AttributeType.Karmaenergie_Aktuell));
 			listSettings.addListItem(new ListItem(ListItemType.Talent, TalentGroupType.Gaben.name()));
-			listSettings.addListItem(new ListItem(ListItemType.Header, "Künste"));
+			listSettings.addListItem(new ListItem(ListItemType.Header, ListItemType.Art));
 			listSettings.addListItem(new ListItem(ListItemType.Art));
 			tabInfos.add(tabInfo);
 
@@ -554,18 +551,16 @@ public class HeroConfiguration {
 			tabInfo.setTitle("Wunden");
 			tabInfos.add(tabInfo);
 
-			tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_fight);
+			tabInfo = new TabInfo(ListableFragment.class, R.drawable.dsa_fight);
 			tabInfo.setTitle("Kampf");
 			listSettings = (ListSettings) tabInfo.getListSettings(0);
 			listSettings.addListItem(new ListItem(AttributeType.Lebensenergie_Aktuell));
 			listSettings.addListItem(new ListItem(AttributeType.Ausdauer_Aktuell));
 			listSettings.addListItem(new ListItem(AttributeType.Initiative_Aktuell));
-			listSettings.addListItem(new ListItem(ListItemType.Header, "Gegenstände"));
 			listSettings.addListItem(new ListItem(ListItemType.EquippedItem));
 			listSettings.addListItem(new ListItem(AttributeType.Ausweichen));
 			listSettings.addListItem(new ListItem(ListItemType.Wound));
 			listSettings.addListItem(new ListItem(ListItemType.Probe));
-			listSettings.addListItem(new ListItem(ListItemType.Header, "Modifikatoren"));
 			listSettings.addListItem(new ListItem(ListItemType.Modificator));
 			tabInfos.add(tabInfo);
 
@@ -573,13 +568,11 @@ public class HeroConfiguration {
 			tabInfo.setTitle("Gegenstände");
 			tabInfos.add(tabInfo);
 
-			tabInfo = new TabInfo(ListableFragment.class, R.drawable.tab_notes, false, false);
+			tabInfo = new TabInfo(ListableFragment.class, R.drawable.dsa_notes, false, false);
 			tabInfo.setTitle("Notizen");
 			listSettings = (ListSettings) tabInfo.getListSettings(0);
 			listSettings.addListItem(new ListItem(ListItemType.Notes));
-			listSettings.addListItem(new ListItem(ListItemType.Header, "Dokumente"));
 			listSettings.addListItem(new ListItem(ListItemType.Document));
-			listSettings.addListItem(new ListItem(ListItemType.Header, "Geldbörse"));
 			listSettings.addListItem(new ListItem(ListItemType.Purse));
 			tabInfos.add(tabInfo);
 

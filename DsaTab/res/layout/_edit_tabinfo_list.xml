@@ -44,16 +44,39 @@
             android:layout_height="wrap_content"
             android:text="@string/consider_modificators" />
 
-        <TextView
-            style="?android:attr/listSeparatorTextViewStyle"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="left|center_vertical"
-            android:text="@string/list_content" />
+            android:divider="?attr/dividerVertical"
+            android:dividerPadding="8dp"
+            android:orientation="horizontal"
+            android:minHeight="?attr/listPreferredItemHeightSmall"
+            android:showDividers="middle" >
+
+            <TextView
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|left"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:text="@string/list_content" />
+
+            <ImageButton
+                android:id="@+id/popup_edit_add_list_item"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="?attr/selectableBackground"
+                android:src="@drawable/ic_menu_add"
+                android:padding="@dimen/default_gap"/>
+            
+        </LinearLayout>
 
         <com.haarman.listviewanimations.view.DynamicListView
             android:id="@android:id/list"
             android:layout_width="fill_parent"
+            android:divider="@null"
             android:layout_height="0dp"
             android:layout_weight="1" />
     </LinearLayout>

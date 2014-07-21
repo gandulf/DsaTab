@@ -18,37 +18,37 @@
     <item android:maxLevel="0">               
         <selector>
             <!-- Even though these two point to the same resource, have two states so the drawable will invalidate itself when coming out of pressed state. -->
-		    <item android:state_focused="true"  android:state_enabled="false" android:state_pressed="true" android:drawable="@drawable/_list_selector_disabled_holo_dark" />
-		    <item android:state_focused="true"  android:state_enabled="false"                              android:drawable="@drawable/_list_selector_disabled_holo_dark" />
-		    <item android:state_focused="true"                                android:state_pressed="true" android:drawable="@drawable/_list_selector_background_transition_holo_dark" />
-		    <item android:state_focused="false"                               android:state_pressed="true" android:drawable="@drawable/_list_selector_background_transition_holo_dark" />
-		    <item android:state_focused="true"                                                             android:drawable="@drawable/_list_focused_holo" />
+		    <item android:state_focused="true"  android:state_enabled="false" android:state_pressed="true" android:drawable="@drawable/abc_list_selector_disabled_holo_dark" />
+		    <item android:state_focused="true"  android:state_enabled="false"                              android:drawable="@drawable/abc_list_selector_disabled_holo_dark" />
+		    <item android:state_focused="true"                                android:state_pressed="true" android:drawable="@drawable/abc_list_selector_background_transition_holo_dark" />
+		    <item android:state_focused="false"                               android:state_pressed="true" android:drawable="@drawable/abc_list_selector_background_transition_holo_dark" />
+		    <item android:state_focused="true"                                                             android:drawable="@drawable/abc_list_focused_holo" />
             
 		    <item android:state_checked="true" android:drawable="@color/ValueGreen" />
-		    <item android:drawable="@color/RowEven" />
+		    <item android:drawable="@drawable/list_selector_even_holo_dark" />
         </selector>
     </item>
     <item android:maxLevel="1">
         <selector>    
             <!-- Even though these two point to the same resource, have two states so the drawable will invalidate itself when coming out of pressed state. -->
-		    <item android:state_focused="true"  android:state_enabled="false" android:state_pressed="true" android:drawable="@drawable/_list_selector_disabled_holo_dark" />
-		    <item android:state_focused="true"  android:state_enabled="false"                              android:drawable="@drawable/_list_selector_disabled_holo_dark" />
-		    <item android:state_focused="true"                                android:state_pressed="true" android:drawable="@drawable/_list_selector_background_transition_holo_dark" />
-		    <item android:state_focused="false"                               android:state_pressed="true" android:drawable="@drawable/_list_selector_background_transition_holo_dark" />
-		    <item android:state_focused="true"                                                             android:drawable="@drawable/_list_focused_holo" />
+		    <item android:state_focused="true"  android:state_enabled="false" android:state_pressed="true" android:drawable="@drawable/abc_list_selector_disabled_holo_dark" />
+		    <item android:state_focused="true"  android:state_enabled="false"                              android:drawable="@drawable/abc_list_selector_disabled_holo_dark" />
+		    <item android:state_focused="true"                                android:state_pressed="true" android:drawable="@drawable/abc_list_selector_background_transition_holo_dark" />
+		    <item android:state_focused="false"                               android:state_pressed="true" android:drawable="@drawable/abc_list_selector_background_transition_holo_dark" />
+		    <item android:state_focused="true"                                                             android:drawable="@drawable/abc_list_focused_holo" />
             
 		    <item android:state_checked="true" android:drawable="@color/ValueGreen" />
-		    <item android:drawable="@color/RowOdd" />
+		    <item android:drawable="@drawable/list_selector_odd_holo_dark" />
         </selector>
     </item>
     <item android:maxLevel="2">
         <selector>
             <!-- Even though these two point to the same resource, have two states so the drawable will invalidate itself when coming out of pressed state. -->
-    <item android:state_focused="true"  android:state_enabled="false" android:state_pressed="true" android:drawable="@drawable/_list_selector_disabled_holo_dark" />
-    <item android:state_focused="true"  android:state_enabled="false"                              android:drawable="@drawable/_list_selector_disabled_holo_dark" />
-    <item android:state_focused="true"                                android:state_pressed="true" android:drawable="@drawable/_list_selector_background_transition_holo_dark" />
-    <item android:state_focused="false"                               android:state_pressed="true" android:drawable="@drawable/_list_selector_background_transition_holo_dark" />
-    <item android:state_focused="true"                                                             android:drawable="@drawable/_list_focused_holo" />
+		    <item android:state_focused="true"  android:state_enabled="false" android:state_pressed="true" android:drawable="@drawable/abc_list_selector_disabled_holo_dark" />
+		    <item android:state_focused="true"  android:state_enabled="false"                              android:drawable="@drawable/abc_list_selector_disabled_holo_dark" />
+		    <item android:state_focused="true"                                android:state_pressed="true" android:drawable="@drawable/abc_list_selector_background_transition_holo_dark" />
+		    <item android:state_focused="false"                               android:state_pressed="true" android:drawable="@drawable/abc_list_selector_background_transition_holo_dark" />
+		    <item android:state_focused="true"                                                             android:drawable="@drawable/abc_list_focused_holo" />
                 
 		    <item android:state_checked="true" android:drawable="@color/ValueGreen" />
 		    <item android:drawable="@color/RowFavoriteEven" />            
@@ -57,11 +57,11 @@
     <item android:maxLevel="3">
         <selector>
             <!-- Even though these two point to the same resource, have two states so the drawable will invalidate itself when coming out of pressed state. -->
-    <item android:state_focused="true"  android:state_enabled="false" android:state_pressed="true" android:drawable="@drawable/_list_selector_disabled_holo_dark" />
-    <item android:state_focused="true"  android:state_enabled="false"                              android:drawable="@drawable/_list_selector_disabled_holo_dark" />
-    <item android:state_focused="true"                                android:state_pressed="true" android:drawable="@drawable/_list_selector_background_transition_holo_dark" />
-    <item android:state_focused="false"                               android:state_pressed="true" android:drawable="@drawable/_list_selector_background_transition_holo_dark" />
-    <item android:state_focused="true"                                                             android:drawable="@drawable/_list_focused_holo" />
+		    <item android:state_focused="true"  android:state_enabled="false" android:state_pressed="true" android:drawable="@drawable/abc_list_selector_disabled_holo_dark" />
+		    <item android:state_focused="true"  android:state_enabled="false"                              android:drawable="@drawable/abc_list_selector_disabled_holo_dark" />
+		    <item android:state_focused="true"                                android:state_pressed="true" android:drawable="@drawable/abc_list_selector_background_transition_holo_dark" />
+		    <item android:state_focused="false"                               android:state_pressed="true" android:drawable="@drawable/abc_list_selector_background_transition_holo_dark" />
+		    <item android:state_focused="true"                                                             android:drawable="@drawable/abc_list_focused_holo" />
                 
 		    <item android:state_checked="true" android:drawable="@color/ValueGreen" />
 		    <item android:drawable="@color/RowFavoriteOdd" />
@@ -70,11 +70,11 @@
     <item android:maxLevel="4">
         <selector>
             <!-- Even though these two point to the same resource, have two states so the drawable will invalidate itself when coming out of pressed state. -->
-    <item android:state_focused="true"  android:state_enabled="false" android:state_pressed="true" android:drawable="@drawable/_list_selector_disabled_holo_dark" />
-    <item android:state_focused="true"  android:state_enabled="false"                              android:drawable="@drawable/_list_selector_disabled_holo_dark" />
-    <item android:state_focused="true"                                android:state_pressed="true" android:drawable="@drawable/_list_selector_background_transition_holo_dark" />
-    <item android:state_focused="false"                               android:state_pressed="true" android:drawable="@drawable/_list_selector_background_transition_holo_dark" />
-    <item android:state_focused="true"                                                             android:drawable="@drawable/_list_focused_holo" />
+		    <item android:state_focused="true"  android:state_enabled="false" android:state_pressed="true" android:drawable="@drawable/abc_list_selector_disabled_holo_dark" />
+		    <item android:state_focused="true"  android:state_enabled="false"                              android:drawable="@drawable/abc_list_selector_disabled_holo_dark" />
+		    <item android:state_focused="true"                                android:state_pressed="true" android:drawable="@drawable/abc_list_selector_background_transition_holo_dark" />
+		    <item android:state_focused="false"                               android:state_pressed="true" android:drawable="@drawable/abc_list_selector_background_transition_holo_dark" />
+		    <item android:state_focused="true"                                                             android:drawable="@drawable/abc_list_focused_holo" />
     
 		    <item android:state_checked="true" android:drawable="@color/ValueGreen" />
 		    <item android:drawable="@color/RowUnusedEven" />
@@ -83,11 +83,11 @@
     <item android:maxLevel="5">
         <selector>
             <!-- Even though these two point to the same resource, have two states so the drawable will invalidate itself when coming out of pressed state. -->
-    <item android:state_focused="true"  android:state_enabled="false" android:state_pressed="true" android:drawable="@drawable/_list_selector_disabled_holo_dark" />
-    <item android:state_focused="true"  android:state_enabled="false"                              android:drawable="@drawable/_list_selector_disabled_holo_dark" />
-    <item android:state_focused="true"                                android:state_pressed="true" android:drawable="@drawable/_list_selector_background_transition_holo_dark" />
-    <item android:state_focused="false"                               android:state_pressed="true" android:drawable="@drawable/_list_selector_background_transition_holo_dark" />
-    <item android:state_focused="true"                                                             android:drawable="@drawable/_list_focused_holo" />
+		    <item android:state_focused="true"  android:state_enabled="false" android:state_pressed="true" android:drawable="@drawable/abc_list_selector_disabled_holo_dark" />
+		    <item android:state_focused="true"  android:state_enabled="false"                              android:drawable="@drawable/abc_list_selector_disabled_holo_dark" />
+		    <item android:state_focused="true"                                android:state_pressed="true" android:drawable="@drawable/abc_list_selector_background_transition_holo_dark" />
+		    <item android:state_focused="false"                               android:state_pressed="true" android:drawable="@drawable/abc_list_selector_background_transition_holo_dark" />
+		    <item android:state_focused="true"                                                             android:drawable="@drawable/abc_list_focused_holo" />
                 
 		    <item android:state_checked="true" android:drawable="@color/ValueGreen" />
 		    <item android:drawable="@color/RowUnusedOdd" />

@@ -7,7 +7,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SlidingPaneLayout;
@@ -37,7 +36,7 @@ import com.dsatab.R;
 import com.dsatab.TabInfo;
 import com.dsatab.fragment.TabListableConfigFragment;
 import com.dsatab.util.Util;
-import com.dsatab.view.PictureChooserDialog;
+import com.dsatab.view.ImageChooserDialog;
 import com.gandulf.guilib.data.OpenArrayAdapter;
 import com.gandulf.guilib.util.DefaultTextWatcher;
 import com.haarman.listviewanimations.itemmanipulation.AnimateAdapter;
@@ -178,7 +177,7 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 		if (tabsAdapter.getCount() > 0) {
 
 			int index = getIntent().getExtras().getInt(DATA_INTENT_TAB_INDEX, 0);
-			if (tabsAdapter.getCount() > index)
+			if (index >= 0 && index < tabsAdapter.getCount())
 				selectTabInfo(tabsAdapter.getItem(index));
 			else
 				selectTabInfo(tabsAdapter.getItem(0));
@@ -248,7 +247,7 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 		switch (item.getItemId()) {
 		case R.id.option_tab_add:
 			TabInfo info = new TabInfo();
-			info.setIconUri(Util.getUriForResourceId(R.drawable.icon_fist));
+			info.setIconUri(Util.getUriForResourceId(R.drawable.dsa_armor_fist));
 			animateAdapter.animateShow(tabsAdapter.getCount());
 			tabsAdapter.add(info);
 			selectTabInfo(info);
@@ -307,16 +306,11 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 	}
 
 	private void pickIcon() {
-		final PictureChooserDialog pdialog = new PictureChooserDialog(this);
+		final ImageChooserDialog pdialog = new ImageChooserDialog(this);
 
-		List<Integer> itemIcons = DsaTabApplication.getInstance().getConfiguration().getTabIcons();
-
-		List<Uri> portraitPaths = new ArrayList<Uri>(itemIcons.size());
-		for (Integer resId : itemIcons) {
-			portraitPaths.add(Util.getUriForResourceId(resId));
-		}
 		pdialog.setTitle(R.string.title_choose_icon);
-		pdialog.setImages(portraitPaths);
+		pdialog.setImageIds(DsaTabApplication.getInstance().getConfiguration().getDsaIcons());
+		pdialog.setGridColumnWidth(getResources().getDimensionPixelSize(R.dimen.icon_button_size_plain));
 		pdialog.setScaleType(ScaleType.FIT_CENTER);
 		pdialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
 

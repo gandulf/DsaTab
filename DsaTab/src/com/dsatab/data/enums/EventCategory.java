@@ -3,9 +3,9 @@ package com.dsatab.data.enums;
 import com.dsatab.R;
 
 public enum EventCategory {
-	Misc(R.drawable.m_icon_misc), Abenteuer(R.drawable.m_icon_abenteuer, true), Held(R.drawable.m_icon_held, true), Bekanntschaft(
-			R.drawable.m_icon_bekanntschaft, true), Freundschaft(R.drawable.m_icon_freundschaft, true), Tat(
-			R.drawable.m_icon_tat), Ort(R.drawable.m_icon_ort, true), Heldensoftware(R.drawable.m_icon_heldensoftware);
+	Misc(R.drawable.dsa_cubes), Abenteuer(R.drawable.dsa_adventure, true), Held(R.drawable.dsa_talents, true), Bekanntschaft(
+			R.drawable.dsa_group, true), Freundschaft(R.drawable.dsa_heart, true), Tat(R.drawable.dsa_fist), Ort(
+			R.drawable.dsa_castle, true), Heldensoftware(R.drawable.dsa_character);
 
 	private int iconId;
 

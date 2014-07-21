@@ -2,13 +2,13 @@
 
 	<item
         android:id="@+id/option_note_add"
-        android:icon="?attr/imgBarNoteAdd"
+        android:icon="@drawable/dsa_notes_add"
         app:showAsAction="withText|ifRoom"
         android:title="@string/create_note">
     </item>
     <item
         android:id="@+id/option_note_record"
-        android:icon="?attr/imgBarNoteRecord"
+        android:icon="@drawable/dsa_speech_add"
         app:showAsAction="withText|ifRoom"
         android:title="@string/record_note">
     </item>

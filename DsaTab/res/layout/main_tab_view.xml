@@ -27,12 +27,28 @@
                 tools:layout="@layout/attributes_list" >
             </fragment>
 
-            <com.dsatab.view.MyViewPager
+            <LinearLayout
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
-                android:layout_below="@+id/inc_attributes" />
+                android:baselineAligned="false"                
+                android:layout_below="@+id/inc_attributes" >
+
+                <FrameLayout
+                    android:id="@+id/pane_left"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/pane_right"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+                </FrameLayout>
+            </LinearLayout>
 
             <FrameLayout
                 android:id="@+id/loading"
@@ -67,10 +83,9 @@
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#333"
+        android:background="?android:attr/windowBackground"
+        android:cacheColorHint="#000000"
         android:choiceMode="singleChoice"
-        android:divider="@android:color/transparent"
-        android:listSelector="?attr/listItemBackground"
-        android:dividerHeight="0dp" />
+         />
 
 </android.support.v4.widget.DrawerLayout>

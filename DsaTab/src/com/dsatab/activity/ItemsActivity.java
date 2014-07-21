@@ -82,12 +82,14 @@ public class ItemsActivity extends BaseFragmentActivity implements OnItemSelecte
 	}
 
 	public static void insert(Activity context, String heroKey, int requestCode) {
+
 		Intent intent = new Intent(context, ItemsActivity.class);
 		intent.setAction(Intent.ACTION_INSERT);
 		if (heroKey != null) {
 			intent.putExtra(ItemEditFragment.INTENT_EXTRA_HERO_KEY, heroKey);
 		}
 		context.startActivityForResult(intent, requestCode);
+
 	}
 
 	public static void edit(Activity context, String heroKey, ItemCard itemCard, int requestCode) {
@@ -261,8 +263,13 @@ public class ItemsActivity extends BaseFragmentActivity implements OnItemSelecte
 		viewMode = true;
 	}
 
-	protected void viewItem(Item item, ItemSpecification itemSpecification) {
+	public void viewItem(Item item, ItemSpecification itemSpecification) {
 		if (!viewMode) {
+
+			if (slidingPaneLayout.isOpen()) {
+				slidingPaneLayout.closePane();
+			}
+
 			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
 			if (itemEditFragment != null)
@@ -282,8 +289,12 @@ public class ItemsActivity extends BaseFragmentActivity implements OnItemSelecte
 		viewMode = true;
 	}
 
-	protected void editItem(Item item, ItemSpecification itemSpecification) {
+	public void editItem(Item item, ItemSpecification itemSpecification) {
 		if (viewMode) {
+
+			if (slidingPaneLayout.isOpen()) {
+				slidingPaneLayout.closePane();
+			}
 
 			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
@@ -369,6 +380,7 @@ public class ItemsActivity extends BaseFragmentActivity implements OnItemSelecte
 			return true;
 		case R.id.option_ok:
 			itemEditFragment.accept();
+			itemListFragment.refresh();
 			viewItem(itemEditFragment.getItem(), itemEditFragment.getItemSpecification());
 			return true;
 		case R.id.option_cancel:

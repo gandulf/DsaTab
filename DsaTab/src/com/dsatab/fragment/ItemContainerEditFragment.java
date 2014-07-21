@@ -1,8 +1,5 @@
 package com.dsatab.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,7 +16,7 @@ import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.items.ItemContainer;
 import com.dsatab.util.Util;
-import com.dsatab.view.PictureChooserDialog;
+import com.dsatab.view.ImageChooserDialog;
 
 public class ItemContainerEditFragment extends Fragment implements OnClickListener {
 
@@ -95,7 +92,7 @@ public class ItemContainerEditFragment extends Fragment implements OnClickListen
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.popup_edit_icon:
-			pickPortrait();
+			pickIcon();
 			break;
 
 		default:
@@ -116,17 +113,11 @@ public class ItemContainerEditFragment extends Fragment implements OnClickListen
 		return itemContainer;
 	}
 
-	private void pickPortrait() {
-		final PictureChooserDialog pdialog = new PictureChooserDialog(getActivity());
+	private void pickIcon() {
+		final ImageChooserDialog pdialog = new ImageChooserDialog(getActivity());
 
-		List<Integer> itemIcons = DsaTabApplication.getInstance().getConfiguration().getItemIcons();
-
-		List<Uri> portraitPaths = new ArrayList<Uri>(itemIcons.size());
-		for (Integer resId : itemIcons) {
-			portraitPaths.add(Util.getUriForResourceId(resId));
-		}
-
-		pdialog.setImages(portraitPaths);
+		pdialog.setImageIds(DsaTabApplication.getInstance().getConfiguration().getDsaIcons());
+		pdialog.setGridColumnWidth(getResources().getDimensionPixelSize(R.dimen.icon_button_size_plain));
 		pdialog.setScaleType(ScaleType.FIT_CENTER);
 		pdialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
 

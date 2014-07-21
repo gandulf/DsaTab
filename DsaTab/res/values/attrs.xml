@@ -2,18 +2,17 @@
 <resources>
                 
     <declare-styleable name="DsaTabTheme">
-        
-        <attr name="textViewValueStyle" format="reference"/>
+                
+        <attr name="buttonStyleLeft" format="reference"/>
+        <attr name="buttonStyleRight" format="reference"/>
         <attr name="textViewValueNoTouchStyle" format="reference"/>
-        <attr name="textViewValueLeftStyle" format="reference"/>
-        <attr name="textViewValueRightStyle" format="reference"/>
-        <attr name="textViewValueSmallStyle" format="reference"/>
         <attr name="textViewValueSmallNoTouchStyle" format="reference"/>
         
         <attr name="iconImageViewStyle" format="reference"/>
         
         <attr name="listItemBackground" format="reference"/>
         <attr name="listShadowBackground" format="reference"/>
+        <attr name="dropShadowBackground" format="reference"/>
         
         <attr name="selectableBackground" format="reference" />
         <attr name="imgDividerVertical" format="reference" />
@@ -38,9 +37,6 @@
         <attr name="imgUp" format="reference"/>
         <attr name="imgBarUp" format="reference"/>
         
-        <attr name="imgSettings" format="reference"/>
-        <attr name="imgBarSettings" format="reference"/>
-        
         <attr name="imgAccept" format="reference"/>
         <attr name="imgBarAccept" format="reference"/>
         
@@ -58,14 +54,8 @@
         <attr name="imgUser" format="reference"/>
         <attr name="imgBarUser" format="reference"/>
         
-        <attr name="imgMap" format="reference"/>
-        <attr name="imgBarMap" format="reference"/>
-        
         <attr name="imgSplit" format="reference"/>
         <attr name="imgBarSplit" format="reference"/>
-        
-        <attr name="imgPlay" format="reference"/>
-        <attr name="imgBarPlay" format="reference"/>
         
         <attr name="imgDelete" format="reference"/>
         <attr name="imgBarDelete" format="reference"/>
@@ -82,17 +72,8 @@
         <attr name="imgSearch" format="reference"/>
         <attr name="imgBarSearch" format="reference"/>
         
-        <attr name="imgNoteAdd" format="reference"/>
-        <attr name="imgBarNoteAdd" format="reference"/>
-        
-        <attr name="imgNoteRecord" format="reference"/>
-        <attr name="imgBarNoteRecord" format="reference"/>
-        
         <attr name="imgFilter" format="reference"/>
         <attr name="imgBarFilter" format="reference"/>
-        
-        <attr name="imgSwordAdd" format="reference"/>
-        <attr name="imgBarSwordAdd" format="reference"/>
         
         <attr name="imgSet" format="reference"/>
         <attr name="imgSet1" format="reference"/>
@@ -103,15 +84,7 @@
         <attr name="imgBarSet1" format="reference"/>
         <attr name="imgBarSet2" format="reference"/>
         <attr name="imgBarSet3" format="reference"/>
-        
-        <attr name="imgModifier" format="reference"/>
-        <attr name="imgModifierAdd" format="reference"/>
-        
-        <attr name="imgBarModifier" format="reference"/>
-        <attr name="imgBarModifierAdd" format="reference"/>        
-        
-        <attr name="imgActionMicrophone" format="reference"/>
-        <attr name="imgBarActionMicrophone" format="reference"/>
+                
     </declare-styleable>
         
 </resources>

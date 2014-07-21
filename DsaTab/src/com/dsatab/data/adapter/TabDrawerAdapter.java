@@ -3,7 +3,9 @@ package com.dsatab.data.adapter;
 import java.util.List;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,42 +16,57 @@ import android.widget.TextView;
 import com.dsatab.R;
 import com.dsatab.TabInfo;
 import com.dsatab.data.adapter.TabDrawerAdapter.DrawerItem;
-import com.dsatab.util.Util;
 import com.gandulf.guilib.data.OpenArrayAdapter;
+import com.gandulf.guilib.util.ColorUtil;
 
 public class TabDrawerAdapter extends OpenArrayAdapter<DrawerItem> {
 
 	private static final int TYPE_HEADER = 0;
 	private static final int TYPE_TAB = 1;
+	private static final int TYPE_SYSTEM = 2;
+	private static final int TYPE_PROFILE = 3;
 
 	private LayoutInflater inflater;
 
+	public enum DrawerItemType {
+		Header, Tab, System, Profile
+	};
+
 	public static class DrawerItem {
+
 		int id;
 		String text;
 		Uri image;
 		int imageId;
+		int color;
+		DrawerItemType type;
 
 		public DrawerItem(String text) {
-			this(-1, text, 0);
+			this(-1, text, 0, -1, DrawerItemType.Header);
 		}
 
-		public DrawerItem(int id, String text, Uri image) {
+		public DrawerItem(int id, String text, Uri image, int color, DrawerItemType drawerItemType) {
 			this.id = id;
 			this.text = text;
 			this.image = image;
+			this.type = drawerItemType;
+			this.color = color;
 		}
 
-		public DrawerItem(int id, String text, int imageResourceID) {
+		public DrawerItem(int id, String text, int imageResourceID, int color, DrawerItemType drawerItemType) {
 			this.id = id;
 			this.text = text;
 			this.imageId = imageResourceID;
+			this.type = drawerItemType;
+			this.color = color;
 		}
 
-		public DrawerItem(TabInfo tabInfo) {
+		public DrawerItem(int id, TabInfo tabInfo) {
 			text = tabInfo.getTitle();
 			image = tabInfo.getIconUri();
-			id = tabInfo.getId().hashCode();
+			this.id = id;
+			type = DrawerItemType.Tab;
+			color = tabInfo.getColor();
 		}
 
 		public int getId() {
@@ -68,6 +85,14 @@ public class TabDrawerAdapter extends OpenArrayAdapter<DrawerItem> {
 			return imageId;
 		}
 
+		public DrawerItemType getType() {
+			return type;
+		}
+
+		public int getColor() {
+			return color;
+		}
+
 	}
 
 	public TabDrawerAdapter(Context context, List<DrawerItem> objects) {
@@ -78,18 +103,25 @@ public class TabDrawerAdapter extends OpenArrayAdapter<DrawerItem> {
 
 	@Override
 	public int getItemViewType(int position) {
-		DrawerItem tabInfo = getItem(position);
+		DrawerItem drawerItem = getItem(position);
 
-		if (tabInfo.getId() == -1) {
+		switch (drawerItem.getType()) {
+		case Header:
 			return TYPE_HEADER;
-		} else {
+		case Tab:
 			return TYPE_TAB;
+		case System:
+			return TYPE_SYSTEM;
+		case Profile:
+			return TYPE_PROFILE;
+		default:
+			return 0;
 		}
 	}
 
 	@Override
 	public int getViewTypeCount() {
-		return 2;
+		return 4;
 	}
 
 	/*
@@ -99,36 +131,50 @@ public class TabDrawerAdapter extends OpenArrayAdapter<DrawerItem> {
 	 */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		DrawerItem tabInfo = getItem(position);
+		DrawerItem drawerInfo = getItem(position);
 
+		final int itemViewType = getItemViewType(position);
 		if (convertView == null) {
-			switch (getItemViewType(position)) {
+
+			switch (itemViewType) {
 			case TYPE_HEADER:
 				convertView = inflater.inflate(R.layout.item_listitem_header, parent, false);
 				break;
 			case TYPE_TAB:
 				convertView = inflater.inflate(R.layout.list_item_icon_text, parent, false);
 				break;
+			case TYPE_SYSTEM:
+				convertView = inflater.inflate(R.layout.list_item_icon_text_small, parent, false);
+				break;
+			case TYPE_PROFILE:
+				convertView = inflater.inflate(R.layout.list_item_profile, parent, false);
+				break;
 			}
 
 		}
 
-		switch (getItemViewType(position)) {
+		switch (itemViewType) {
 		case TYPE_HEADER: {
 			TextView textView = (TextView) convertView.findViewById(android.R.id.text1);
-			textView.setText(tabInfo.text);
+			textView.setText(drawerInfo.text);
 			break;
 		}
+		case TYPE_PROFILE:
+		case TYPE_SYSTEM:
 		case TYPE_TAB: {
 			TextView textView = (TextView) convertView.findViewById(android.R.id.text1);
 			ImageView imge = (ImageView) convertView.findViewById(android.R.id.icon);
-			textView.setText(tabInfo.text);
+			textView.setText(drawerInfo.text);
 
-			if (tabInfo.image != null) {
-				Drawable d = Util.getDrawableByUri(tabInfo.image);
-				imge.setImageDrawable(d);
+			if (drawerInfo.image != null) {
+				imge.setImageURI(drawerInfo.image);
 			} else {
-				imge.setImageResource(tabInfo.imageId);
+				imge.setImageResource(drawerInfo.imageId);
+			}
+
+			if (drawerInfo.color != Color.TRANSPARENT && convertView.getBackground() != null) {
+				convertView.getBackground().setColorFilter(
+						new PorterDuffColorFilter(ColorUtil.addAlpha(150, drawerInfo.color), Mode.SRC_ATOP));
 			}
 			break;
 		}

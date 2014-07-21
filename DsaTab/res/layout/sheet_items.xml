@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SlidingPaneLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/sheet_items"
-    android:layout_width="match_parent"
-    android:layout_height="fill_parent"
-    android:layout_margin="@dimen/default_gap"
-    android:layout_weight="1"
-    android:orientation="horizontal" >
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="250dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="0"
         android:background="?attr/listShadowBackground"
         android:orientation="vertical" >
 
@@ -25,37 +23,47 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:background="?attr/listShadowBackground"
             android:divider="@null" />
 
-        <Button
-            android:id="@+id/container_add"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableLeft="?attr/imgSwordAdd"
-            android:ellipsize="middle"
-            android:maxLines="2"
-            android:text="@string/add_container" />
-
     </LinearLayout>
-
-    <com.haarman.listviewanimations.view.DynamicListView
-        android:id="@android:id/list"
-        android:layout_width="0dp"
+    
+    <FrameLayout android:layout_width="500dp"
         android:layout_height="match_parent"
-        android:layout_weight="3"
-        android:divider="@null"
-        android:visibility="gone" />
+        android:layout_weight="1" >
 
-    <com.rokoder.android.lib.support.v4.widget.GridViewCompat
-        android:id="@+id/workspace"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3"
-        android:columnWidth="@dimen/workspace_cell_width"
-        android:clipChildren="true"
-        android:numColumns="auto_fit"
-        android:stretchMode="none"
-        android:listSelector="?attr/listItemBackground"
-        android:drawSelectorOnTop="true" />
+	    <com.haarman.listviewanimations.view.DynamicListView
+	        android:id="@android:id/list"
+	        android:layout_margin="@dimen/default_gap"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        
+	        android:divider="@null"
+	        android:visibility="gone" />
+	
+	    <com.rokoder.android.lib.support.v4.widget.GridViewCompat
+	        android:id="@+id/workspace"
+	        android:layout_margin="@dimen/default_gap"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"        
+	        android:columnWidth="@dimen/workspace_cell_width"
+	        android:clipChildren="true"
+	        android:numColumns="auto_fit"
+	        android:stretchMode="none"
+	        android:listSelector="?attr/listItemBackground"
+	        android:drawSelectorOnTop="true" />
+	    
+	    <TextView
+	        android:id="@+android:id/empty"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        android:drawablePadding="10dp"
+	        android:drawableTop="?attr/imgEmpty"
+	        android:gravity="center"
+	        android:text="@string/message_empty"
+	        android:visibility="gone" >
+	    </TextView>
 
-</LinearLayout>
+    </FrameLayout>
+</android.support.v4.widget.SlidingPaneLayout>

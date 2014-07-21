@@ -3,10 +3,11 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="?attr/listItemBackground"
-    android:divider="@drawable/divider_vertical_holo_light"
+    android:divider="?attr/dividerVertical"
     android:showDividers="middle"
     android:dividerPadding="8dp"
-    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:orientation="horizontal"
+    android:minHeight="?attr/listPreferredItemHeight"
     android:paddingLeft="0dp"
     android:paddingRight="0dp" >
 

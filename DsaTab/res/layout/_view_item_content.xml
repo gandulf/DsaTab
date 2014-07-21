@@ -9,16 +9,6 @@
     auto:orientation="vertical"
     auto:useDefaultMargins="true" >
 
-    <TextView
-        android:id="@+id/popup_edit_name_label"
-        style="?android:attr/listSeparatorTextViewStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        auto:layout_column="1"
-        auto:layout_gravity="start|end"
-        auto:layout_row="0"
-        android:text="@string/label_name" />
-
     <ImageView
         android:id="@+id/popup_edit_icon"
         style="?attr/iconImageViewStyle"
@@ -27,124 +17,61 @@
         auto:layout_column="0"
         auto:layout_gravity="bottom|right"
         auto:layout_row="0"
-        auto:layout_rowSpan="2" />
+        auto:layout_rowSpan="1" />
 
-    <TextView
+    <com.thebnich.floatinghintedittext.FloatingHintTextView
         android:id="@+id/popup_edit_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         auto:layout_column="1"
         auto:layout_gravity="start|end"
-        auto:layout_row="1" />
+        auto:layout_row="0"
+        android:hint="@string/label_name" />
 
-    <TextView
-        android:id="@+id/popup_edit_title_label"
-        style="?android:attr/listSeparatorTextViewStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        auto:layout_column="0"
-        auto:layout_columnSpan="2"
-        auto:layout_gravity="start|end"
-        auto:layout_row="2"
-        android:text="@string/label_titel" />
-
-    <TextView
+    <com.thebnich.floatinghintedittext.FloatingHintTextView
         android:id="@+id/popup_edit_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         auto:layout_columnSpan="2"
         auto:layout_gravity="start|end"
-        auto:layout_row="3" />
+        auto:layout_column="0"
+        auto:layout_row="1"
+        android:hint="@string/label_titel" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         auto:layout_columnSpan="2"
         auto:layout_gravity="fill_horizontal"
-        auto:layout_row="4" >
+        auto:layout_row="2" >
 
-        <TextView
-            android:id="@+id/popup_edit_price_label"
-            style="?android:attr/listSeparatorTextViewStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="4dp"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:text="@string/label_price" />
-
-        <TextView
-            android:id="@+id/popup_edit_weight_label"
-            style="?android:attr/listSeparatorTextViewStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:text="@string/label_weight" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        auto:layout_columnSpan="2"
-        auto:layout_gravity="fill_horizontal"
-        auto:layout_row="5" >
-
-        <TextView
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
             android:id="@+id/popup_edit_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            auto:layout_gravity="right|fill_horizontal"
-            android:gravity="right" />
+            auto:layout_gravity="left|fill_horizontal"
+            android:hint="@string/label_price" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            auto:layout_gravity="left|center_vertical"
-            android:text="@string/label_kreuzer"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
             android:id="@+id/popup_edit_weight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:layout_weight="1"
-            auto:layout_gravity="right|fill_horizontal"
-            android:gravity="right" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            auto:layout_gravity="right|center_vertical"
-            android:text="@string/label_ounces"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            auto:layout_gravity="left|fill_horizontal"
+            android:hint="@string/label_weight" />
+        
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/popup_edit_category_label"
-        style="?android:attr/listSeparatorTextViewStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        auto:layout_column="0"
-        auto:layout_columnSpan="2"
-        auto:layout_gravity="start|end"
-        auto:layout_row="8"
-        android:text="@string/label_category" />
-
-    <TextView
+    <com.thebnich.floatinghintedittext.FloatingHintTextView
         android:id="@+id/popup_edit_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         auto:layout_columnSpan="2"
         auto:layout_gravity="start|end"
-        auto:layout_row="9" />
+        auto:layout_row="3"
+        android:hint="@string/label_category" />
 
     <android.support.v7.widget.Space
         android:id="@+id/space1"

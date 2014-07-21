@@ -6,20 +6,20 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AbsListView.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
@@ -50,6 +50,8 @@ public class TabListableConfigFragment extends Fragment implements View.OnClickL
 
 	private CheckBox normal, favorites, unused, modifier;
 
+	private ImageButton addListItem;
+
 	private DynamicListView listItemList;
 	private ListItemConfigAdapter listItemAdapter;
 	private AnimateAdapter<ListItem> animateListItemAdapter;
@@ -71,14 +73,8 @@ public class TabListableConfigFragment extends Fragment implements View.OnClickL
 		listItemList = (DynamicListView) root.findViewById(android.R.id.list);
 		listItemList.setDivider(null);
 
-		Button button = (Button) getLayoutInflater(getArguments()).inflate(R.layout._button_borderless, listItemList,
-				false);
-		button.setId(R.id.option_add);
-		button.setText("Listeneintrag hinzufügen");
-		button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_menu_add, 0, 0, 0);
-		button.setOnClickListener(this);
-		button.setLayoutParams(new AbsListView.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-		listItemList.addFooterView(button);
+		addListItem = (ImageButton) root.findViewById(R.id.popup_edit_add_list_item);
+		addListItem.setOnClickListener(this);
 
 		spinner.setAdapter(new SpinnerSimpleAdapter<String>(getActivity(), BaseFragment.activities));
 
@@ -248,7 +244,12 @@ public class TabListableConfigFragment extends Fragment implements View.OnClickL
 				public void onClick(DialogInterface dialog, int which) {
 					switch (which) {
 					case DialogInterface.BUTTON_POSITIVE:
-						listItem.setName(editText.getText().toString());
+
+						if (TextUtils.isEmpty(editText.getText()))
+							listItem.setName(null);
+						else
+							listItem.setName(editText.getText().toString());
+
 						Util.hideKeyboard(editText);
 						listItemAdapter.notifyDataSetChanged();
 						break;
@@ -273,7 +274,7 @@ public class TabListableConfigFragment extends Fragment implements View.OnClickL
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.option_add:
+		case R.id.popup_edit_add_list_item:
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 

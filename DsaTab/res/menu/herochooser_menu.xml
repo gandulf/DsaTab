@@ -8,13 +8,13 @@
     
     <item
         android:id="@+id/option_load_example_heroes"
-        android:icon="@drawable/ic_action_file_dark"
+        android:icon="@drawable/dsa_character"
         app:showAsAction="never"
         android:title="Beispiel Helden laden"/>
     
     <item
         android:id="@+id/option_items"
-        android:icon="?attr/imgBarSwordAdd"
+        android:icon="@drawable/dsa_items"
         app:showAsAction="never"
         android:title="@string/items"/>
     <item

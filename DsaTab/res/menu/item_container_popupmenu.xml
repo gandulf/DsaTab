@@ -2,7 +2,7 @@
 
     <item
         android:id="@+id/option_add"
-        android:icon="?attr/imgBarSwordAdd"
+        android:icon="@drawable/dsa_bag_add"
         app:showAsAction="withText|ifRoom"
         android:title="@string/label_create">
     </item>

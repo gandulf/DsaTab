@@ -2,7 +2,7 @@
 
     <item
         android:id="@+id/option_item_add_table"
-        android:icon="?attr/imgBarSwordAdd"
+        android:icon="@drawable/dsa_items_add"
         app:showAsAction="withText|ifRoom"
         android:title="@string/add_item"/>
     <item

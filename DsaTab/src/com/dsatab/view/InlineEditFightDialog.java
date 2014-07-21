@@ -62,6 +62,7 @@ public class InlineEditFightDialog extends AlertDialog implements DialogInterfac
 			editAt.setMinValue(valueAt.getMinimum());
 			editAt.setMaxValue(valueAt.getMaximum());
 			editAt.setValue(valueAt.getValue());
+
 		} else {
 			singleValued = true;
 		}
@@ -199,6 +200,10 @@ public class InlineEditFightDialog extends AlertDialog implements DialogInterfac
 		numberPicker = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_text);
 		editAt = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_at);
 		editPa = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_pa);
+
+		numberPicker.setWrapSelectorWheel(false);
+		editAt.setWrapSelectorWheel(false);
+		editPa.setWrapSelectorWheel(false);
 
 		textFreeValue = (TextView) popupcontent.findViewById(R.id.popup_edit_free_value);
 		textFreeLabel = (TextView) popupcontent.findViewById(R.id.popup_edit_free_label);

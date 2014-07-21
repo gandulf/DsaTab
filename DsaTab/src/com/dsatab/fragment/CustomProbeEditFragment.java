@@ -26,7 +26,7 @@ import com.dsatab.data.Probe.ProbeType;
 import com.dsatab.data.adapter.SpinnerSimpleAdapter;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 import com.dsatab.util.Util;
-import com.dsatab.view.PictureChooserDialog;
+import com.dsatab.view.ImageChooserDialog;
 
 public class CustomProbeEditFragment extends Fragment implements OnClickListener, OnItemSelectedListener {
 
@@ -202,7 +202,7 @@ public class CustomProbeEditFragment extends Fragment implements OnClickListener
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.popup_edit_icon:
-			pickPortrait();
+			pickIcon();
 			break;
 
 		default:
@@ -230,17 +230,12 @@ public class CustomProbeEditFragment extends Fragment implements OnClickListener
 		return customProbe;
 	}
 
-	private void pickPortrait() {
-		final PictureChooserDialog pdialog = new PictureChooserDialog(getActivity());
+	private void pickIcon() {
+		final ImageChooserDialog pdialog = new ImageChooserDialog(getActivity());
 
-		List<Integer> itemIcons = DsaTabApplication.getInstance().getConfiguration().getItemIcons();
-
-		List<Uri> portraitPaths = new ArrayList<Uri>(itemIcons.size());
-		for (Integer resId : itemIcons) {
-			portraitPaths.add(Util.getUriForResourceId(resId));
-		}
-
-		pdialog.setImages(portraitPaths);
+		List<Integer> itemIcons = DsaTabApplication.getInstance().getConfiguration().getDsaIcons();
+		pdialog.setImageIds(itemIcons);
+		pdialog.setGridColumnWidth(getResources().getDimensionPixelSize(R.dimen.icon_button_size_plain));
 		pdialog.setScaleType(ScaleType.FIT_CENTER);
 		pdialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
 

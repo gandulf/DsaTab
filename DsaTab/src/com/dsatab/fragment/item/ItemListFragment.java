@@ -114,8 +114,14 @@ public class ItemListFragment extends BaseListFragment implements TabListener, O
 
 							switch (menuItem.getItemId()) {
 							case R.id.option_edit:
-								ItemsActivity.edit(fragment.getActivity(), fragment.getHeroKey(), item,
-										ItemsActivity.ACTION_EDIT);
+
+								if (fragment.getActivity() instanceof ItemsActivity) {
+									ItemsActivity itemsActivity = ((ItemsActivity) fragment.getActivity());
+									itemsActivity.editItem(item, null);
+								} else {
+									ItemsActivity.edit(fragment.getActivity(), fragment.getHeroKey(), item,
+											ItemsActivity.ACTION_EDIT);
+								}
 								break;
 							case R.id.option_delete: {
 								DataManager.deleteItem(item);
@@ -127,7 +133,7 @@ public class ItemListFragment extends BaseListFragment implements TabListener, O
 					}
 				}
 				if (notifyChanged) {
-					Util.notifyDatasetChanged(list);
+					fragment.refresh();
 				}
 			}
 			mode.finish();
@@ -350,7 +356,7 @@ public class ItemListFragment extends BaseListFragment implements TabListener, O
 		MenuItemCompat.setActionView(item, searchView);
 		// --
 
-		inflater.inflate(R.menu.menuitem_add, menu);
+		inflater.inflate(R.menu.menuitem_add_items, menu);
 
 		super.onCreateOptionsMenu(menu, inflater);
 	}
@@ -384,7 +390,13 @@ public class ItemListFragment extends BaseListFragment implements TabListener, O
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.option_add) {
-			ItemsActivity.insert(getActivity(), getHeroKey(), ItemsActivity.ACTION_CREATE);
+
+			if (getActivity() instanceof ItemsActivity) {
+				ItemsActivity itemsActivity = (ItemsActivity) getActivity();
+				itemsActivity.editItem(null, null);
+			} else {
+				ItemsActivity.insert(getActivity(), getHeroKey(), ItemsActivity.ACTION_CREATE);
+			}
 			return true;
 		} else {
 			return super.onOptionsItemSelected(item);
@@ -400,6 +412,12 @@ public class ItemListFragment extends BaseListFragment implements TabListener, O
 	public Item getItem(int position) {
 		Cursor cursor = (Cursor) itemAdapter.getItem(position);
 		return DataManager.getItemByCursor(cursor);
+	}
+
+	public void refresh() {
+		if (getActivity() != null) {
+			getActivity().getSupportLoaderManager().restartLoader(0, null, this);
+		}
 	}
 
 	public Collection<ItemType> getItemTypes() {

@@ -26,6 +26,8 @@ import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.modifier.Modificator;
 import com.dsatab.util.Hint;
 import com.dsatab.util.Util;
+import com.nineoldandroids.animation.ObjectAnimator;
+import com.nineoldandroids.view.ViewHelper;
 
 public class CharacterFragment extends BaseProfileFragment {
 
@@ -315,7 +317,16 @@ public class CharacterFragment extends BaseProfileFragment {
 		boolean showDetails = getPreferences().getBoolean(PREF_SHOW_BASEINFO, true);
 
 		if (showDetails) {
-			detailsSwitch.setImageResource(Util.getThemeResourceId(getActivity(), R.attr.imgExpanderClose));
+
+			if (animate) {
+				ObjectAnimator animator = ObjectAnimator.ofFloat(detailsSwitch, "rotation", 180, 0);
+				animator.setTarget(detailsSwitch);
+				animator.setDuration(250);
+				animator.start();
+			} else {
+				ViewHelper.setRotation(detailsSwitch, 0);
+			}
+
 			Animation slideup = AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in);
 
 			if (baseInfo == null || TextUtils.isEmpty(baseInfo.getAussehen())) {
@@ -355,7 +366,14 @@ public class CharacterFragment extends BaseProfileFragment {
 			}
 
 		} else {
-			detailsSwitch.setImageResource(Util.getThemeResourceId(getActivity(), R.attr.imgExpanderOpen));
+			if (animate) {
+				ObjectAnimator animator = ObjectAnimator.ofFloat(detailsSwitch, "rotation", 0, 180);
+				animator.setTarget(detailsSwitch);
+				animator.setDuration(250);
+				animator.start();
+			} else {
+				ViewHelper.setRotation(detailsSwitch, 180);
+			}
 
 			findViewById(R.id.row_aussehen).setVisibility(View.GONE);
 			findViewById(R.id.row_kultur).setVisibility(View.GONE);

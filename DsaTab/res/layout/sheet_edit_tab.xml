@@ -7,7 +7,7 @@
 
     <com.haarman.listviewanimations.view.DynamicListView
         android:id="@+id/popup_tab_list"
-        android:layout_width="300dp"
+        android:layout_width="250dp"
         android:layout_height="match_parent"
         android:layout_weight="0"
         android:background="?attr/listShadowBackground"
@@ -17,7 +17,8 @@
         android:id="@android:id/tabhost"
         android:layout_width="500dp"
         android:layout_height="match_parent"
-        android:layout_weight="1" >
+        android:layout_weight="1" 
+        android:clickable="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,7 +42,7 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical" >
 
-                    <EditText
+                    <com.thebnich.floatinghintedittext.FloatingHintEditText
                         android:id="@+id/popup_edit_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

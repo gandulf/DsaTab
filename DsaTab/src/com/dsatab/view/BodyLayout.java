@@ -198,7 +198,7 @@ public class BodyLayout extends FrameLayout {
 		rsWidthMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
 		rsHeightMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
 
-		woundSizePx = getContext().getResources().getDimensionPixelSize(R.dimen.icon_button_size);
+		woundSizePx = getContext().getResources().getDimensionPixelSize(R.dimen.icon_button_size_plain);
 		woundWidthMeasureSpec = MeasureSpec.makeMeasureSpec(woundSizePx, MeasureSpec.EXACTLY);
 		woundHeightMeasureSpec = MeasureSpec.makeMeasureSpec(woundSizePx, MeasureSpec.EXACTLY);
 	}

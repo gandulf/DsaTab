@@ -1465,7 +1465,7 @@ public class HeldenXmlParser {
 		for (Element attribute : domAttributes) {
 			writeAttribute(hero, hero,
 					hero.getAttribute(AttributeType.valueOf(attribute.getAttributeValue(Xml.KEY_NAME))), attribute);
-			Debug.verbose("Xml popuplate attr " + attribute);
+			Debug.trace("Xml popuplate attr " + attribute);
 		}
 
 		List<Element> talentList = DomUtil.getChildrenByTagName(heldElement, Xml.KEY_TALENTLISTE, Xml.KEY_TALENT);
@@ -1473,7 +1473,7 @@ public class HeldenXmlParser {
 		for (Element talentElement : talentList) {
 			try {
 				writeTalent(hero, hero.getTalent(talentElement.getAttributeValue(Xml.KEY_NAME)), talentElement);
-				Debug.verbose("Xml popuplate talent " + talentElement);
+				Debug.trace("Xml popuplate talent " + talentElement);
 			} catch (TalentTypeUnknownException e) {
 				Debug.error("Skipping talent since it's unknown " + talentElement, e);
 			}
@@ -1486,7 +1486,7 @@ public class HeldenXmlParser {
 			try {
 				writeCombatTalent(hero, hero.getCombatTalent(combatTalent.getAttributeValue(Xml.KEY_NAME)),
 						combatTalent);
-				Debug.verbose("Xml popuplate combattalent " + combatTalent);
+				Debug.trace("Xml popuplate combattalent " + combatTalent);
 			} catch (TalentTypeUnknownException e) {
 				Debug.error("Skipping combattalent since it's unknown " + combatTalent, e);
 			}
@@ -1496,7 +1496,7 @@ public class HeldenXmlParser {
 
 		for (Element spell : spellList) {
 			writeSpell(hero, hero.getSpell(spell.getAttributeValue(Xml.KEY_NAME)), spell);
-			Debug.verbose("Xml popuplate spell " + spell);
+			Debug.trace("Xml popuplate spell " + spell);
 		}
 
 		List<Element> sfs = DomUtil.getChildrenByTagName(heldElement, Xml.KEY_SF, Xml.KEY_SONDERFERTIGKEIT);
@@ -1505,14 +1505,14 @@ public class HeldenXmlParser {
 			Art art = hero.getArt(Art.normalizeName(sf.getAttributeValue(Xml.KEY_NAME)));
 			if (art != null) {
 				writeArt(art, sf);
-				Debug.verbose("Xml popuplate art " + sf);
+				Debug.trace("Xml popuplate art " + sf);
 			}
 		}
 
 		Element purseElement = heldElement.getChild(Xml.KEY_GELDBOERSE);
 		if (purseElement != null) {
 			writePurse(hero.getPurse(), purseElement);
-			Debug.verbose("Xml popuplate purse " + purseElement);
+			Debug.trace("Xml popuplate purse " + purseElement);
 		}
 
 		if (hero.getExperience() != null) {
@@ -1523,7 +1523,7 @@ public class HeldenXmlParser {
 			} else
 				experienceElement.removeAttribute(Xml.KEY_VALUE);
 
-			Debug.verbose("Xml popuplate xp " + experienceElement);
+			Debug.trace("Xml popuplate xp " + experienceElement);
 		}
 
 		if (hero.getFreeExperience() != null) {
@@ -1535,7 +1535,7 @@ public class HeldenXmlParser {
 			} else
 				freeExperienceElement.removeAttribute(Xml.KEY_VALUE);
 
-			Debug.verbose("Xml popuplate free xp " + freeExperienceElement);
+			Debug.trace("Xml popuplate free xp " + freeExperienceElement);
 		}
 
 		List<Element> equippedElements = equippmentNode.getChildren(Xml.KEY_HELDENAUSRUESTUNG);
@@ -1562,9 +1562,9 @@ public class HeldenXmlParser {
 			if (equippedItem != null) {
 				allEquippedItems.remove(equippedItem);
 				writeEquippedItem(hero, equippedItem, itemElement);
-				Debug.verbose("Xml popuplate equippeditem " + itemElement);
+				Debug.trace("Xml popuplate equippeditem " + itemElement);
 			} else {
-				Debug.verbose("Xml popuplate NO EQUIPPED ITEM found, removing it: " + itemElement);
+				Debug.trace("Xml popuplate NO EQUIPPED ITEM found, removing it: " + itemElement);
 				iter.remove();
 			}
 		}
@@ -1642,9 +1642,9 @@ public class HeldenXmlParser {
 				if (animal != null) {
 					allAnimals.remove(animal);
 					writeAnimal(hero, animal, itemElement);
-					Debug.verbose("Xml popuplate animal " + itemElement);
+					Debug.trace("Xml popuplate animal " + itemElement);
 				} else {
-					Debug.verbose("Xml popuplate NO ANIMAL found remove it " + itemElement);
+					Debug.trace("Xml popuplate NO ANIMAL found remove it " + itemElement);
 					iter.remove();
 				}
 			} else {
@@ -1655,9 +1655,9 @@ public class HeldenXmlParser {
 				if (item != null) {
 					allItems.remove(item);
 					writeItem(item, itemElement);
-					Debug.verbose("Xml popuplate item " + itemElement);
+					Debug.trace("Xml popuplate item " + itemElement);
 				} else {
-					Debug.verbose("Xml popuplate NO ITEM found remove it " + itemElement);
+					Debug.trace("Xml popuplate NO ITEM found remove it " + itemElement);
 					iter.remove();
 				}
 			}

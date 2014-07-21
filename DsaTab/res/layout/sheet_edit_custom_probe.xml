@@ -25,7 +25,7 @@
             auto:layout_row="0"
              />
 
-        <EditText
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
             android:id="@+id/popup_edit_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,18 +36,18 @@
             android:inputType="text" >
 
             <requestFocus />
-        </EditText>
+        </com.thebnich.floatinghintedittext.FloatingHintEditText>
 
-        <EditText
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
             android:id="@+id/popup_edit_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             auto:layout_column="0"
             auto:layout_columnSpan="2"
             android:hint="Beschreibung"
-            android:inputType="text">
-        </EditText>
-        <EditText
+            android:inputType="text"/>
+        
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
             android:id="@+id/popup_edit_footer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,8 +55,8 @@
             auto:layout_column="0"
             auto:layout_columnSpan="2"
             android:hint="Fußnote"
-            android:inputType="text">
-        </EditText>
+            android:inputType="text"/>
+        
         
         <TextView
             
@@ -66,7 +66,7 @@
             auto:layout_columnSpan="2"
             android:text="Probe" />
 
-        <EditText
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
             android:id="@+id/popup_edit_attributes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -74,10 +74,10 @@
             auto:layout_column="0"
             auto:layout_columnSpan="2"
             android:hint="Attribute (MU/KL/IN)"
-            android:inputType="text">
-        </EditText>
+            android:inputType="text"/>
         
-        <EditText
+        
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
             android:id="@+id/popup_edit_be"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -85,10 +85,10 @@
             auto:layout_column="0"
             auto:layout_columnSpan="2"
             android:hint="BE (BE-2)"
-            android:inputType="text">
-        </EditText>
+            android:inputType="text"/>
         
-        <EditText
+        
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
             android:id="@+id/popup_edit_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -96,8 +96,8 @@
             auto:layout_column="0"
             auto:layout_columnSpan="2"
             android:hint="Wert"
-            android:inputType="number">
-        </EditText>
+            android:inputType="number"/>
+        
         
         <TextView
             style="?android:attr/listSeparatorTextViewStyle"

@@ -1,17 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.dsatab.view.CheckableRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.dsatab.view.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:paddingRight="6dp"
-    android:paddingLeft="6dp">
-    
+    android:minHeight="?attr/listPreferredItemHeightSmall"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp" 
+    android:orientation="horizontal"
+    android:divider="?attr/dividerVertical"
+    android:showDividers="middle"    
+    android:dividerPadding="8dp">
+
     <TextView
         android:id="@android:id/text1"
         style="?android:attr/listSeparatorTextViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:focusable="true"
-        android:ellipsize="end" />
+        android:layout_gravity="bottom|left"
+        android:layout_weight="1"
+        
+        android:ellipsize="end"
+        android:focusable="true" />
 
-</com.dsatab.view.CheckableRelativeLayout>
+    
+    <ImageButton
+        android:id="@android:id/button1"        
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:background="?attr/selectableBackground"
+        android:padding="@dimen/default_gap"
+        android:visibility="gone"/>
+
+    
+    <ImageButton
+        android:id="@android:id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:background="?attr/selectableBackground"
+        android:padding="@dimen/default_gap"
+        android:visibility="gone"/>
+
+
+
+</com.dsatab.view.CheckableLinearLayout>

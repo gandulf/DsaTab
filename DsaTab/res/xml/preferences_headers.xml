@@ -4,7 +4,7 @@
 
     <header
     		unified:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsRulesFragment"
-    		unified:icon="?attr/imgSettings"
+    		unified:icon="@drawable/ic_menu_preferences"
     		unified:title="Regeln"
     		android:title="Regeln"
     		unified:summary="Einstellungen die Regeln von DSA betreffend."
@@ -32,7 +32,7 @@
             unified:preferenceRes="@xml/preferences_hc_header" />
 	
 	<header unified:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsSetupFragment"
-            unified:icon="?attr/imgSettings"
+            unified:icon="@drawable/ic_menu_preferences"
             unified:title="Setup"
             android:title="Setup"
             unified:summary="Systemeinstellungen DsaTab betreffend." 

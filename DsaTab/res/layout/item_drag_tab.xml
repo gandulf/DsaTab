@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     android:background="?attr/listItemBackground"
     android:minHeight="?android:attr/listPreferredItemHeight"
-    android:paddingLeft="@dimen/default_gap"
-    android:paddingRight="@dimen/default_gap" >
+    android:paddingRight="?attr/listPreferredItemPaddingRight"
+    android:paddingLeft="?attr/listPreferredItemPaddingLeft">
 
     <ImageView
         android:id="@+id/drag"
@@ -16,8 +16,8 @@
 
     <ImageView
         android:id="@+id/gen_tab"
-        android:layout_width="@dimen/icon_button_size"
-        android:layout_height="@dimen/icon_button_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical" />
 
     <TextView

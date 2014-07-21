@@ -5,7 +5,6 @@ import java.util.List;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -74,11 +73,6 @@ public class AttributeListFragment extends BaseAttributesFragment implements Her
 	 */
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		if (tfName != null) {
-			Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/harrington.ttf");
-			tfName.setTypeface(tf);
-		}
-
 		fillAttributeLabel(tfLabelLE, AttributeType.Lebensenergie_Aktuell);
 		fillAttributeLabel(tfLabelAU, AttributeType.Ausdauer_Aktuell);
 		fillAttributeLabel(tfLabelKE, AttributeType.Karmaenergie_Aktuell);

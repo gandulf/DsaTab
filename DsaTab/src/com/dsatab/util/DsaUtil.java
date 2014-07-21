@@ -151,36 +151,36 @@ public class DsaUtil {
 	public static int getResourceId(ItemType itemType) {
 		switch (itemType) {
 		case Waffen:
-			return R.drawable.icon_sword;
+			return R.drawable.dsa_sword;
 		case Fernwaffen:
-			return R.drawable.icon_bow;
+			return R.drawable.dsa_bow;
 		case Rüstung:
-			return R.drawable.icon_armor;
+			return R.drawable.dsa_armor_leather;
 		case Schilde:
-			return R.drawable.icon_shield;
+			return R.drawable.dsa_shield;
 		case Sonstiges:
-			return R.drawable.icon_misc;
+			return R.drawable.dsa_special;
 		default:
-			return R.drawable.icon_misc;
+			return R.drawable.dsa_cubes;
 		}
 	}
 
 	public static int getResourceId(DistanceWeapon spec) {
 		switch (spec.getTalentType()) {
 		case Wurfmesser:
-			return R.drawable.icon_wurfdolch;
+			return R.drawable.dsa_dagger_throw;
 		case Armbrust:
-			return R.drawable.icon_crossbow;
+			return R.drawable.dsa_crossbow;
 		case Wurfbeile:
-			return R.drawable.icon_wurfbeil;
+			return R.drawable.dsa_axe_throw;
 		case Wurfspeere:
-			return R.drawable.icon_speer;
+			return R.drawable.dsa_spear;
 		case Diskus:
-			return R.drawable.icon_diskus;
+			return R.drawable.dsa_diskus;
 		case Schleuder:
-			return R.drawable.icon_sling;
+			return R.drawable.dsa_sling;
 		default:
-			return R.drawable.icon_bow;
+			return R.drawable.dsa_bow;
 
 		}
 	}
@@ -189,12 +189,12 @@ public class DsaUtil {
 		if (spec.getType() != null) {
 			switch (spec.getType()) {
 			case Sonstiges:
-				return R.drawable.icon_misc;
+				return R.drawable.dsa_special;
 			default:
-				return R.drawable.icon_other;
+				return R.drawable.dsa_cubes;
 			}
 		} else {
-			return R.drawable.icon_other;
+			return R.drawable.dsa_cubes;
 		}
 	}
 
@@ -203,37 +203,37 @@ public class DsaUtil {
 		switch (weapon.getTalentType()) {
 		case Anderthalbhänder:
 		case Zweihandschwertersäbel:
-			return R.drawable.icon_2schwert;
+			return R.drawable.dsa_2sword;
 		case Hiebwaffen:
-			return R.drawable.icon_hieb;
+			return R.drawable.dsa_hieb;
 		case Stäbe:
-			return R.drawable.icon_stab;
+			return R.drawable.dsa_staff;
 		case Fechtwaffen:
-			return R.drawable.icon_fecht;
+			return R.drawable.dsa_fecht;
 		case Dolche:
-			return R.drawable.icon_messer;
+			return R.drawable.dsa_dagger;
 		case Speere:
-			return R.drawable.icon_speer;
+			return R.drawable.dsa_spear;
 		case Infanteriewaffen:
-			return R.drawable.icon_halberd;
+			return R.drawable.dsa_2hieb2;
 		case Zweihandhiebwaffen:
 			if (weapon.getItem().getName().contains("hammer")) {
-				return R.drawable.icon_hammer;
+				return R.drawable.dsa_hammer;
 			} else {
-				return R.drawable.icon_2hieb;
+				return R.drawable.dsa_2hieb;
 			}
 		case Zweihandflegel:
-			return R.drawable.icon_2hieb;
+			return R.drawable.dsa_2hieb;
 		case Kettenstäbe:
 		case Kettenwaffen:
-			return R.drawable.icon_kettenwaffen;
+			return R.drawable.dsa_kettenwaffe;
 		case Raufen:
 		case Ringen:
-			return R.drawable.icon_fist;
+			return R.drawable.dsa_fist;
 		case Peitsche:
-			return R.drawable.icon_whip;
+			return R.drawable.dsa_whip;
 		default:
-			return R.drawable.icon_sword;
+			return R.drawable.dsa_sword;
 		}
 	}
 
@@ -249,14 +249,14 @@ public class DsaUtil {
 		else if (spec instanceof Armor)
 			return getResourceId((Armor) spec);
 		else
-			return R.drawable.icon_misc;
+			return R.drawable.dsa_cubes;
 	}
 
 	public static int getResourceId(Shield spec) {
 		if (spec.isParadeWeapon() && !spec.isShield())
-			return R.drawable.icon_messer;
+			return R.drawable.dsa_dagger;
 		else
-			return R.drawable.icon_shield;
+			return R.drawable.dsa_shield;
 	}
 
 	public static int getResourceId(Armor armor) {
@@ -264,24 +264,25 @@ public class DsaUtil {
 
 		if (Armor.CATEGORY_HELM.equalsIgnoreCase(item.getCategory())) {
 			if (armor.getRs(ArmorPosition.Kopf) > 5)
-				return R.drawable.icon_helm_full;
+				return R.drawable.dsa_helm_full2;
 			else if (armor.getRs(ArmorPosition.Kopf) > 0)
-				return R.drawable.icon_helm_half;
+				return R.drawable.dsa_helm_full;
 			else
-				return R.drawable.icon_helm;
+				return R.drawable.dsa_helm_half;
 		} else if (Armor.CATEGORY_TORSO.equalsIgnoreCase(item.getCategory())
 				|| Armor.CATEGORY_FULL.equalsIgnoreCase(item.getCategory())) {
 			if (armor.getMaxRs() >= 5)
-				return R.drawable.icon_armor_metal;
+				return R.drawable.dsa_armor_plate;
 			else if (armor.getMaxRs() > 2)
-				return R.drawable.icon_armor_chain;
+				return R.drawable.dsa_armor_mail;
 			else
-				return R.drawable.icon_armor_cloth;
-		} else if (Armor.CATEGORY_ARME.equalsIgnoreCase(item.getCategory())
-				|| Armor.CATEGORY_BEINE.equalsIgnoreCase(item.getCategory())) {
-			return R.drawable.icon_greaves;
+				return R.drawable.dsa_armor_cloth;
+		} else if (Armor.CATEGORY_ARME.equalsIgnoreCase(item.getCategory())) {
+			return R.drawable.dsa_trousers;
+		} else if (Armor.CATEGORY_BEINE.equalsIgnoreCase(item.getCategory())) {
+			return R.drawable.dsa_armor_fist;
 		} else {
-			return R.drawable.icon_armor;
+			return R.drawable.dsa_armor_leather;
 		}
 	}
 }

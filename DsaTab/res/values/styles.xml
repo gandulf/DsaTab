@@ -2,19 +2,55 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:custom="http://schemas.android.com/apk/res-auto">
 
     <style name="Widget.IconImageView" parent="@style/FlipImageView.Checked">
-        <item name="android:scaleType">fitCenter</item>
-        <item name="android:minWidth">@dimen/icon_button_size</item>
-        <item name="android:minHeight">@dimen/icon_button_size</item>
-        <item name="android:background">@drawable/btn_plain_bg_normal</item>
         <item name="android:padding">@dimen/default_gap</item>
     </style>
-
-    <style name="TextValue" parent="@android:style/Widget.TextView">
+        
+    <style name="Widget.Button" parent="@android:style/Widget.Button">
         <item name="android:background">@drawable/btn_touch_light</item>
-        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
         <item name="android:minWidth">48dp</item>
         <item name="android:minHeight">48dp</item>
         <item name="android:gravity">center</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+    
+    <style name="Widget.Button.Dark">
+        <item name="android:background">@drawable/btn_touch_dark</item>
+    </style>
+
+    <style name="Widget.Button.Left">
+        <item name="android:background">@drawable/btn_touch_light_left</item>
+        <item name="android:layout_marginRight">0dp</item>
+    </style>
+    
+    <style name="Widget.Button.Left.Dark">
+        <item name="android:background">@drawable/btn_touch_dark_left</item>
+        <item name="android:layout_marginRight">0dp</item>
+    </style>
+
+    <style name="Widget.Button.Right">
+        <item name="android:background">@drawable/btn_touch_light_right</item>
+        <item name="android:layout_marginLeft">0dp</item>
+    </style>
+    
+    <style name="Widget.Button.Right.Dark">
+        <item name="android:background">@drawable/btn_touch_dark_right</item>
+        <item name="android:layout_marginLeft">0dp</item>
+    </style>  
+    
+    <style name="Widget.Button.Small">
+        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+        <item name="android:minWidth">30dp</item>
+        <item name="android:minHeight">25dp</item>
+    </style>
+    
+    <style name="Widget.Button.Small.Dark">
+        <item name="android:background">@drawable/btn_touch_small_dark</item>
+    </style>
+    
+    <style name="TextValue.NoTouch" parent="@android:style/Widget.TextView">
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:ellipsize">end</item>
         <item name="android:layout_marginTop">@dimen/default_gap</item>
@@ -23,53 +59,9 @@
         <item name="android:layout_marginRight">@dimen/default_gap</item>
     </style>
     
-    <style name="TextValue.Dark">
-        <item name="android:background">@drawable/btn_touch_dark</item>
-    </style>
-
-    <style name="TextValue.Left">
-        <item name="android:background">@drawable/btn_touch_light_left</item>
-        <item name="android:layout_marginRight">0dp</item>
-    </style>
-    
-    <style name="TextValue.Left.Dark">
-    </style>
-
-    <style name="TextValue.Right">
-        <item name="android:background">@drawable/btn_touch_light_right</item>
-        <item name="android:layout_marginLeft">0dp</item>
-    </style>
-    
-    <style name="TextValue.Right.Dark">
-    </style>  
-
-    <style name="TextValue.NoTouch">
-        <item name="android:background">@null</item>
-        <item name="android:minHeight">0dp</item>
-        <item name="android:minWidth">0dp</item>
-    </style>
-
-    <style name="TextValue.NoTouch.Dark">
-        <item name="android:background">@drawable/btn_touch_light</item>
-    </style>
-
-    <style name="TextValue.Small">
+	<style name="TextValue.NoTouch.Small">
         <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
-        <item name="android:minWidth">30dp</item>
-        <item name="android:minHeight">25dp</item>
     </style>
-    
-    <style name="TextValue.Small.Dark">
-        <item name="android:background">@drawable/btn_touch_dark</item>
-    </style>
-
-    <style name="TextValue.Small.NoTouch">
-        <item name="android:background">@null</item>
-        <item name="android:minWidth">0dp</item>
-        <item name="android:minHeight">0dp</item>
-    </style>
-    
-    <style name="TextValue.Small.NoTouch.Dark"></style>
 
     <style name="TextLabel" parent="@android:style/Widget.TextView">
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
@@ -88,13 +80,7 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:gravity">right</item>
     </style>
-
-    <style name="TextLabel.Popup">
-        <item name="android:textStyle">bold</item>
-        <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:ellipsize">end</item>
-    </style>
-
+    
     <style name="TextViewTitle" parent="@android:style/Widget.TextView">
         <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
         <item name="android:shadowColor">#ffffff</item>
@@ -104,7 +90,7 @@
     </style>
 
     <style name="FlipImageView.Checked" parent="@style/FlipImageView">
-        <item name="flipDrawable">@drawable/dsa_list_checked</item>
+        <item name="flipDrawable">@drawable/list_checked</item>
     </style>
 
 </resources>

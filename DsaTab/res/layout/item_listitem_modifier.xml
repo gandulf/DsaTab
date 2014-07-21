@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     android:background="?attr/listItemBackground"
     android:minHeight="?android:attr/listPreferredItemHeight"
-    android:paddingLeft="6dp"
-    android:paddingRight="6dp">
+    android:paddingRight="?attr/listPreferredItemPaddingRight"
+    android:paddingLeft="?attr/listPreferredItemPaddingLeft">
 
     <fr.castorflex.android.flipimageview.library.FlipImageView
         android:id="@android:id/icon1"
@@ -15,7 +15,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="4dip"
-        android:src="@drawable/icon_patch" />
+        android:src="@drawable/dsa_wound_patch" />
 
     <TextView
         android:id="@android:id/text1"
@@ -43,8 +43,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="4dip"
-        android:focusable="false" >
+        android:focusable="false"
+        android:layout_marginLeft="4dip">
     </CheckBox>
 
 </com.dsatab.view.CheckableRelativeLayout>

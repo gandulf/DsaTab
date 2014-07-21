@@ -117,11 +117,12 @@ public class ProbeInfo implements Cloneable {
 	}
 
 	public void applyBePattern(String beModifier) {
-		if (beModifier != null)
+		if (beModifier != null) {
 			bePattern = beModifier.toUpperCase(Locale.GERMAN);
-		else
+			bePattern = bePattern.replace("BEX", "BEx");
+		} else {
 			bePattern = null;
-
+		}
 		if (TextUtils.isEmpty(beModifier)) {
 			beFlag = BE_FLAG_NONE;
 		} else {

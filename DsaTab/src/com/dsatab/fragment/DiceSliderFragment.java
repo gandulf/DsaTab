@@ -6,16 +6,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import android.animation.LayoutTransition;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Shader;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -32,7 +32,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.dsatab.DsaTabApplication;
@@ -62,7 +61,11 @@ import com.dsatab.util.Debug;
 import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Hint;
 import com.dsatab.util.Util;
+import com.dsatab.view.listener.HideOnAnimationEndListener;
 import com.gandulf.guilib.view.SeekBarEx;
+import com.nineoldandroids.animation.ObjectAnimator;
+import com.nineoldandroids.animation.ValueAnimator;
+import com.nineoldandroids.view.ViewHelper;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelSlideListener;
 
@@ -71,19 +74,17 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 	public static final String TAG = "diceSliderFragment";
 
-	private static final int DICE_DELAY = 100;
+	private static final int DICE_DELAY = 1000;
 
 	private static final int HANDLE_DICE_20 = 1;
 	private static final int HANDLE_DICE_6 = 2;
 
 	private SlidingUpPanelLayout slidingUpPanelLayout;
 
-	private boolean sliderVisible = true;
+	private boolean sliderOpened = false;
 	private boolean modifierVisible = true;
 
-	private TableLayout tblDiceProbe;
-	private TextView tfDiceTalent, tfDiceTalentValue, tfDiceProbesAttr, tfDiceProbesAttrValues, tfEffect,
-			tfEffectValue;
+	private TextView tfDiceTalent, tfDiceTalentValue, tfDiceValue, tfEffectValue;
 	private ImageView tfDice20, tfDice6;
 
 	private ImageButton detailsSwitch;
@@ -92,7 +93,6 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 	private View executeButton;
 
-	private int dice20Count, dice6Count;
 	private Animation shakeDice20;
 	private Animation shakeDice6;
 
@@ -108,7 +108,6 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 	private ProbeData probeData;
 
-	private View modifiersContainer;
 	private LinearLayout modifiersLayout;
 
 	private SeekBarEx modifierWheel;
@@ -123,6 +122,8 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 	private DsaTabActivity activity;
 	private Hero hero;
 	private Context context;
+
+	private int originalHeight = 0;
 
 	/*
 	 * (non-Javadoc)
@@ -139,17 +140,17 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		// inflate using the cloned inflater, not the passed in default
 		View view = localInflater.inflate(R.layout.dice_slider_content, container, false);
 
-		BitmapDrawable tileMe = new BitmapDrawable(context.getResources(), BitmapFactory.decodeResource(getResources(),
-				R.drawable.bg_tab_dice));
-		tileMe.setTileModeX(Shader.TileMode.MIRROR);
-		tileMe.setTileModeY(Shader.TileMode.CLAMP);
-		view.setBackgroundDrawable(tileMe);
+		// BitmapDrawable tileMe = new BitmapDrawable(context.getResources(),
+		// BitmapFactory.decodeResource(getResources(),
+		// R.drawable.bg_tab_dice));
+		// tileMe.setTileModeX(Shader.TileMode.MIRROR);
+		// tileMe.setTileModeY(Shader.TileMode.CLAMP);
+		// view.setBackgroundDrawable(tileMe);
 
-		modifiersContainer = view.findViewById(R.id.probe_modifier);
 		modifiersLayout = (LinearLayout) view.findViewById(R.id.probe_modifier_container);
 
 		detailsSwitch = (ImageButton) view.findViewById(R.id.details_switch);
-		detailsSwitch.setVisibility(View.GONE);
+		detailsSwitch.setVisibility(View.INVISIBLE);
 
 		return view;
 	}
@@ -183,12 +184,12 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 	@Override
 	public void onPanelExpanded(View panel) {
-		setSliderVisible(true);
+		setSliderOpened(true);
 	}
 
 	@Override
 	public void onPanelCollapsed(View panel) {
-		setSliderVisible(false);
+		setSliderOpened(false);
 	}
 
 	@Override
@@ -207,26 +208,54 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		this.hero = hero;
 	}
 
-	public boolean isSliderVisible() {
-		return sliderVisible;
+	public boolean isSliderOpened() {
+		return sliderOpened;
 	}
 
-	public void setSliderVisible(boolean sliderVisible) {
-		this.sliderVisible = sliderVisible;
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void disableLayoutTransition() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB && linDiceResult.getLayoutTransition() != null) {
+			linDiceResult.setLayoutTransition(null);
+		}
+
+	}
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void enableLayoutTransition() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB && linDiceResult.getLayoutTransition() == null) {
+			linDiceResult.setLayoutTransition(new LayoutTransition());
+		}
+	}
+
+	public void setSliderOpened(boolean sliderVisible) {
+		this.sliderOpened = sliderVisible;
 		if (sliderVisible) {
 
-			if (!slidingUpPanelLayout.isExpanded()) {
+			if (!slidingUpPanelLayout.isExpanded() && !slidingUpPanelLayout.isSliding()) {
 				slidingUpPanelLayout.expandPane();
+				disableLayoutTransition();
 			}
 		} else {
-			if (slidingUpPanelLayout.isExpanded()) {
+			if (slidingUpPanelLayout.isExpanded() && !slidingUpPanelLayout.isSliding()) {
 				slidingUpPanelLayout.collapsePane();
+				disableLayoutTransition();
 			}
 
-			tblDiceProbe.setVisibility(View.GONE);
+			// tblDiceProbe.setVisibility(View.GONE);
+			tfDiceTalentValue.setVisibility(View.GONE);
+			tfDiceValue.setVisibility(View.GONE);
+			tfEffectValue.setVisibility(View.GONE);
+
 			executeButton.setVisibility(View.GONE);
-			modifiersContainer.setVisibility(View.GONE);
-			detailsSwitch.setVisibility(View.GONE);
+			modifiersLayout.setVisibility(View.GONE);
+			if (detailsSwitch.getVisibility() == View.VISIBLE) {
+				detailsSwitch.startAnimation(AnimationUtils.loadAnimation(context, R.anim.abc_fade_out));
+			}
+			detailsSwitch.setVisibility(View.INVISIBLE);
+			linDiceResult.setBackgroundResource(0);
+
+			shakeDice20.cancel();
+			shakeDice6.cancel();
 		}
 	}
 
@@ -235,15 +264,9 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		super.onActivityCreated(savedInstanceState);
 		init();
 
-		tblDiceProbe = (TableLayout) findViewById(R.id.dice_probe_table);
-		tblDiceProbe.setVisibility(View.GONE);
-
 		tfDiceTalent = (TextView) findViewById(R.id.dice_talent);
 		tfDiceTalentValue = (TextView) findViewById(R.id.dice_talent_value);
-		tfDiceProbesAttr = (TextView) findViewById(R.id.dice_probe);
-		tfDiceProbesAttrValues = (TextView) findViewById(R.id.dice_value);
-
-		tfEffect = (TextView) findViewById(R.id.dice_effect);
+		tfDiceValue = (TextView) findViewById(R.id.dice_value);
 		tfEffectValue = (TextView) findViewById(R.id.dice_effect_value);
 
 		tfDice20 = (ImageView) findViewById(R.id.dice_w20);
@@ -294,9 +317,8 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 				checkProbe(probeData);
 			}
 			break;
-		case R.id.dice_probe_table:
 		case R.id.details_switch:
-			setModifiersVisible(!isModifiersVisible());
+			setModifiersVisible(!isModifiersVisible(), true);
 			break;
 		}
 		if (v == tfDice20) {
@@ -354,7 +376,6 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		modifierWheel.setLabel(text2);
 
 		linearLayout.addView(editListItem);
-
 	}
 
 	private Modifier getManualModifier() {
@@ -421,8 +442,6 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 		if (effect != null) {
 			tfEffectValue.setVisibility(View.VISIBLE);
-			tfEffect.setVisibility(View.VISIBLE);
-
 			tfEffectValue.setText(effectFormat.format(effect));
 			if (erschwernis != null)
 				tfEffectValue.append(" (" + erschwernis + ")");
@@ -497,7 +516,6 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 			}
 		} else {
 			tfEffectValue.setVisibility(View.INVISIBLE);
-			tfEffect.setVisibility(View.INVISIBLE);
 		}
 	}
 
@@ -505,8 +523,6 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		// clear any pending w20 still in queue
 		mHandler.removeMessages(HANDLE_DICE_20);
 		mHandler.removeMessages(HANDLE_DICE_6);
-		dice20Count = 0;
-		dice6Count = 0;
 		linDiceResult.removeAllViews();
 		if (probeData != null) {
 			probeData.clearDice();
@@ -553,13 +569,6 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		probeData.probe = probe;
 		probeData.value = new Integer[] { value1, value2, value3 };
 
-		if (isModifiersVisible()) {
-			modifiersContainer.setVisibility(View.VISIBLE);
-			fillModifierList(modifiersLayout, true);
-		} else {
-			modifiersContainer.setVisibility(View.GONE);
-		}
-
 		Double result = null;
 		if (preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_AUTO_ROLL_DICE, true)) {
 			executeButton.setVisibility(View.GONE);
@@ -578,7 +587,7 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 	}
 
 	private void ensureVisibility() {
-		setSliderVisible(true);
+		setSliderOpened(true);
 	}
 
 	private void updateProgressView(ProbeData info, Modifier... modificators) {
@@ -674,9 +683,7 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		Probe probe = probeData.probe;
 
 		// --
-		tblDiceProbe.setVisibility(View.VISIBLE);
 		tfDiceTalent.setText(probe.getName());
-
 		if (probe.getProbeBonus() != null) {
 			tfDiceTalentValue.setText(Integer.toString(probe.getProbeBonus()));
 			tfDiceTalentValue.setVisibility(View.VISIBLE);
@@ -687,41 +694,105 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		// if no probe is present and all values are the same display them as
 		// bonus
 		if (isAttributesHidden(info)) {
-			tfDiceProbesAttr.setVisibility(View.GONE);
-			tfDiceProbesAttrValues.setVisibility(View.GONE);
+			tfDiceValue.setHint(null);
+			tfDiceValue.setVisibility(View.GONE);
 
-			tfDiceTalentValue.setText(Util.toString(info.value[0]));
-			tfDiceTalentValue.setVisibility(View.VISIBLE);
+			if (info.value[0] != null) {
+				tfDiceTalentValue.setText(Util.toString(info.value[0]));
+				tfDiceTalentValue.setVisibility(View.VISIBLE);
+			} else {
+				tfDiceTalentValue.setVisibility(View.INVISIBLE);
+			}
 		} else {
-			tfDiceProbesAttr.setText(probe.getProbeInfo().getAttributesString());
-			tfDiceProbesAttr.setVisibility(View.VISIBLE);
+			tfDiceValue.setHint(probe.getProbeInfo().getAttributesString());
 
-			tfDiceProbesAttrValues.setText(Util.toString(info.value[0]) + "/" + Util.toString(info.value[1]) + "/"
+			tfDiceValue.setText(Util.toString(info.value[0]) + "/" + Util.toString(info.value[1]) + "/"
 					+ Util.toString(info.value[2]));
-			tfDiceProbesAttrValues.setVisibility(View.VISIBLE);
+			tfDiceValue.setVisibility(View.VISIBLE);
 		}
 
 		detailsSwitch.setOnClickListener(this);
-		tblDiceProbe.setOnClickListener(this);
 
-		setModifiersVisible(isModifiersVisible());
+		setModifiersVisible(isModifiersVisible(), false);
 
 		getView().requestLayout();
 	}
 
-	private void setModifiersVisible(boolean visible) {
+	private void setModifiersVisible(boolean visible, boolean animate) {
 
+		if (detailsSwitch.getVisibility() != View.VISIBLE) {
+			detailsSwitch.startAnimation(AnimationUtils.loadAnimation(context, R.anim.abc_fade_in));
+		}
 		detailsSwitch.setVisibility(View.VISIBLE);
 
 		modifierVisible = visible;
 
-		if (!isModifiersVisible()) {
-			modifiersContainer.setVisibility(View.GONE);
-			detailsSwitch.setImageResource(Util.getThemeResourceId(context, R.attr.imgExpanderClose));
-		} else {
-			modifiersContainer.setVisibility(View.VISIBLE);
-			detailsSwitch.setImageResource(Util.getThemeResourceId(context, R.attr.imgExpanderOpen));
+		originalHeight = Math.max(originalHeight, modifiersLayout.getMeasuredHeight());
+
+		if (isModifiersVisible()) {
+			if (animate) {
+				ObjectAnimator animator = ObjectAnimator.ofFloat(detailsSwitch, "rotation", 180, 0);
+				animator.setTarget(detailsSwitch);
+				animator.setDuration(500);
+				animator.start();
+			} else {
+				ViewHelper.setRotation(detailsSwitch, 0);
+			}
+
+			// --
 			fillModifierList(modifiersLayout, true);
+			if (animate) {
+				modifiersLayout.setVisibility(View.VISIBLE);
+				ValueAnimator anim = ValueAnimator.ofInt(0, originalHeight);
+				anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+					@Override
+					public void onAnimationUpdate(ValueAnimator valueAnimator) {
+						int val = (Integer) valueAnimator.getAnimatedValue();
+						ViewGroup.LayoutParams layoutParams = modifiersLayout.getLayoutParams();
+						layoutParams.height = val;
+						modifiersLayout.setLayoutParams(layoutParams);
+					}
+				});
+				anim.setDuration(500);
+				anim.start();
+			} else {
+				modifiersLayout.setVisibility(View.VISIBLE);
+				ViewGroup.LayoutParams layoutParams = modifiersLayout.getLayoutParams();
+				layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+				modifiersLayout.setLayoutParams(layoutParams);
+			}
+
+		} else {
+			if (animate) {
+				ValueAnimator anim = ValueAnimator.ofInt(modifiersLayout.getHeight(), 0);
+				anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+					@Override
+					public void onAnimationUpdate(ValueAnimator valueAnimator) {
+						int val = (Integer) valueAnimator.getAnimatedValue();
+						ViewGroup.LayoutParams layoutParams = modifiersLayout.getLayoutParams();
+						layoutParams.height = val;
+						modifiersLayout.setLayoutParams(layoutParams);
+					}
+				});
+				anim.setDuration(500);
+				anim.addListener(new HideOnAnimationEndListener(modifiersLayout));
+				anim.start();
+			} else {
+				modifiersLayout.setVisibility(View.GONE);
+				ViewGroup.LayoutParams layoutParams = modifiersLayout.getLayoutParams();
+				layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+				modifiersLayout.setLayoutParams(layoutParams);
+			}
+			//
+
+			if (animate) {
+				ObjectAnimator animator = ObjectAnimator.ofFloat(detailsSwitch, "rotation", 0, 180);
+				animator.setTarget(detailsSwitch);
+				animator.setDuration(500);
+				animator.start();
+			} else {
+				ViewHelper.setRotation(detailsSwitch, 180);
+			}
 		}
 	}
 
@@ -995,22 +1066,18 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		return effect;
 	}
 
-	public int rollDice20(int delay, int referenceValue) {
+	protected int rollDice20(int delay, int referenceValue) {
 		int result = Dice.dice(20);
 		return rollDice20(delay, result, referenceValue);
 	}
 
-	public int rollDice20(int delay, int result, int referenceValue) {
-
-		dice20Count++;
-
+	protected int rollDice20(int delay, int result, int referenceValue) {
 		if (delay > 0 && preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_ANIM_ROLL_DICE, true)) {
 
-			if (dice20Count == 1 && (!shakeDice20.hasStarted() || shakeDice20.hasEnded())) {
+			if ((!shakeDice20.hasStarted() || shakeDice20.hasEnded())) {
 				shakeDice20.reset();
 				tfDice20.startAnimation(shakeDice20);
 			}
-
 			mHandler.sendMessageDelayed(Message.obtain(mHandler, HANDLE_DICE_20, result, referenceValue), delay);
 		} else {
 			showDice20(result, referenceValue);
@@ -1024,10 +1091,8 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 	}
 
 	public int rollDice6(int delay, int result) {
-		dice6Count++;
-
 		if (delay > 0 && preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_ANIM_ROLL_DICE, true)) {
-			if (dice6Count == 1 && (!shakeDice6.hasStarted() || shakeDice6.hasEnded())) {
+			if ((!shakeDice6.hasStarted() || shakeDice6.hasEnded())) {
 				shakeDice6.reset();
 				tfDice6.startAnimation(shakeDice6);
 			}
@@ -1042,7 +1107,6 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 	public int rollDice6() {
 		int result = Dice.dice(6);
-
 		return rollDice6(DICE_DELAY, result);
 	}
 
@@ -1067,16 +1131,26 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		res.setGravity(Gravity.CENTER);
 		res.setPadding(padding, 0, padding, 0);
 		res.setTextSize(TypedValue.COMPLEX_UNIT_PX, (width - res.getPaddingTop() - res.getPaddingBottom()) / 3);
+
+		addDice(res, width, width);
+
+		return res;
+	}
+
+	private void addDice(View res, int width, int height) {
+		enableLayoutTransition();
 		linDiceResult.addView(res, width, width);
 		if (preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_ANIM_ROLL_DICE, true)) {
 			res.startAnimation(AnimationUtils.loadAnimation(context, R.anim.flip_in));
 		}
 
-		if (linDiceResult.getWidth() > 0 && linDiceResult.getChildCount() * width > linDiceResult.getWidth()) {
+		if (linDiceResult.getChildCount() > 1 && linDiceResult.getWidth() > 0
+				&& linDiceResult.getChildCount() * width > linDiceResult.getWidth()) {
+			View dice = linDiceResult.getChildAt(0);
+
+			dice.startAnimation(AnimationUtils.loadAnimation(context, R.anim.dice_right));
 			linDiceResult.removeViewAt(0);
 		}
-
-		return res;
 	}
 
 	private ImageView showDice6(int value) {
@@ -1087,14 +1161,8 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 		res.setImageResource(Util.getDrawableByName("w6_" + value));
 		res.setPadding(padding, 0, padding, 0);
-		linDiceResult.addView(res, width, width);
-		if (preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_ANIM_ROLL_DICE, true)) {
-			res.startAnimation(AnimationUtils.loadAnimation(context, R.anim.flip_in));
-		}
 
-		if (linDiceResult.getWidth() > 0 && linDiceResult.getChildCount() * width > linDiceResult.getWidth()) {
-			linDiceResult.removeViewAt(0);
-		}
+		addDice(res, width, width);
 
 		return res;
 	}
@@ -1172,12 +1240,10 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 				switch (msg.what) {
 				case HANDLE_DICE_6: {
 					diceSlider.showDice6(result);
-					diceSlider.dice6Count--;
 					break;
 				}
 				case HANDLE_DICE_20: {
 					diceSlider.showDice20(result, msg.arg2);
-					diceSlider.dice20Count--;
 					break;
 				}
 				}

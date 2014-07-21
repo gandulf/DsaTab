@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
         
-        <EditText
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
             android:id="@+id/popup_edit_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,17 +22,15 @@
 
             <requestFocus>
             </requestFocus>
-        </EditText>
+        </com.thebnich.floatinghintedittext.FloatingHintEditText>
 
-        <EditText
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
             android:id="@+id/popup_edit_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/modifier_rule_hint"
             android:inputType="textMultiLine"
-            android:lines="3" >
-
-        </EditText>
+            android:lines="3" />
 
         <TextView
             android:id="@+id/popup_edit_info_help"
@@ -46,14 +44,14 @@
 
         </TextView>
         
-        <EditText
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
             android:id="@+id/popup_edit_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/label_info"
-            android:inputType="textShortMessage" >
+            android:inputType="textShortMessage" />
 
-        </EditText>
+        
 
         <CheckBox
             android:id="@+id/popup_edit_active"

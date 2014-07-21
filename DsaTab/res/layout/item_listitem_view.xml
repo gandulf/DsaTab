@@ -3,10 +3,10 @@
     xmlns:guilib="http://schemas.android.com/apk/com.gandulf.guilib"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:minHeight="?android:attr/listPreferredItemHeight"
     android:background="?attr/listItemBackground"
-    android:paddingRight="6dp"
-    android:paddingLeft="6dp">
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:paddingRight="?attr/listPreferredItemPaddingRight"
+    android:paddingLeft="?attr/listPreferredItemPaddingLeft">
 
     <fr.castorflex.android.flipimageview.library.FlipImageView
         android:id="@android:id/icon1"
@@ -27,12 +27,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignWithParentIfMissing="true"
+        android:layout_marginTop="@dimen/default_gap"
         android:layout_toLeftOf="@android:id/icon2"
         android:layout_toRightOf="@android:id/icon1"
         android:ellipsize="marquee"
-        android:singleLine="true"
         android:marqueeRepeatLimit="marquee_forever"
-        android:scrollHorizontally="true"        
+        android:scrollHorizontally="true"
+        android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textStyle="bold" />
 
@@ -43,6 +44,8 @@
         android:layout_alignLeft="@android:id/text1"
         android:layout_alignRight="@android:id/text1"
         android:layout_below="@android:id/text1"
+        android:ellipsize="marquee"
+        android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textStyle="normal" />
 
@@ -54,6 +57,8 @@
         android:layout_alignRight="@android:id/text1"
         android:layout_below="@android:id/text2"
         android:gravity="bottom|right"
+        android:singleLine="true"
+        android:ellipsize="marquee"
         android:textAllCaps="true"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textSize="12sp"
