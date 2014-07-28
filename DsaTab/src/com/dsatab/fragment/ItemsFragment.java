@@ -89,7 +89,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	protected Callback mItemGridCallback;
 	protected Callback mItemListCallback;
 
-	private Set<ItemType> categoriesSelected;
+	private Set<ItemType> categoriesSelected = new HashSet<ItemType>(Arrays.asList(ItemType.values()));
 
 	private static final class ItemsActionMode implements ActionMode.Callback {
 
@@ -490,13 +490,13 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setHasOptionsMenu(true);
 
 		SharedPreferences pref = getActivity().getPreferences(Context.MODE_PRIVATE);
 		mScreenType = pref.getString(PREF_KEY_SCREEN_TYPE, TYPE_LIST);
 
 		categoriesSelected = new HashSet<ItemType>(Arrays.asList(ItemType.values()));
 
+		setHasOptionsMenu(true);
 	}
 
 	/*
@@ -878,6 +878,15 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		} else {
 			itemGridCompat.setVisibility(View.GONE);
 			itemList.setVisibility(View.VISIBLE);
+		}
+	}
+
+	@Override
+	protected View getListView() {
+		if (TYPE_GRID.equals(mScreenType)) {
+			return itemGridCompat;
+		} else {
+			return itemList;
 		}
 	}
 

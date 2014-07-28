@@ -150,6 +150,8 @@ public class ImageChooserDialog extends AlertDialog implements AdapterView.OnIte
 				tv = (ImageView) convertView;
 			} else {
 				tv = new ImageView(getContext());
+				int gap = getContext().getResources().getDimensionPixelSize(R.dimen.default_gap);
+				tv.setPadding(gap, gap, gap, gap);
 				tv.setScaleType(scaleType);
 			}
 

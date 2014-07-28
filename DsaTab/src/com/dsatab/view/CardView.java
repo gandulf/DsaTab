@@ -72,11 +72,13 @@ public class CardView extends ImageView implements Checkable {
 	/**
 	 * 
 	 */
-	@TargetApi(11)
+
 	private void init() {
 
 		setDrawingCacheEnabled(false);
-		setBackgroundResource(Util.getThemeResourceId(getContext(), R.attr.listItemBackground));
+		if (isFocusable()) {
+			setBackgroundResource(Util.getThemeResourceId(getContext(), R.attr.listItemBackground));
+		}
 		setScaleType(ScaleType.CENTER_INSIDE);
 
 		textBox = new Rect();
@@ -88,6 +90,11 @@ public class CardView extends ImageView implements Checkable {
 			paint.setTypeface(DsaTabApplication.getInstance().getPoorRichardFont());
 		}
 
+		initHoneycomb();
+	}
+
+	@TargetApi(11)
+	private void initHoneycomb() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 		}

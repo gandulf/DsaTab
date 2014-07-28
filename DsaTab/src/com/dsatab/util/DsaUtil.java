@@ -5,10 +5,21 @@ import android.content.SharedPreferences;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabPreferenceActivity;
+import com.dsatab.data.Art;
+import com.dsatab.data.Attribute;
+import com.dsatab.data.CombatDistanceTalent;
+import com.dsatab.data.CombatMeleeAttribute;
+import com.dsatab.data.CombatProbe;
+import com.dsatab.data.CombatShieldTalent;
+import com.dsatab.data.CustomProbe;
+import com.dsatab.data.Probe;
+import com.dsatab.data.Spell;
+import com.dsatab.data.Talent;
 import com.dsatab.data.enums.ArmorPosition;
 import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.items.Armor;
 import com.dsatab.data.items.DistanceWeapon;
+import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemSpecification;
 import com.dsatab.data.items.MiscSpecification;
@@ -257,6 +268,56 @@ public class DsaUtil {
 			return R.drawable.dsa_dagger;
 		else
 			return R.drawable.dsa_shield;
+	}
+
+	public static int getResourceId(Probe probe) {
+
+		if (probe instanceof CombatProbe) {
+			CombatProbe combatProbe = (CombatProbe) probe;
+
+			EquippedItem equippedItem = combatProbe.getEquippedItem();
+
+			if (combatProbe.isAttack()) {
+				if (equippedItem != null && equippedItem.getItemSpecification() != null) {
+					return getResourceId(equippedItem.getItemSpecification());
+				} else {
+					return R.drawable.dsa_attack;
+				}
+			} else {
+				return R.drawable.dsa_shield_round;
+			}
+		} else if (probe instanceof CombatMeleeAttribute) {
+			CombatMeleeAttribute combatProbe = (CombatMeleeAttribute) probe;
+			if (combatProbe.isAttack())
+				return R.drawable.dsa_attack;
+			else
+				return R.drawable.dsa_shield_round;
+		} else if (probe instanceof CustomProbe) {
+			return R.drawable.dsa_dice;
+		} else if (probe instanceof CombatDistanceTalent) {
+			return R.drawable.dsa_bow;
+		} else if (probe instanceof CombatShieldTalent) {
+			return R.drawable.dsa_shield_round;
+		} else if (probe instanceof CombatMeleeAttribute) {
+			return R.drawable.dsa_attack;
+		} else if (probe instanceof Spell) {
+			return R.drawable.dsa_spells;
+		} else if (probe instanceof Art) {
+			return R.drawable.dsa_arts;
+		} else if (probe instanceof Talent) {
+			return R.drawable.dsa_talents;
+		} else if (probe instanceof Attribute) {
+			Attribute attribute = (Attribute) probe;
+
+			switch (attribute.getType()) {
+			case Ausweichen:
+				return R.drawable.dsa_ausweichen;
+			default:
+				return R.drawable.dsa_character;
+			}
+		}
+
+		return R.drawable.ic_menu_play_clip;
 	}
 
 	public static int getResourceId(Armor armor) {

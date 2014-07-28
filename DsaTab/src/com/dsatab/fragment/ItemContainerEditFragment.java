@@ -117,7 +117,7 @@ public class ItemContainerEditFragment extends Fragment implements OnClickListen
 		final ImageChooserDialog pdialog = new ImageChooserDialog(getActivity());
 
 		pdialog.setImageIds(DsaTabApplication.getInstance().getConfiguration().getDsaIcons());
-		pdialog.setGridColumnWidth(getResources().getDimensionPixelSize(R.dimen.icon_button_size_plain));
+		pdialog.setGridColumnWidth(getResources().getDimensionPixelSize(R.dimen.icon_button_size));
 		pdialog.setScaleType(ScaleType.FIT_CENTER);
 		pdialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
 

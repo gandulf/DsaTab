@@ -45,6 +45,7 @@ public class ItemViewFragment extends BaseFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
+		setRetainInstance(true);
 	}
 
 	@Override
@@ -117,7 +118,7 @@ public class ItemViewFragment extends BaseFragment {
 
 	public void showCard() {
 		if (item != null && imageView != null) {
-			if (item.hasImage()) {
+			if (item.hasImage() || item.isImageTextOverlay()) {
 				imageView.setItem(item);
 				imageView.setVisibility(View.VISIBLE);
 			} else {

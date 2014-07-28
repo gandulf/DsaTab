@@ -7,7 +7,6 @@ import android.view.View;
 import com.dsatab.activity.DsaTabActivity;
 import com.dsatab.data.items.EquippedItem;
 import com.dsatab.fragment.BaseFragment;
-import com.dsatab.view.ArcheryChooserDialog;
 
 public class TargetListener implements View.OnClickListener {
 
@@ -28,10 +27,7 @@ public class TargetListener implements View.OnClickListener {
 			BaseFragment fragment = mFragment.get();
 
 			if (fragment != null && fragment.getActivity() instanceof DsaTabActivity) {
-				ArcheryChooserDialog targetChooserDialog = new ArcheryChooserDialog(
-						(DsaTabActivity) fragment.getActivity());
-				targetChooserDialog.setWeapon(item);
-				targetChooserDialog.show();
+				fragment.checkProbe(item.getCombatProbeAttacke(), false);
 			}
 		}
 	}
