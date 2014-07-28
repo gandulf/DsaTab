@@ -5,22 +5,20 @@
     xmlns:guilib="http://schemas.android.com/apk/com.gandulf.guilib"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
     android:baselineAligned="false"
+    android:orientation="vertical"
     android:padding="@dimen/default_gap" >
 
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            layout="@layout/_edit_item_content" />
-    
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        layout="@layout/_edit_item_content" />
 
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            layout="@layout/_edit_item_image" />
-    
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        layout="@layout/_edit_item_image" />
 
 </LinearLayout>

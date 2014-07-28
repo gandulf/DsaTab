@@ -1,5 +1,6 @@
 package com.dsatab.data.items;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 import android.content.Context;
@@ -19,7 +20,7 @@ import com.dsatab.data.listable.Listable;
 import com.dsatab.util.Util;
 import com.gandulf.guilib.util.Debug;
 
-public class EquippedItem implements ItemCard, Listable {
+public class EquippedItem implements ItemCard, Listable, Serializable {
 
 	public static final String NAME_PREFIX_RUESTUNG = "ruestung";
 

@@ -184,14 +184,25 @@ public abstract class BaseListFragment extends BaseFragment implements OnItemLon
 				if (emptyText != null && emptyView instanceof TextView) {
 					((TextView) emptyView).setText(emptyText);
 				}
-				findViewById(android.R.id.list).setVisibility(View.GONE);
+
+				View list = getListView();
+				if (list != null) {
+					list.setVisibility(View.GONE);
+				}
 			} else {
 				emptyView.setVisibility(View.GONE);
-				findViewById(android.R.id.list).setVisibility(View.VISIBLE);
+				View list = getListView();
+				if (list != null) {
+					list.setVisibility(View.VISIBLE);
+				}
 			}
 			emptyView.setOnClickListener(this);
 		}
 
+	}
+
+	protected View getListView() {
+		return findViewById(android.R.id.list);
 	}
 
 	protected void refreshEmptyView(Adapter adapter) {

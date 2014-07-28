@@ -310,7 +310,7 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 
 		pdialog.setTitle(R.string.title_choose_icon);
 		pdialog.setImageIds(DsaTabApplication.getInstance().getConfiguration().getDsaIcons());
-		pdialog.setGridColumnWidth(getResources().getDimensionPixelSize(R.dimen.icon_button_size_plain));
+		pdialog.setGridColumnWidth(getResources().getDimensionPixelSize(R.dimen.icon_button_size));
 		pdialog.setScaleType(ScaleType.FIT_CENTER);
 		pdialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
 

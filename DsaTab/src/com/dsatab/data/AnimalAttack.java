@@ -1,11 +1,13 @@
 package com.dsatab.data;
 
+import java.io.Serializable;
+
 import com.dsatab.DsaTabApplication;
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.data.enums.Position;
 import com.dsatab.data.enums.TalentType;
 
-public class AnimalAttack implements CombatTalent {
+public class AnimalAttack implements CombatTalent, Serializable {
 
 	private String name;
 

@@ -266,7 +266,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 		list.setOnItemClickListener(this);
 		list.setOnItemLongClickListener(this);
 
-		adapter = new HeroAdapter(this, R.layout.hero_chooser_item, new ArrayList<HeroFileInfo>());
+		adapter = new HeroAdapter(this, R.layout.item_hero_chooser, new ArrayList<HeroFileInfo>());
 		try {
 			adapter.addAll(exchange.getHeroes(StorageType.FileSystem, StorageType.Dropbox));
 		} catch (Exception e) {
@@ -486,7 +486,7 @@ public class HeroChooserActivity extends BaseActivity implements AdapterView.OnI
 			if (convertView instanceof ViewGroup) {
 				layout = (ViewGroup) convertView;
 			} else {
-				layout = (ViewGroup) layoutInflater.inflate(R.layout.hero_chooser_item, parent, false);
+				layout = (ViewGroup) layoutInflater.inflate(R.layout.item_hero_chooser, parent, false);
 				layout.setFocusable(false);
 				layout.setClickable(false);
 			}

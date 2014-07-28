@@ -7,16 +7,14 @@
         <item name="android:buttonStyle">@style/Widget.Button.Dark</item>
         <item name="android:imageButtonStyle">@style/Widget.Button.Dark</item>
         <item name="android:buttonStyleSmall">@style/Widget.Button.Small.Dark</item>
-        
-        
+                
         <item name="imgChainTop">@drawable/chain_top_dark</item>
         <item name="imgChainBottom">@drawable/chain_bottom_dark</item>
         
         <item name="imgDragVertical">@drawable/drag_vertical_dark</item>
         <item name="imgCharacter">@drawable/character_dark</item>
         <item name="imgEmpty">@drawable/empty_dark</item>
-        
-        <item name="imgExpander">@drawable/expander_group_holo_dark</item>
+                
         <item name="imgExpanderOpen">@drawable/expander_open_holo_dark</item>
         <item name="imgExpanderClose">@drawable/expander_close_holo_dark</item>
         

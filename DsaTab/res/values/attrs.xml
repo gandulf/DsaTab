@@ -23,8 +23,7 @@
         
         <attr name="imgCharacter" format="reference"/>
         <attr name="imgEmpty" format="reference"/>
-        
-        <attr name="imgExpander" format="reference"/>
+                
         <attr name="imgExpanderOpen" format="reference"/>
         <attr name="imgExpanderClose" format="reference"/>
         

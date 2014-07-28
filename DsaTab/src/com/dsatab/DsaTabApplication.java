@@ -190,8 +190,10 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 			if (!heroPath.endsWith("/"))
 				heroPath += "/";
 
-			if (!heroPath.startsWith("/"))
+			if (!heroPath.startsWith("/")) {
+
 				heroPath = SD_CARD_PATH_PREFIX + heroPath;
+			}
 
 		}
 

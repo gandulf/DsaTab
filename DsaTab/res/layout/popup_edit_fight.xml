@@ -34,6 +34,44 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/popup_edit_labels"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal" >
+
+        <com.dsatab.view.FlexibleTextView
+            android:id="@+id/popup_edit_talent_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="@string/label_talent"
+            style="?android:attr/listSeparatorTextViewStyle" />
+
+        <TextView
+            android:id="@+id/popup_edit_at_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="@string/label_at"
+            android:hint="@string/label_at_short"
+            style="?android:attr/listSeparatorTextViewStyle"
+            >
+        </TextView>
+
+        <com.dsatab.view.FlexibleTextView
+            android:id="@+id/popup_edit_pa_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="@string/label_pa"
+            android:hint="@string/label_pa_short"
+            style="?android:attr/listSeparatorTextViewStyle" />
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
@@ -59,41 +97,6 @@
             android:orientation="vertical" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/popup_edit_labels"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <com.dsatab.view.FlexibleTextView
-            android:id="@+id/popup_edit_talent_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:gravity="center"
-            android:text="@string/label_talent"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/popup_edit_at_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:text="@string/label_at"
-            android:hint="@string/label_at_short"
-            android:textAppearance="?android:attr/textAppearanceMedium" >
-        </TextView>
-
-        <com.dsatab.view.FlexibleTextView
-            android:id="@+id/popup_edit_pa_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:text="@string/label_pa"
-            android:hint="@string/label_pa_short"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-    </LinearLayout>
+    
 
 </LinearLayout>

@@ -17,8 +17,7 @@
         <item name="imgDragVertical">@drawable/drag_vertical_light</item>
         <item name="imgCharacter">@drawable/character_light</item>
         <item name="imgEmpty">@drawable/empty_light</item>
-        
-        <item name="imgExpander">@drawable/expander_group_holo_light</item>
+                
         <item name="imgExpanderOpen">@drawable/expander_open_holo_light</item>
         <item name="imgExpanderClose">@drawable/expander_close_holo_light</item>
         

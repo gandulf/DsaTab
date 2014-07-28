@@ -50,9 +50,6 @@ public class Attribute extends BaseProbe implements Value, Cloneable, Listable {
 	public void setType(AttributeType type) {
 		this.type = type;
 		if (this.type != null) {
-			if (this.type == AttributeType.Ausweichen) {
-				probeInfo.setErschwernis(0);
-			}
 			if (this.type.hasBe()) {
 				probeInfo.applyBePattern(CONSTANT_BE);
 			}

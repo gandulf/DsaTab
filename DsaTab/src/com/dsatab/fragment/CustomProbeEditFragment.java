@@ -30,6 +30,8 @@ import com.dsatab.view.ImageChooserDialog;
 
 public class CustomProbeEditFragment extends Fragment implements OnClickListener, OnItemSelectedListener {
 
+	private static final String ICON_URI = "ICON_URI";
+
 	private EditText editName, editDescription, editFooter;
 	private EditText editAttrs, editBe, editValue;
 	private Spinner editProbeType, editModType;
@@ -79,6 +81,11 @@ public class CustomProbeEditFragment extends Fragment implements OnClickListener
 		iconView = (ImageView) root.findViewById(R.id.popup_edit_icon);
 		iconView.setOnClickListener(this);
 
+		if (savedInstanceState != null && savedInstanceState.containsKey(ICON_URI)) {
+			iconUri = Uri.parse(savedInstanceState.getString(ICON_URI));
+			iconView.setImageURI(iconUri);
+		}
+
 		return root;
 	}
 
@@ -86,6 +93,13 @@ public class CustomProbeEditFragment extends Fragment implements OnClickListener
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		updateView();
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+
+		outState.putString(ICON_URI, iconUri.toString());
 	}
 
 	public void setCustomProbe(CustomProbe probe) {
@@ -235,7 +249,7 @@ public class CustomProbeEditFragment extends Fragment implements OnClickListener
 
 		List<Integer> itemIcons = DsaTabApplication.getInstance().getConfiguration().getDsaIcons();
 		pdialog.setImageIds(itemIcons);
-		pdialog.setGridColumnWidth(getResources().getDimensionPixelSize(R.dimen.icon_button_size_plain));
+		pdialog.setGridColumnWidth(getResources().getDimensionPixelSize(R.dimen.icon_button_size));
 		pdialog.setScaleType(ScaleType.FIT_CENTER);
 		pdialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
 

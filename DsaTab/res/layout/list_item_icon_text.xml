@@ -18,7 +18,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:minHeight="?attr/listPreferredItemHeightSmall"
     android:paddingRight="?attr/listPreferredItemPaddingRight"
     android:paddingLeft="?attr/listPreferredItemPaddingLeft">
 

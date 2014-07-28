@@ -37,10 +37,15 @@ public class ItemCursorAdapter extends SimpleCursorAdapter {
 
 	@Override
 	public long getItemId(int position) {
-		Cursor cursor = (Cursor) getItem(position);
-		if (cursor != null) {
-			String _id = cursor.getString(cursor.getColumnIndex("_id"));
-			return _id.hashCode();
+
+		if (getCursor() != null && !getCursor().isClosed()) {
+			Cursor cursor = (Cursor) getItem(position);
+			if (cursor != null) {
+				String _id = cursor.getString(cursor.getColumnIndex("_id"));
+				return _id.hashCode();
+			} else {
+				return ListView.INVALID_ROW_ID;
+			}
 		} else {
 			return ListView.INVALID_ROW_ID;
 		}
@@ -71,7 +76,7 @@ public class ItemCursorAdapter extends SimpleCursorAdapter {
 		FlippableViewHolder.prepare(position, convertView, parent);
 
 		// this seems to be called even after stop in some rare occasions...
-		if (!getCursor().isClosed()) {
+		if (getCursor() != null && !getCursor().isClosed()) {
 			Cursor item = (Cursor) getItem(position);
 			((ItemListItem) convertView).setItem(DataManager.getItemByCursor(item));
 		}

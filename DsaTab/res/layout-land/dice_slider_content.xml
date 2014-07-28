@@ -1,28 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/contentLayout"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
     android:background="@drawable/abc_ab_bottom_solid_dark_holo"
     android:clickable="true"
     android:gravity="center|top"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/default_gap"
-    android:paddingLeft="@dimen/default_gap"
-    android:paddingRight="@dimen/default_gap"
-    >
+    android:orientation="vertical" >
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/container_shadow_bottom_dark">
+        android:background="@drawable/container_shadow_bottom_dark" >
 
         <TextView
             android:id="@+id/dice_talent"
-
             android:layout_width="fill_parent"
             android:layout_height="@dimen/icon_button_size"
             android:layout_gravity="fill_vertical|fill_horizontal"
+            android:layout_marginLeft="@dimen/icon_button_size"
             android:layout_marginRight="@dimen/icon_button_size"
             android:ellipsize="end"
             android:gravity="center"
@@ -39,15 +36,16 @@
             android:contentDescription="@string/label_misc_modifications"
             android:src="?attr/imgExpanderClose" />
     </FrameLayout>
-    
 
-    <LinearLayout
+    <ListView
         android:id="@+id/probe_modifier_container"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/default_gap" >
-    </LinearLayout>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:animateLayoutChanges="true"
+        android:paddingBottom="@dimen/default_gap"
+        android:paddingTop="@dimen/default_gap" >
+    </ListView>
 
     <LinearLayout
         android:id="@+id/dice_dices"
@@ -116,11 +114,12 @@
         android:id="@+id/dice_dice_result"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/default_gap"
-        android:paddingBottom="@dimen/default_gap"
+        android:animateLayoutChanges="true"
         android:gravity="center_horizontal"
         android:minHeight="@dimen/dices_size_with_2gap"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/default_gap"
+        android:paddingTop="@dimen/default_gap" >
     </LinearLayout>
 
 </LinearLayout>

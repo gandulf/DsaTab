@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.view.MenuItem;
@@ -146,7 +147,7 @@ public class ItemsActivity extends BaseFragmentActivity implements OnItemSelecte
 		itemListFragment = (ItemListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_item_chooser);
 
 		slidingPaneLayout = (SlidingPaneLayout) findViewById(R.id.slidepanel);
-		slidingPaneLayout.setParallaxDistance(100);
+		// slidingPaneLayout.setParallaxDistance(100);
 
 		slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
 
@@ -186,7 +187,7 @@ public class ItemsActivity extends BaseFragmentActivity implements OnItemSelecte
 
 		itemListFragment.setOnItemSelectedListener(this);
 
-		if (getIntent().getAction() == Intent.ACTION_PICK) {
+		if (Intent.ACTION_PICK.equals(getIntent().getAction())) {
 			setTitle(R.string.choose_item);
 			getSupportActionBar().setDisplayShowTitleEnabled(true);
 		} else {
@@ -220,11 +221,20 @@ public class ItemsActivity extends BaseFragmentActivity implements OnItemSelecte
 
 	protected void initViewFragment() {
 
-		itemViewFragment = new ItemViewFragment();
+		Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.details);
+		if (currentFragment instanceof ItemViewFragment) {
+			itemViewFragment = (ItemViewFragment) currentFragment;
+		} else {
+			itemViewFragment = new ItemViewFragment();
 
-		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		ft.add(R.id.details, itemViewFragment);
-		ft.commit();
+			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+			if (currentFragment == null)
+				ft.add(R.id.details, itemViewFragment);
+			else
+				ft.replace(R.id.details, itemViewFragment);
+
+			ft.commit();
+		}
 
 		Bundle extra = getIntent().getExtras();
 
@@ -317,11 +327,20 @@ public class ItemsActivity extends BaseFragmentActivity implements OnItemSelecte
 
 	protected void initEditFragment() {
 
-		itemEditFragment = new ItemEditFragment();
+		Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.details);
+		if (currentFragment instanceof ItemEditFragment) {
+			itemEditFragment = (ItemEditFragment) currentFragment;
+		} else {
+			itemEditFragment = new ItemEditFragment();
 
-		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		ft.add(R.id.details, itemEditFragment);
-		ft.commit();
+			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+			if (currentFragment == null)
+				ft.add(R.id.details, itemEditFragment);
+			else
+				ft.replace(R.id.details, itemEditFragment);
+
+			ft.commit();
+		}
 
 		Bundle extra = getIntent().getExtras();
 
@@ -395,7 +414,7 @@ public class ItemsActivity extends BaseFragmentActivity implements OnItemSelecte
 	@Override
 	public boolean onItemSelected(Item item) {
 		if (item != null) {
-			if (getIntent().getAction() == Intent.ACTION_PICK) {
+			if (Intent.ACTION_PICK.equals(getIntent().getAction())) {
 				Intent data = getIntent();
 				data.putExtra(INTENT_EXTRA_ITEM_ID, item.getId());
 

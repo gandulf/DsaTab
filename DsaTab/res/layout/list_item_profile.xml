@@ -23,7 +23,7 @@
         android:id="@android:id/icon"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/profile_picture"
+        android:src="@drawable/profile_picture"
         android:scaleType="centerCrop" />
     
     <TextView
@@ -38,7 +38,7 @@
         
         android:textStyle="bold"
         android:textSize="22sp"
-        android:text="Hagen Treuson"
-        android:textColor="#DDDDDD" />
+        android:text="Silk Treuson"
+        android:textColor="@color/Brighter" />
 
 </FrameLayout>

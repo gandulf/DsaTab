@@ -222,7 +222,13 @@ public abstract class BaseFragment extends Fragment implements HeroLoader, HeroC
 			return getBaseActivity().checkProbe(probe);
 		else
 			return false;
+	}
 
+	public boolean checkProbe(Probe probe, boolean autoRoll) {
+		if (getBaseActivity() != null)
+			return getBaseActivity().checkProbe(probe, autoRoll);
+		else
+			return false;
 	}
 
 	public abstract void onHeroLoaded(Hero hero);

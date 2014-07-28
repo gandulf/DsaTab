@@ -71,7 +71,6 @@ import com.dsatab.data.items.ItemSpecification;
 import com.dsatab.data.items.Shield;
 import com.dsatab.data.items.Weapon;
 import com.dsatab.data.listable.FileListable;
-import com.dsatab.data.listable.FooterListItem;
 import com.dsatab.data.listable.HeaderListItem;
 import com.dsatab.data.listable.Listable;
 import com.dsatab.data.listable.PurseListable;
@@ -86,7 +85,6 @@ import com.dsatab.data.notes.NotesItem;
 import com.dsatab.util.Debug;
 import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Util;
-import com.dsatab.view.EvadeChooserDialog;
 import com.dsatab.view.ItemListItem;
 import com.dsatab.view.ListSettings;
 import com.dsatab.view.listener.EditListener;
@@ -111,8 +109,6 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 	private EditListener editListener;
 	private TargetListener targetListener;
 
-	private EvadeChooserDialog ausweichenModificationDialog;
-
 	private LayoutInflater inflater;
 
 	private Bitmap indicatorStar, indicatorStarGray, indicatorHouse, indicatorHouseGray, indicatorFlash,
@@ -127,9 +123,8 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 	private static final int ITEM_TYPE_HEADER = 6;
 	private static final int ITEM_TYPE_NOTES = 7;
 	private static final int ITEM_TYPE_PURSE = 8;
-	private static final int ITEM_TYPE_FOOTER = 9;
-	private static final int ITEM_TYPE_WOUND = 10;
-	private static final int ITEM_TYPE_PROBE = 11;
+	private static final int ITEM_TYPE_WOUND = 9;
+	private static final int ITEM_TYPE_PROBE = 10;
 
 	private DsaTabActivity main;
 
@@ -157,6 +152,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 
 		}
 	};
+
 	private OnValueChangeListener onPurseValueChangeListener = new OnValueChangeListener() {
 
 		@Override
@@ -210,7 +206,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 	 */
 	@Override
 	public int getViewTypeCount() {
-		return 12;
+		return 11;
 	}
 
 	/*
@@ -253,8 +249,6 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 			return ITEM_TYPE_NOTES;
 		} else if (item instanceof PurseListable) {
 			return ITEM_TYPE_PURSE;
-		} else if (item instanceof FooterListItem) {
-			return ITEM_TYPE_FOOTER;
 		} else if (item instanceof WoundListItem) {
 			return ITEM_TYPE_WOUND;
 		} else if (item instanceof Probe) {
@@ -432,14 +426,6 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				convertView.setTag(holder);
 				break;
 			}
-			case ITEM_TYPE_FOOTER: {
-				convertView = inflater.inflate(R.layout.item_listitem_footer, parent, false);
-				FooterViewHolder holder = new FooterViewHolder();
-
-				convertView.setTag(holder);
-				break;
-
-			}
 			case ITEM_TYPE_WOUND: {
 				convertView = inflater.inflate(R.layout.item_listitem_wound, parent, false);
 				WoundViewHolder holder = new WoundViewHolder();
@@ -516,8 +502,6 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 			convertView = prepareView((NotesItem) item, position, convertView, parent);
 		} else if (item instanceof PurseListable) {
 			convertView = prepareView((PurseListable) item, position, convertView, parent);
-		} else if (item instanceof FooterListItem) {
-			convertView = prepareView((FooterListItem) item, position, convertView, parent);
 		} else if (item instanceof WoundListItem) {
 			convertView = prepareView((WoundListItem) item, position, convertView, parent);
 		} else if (item instanceof CustomProbe) {
@@ -810,93 +794,6 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		return convertView;
 	}
 
-	protected View prepareView(FooterListItem item, int position, View convertView, ViewGroup parent) {
-		FooterViewHolder holder = (FooterViewHolder) convertView.getTag();
-
-		ViewGroup container = (ViewGroup) convertView;
-		container.removeAllViews();
-
-		switch (item.getType()) {
-		case Document:
-			Button browse = (Button) inflater.inflate(R.layout._button_borderless, container, false);
-			browse.setText(R.string.choose_folder);
-			browse.setCompoundDrawablesWithIntrinsicBounds(Util.getThemeResourceId(getContext(), R.attr.imgFilter), 0,
-					0, 0);
-			browse.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					if (actionListener != null)
-						actionListener.onAction(OnActionListener.ACTION_DOCUMENTS_CHOOSE);
-
-				}
-			});
-			container.addView(browse);
-			break;
-		case Modificator:
-			Button add = (Button) inflater.inflate(R.layout._button_borderless, container, false);
-			add.setText(R.string.create_modificator);
-			add.setCompoundDrawablesWithIntrinsicBounds(R.drawable.dsa_modifier_add, 0, 0, 0);
-			add.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					if (actionListener != null)
-						actionListener.onAction(OnActionListener.ACTION_MODIFICATOR_ADD);
-
-				}
-			});
-			container.addView(add);
-			break;
-		case Probe:
-			Button addProbe = (Button) inflater.inflate(R.layout._button_borderless, container, false);
-			addProbe.setText(R.string.create_custom_probe);
-			addProbe.setCompoundDrawablesWithIntrinsicBounds(R.drawable.dsa_dice_add, 0, 0, 0);
-			addProbe.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					if (actionListener != null)
-						actionListener.onAction(OnActionListener.ACTION_CUSTOM_PROBE_ADD);
-
-				}
-			});
-			container.addView(addProbe);
-			break;
-		case Notes:
-			Button noteAdd = (Button) inflater.inflate(R.layout._button_borderless, container, false);
-			noteAdd.setText(R.string.create_note);
-			noteAdd.setCompoundDrawablesWithIntrinsicBounds(R.drawable.dsa_notes_add, 0, 0, 0);
-			noteAdd.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					if (actionListener != null)
-						actionListener.onAction(OnActionListener.ACTION_NOTES_ADD);
-
-				}
-			});
-			container.addView(noteAdd);
-
-			Button noteRecord = (Button) inflater.inflate(R.layout._button_borderless, container, false);
-			noteRecord.setText(R.string.record_note);
-			noteRecord.setCompoundDrawablesWithIntrinsicBounds(R.drawable.dsa_speech_add, 0, 0, 0);
-			noteRecord.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					if (actionListener != null)
-						actionListener.onAction(OnActionListener.ACTION_NOTES_RECORD);
-
-				}
-			});
-			container.addView(noteRecord);
-			break;
-		}
-
-		return convertView;
-	}
-
 	protected View prepareView(NotesItem e, int position, View convertView, ViewGroup parent) {
 		EventViewHolder holder = (EventViewHolder) convertView.getTag();
 
@@ -977,7 +874,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		return convertView;
 	}
 
-	protected View prepareAusweichenView(Attribute attribute, int position, View convertView, ViewGroup parent) {
+	protected View prepareAusweichenView(final Attribute attribute, int position, View convertView, ViewGroup parent) {
 
 		ViewHolder holder = (ViewHolder) convertView.getTag();
 		holder.icon1.setOnClickListener(getProbeListener());
@@ -990,10 +887,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		holder.icon2.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (ausweichenModificationDialog == null) {
-					ausweichenModificationDialog = new EvadeChooserDialog(main);
-				}
-				ausweichenModificationDialog.show();
+				main.checkProbe(attribute, false);
 			}
 		});
 
@@ -1004,7 +898,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				.isIncludeModifiers() : true);
 
 		holder.text1.setText(title);
-		holder.text2.setText("Modifikator " + Util.toProbe(attribute.getProbeInfo().getErschwernis()));
+		// holder.text2.setText("Modifikator " + Util.toProbe(attribute.getProbeInfo().getErschwernis()));
 		holder.icon1.setTag(attribute);
 
 		holder.icon_chain_top.setVisibility(View.GONE);

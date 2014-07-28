@@ -28,6 +28,7 @@
                 android:layout_height="fill_parent"
                 android:columnWidth="@dimen/portrait_width_small"
                 android:gravity="center"
+                android:cacheColorHint="#00000000"
                 android:numColumns="auto_fit"
                 android:drawSelectorOnTop="true"
                 android:stretchMode="columnWidth" />

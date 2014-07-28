@@ -1,9 +1,11 @@
 package com.dsatab.data;
 
+import java.io.Serializable;
+
 import com.dsatab.data.enums.TalentType;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 
-public abstract class BaseCombatTalent extends Talent implements CombatTalent {
+public abstract class BaseCombatTalent extends Talent implements CombatTalent, Serializable {
 
 	public BaseCombatTalent(Hero hero, TalentType type) {
 		super(hero, type);

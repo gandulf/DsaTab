@@ -29,12 +29,12 @@
                     android:id="@+id/option_equipped_set2"
                     android:icon="?attr/imgBarSet2"
                     app:showAsAction="withText"
-                    android:title="@string/set_1"/>
+                    android:title="@string/set_2"/>
                 <item
                     android:id="@+id/option_equipped_set3"
                     android:icon="?attr/imgBarSet3"
                     app:showAsAction="withText"
-                    android:title="@string/set_1"/>
+                    android:title="@string/set_3"/>
             </menu>
         </item>
         <item

@@ -1,4 +1,4 @@
-package com.dsatab.view;
+package com.dsatab.fragment;
 
 import net.simonvt.numberpicker.NumberPicker;
 import android.os.Bundle;
@@ -18,7 +18,6 @@ import com.dsatab.data.Art;
 import com.dsatab.data.ArtInfo;
 import com.dsatab.data.Hero;
 import com.dsatab.data.Value;
-import com.dsatab.fragment.BaseFragment;
 import com.dsatab.util.Debug;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 

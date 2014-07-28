@@ -5,8 +5,8 @@
     xmlns:guilib="http://schemas.android.com/apk/com.gandulf.guilib"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="horizontal"
     android:baselineAligned="false"
+    android:orientation="horizontal"
     android:padding="@dimen/default_gap" >
 
     <ScrollView

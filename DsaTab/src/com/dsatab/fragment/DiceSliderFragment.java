@@ -11,6 +11,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.AudioManager;
@@ -27,11 +28,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.dsatab.DsaTabApplication;
@@ -51,6 +52,8 @@ import com.dsatab.data.Hero;
 import com.dsatab.data.Probe;
 import com.dsatab.data.Probe.ProbeType;
 import com.dsatab.data.Spell;
+import com.dsatab.data.adapter.ModifierAdapter;
+import com.dsatab.data.adapter.ModifierAdapter.OnModifierChangedListener;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.FeatureType;
 import com.dsatab.data.items.DistanceWeapon;
@@ -61,18 +64,18 @@ import com.dsatab.util.Debug;
 import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Hint;
 import com.dsatab.util.Util;
-import com.dsatab.view.listener.HideOnAnimationEndListener;
-import com.gandulf.guilib.view.SeekBarEx;
 import com.nineoldandroids.animation.ObjectAnimator;
-import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelSlideListener;
 
-public class DiceSliderFragment extends BaseFragment implements View.OnClickListener, OnSeekBarChangeListener,
+public class DiceSliderFragment extends BaseFragment implements View.OnClickListener, OnModifierChangedListener,
 		PanelSlideListener {
 
 	public static final String TAG = "diceSliderFragment";
+
+	private final int SCHNELLSCHUSS_INDEX = 13;
+	private static final String EVADE_GEZIELT = "Gezieltes Ausweichen DK-Mod. x2";
 
 	private static final int DICE_DELAY = 1000;
 
@@ -89,9 +92,10 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 	private ImageButton detailsSwitch;
 
+	private boolean animate = true;
 	private LinearLayout linDiceResult;
 
-	private View executeButton;
+	private ImageButton executeButton;
 
 	private Animation shakeDice20;
 	private Animation shakeDice6;
@@ -104,17 +108,16 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 	private List<Modifier> modifiers;
 
-	private Modifier manualModifer, erschwernisModifier;
-
 	private ProbeData probeData;
 
-	private LinearLayout modifiersLayout;
-
-	private SeekBarEx modifierWheel;
+	private ListView modifiersList;
+	private ModifierAdapter modifierAdapter;
 
 	private SharedPreferences preferences;
 
 	private SoundPool sounds;
+
+	private boolean probeAutoRoll = true;
 
 	private int soundNeutral;
 	private int soundWin;
@@ -122,8 +125,6 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 	private DsaTabActivity activity;
 	private Hero hero;
 	private Context context;
-
-	private int originalHeight = 0;
 
 	/*
 	 * (non-Javadoc)
@@ -135,23 +136,31 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// create ContextThemeWrapper from the original Activity Context with the custom theme
 		context = new ContextThemeWrapper(getActivity(), R.style.DsaTabTheme_Dark);
+
 		// clone the inflater using the ContextThemeWrapper
 		LayoutInflater localInflater = inflater.cloneInContext(context);
 		// inflate using the cloned inflater, not the passed in default
-		View view = localInflater.inflate(R.layout.dice_slider_content, container, false);
 
-		// BitmapDrawable tileMe = new BitmapDrawable(context.getResources(),
-		// BitmapFactory.decodeResource(getResources(),
-		// R.drawable.bg_tab_dice));
-		// tileMe.setTileModeX(Shader.TileMode.MIRROR);
-		// tileMe.setTileModeY(Shader.TileMode.CLAMP);
-		// view.setBackgroundDrawable(tileMe);
+		ViewGroup view = (ViewGroup) localInflater.inflate(R.layout.dice_slider_content, container, false);
 
-		modifiersLayout = (LinearLayout) view.findViewById(R.id.probe_modifier_container);
+		modifiersList = (ListView) view.findViewById(R.id.probe_modifier_container);
+		modifiersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Modifier modifier = (Modifier) modifiersList.getItemAtPosition(position);
+				modifier.toggleActive();
+				onModifierChanged(modifier);
+			}
+		});
+
+		modifierAdapter = new ModifierAdapter(context, new ArrayList<Modifier>());
+		modifierAdapter.setOnModifierChangedListener(this);
+		modifiersList.setAdapter(modifierAdapter);
 
 		detailsSwitch = (ImageButton) view.findViewById(R.id.details_switch);
 		detailsSwitch.setVisibility(View.INVISIBLE);
 
+		initLayoutTransitions(view);
 		return view;
 	}
 
@@ -170,11 +179,10 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 	public void setSlidingUpPanelLayout(SlidingUpPanelLayout slidingUpPanelLayout) {
 		this.slidingUpPanelLayout = slidingUpPanelLayout;
 
-		slidingUpPanelLayout.setShadowDrawable(null);
 		slidingUpPanelLayout.setDragView(findViewById(R.id.dice_talent));
 		slidingUpPanelLayout.setCoveredFadeColor(0);
 		slidingUpPanelLayout.setPanelSlideListener(this);
-		slidingUpPanelLayout.setOverdrawHeight(10);
+		// slidingUpPanelLayout.setOverdrawHeight(10);
 	}
 
 	@Override
@@ -184,12 +192,32 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 	@Override
 	public void onPanelExpanded(View panel) {
-		setSliderOpened(true);
+		enableLayoutTransition();
+	}
+
+	@Override
+	public void onPanelHidden(View panel) {
+
 	}
 
 	@Override
 	public void onPanelCollapsed(View panel) {
-		setSliderOpened(false);
+		// tblDiceProbe.setVisibility(View.GONE);
+		tfDiceTalentValue.setVisibility(View.GONE);
+		tfDiceValue.setVisibility(View.GONE);
+		tfEffectValue.setVisibility(View.GONE);
+
+		executeButton.setVisibility(View.GONE);
+		if (detailsSwitch.getVisibility() == View.VISIBLE) {
+			detailsSwitch.startAnimation(AnimationUtils.loadAnimation(context, R.anim.abc_fade_out));
+		}
+		detailsSwitch.setVisibility(View.INVISIBLE);
+		linDiceResult.setBackgroundResource(0);
+
+		shakeDice20.cancel();
+		shakeDice6.cancel();
+
+		disableLayoutTransition();
 	}
 
 	@Override
@@ -217,6 +245,7 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB && linDiceResult.getLayoutTransition() != null) {
 			linDiceResult.setLayoutTransition(null);
 		}
+		animate = false;
 
 	}
 
@@ -225,37 +254,15 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB && linDiceResult.getLayoutTransition() == null) {
 			linDiceResult.setLayoutTransition(new LayoutTransition());
 		}
+
+		animate = true;
 	}
 
-	public void setSliderOpened(boolean sliderVisible) {
-		this.sliderOpened = sliderVisible;
-		if (sliderVisible) {
-
-			if (!slidingUpPanelLayout.isExpanded() && !slidingUpPanelLayout.isSliding()) {
-				slidingUpPanelLayout.expandPane();
-				disableLayoutTransition();
-			}
-		} else {
-			if (slidingUpPanelLayout.isExpanded() && !slidingUpPanelLayout.isSliding()) {
-				slidingUpPanelLayout.collapsePane();
-				disableLayoutTransition();
-			}
-
-			// tblDiceProbe.setVisibility(View.GONE);
-			tfDiceTalentValue.setVisibility(View.GONE);
-			tfDiceValue.setVisibility(View.GONE);
-			tfEffectValue.setVisibility(View.GONE);
-
-			executeButton.setVisibility(View.GONE);
-			modifiersLayout.setVisibility(View.GONE);
-			if (detailsSwitch.getVisibility() == View.VISIBLE) {
-				detailsSwitch.startAnimation(AnimationUtils.loadAnimation(context, R.anim.abc_fade_out));
-			}
-			detailsSwitch.setVisibility(View.INVISIBLE);
-			linDiceResult.setBackgroundResource(0);
-
-			shakeDice20.cancel();
-			shakeDice6.cancel();
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+	private void initLayoutTransitions(ViewGroup root) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+			// root.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
+			modifiersList.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
 		}
 	}
 
@@ -275,7 +282,7 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		tfDice6 = (ImageView) findViewById(R.id.dice_w6);
 		tfDice6.setOnClickListener(this);
 
-		executeButton = findViewById(R.id.dice_execute);
+		executeButton = (ImageButton) findViewById(R.id.dice_execute);
 		executeButton.setOnClickListener(this);
 		executeButton.setVisibility(View.GONE);
 
@@ -293,8 +300,6 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 	 */
 	private void init() {
 		mHandler = new DiceHandler(this);
-
-		erschwernisModifier = new Modifier(0, "Probenerschwernis");
 
 		effectFormat.setMaximumFractionDigits(1);
 
@@ -334,96 +339,52 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 	}
 
-	/**
-	 * @param linearLayout
-	 */
-	private void fillModifierList(LinearLayout linearLayout, boolean inverse) {
-		linearLayout.removeAllViews();
-		LayoutInflater inflater = LayoutInflater.from(linearLayout.getContext());
-		if (modifiers != null) {
-			for (Modifier mod : modifiers) {
-
-				if (mod == getManualModifier())
-					continue;
-
-				View listItem = inflater.inflate(R.layout.popup_probe_list_item, linearLayout, false);
-
-				TextView text1 = (TextView) listItem.findViewById(R.id.popup_probelist_item_text1);
-				text1.setText(mod.getTitle());
-
-				TextView text2 = (TextView) listItem.findViewById(R.id.popup_probelist_item_text2);
-				text2.setText(Util.toProbe(-mod.getModifier()));
-				Util.setTextColor(text2, mod.getModifier());
-
-				linearLayout.addView(listItem);
-			}
-		}
-
-		// manual modifier
-		View editListItem = inflater.inflate(R.layout.popup_probe_manual_list_item, linearLayout, false);
-		modifierWheel = (SeekBarEx) editListItem.findViewById(R.id.wheel);
-		modifierWheel.setOnSeekBarChangeListener(null);
-		modifierWheel.setMin(-15);
-		modifierWheel.setMax(15);
-		modifierWheel.setValue(-getManualModifier().getModifier());
-		modifierWheel.setOnSeekBarChangeListener(this);
-		TextView text1 = (TextView) editListItem.findViewById(android.R.id.text1);
-		text1.setText(getManualModifier().getTitle());
-
-		TextView text2 = (TextView) editListItem.findViewById(android.R.id.text2);
-		text2.setText(String.valueOf(modifierWheel.getValue()));
-		Util.setTextColor(text2, -modifierWheel.getValue());
-		modifierWheel.setLabel(text2);
-
-		linearLayout.addView(editListItem);
-	}
-
-	private Modifier getManualModifier() {
-		if (manualModifer == null) {
-			manualModifer = new Modifier(0, "Manuell", "Manuell");
-		}
-		return manualModifer;
-	}
-
 	private boolean isModifiersVisible() {
 		return modifierVisible;
 	}
 
-	@Override
-	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-		if (probeData != null) {
-			probeData.sound = false;
+	public void onModifierChanged(Modifier mod) {
 
-			int erschwernis = 0;
-			if (modifierWheel != null) {
-				erschwernis = modifierWheel.getValue();
+		if (EVADE_GEZIELT.equals(mod.getTitle())) {
+			for (Modifier m : modifiers) {
+				if (getString(R.string.label_distance).equals(m.getTitle())) {
+					mod.setModifier(m.getModifier());
+					break;
+				}
 			}
-			getManualModifier().setModifier(-erschwernis);
+		} else if (getString(R.string.label_distance).equals(mod.getTitle())) {
+			for (Modifier m : modifiers) {
+				if (EVADE_GEZIELT.equals(m.getTitle())) {
+					m.setModifier(mod.getModifier());
+					break;
+				}
+			}
 
-			updateProgressView(probeData, getManualModifier());
-			if (preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_AUTO_ROLL_DICE, true)) {
-				checkProbe(probeData, getManualModifier());
+			if (probeData.probe instanceof CombatProbe) {
+				CombatProbe combatProbe = (CombatProbe) probeData.probe;
+
+				// combatProbe.getProbeInfo().setErschwernis(erschwernis);
+				EquippedItem equippedItem = combatProbe.getEquippedItem();
+				if (equippedItem != null && equippedItem.getItemSpecification() instanceof DistanceWeapon) {
+					DistanceWeapon distanceWeapon = (DistanceWeapon) equippedItem.getItemSpecification();
+					combatProbe.setTpModifier(distanceWeapon.getTpDistance(mod.getSpinnerIndex()));
+				} else {
+					combatProbe.setTpModifier(null);
+				}
 			}
 
 		}
 
-		if (seekBar instanceof SeekBarEx) {
-			SeekBarEx seekBarEx = (SeekBarEx) seekBar;
-			if (seekBarEx.getLabel() != null) {
-				Util.setTextColor(seekBarEx.getLabel(), -seekBarEx.getValue());
-			}
+		Editor edit = getPreferences().edit();
+		edit.putBoolean(Modifier.PREF_PREFIX_ACTIVE + mod.getTitle(), mod.isActive());
+		edit.commit();
+
+		Util.notifyDatasetChanged(modifiersList);
+
+		updateProgressView(probeData, mod);
+		if (isAutoRoll()) {
+			checkProbe(probeData, mod);
 		}
-
-	}
-
-	@Override
-	public void onStartTrackingTouch(SeekBar seekBar) {
-
-	}
-
-	@Override
-	public void onStopTrackingTouch(SeekBar seekBar) {
-
 	}
 
 	private void showEffect(Double effect, Integer erschwernis, ProbeData info) {
@@ -529,12 +490,13 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		}
 	}
 
-	public Double checkProbe(Hero hero, Probe probe) {
+	public void checkProbe(Hero hero, Probe probe, boolean autoRoll) {
 
 		if (activity != null) {
 			Hint.showRandomHint("DiceSlider", activity);
 		}
 		this.hero = hero;
+		this.probeAutoRoll = autoRoll;
 
 		clearDice();
 
@@ -554,40 +516,172 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 			break;
 		}
 
-		modifiers = hero.getModifiers(probe, true, true);
+		populateModifiers(probe);
 
-		if (probe.getProbeInfo().getErschwernis() != null) {
-			erschwernisModifier.setModifier(-1 * probe.getProbeInfo().getErschwernis());
-			modifiers.add(erschwernisModifier);
-		} else {
-
-		}
-
-		getManualModifier().setModifier(0);
 		probeData = new ProbeData();
 		probeData.hero = hero;
 		probeData.probe = probe;
 		probeData.value = new Integer[] { value1, value2, value3 };
 
-		Double result = null;
-		if (preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_AUTO_ROLL_DICE, true)) {
+		if (!slidingUpPanelLayout.isPanelExpanded())
+			animate = false;
+
+		if (isAutoRoll()) {
 			executeButton.setVisibility(View.GONE);
 			updateView(probeData);
 			updateProgressView(probeData);
-			result = checkProbe(probeData);
+			checkProbe(probeData);
 		} else {
 			updateView(probeData);
 			updateProgressView(probeData);
 			executeButton.setVisibility(View.VISIBLE);
 		}
 
-		ensureVisibility();
+		getView().postDelayed(new Runnable() {
 
-		return result;
+			@Override
+			public void run() {
+				ensureVisibility();
+			}
+		}, 200);
+
+	}
+
+	private void populateModifiers(Probe probe) {
+		modifiers = hero.getModifiers(probe, true, true);
+
+		if (probe.getProbeInfo().getErschwernis() != null && probe.getProbeInfo().getErschwernis() != 0) {
+			Modifier erschwernisModifier = new Modifier(0, "Probenerschwernis");
+			erschwernisModifier.setModifier(-1 * probe.getProbeInfo().getErschwernis());
+			erschwernisModifier.setActive(getPreferences().getBoolean(
+					Modifier.PREF_PREFIX_ACTIVE + erschwernisModifier.getTitle(), true));
+			modifiers.add(erschwernisModifier);
+		}
+
+		if (probe instanceof CombatProbe) {
+
+			CombatProbe combatProbe = (CombatProbe) probe;
+
+			EquippedItem equippedItem = combatProbe.getEquippedItem();
+			if (equippedItem != null && equippedItem.getItemSpecification() instanceof DistanceWeapon) {
+
+				String[] distances = getResources().getStringArray(R.array.archeryDistance);
+				DistanceWeapon item = equippedItem.getItem().getSpecification(DistanceWeapon.class);
+				if (item != null) {
+					String from, to;
+
+					for (int i = 0; i < distances.length; i++) {
+						to = item.getDistance(i);
+
+						if (to != null) {
+							distances[i] += " (";
+							if (i > 0) {
+								from = item.getDistance(i - 1);
+								distances[i] += from;
+							}
+
+							distances[i] += " bis " + to + "m)";
+						}
+					}
+				}
+
+				Modifier distance = new Modifier(0, getString(R.string.label_distance));
+				distance.setSpinnerOptions(distances);
+				distance.setSpinnerValues(getResources().getIntArray(R.array.archeryDistanceValues));
+				distance.setActive(getPreferences().getBoolean(Modifier.PREF_PREFIX_ACTIVE + distance.getTitle(), true));
+				modifiers.add(distance);
+
+				Modifier size = new Modifier(0, getString(R.string.label_size));
+				size.setSpinnerOptions(getResources().getStringArray(R.array.archerySize));
+				size.setSpinnerValues(getResources().getIntArray(R.array.archerySizeValues));
+				size.setActive(getPreferences().getBoolean(Modifier.PREF_PREFIX_ACTIVE + size.getTitle(), true));
+				modifiers.add(size);
+
+				int[] modificationValues = getResources().getIntArray(R.array.archeryModificationValues);
+				String[] modificationStrings = getResources().getStringArray(R.array.archeryModificationStrings);
+				if (getHero().hasFeature(FeatureType.Meisterschütze)) {
+					modificationStrings[SCHNELLSCHUSS_INDEX] = "Schnellschuß +0";
+					modificationValues[SCHNELLSCHUSS_INDEX] = 0;
+
+				} else if (getHero().hasFeature(FeatureType.Scharfschütze)) {
+					modificationStrings[SCHNELLSCHUSS_INDEX] = "Schnellschuß +1";
+					modificationValues[SCHNELLSCHUSS_INDEX] = 1;
+				}
+
+				for (int i = 0; i < modificationStrings.length; i++) {
+					Modifier mod = new Modifier(-modificationValues[i], modificationStrings[i]);
+					mod.setActive(false);
+					modifiers.add(mod);
+				}
+			}
+		}
+
+		if (probe instanceof Attribute) {
+			Attribute attribute = (Attribute) probe;
+
+			switch (attribute.getType()) {
+			case Ausweichen:
+				Modifier distance = new Modifier(0, getString(R.string.label_distance));
+				distance.setSpinnerOptions(getResources().getStringArray(R.array.evadeDistance));
+				distance.setSpinnerValues(getResources().getIntArray(R.array.evadeDistanceValues));
+				distance.setActive(getPreferences().getBoolean(Modifier.PREF_PREFIX_ACTIVE + distance.getTitle(), true));
+				modifiers.add(distance);
+
+				Modifier enemies = new Modifier(0, getString(R.string.label_enemy));
+				enemies.setSpinnerOptions(getResources().getStringArray(R.array.evadeEnemy));
+				enemies.setSpinnerValues(getResources().getIntArray(R.array.evadeEnemyValues));
+				enemies.setActive(getPreferences().getBoolean(Modifier.PREF_PREFIX_ACTIVE + enemies.getTitle(), true));
+				modifiers.add(enemies);
+
+				Modifier modGezielt = new Modifier(0, EVADE_GEZIELT);
+				modifiers.add(modGezielt);
+
+				String[] modStrings = getResources().getStringArray(R.array.evadeModificationStrings);
+				int[] modValues = getResources().getIntArray(R.array.evadeModificationValues);
+				for (int i = 0; i < modStrings.length; i++) {
+					Modifier mod = new Modifier(-modValues[i], modStrings[i]);
+					mod.setActive(false);
+					modifiers.add(mod);
+				}
+				break;
+			}
+		}
+
+		Modifier manualModifer = new Modifier(0, Modifier.TITLE_MANUAL, Modifier.TITLE_MANUAL);
+		manualModifer.setActive(getPreferences().getBoolean(Modifier.PREF_PREFIX_ACTIVE + manualModifer.getTitle(),
+				true));
+		modifiers.add(manualModifer);
+
+	}
+
+	protected boolean isAutoRoll() {
+		return probeAutoRoll && preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_AUTO_ROLL_DICE, true);
 	}
 
 	private void ensureVisibility() {
-		setSliderOpened(true);
+		expandPanel();
+	}
+
+	public void expandPanel() {
+		if (!slidingUpPanelLayout.isPanelExpanded() && !slidingUpPanelLayout.isPanelSliding()) {
+			disableLayoutTransition();
+			slidingUpPanelLayout.expandPanel();
+		}
+	}
+
+	public void collapsePanel() {
+		if (slidingUpPanelLayout.isPanelExpanded() && !slidingUpPanelLayout.isPanelSliding()) {
+			disableLayoutTransition();
+			slidingUpPanelLayout.collapsePanel();
+		}
+	}
+
+	public void showPanel() {
+		slidingUpPanelLayout.showPanel();
+	}
+
+	public void hidePanel() {
+		slidingUpPanelLayout.hidePanel();
 	}
 
 	private void updateProgressView(ProbeData info, Modifier... modificators) {
@@ -684,6 +778,8 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 		// --
 		tfDiceTalent.setText(probe.getName());
+		tfDiceTalent.setTextColor(getResources().getColor(android.R.color.primary_text_dark));
+
 		if (probe.getProbeBonus() != null) {
 			tfDiceTalentValue.setText(Integer.toString(probe.getProbeBonus()));
 			tfDiceTalentValue.setVisibility(View.VISIBLE);
@@ -711,14 +807,17 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 			tfDiceValue.setVisibility(View.VISIBLE);
 		}
 
+		if (!isAutoRoll()) {
+			executeButton.setImageResource(DsaUtil.getResourceId(probe));
+		}
 		detailsSwitch.setOnClickListener(this);
 
 		setModifiersVisible(isModifiersVisible(), false);
 
-		getView().requestLayout();
+		// getView().requestLayout();
 	}
 
-	private void setModifiersVisible(boolean visible, boolean animate) {
+	private void setModifiersVisible(boolean visible, final boolean animate) {
 
 		if (detailsSwitch.getVisibility() != View.VISIBLE) {
 			detailsSwitch.startAnimation(AnimationUtils.loadAnimation(context, R.anim.abc_fade_in));
@@ -726,8 +825,6 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		detailsSwitch.setVisibility(View.VISIBLE);
 
 		modifierVisible = visible;
-
-		originalHeight = Math.max(originalHeight, modifiersLayout.getMeasuredHeight());
 
 		if (isModifiersVisible()) {
 			if (animate) {
@@ -740,51 +837,11 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 			}
 
 			// --
-			fillModifierList(modifiersLayout, true);
-			if (animate) {
-				modifiersLayout.setVisibility(View.VISIBLE);
-				ValueAnimator anim = ValueAnimator.ofInt(0, originalHeight);
-				anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-					@Override
-					public void onAnimationUpdate(ValueAnimator valueAnimator) {
-						int val = (Integer) valueAnimator.getAnimatedValue();
-						ViewGroup.LayoutParams layoutParams = modifiersLayout.getLayoutParams();
-						layoutParams.height = val;
-						modifiersLayout.setLayoutParams(layoutParams);
-					}
-				});
-				anim.setDuration(500);
-				anim.start();
-			} else {
-				modifiersLayout.setVisibility(View.VISIBLE);
-				ViewGroup.LayoutParams layoutParams = modifiersLayout.getLayoutParams();
-				layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-				modifiersLayout.setLayoutParams(layoutParams);
-			}
+
+			modifierAdapter.clear();
+			modifierAdapter.addAll(modifiers);
 
 		} else {
-			if (animate) {
-				ValueAnimator anim = ValueAnimator.ofInt(modifiersLayout.getHeight(), 0);
-				anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-					@Override
-					public void onAnimationUpdate(ValueAnimator valueAnimator) {
-						int val = (Integer) valueAnimator.getAnimatedValue();
-						ViewGroup.LayoutParams layoutParams = modifiersLayout.getLayoutParams();
-						layoutParams.height = val;
-						modifiersLayout.setLayoutParams(layoutParams);
-					}
-				});
-				anim.setDuration(500);
-				anim.addListener(new HideOnAnimationEndListener(modifiersLayout));
-				anim.start();
-			} else {
-				modifiersLayout.setVisibility(View.GONE);
-				ViewGroup.LayoutParams layoutParams = modifiersLayout.getLayoutParams();
-				layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-				modifiersLayout.setLayoutParams(layoutParams);
-			}
-			//
-
 			if (animate) {
 				ObjectAnimator animator = ObjectAnimator.ofFloat(detailsSwitch, "rotation", 0, 180);
 				animator.setTarget(detailsSwitch);
@@ -793,6 +850,9 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 			} else {
 				ViewHelper.setRotation(detailsSwitch, 180);
 			}
+
+			modifierAdapter.clear();
+
 		}
 	}
 
@@ -849,6 +909,8 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		Double effect = null;
 
 		Integer erschwernis = null;
+
+		int diceRolled = 0;
 
 		if (info.value[0] != null && info.value[1] != null && info.value[2] != null) {
 
@@ -947,7 +1009,8 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 			case TwoOfThree: {
 
 				if (info.dice[0] == null) {
-					info.dice[0] = rollDice20(500, info.value[0] + taw);
+
+					info.dice[0] = rollDice20(DICE_DELAY * diceRolled++, info.value[0] + taw);
 
 					if (info.dice[0] == 1) {
 						info.successOne = Boolean.TRUE;
@@ -958,10 +1021,10 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 					}
 				}
 				if (info.dice[1] == null)
-					info.dice[1] = rollDice20(DICE_DELAY * 1, info.value[1] + taw);
+					info.dice[1] = rollDice20(DICE_DELAY * diceRolled++, info.value[1] + taw);
 
 				if (info.dice[2] == null)
-					info.dice[2] = rollDice20(DICE_DELAY * 2, info.value[2] + taw);
+					info.dice[2] = rollDice20(DICE_DELAY * diceRolled++, info.value[2] + taw);
 
 				int[] dices = new int[] { info.dice[0], info.dice[1], info.dice[2] };
 				Arrays.sort(dices);
@@ -995,13 +1058,13 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 			case One: {
 
 				if (info.dice[0] == null) {
-					info.dice[0] = rollDice20(DICE_DELAY * 0, info.value[0] + taw);
+					info.dice[0] = rollDice20(DICE_DELAY * diceRolled++, info.value[0] + taw);
 
 					if (info.dice[0] == 1) {
-						info.dice[0] = rollDice20(DICE_DELAY * 3, info.value[0] + taw);
+						info.dice[0] = rollDice20(DICE_DELAY * diceRolled++, info.value[0] + taw);
 						info.successOne = Boolean.TRUE;
 					} else if (info.dice[0] >= PATZER_THRESHOLD) {
-						info.dice[0] = rollDice20(DICE_DELAY * 3, info.value[0] + taw);
+						info.dice[0] = rollDice20(DICE_DELAY * diceRolled++, info.value[0] + taw);
 						info.failureTwenty = Boolean.TRUE;
 					}
 				}
@@ -1031,7 +1094,10 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 				info.target = null;
 			}
 
-			if (item != null && info.tp == null && combatProbe.isAttack()) {
+			boolean success = ((info.successOne != null && info.successOne) || (effect != null && effect >= 0))
+					&& (info.failureTwenty == null || !info.failureTwenty);
+
+			if (item != null && info.tp == null && combatProbe.isAttack() && success) {
 				boolean realSuccessOne = info.successOne != null && info.successOne && effect >= 0;
 				int diceSize = info.tpDices.size();
 				if (item.getItemSpecification() instanceof Weapon) {
@@ -1050,9 +1116,9 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 				for (int i = diceSize; i < info.tpDices.size(); i++) {
 					DiceRoll diceRoll = info.tpDices.get(i);
 					if (diceRoll.dice == 6)
-						rollDice6(DICE_DELAY * 3, diceRoll.result);
+						rollDice6(DICE_DELAY * diceRolled++, diceRoll.result);
 					else if (diceRoll.dice == 20)
-						rollDice20(DICE_DELAY * 3, diceRoll.result, -1);
+						rollDice20(DICE_DELAY * diceRolled++, diceRoll.result, -1);
 				}
 
 				if (info.tp != null && combatProbe.getTpModifier() != null) {
@@ -1072,7 +1138,7 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 	}
 
 	protected int rollDice20(int delay, int result, int referenceValue) {
-		if (delay > 0 && preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_ANIM_ROLL_DICE, true)) {
+		if (animate && delay > 0 && preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_ANIM_ROLL_DICE, true)) {
 
 			if ((!shakeDice20.hasStarted() || shakeDice20.hasEnded())) {
 				shakeDice20.reset();
@@ -1082,7 +1148,6 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		} else {
 			showDice20(result, referenceValue);
 		}
-		ensureVisibility();
 		return result;
 	}
 
@@ -1090,8 +1155,8 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		return rollDice20(DICE_DELAY, -1);
 	}
 
-	public int rollDice6(int delay, int result) {
-		if (delay > 0 && preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_ANIM_ROLL_DICE, true)) {
+	protected int rollDice6(int delay, int result) {
+		if (animate && delay > 0 && preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_ANIM_ROLL_DICE, true)) {
 			if ((!shakeDice6.hasStarted() || shakeDice6.hasEnded())) {
 				shakeDice6.reset();
 				tfDice6.startAnimation(shakeDice6);
@@ -1101,7 +1166,6 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		} else {
 			showDice6(result);
 		}
-		ensureVisibility();
 		return result;
 	}
 
@@ -1138,9 +1202,8 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 	}
 
 	private void addDice(View res, int width, int height) {
-		enableLayoutTransition();
 		linDiceResult.addView(res, width, width);
-		if (preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_ANIM_ROLL_DICE, true)) {
+		if (animate && preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_ANIM_ROLL_DICE, true)) {
 			res.startAnimation(AnimationUtils.loadAnimation(context, R.anim.flip_in));
 		}
 
@@ -1148,7 +1211,9 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 				&& linDiceResult.getChildCount() * width > linDiceResult.getWidth()) {
 			View dice = linDiceResult.getChildAt(0);
 
-			dice.startAnimation(AnimationUtils.loadAnimation(context, R.anim.dice_right));
+			if (animate) {
+				dice.startAnimation(AnimationUtils.loadAnimation(context, R.anim.dice_right));
+			}
 			linDiceResult.removeViewAt(0);
 		}
 	}
@@ -1280,6 +1345,16 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 			target = null;
 			tpDices.clear();
 		}
+
+	}
+
+	@Override
+	public void onHiddenChanged(boolean hidden) {
+		super.onHiddenChanged(hidden);
+		if (hidden)
+			hidePanel();
+		else
+			showPanel();
 
 	}
 

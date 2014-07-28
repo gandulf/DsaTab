@@ -67,6 +67,7 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
+		setRetainInstance(true);
 	}
 
 	/*
@@ -282,7 +283,7 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 		final ImageChooserDialog pdialog = new ImageChooserDialog(getActivity());
 
 		pdialog.setImageIds(DsaTabApplication.getInstance().getConfiguration().getDsaIcons());
-		pdialog.setGridColumnWidth(getResources().getDimensionPixelSize(R.dimen.icon_button_size_plain));
+		pdialog.setGridColumnWidth(getResources().getDimensionPixelSize(R.dimen.icon_button_size));
 		pdialog.setScaleType(ScaleType.FIT_CENTER);
 		pdialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
 

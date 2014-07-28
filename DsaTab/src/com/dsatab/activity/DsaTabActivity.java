@@ -146,6 +146,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements LoaderManage
 
 			} else {
 				ft.hide(diceSliderFragment);
+
 				// if (diceSliderFragment.getView().getVisibility() == View.VISIBLE) {
 				// Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_out_bottom);
 				// diceSliderFragment.getView().startAnimation(animation);
@@ -722,7 +723,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements LoaderManage
 	@Override
 	public void onBackPressed() {
 		if (diceSliderFragment != null && diceSliderFragment.isVisible() && diceSliderFragment.isSliderOpened()) {
-			diceSliderFragment.setSliderOpened(false);
+			diceSliderFragment.collapsePanel();
 		} else {
 			super.onBackPressed();
 		}
@@ -748,9 +749,13 @@ public class DsaTabActivity extends BaseFragmentActivity implements LoaderManage
 	}
 
 	public boolean checkProbe(Probe probe) {
+		return checkProbe(probe, true);
+	}
+
+	public boolean checkProbe(Probe probe, boolean autoRoll) {
 		if (diceSliderFragment != null) {
 			if (probe != null && getHero() != null) {
-				diceSliderFragment.checkProbe(getHero(), probe);
+				diceSliderFragment.checkProbe(getHero(), probe, autoRoll);
 				return true;
 			}
 		}
@@ -781,8 +786,10 @@ public class DsaTabActivity extends BaseFragmentActivity implements LoaderManage
 						@Override
 						public void onShake() {
 							vibe.vibrate(100);
-							if (diceSliderFragment != null)
+							if (diceSliderFragment != null) {
+								diceSliderFragment.expandPanel();
 								diceSliderFragment.rollDice20();
+							}
 						}
 					});
 

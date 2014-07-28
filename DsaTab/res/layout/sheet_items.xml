@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:cacheColorHint="#00000000"
             android:background="?attr/listShadowBackground"
             android:divider="@null" />
 
@@ -30,6 +31,7 @@
     
     <FrameLayout android:layout_width="500dp"
         android:layout_height="match_parent"
+        android:background="?android:attr/windowBackground"
         android:layout_weight="1" >
 
 	    <com.haarman.listviewanimations.view.DynamicListView
@@ -37,7 +39,7 @@
 	        android:layout_margin="@dimen/default_gap"
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
-	        
+	        android:cacheColorHint="#00000000"
 	        android:divider="@null"
 	        android:visibility="gone" />
 	
@@ -50,6 +52,7 @@
 	        android:clipChildren="true"
 	        android:numColumns="auto_fit"
 	        android:stretchMode="none"
+	        android:cacheColorHint="#00000000"
 	        android:listSelector="?attr/listItemBackground"
 	        android:drawSelectorOnTop="true" />
 	    

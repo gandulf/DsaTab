@@ -194,6 +194,7 @@ public class ItemListFragment extends BaseListFragment implements TabListener, O
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
+		setRetainInstance(true);
 
 		itemTypes = new HashSet<ItemType>();
 		itemAdapter = new ItemCursorAdapter(getActivity(), null);

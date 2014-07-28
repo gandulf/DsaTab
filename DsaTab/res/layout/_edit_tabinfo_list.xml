@@ -77,6 +77,7 @@
             android:id="@android:id/list"
             android:layout_width="fill_parent"
             android:divider="@null"
+            android:cacheColorHint="#00000000"
             android:layout_height="0dp"
             android:layout_weight="1" />
     </LinearLayout>
