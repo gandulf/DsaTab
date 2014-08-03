@@ -34,6 +34,7 @@
             android:layout_marginRight="@dimen/default_gap"
             android:background="@null"
             android:contentDescription="@string/label_misc_modifications"
+            android:scaleType="centerInside"
             android:src="?attr/imgExpanderClose" />
     </FrameLayout>
 
@@ -57,25 +58,29 @@
 
         <com.thebnich.floatinghintedittext.FloatingHintTextView
             android:id="@+id/dice_talent_value"
-            style="?attr/textViewValueNoTouchStyle"
+            style="@style/TextValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/label_taw_short"
+            android:minWidth="48dp"
             android:paddingLeft="@dimen/default_gap"
             android:paddingRight="@dimen/default_gap"
             android:textStyle="bold" />
 
         <com.thebnich.floatinghintedittext.FloatingHintTextView
             android:id="@+id/dice_value"
-            style="?attr/textViewValueNoTouchStyle"
+            style="@style/TextValue"
+            android:minWidth="64dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+             />
 
         <com.thebnich.floatinghintedittext.FloatingHintTextView
             android:id="@+id/dice_effect_value"
-            style="?attr/textViewValueNoTouchStyle"
+            style="@style/TextValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minWidth="48dp"
             android:layout_marginLeft="@dimen/default_gap"
             android:hint="@string/label_tap_short"
             android:textStyle="bold" />

@@ -19,14 +19,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.dsatab.view.ListSettings;
-import com.dsatab.view.ListSettings.FilterType;
-import com.dsatab.view.listener.FilterChangedListener;
 import com.gandulf.guilib.util.Debug;
 import com.haarman.listviewanimations.view.OnItemCheckedListener;
 import com.rokoder.android.lib.support.v4.widget.GridViewCompat;
 
 public abstract class BaseListFragment extends BaseFragment implements OnItemLongClickListener, OnItemClickListener,
-		FilterChangedListener, OnItemCheckedListener, View.OnClickListener {
+		OnItemCheckedListener, View.OnClickListener {
 
 	protected ActionMode mMode;
 
@@ -43,17 +41,6 @@ public abstract class BaseListFragment extends BaseFragment implements OnItemLon
 			}
 		}
 		return listSettings;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.dsatab.fragment.FilterChangedListener#onFilterChanged(com.dsatab. view.FilterSettings.FilterType,
-	 * com.dsatab.view.FilterSettings)
-	 */
-	@Override
-	public void onFilterChanged(FilterType type, ListSettings settings) {
-
 	}
 
 	@Override

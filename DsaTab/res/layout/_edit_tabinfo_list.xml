@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="?attr/dividerVertical"
-            android:dividerPadding="8dp"
+            android:dividerPadding="?attr/dividerPadding"
             android:orientation="horizontal"
             android:minHeight="?attr/listPreferredItemHeightSmall"
             android:showDividers="middle" >

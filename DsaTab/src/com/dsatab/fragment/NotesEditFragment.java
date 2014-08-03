@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,7 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.dsatab.R;
-import com.dsatab.data.Hero;
+import com.dsatab.activity.FragmentEditActivity;
 import com.dsatab.data.adapter.EventCatgoryAdapter;
 import com.dsatab.data.enums.EventCategory;
 import com.dsatab.data.notes.Connection;
@@ -24,7 +26,45 @@ import com.dsatab.data.notes.Event;
 import com.dsatab.data.notes.NotesItem;
 import com.dsatab.util.Util;
 
-public class NotesEditFragment extends BaseFragment implements OnItemSelectedListener {
+public class NotesEditFragment extends BaseEditFragment implements OnItemSelectedListener {
+
+	public static void insert(Activity activity, int requestCode) {
+		Intent intent = new Intent(activity, FragmentEditActivity.class);
+		intent.setAction(Intent.ACTION_INSERT);
+		intent.putExtra(FragmentEditActivity.EDIT_FRAGMENT_CLASS, NotesEditFragment.class);
+		activity.startActivityForResult(intent, requestCode);
+	}
+
+	public static void edit(Connection event, Activity activity, int requestCode) {
+
+		Intent intent = new Intent(activity, FragmentEditActivity.class);
+		intent.setAction(Intent.ACTION_EDIT);
+		intent.putExtra(FragmentEditActivity.EDIT_FRAGMENT_CLASS, NotesEditFragment.class);
+		if (event != null) {
+			intent.putExtra(INTENT_NOTES_ITEM, event);
+			intent.putExtra(INTENT_NAME_EVENT_TEXT, event.getDescription());
+			intent.putExtra(INTENT_NAME_EVENT_NAME, event.getName());
+			intent.putExtra(INTENT_NAME_EVENT_SOZIALSTATUS, event.getSozialStatus());
+			intent.putExtra(INTENT_NAME_EVENT_CATEGORY, event.getCategory());
+		}
+		activity.startActivityForResult(intent, requestCode);
+	}
+
+	public static void edit(Event event, String audioPath, Activity activity, int requestCode) {
+		Intent intent = new Intent(activity, FragmentEditActivity.class);
+		intent.setAction(Intent.ACTION_EDIT);
+		intent.putExtra(FragmentEditActivity.EDIT_FRAGMENT_CLASS, NotesEditFragment.class);
+		if (event != null) {
+			intent.putExtra(INTENT_NOTES_ITEM, event);
+			intent.putExtra(INTENT_NAME_EVENT_TEXT, event.getComment());
+			intent.putExtra(INTENT_NAME_EVENT_NAME, event.getName());
+			intent.putExtra(INTENT_NAME_EVENT_CATEGORY, event.getCategory());
+		}
+		if (audioPath != null) {
+			intent.putExtra(INTENT_NAME_AUDIO_PATH, audioPath);
+		}
+		activity.startActivityForResult(intent, requestCode);
+	}
 
 	public static final String INTENT_NOTES_ITEM = "notesItem";
 
@@ -150,16 +190,6 @@ public class NotesEditFragment extends BaseFragment implements OnItemSelectedLis
 
 			}
 		}
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.dsatab.fragment.BaseFragment#onHeroLoaded(com.dsatab.data.Hero)
-	 */
-	@Override
-	public void onHeroLoaded(Hero hero) {
 
 	}
 

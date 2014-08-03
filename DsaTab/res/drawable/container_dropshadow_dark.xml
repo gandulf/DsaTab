@@ -1,37 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+<selector xmlns:android="http://schemas.android.com/apk/res/android" android:constantSize="true">
 
-     <!-- Drop Shadow Stack -->     
-     <item>
-        <shape>
-            <padding android:top="1dp" android:right="1dp" android:bottom="1dp" android:left="1dp" />
-            <solid android:color="#10666666" />
-        </shape>
-    </item>
-     <item>
-        <shape>
-            <padding android:top="1dp" android:right="1dp" android:bottom="1dp" android:left="1dp" />
-            <solid android:color="#20666666" />
-        </shape>
-    </item>
-     <item>
-        <shape>
-            <padding android:top="1dp" android:right="1dp" android:bottom="1dp" android:left="1dp" />
-            <solid android:color="#30666666" />
-        </shape>
-    </item>
-    <item>
-        <shape>
-            <padding android:top="1dp" android:right="1dp" android:bottom="1dp" android:left="1dp" />
-            <solid android:color="#50666666" />
-        </shape>
-    </item>
+    <item android:drawable="@drawable/_container_dropshadow_dark" android:state_pressed="true"/>
+    <item android:drawable="@drawable/_container_dropshadow_dark_checked" android:state_checked="true"/>
+    <item android:drawable="@drawable/_container_dropshadow_dark"/>
+    
+    
 
-    <!-- Background -->
-    <item>
-	<shape>
-        <solid android:color="#333333" />
-	    <corners android:radius="3dp" />
-	</shape>
-    </item>
-</layer-list>
+</selector>

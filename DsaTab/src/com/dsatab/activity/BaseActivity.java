@@ -7,24 +7,27 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.WindowManager;
 
 import com.dsatab.DsaTabApplication;
+import com.dsatab.util.Hint;
 import com.dsatab.util.Util;
 
 public class BaseActivity extends ActionBarActivity {
 
-	protected SharedPreferences preferences;
-
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.app.Activity#onCreate(android.os.Bundle)
+	 * @see android.support.v4.app.FragmentActivity#onPostCreate(android.os.Bundle)
 	 */
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		preferences = DsaTabApplication.getPreferences();
-		super.onCreate(savedInstanceState);
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		SharedPreferences preferences = DsaTabApplication.getPreferences();
+		updateFullscreenStatus(preferences.getBoolean(DsaTabPreferenceActivity.KEY_FULLSCREEN, false));
+
+		Hint.showRandomHint(getClass().getSimpleName(), this);
 	}
 
 	protected void applyPreferencesToTheme() {
+
 		SharedPreferences pref = DsaTabApplication.getPreferences();
 		String bgPath = pref.getString(DsaTabPreferenceActivity.KEY_STYLE_BG_PATH, null);
 
@@ -35,28 +38,6 @@ public class BaseActivity extends ActionBarActivity {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Activity#onDestroy()
-	 */
-	@Override
-	protected void onDestroy() {
-		// Util.unbindDrawables(getWindow().getDecorView());
-		super.onDestroy();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Activity#onPostCreate(android.os.Bundle)
-	 */
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-		updateFullscreenStatus(preferences.getBoolean(DsaTabPreferenceActivity.KEY_FULLSCREEN, true));
-	}
-
 	protected void updateFullscreenStatus(boolean bUseFullscreen) {
 		if (bUseFullscreen) {
 			getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -65,7 +46,6 @@ public class BaseActivity extends ActionBarActivity {
 			getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		}
-
 		getWindow().getDecorView().requestLayout();
 	}
 }

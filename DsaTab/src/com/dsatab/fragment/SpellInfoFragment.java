@@ -69,41 +69,46 @@ public class SpellInfoFragment extends BaseFragment {
 	}
 
 	public Spell accept() {
-		try {
-			NumberPicker numberPicker = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_value);
-			if (numberPicker != null && numberPicker.getVisibility() == View.VISIBLE) {
-				spell.setValue(numberPicker.getValue());
+
+		if (editMode) {
+			try {
+				NumberPicker numberPicker = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_value);
+				if (numberPicker != null && numberPicker.getVisibility() == View.VISIBLE) {
+					spell.setValue(numberPicker.getValue());
+				}
+
+				SpellInfo info = spell.getInfo();
+
+				info.setCastDuration(getValue(R.id.popup_spell_castduration_edit));
+				info.setCosts(getValue(R.id.popup_spell_costs_edit));
+				info.setEffect(getValue(R.id.popup_spell_effect_edit));
+				info.setTarget(getValue(R.id.popup_spell_target_edit));
+				info.setRange(getValue(R.id.popup_spell_range_edit));
+				info.setEffectDuration(getValue(R.id.popup_spell_effectduration_edit));
+				info.setRepresentation(getValue(R.id.popup_spell_representation_edit));
+				info.setSource(getValue(R.id.popup_spell_source_edit));
+				info.setComplexity(getValue(R.id.popup_spell_complexity_edit));
+				info.setMerkmale(getValue(R.id.popup_spell_merkmal_edit));
+				info.setProbe(getValue(R.id.popup_spell_probe_edit));
+
+				spell.setComments(getValue(R.id.popup_spell_comment_edit));
+				spell.setVariant(getValue(R.id.popup_spell_variant_edit));
+				spell.setProbePattern(info.getProbe());
+
+				RuntimeExceptionDao<SpellInfo, Long> dao = DsaTabApplication.getInstance().getDBHelper()
+						.getRuntimeExceptionDao(SpellInfo.class);
+				dao.createOrUpdate(info);
+
+				spell.fireValueChangedEvent();
+
+				Toast.makeText(getActivity(), "Zauberinformationen wurden gespeichert", Toast.LENGTH_SHORT).show();
+
+				getBaseActivity().getSupportFragmentManager().popBackStack();
+			} catch (NumberFormatException e) {
+				Debug.error(e);
 			}
-
-			SpellInfo info = spell.getInfo();
-
-			info.setCastDuration(getValue(R.id.popup_spell_castduration_edit));
-			info.setCosts(getValue(R.id.popup_spell_costs_edit));
-			info.setEffect(getValue(R.id.popup_spell_effect_edit));
-			info.setTarget(getValue(R.id.popup_spell_target_edit));
-			info.setRange(getValue(R.id.popup_spell_range_edit));
-			info.setEffectDuration(getValue(R.id.popup_spell_effectduration_edit));
-			info.setRepresentation(getValue(R.id.popup_spell_representation_edit));
-			info.setSource(getValue(R.id.popup_spell_source_edit));
-			info.setComplexity(getValue(R.id.popup_spell_complexity_edit));
-			info.setMerkmale(getValue(R.id.popup_spell_merkmal_edit));
-			info.setProbe(getValue(R.id.popup_spell_probe_edit));
-
-			spell.setComments(getValue(R.id.popup_spell_comment_edit));
-			spell.setVariant(getValue(R.id.popup_spell_variant_edit));
-			spell.setProbePattern(info.getProbe());
-
-			RuntimeExceptionDao<SpellInfo, Long> dao = DsaTabApplication.getInstance().getDBHelper()
-					.getRuntimeExceptionDao(SpellInfo.class);
-			dao.createOrUpdate(info);
-
-			spell.fireValueChangedEvent();
-
-			Toast.makeText(getActivity(), "Zauberinformationen wurden gespeichert", Toast.LENGTH_SHORT).show();
-
+		} else {
 			getBaseActivity().getSupportFragmentManager().popBackStack();
-		} catch (NumberFormatException e) {
-			Debug.error(e);
 		}
 
 		return spell;
@@ -151,7 +156,7 @@ public class SpellInfoFragment extends BaseFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		popupcontent = inflater.inflate(R.layout.popup_spell_info, container, false);
+		popupcontent = inflater.inflate(R.layout.sheet_spell_info, container, false);
 		return popupcontent;
 	}
 
@@ -160,6 +165,7 @@ public class SpellInfoFragment extends BaseFragment {
 		super.onCreateOptionsMenu(menu, inflater);
 
 		if (!editMode) {
+			inflater.inflate(R.menu.menuitem_ok, menu);
 			inflater.inflate(R.menu.menuitem_edit, menu);
 		} else {
 			inflater.inflate(R.menu.menuitem_ok, menu);
@@ -204,7 +210,8 @@ public class SpellInfoFragment extends BaseFragment {
 		if (spell != null) {
 			SpellInfo info = spell.getInfo();
 
-			popupcontent.findViewById(R.id.popup_edit_value).setEnabled(edit);
+			if (popupcontent.findViewById(R.id.popup_edit_value) != null)
+				popupcontent.findViewById(R.id.popup_edit_value).setEnabled(edit);
 
 			edit(R.id.popup_spell_castduration, R.id.popup_spell_castduration_edit, info.getCastDurationDetailed(),
 					edit);
@@ -221,7 +228,6 @@ public class SpellInfoFragment extends BaseFragment {
 			edit(R.id.popup_spell_comment, R.id.popup_spell_comment_edit, spell.getComments(), edit);
 			edit(R.id.popup_spell_variant, R.id.popup_spell_variant_edit, spell.getVariant(), edit);
 			edit(R.id.popup_spell_probe, R.id.popup_spell_probe_edit, info.getProbe(), edit);
-
 		}
 
 		getBaseActivity().supportInvalidateOptionsMenu();

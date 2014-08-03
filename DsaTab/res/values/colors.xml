@@ -4,8 +4,8 @@
     <color name="accent">#33b5e5</color>
     <color name="accent_checked">#CC33b5e5</color>
     
-	<color name="Darker">#99333333</color>
-	<color name="Brighter">#66FFFFFF</color>
+	<color name="Darker">#40000000</color>
+	<color name="Brighter">#60FFFFFF</color>
 	
 	<color name="RowOdd">#09000000</color>
 	<color name="RowEven">#09FFFFFF</color>

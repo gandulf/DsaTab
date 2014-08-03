@@ -85,7 +85,7 @@
             android:title="Portraits herunterladen" />
         <Preference
             android:key="downloadMaps"
-            android:summary="Gesammltes Kartenwerk - Copyright Ulisses (ca. 26 MB)"
+            android:summary="Gesammeltes Kartenwerk - Copyright Ulisses (ca. 26 MB)"
             android:title="Karten herunterladen" />
         <Preference
             android:key="downloadOSMMaps"

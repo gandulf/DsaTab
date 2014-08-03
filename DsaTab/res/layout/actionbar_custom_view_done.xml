@@ -10,17 +10,18 @@
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
+  See the License for the specific language governing permissions and 
   limitations under the License.
-  -->
+-->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:divider="?attr/dividerVertical"
+    android:dividerPadding="?attr/dividerPadding"
     android:orientation="horizontal"
-    android:divider="?attr/imgDividerVertical"
-    android:showDividers="end"
-    android:dividerPadding="12dp">
+    android:showDividers="end" >
 
     <include layout="@layout/actionbar_done_button" />
+
 </LinearLayout>

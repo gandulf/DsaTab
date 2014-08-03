@@ -23,13 +23,11 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -74,8 +72,10 @@ public class MapFragment extends BaseFragment {
 
 	private String activeMap = null;
 
-	private String[] mapFiles;
-	private String[] mapNames;
+	private File mapDir;
+	private List<String> mapFiles;
+	private List<String> mapNames;
+	private boolean osmMapLoaded = false;
 
 	private BitmapDrawable bitmap;
 
@@ -89,34 +89,99 @@ public class MapFragment extends BaseFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setHasOptionsMenu(true);
+		getMapFiles();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu,
-	 * com.actionbarsherlock.view.MenuInflater)
-	 */
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.menuitem_map, menu);
-	}
+	private void initMapNavigation() {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.actionbarsherlock.app.SherlockFragment#onOptionsItemSelected(com. actionbarsherlock.view.MenuItem)
-	 */
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == R.id.option_map_choose) {
-			showMapChooser();
-			return true;
-		} else {
-			return super.onOptionsItemSelected(item);
+		mapFiles = null;
+		mapNames = null;
+
+		if (!getMapNames().isEmpty()) {
+			ActionBar actionBar = getActionBarActivity().getSupportActionBar();
+
+			final ArrayAdapter<String> adapter = new ArrayAdapter<String>(actionBar.getThemedContext(),
+					android.R.layout.simple_spinner_item, getMapNames());
+			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+			actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+			actionBar.setListNavigationCallbacks(adapter, new ActionBar.OnNavigationListener() {
+
+				@Override
+				public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+					loadMap(getMapFiles().get(itemPosition));
+					return false;
+				}
+			});
+
+			String lastMap = getPreferences().getString(PREF_KEY_LAST_MAP, null);
+			int mapIndex = getMapFiles().indexOf(lastMap);
+			if (mapIndex >= 0)
+				actionBar.setSelectedNavigationItem(mapIndex);
+			else
+				actionBar.setSelectedNavigationItem(0);
 		}
+	}
+
+	public List<String> getMapFiles() {
+		if (mapFiles == null) {
+			initMaps();
+		}
+		return mapFiles;
+	}
+
+	public List<String> getMapNames() {
+		if (mapNames == null) {
+			initMaps();
+		}
+		return mapNames;
+	}
+
+	private void initMaps() {
+		mapFiles = new ArrayList<String>();
+		mapNames = new ArrayList<String>();
+
+		mapDir = DsaTabApplication.getDirectory(DsaTabApplication.DIR_MAPS);
+		File osmMapDir = DsaTabApplication.getDirectory(DsaTabApplication.DIR_OSM_MAPS);
+
+		if (!mapDir.exists())
+			mapDir.mkdirs();
+
+		File[] files = mapDir.listFiles(new FilenameFilter() {
+
+			@Override
+			public boolean accept(File dir, String filename) {
+
+				filename = filename.toLowerCase(Locale.GERMAN);
+
+				return filename.endsWith(".jpg") || filename.endsWith(".gif") || filename.endsWith(".png")
+						|| filename.endsWith(".jpeg") || filename.endsWith(".bmp");
+			}
+		});
+		if (files != null) {
+			Arrays.sort(files, new Util.FileNameComparator());
+			for (File file : files) {
+				if (file.isFile()) {
+					mapFiles.add(file.getName());
+					mapNames.add(file.getName().replace("-", " ").substring(0, file.getName().length() - 4));
+				}
+			}
+		}
+
+		files = osmMapDir.listFiles();
+		if (files != null && files.length > 0) {
+			osmMapLoaded = true;
+			mapFiles.add(OSM_AVENTURIEN);
+			mapNames.add("Aventurien (GoogleMaps)");
+		} else {
+			osmMapLoaded = false;
+		}
+	}
+
+	private void removeMapNavigation() {
+		ActionBar actionBar = getActionBarActivity().getSupportActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+		actionBar.setListNavigationCallbacks(null, null);
 	}
 
 	/*
@@ -186,79 +251,7 @@ public class MapFragment extends BaseFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 
-		// imageMapView.setOnTouchListener(this);
-
-		List<String> mapFiles = new ArrayList<String>();
-		List<String> mapNames = new ArrayList<String>();
-
-		File mapDir = DsaTabApplication.getDirectory(DsaTabApplication.DIR_MAPS);
-		File osmMapDir = DsaTabApplication.getDirectory(DsaTabApplication.DIR_OSM_MAPS);
-
-		if (!mapDir.exists())
-			mapDir.mkdirs();
-
-		File[] files = mapDir.listFiles(new FilenameFilter() {
-
-			@Override
-			public boolean accept(File dir, String filename) {
-
-				filename = filename.toLowerCase(Locale.GERMAN);
-
-				return filename.endsWith(".jpg") || filename.endsWith(".gif") || filename.endsWith(".png")
-						|| filename.endsWith(".jpeg") || filename.endsWith(".bmp");
-			}
-		});
-		if (files != null) {
-			Arrays.sort(files, new Util.FileNameComparator());
-			for (File file : files) {
-				if (file.isFile()) {
-					mapFiles.add(file.getName());
-					mapNames.add(file.getName().replace("-", " ").substring(0, file.getName().length() - 4));
-				}
-			}
-		}
-
-		files = osmMapDir.listFiles();
-		if (files != null && files.length > 0) {
-			mapFiles.add(OSM_AVENTURIEN);
-			mapNames.add("Aventurien (GoogleMaps)");
-		} else {
-			if (getPreferences().getBoolean(PREF_KEY_OSM_ASK, true)) {
-				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-				builder.setTitle("Neue Aventurien Karte");
-				builder.setMessage("Es gibt jetzt eine GoogleMaps ähnliche Karte von ganz Aventurien. Willst du dir das Kartenpaket (ca. 10MB) aus dem Internet herunterladen?");
-				builder.setCancelable(true);
-				builder.setPositiveButton("Herunterladen", new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-
-						AbstractDownloader downloader = DownloaderWrapper.getInstance(
-								DsaTabApplication.getDsaTabPath(), getActivity());
-						downloader.addPath(DsaTabPreferenceActivity.PATH_OSM_MAP_PACK);
-						downloader.downloadZip();
-					}
-				});
-				builder.setNegativeButton(R.string.label_cancel, new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-
-						Editor edit = getPreferences().edit();
-						edit.putBoolean(PREF_KEY_OSM_ASK, false);
-						edit.commit();
-						dialog.dismiss();
-
-					}
-				});
-				builder.show();
-			}
-
-		}
-
 		TextView empty = (TextView) findViewById(android.R.id.empty);
-
 		if (mapFiles.isEmpty()) {
 			String path = mapDir.getAbsolutePath();
 			empty.setVisibility(View.VISIBLE);
@@ -268,19 +261,44 @@ public class MapFragment extends BaseFragment {
 
 			empty.setText(Util.getText(R.string.message_map_empty, path));
 
-			this.mapFiles = null;
-			this.mapNames = null;
-
 		} else {
-
 			empty.setVisibility(View.GONE);
-
-			this.mapFiles = mapFiles.toArray(new String[0]);
-			this.mapNames = mapNames.toArray(new String[0]);
-
 		}
 
 		mAttacher = new PhotoViewAttacher(imageMapView);
+
+		if (!osmMapLoaded && getPreferences().getBoolean(PREF_KEY_OSM_ASK, true)) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle("Neue Aventurien Karte");
+			builder.setMessage("Es gibt jetzt eine GoogleMaps ähnliche Karte von ganz Aventurien. Willst du dir das Kartenpaket (ca. 10MB) aus dem Internet herunterladen?");
+			builder.setCancelable(true);
+			builder.setPositiveButton("Herunterladen", new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+
+					AbstractDownloader downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath(),
+							getActivity());
+					downloader.addPath(DsaTabPreferenceActivity.PATH_OSM_MAP_PACK);
+					downloader.downloadZip();
+				}
+			});
+			builder.setNegativeButton(R.string.label_cancel, new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+
+					Editor edit = getPreferences().edit();
+					edit.putBoolean(PREF_KEY_OSM_ASK, false);
+					edit.commit();
+					dialog.dismiss();
+
+				}
+			});
+			builder.show();
+
+		}
 
 		super.onActivityCreated(savedInstanceState);
 	}
@@ -437,6 +455,7 @@ public class MapFragment extends BaseFragment {
 	public void onPause() {
 
 		Editor edit = getPreferences().edit();
+		edit.putString(PREF_KEY_LAST_MAP, activeMap);
 		edit.putString(PREF_KEY_LAST_MAP_COORDINATES, Util.toString(mAttacher.getSuppViewMatrix()));
 		if (osmMapView != null) {
 			edit.putInt(PREF_KEY_OSM_ZOOM, osmMapView.getZoomLevel());
@@ -448,6 +467,7 @@ public class MapFragment extends BaseFragment {
 
 		// clear bitmap
 		unloadMap();
+		removeMapNavigation();
 
 		super.onPause();
 	}
@@ -461,8 +481,6 @@ public class MapFragment extends BaseFragment {
 	public void onResume() {
 		super.onResume();
 
-		String lastMap = getPreferences().getString(PREF_KEY_LAST_MAP, null);
-
 		if (osmMapView != null) {
 			osmMapView.getController().setZoom(getPreferences().getInt(PREF_KEY_OSM_ZOOM, DEFAULT_OSM_ZOOM));
 
@@ -474,36 +492,8 @@ public class MapFragment extends BaseFragment {
 			}
 		}
 
-		if (!TextUtils.isEmpty(lastMap)) {
-			loadMap(lastMap);
-		}
+		initMapNavigation();
 
-	}
-
-	private void showMapChooser() {
-		if (this.mapFiles == null || this.mapFiles.length == 0) {
-			Toast.makeText(getActivity(), "Keine Karten gefunden", Toast.LENGTH_SHORT).show();
-			return;
-		}
-
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		builder.setTitle("Karte auswählen");
-
-		builder.setItems(mapNames, new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				Editor edit = getPreferences().edit();
-				edit.putString(PREF_KEY_LAST_MAP, mapFiles[which]);
-				edit.commit();
-
-				loadMap(mapFiles[which]);
-
-				dialog.dismiss();
-			}
-		});
-
-		builder.show().setCanceledOnTouchOutside(true);
 	}
 
 }

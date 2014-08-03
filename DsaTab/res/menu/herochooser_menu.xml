@@ -9,18 +9,8 @@
     <item
         android:id="@+id/option_load_example_heroes"
         android:icon="@drawable/dsa_character"
-        app:showAsAction="never"
+        app:showAsAction="withText|ifRoom"
+        android:visible="false"
         android:title="Beispiel Helden laden"/>
-    
-    <item
-        android:id="@+id/option_items"
-        android:icon="@drawable/dsa_items"
-        app:showAsAction="never"
-        android:title="@string/items"/>
-    <item
-        android:id="@+id/option_settings"
-        android:icon="@drawable/ic_menu_preferences"
-        app:showAsAction="never"
-        android:title="@string/settings"/>
 
 </menu>

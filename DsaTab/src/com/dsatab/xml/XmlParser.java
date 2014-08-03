@@ -11,7 +11,6 @@ import android.text.TextUtils;
 import au.com.bytecode.opencsv.CSVReader;
 
 import com.dsatab.DsaTabApplication;
-import com.dsatab.common.DsaTabRuntimeException;
 import com.dsatab.data.ArtInfo;
 import com.dsatab.data.SpellInfo;
 import com.dsatab.data.enums.ArmorPosition;
@@ -24,6 +23,7 @@ import com.dsatab.data.items.MiscSpecification;
 import com.dsatab.data.items.Shield;
 import com.dsatab.data.items.Weapon;
 import com.dsatab.db.DataManager;
+import com.dsatab.exception.DsaTabRuntimeException;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.j256.ormlite.dao.RuntimeExceptionDao;

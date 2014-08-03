@@ -74,21 +74,16 @@
         <item name="imgBarSet1">@drawable/dsa_set1</item>
         <item name="imgBarSet2">@drawable/dsa_set2</item>
         <item name="imgBarSet3">@drawable/dsa_set3</item>
-                      
-                        
-        <item name="textViewValueNoTouchStyle">@style/TextValue.NoTouch</item>
+                
         <item name="buttonStyleLeft" >@style/Widget.Button.Left.Dark</item>
         <item name="buttonStyleRight">@style/Widget.Button.Right.Dark</item>
-        <item name="textViewValueSmallNoTouchStyle">@style/TextValue.NoTouch.Small</item>
         
         <item name="android:soundEffectsEnabled">false</item>
         <item name="iconImageViewStyle">@style/Widget.IconImageView</item>
                 
         <item name="listItemBackground">@drawable/list_background_holo_dark</item>
         <item name="listShadowBackground">@drawable/sliding_listshadow_bg_dark</item>                
-        <item name="selectableBackground">@drawable/abc_list_selector_holo_dark</item>
-        <item name="imgDividerVertical">@drawable/divider_vertical_holo_dark</item>        
-        <item name="flipImageViewStyle">@style/FlipImageView.Checked</item>
+        <item name="selectableBackground">@drawable/abc_list_selector_holo_dark</item>        
         <item name="numberPickerStyle">@style/NPWidget.Holo.NumberPicker</item>        
         <item name="showcaseViewStyle">@style/ShowcaseView</item>
         
@@ -97,6 +92,7 @@
         
         <item name="dropShadowBackground">@drawable/container_dropshadow_dark</item>
         
+        <item name="dividerPadding">6dip</item>
     </style>
     
 </resources>

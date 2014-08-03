@@ -3,11 +3,13 @@ package com.dsatab.fragment;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,14 +23,32 @@ import android.widget.Spinner;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
+import com.dsatab.activity.FragmentEditActivity;
 import com.dsatab.data.CustomProbe;
 import com.dsatab.data.Probe.ProbeType;
 import com.dsatab.data.adapter.SpinnerSimpleAdapter;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 import com.dsatab.util.Util;
-import com.dsatab.view.ImageChooserDialog;
+import com.dsatab.view.dialog.ImageChooserDialog;
 
-public class CustomProbeEditFragment extends Fragment implements OnClickListener, OnItemSelectedListener {
+public class CustomProbeEditFragment extends BaseEditFragment implements OnClickListener, OnItemSelectedListener {
+
+	public static void insert(Activity activity, int requestCode) {
+		Intent intent = new Intent(activity, FragmentEditActivity.class);
+		intent.setAction(Intent.ACTION_INSERT);
+		intent.putExtra(FragmentEditActivity.EDIT_FRAGMENT_CLASS, CustomProbeEditFragment.class);
+		activity.startActivityForResult(intent, requestCode);
+	}
+
+	public static void edit(Activity activity, CustomProbe probe, int requestCode) {
+		Intent intent = new Intent(activity, FragmentEditActivity.class);
+		intent.setAction(Intent.ACTION_EDIT);
+		intent.putExtra(FragmentEditActivity.EDIT_FRAGMENT_CLASS, CustomProbeEditFragment.class);
+		intent.putExtra(INTENT_PROBE_CHOOSER_ID, probe.getId().toString());
+		activity.startActivityForResult(intent, requestCode);
+	}
+
+	public static final String INTENT_PROBE_CHOOSER_ID = "com.dsatab.data.intent.customProbeId";
 
 	private static final String ICON_URI = "ICON_URI";
 
@@ -92,6 +112,17 @@ public class CustomProbeEditFragment extends Fragment implements OnClickListener
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+
+		CustomProbe probe = null;
+		Bundle extra = getExtra();
+		if (extra != null && extra.containsKey(INTENT_PROBE_CHOOSER_ID)) {
+			UUID containerId = UUID.fromString(extra.getString(INTENT_PROBE_CHOOSER_ID));
+			if (containerId != null) {
+				probe = DsaTabApplication.getInstance().getHero().getHeroConfiguration().getCustomProbe(containerId);
+			}
+		}
+		setCustomProbe(probe);
+
 		updateView();
 	}
 
@@ -228,7 +259,7 @@ public class CustomProbeEditFragment extends Fragment implements OnClickListener
 	/**
 	 * 
 	 */
-	public CustomProbe accept() {
+	public Bundle accept() {
 		Util.hideKeyboard(editName);
 		customProbe.setName(editName.getText().toString());
 		customProbe.setDescription(editDescription.getText().toString());
@@ -241,7 +272,13 @@ public class CustomProbeEditFragment extends Fragment implements OnClickListener
 
 		customProbe.setIconUri(iconUri);
 
-		return customProbe;
+		if (Intent.ACTION_INSERT.equals(getActivity().getIntent().getAction())) {
+			DsaTabApplication.getInstance().getHero().getHeroConfiguration().addCustomProbe(customProbe);
+		}
+
+		Bundle data = new Bundle();
+		// TODO fill data
+		return data;
 	}
 
 	private void pickIcon() {

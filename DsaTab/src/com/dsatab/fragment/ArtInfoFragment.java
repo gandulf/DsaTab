@@ -112,7 +112,7 @@ public class ArtInfoFragment extends BaseFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		popupcontent = inflater.inflate(R.layout.popup_art_info, container, false);
+		popupcontent = inflater.inflate(R.layout.sheet_art_info, container, false);
 		return popupcontent;
 	}
 
@@ -121,6 +121,7 @@ public class ArtInfoFragment extends BaseFragment {
 		super.onCreateOptionsMenu(menu, inflater);
 
 		if (!editMode) {
+			inflater.inflate(R.menu.menuitem_ok, menu);
 			inflater.inflate(R.menu.menuitem_edit, menu);
 		} else {
 			inflater.inflate(R.menu.menuitem_ok, menu);
@@ -159,37 +160,41 @@ public class ArtInfoFragment extends BaseFragment {
 
 	public Art accept() {
 
-		try {
-			NumberPicker numberPicker = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_value);
-			if (numberPicker != null && numberPicker.getVisibility() == View.VISIBLE) {
-				art.setValue(numberPicker.getValue());
+		if (editMode) {
+			try {
+				NumberPicker numberPicker = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_value);
+				if (numberPicker != null && numberPicker.getVisibility() == View.VISIBLE) {
+					art.setValue(numberPicker.getValue());
+				}
+
+				ArtInfo info = art.getInfo();
+
+				info.setCastDuration(getValue(R.id.popup_liturgie_castduration_edit));
+				info.setCosts(getValue(R.id.popup_liturgie_costs_edit));
+				info.setEffect(getValue(R.id.popup_liturgie_effect_edit));
+				info.setEffectDuration(getValue(R.id.popup_liturgie_effectduration_edit));
+				info.setMerkmale(getValue(R.id.popup_liturgie_merkmal_edit));
+				info.setOrigin(getValue(R.id.popup_liturgie_origin_edit));
+				info.setProbe(getValue(R.id.popup_liturgie_probe_edit));
+				info.setRange(getValue(R.id.popup_liturgie_range_edit));
+				info.setSource(getValue(R.id.popup_liturgie_source_edit));
+				info.setTarget(getValue(R.id.popup_liturgie_target_edit));
+
+				art.setProbePattern(info.getProbe());
+
+				RuntimeExceptionDao<ArtInfo, Long> dao = DsaTabApplication.getInstance().getDBHelper()
+						.getRuntimeExceptionDao(ArtInfo.class);
+				dao.createOrUpdate(info);
+
+				art.fireValueChangedEvent();
+				Toast.makeText(getActivity(), "Kunstinformationen wurden gespeichert", Toast.LENGTH_SHORT).show();
+
+				getBaseActivity().getSupportFragmentManager().popBackStack();
+			} catch (NumberFormatException e) {
+				Debug.error(e);
 			}
-
-			ArtInfo info = art.getInfo();
-
-			info.setCastDuration(getValue(R.id.popup_liturgie_castduration_edit));
-			info.setCosts(getValue(R.id.popup_liturgie_costs_edit));
-			info.setEffect(getValue(R.id.popup_liturgie_effect_edit));
-			info.setEffectDuration(getValue(R.id.popup_liturgie_effectduration_edit));
-			info.setMerkmale(getValue(R.id.popup_liturgie_merkmal_edit));
-			info.setOrigin(getValue(R.id.popup_liturgie_origin_edit));
-			info.setProbe(getValue(R.id.popup_liturgie_probe_edit));
-			info.setRange(getValue(R.id.popup_liturgie_range_edit));
-			info.setSource(getValue(R.id.popup_liturgie_source_edit));
-			info.setTarget(getValue(R.id.popup_liturgie_target_edit));
-
-			art.setProbePattern(info.getProbe());
-
-			RuntimeExceptionDao<ArtInfo, Long> dao = DsaTabApplication.getInstance().getDBHelper()
-					.getRuntimeExceptionDao(ArtInfo.class);
-			dao.createOrUpdate(info);
-
-			art.fireValueChangedEvent();
-			Toast.makeText(getActivity(), "Kunstinformationen wurden gespeichert", Toast.LENGTH_SHORT).show();
-
+		} else {
 			getBaseActivity().getSupportFragmentManager().popBackStack();
-		} catch (NumberFormatException e) {
-			Debug.error(e);
 		}
 		return art;
 	}

@@ -10,16 +10,13 @@ import com.dsatab.data.CombatMeleeTalent;
 import com.dsatab.data.Value;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.fragment.BaseFragment;
-import com.dsatab.view.InlineEditDialog;
-import com.dsatab.view.InlineEditFightDialog;
+import com.dsatab.view.dialog.InlineEditDialog;
+import com.dsatab.view.dialog.InlineEditFightDialog;
 
 public class EditListener implements View.OnClickListener, View.OnLongClickListener {
 
 	private WeakReference<BaseFragment> mFragment;
 
-	/**
-	 * 
-	 */
 	public EditListener(BaseFragment context) {
 		this.mFragment = new WeakReference<BaseFragment>(context);
 	}

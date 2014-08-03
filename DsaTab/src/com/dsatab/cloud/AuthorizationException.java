@@ -1,6 +1,6 @@
 package com.dsatab.cloud;
 
-import com.dsatab.common.DsaTabException;
+import com.dsatab.exception.DsaTabException;
 
 public class AuthorizationException extends DsaTabException {
 

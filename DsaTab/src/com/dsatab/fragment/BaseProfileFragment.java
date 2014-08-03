@@ -38,9 +38,9 @@ import com.dsatab.db.DataManager;
 import com.dsatab.util.Debug;
 import com.dsatab.util.PhotoPicker;
 import com.dsatab.util.Util;
-import com.dsatab.view.ImageChooserDialog;
-import com.dsatab.view.PortraitViewDialog;
-import com.dsatab.view.WebInfoDialog;
+import com.dsatab.view.dialog.ImageChooserDialog;
+import com.dsatab.view.dialog.PortraitViewDialog;
+import com.dsatab.view.dialog.WebInfoDialog;
 import com.squareup.picasso.Picasso;
 
 public abstract class BaseProfileFragment extends BaseAttributesFragment implements OnClickListener,

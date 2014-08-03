@@ -5,8 +5,6 @@
                 
         <attr name="buttonStyleLeft" format="reference"/>
         <attr name="buttonStyleRight" format="reference"/>
-        <attr name="textViewValueNoTouchStyle" format="reference"/>
-        <attr name="textViewValueSmallNoTouchStyle" format="reference"/>
         
         <attr name="iconImageViewStyle" format="reference"/>
         
@@ -15,7 +13,6 @@
         <attr name="dropShadowBackground" format="reference"/>
         
         <attr name="selectableBackground" format="reference" />
-        <attr name="imgDividerVertical" format="reference" />
         <attr name="imgDragVertical" format="reference"/>
         
         <attr name="imgChainTop" format="reference"/>

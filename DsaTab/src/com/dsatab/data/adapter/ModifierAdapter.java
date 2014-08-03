@@ -20,6 +20,7 @@ import com.dsatab.R;
 import com.dsatab.data.modifier.Modifier;
 import com.dsatab.util.Util;
 import com.gandulf.guilib.data.OpenArrayAdapter;
+import com.gandulf.guilib.util.Debug;
 import com.gandulf.guilib.view.SeekBarEx;
 import com.gandulf.guilib.view.SeekBarEx.SeekBarLabelRenderer;
 
@@ -127,15 +128,30 @@ public class ModifierAdapter extends OpenArrayAdapter<Modifier> implements OnSee
 
 		}
 
-		final Modifier modifier = getItem(position);
+		Modifier modifier = getItem(position);
 		switch (type) {
 		case TYPE_MANUAL: {
 
 			ViewHolderManual holder = (ViewHolderManual) convertView.getTag();
 
 			holder.seekBar.setOnSeekBarChangeListener(null);
-			holder.seekBar.setMin(-15);
-			holder.seekBar.setMax(15);
+
+			int nextStep = Math.abs(modifier.getModifier()) + (5 - modifier.getModifier() % 5);
+			nextStep = Math.max(10, nextStep);
+			Debug.verbose("mod = " + modifier.getModifier() + ", next" + nextStep);
+
+			if (-modifier.getModifier() < 0) {
+				holder.seekBar.setMin(-nextStep);
+			} else {
+				holder.seekBar.setMin(-10);
+			}
+
+			if (-modifier.getModifier() > 0) {
+				holder.seekBar.setMax(nextStep);
+			} else {
+				holder.seekBar.setMax(10);
+			}
+
 			holder.seekBar.setValue(-modifier.getModifier());
 			holder.seekBar.setOnSeekBarChangeListener(this);
 
@@ -171,42 +187,49 @@ public class ModifierAdapter extends OpenArrayAdapter<Modifier> implements OnSee
 			SpinnerSimpleAdapter<String> adapter = new SpinnerSimpleAdapter<String>(getContext(),
 					modifier.getSpinnerOptions());
 			holder.spinner.setAdapter(adapter);
+			holder.spinner.setTag(modifier);
+			int index = modifier.getSpinnerIndex();
+			if (index >= 0 && index < adapter.getCount()) {
+				holder.spinner.setSelection(index);
+			}
 			holder.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 				@Override
 				public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-					if (modifier.getSpinnerIndex() != position) {
-						modifier.setModifier(-modifier.getSpinnerValues()[position]);
-						modifier.setSpinnerIndex(position);
-						holder.text2.setText(Util.toProbe(-modifier.getModifier()));
-						Util.setTextColor(holder.text2, modifier.getModifier());
-						onModifierChanged(modifier);
+					Modifier spinnerModifier = null;
+					if (parent.getTag() instanceof Modifier) {
+						spinnerModifier = (Modifier) parent.getTag();
 
-						SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-						Editor edit = preferences.edit();
-						edit.putInt(Modifier.PREF_PREFIX_SPINNER_INDEX + modifier.getTitle(), position);
-						edit.commit();
+						if (spinnerModifier.getSpinnerIndex() != position) {
+							spinnerModifier.setModifier(-spinnerModifier.getSpinnerValues()[position]);
+							spinnerModifier.setSpinnerIndex(position);
+							holder.text2.setText(Util.toProbe(-spinnerModifier.getModifier()));
+							Util.setTextColor(holder.text2, spinnerModifier.getModifier());
+							onModifierChanged(spinnerModifier);
+
+							SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+							Editor edit = preferences.edit();
+							edit.putInt(Modifier.PREF_PREFIX_SPINNER_INDEX + spinnerModifier.getTitle(), position);
+							edit.commit();
+						}
 					}
 
 				}
 
 				@Override
 				public void onNothingSelected(AdapterView<?> parent) {
-					modifier.setModifier(0);
-					modifier.setSpinnerIndex(-1);
-					holder.text2.setText(Util.toProbe(-modifier.getModifier()));
-					Util.setTextColor(holder.text2, modifier.getModifier());
-					onModifierChanged(modifier);
+					Modifier spinnerModifier = null;
+					if (parent.getTag() instanceof Modifier) {
+						spinnerModifier = (Modifier) parent.getTag();
+						spinnerModifier.setModifier(0);
+						spinnerModifier.setSpinnerIndex(-1);
+						holder.text2.setText(Util.toProbe(-spinnerModifier.getModifier()));
+						Util.setTextColor(holder.text2, spinnerModifier.getModifier());
+						onModifierChanged(spinnerModifier);
+					}
 				}
 
 			});
-
-			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-			int index = preferences.getInt(Modifier.PREF_PREFIX_SPINNER_INDEX + modifier.getTitle(), 0);
-			if (index < adapter.getCount()) {
-				holder.spinner.setSelection(index);
-				modifier.setSpinnerIndex(index);
-			}
 
 			holder.text2.setText(Util.toProbe(-modifier.getModifier()));
 			holder.text2.setChecked(modifier.isActive());
@@ -238,6 +261,7 @@ public class ModifierAdapter extends OpenArrayAdapter<Modifier> implements OnSee
 			if (seekBarEx.getLabel() != null) {
 				Util.setTextColor(seekBarEx.getLabel(), modifier.getModifier());
 			}
+
 		}
 
 	}
@@ -254,6 +278,19 @@ public class ModifierAdapter extends OpenArrayAdapter<Modifier> implements OnSee
 			SeekBarEx seekBarEx = (SeekBarEx) seekBar;
 			Modifier modifier = (Modifier) seekBarEx.getTag();
 			onModifierChanged(modifier);
+
+			seekBarEx.setOnSeekBarChangeListener(null);
+
+			if (seekBarEx.getValue() == seekBarEx.getMin()) {
+				seekBarEx.setMin(seekBarEx.getMin() - 5);
+			}
+
+			if (seekBarEx.getValue() == seekBarEx.getMax()) {
+				seekBarEx.setMax(seekBarEx.getMax() + 5);
+			}
+
+			seekBarEx.setOnSeekBarChangeListener(this);
+
 			if (seekBarEx.getLabel() != null) {
 				Util.setTextColor(seekBarEx.getLabel(), modifier.getModifier());
 			}

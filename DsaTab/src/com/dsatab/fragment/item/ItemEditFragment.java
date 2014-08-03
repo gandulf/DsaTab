@@ -34,8 +34,8 @@ import com.dsatab.fragment.BaseFragment;
 import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Util;
 import com.dsatab.view.CardView;
-import com.dsatab.view.ImageChooserDialog;
 import com.dsatab.view.ItemListItem;
+import com.dsatab.view.dialog.ImageChooserDialog;
 import com.gandulf.guilib.util.DefaultTextWatcher;
 
 public class ItemEditFragment extends BaseFragment implements OnClickListener, OnCheckedChangeListener {

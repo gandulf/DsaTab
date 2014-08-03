@@ -113,6 +113,8 @@
     <string name="menu_hide_comments">Kommentare ausblenden</string>
     <string name="message_empty">"Keine Einträge gefunden."\n\n
 "Um diesen Tab zu entfernen, wähle den Menüpunkt <b>Tabs anpassen</b>,\noder klicke auf diese Nachricht."</string>    
+<string name="message_items_empty">"Keine Einträge gefunden."\n\n
+"Fügen sie neue Gegenstände über das Menü hinzu."</string>
     <string name="message_documents_empty">"Keine Dokumente gefunden."\n\n
 "Kopiere sie auf deine SD-Karte unter \""<b>%1$s</b>"\"."</string>
     <string name="message_map_empty">"Kein Kartenmaterial gefunden."\n\n

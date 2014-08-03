@@ -8,9 +8,6 @@
         <item name="android:imageButtonStyle">@style/Widget.Button</item>
         <item name="android:buttonStyleSmall">@style/Widget.Button.Small</item>
         
-        <item name="buttonStyleLeft">@style/Widget.Button.Left</item>
-        <item name="buttonStyleRight">@style/Widget.Button.Right</item>
-        
         <item name="imgChainTop">@drawable/chain_top_light</item>
         <item name="imgChainBottom">@drawable/chain_bottom_light</item>
         
@@ -77,18 +74,16 @@
         <item name="imgBarSet1">@drawable/dsa_set1</item>
         <item name="imgBarSet2">@drawable/dsa_set2</item>
         <item name="imgBarSet3">@drawable/dsa_set3</item>
-                
-        <item name="textViewValueNoTouchStyle">@style/TextValue.NoTouch</item>       
-        <item name="textViewValueSmallNoTouchStyle">@style/TextValue.NoTouch.Small</item>
+        
+        <item name="buttonStyleLeft">@style/Widget.Button.Left</item>
+        <item name="buttonStyleRight">@style/Widget.Button.Right</item>
         
 		<item name="android:soundEffectsEnabled">false</item>       
         <item name="iconImageViewStyle">@style/Widget.IconImageView</item>
         
         <item name="listItemBackground">@drawable/list_background_holo_light</item>
         <item name="listShadowBackground">@drawable/sliding_listshadow_bg_light</item>
-        <item name="selectableBackground">@drawable/abc_list_selector_holo_light</item>
-        <item name="imgDividerVertical">@drawable/divider_vertical_holo_light</item>        
-        <item name="flipImageViewStyle">@style/FlipImageView.Checked</item>        
+        <item name="selectableBackground">@drawable/abc_list_selector_holo_light</item>        
         <item name="numberPickerStyle">@style/NPWidget.Holo.Light.NumberPicker</item>
         <item name="showcaseViewStyle">@style/ShowcaseView.Light</item>
         
@@ -96,6 +91,8 @@
         <item name="floatingHintTextViewStyle">@style/Widget.FloatingHintTextView</item>
         
         <item name="dropShadowBackground">@drawable/container_dropshadow_light</item>
+        
+        <item name="dividerPadding">6dip</item>
     </style>
     
 </resources>

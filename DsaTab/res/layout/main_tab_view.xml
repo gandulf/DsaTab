@@ -35,9 +35,10 @@
             <LinearLayout
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_below="@+id/inc_attributes"
+                android:layout_alignWithParentIfMissing="true"
+                android:layout_below="@+id/inc_attributes"                
                 android:baselineAligned="false" >
 
                 <FrameLayout

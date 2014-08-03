@@ -34,7 +34,6 @@ import android.widget.ListView;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
-import com.dsatab.activity.ItemContainerEditActivity;
 import com.dsatab.activity.ItemsActivity;
 import com.dsatab.data.Hero;
 import com.dsatab.data.adapter.GridItemAdapter;
@@ -342,12 +341,12 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 							adapter.animateDismiss(checkedPositions.keyAt(i));
 							break;
 						case R.id.option_edit: {
-							ItemContainerEditActivity.edit(fragment.getActivity(), itemContainer);
+							ItemContainerEditFragment.edit(fragment.getActivity(), itemContainer);
 							mode.finish();
 							return true;
 						}
 						case R.id.option_add: {
-							ItemContainerEditActivity.insert(fragment.getActivity());
+							ItemContainerEditFragment.insert(fragment.getActivity());
 							mode.finish();
 							return true;
 						}
@@ -646,8 +645,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 			getActivity().supportInvalidateOptionsMenu();
 			return true;
 		case R.id.option_add_container:
-			Intent intent = new Intent(getActivity(), ItemContainerEditActivity.class);
-			startActivity(intent);
+			ItemContainerEditFragment.insert(getActivity());
 			return true;
 		case R.id.option_itemgrid_type_grid:
 			setScreenType(TYPE_GRID);
@@ -962,6 +960,8 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 
 			itemListAdapter.add(item);
 			itemListAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
+
+			refreshEmptyView(itemListAdapter);
 		}
 		containerAdapter.notifyDataSetChanged();
 	}
@@ -1005,6 +1005,8 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		if (item.getContainerId() == mCurrentContainerId) {
 			itemGridAdapter.remove(item);
 			itemListAdapter.remove(item);
+
+			refreshEmptyView(itemListAdapter);
 		}
 		containerAdapter.notifyDataSetChanged();
 	}
@@ -1023,6 +1025,8 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 
 			itemListAdapter.add(item);
 			itemListAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
+
+			refreshEmptyView(itemListAdapter);
 		}
 	}
 
@@ -1037,6 +1041,8 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		if (item.getSet() == mCurrentContainerId) {
 			itemGridAdapter.remove(item);
 			itemListAdapter.remove(item);
+
+			refreshEmptyView(itemListAdapter);
 		}
 	}
 

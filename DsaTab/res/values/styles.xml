@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:custom="http://schemas.android.com/apk/res-auto">
 
-    <style name="Widget.IconImageView" parent="@style/FlipImageView.Checked">
+    <style name="Widget.IconImageView" parent="@style/FlipImageView">
         <item name="android:padding">@dimen/default_gap</item>
+        <item name="flipDrawable">@drawable/list_checked</item>
     </style>
         
     <style name="Widget.Button" parent="@android:style/Widget.Button">
@@ -49,17 +50,15 @@
         <item name="android:background">@drawable/btn_touch_small_dark</item>
     </style>
     
-    <style name="TextValue.NoTouch" parent="@android:style/Widget.TextView">
+    
+    <style name="TextValue" parent="@android:style/Widget.TextView">
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:ellipsize">end</item>
-        <item name="android:layout_marginTop">@dimen/default_gap</item>
-        <item name="android:layout_marginBottom">@dimen/default_gap</item>
-        <item name="android:layout_marginLeft">@dimen/default_gap</item>
-        <item name="android:layout_marginRight">@dimen/default_gap</item>
+        <item name="android:padding">@dimen/default_gap</item>
     </style>
     
-	<style name="TextValue.NoTouch.Small">
+	<style name="TextValue.Small">
         <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
     </style>
 
@@ -78,19 +77,8 @@
         <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
         <item name="android:textSize">9sp</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:gravity">right</item>
+        <item name="android:gravity">right|bottom</item>
+        <item name="android:layout_height">match_parent</item>
     </style>
     
-    <style name="TextViewTitle" parent="@android:style/Widget.TextView">
-        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
-        <item name="android:shadowColor">#ffffff</item>
-        <item name="android:shadowDx">1.0</item>
-        <item name="android:shadowDy">1.0</item>
-        <item name="android:shadowRadius">2.0</item>
-    </style>
-
-    <style name="FlipImageView.Checked" parent="@style/FlipImageView">
-        <item name="flipDrawable">@drawable/list_checked</item>
-    </style>
-
 </resources>

@@ -7,8 +7,9 @@
     android:paddingRight="0dp" 
     android:orientation="horizontal"
     android:divider="?attr/dividerVertical"
+            android:dividerPadding="?attr/dividerPadding"
     android:showDividers="middle"    
-    android:dividerPadding="8dp">
+    >
 
     <TextView
         android:id="@android:id/text1"

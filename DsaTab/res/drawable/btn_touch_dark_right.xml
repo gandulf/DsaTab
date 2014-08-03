@@ -8,7 +8,7 @@
                 <shape android:shape="rectangle">
                     <solid android:color="#222222" />
                     <corners  android:topRightRadius="14dp" android:bottomRightRadius="14dp" />
-                    <stroke android:width="1px" android:color="#999999" />
+                    <stroke android:width="1px" android:color="#666666" />
                 </shape>
 			</item>
         </layer-list>
@@ -18,16 +18,16 @@
             <!-- Bottom 2dp Shadow -->
             <item android:top="3px" android:right="3dp" android:bottom="3dp" android:left="0dp">
                 <shape android:shape="rectangle">
-                    <solid android:color="#666666" />
+                    <solid android:color="#444444" />
                     <corners  android:topRightRadius="14dp" android:bottomRightRadius="14dp" />
                 </shape>
 			</item>
             <!-- White Top color -->
             <item android:top="3px" android:right="3dp" android:bottom="5dp" android:left="0dp">
                 <shape android:shape="rectangle">
-                    <solid android:color="#333333" />
+                    <solid android:color="#222222" />
                     <corners  android:topRightRadius="14dp" android:bottomRightRadius="14dp" />
-                    <stroke android:width="1px" android:color="#999999" />
+                    <stroke android:width="1px" android:color="#666666" />
                 </shape>
 			</item>
         </layer-list>

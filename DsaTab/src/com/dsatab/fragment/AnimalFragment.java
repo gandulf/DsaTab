@@ -1,17 +1,16 @@
 package com.dsatab.fragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -34,8 +33,7 @@ import com.dsatab.view.listener.HeroChangedListener;
 
 public class AnimalFragment extends BaseProfileFragment {
 
-	private static final int ANIMAL_GROUP_ID = 1001;
-	private static final int ANIMAL_MENU_ID = 1000;
+	private static final String PREF_KEY_LAST_ANIMAL = "animal.lastIndex";
 
 	private TextView tfTotalLe, tfTotalAu, tfTotalAe, tfTotalKe, tfINI, tfLO, tfRS, tfMR2;
 	private TextView tfLabelINI, tfLabelLO, tfLabelRS;
@@ -44,45 +42,38 @@ public class AnimalFragment extends BaseProfileFragment {
 
 	private int animalIndex = 0;
 
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		super.onCreateOptionsMenu(menu, inflater);
+	private void initAnimalNavigation() {
+		ActionBar actionBar = getActionBarActivity().getSupportActionBar();
 
-		if (getHero().getAnimals().size() > 1) {
-			SubMenu subMenu = menu.addSubMenu(Menu.NONE, ANIMAL_MENU_ID, 0, R.string.choose_animal);
-			MenuItemCompat.setShowAsAction(subMenu.getItem(), MenuItemCompat.SHOW_AS_ACTION_ALWAYS
-					| MenuItemCompat.SHOW_AS_ACTION_WITH_TEXT);
-			subMenu.setIcon(R.drawable.dsa_cat);
-			for (int i = 0; i < getHero().getAnimals().size(); i++) {
-				Animal animal = getHero().getAnimals().get(i);
-				subMenu.add(ANIMAL_GROUP_ID, i, i, animal.getTitle());
-			}
-			subMenu.setGroupCheckable(ANIMAL_GROUP_ID, true, true);
+		List<String> animalNames = new ArrayList<String>();
+		for (int i = 0; i < getHero().getAnimals().size(); i++) {
+			Animal animal = getHero().getAnimals().get(i);
+			animalNames.add(animal.getTitle());
 		}
+		final ArrayAdapter<String> adapter = new ArrayAdapter<String>(actionBar.getThemedContext(),
+				android.R.layout.simple_spinner_item, animalNames);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		actionBar.setListNavigationCallbacks(adapter, new ActionBar.OnNavigationListener() {
+
+			@Override
+			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+				animalIndex = itemPosition;
+				onAnimalLoaded(getAnimal());
+
+				return false;
+			}
+		});
+
+		actionBar.setSelectedNavigationItem(animalIndex);
+
 	}
 
-	@Override
-	public void onPrepareOptionsMenu(Menu menu) {
-		MenuItem animalMenu = menu.findItem(ANIMAL_MENU_ID);
-		if (animalMenu != null && animalMenu.hasSubMenu()) {
-			SubMenu subMenu = animalMenu.getSubMenu();
-			if (animalIndex >= 0 && animalIndex < subMenu.size()) {
-				subMenu.getItem(animalIndex).setChecked(true);
-			}
-		}
-		super.onPrepareOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getGroupId() == ANIMAL_GROUP_ID) {
-			animalIndex = item.getItemId();
-			item.setChecked(true);
-			onAnimalLoaded(getAnimal());
-			return true;
-		} else {
-			return super.onOptionsItemSelected(item);
-		}
+	private void removeAnimalNavigation() {
+		ActionBar actionBar = getActionBarActivity().getSupportActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+		actionBar.setListNavigationCallbacks(null, null);
 	}
 
 	/*
@@ -159,10 +150,23 @@ public class AnimalFragment extends BaseProfileFragment {
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public void onResume() {
+		super.onResume();
 
-		setHasOptionsMenu(true);
+		animalIndex = getPreferences().getInt(PREF_KEY_LAST_ANIMAL, 0);
+		initAnimalNavigation();
+
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+
+		Editor edit = getPreferences().edit();
+		edit.putInt(PREF_KEY_LAST_ANIMAL, animalIndex);
+		edit.commit();
+
+		removeAnimalNavigation();
 	}
 
 	@Override

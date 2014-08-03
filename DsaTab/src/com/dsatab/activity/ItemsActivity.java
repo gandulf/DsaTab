@@ -28,7 +28,7 @@ import com.dsatab.fragment.item.ItemListFragment;
 import com.dsatab.fragment.item.ItemListFragment.OnItemSelectedListener;
 import com.dsatab.fragment.item.ItemViewFragment;
 
-public class ItemsActivity extends BaseFragmentActivity implements OnItemSelectedListener {
+public class ItemsActivity extends BaseActivity implements OnItemSelectedListener {
 
 	public static final int ACTION_EDIT = 1014;
 	public static final int ACTION_CREATE = 1015;

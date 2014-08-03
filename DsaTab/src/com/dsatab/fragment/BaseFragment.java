@@ -29,12 +29,10 @@ import com.dsatab.util.Util;
 import com.dsatab.view.listener.EditListener;
 import com.dsatab.view.listener.HeroChangedListener;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
-import com.dsatab.view.listener.HeroLoader;
 import com.dsatab.view.listener.ProbeListener;
 import com.dsatab.view.listener.TargetListener;
 
-public abstract class BaseFragment extends Fragment implements HeroLoader, HeroChangedListener,
-		OnSharedPreferenceChangeListener {
+public abstract class BaseFragment extends Fragment implements HeroChangedListener, OnSharedPreferenceChangeListener {
 
 	public static final String TAB_POSITION = "TAB_POSITION";
 	public static final String TAB_INFO = "TAB_INFO";
@@ -206,13 +204,11 @@ public abstract class BaseFragment extends Fragment implements HeroLoader, HeroC
 		return getHero();
 	}
 
-	@Override
 	public final void loadHero(Hero hero) {
 		onHeroLoaded(hero);
 		onAttachListener(hero);
 	}
 
-	@Override
 	public final void unloadHero(Hero hero) {
 		onDetachListener(hero);
 	}

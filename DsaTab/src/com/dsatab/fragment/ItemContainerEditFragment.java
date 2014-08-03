@@ -1,9 +1,10 @@
 package com.dsatab.fragment;
 
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,11 +15,29 @@ import android.widget.ImageView.ScaleType;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
+import com.dsatab.activity.FragmentEditActivity;
 import com.dsatab.data.items.ItemContainer;
 import com.dsatab.util.Util;
-import com.dsatab.view.ImageChooserDialog;
+import com.dsatab.view.dialog.ImageChooserDialog;
 
-public class ItemContainerEditFragment extends Fragment implements OnClickListener {
+public class ItemContainerEditFragment extends BaseEditFragment implements OnClickListener {
+
+	public static void insert(Activity activity) {
+		Intent intent = new Intent(activity, FragmentEditActivity.class);
+		intent.setAction(Intent.ACTION_INSERT);
+		intent.putExtra(FragmentEditActivity.EDIT_FRAGMENT_CLASS, ItemContainerEditFragment.class);
+		activity.startActivity(intent);
+	}
+
+	public static void edit(Activity activity, ItemContainer itemContainer) {
+		Intent intent = new Intent(activity, FragmentEditActivity.class);
+		intent.setAction(Intent.ACTION_EDIT);
+		intent.putExtra(FragmentEditActivity.EDIT_FRAGMENT_CLASS, ItemContainerEditFragment.class);
+		intent.putExtra(INTENT_ITEM_CHOOSER_ID, itemContainer.getId());
+		activity.startActivity(intent);
+	}
+
+	public static final String INTENT_ITEM_CHOOSER_ID = "com.dsatab.data.intent.itemContainerId";
 
 	private EditText editCapacity;
 	private EditText editName;
@@ -44,6 +63,20 @@ public class ItemContainerEditFragment extends Fragment implements OnClickListen
 		iconView.setOnClickListener(this);
 
 		return root;
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+
+		Bundle extra = getExtra();
+		if (extra != null) {
+			int containerId = extra.getInt(INTENT_ITEM_CHOOSER_ID, -1);
+			if (containerId >= 0) {
+				itemContainer = DsaTabApplication.getInstance().getHero().getItemContainer(containerId);
+			}
+		}
+		setItemContainer(itemContainer);
 	}
 
 	public void setItemContainer(ItemContainer itemContainer) {
@@ -104,13 +137,21 @@ public class ItemContainerEditFragment extends Fragment implements OnClickListen
 	/**
 	 * 
 	 */
-	public ItemContainer accept() {
+	public Bundle accept() {
 		Util.hideKeyboard(editName);
 		itemContainer.setCapacity(Util.parseInt(editCapacity.getText().toString(), 0));
 		itemContainer.setName(editName.getText().toString());
 		itemContainer.setIconUri(iconUri);
 
-		return itemContainer;
+		if (itemContainer.getId() == ItemContainer.INVALID_ID) {
+			DsaTabApplication.getInstance().getHero().addItemContainer(itemContainer);
+		} else {
+			DsaTabApplication.getInstance().getHero().fireItemContainerChangedEvent(itemContainer);
+		}
+
+		Bundle data = new Bundle();
+		// TODO fill bundle
+		return data;
 	}
 
 	private void pickIcon() {

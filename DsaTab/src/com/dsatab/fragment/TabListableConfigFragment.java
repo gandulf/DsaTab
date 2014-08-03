@@ -172,7 +172,10 @@ public class TabListableConfigFragment extends Fragment implements View.OnClickL
 	}
 
 	private void updateListSettings() {
-		if (info != null && listSettings != null) {
+
+		if (info != null && info.getListSettings(index) != null) {
+			listSettings = info.getListSettings(index);
+
 			settingsLayout.setVisibility(View.VISIBLE);
 
 			normal.setChecked(listSettings.isShowNormal());

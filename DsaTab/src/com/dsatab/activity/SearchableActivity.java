@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-public class SearchableActivity extends BaseFragmentActivity {
+public class SearchableActivity extends BaseActivity {
 
 	public static final String INTENT_TAB_INFO = "tabInfo";
 

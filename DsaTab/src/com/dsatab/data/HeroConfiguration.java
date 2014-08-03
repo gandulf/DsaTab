@@ -110,7 +110,7 @@ public class HeroConfiguration {
 
 		JSONArray array = null;
 
-		if (version < 75) {
+		if (version < 84) {
 			tabInfos = getDefaultTabs(tabInfos);
 		} else {
 			if (in.has(FIELD_TABS_PORTRAIT)) {

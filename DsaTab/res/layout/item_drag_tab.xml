@@ -10,8 +10,9 @@
     <ImageView
         android:id="@+id/drag"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/icon_button_size"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:scaleType="centerInside"
         android:src="?attr/imgDragVertical" />
 
     <ImageView

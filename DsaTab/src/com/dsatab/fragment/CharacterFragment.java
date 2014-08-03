@@ -330,39 +330,39 @@ public class CharacterFragment extends BaseProfileFragment {
 			Animation slideup = AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in);
 
 			if (baseInfo == null || TextUtils.isEmpty(baseInfo.getAussehen())) {
-				findViewById(R.id.row_aussehen).setVisibility(View.GONE);
+				findViewById(R.id.gen_aussehen).setVisibility(View.GONE);
 			} else {
 				((TextView) findViewById(R.id.gen_aussehen)).setText(baseInfo.getAussehen());
 				if (animate)
-					findViewById(R.id.row_aussehen).startAnimation(slideup);
-				findViewById(R.id.row_aussehen).setVisibility(View.VISIBLE);
+					findViewById(R.id.gen_aussehen).startAnimation(slideup);
+				findViewById(R.id.gen_aussehen).setVisibility(View.VISIBLE);
 			}
 
 			if (baseInfo == null || TextUtils.isEmpty(baseInfo.getTitel())) {
-				findViewById(R.id.row_titel).setVisibility(View.GONE);
+				findViewById(R.id.gen_titel).setVisibility(View.GONE);
 			} else {
 				((TextView) findViewById(R.id.gen_titel)).setText(baseInfo.getTitel());
 				if (animate)
-					findViewById(R.id.row_titel).startAnimation(slideup);
-				findViewById(R.id.row_titel).setVisibility(View.VISIBLE);
+					findViewById(R.id.gen_titel).startAnimation(slideup);
+				findViewById(R.id.gen_titel).setVisibility(View.VISIBLE);
 			}
 
 			if (baseInfo == null || TextUtils.isEmpty(baseInfo.getStand())) {
-				findViewById(R.id.row_stand).setVisibility(View.GONE);
+				findViewById(R.id.gen_stand).setVisibility(View.GONE);
 			} else {
 				((TextView) findViewById(R.id.gen_stand)).setText(baseInfo.getStand());
 				if (animate)
-					findViewById(R.id.row_stand).startAnimation(slideup);
-				findViewById(R.id.row_stand).setVisibility(View.VISIBLE);
+					findViewById(R.id.gen_stand).startAnimation(slideup);
+				findViewById(R.id.gen_stand).setVisibility(View.VISIBLE);
 			}
 
 			if (baseInfo == null || TextUtils.isEmpty(baseInfo.getKultur())) {
-				findViewById(R.id.row_kultur).setVisibility(View.GONE);
+				findViewById(R.id.gen_kultur).setVisibility(View.GONE);
 			} else {
 				((TextView) findViewById(R.id.gen_kultur)).setText(baseInfo.getKultur());
 				if (animate)
-					findViewById(R.id.row_kultur).startAnimation(slideup);
-				findViewById(R.id.row_kultur).setVisibility(View.VISIBLE);
+					findViewById(R.id.gen_kultur).startAnimation(slideup);
+				findViewById(R.id.gen_kultur).setVisibility(View.VISIBLE);
 			}
 
 		} else {
@@ -375,10 +375,10 @@ public class CharacterFragment extends BaseProfileFragment {
 				ViewHelper.setRotation(detailsSwitch, 180);
 			}
 
-			findViewById(R.id.row_aussehen).setVisibility(View.GONE);
-			findViewById(R.id.row_kultur).setVisibility(View.GONE);
-			findViewById(R.id.row_stand).setVisibility(View.GONE);
-			findViewById(R.id.row_titel).setVisibility(View.GONE);
+			findViewById(R.id.gen_aussehen).setVisibility(View.GONE);
+			findViewById(R.id.gen_kultur).setVisibility(View.GONE);
+			findViewById(R.id.gen_stand).setVisibility(View.GONE);
+			findViewById(R.id.gen_titel).setVisibility(View.GONE);
 		}
 
 		if (baseInfo != null) {

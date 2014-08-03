@@ -40,12 +40,9 @@ import android.widget.Toast;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
-import com.dsatab.activity.CustomProbeEditActivity;
 import com.dsatab.activity.DsaTabActivity;
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.activity.ItemsActivity;
-import com.dsatab.activity.ModificatorEditActivity;
-import com.dsatab.activity.NotesEditActivity;
 import com.dsatab.data.Art;
 import com.dsatab.data.Attribute;
 import com.dsatab.data.CombatTalent;
@@ -85,13 +82,12 @@ import com.dsatab.data.notes.NotesItem;
 import com.dsatab.db.DataManager;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
-import com.dsatab.view.DirectoryChooserDialogHelper;
-import com.dsatab.view.DirectoryChooserDialogHelper.Result;
-import com.dsatab.view.EquippedItemChooserDialog;
 import com.dsatab.view.ListSettings;
-import com.dsatab.view.ListSettings.FilterType;
 import com.dsatab.view.ListSettings.ListItem;
 import com.dsatab.view.ListSettings.ListItemType;
+import com.dsatab.view.dialog.DirectoryChooserDialogHelper;
+import com.dsatab.view.dialog.DirectoryChooserDialogHelper.Result;
+import com.dsatab.view.dialog.EquippedItemChooserDialog;
 import com.dsatab.view.listener.EditListener;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
 import com.haarman.listviewanimations.itemmanipulation.AnimateAdapter;
@@ -137,13 +133,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 
 							switch (item.getItemId()) {
 							case R.id.option_edit:
-								Intent intent = new Intent(fragment.getActivity(), ModificatorEditActivity.class);
-								intent.putExtra(ModificatorEditActivity.INTENT_ID, modificator.getId());
-								intent.putExtra(ModificatorEditActivity.INTENT_NAME, modificator.getModificatorName());
-								intent.putExtra(ModificatorEditActivity.INTENT_RULES, modificator.getRules());
-								intent.putExtra(ModificatorEditActivity.INTENT_COMMENT, modificator.getComment());
-								intent.putExtra(ModificatorEditActivity.INTENT_ACTIVE, modificator.isActive());
-								fragment.getActivity().startActivityForResult(intent,
+								ModificatorEditFragment.edit(fragment.getActivity(), modificator,
 										DsaTabActivity.ACTION_EDIT_MODIFICATOR);
 								mode.finish();
 								return true;
@@ -282,7 +272,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 
 							switch (item.getItemId()) {
 							case R.id.option_edit:
-								CustomProbeEditActivity.edit(fragment.getActivity(), modificator,
+								CustomProbeEditFragment.edit(fragment.getActivity(), modificator,
 										DsaTabActivity.ACTION_EDIT_CUSTOM_PROBES);
 								mode.finish();
 								return true;
@@ -1136,7 +1126,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 									notifyNotesChanged = true;
 								}
 							} else if (item.getItemId() == R.id.option_edit) {
-								NotesEditActivity.edit(event, null, fragment.getActivity(),
+								NotesEditFragment.edit(event, null, fragment.getActivity(),
 										DsaTabActivity.ACTION_EDIT_NOTES);
 
 								mode.finish();
@@ -1148,7 +1138,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 								adapter.animateDismiss(checkedPositions.keyAt(i));
 								notifyNotesChanged = true;
 							} else if (item.getItemId() == R.id.option_edit) {
-								NotesEditActivity.edit(connection, fragment.getActivity(),
+								NotesEditFragment.edit(connection, fragment.getActivity(),
 										DsaTabActivity.ACTION_EDIT_NOTES);
 
 								mode.finish();
@@ -1250,10 +1240,10 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 			if (resultCode == Activity.RESULT_OK) {
 
 				CustomModificator modificator = new CustomModificator(getHero());
-				modificator.setModificatorName(data.getStringExtra(ModificatorEditActivity.INTENT_NAME));
-				modificator.setRules(data.getStringExtra(ModificatorEditActivity.INTENT_RULES));
-				modificator.setComment(data.getStringExtra(ModificatorEditActivity.INTENT_COMMENT));
-				modificator.setActive(data.getBooleanExtra(ModificatorEditActivity.INTENT_ACTIVE, true));
+				modificator.setModificatorName(data.getStringExtra(ModificatorEditFragment.INTENT_NAME));
+				modificator.setRules(data.getStringExtra(ModificatorEditFragment.INTENT_RULES));
+				modificator.setComment(data.getStringExtra(ModificatorEditFragment.INTENT_COMMENT));
+				modificator.setActive(data.getBooleanExtra(ModificatorEditFragment.INTENT_ACTIVE, true));
 
 				getHero().addModificator(modificator);
 
@@ -1261,18 +1251,18 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 		} else if (requestCode == DsaTabActivity.ACTION_EDIT_MODIFICATOR) {
 			if (resultCode == Activity.RESULT_OK) {
 
-				UUID id = (UUID) data.getSerializableExtra(ModificatorEditActivity.INTENT_ID);
+				UUID id = (UUID) data.getSerializableExtra(ModificatorEditFragment.INTENT_ID);
 
 				for (Modificator modificator : getHero().getUserModificators()) {
 					if (modificator instanceof CustomModificator) {
 						CustomModificator customModificator = (CustomModificator) modificator;
 						if (customModificator.getId().equals(id)) {
 							customModificator.setModificatorName(data
-									.getStringExtra(ModificatorEditActivity.INTENT_NAME));
-							customModificator.setRules(data.getStringExtra(ModificatorEditActivity.INTENT_RULES));
-							customModificator.setActive(data.getBooleanExtra(ModificatorEditActivity.INTENT_ACTIVE,
+									.getStringExtra(ModificatorEditFragment.INTENT_NAME));
+							customModificator.setRules(data.getStringExtra(ModificatorEditFragment.INTENT_RULES));
+							customModificator.setActive(data.getBooleanExtra(ModificatorEditFragment.INTENT_ACTIVE,
 									true));
-							customModificator.setComment(data.getStringExtra(ModificatorEditActivity.INTENT_COMMENT));
+							customModificator.setComment(data.getStringExtra(ModificatorEditFragment.INTENT_COMMENT));
 						}
 					}
 				}
@@ -1312,24 +1302,6 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 		}
 
 		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.dsatab.fragment.BaseFragment#onFilterChanged(com.dsatab.view. FilterSettings.FilterType,
-	 * com.dsatab.view.FilterSettings)
-	 */
-	@Override
-	public void onFilterChanged(FilterType type, ListSettings settings) {
-		if (itemListAdapter != null && (type == FilterType.Fight || type == null) && settings instanceof ListSettings) {
-
-			Debug.verbose("fight filter " + settings);
-
-			ListSettings newSettings = (ListSettings) settings;
-
-			itemListAdapter.filter(newSettings);
-		}
 	}
 
 	/*
@@ -1417,16 +1389,15 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 			return true;
 		}
 		case ACTION_NOTES_ADD: {
-			NotesEditActivity.insert(getActivity(), DsaTabActivity.ACTION_EDIT_NOTES);
+			NotesEditFragment.insert(getActivity(), DsaTabActivity.ACTION_EDIT_NOTES);
 			return true;
 		}
 		case ACTION_CUSTOM_PROBE_ADD: {
-			CustomProbeEditActivity.insert(getActivity(), DsaTabActivity.ACTION_EDIT_CUSTOM_PROBES);
+			CustomProbeEditFragment.insert(getActivity(), DsaTabActivity.ACTION_EDIT_CUSTOM_PROBES);
 			return true;
 		}
 		case ACTION_MODIFICATOR_ADD: {
-			getActivity().startActivityForResult(new Intent(getActivity(), ModificatorEditActivity.class),
-					DsaTabActivity.ACTION_ADD_MODIFICATOR);
+			ModificatorEditFragment.insert(getActivity(), DsaTabActivity.ACTION_ADD_MODIFICATOR);
 			return true;
 		}
 		case ACTION_DOCUMENTS_CHOOSE: {
@@ -1901,7 +1872,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 							.currentTimeMillis() + ".3gp");
 					currentAudio.renameTo(nowAudio);
 
-					NotesEditActivity.edit(null, nowAudio.getAbsolutePath(), getActivity(),
+					NotesEditFragment.edit(null, nowAudio.getAbsolutePath(), getActivity(),
 							DsaTabActivity.ACTION_EDIT_NOTES);
 				}
 			});

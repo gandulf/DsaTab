@@ -36,7 +36,7 @@ import com.dsatab.R;
 import com.dsatab.TabInfo;
 import com.dsatab.fragment.TabListableConfigFragment;
 import com.dsatab.util.Util;
-import com.dsatab.view.ImageChooserDialog;
+import com.dsatab.view.dialog.ImageChooserDialog;
 import com.gandulf.guilib.data.OpenArrayAdapter;
 import com.gandulf.guilib.util.DefaultTextWatcher;
 import com.haarman.listviewanimations.itemmanipulation.AnimateAdapter;
@@ -44,7 +44,7 @@ import com.haarman.listviewanimations.itemmanipulation.OnAnimateCallback;
 import com.haarman.listviewanimations.itemmanipulation.SwipeDismissAdapter;
 import com.haarman.listviewanimations.view.DynamicListView;
 
-public class TabEditActivity extends BaseFragmentActivity implements OnItemClickListener, OnClickListener,
+public class TabEditActivity extends BaseActivity implements OnItemClickListener, OnClickListener,
 		OnCheckedChangeListener, OnAnimateCallback {
 
 	public static final String DATA_INTENT_TAB_INDEX = "tab.tabIndex";
@@ -79,7 +79,7 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 		setContentView(R.layout.sheet_edit_tab);
 
 		SlidingPaneLayout slidingPaneLayout = (SlidingPaneLayout) findViewById(R.id.slidepanel);
-		slidingPaneLayout.setParallaxDistance(100);
+		// slidingPaneLayout.setParallaxDistance(100);
 		slidingPaneLayout.openPane();
 
 		TabHost tabHost = (TabHost) findViewById(android.R.id.tabhost);
@@ -91,11 +91,7 @@ public class TabEditActivity extends BaseFragmentActivity implements OnItemClick
 		// false);
 		// TextView title = (TextView) tabIndicator.findViewById(android.R.id.title); title.setText("Tab 1");
 
-		TabHost.TabSpec spec = tabHost.newTabSpec("General");
-		spec.setContent(R.id.tab1);
-		spec.setIndicator(getString(R.string.tab_general));
-		tabHost.addTab(spec);
-		spec = tabHost.newTabSpec("Primary");
+		TabHost.TabSpec spec = tabHost.newTabSpec("Primary");
 		spec.setContent(R.id.tab2);
 		spec.setIndicator(getString(R.string.tab_primary));
 		tabHost.addTab(spec);

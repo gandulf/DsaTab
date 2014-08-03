@@ -4,12 +4,12 @@
             id="PROBE_DICE_MU"
             description="Um eine Probe zu würfeln, klicke einfach auf diese mit Kreisen markierten Werte.\n\n Zum Editieren, klicke lange auf den Wert (manche Werte sind nicht editierbar)."
             title="Probe würfeln"
-            viewId="@id/attr_total_le"/>
+            viewId="@id/attr_mu"/>
         <hint
             id="ANIMAL_FRAGMENT"
             description="Es gibt nun einen neuen Tab mit dem die Werte seiner Begleittiere angezeigt werden können."
             title="Tiere/Begleiter verwalten"
-            x="95.0"
+            x="5.0"
             y="5.0"/>
     </fragment>
     <fragment name="ListableFragment">
@@ -26,13 +26,6 @@
             title="Behälter bearbeiten"
             viewId="@id/container_list"/>
     </fragment>    
-    <fragment name="DiceSlider">
-        <hint
-            id="PROBE_MANUAL_MODIFIER"
-            description="Wird eine Probe durch den Spielleiter noch zusätzlich erschwert oder erleichtert, kannst du dies beim Probenwurf nachträglich anpassen. Klicke hierzu auf die Infozeile, es werden dann sämtliche Modifikatoren der Probe aufgelistet und du kannst eine manuelle Erschwernis hinzufügen."
-            title="Zusätzliche Probenzuschläge"
-            viewId="@id/details_switch"/>        
-    </fragment>
     
     <fragment name="TabEditActivity">
         <hint

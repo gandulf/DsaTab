@@ -12,9 +12,6 @@ public class TargetListener implements View.OnClickListener {
 
 	private WeakReference<BaseFragment> mFragment;
 
-	/**
-	 * 
-	 */
 	public TargetListener(BaseFragment fragment) {
 		this.mFragment = new WeakReference<BaseFragment>(fragment);
 	}

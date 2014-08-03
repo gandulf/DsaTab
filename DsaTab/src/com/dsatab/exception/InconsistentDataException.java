@@ -1,6 +1,5 @@
 package com.dsatab.exception;
 
-import com.dsatab.common.DsaTabRuntimeException;
 
 public class InconsistentDataException extends DsaTabRuntimeException {
 

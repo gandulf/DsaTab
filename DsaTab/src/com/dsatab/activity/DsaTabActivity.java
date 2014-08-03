@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -33,6 +34,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -52,15 +54,18 @@ import com.dsatab.data.adapter.TabDrawerAdapter.DrawerItemType;
 import com.dsatab.fragment.AttributeListFragment;
 import com.dsatab.fragment.BaseFragment;
 import com.dsatab.fragment.DiceSliderFragment;
+import com.dsatab.fragment.HeroChooserFragment;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
-import com.dsatab.view.ChangeLogDialog;
+import com.dsatab.view.dialog.ChangeLogDialog;
 import com.dsatab.view.listener.ShakeListener;
 import com.gandulf.guilib.util.ResUtil;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
-public class DsaTabActivity extends BaseFragmentActivity implements LoaderManager.LoaderCallbacks<Hero>,
+public class DsaTabActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Hero>,
 		OnSharedPreferenceChangeListener, ListView.OnItemClickListener {
+
+	private static final String TAB_INDEX = "TAB_INDEX";
 
 	public static boolean newsShown = false;
 
@@ -86,15 +91,15 @@ public class DsaTabActivity extends BaseFragmentActivity implements LoaderManage
 
 	private static final String KEY_TAB_INFO = "tabInfo";
 
+	private static final int[] containerIds = { R.id.pane_left, R.id.pane_right };
+	private List<ViewGroup> containers;
+
 	protected SharedPreferences preferences;
 
 	private AttributeListFragment attributeFragment;
 	private DiceSliderFragment diceSliderFragment;
 
 	private ShakeListener mShaker;
-
-	private ViewGroup fragmentContainerLeft;
-	private ViewGroup fragmentContainerRight;
 
 	private TabInfo tabInfo;
 
@@ -300,7 +305,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements LoaderManage
 
 			if (resultCode == RESULT_OK) {
 				HeroFileInfo herofileInfo = (HeroFileInfo) data
-						.getSerializableExtra(HeroChooserActivity.INTENT_NAME_HERO_FILE_INFO);
+						.getSerializableExtra(HeroChooserFragment.INTENT_NAME_HERO_FILE_INFO);
 				Debug.verbose("HeroChooserActivity returned with path:" + herofileInfo);
 				loadHero(herofileInfo);
 			} else if (resultCode == RESULT_CANCELED) {
@@ -320,6 +325,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements LoaderManage
 		} else if (requestCode == ACTION_EDIT_TABS) {
 			if (resultCode == Activity.RESULT_OK) {
 				setupNavigationDrawer();
+				showTab(tabInfo, false);
 			}
 		}
 
@@ -352,6 +358,8 @@ public class DsaTabActivity extends BaseFragmentActivity implements LoaderManage
 		applyPreferencesToTheme();
 		super.onCreate(savedInstanceState);
 
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
 		preferences = DsaTabApplication.getPreferences();
 
 		getSupportActionBar().setDisplayShowTitleEnabled(true);
@@ -365,8 +373,11 @@ public class DsaTabActivity extends BaseFragmentActivity implements LoaderManage
 
 		setContentView(R.layout.main_tab_view);
 
-		fragmentContainerLeft = (ViewGroup) findViewById(R.id.pane_left);
-		fragmentContainerRight = (ViewGroup) findViewById(R.id.pane_right);
+		containers = new ArrayList<ViewGroup>(2);
+		for (int i = 0; i < containerIds.length; i++) {
+			containers.add((ViewGroup) findViewById(containerIds[i]));
+		}
+
 		loadingView = findViewById(R.id.loading);
 
 		SlidingUpPanelLayout slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.slidepanel);
@@ -514,12 +525,13 @@ public class DsaTabActivity extends BaseFragmentActivity implements LoaderManage
 		}
 
 		tabDrawerAdapter.add(new DrawerItem("System"));
-		if (getHero() != null) {
-			tabDrawerAdapter.add(new DrawerItem(DRAWER_ID_TABS, getString(R.string.option_edit_tabs),
-					R.drawable.ic_menu_moreoverflow, Color.TRANSPARENT, DrawerItemType.System));
-		}
+
 		tabDrawerAdapter.add(new DrawerItem(DRAWER_ID_HEROES, "HELDEN", R.drawable.dsa_group, Color.TRANSPARENT,
 				DrawerItemType.System));
+		if (getHero() != null) {
+			tabDrawerAdapter.add(new DrawerItem(DRAWER_ID_TABS, "TABS ANPASSEN", R.drawable.ic_menu_moreoverflow,
+					Color.TRANSPARENT, DrawerItemType.System));
+		}
 		tabDrawerAdapter.add(new DrawerItem(DRAWER_ID_ITEMS, "GEGENSTÄNDE", R.drawable.dsa_items, Color.TRANSPARENT,
 				DrawerItemType.System));
 		tabDrawerAdapter.add(new DrawerItem(DRAWER_ID_SETTINGS, "EINSTELLUNGEN", R.drawable.ic_menu_preferences,
@@ -544,7 +556,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements LoaderManage
 	}
 
 	public void notifyTabsChanged(TabInfo tabInfo) {
-		this.tabInfo = refreshTabInfo();
+		this.tabInfo = refreshTabInfo(0);
 		setupNavigationDrawer();
 		showTab(tabInfo, true);
 	}
@@ -552,7 +564,7 @@ public class DsaTabActivity extends BaseFragmentActivity implements LoaderManage
 	/**
 	 * 
 	 */
-	private TabInfo refreshTabInfo() {
+	private TabInfo refreshTabInfo(int defaultTabIndex) {
 
 		if (getHeroConfiguration() == null || getHeroConfiguration().getTabs().isEmpty()) {
 			tabInfo = null;
@@ -612,7 +624,10 @@ public class DsaTabActivity extends BaseFragmentActivity implements LoaderManage
 		}
 
 		// last resort set tabinfo to first one if no matching one is found
-		return tabs.get(0);
+		if (defaultTabIndex >= 0 && defaultTabIndex < tabs.size())
+			return tabs.get(defaultTabIndex);
+		else
+			return tabs.get(0);
 	}
 
 	public boolean showTab(int index) {
@@ -623,9 +638,42 @@ public class DsaTabActivity extends BaseFragmentActivity implements LoaderManage
 		}
 	}
 
+	protected boolean isUpdateRequired(TabInfo tabInfo) {
+
+		if (tabInfo != this.tabInfo)
+			return true;
+
+		boolean dirty = false;
+		for (int i = 0; i < TabInfo.MAX_TABS_PER_PAGE; i++) {
+			int containerId = containerIds[i];
+			Fragment fragment = getSupportFragmentManager().findFragmentById(containerId);
+
+			if (fragment == null && tabInfo.getActivityClazz(i) == null) {
+				continue;
+			}
+
+			if (fragment != null) {
+				dirty = !fragment.getClass().equals(tabInfo.getActivityClazz(i));
+			}
+
+			if (tabInfo.getActivityClazz(i) != null) {
+				if (fragment != null)
+					dirty = !tabInfo.getActivityClazz(i).equals(fragment.getClass());
+				else
+					dirty = true;
+			}
+
+		}
+
+		dirty |= tabInfo.isAttributeList() != attributeFragment.isVisible();
+		dirty |= tabInfo.isDiceSlider() != diceSliderFragment.isVisible();
+
+		return dirty;
+	}
+
 	protected boolean showTab(TabInfo newTabInfo, boolean forceRefresh) {
 
-		if (newTabInfo != null && getHeroConfiguration() != null && (forceRefresh || !newTabInfo.equals(tabInfo))) {
+		if (newTabInfo != null && getHeroConfiguration() != null && (forceRefresh || isUpdateRequired(newTabInfo))) {
 
 			this.tabInfo = newTabInfo;
 			String tag = newTabInfo.getId().toString();
@@ -633,15 +681,8 @@ public class DsaTabActivity extends BaseFragmentActivity implements LoaderManage
 			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
 			for (int i = 0; i < TabInfo.MAX_TABS_PER_PAGE; i++) {
-				int containerId;
-				ViewGroup fragmentContainer;
-				if (i == 0) {
-					containerId = R.id.pane_left;
-					fragmentContainer = fragmentContainerLeft;
-				} else {
-					containerId = R.id.pane_right;
-					fragmentContainer = fragmentContainerRight;
-				}
+				int containerId = containerIds[i];
+				ViewGroup fragmentContainer = containers.get(i);
 
 				// detach old fragment
 				Fragment oldFragment = getSupportFragmentManager().findFragmentById(containerId);
@@ -650,6 +691,16 @@ public class DsaTabActivity extends BaseFragmentActivity implements LoaderManage
 				}
 
 				Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag + i);
+
+				// check wether fragment is still uptodate, if we changed the tpe of the fragment the manager has an old
+				// fragment,remove it if the class does not match
+				if (fragment != null) {
+					if (fragment.getClass() != tabInfo.getActivityClazz(i)) {
+						ft.remove(fragment);
+						fragment = null;
+					}
+				}
+
 				if (fragment == null) {
 					fragment = newTabInfo.getFragment(i);
 					if (fragment != null) {
@@ -671,7 +722,6 @@ public class DsaTabActivity extends BaseFragmentActivity implements LoaderManage
 
 			updatePage(tabInfo, ft);
 			ft.commitAllowingStateLoss();
-
 			return true;
 		} else {
 			return false;
@@ -684,13 +734,8 @@ public class DsaTabActivity extends BaseFragmentActivity implements LoaderManage
 		ViewGroup fragmentContainer = null;
 		int containerId = 0;
 		for (int i = 0; i < TabInfo.MAX_TABS_PER_PAGE; i++) {
-			if (i == 0) {
-				containerId = R.id.pane_left;
-				fragmentContainer = fragmentContainerLeft;
-			} else {
-				containerId = R.id.pane_right;
-				fragmentContainer = fragmentContainerRight;
-			}
+			containerId = containerIds[i];
+			fragmentContainer = containers.get(i);
 
 			// detach old fragment
 			Fragment fragment = getSupportFragmentManager().findFragmentById(containerId);
@@ -736,8 +781,10 @@ public class DsaTabActivity extends BaseFragmentActivity implements LoaderManage
 			return;
 		}
 
+		int defaultTabIndex = preferences.getInt(TAB_INDEX, 0);
+
 		setupNavigationDrawer();
-		showTab(refreshTabInfo(), true);
+		showTab(refreshTabInfo(defaultTabIndex), true);
 
 		if (attributeFragment != null && attributeFragment.isAdded()) {
 			attributeFragment.loadHero(hero);
@@ -814,6 +861,15 @@ public class DsaTabActivity extends BaseFragmentActivity implements LoaderManage
 
 		if (getHero() != null && preferences.getBoolean(DsaTabPreferenceActivity.KEY_AUTO_SAVE, true)) {
 			DsaTabApplication.getInstance().saveHero(this);
+
+		}
+
+		if (getHeroConfiguration() != null && getHeroConfiguration().getTabs() != null) {
+			Editor edit = preferences.edit();
+
+			int tabIndex = getHeroConfiguration().getTabs().indexOf(tabInfo);
+			edit.putInt(TAB_INDEX, tabIndex);
+			edit.commit();
 		}
 
 		super.onDestroy();
@@ -1061,6 +1117,41 @@ public class DsaTabActivity extends BaseFragmentActivity implements LoaderManage
 	}
 
 	protected void showHeroChooser() {
-		startActivityForResult(new Intent(DsaTabActivity.this, HeroChooserActivity.class), ACTION_CHOOSE_HERO);
+
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+		for (int i = 0; i < TabInfo.MAX_TABS_PER_PAGE; i++) {
+			int containerId = containerIds[i];
+			ViewGroup fragmentContainer = containers.get(i);
+
+			// detach old fragment
+			Fragment oldFragment = getSupportFragmentManager().findFragmentById(containerId);
+			if (oldFragment != null) {
+				ft.detach(oldFragment);
+			}
+
+			if (i == 0) {
+				Fragment fragment = getSupportFragmentManager().findFragmentByTag(HeroChooserFragment.TAG);
+				if (fragment == null) {
+					fragment = new HeroChooserFragment();
+					fragmentContainer.setVisibility(View.VISIBLE);
+					ft.add(containerId, fragment, HeroChooserFragment.TAG);
+				} else {
+					fragmentContainer.setVisibility(View.VISIBLE);
+					ft.attach(fragment);
+				}
+			} else {
+				fragmentContainer.setVisibility(View.GONE);
+			}
+		}
+
+		updatePage(null, ft);
+		getSupportActionBar().setTitle(R.string.hero_chooser_title);
+
+		ft.commitAllowingStateLoss();
+
+		tabInfo = null;
+
 	}
+
 }

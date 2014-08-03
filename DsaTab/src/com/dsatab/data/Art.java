@@ -8,7 +8,6 @@ import java.util.EnumSet;
 import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 
-import com.dsatab.common.DsaTabRuntimeException;
 import com.dsatab.common.StyleableSpannableStringBuilder;
 import com.dsatab.data.enums.ArtGroupType;
 import com.dsatab.data.enums.TalentType;
@@ -16,6 +15,7 @@ import com.dsatab.data.listable.Listable;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 import com.dsatab.db.DataManager;
 import com.dsatab.exception.ArtUnknownException;
+import com.dsatab.exception.DsaTabRuntimeException;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 
