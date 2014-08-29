@@ -303,7 +303,7 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
 	}
 
 	public enum ListItemType {
-		Header(""), Talent("Talente"), Spell("Zauber"), Art("Künste"), Attribute("Eigenschaften"), EquippedItem(
+		Header("Überschrift"), Talent("Talente"), Spell("Zauber"), Art("Künste"), Attribute("Eigenschaften"), EquippedItem(
 				"Gegenstände"), Modificator("Modifikatoren"), Document("Dokumente"), Notes("Notizen"), Purse(
 				"Geldbörse"), Wound("Wunden"), Probe("Proben");
 

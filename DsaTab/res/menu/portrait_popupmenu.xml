@@ -6,6 +6,11 @@
         app:showAsAction="withText|ifRoom"
         android:title="@string/choose_portrait"/>
     <item
+        android:id="@+id/option_download_avatars"
+        android:icon="?attr/imgBarUser"
+        app:showAsAction="withText|ifRoom"
+        android:title="@string/download_portraits"/>
+    <item
         android:id="@+id/option_take_photo"
         android:icon="?attr/imgBarCamera"
         app:showAsAction="withText|ifRoom"

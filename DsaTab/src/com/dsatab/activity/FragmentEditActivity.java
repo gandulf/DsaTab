@@ -36,14 +36,26 @@ public class FragmentEditActivity extends BaseActivity {
 				throw new IllegalArgumentException("Called FragmentEditActivit without EDIT_FRAGMENT_CLASS in intent: "
 						+ getIntent());
 			}
+
+			fragment = (BaseEditFragment) getSupportFragmentManager().findFragmentById(android.R.id.content);
+
 			Class<? extends BaseEditFragment> fragmentClass = (Class<? extends BaseEditFragment>) getIntent()
 					.getExtras().getSerializable(EDIT_FRAGMENT_CLASS);
-			fragment = fragmentClass.newInstance();
-			fragment.setArguments(getIntent().getExtras());
 
-			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-			ft.add(android.R.id.content, fragment);
-			ft.commit();
+			if (fragment != null && fragmentClass.isAssignableFrom(fragment.getClass())) {
+				// all ok keep current fragment
+			} else {
+				FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+				if (fragment != null) {
+					ft.remove(fragment);
+				}
+
+				fragment = fragmentClass.newInstance();
+				fragment.setArguments(getIntent().getExtras());
+				ft.add(android.R.id.content, fragment);
+				ft.commit();
+
+			}
 		} catch (InstantiationException e) {
 			Debug.error(e);
 			setResult(RESULT_CANCELED);
@@ -56,16 +68,31 @@ public class FragmentEditActivity extends BaseActivity {
 			return;
 		}
 
+		if (getIntent() != null) {
+			if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
+				inflateDone();
+			} else {
+				inflateDoneDiscard();
+			}
+		} else {
+			inflateDone();
+		}
+	}
+
+	public void inflateDoneDiscard() {
 		// Inflate a "Done/Discard" custom action bar view.
 		LayoutInflater inflater = LayoutInflater.from(getSupportActionBar().getThemedContext());
 		final View customActionBarView = inflater.inflate(R.layout.actionbar_custom_view_done_discard, null);
 		customActionBarView.findViewById(R.id.actionbar_done).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent();
-				intent.putExtras(fragment.accept());
-				setResult(RESULT_OK, intent);
-				finish();
+				Bundle data = fragment.accept();
+				if (data != null) {
+					Intent intent = new Intent();
+					intent.putExtras(data);
+					setResult(RESULT_OK, intent);
+					finish();
+				}
 			}
 		});
 		customActionBarView.findViewById(R.id.actionbar_discard).setOnClickListener(new View.OnClickListener() {
@@ -86,4 +113,29 @@ public class FragmentEditActivity extends BaseActivity {
 				ViewGroup.LayoutParams.MATCH_PARENT));
 	}
 
+	public void inflateDone() {
+		// Inflate a "Done/Discard" custom action bar view.
+		LayoutInflater inflater = LayoutInflater.from(getSupportActionBar().getThemedContext());
+		final View customActionBarView = inflater.inflate(R.layout.actionbar_custom_view_done, null);
+		customActionBarView.findViewById(R.id.actionbar_done).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Bundle data = fragment.accept();
+				if (data != null) {
+					Intent intent = new Intent();
+					intent.putExtras(data);
+					setResult(RESULT_OK, intent);
+					finish();
+				}
+			}
+		});
+
+		// Show the custom action bar view and hide the normal Home icon and
+		// title.
+		final ActionBar actionBar = getSupportActionBar();
+		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM, ActionBar.DISPLAY_SHOW_CUSTOM
+				| ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
+		actionBar.setCustomView(customActionBarView, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+				ViewGroup.LayoutParams.MATCH_PARENT));
+	}
 }

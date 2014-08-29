@@ -22,6 +22,8 @@ import com.gandulf.guilib.util.Debug;
 
 public class EquippedItem implements ItemCard, Listable, Serializable {
 
+	private static final long serialVersionUID = -6432607790667186390L;
+
 	public static final String NAME_PREFIX_RUESTUNG = "ruestung";
 
 	public static final String NAME_PREFIX_SCHILD = "schild";

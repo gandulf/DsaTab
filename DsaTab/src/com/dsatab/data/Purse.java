@@ -89,20 +89,10 @@ public class Purse {
 		}
 	}
 
-	private Currency activeCurrency;
-
 	private Map<PurseUnit, Integer> coins;
 
 	public Purse() {
 		coins = new HashMap<PurseUnit, Integer>(4);
-	}
-
-	public Currency getActiveCurrency() {
-		return activeCurrency;
-	}
-
-	public void setActiveCurrency(Currency activeCurrency) {
-		this.activeCurrency = activeCurrency;
 	}
 
 	public void setCoins(PurseUnit w, int value) {

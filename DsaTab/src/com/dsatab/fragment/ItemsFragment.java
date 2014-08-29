@@ -17,6 +17,7 @@ import android.content.SharedPreferences.Editor;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SlidingPaneLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.view.ActionMode;
 import android.support.v7.view.ActionMode.Callback;
 import android.util.SparseBooleanArray;
@@ -49,19 +50,18 @@ import com.dsatab.util.Debug;
 import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Util;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
+import com.gandulf.guilib.util.ListViewCompat;
 import com.gandulf.guilib.util.ResUtil;
-import com.haarman.listviewanimations.itemmanipulation.AnimateAdapter;
-import com.haarman.listviewanimations.itemmanipulation.OnAnimateCallback;
-import com.haarman.listviewanimations.view.DynamicListView;
+import com.gandulf.guilib.view.DynamicListViewEx;
 import com.rokoder.android.lib.support.v4.widget.GridViewCompat;
 
-public class ItemsFragment extends BaseListFragment implements OnItemClickListener, HeroInventoryChangedListener,
-		OnAnimateCallback {
+public class ItemsFragment extends BaseListFragment implements OnItemClickListener, HeroInventoryChangedListener {
 
 	private static final int ACTION_ADD = 1099;
 	private static final int ACTION_EDIT = 1098;
 
 	private static final int MENU_FILTER_GROUP = 98;
+	private static final int MENU_MOVE_GROUP = 97;
 
 	private static final int INVALID_SET = -1;
 
@@ -72,13 +72,16 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	public static final String TYPE_LIST = "list";
 
 	private ListView containerList;
-	private AnimateAdapter<ItemContainer> animateAdapter;
 	private ItemContainerAdapter containerAdapter;
+
+	private ItemContainerAdapter containerSpinnerAdapter;
 
 	private GridViewCompat itemGridCompat;
 	private GridItemAdapter itemGridAdapter;
 
-	private DynamicListView itemList;
+	private SlidingPaneLayout slidingPaneLayout;
+
+	private DynamicListViewEx itemList;
 	private ItemAdapter itemListAdapter;
 
 	private int mCurrentContainerId = INVALID_SET;
@@ -110,7 +113,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 			if (list == null || fragment == null)
 				return false;
 
-			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+			SparseBooleanArray checkedPositions = ListViewCompat.getCheckedItemPositions(list);
 
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
@@ -123,7 +126,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 
 							Item selectedItem = itemCard.getItem();
 
-							if (item.getGroupId() == R.id.option_group_container) {
+							if (item.getGroupId() == MENU_MOVE_GROUP) {
 								int newScreen = item.getItemId();
 								if (newScreen != selectedItem.getContainerId()) {
 									getHero().moveItem(selectedItem, newScreen);
@@ -159,13 +162,16 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 								case R.id.option_move:
 									return false;
 								case R.id.option_equipped_set1:
-									getHero().addEquippedItem(fragment.getActivity(), selectedItem, null, null, 0);
+									fragment.getHero().addEquippedItem(fragment.getActivity(), selectedItem, null,
+											null, 0);
 									break;
 								case R.id.option_equipped_set2:
-									getHero().addEquippedItem(fragment.getActivity(), selectedItem, null, null, 1);
+									fragment.getHero().addEquippedItem(fragment.getActivity(), selectedItem, null,
+											null, 1);
 									break;
 								case R.id.option_equipped_set3:
-									getHero().addEquippedItem(fragment.getActivity(), selectedItem, null, null, 2);
+									fragment.getHero().addEquippedItem(fragment.getActivity(), selectedItem, null,
+											null, 2);
 									break;
 								}
 							}
@@ -197,9 +203,9 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 			MenuItem move = menu.findItem(R.id.option_move);
 			SubMenu moveMenu = move.getSubMenu();
 			int order = 4;
-			for (ItemContainer itemContainer : getHero().getItemContainers()) {
-				moveMenu.add(R.id.option_group_container, itemContainer.getId(), order++, itemContainer.getName())
-						.setIcon(ResUtil.getDrawableByUri(fragment.getActivity(), itemContainer.getIconUri()));
+			for (ItemContainer<Item> itemContainer : getHero().getItemContainers()) {
+				moveMenu.add(MENU_MOVE_GROUP, itemContainer.getId(), order++, itemContainer.getName()).setIcon(
+						ResUtil.getDrawableByUri(fragment.getActivity(), itemContainer.getIconUri()));
 			}
 
 			mode.setTitle("Ausrüstung");
@@ -235,7 +241,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 			if (list == null || fragment == null)
 				return false;
 
-			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+			SparseBooleanArray checkedPositions = ListViewCompat.getCheckedItemPositions(list);
 			int selected = 0;
 			boolean isEquippable = true;
 			boolean changed = false;
@@ -309,27 +315,25 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	private static final class ItemsContainerActionMode implements ActionMode.Callback {
 
 		private WeakReference<ListView> listView;
-		private WeakReference<AnimateAdapter<ItemContainer>> animateAdapter;
 		private WeakReference<ItemsFragment> listFragment;
 
-		public ItemsContainerActionMode(ItemsFragment fragment, ListView listView,
-				AnimateAdapter<ItemContainer> animateAdapter) {
+		public ItemsContainerActionMode(ItemsFragment fragment, ListView listView) {
 			this.listFragment = new WeakReference<ItemsFragment>(fragment);
 			this.listView = new WeakReference<ListView>(listView);
-			this.animateAdapter = new WeakReference<AnimateAdapter<ItemContainer>>(animateAdapter);
+
 		}
 
 		@Override
 		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 			final ListView list = listView.get();
 			final ItemsFragment fragment = listFragment.get();
-			final AnimateAdapter<ItemContainer> adapter = animateAdapter.get();
-			if (list == null || fragment == null || adapter == null)
+
+			if (list == null || fragment == null)
 				return false;
 
 			boolean notifyChanged = false;
 
-			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+			SparseBooleanArray checkedPositions = ListViewCompat.getCheckedItemPositions(list);
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
 					if (checkedPositions.valueAt(i)) {
@@ -338,7 +342,9 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 
 						switch (item.getItemId()) {
 						case R.id.option_delete:
-							adapter.animateDismiss(checkedPositions.keyAt(i));
+							int pos = checkedPositions.keyAt(i);
+							ItemContainer container = (ItemContainer) list.getItemAtPosition(pos);
+							fragment.getHero().removeItemContainer(container);
 							break;
 						case R.id.option_edit: {
 							ItemContainerEditFragment.edit(fragment.getActivity(), itemContainer);
@@ -395,12 +401,13 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 			if (list == null || fragment == null)
 				return false;
 
-			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+			SparseBooleanArray checkedPositions = ListViewCompat.getCheckedItemPositions(list);
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
 					if (checkedPositions.valueAt(i)) {
 
-						ItemContainer itemContainer = (ItemContainer) list.getItemAtPosition(checkedPositions.keyAt(i));
+						ItemContainer<?> itemContainer = (ItemContainer<?>) list.getItemAtPosition(checkedPositions
+								.keyAt(i));
 
 						MenuItem editItem = menu.findItem(R.id.option_edit);
 						MenuItem deleteItem = menu.findItem(R.id.option_delete);
@@ -424,49 +431,43 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	@Override
 	public void onHeroLoaded(Hero hero) {
 
-		ItemContainer set1 = new ItemContainer(0, "Set I");
-		set1.setIconUri(Util.getUriForResourceId(Util.getThemeResourceId(getActivity(), R.attr.imgSet1)));
+		ItemContainer<EquippedItem> set1 = new ItemContainer<EquippedItem>(ItemContainer.SET1, "Set I",
+				Util.getUriForResourceId(Util.getThemeResourceId(getActivity(), R.attr.imgSet1)));
+		set1.addAll(getHero().getEquippedItems(0));
 
-		ItemContainer set2 = new ItemContainer(1, "Set II");
-		set2.setIconUri(Util.getUriForResourceId(Util.getThemeResourceId(getActivity(), R.attr.imgSet2)));
+		ItemContainer<EquippedItem> set2 = new ItemContainer<EquippedItem>(ItemContainer.SET2, "Set II",
+				Util.getUriForResourceId(Util.getThemeResourceId(getActivity(), R.attr.imgSet2)));
+		set2.addAll(getHero().getEquippedItems(1));
 
-		ItemContainer set3 = new ItemContainer(2, "Set III");
-		set3.setIconUri(Util.getUriForResourceId(Util.getThemeResourceId(getActivity(), R.attr.imgSet3)));
+		ItemContainer<EquippedItem> set3 = new ItemContainer<EquippedItem>(ItemContainer.SET3, "Set III",
+				Util.getUriForResourceId(Util.getThemeResourceId(getActivity(), R.attr.imgSet3)));
+		set3.addAll(getHero().getEquippedItems(2));
 
-		containerAdapter = new ItemContainerAdapter(getActivity(), getHero().getItemContainers());
-		containerAdapter.insert(set1, 0);
-		containerAdapter.insert(set2, 1);
-		containerAdapter.insert(set3, 2);
+		containerAdapter = new ItemContainerAdapter(getActivity(), R.layout.item_listitem_view);
+		containerAdapter.add(set1);
+		containerAdapter.add(set2);
+		containerAdapter.add(set3);
+		containerAdapter.addAll(getHero().getItemContainers());
+
+		containerSpinnerAdapter = new ItemContainerAdapter(getActionBarActivity().getSupportActionBar()
+				.getThemedContext(), R.layout.item_spinneritem_view);
+		containerSpinnerAdapter.setDropDownViewResource(R.layout.item_spinneritem_view);
+		containerSpinnerAdapter.add(set1);
+		containerSpinnerAdapter.add(set2);
+		containerSpinnerAdapter.add(set3);
+		containerSpinnerAdapter.addAll(getHero().getItemContainers());
 
 		if (containerList != null) {
-			animateAdapter = new AnimateAdapter<ItemContainer>(containerAdapter, this);
-			animateAdapter.setAbsListView(containerList);
-			containerList.setAdapter(animateAdapter);
-
-			mContainerCallback = new ItemsContainerActionMode(this, containerList, animateAdapter);
+			containerList.setAdapter(containerAdapter);
+			mContainerCallback = new ItemsContainerActionMode(this, containerList);
 		}
 		itemListAdapter = new ItemAdapter(getActivity(), hero);
 		itemList.setAdapter(itemListAdapter);
 
 		SharedPreferences pref = getActivity().getPreferences(Context.MODE_PRIVATE);
-		int containerID = pref.getInt(PREF_KEY_LAST_OPEN_SCREEN, 0);
+		int containerID = pref.getInt(PREF_KEY_LAST_OPEN_SCREEN, ItemContainer.SET1);
 
 		showScreen(containerID);
-	}
-
-	@Override
-	public void onDismiss(AbsListView list, int[] positions) {
-		if (list == containerList) {
-			for (int pos : positions) {
-				ItemContainer container = containerAdapter.remove(pos);
-				getHero().removeItemContainer(container);
-			}
-		}
-	}
-
-	@Override
-	public void onShow(AbsListView list, int[] positions) {
-
 	}
 
 	private void showItemPopup() {
@@ -474,7 +475,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	}
 
 	public static boolean isSetIndex(int index) {
-		return index >= 0 && index < Hero.MAXIMUM_SET_NUMBER;
+		return index >= ItemContainer.SET1 && index <= ItemContainer.SET3;
 	}
 
 	public int getCurrentContainerId() {
@@ -498,6 +499,48 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		setHasOptionsMenu(true);
 	}
 
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case android.R.id.empty:
+			// do not remove tab in itemsfragment
+			break;
+		default:
+			super.onClick(v);
+		}
+
+	}
+
+	private void removeItemsNavigation() {
+		ActionBar actionBar = getActionBarActivity().getSupportActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+		actionBar.setListNavigationCallbacks(null, null);
+	}
+
+	private void initItemsNavigation() {
+		ActionBar actionBar = getActionBarActivity().getSupportActionBar();
+
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		actionBar.setListNavigationCallbacks(containerSpinnerAdapter, new ActionBar.OnNavigationListener() {
+
+			@Override
+			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+				showScreen(itemPosition);
+				return false;
+			}
+		});
+
+		for (int i = 0; i < containerSpinnerAdapter.getCount(); i++) {
+			ItemContainer<?> container = containerSpinnerAdapter.getItem(i);
+
+			if (container.getId() == mCurrentContainerId) {
+				actionBar.setSelectedNavigationItem(i);
+				break;
+			}
+		}
+
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -509,31 +552,18 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.item_list_menu, menu);
 
-		SubMenu gridSet = menu.findItem(R.id.option_itemgrid_set).getSubMenu();
-
-		int order = Hero.MAXIMUM_SET_NUMBER;
-		if (getHero() != null) {
-			for (ItemContainer itemContainer : getHero().getItemContainers()) {
-				MenuItem item = gridSet.add(R.id.option_group_container, itemContainer.getId(), order++,
-						itemContainer.getName()).setIcon(
-						ResUtil.getDrawableByUri(getActivity(), itemContainer.getIconUri()));
-				item.setCheckable(true);
+		if (menu.findItem(R.id.option_item_filter) != null) {
+			SubMenu filterSet = menu.findItem(R.id.option_item_filter).getSubMenu();
+			if (filterSet != null) {
+				ItemType[] itemType = ItemType.values();
+				for (int i = 0; i < itemType.length; i++) {
+					MenuItem item = filterSet.add(MENU_FILTER_GROUP, i, Menu.NONE, itemType[i].name()).setIcon(
+							DsaUtil.getResourceId(itemType[i]));
+					item.setCheckable(true);
+					item.setChecked(categoriesSelected.contains(itemType[item.getItemId()]));
+				}
 			}
 		}
-		inflater.inflate(R.menu.menuitem_add_container, gridSet);
-
-		SubMenu filterSet = menu.findItem(R.id.option_item_filter).getSubMenu();
-		ItemType[] itemType = ItemType.values();
-		for (int i = 0; i < itemType.length; i++) {
-			MenuItem item = filterSet.add(MENU_FILTER_GROUP, i, Menu.NONE, itemType[i].name()).setIcon(
-					DsaUtil.getResourceId(itemType[i]));
-			item.setCheckable(true);
-			item.setChecked(categoriesSelected.contains(itemType[item.getItemId()]));
-
-		}
-		gridSet.setGroupCheckable(R.id.option_group_container, true, true);
-
-		updateActionBarIcons(menu, mCurrentContainerId);
 	}
 
 	/*
@@ -544,49 +574,6 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	@Override
 	public void onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
-
-		SubMenu gridSet = menu.findItem(R.id.option_itemgrid_set).getSubMenu();
-
-		for (int i = gridSet.size() - 2; i >= Hero.MAXIMUM_SET_NUMBER; i--) {
-			gridSet.removeItem(gridSet.getItem(i).getItemId());
-		}
-
-		int order = Hero.MAXIMUM_SET_NUMBER;
-		if (getHero() != null) {
-			for (ItemContainer itemContainer : getHero().getItemContainers()) {
-				if (gridSet.findItem(itemContainer.getId()) == null) {
-					MenuItem item = gridSet.add(R.id.option_group_container, itemContainer.getId(), order++,
-							itemContainer.getName()).setIcon(
-							ResUtil.getDrawableByUri(getActivity(), itemContainer.getIconUri()));
-					item.setCheckable(true);
-				}
-			}
-		}
-
-		gridSet.setGroupCheckable(R.id.option_group_container, true, true);
-
-		switch (mCurrentContainerId) {
-		case 0:
-			if (gridSet.findItem(R.id.option_itemgrid_set1) != null) {
-				gridSet.findItem(R.id.option_itemgrid_set1).setChecked(true);
-			}
-			break;
-		case 1:
-			if (gridSet.findItem(R.id.option_itemgrid_set2) != null) {
-				gridSet.findItem(R.id.option_itemgrid_set2).setChecked(true);
-			}
-			break;
-		case 2:
-			if (gridSet.findItem(R.id.option_itemgrid_set3) != null) {
-				gridSet.findItem(R.id.option_itemgrid_set3).setChecked(true);
-			}
-			break;
-		default:
-			if (gridSet.findItem(mCurrentContainerId) != null) {
-				gridSet.findItem(mCurrentContainerId).setChecked(true);
-			}
-			break;
-		}
 
 		SubMenu filterSet = menu.findItem(R.id.option_item_filter).getSubMenu();
 		ItemType[] itemType = ItemType.values();
@@ -601,7 +588,6 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 			menu.findItem(R.id.option_itemgrid_type_list).setChecked(true);
 		}
 
-		updateActionBarIcons(menu, mCurrentContainerId);
 	}
 
 	/*
@@ -632,18 +618,6 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		case R.id.option_item_add_table:
 			showItemPopup();
 			return true;
-		case R.id.option_itemgrid_set1:
-			showScreen(0);
-			getActivity().supportInvalidateOptionsMenu();
-			return true;
-		case R.id.option_itemgrid_set2:
-			showScreen(1);
-			getActivity().supportInvalidateOptionsMenu();
-			return true;
-		case R.id.option_itemgrid_set3:
-			showScreen(2);
-			getActivity().supportInvalidateOptionsMenu();
-			return true;
 		case R.id.option_add_container:
 			ItemContainerEditFragment.insert(getActivity());
 			return true;
@@ -656,15 +630,6 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 			item.setChecked(true);
 			return true;
 		default:
-			if (item.getGroupId() == R.id.option_group_container) {
-				if (getHero() != null) {
-					ItemContainer itemContainer = getHero().getItemContainer(item.getItemId());
-					int index = containerAdapter.indexOf(itemContainer);
-					showScreen(index);
-					getActivity().supportInvalidateOptionsMenu();
-					return true;
-				}
-			}
 			return super.onOptionsItemSelected(item);
 		}
 	}
@@ -682,11 +647,13 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		containerList = (ListView) root.findViewById(R.id.container_list);
 		itemGridCompat = (GridViewCompat) root.findViewById(R.id.workspace);
 
-		itemList = (DynamicListView) root.findViewById(android.R.id.list);
+		itemList = (DynamicListViewEx) root.findViewById(android.R.id.list);
 		itemList.setOnItemCheckedListener(this);
 
 		mItemGridCallback = new ItemsActionMode(this, itemGridCompat);
 		mItemListCallback = new ItemsActionMode(this, itemList);
+
+		slidingPaneLayout = (SlidingPaneLayout) root.findViewById(R.id.sheet_items);
 
 		return root;
 	}
@@ -733,6 +700,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 							mMode = getActionBarActivity().startSupportActionMode(mContainerCallback);
 							customizeActionModeCloseButton();
 							mMode.invalidate();
+							return true;
 						} else {
 							return false;
 						}
@@ -744,7 +712,6 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 			});
 		}
 
-		SlidingPaneLayout slidingPaneLayout = (SlidingPaneLayout) findViewById(R.id.sheet_items);
 		// slidingPaneLayout.setParallaxDistance(100);
 		slidingPaneLayout.openPane();
 
@@ -818,33 +785,6 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		}
 	}
 
-	private void updateActionBarIcons(Menu menu, int containerId) {
-		MenuItem item = menu.findItem(R.id.option_itemgrid_set);
-
-		switch (containerId) {
-		case 0:
-			item.setIcon(Util.getThemeResourceId(getActivity(), R.attr.imgBarSet1));
-			item.setTitle("Set");
-			break;
-		case 1:
-			item.setIcon(Util.getThemeResourceId(getActivity(), R.attr.imgBarSet2));
-			item.setTitle("Set");
-			break;
-		case 2:
-			item.setIcon(Util.getThemeResourceId(getActivity(), R.attr.imgBarSet3));
-			item.setTitle("Set");
-			break;
-		default:
-			ItemContainer itemContainer = getHero().getItemContainer(containerId);
-			if (itemContainer != null) {
-				item.setIcon(ResUtil.getDrawableByUri(getActivity(), itemContainer.getIconUri()));
-				item.setTitle(itemContainer.getName());
-			}
-			break;
-		}
-
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -859,6 +799,18 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		edit.putInt(PREF_KEY_LAST_OPEN_SCREEN, mCurrentContainerId);
 		edit.putString(PREF_KEY_SCREEN_TYPE, mScreenType);
 		edit.commit();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		initItemsNavigation();
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		removeItemsNavigation();
 	}
 
 	private void setScreenType(String type) {
@@ -913,6 +865,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 				if (containerList != null) {
 					containerList.setItemChecked(containerId, true);
 				}
+				itemListAdapter.setContainerId(containerId);
 			} else {
 				ItemContainer itemContainer = getHero().getItemContainer(containerId);
 				if (itemContainer != null) {
@@ -926,16 +879,28 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 					}
 				} else {
 					mCurrentContainerId = INVALID_SET;
+
 				}
+				itemListAdapter.setContainerId(mCurrentContainerId);
 			}
 
-			itemGridAdapter.setNotifyOnChange(true);
-			itemGridAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
+			itemGridAdapter.notifyDataSetChanged();
+			// itemGridAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
 
-			itemListAdapter.setNotifyOnChange(true);
-			itemListAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
+			itemListAdapter.notifyDataSetChanged();
+			// itemListAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
 
-			getActivity().supportInvalidateOptionsMenu();
+			ActionBar actionBar = getActionBarActivity().getSupportActionBar();
+			if (actionBar.getNavigationMode() == ActionBar.NAVIGATION_MODE_LIST) {
+				for (int i = 0; i < containerSpinnerAdapter.getCount(); i++) {
+					ItemContainer container = containerSpinnerAdapter.getItem(i);
+
+					if (container.getId() == mCurrentContainerId) {
+						actionBar.setSelectedNavigationItem(i);
+						break;
+					}
+				}
+			}
 
 			refreshEmptyView(itemListAdapter);
 		}
@@ -956,10 +921,10 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 				return;
 
 			itemGridAdapter.add(item);
-			itemGridAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
+			// itemGridAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
 
 			itemListAdapter.add(item);
-			itemListAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
+			// itemListAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
 
 			refreshEmptyView(itemListAdapter);
 		}
@@ -975,8 +940,8 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	public void onItemChanged(EquippedItem item) {
 		Debug.trace("onItemChanged " + item);
 		if (item.getSet() == mCurrentContainerId) {
-			itemGridAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
-			itemListAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
+			// itemGridAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
+			// itemListAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
 		}
 	}
 
@@ -989,8 +954,8 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	public void onItemChanged(Item item) {
 		Debug.trace("onItemChanged " + item);
 		if (item.getContainerId() == mCurrentContainerId) {
-			itemGridAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
-			itemListAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
+			// itemGridAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
+			// itemListAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
 		}
 	}
 
@@ -1019,15 +984,23 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	@Override
 	public void onItemEquipped(EquippedItem item) {
 		Debug.trace("onItemEquipped " + item);
+
 		if (item.getSet() == mCurrentContainerId) {
 			itemGridAdapter.add(item);
-			itemGridAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
+			// itemGridAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
 
 			itemListAdapter.add(item);
-			itemListAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
+			// itemListAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
 
 			refreshEmptyView(itemListAdapter);
 		}
+
+		for (ItemContainer container : containerAdapter.getItems()) {
+			if (container.getId() == item.getContainerId()) {
+				container.add(item);
+			}
+		}
+		containerAdapter.notifyDataSetChanged();
 	}
 
 	/*
@@ -1044,6 +1017,13 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 
 			refreshEmptyView(itemListAdapter);
 		}
+
+		for (ItemContainer container : containerAdapter.getItems()) {
+			if (container.getId() == item.getContainerId()) {
+				container.remove(item);
+			}
+		}
+		containerAdapter.notifyDataSetChanged();
 	}
 
 	/*

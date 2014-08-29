@@ -1,5 +1,7 @@
 package com.dsatab.data;
 
+import java.io.Serializable;
+
 import android.text.TextUtils;
 
 import com.dsatab.util.Util;
@@ -7,7 +9,9 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "art")
-public class ArtInfo {
+public class ArtInfo implements Serializable {
+
+	private static final long serialVersionUID = -5634714445422591166L;
 
 	private static final String[] LITURGIE_COSTS = { "2 KaP", "5 KaP", "10 KaP", "15 KaP", "20 KaP", "25 KaP/ 1 pKap",
 			"30 KaP/ 3 pKaP", "35 Kap/ 5 pKap", "40 KaP/ 7 pKaP", "45 KaP/ 9 pKaP" };

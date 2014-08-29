@@ -3,7 +3,6 @@ package com.dsatab.view.dialog;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -21,7 +20,7 @@ public class WebInfoDialog extends AlertDialog implements DialogInterface.OnClic
 
 	private WebView popupcontent = null;
 	private Spinner spinner;
-	SpinnerSimpleAdapter<String> infoAdapters;
+	private SpinnerSimpleAdapter<String> infoAdapters;
 
 	private String url;
 	private String data;
@@ -38,9 +37,8 @@ public class WebInfoDialog extends AlertDialog implements DialogInterface.OnClic
 	}
 
 	public static boolean show(Context context, CharSequence tag) {
-		if (dialog != null) {
+		if (dialog != null && dialog.isShowing()) {
 			dialog.dismiss();
-
 		}
 
 		dialog = new WebInfoDialog(context);
@@ -105,30 +103,9 @@ public class WebInfoDialog extends AlertDialog implements DialogInterface.OnClic
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.AlertDialog#onCreate(android.os.Bundle)
-	 */
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
-
 	@Override
 	public void onClick(DialogInterface dialog, int which) {
 		WebInfoDialog.this.dismiss();
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Dialog#onStart()
-	 */
-	@Override
-	protected void onStart() {
-		super.onStart();
 	}
 
 }

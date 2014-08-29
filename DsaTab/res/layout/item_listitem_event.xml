@@ -9,7 +9,7 @@
     android:paddingRight="?attr/listPreferredItemPaddingRight"
     android:paddingLeft="?attr/listPreferredItemPaddingLeft">
 
-    <fr.castorflex.android.flipimageview.library.FlipImageView
+    <ImageView
         android:id="@android:id/icon1"
         android:layout_width="@dimen/icon_button_size"
         android:layout_height="@dimen/icon_button_size"

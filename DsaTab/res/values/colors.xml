@@ -23,8 +23,4 @@
 	<color name="ValueGreenAlpha">#CC259b24</color>
 	<color name="ValueYellowAlpha">#CCffeb3b</color>
 		
-	<color name="delete_color_filter">#88e51c23</color>
-	<color name="accept_color_filter">#33259b24</color>
-	<color name="reject_color_filter">#33e51c23</color>
-		
 </resources>

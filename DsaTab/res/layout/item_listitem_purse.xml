@@ -13,7 +13,6 @@
         android:id="@+id/sp_currency"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="?android:attr/listPreferredItemHeight"
         tools:listitem="@android:layout/simple_spinner_item" >
     </Spinner>
     

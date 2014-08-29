@@ -2,6 +2,8 @@ package com.dsatab.data;
 
 public abstract class MarkableElement extends BaseProbe implements Markable {
 
+	private static final long serialVersionUID = 2615623261500858793L;
+
 	private boolean unused, favorite;
 
 	public MarkableElement(AbstractBeing being) {

@@ -228,10 +228,9 @@ public class ItemsActivity extends BaseActivity implements OnItemSelectedListene
 			itemViewFragment = new ItemViewFragment();
 
 			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-			if (currentFragment == null)
-				ft.add(R.id.details, itemViewFragment);
-			else
-				ft.replace(R.id.details, itemViewFragment);
+			if (currentFragment != null)
+				ft.remove(currentFragment);
+			ft.add(R.id.details, itemViewFragment);
 
 			ft.commit();
 		}
@@ -334,10 +333,10 @@ public class ItemsActivity extends BaseActivity implements OnItemSelectedListene
 			itemEditFragment = new ItemEditFragment();
 
 			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-			if (currentFragment == null)
-				ft.add(R.id.details, itemEditFragment);
-			else
-				ft.replace(R.id.details, itemEditFragment);
+			if (currentFragment != null)
+				ft.remove(currentFragment);
+
+			ft.add(R.id.details, itemEditFragment);
 
 			ft.commit();
 		}
@@ -409,6 +408,20 @@ public class ItemsActivity extends BaseActivity implements OnItemSelectedListene
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (itemViewFragment != null)
+			itemViewFragment.onActivityResult(requestCode, resultCode, data);
+
+		if (itemEditFragment != null)
+			itemEditFragment.onActivityResult(requestCode, resultCode, data);
+
+		if (itemListFragment != null)
+			itemListFragment.onActivityResult(requestCode, resultCode, data);
 	}
 
 	@Override

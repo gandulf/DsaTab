@@ -1,16 +1,17 @@
 package com.dsatab.fragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -32,14 +33,11 @@ import com.dsatab.util.Util;
 import com.dsatab.view.ListSettings;
 import com.dsatab.view.ListSettings.ListItem;
 import com.dsatab.view.ListSettings.ListItemType;
-import com.haarman.listviewanimations.itemmanipulation.AnimateAdapter;
-import com.haarman.listviewanimations.itemmanipulation.OnAnimateCallback;
-import com.haarman.listviewanimations.itemmanipulation.OnDismissCallback;
-import com.haarman.listviewanimations.itemmanipulation.SwipeDismissAdapter;
-import com.haarman.listviewanimations.view.DynamicListView;
+import com.gandulf.guilib.view.DynamicListViewEx;
+import com.nhaarman.listviewanimations.itemmanipulation.dragdrop.TouchViewDraggableManager;
 
 public class TabListableConfigFragment extends Fragment implements View.OnClickListener, OnItemClickListener,
-		OnItemSelectedListener, OnCheckedChangeListener, OnAnimateCallback {
+		OnItemSelectedListener, OnCheckedChangeListener {
 
 	private TabInfo info;
 	private ListSettings listSettings;
@@ -52,9 +50,8 @@ public class TabListableConfigFragment extends Fragment implements View.OnClickL
 
 	private ImageButton addListItem;
 
-	private DynamicListView listItemList;
+	private DynamicListViewEx listItemList;
 	private ListItemConfigAdapter listItemAdapter;
-	private AnimateAdapter<ListItem> animateListItemAdapter;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,13 +62,7 @@ public class TabListableConfigFragment extends Fragment implements View.OnClickL
 		spinner.setOnItemSelectedListener(this);
 		settingsLayout = (LinearLayout) root.findViewById(R.id.popup_tab_content);
 
-		normal = (CheckBox) root.findViewById(R.id.popup_edit_show_normal);
-		favorites = (CheckBox) root.findViewById(R.id.popup_edit_show_favorites);
-		unused = (CheckBox) root.findViewById(R.id.popup_edit_show_unused);
-		modifier = (CheckBox) root.findViewById(R.id.popup_edit_include_modifiers);
-
-		listItemList = (DynamicListView) root.findViewById(android.R.id.list);
-		listItemList.setDivider(null);
+		listItemList = (DynamicListViewEx) root.findViewById(android.R.id.list);
 
 		addListItem = (ImageButton) root.findViewById(R.id.popup_edit_add_list_item);
 		addListItem.setOnClickListener(this);
@@ -80,23 +71,21 @@ public class TabListableConfigFragment extends Fragment implements View.OnClickL
 
 		listItemAdapter = new ListItemConfigAdapter(getActivity(), DsaTabApplication.getInstance().getHero(),
 				new ArrayList<ListSettings.ListItem>());
+		ViewGroup checkboxes = (ViewGroup) inflater.inflate(R.layout._edit_tabinfo_list_checkboxes, container);
 
-		SwipeDismissAdapter swipeAdapter = new SwipeDismissAdapter(listItemAdapter, new OnDismissCallback() {
-			@Override
-			public void onDismiss(AbsListView list, int[] reverseSortedPositions) {
-				for (int position : reverseSortedPositions) {
-					listItemAdapter.remove(position);
-					listSettings.getListItems().remove(position);
-				}
-			}
-		});
+		normal = (CheckBox) checkboxes.findViewById(R.id.popup_edit_show_normal);
+		favorites = (CheckBox) checkboxes.findViewById(R.id.popup_edit_show_favorites);
+		unused = (CheckBox) checkboxes.findViewById(R.id.popup_edit_show_unused);
+		modifier = (CheckBox) checkboxes.findViewById(R.id.popup_edit_include_modifiers);
 
-		swipeAdapter.setAbsListView(listItemList);
-		animateListItemAdapter = new AnimateAdapter<ListSettings.ListItem>(swipeAdapter, this);
-		animateListItemAdapter.setAbsListView(listItemList);
+		listItemList.addHeaderView(checkboxes);
 
-		listItemList.setAdapter(animateListItemAdapter);
+		listItemList.setAdapter(listItemAdapter);
 		listItemList.setOnItemClickListener(this);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			listItemList.enableDragAndDrop();
+			listItemList.setDraggableManager(new TouchViewDraggableManager(R.id.drag));
+		}
 
 		return root;
 	}
@@ -221,18 +210,6 @@ public class TabListableConfigFragment extends Fragment implements View.OnClickL
 		}
 	}
 
-	@Override
-	public void onShow(AbsListView list, int[] pos) {
-		if (pos != null && pos.length > 0) {
-			list.smoothScrollToPosition(pos[0]);
-		}
-	}
-
-	@Override
-	public void onDismiss(AbsListView arg0, int[] arg1) {
-
-	}
-
 	protected void editListItem(final ListItem listItem) {
 		if (listItem.getType() == ListItemType.Header) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -269,6 +246,17 @@ public class TabListableConfigFragment extends Fragment implements View.OnClickL
 		}
 	}
 
+	public void accept() {
+		if (listSettings != null && listItemAdapter != null) {
+			listSettings.getListItems().clear();
+			listSettings.getListItems().addAll(listItemAdapter.getItems());
+		}
+	}
+
+	public void cancel() {
+
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -281,15 +269,20 @@ public class TabListableConfigFragment extends Fragment implements View.OnClickL
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-			ArrayAdapter<ListItemType> typeAdapter = new ArrayAdapter<ListItemType>(getActivity(),
-					android.R.layout.simple_list_item_1, ListItemType.values());
+			List<String> listTypeTitles = new ArrayList<String>();
+			for (ListItemType listItemType : ListItemType.values()) {
+				listTypeTitles.add(listItemType.title());
+			}
+
+			ArrayAdapter<String> typeAdapter = new ArrayAdapter<String>(getActivity(),
+					android.R.layout.simple_list_item_1, listTypeTitles);
+
 			builder.setTitle("Typ auswählen");
 			builder.setAdapter(typeAdapter, new DialogInterface.OnClickListener() {
 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					ListItem newListItem = new ListItem((ListItemType) ListItemType.values()[which]);
-					animateListItemAdapter.animateShow(listItemAdapter.getCount());
 					listItemAdapter.add(newListItem);
 					listSettings.getListItems().add(newListItem);
 

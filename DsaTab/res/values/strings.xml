@@ -123,6 +123,7 @@
     <string name="message_heroes_empty">"Es wurden keine Helden-Dateien gefunden."\n\n
 "Stell sicher, dass sich auf der SD-Karte unter \""<b>%1$s</b>"\"\n die als XML-Datei exportierten Helden der Helden-Software befinden."</string>
     <string name="search_hint">Suchen</string>
+    <string name="search_wiki_hint">Suche bei Wiki Aventurica</string>
     <string name="title_credits">Credits</string>
     <string name="news_title">Informationen</string>
     <string name="tip_0_title">Tabs anpassen</string>
@@ -249,6 +250,7 @@
 <string name="record_note">Notiz aufnehmen</string>
 <string name="record">Aufnehmen</string>
 <string name="choose_portrait">Portrait auswählen</string>
+<string name="download_portraits">Portraits herunterladen</string>
 <string name="take_photo">Photo aufnehmen</string>
 <string name="open_gallery">Galerie öffnen</string>
 <string name="message_save_hero_failed">Held konnte nicht gespeichert werden.</string>

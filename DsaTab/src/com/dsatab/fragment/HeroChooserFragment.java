@@ -13,6 +13,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
@@ -38,6 +39,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,7 +49,6 @@ import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabActivity;
 import com.dsatab.activity.DsaTabPreferenceActivity;
-import com.dsatab.activity.ItemsActivity;
 import com.dsatab.cloud.AuthorizationException;
 import com.dsatab.cloud.HeroExchange;
 import com.dsatab.cloud.HeroExchange.OnHeroExchangeListener;
@@ -58,6 +59,7 @@ import com.dsatab.data.HeroFileInfo.StorageType;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.gandulf.guilib.data.OpenArrayAdapter;
+import com.gandulf.guilib.util.ListViewCompat;
 import com.rokoder.android.lib.support.v4.widget.GridViewCompat;
 
 public class HeroChooserFragment extends BaseFragment implements AdapterView.OnItemClickListener,
@@ -85,7 +87,8 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 
 	private View loadingView;
 	private TextView empty;
-	private AlertDialog connectDialog;
+	private AlertDialog dropboxDialog;
+	private AlertDialog heldenAustauschDialog;
 
 	private final class HeroesActionMode implements ActionMode.Callback {
 
@@ -97,7 +100,7 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 				return false;
 			}
 
-			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+			SparseBooleanArray checkedPositions = ListViewCompat.getCheckedItemPositions(list);
 			if (checkedPositions != null) {
 				adapter.setNotifyOnChange(false);
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
@@ -186,7 +189,7 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 			boolean online = false;
 			boolean deletable = false;
 			boolean uploadable = false;
-			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+			SparseBooleanArray checkedPositions = ListViewCompat.getCheckedItemPositions(list);
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
 					if (checkedPositions.valueAt(i)) {
@@ -278,8 +281,7 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 			Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();
 		}
 
-		if (!exchange.isConnected(StorageType.Dropbox)
-				&& !getActivity().getPreferences(Activity.MODE_PRIVATE).getBoolean(PREF_DONT_SHOW_CONNECT, false)) {
+		if (!exchange.isConnected(StorageType.Dropbox)) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			View popupcontent = getLayoutInflater(savedInstanceState).inflate(R.layout.popup_cloud, null);
 			builder.setView(popupcontent);
@@ -295,9 +297,34 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 					editor.commit();
 				}
 			});
-			connectDialog = builder.show();
-			connectDialog.setCanceledOnTouchOutside(true);
+
+			if (DsaTabApplication.getInstance().isFirstRun()
+					|| getActivity().getPreferences(Activity.MODE_PRIVATE).getBoolean(PREF_DONT_SHOW_CONNECT, false)) {
+				dropboxDialog = builder.create();
+			} else {
+				dropboxDialog = builder.show();
+			}
+
+			dropboxDialog.setCanceledOnTouchOutside(true);
 		}
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		final EditText editText = new EditText(getActivity());
+		editText.setHint("Helden-Austausch Token");
+		editText.setText(DsaTabApplication.getPreferences().getString(DsaTabPreferenceActivity.KEY_EXCHANGE_TOKEN, ""));
+		builder.setTitle("Berechtigungstoken der Heldenaustauschseite");
+		builder.setView(editText);
+		builder.setNegativeButton(android.R.string.cancel, null);
+		builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Editor editor = DsaTabApplication.getPreferences().edit();
+				editor.putString(DsaTabPreferenceActivity.KEY_EXCHANGE_TOKEN, editText.getText().toString());
+				editor.commit();
+			}
+		});
+		heldenAustauschDialog = builder.create();
 
 		refresh();
 	}
@@ -384,9 +411,8 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 		switch (v.getId()) {
 		case R.id.connect_dropbox:
 			exchange.syncDropbox(REQUEST_LINK_TO_DBX);
-			if (connectDialog != null) {
-				connectDialog.dismiss();
-				connectDialog = null;
+			if (dropboxDialog != null) {
+				dropboxDialog.dismiss();
 			}
 			break;
 		}
@@ -440,6 +466,11 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 			menuItem.setVisible(adapter != null && adapter.isEmpty());
 		}
 
+		menuItem = menu.findItem(R.id.option_connect_dropbox);
+		if (menuItem != null) {
+			menuItem.setVisible(dropboxDialog != null);
+		}
+
 	}
 
 	@Override
@@ -457,11 +488,11 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 		case R.id.option_load_example_heroes:
 			loadExampleHeroes();
 			break;
-		case R.id.option_items:
-			startActivity(new Intent(getActivity(), ItemsActivity.class));
+		case R.id.option_connect_dropbox:
+			dropboxDialog.show();
 			return true;
-		case R.id.option_settings:
-			DsaTabPreferenceActivity.startPreferenceActivity(getActivity());
+		case R.id.option_connect_heldenaustausch:
+			heldenAustauschDialog.show();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -569,7 +600,7 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		if (mMode != null) {
-			SparseBooleanArray checked = list.getCheckedItemPositions();
+			SparseBooleanArray checked = ListViewCompat.getCheckedItemPositions(list);
 			boolean hasCheckedElement = false;
 			for (int i = 0; i < checked.size() && !hasCheckedElement; i++) {
 				hasCheckedElement = checked.valueAt(i);
@@ -614,7 +645,7 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 
 		List<Object> checkedObjects = new ArrayList<Object>();
 
-		SparseBooleanArray checked = gridView.getCheckedItemPositions();
+		SparseBooleanArray checked = ListViewCompat.getCheckedItemPositions(gridView);
 		boolean hasCheckedElement = false;
 		if (checked != null) {
 			for (int i = 0; i < checked.size() && !hasCheckedElement; i++) {

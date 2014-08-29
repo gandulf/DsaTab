@@ -171,7 +171,11 @@ public class Spell extends MarkableElement implements Value, Listable, Serializa
 		this.value = value;
 
 		if (oldValue != this.value)
-			being.fireValueChangedEvent(this);
+			fireValueChangedEvent();
+	}
+
+	public void setInfo(SpellInfo info) {
+		this.info = info;
 	}
 
 	@Override

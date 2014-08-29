@@ -19,6 +19,8 @@ import com.dsatab.data.adapter.TabDrawerAdapter.DrawerItem;
 import com.gandulf.guilib.data.OpenArrayAdapter;
 import com.gandulf.guilib.util.ColorUtil;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class TabDrawerAdapter extends OpenArrayAdapter<DrawerItem> {
 
 	private static final int TYPE_HEADER = 0;
@@ -159,17 +161,35 @@ public class TabDrawerAdapter extends OpenArrayAdapter<DrawerItem> {
 			textView.setText(drawerInfo.text);
 			break;
 		}
-		case TYPE_PROFILE:
-		case TYPE_SYSTEM:
-		case TYPE_TAB: {
+		case TYPE_PROFILE: {
 			TextView textView = (TextView) convertView.findViewById(android.R.id.text1);
-			ImageView imge = (ImageView) convertView.findViewById(android.R.id.icon);
+			ImageView image = (ImageView) convertView.findViewById(android.R.id.icon);
+			CircleImageView circleImage = (CircleImageView) convertView.findViewById(android.R.id.icon1);
+			circleImage.setBorderWidth(2);
+			circleImage.setBorderColor(Color.WHITE);
+
 			textView.setText(drawerInfo.text);
 
 			if (drawerInfo.image != null) {
-				imge.setImageURI(drawerInfo.image);
+				image.setImageURI(drawerInfo.image);
+				circleImage.setImageURI(drawerInfo.image);
 			} else {
-				imge.setImageResource(drawerInfo.imageId);
+				image.setImageResource(drawerInfo.imageId);
+				circleImage.setImageResource(drawerInfo.imageId);
+			}
+
+			break;
+		}
+		case TYPE_SYSTEM:
+		case TYPE_TAB: {
+			TextView textView = (TextView) convertView.findViewById(android.R.id.text1);
+			ImageView image = (ImageView) convertView.findViewById(android.R.id.icon);
+			textView.setText(drawerInfo.text);
+
+			if (drawerInfo.image != null) {
+				image.setImageURI(drawerInfo.image);
+			} else {
+				image.setImageResource(drawerInfo.imageId);
 			}
 
 			if (drawerInfo.color != Color.TRANSPARENT && convertView.getBackground() != null) {

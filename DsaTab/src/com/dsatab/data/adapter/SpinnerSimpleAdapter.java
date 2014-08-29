@@ -67,7 +67,7 @@ public class SpinnerSimpleAdapter<T> extends ArrayAdapter<T> {
 
 		if (textView != null) {
 			T e = getItem(position);
-			textView.setText(e.toString());
+			textView.setText(e.toString().replace('_', ' '));
 		}
 		return convertView;
 	}
@@ -83,7 +83,7 @@ public class SpinnerSimpleAdapter<T> extends ArrayAdapter<T> {
 
 		if (textView != null) {
 			T e = getItem(position);
-			textView.setText(e.toString());
+			textView.setText(e.toString().replace('_', ' '));
 		}
 		return textView;
 	}

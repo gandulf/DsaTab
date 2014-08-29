@@ -14,7 +14,6 @@ import android.graphics.Color;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.TextUtils.TruncateAt;
-import android.util.FloatMath;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +30,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Spinner;
@@ -94,9 +92,6 @@ import com.dsatab.view.listener.TargetListener;
 import com.gandulf.guilib.data.OpenArrayAdapter;
 import com.gandulf.guilib.view.SeekBarEx;
 
-import fr.castorflex.android.flipimageview.library.FlipImageView;
-import fr.castorflex.android.flipimageview.library.FlipImageView.FlippableViewHolder;
-
 public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements OnSeekBarChangeListener,
 		OnCheckedChangeListener, OnClickListener {
 
@@ -139,8 +134,8 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 			if (hero.getPurse() != null) {
 				Currency cur = (Currency) parent.getItemAtPosition(position);
-				if (cur != hero.getPurse().getActiveCurrency()) {
-					hero.getPurse().setActiveCurrency(cur);
+				if (cur != hero.getHeroConfiguration().getActiveCurrency()) {
+					hero.getHeroConfiguration().setActiveCurrency(cur);
 					notifyDataSetChanged();
 				}
 			}
@@ -318,7 +313,6 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				holder.text2 = (TextView) convertView.findViewById(android.R.id.text2);
 				holder.text3 = (TextView) convertView.findViewById(R.id.text3);
 				holder.icon1 = (ImageView) convertView.findViewById(android.R.id.icon1);
-				holder.flip = (FlipImageView) convertView.findViewById(android.R.id.icon1);
 
 				holder.icon2 = (ImageView) convertView.findViewById(android.R.id.icon2);
 				holder.icon_chain_bottom = (ImageView) convertView.findViewById(R.id.icon_chain_bottom);
@@ -369,15 +363,14 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				break;
 			}
 			case ITEM_TYPE_MODIFIER: {
-				// We need the layoutinflater to pick up the view from xml
-				// Pick up the TwoLineListItem defined in the xml file
 				convertView = inflater.inflate(R.layout.item_listitem_modifier, parent, false);
 
 				ModifierViewHolder holder = new ModifierViewHolder();
 				holder.text1 = (TextView) convertView.findViewById(android.R.id.text1);
 				holder.text2 = (TextView) convertView.findViewById(android.R.id.text2);
-				holder.flip = (FlipImageView) convertView.findViewById(android.R.id.icon1);
+				holder.icon1 = (ImageView) convertView.findViewById(android.R.id.icon1);
 				holder.active = (CheckBox) convertView.findViewById(R.id.active);
+				holder.active.setOnCheckedChangeListener(this);
 				convertView.setTag(holder);
 				break;
 			}
@@ -398,7 +391,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				holder.text1 = (TextView) convertView.findViewById(android.R.id.text1);
 				holder.text2 = (TextView) convertView.findViewById(android.R.id.text2);
 				holder.text3 = (TextView) convertView.findViewById(R.id.text3);
-				holder.flip = (FlipImageView) convertView.findViewById(android.R.id.icon1);
+				holder.icon1 = (ImageView) convertView.findViewById(android.R.id.icon1);
 				holder.icon2 = (ImageView) convertView.findViewById(android.R.id.icon2);
 
 				convertView.setTag(holder);
@@ -435,7 +428,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				int buttonSize = getContext().getResources().getDimensionPixelSize(R.dimen.icon_button_size);
 				int gap = getContext().getResources().getDimensionPixelSize(R.dimen.default_gap);
 				int halfgap = gap / 2;
-				int buttonCount = (int) FloatMath.floor(((float) width / (buttonSize + gap)));
+				int buttonCount = (int) Math.floor(((float) width / (buttonSize + gap)));
 
 				// <ToggleButton
 				// android:id="@+id/wound1"
@@ -477,8 +470,6 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 			}
 			}
 		}
-
-		FlippableViewHolder.prepare(position, convertView, (ListView) parent);
 
 		Listable item = getItem(position);
 
@@ -656,6 +647,9 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				attribute.addValue(1);
 			else
 				attribute.addValue(-1);
+		} else if (button.getTag() instanceof AbstractModificator) {
+			AbstractModificator modificator = (AbstractModificator) button.getTag();
+			modificator.setActive(checked);
 		}
 	}
 
@@ -664,7 +658,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 
 		Currency currency = item.getCurrency();
 		if (currency == null) {
-			currency = hero.getPurse().getActiveCurrency();
+			currency = hero.getHeroConfiguration().getActiveCurrency();
 
 			SpinnerSimpleAdapter<Currency> currencyAdapter = new SpinnerSimpleAdapter<Currency>(getContext(),
 					Currency.values());
@@ -758,20 +752,9 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				holder.button1.setVisibility(View.VISIBLE);
 				break;
 			case Notes:
-				holder.button1.setImageResource(R.drawable.dsa_notes_add);
+
+				holder.button1.setImageResource(R.drawable.dsa_speech_add);
 				holder.button1.setOnClickListener(new View.OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						if (actionListener != null)
-							actionListener.onAction(OnActionListener.ACTION_NOTES_ADD);
-
-					}
-				});
-				holder.button1.setVisibility(View.VISIBLE);
-
-				holder.button2.setImageResource(R.drawable.dsa_speech_add);
-				holder.button2.setOnClickListener(new View.OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
@@ -780,7 +763,20 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 
 					}
 				});
+				holder.button1.setVisibility(View.VISIBLE);
+
+				holder.button2.setImageResource(R.drawable.dsa_notes_add);
+				holder.button2.setOnClickListener(new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						if (actionListener != null)
+							actionListener.onAction(OnActionListener.ACTION_NOTES_ADD);
+
+					}
+				});
 				holder.button2.setVisibility(View.VISIBLE);
+
 				break;
 			default:
 				holder.button1.setVisibility(View.GONE);
@@ -799,8 +795,8 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 
 		if (e.getCategory() != null) {
 
-			if (holder.flip != null) {
-				holder.flip.setImageResource(e.getCategory().getDrawableId());
+			if (holder.icon1 != null) {
+				holder.icon1.setImageResource(e.getCategory().getDrawableId());
 			}
 
 			if (holder.icon2 != null) {
@@ -844,23 +840,20 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 			holder.active.setVisibility(View.GONE);
 		}
 
-		holder.flip.setFlippable(true);
-		holder.flip.setClickable(true);
-		holder.flip.setBackgroundResource(0);
-		holder.flip.setScaleType(ScaleType.CENTER);
+		holder.icon1.setClickable(true);
+		holder.icon1.setBackgroundResource(0);
+		holder.icon1.setScaleType(ScaleType.CENTER);
 		if (item instanceof WoundModificator) {
-			holder.flip.setFlippable(false);
-			holder.flip.setClickable(false);
+			holder.icon1.setClickable(false);
 			if (item.isActive())
-				holder.flip.setImageResource(R.drawable.icon_wound_selected);
+				holder.icon1.setImageResource(R.drawable.icon_wound_selected);
 			else
-				holder.flip.setImageResource(R.drawable.icon_wound_normal);
+				holder.icon1.setImageResource(R.drawable.icon_wound_normal);
 		} else if (item instanceof RulesModificator) {
-			holder.flip.setFlippable(false);
-			holder.flip.setClickable(false);
-			holder.flip.setImageResource(R.drawable.ic_menu_preferences);
+			holder.icon1.setClickable(false);
+			holder.icon1.setImageResource(R.drawable.ic_menu_preferences);
 		} else if (item instanceof CustomModificator) {
-			holder.flip.setImageResource(R.drawable.dsa_modifier);
+			holder.icon1.setImageResource(R.drawable.dsa_modifier);
 		}
 
 		if (item != null) {
@@ -997,18 +990,24 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		}
 
 		holder.text2.setText(info);
+		Util.setVisibility(holder.text2, !TextUtils.isEmpty(info), holder.text1);
 
+		String probe;
 		if (art.hasCustomProbe() && !TextUtils.isEmpty(art.getProbeInfo().getAttributesString())) {
-			holder.text3.setText(art.getProbeInfo().getAttributesString());
+			probe = art.getProbeInfo().getAttributesString();
 		} else if (!TextUtils.isEmpty(artInfo.getProbe())
 				&& TextUtils.isEmpty(art.getProbeInfo().getAttributesString())) {
-			holder.text3.setText(artInfo.getProbe());
+			probe = artInfo.getProbe();
 		} else {
 			if (artInfo != null && !TextUtils.isEmpty(artInfo.getEffectDuration()))
-				holder.text3.setText(artInfo.getEffectDuration());
+				probe = artInfo.getEffectDuration();
 			else
-				holder.text3.setText(null);
+				probe = null;
 		}
+
+		holder.text3.setText(probe);
+		Util.setVisibility(holder.text3, !TextUtils.isEmpty(probe), holder.text1);
+
 		if (art.getProbeInfo().getErschwernis() != null) {
 			holder.text4.setText(Util.toProbe(art.getProbeInfo().getErschwernis()));
 			holder.text4.setVisibility(View.VISIBLE);
@@ -1038,7 +1037,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		holder.text1.setText(fileName);
 		holder.text2.setText(null);
 		holder.text3.setText(Util.readableFileSize(fileSize));
-		holder.flip.setImageResource(file.getIcon());
+		holder.icon1.setImageResource(file.getIcon());
 		holder.icon2.setVisibility(View.GONE);
 
 		return convertView;
@@ -1051,20 +1050,18 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 
 		String be = talent.getProbeInfo().getBe();
 
-		if (TextUtils.isEmpty(be)) {
-			Util.setVisibility(holder.text2, false, holder.text1);
-			holder.text2.setText(null);
-		} else {
-			Util.setVisibility(holder.text2, true, holder.text1);
-			holder.text2.setText(be);
-		}
+		holder.text2.setText(be);
+		Util.setVisibility(holder.text2, !TextUtils.isEmpty(be), holder.text1);
+
 		if (talent.getComplexity() != null) {
 			Util.setVisibility(holder.text2, true, holder.text1);
 			if (holder.text2.length() > 0)
 				holder.text2.append(" ");
 			holder.text2.append(Util.toString(talent.getComplexity()));
 		}
+
 		holder.text3.setText(talent.getProbeInfo().getAttributesString());
+		Util.setVisibility(holder.text3, !TextUtils.isEmpty(talent.getProbeInfo().getAttributesString()), holder.text1);
 
 		if (talent instanceof CombatMeleeTalent) {
 			CombatMeleeTalent meleeTalent = (CombatMeleeTalent) talent;
@@ -1363,7 +1360,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		}
 	}
 
-	private static class ViewHolder extends FlippableViewHolder {
+	private static class ViewHolder {
 
 		TextView text1, text2, text3;
 		ImageView icon1, icon2, icon_chain_top, icon_chain_bottom;
@@ -1382,7 +1379,8 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		ImageView indicator;
 	}
 
-	private static class ModifierViewHolder extends FlippableViewHolder {
+	private static class ModifierViewHolder {
+		ImageView icon1;
 		TextView text1, text2;
 		CheckBox active;
 	}
@@ -1392,17 +1390,13 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		ImageButton button1, button2;;
 	}
 
-	private static class FooterViewHolder {
-
-	}
-
 	private static class WoundViewHolder {
 		ToggleButton[] wounds;
 	}
 
-	private static class EventViewHolder extends FlippableViewHolder {
+	private static class EventViewHolder {
 		TextView text1, text2, text3;
-		ImageView icon2;
+		ImageView icon1, icon2;
 	}
 
 	private static class PurseViewHolder {

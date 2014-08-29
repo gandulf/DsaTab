@@ -48,11 +48,18 @@
         android:paddingTop="@dimen/default_gap" >
     </ListView>
 
+    <ImageView android:id="@+id/probe_modifier_container_divider" 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="?attr/dividerHorizontal" />
+    
     <LinearLayout
         android:id="@+id/dice_dices"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/default_gap"
+        android:animateLayoutChanges="true"
         android:gravity="center"
         android:orientation="horizontal" >
 

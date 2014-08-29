@@ -64,6 +64,7 @@ public class MapFragment extends BaseFragment {
 
 	private ProgressBar progress;
 	private TextView progressText;
+	private TextView emptyView;
 
 	private ImageView imageMapView;
 	private PhotoViewAttacher mAttacher;
@@ -199,6 +200,8 @@ public class MapFragment extends BaseFragment {
 		progress = (ProgressBar) root.findViewById(R.id.map_progress);
 		progressText = (TextView) root.findViewById(R.id.map_progress_text);
 		osmMapView = null;
+
+		emptyView = (TextView) root.findViewById(android.R.id.empty);
 		return configureContainerView(root);
 	}
 
@@ -251,18 +254,17 @@ public class MapFragment extends BaseFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 
-		TextView empty = (TextView) findViewById(android.R.id.empty);
 		if (mapFiles.isEmpty()) {
 			String path = mapDir.getAbsolutePath();
-			empty.setVisibility(View.VISIBLE);
+			emptyView.setVisibility(View.VISIBLE);
 			imageMapView.setVisibility(View.GONE);
 			if (osmMapView != null)
 				osmMapView.setVisibility(View.GONE);
 
-			empty.setText(Util.getText(R.string.message_map_empty, path));
+			emptyView.setText(Util.getText(R.string.message_map_empty, path));
 
 		} else {
-			empty.setVisibility(View.GONE);
+			emptyView.setVisibility(View.GONE);
 		}
 
 		mAttacher = new PhotoViewAttacher(imageMapView);

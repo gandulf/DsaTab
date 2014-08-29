@@ -137,7 +137,7 @@ public class NotesEditFragment extends BaseEditFragment implements OnItemSelecte
 
 			String event = extra.getString(INTENT_NAME_EVENT_TEXT);
 			String name = extra.getString(INTENT_NAME_EVENT_NAME);
-			String sozial = extra.getString(INTENT_NAME_EVENT_SOZIALSTATUS);
+			int sozial = extra.getInt(INTENT_NAME_EVENT_SOZIALSTATUS, 1);
 			audioPath = extra.getString(INTENT_NAME_AUDIO_PATH);
 
 			if (notesItem != null) {
@@ -163,7 +163,7 @@ public class NotesEditFragment extends BaseEditFragment implements OnItemSelecte
 
 			editComment.setText(event);
 			editName.setText(name);
-			editSozialStatus.setText(sozial);
+			editSozialStatus.setText(String.valueOf(sozial));
 		}
 
 		updateView();
@@ -230,20 +230,19 @@ public class NotesEditFragment extends BaseEditFragment implements OnItemSelecte
 	 * 
 	 */
 	public Bundle accept() {
-		EditText editText = (EditText) findViewById(R.id.popup_notes_edit_text);
 
-		String descrition = editText.getText().toString();
+		String descrition = editComment.getText().toString();
 		String name = editName.getText().toString();
-		String so = editSozialStatus.getText().toString();
+		int so = Util.parseInt(editSozialStatus.getText().toString(), 1);
 
 		Bundle data = new Bundle(5);
 
 		data.putString(INTENT_NAME_EVENT_TEXT, descrition);
 		data.putString(INTENT_NAME_EVENT_NAME, name);
-		data.putString(INTENT_NAME_EVENT_SOZIALSTATUS, so);
+		data.putInt(INTENT_NAME_EVENT_SOZIALSTATUS, so);
 		data.putSerializable(INTENT_NAME_EVENT_CATEGORY, category);
 		data.putString(INTENT_NAME_AUDIO_PATH, audioPath);
-		Util.hideKeyboard(editText);
+		Util.hideKeyboard(editComment);
 
 		if (category == EventCategory.Bekanntschaft) {
 			if (notesItem instanceof Event) {

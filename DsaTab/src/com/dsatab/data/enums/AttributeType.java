@@ -1,6 +1,5 @@
 package com.dsatab.data.enums;
 
-import java.util.Locale;
 
 public enum AttributeType {
 
@@ -98,15 +97,22 @@ public enum AttributeType {
 		if (code == null)
 			return null;
 
-		code = code.toUpperCase(Locale.US);
+		AttributeType attributeType = null;
+
+		try {
+			attributeType = AttributeType.valueOf(code);
+		} catch (Exception e) {
+			attributeType = null;
+		}
 
 		for (AttributeType attr : AttributeType.values()) {
-			if (attr.code != null && attr.code.equals(code)) {
-				return attr;
+			if (attr.code != null && attr.code.equalsIgnoreCase(code)) {
+				attributeType = attr;
+				break;
 			}
 		}
 
-		return null;
+		return attributeType;
 	}
 
 	public boolean probable() {

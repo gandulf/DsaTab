@@ -50,24 +50,27 @@ public class AnimalFragment extends BaseProfileFragment {
 			Animal animal = getHero().getAnimals().get(i);
 			animalNames.add(animal.getTitle());
 		}
-		final ArrayAdapter<String> adapter = new ArrayAdapter<String>(actionBar.getThemedContext(),
-				android.R.layout.simple_spinner_item, animalNames);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		if (animalNames.size() > 1) {
+			final ArrayAdapter<String> adapter = new ArrayAdapter<String>(actionBar.getThemedContext(),
+					android.R.layout.simple_spinner_item, animalNames);
+			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-		actionBar.setListNavigationCallbacks(adapter, new ActionBar.OnNavigationListener() {
+			actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+			actionBar.setListNavigationCallbacks(adapter, new ActionBar.OnNavigationListener() {
 
-			@Override
-			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-				animalIndex = itemPosition;
-				onAnimalLoaded(getAnimal());
+				@Override
+				public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+					animalIndex = itemPosition;
+					onAnimalLoaded(getAnimal());
 
-				return false;
-			}
-		});
+					return false;
+				}
+			});
 
-		actionBar.setSelectedNavigationItem(animalIndex);
-
+			actionBar.setSelectedNavigationItem(animalIndex);
+		} else {
+			removeAnimalNavigation();
+		}
 	}
 
 	private void removeAnimalNavigation() {

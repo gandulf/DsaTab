@@ -1,12 +1,16 @@
 package com.dsatab.data;
 
+import java.io.Serializable;
+
 import android.text.TextUtils;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "spell")
-public class SpellInfo {
+public class SpellInfo implements Serializable {
+
+	private static final long serialVersionUID = -8229597034182978681L;
 
 	@DatabaseField(generatedId = true)
 	private long id;

@@ -3,42 +3,22 @@
     <item
         android:id="@+id/option_item_add_table"
         android:icon="@drawable/dsa_items_add"
-        app:showAsAction="withText|ifRoom"
+        app:showAsAction="ifRoom"
         android:title="@string/add_item"/>
+    
+    <item
+        android:id="@+id/option_add_container"
+        android:icon="@drawable/dsa_bag_add"
+        app:showAsAction="ifRoom"        
+        android:title="@string/create_container"/>
+    
     <item
         android:id="@+id/option_item_filter"
         android:icon="?attr/imgBarFilter"
         app:showAsAction="withText|ifRoom"
         android:title="@string/filter">
         <menu />
-    </item>
-    <item
-        android:id="@+id/option_itemgrid_set"
-        android:icon="?attr/imgBarSet"
-        app:showAsAction="withText|always"
-        android:title="@string/set">
-        <menu>
-            <group
-                android:id="@+id/option_group_container"
-                android:checkableBehavior="single" >
-                <item
-                    android:id="@+id/option_itemgrid_set1"
-                    android:icon="?attr/imgBarSet1"
-                    app:showAsAction="withText"
-                    android:title="@string/set_1"/>
-                <item
-                    android:id="@+id/option_itemgrid_set2"
-                    android:icon="?attr/imgBarSet2"
-                    app:showAsAction="withText"
-                    android:title="@string/set_2"/>
-                <item
-                    android:id="@+id/option_itemgrid_set3"
-                    android:icon="?attr/imgBarSet3"
-                    app:showAsAction="withText"
-                    android:title="@string/set_3"/>
-            </group>
-        </menu>
-    </item>
+    </item>    
     <item
         android:id="@+id/option_itemgrid_type"
         app:showAsAction="withText|always"
@@ -47,7 +27,7 @@
             <group android:checkableBehavior="single" >
                 <item
                     android:id="@+id/option_itemgrid_type_list"
-                    app:showAsAction="withText"
+                    app:showAsAction="withText"                    
                     android:title="@string/list"/>
                 <item
                     android:id="@+id/option_itemgrid_type_grid"

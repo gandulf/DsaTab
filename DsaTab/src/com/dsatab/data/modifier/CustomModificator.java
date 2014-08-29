@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.StringTokenizer;
 import java.util.UUID;
 
 import org.json.JSONException;
@@ -14,6 +13,7 @@ import org.json.JSONObject;
 
 import android.text.TextUtils;
 import android.widget.Toast;
+import au.com.bytecode.opencsv.CSVReader;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.data.Art;
@@ -147,12 +147,11 @@ public class CustomModificator extends AbstractModificator implements JSONable {
 
 				StringBuilder errors = new StringBuilder();
 
-				StringTokenizer st = new StringTokenizer(rules, ",");
-				String token = null;
-				while (st.hasMoreTokens()) {
-					try {
-						token = st.nextToken();
+				String[] tokens = CSVReader.parseLine(rules, CSVReader.DEFAULT_QUOTE_CHARACTER,
+						CSVReader.DEFAULT_SEPARATOR);
 
+				for (String token : tokens) {
+					try {
 						int index = token.lastIndexOf("+");
 						if (index < 0)
 							index = token.lastIndexOf("-");

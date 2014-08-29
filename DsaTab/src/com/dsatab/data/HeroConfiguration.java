@@ -17,13 +17,16 @@ import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Build;
+import android.text.TextUtils;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.TabInfo;
 import com.dsatab.data.Hero.CombatStyle;
+import com.dsatab.data.Purse.Currency;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.TalentGroupType;
+import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemContainer;
 import com.dsatab.data.modifier.CustomModificator;
 import com.dsatab.data.notes.Event;
@@ -58,6 +61,8 @@ public class HeroConfiguration {
 	private static final String FIELD_VERSION = "version";
 	private static final String FIELD_CUSTOM_PROBES = "customProbes";
 
+	private static final String FIELD_ACTIVE_CURRENCY = "acticeCurrency";
+
 	private List<TabInfo> tabInfos;
 
 	private List<CustomModificator> modificators;
@@ -68,13 +73,14 @@ public class HeroConfiguration {
 	private List<Event> events;
 	private List<CustomProbe> customProbes;
 
-	private List<ItemContainer> itemContainers;
+	private List<ItemContainer<Item>> itemContainers;
 
 	private CombatStyle combatStyle;
 	private boolean beCalculation;
 
 	private boolean leModifierActive;
 	private boolean auModifierActive;
+
 	private Hero hero;
 
 	private Map<String, String> properties;
@@ -87,7 +93,7 @@ public class HeroConfiguration {
 
 		modificators = new ArrayList<CustomModificator>();
 		wounds = new ArrayList<WoundAttribute>();
-		armorAttributes = new ArrayList[Hero.MAXIMUM_SET_NUMBER];
+		armorAttributes = new ArrayList[Hero.INVENTORY_SET_COUNT];
 		attributes = new HashSet<CustomAttribute>();
 		metaTalents = new HashSet<MetaTalent>();
 		events = new ArrayList<Event>();
@@ -176,7 +182,7 @@ public class HeroConfiguration {
 				}
 			}
 		} else {
-			armorAttributes = new ArrayList[Hero.MAXIMUM_SET_NUMBER];
+			armorAttributes = new ArrayList[Hero.INVENTORY_SET_COUNT];
 		}
 
 		if (in.has(FIELD_ATTRIBUTES)) {
@@ -442,17 +448,33 @@ public class HeroConfiguration {
 		this.auModifierActive = auModifierActive;
 	}
 
-	public List<ItemContainer> getItemContainers() {
+	public Currency getActiveCurrency() {
+		if (!TextUtils.isEmpty(getProperty(FIELD_ACTIVE_CURRENCY))) {
+			return Currency.valueOf(getProperty(FIELD_ACTIVE_CURRENCY));
+		} else {
+			return Currency.Mittelreich;
+		}
+	}
+
+	public void setActiveCurrency(Currency activeCurrency) {
+		if (activeCurrency != null) {
+			setProperty(FIELD_ACTIVE_CURRENCY, activeCurrency.name());
+		} else {
+			setProperty(FIELD_ACTIVE_CURRENCY, Currency.Mittelreich.name());
+		}
+	}
+
+	public List<ItemContainer<Item>> getItemContainers() {
 		if (itemContainers == null) {
-			itemContainers = new ArrayList<ItemContainer>();
-			itemContainers.add(new ItemContainer(3, "Rucksack"));
-			itemContainers.add(new ItemContainer(4, "Gürtel"));
-			itemContainers.add(new ItemContainer(5, "Maultier"));
+			itemContainers = new ArrayList<ItemContainer<Item>>();
+			itemContainers.add(new ItemContainer<Item>(3, "Rucksack", Util.getUriForResourceId(R.drawable.dsa_bag)));
+			itemContainers.add(new ItemContainer<Item>(4, "Gürtel", Util.getUriForResourceId(R.drawable.dsa_trousers)));
+			itemContainers.add(new ItemContainer<Item>(5, "Maultier", Util.getUriForResourceId(R.drawable.dsa_cat)));
 		}
 		return itemContainers;
 	}
 
-	public void setItemContainers(List<ItemContainer> itemContainers) {
+	public void setItemContainers(List<ItemContainer<Item>> itemContainers) {
 		this.itemContainers = itemContainers;
 	}
 
@@ -468,7 +490,7 @@ public class HeroConfiguration {
 
 			TabInfo tabInfo = new TabInfo(CharacterFragment.class, ListableFragment.class,
 					getTabResourceId(CharacterFragment.class), true, false);
-			tabInfo.setTitle("Talente");
+			tabInfo.setTitle("Charakter");
 			listSettings = (ListSettings) tabInfo.getListSettings(1);
 			listSettings.addListItem(new ListItem(ListItemType.Talent));
 			tabInfos.add(tabInfo);
@@ -499,7 +521,7 @@ public class HeroConfiguration {
 			tabInfos.add(tabInfo);
 
 			tabInfo = new TabInfo(ItemsFragment.class, getTabResourceId(ItemsFragment.class), false, true);
-			tabInfo.setTitle("Gegenstände");
+			tabInfo.setTitle("Ausrüstung");
 			tabInfos.add(tabInfo);
 
 			tabInfo = new TabInfo(ListableFragment.class, ListableFragment.class, R.drawable.dsa_notes, false, false);
@@ -565,7 +587,7 @@ public class HeroConfiguration {
 			tabInfos.add(tabInfo);
 
 			tabInfo = new TabInfo(ItemsFragment.class, getTabResourceId(ItemsFragment.class), false, true);
-			tabInfo.setTitle("Gegenstände");
+			tabInfo.setTitle("Ausrüstung");
 			tabInfos.add(tabInfo);
 
 			tabInfo = new TabInfo(ListableFragment.class, R.drawable.dsa_notes, false, false);

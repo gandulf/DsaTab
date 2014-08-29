@@ -44,6 +44,7 @@ import com.dsatab.activity.DsaTabActivity;
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.activity.ItemsActivity;
 import com.dsatab.data.Art;
+import com.dsatab.data.ArtInfo;
 import com.dsatab.data.Attribute;
 import com.dsatab.data.CombatTalent;
 import com.dsatab.data.CustomProbe;
@@ -52,6 +53,7 @@ import com.dsatab.data.MetaTalent;
 import com.dsatab.data.Probe;
 import com.dsatab.data.Purse.Currency;
 import com.dsatab.data.Spell;
+import com.dsatab.data.SpellInfo;
 import com.dsatab.data.Talent;
 import com.dsatab.data.TalentGroup;
 import com.dsatab.data.Value;
@@ -70,7 +72,6 @@ import com.dsatab.data.items.Shield;
 import com.dsatab.data.items.Weapon;
 import com.dsatab.data.listable.FileListable;
 import com.dsatab.data.listable.HeaderListItem;
-import com.dsatab.data.listable.Listable;
 import com.dsatab.data.listable.PurseListable;
 import com.dsatab.data.listable.WoundListItem;
 import com.dsatab.data.modifier.AbstractModificator;
@@ -90,18 +91,17 @@ import com.dsatab.view.dialog.DirectoryChooserDialogHelper.Result;
 import com.dsatab.view.dialog.EquippedItemChooserDialog;
 import com.dsatab.view.listener.EditListener;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
-import com.haarman.listviewanimations.itemmanipulation.AnimateAdapter;
-import com.haarman.listviewanimations.itemmanipulation.OnAnimateCallback;
-import com.haarman.listviewanimations.view.DynamicListView;
+import com.gandulf.guilib.util.ListViewCompat;
+import com.gandulf.guilib.view.DynamicListViewEx;
+import com.j256.ormlite.dao.RuntimeExceptionDao;
 
 public class ListableFragment extends BaseListFragment implements OnItemClickListener, HeroInventoryChangedListener,
-		OnAnimateCallback, com.dsatab.view.listener.OnActionListener {
+		com.dsatab.view.listener.OnActionListener {
 
 	private static final int MENU_FILTER_GROUP = 97;
 
-	private DynamicListView itemList;
+	private DynamicListViewEx itemList;
 	private ListableItemAdapter itemListAdapter;
-	private AnimateAdapter<Listable> animateAdapter;
 
 	protected static final class ModifierActionMode implements ActionMode.Callback {
 
@@ -122,7 +122,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 			if (list == null || fragment == null)
 				return false;
 
-			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+			SparseBooleanArray checkedPositions = ListViewCompat.getCheckedItemPositions(list);
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
 					if (checkedPositions.valueAt(i)) {
@@ -163,7 +163,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 			boolean hasItems = false;
 			boolean hasModifiers = false;
 
-			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+			SparseBooleanArray checkedPositions = ListViewCompat.getCheckedItemPositions(list);
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
 					if (checkedPositions.valueAt(i)) {
@@ -212,7 +212,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 
 			MenuItem edit = menu.findItem(R.id.option_edit);
 
-			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+			SparseBooleanArray checkedPositions = ListViewCompat.getCheckedItemPositions(list);
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
 					if (checkedPositions.valueAt(i)) {
@@ -261,7 +261,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 			if (list == null || fragment == null)
 				return false;
 
-			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+			SparseBooleanArray checkedPositions = ListViewCompat.getCheckedItemPositions(list);
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
 					if (checkedPositions.valueAt(i)) {
@@ -303,7 +303,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 
 			boolean hasModifiers = false;
 
-			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+			SparseBooleanArray checkedPositions = ListViewCompat.getCheckedItemPositions(list);
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
 					if (checkedPositions.valueAt(i)) {
@@ -348,7 +348,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 
 			MenuItem edit = menu.findItem(R.id.option_edit);
 
-			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+			SparseBooleanArray checkedPositions = ListViewCompat.getCheckedItemPositions(list);
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
 					if (checkedPositions.valueAt(i)) {
@@ -398,7 +398,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 			boolean notifyChanged = false;
 			boolean refill = false;
 
-			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+			SparseBooleanArray checkedPositions = ListViewCompat.getCheckedItemPositions(list);
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
 					if (checkedPositions.valueAt(i)) {
@@ -546,12 +546,8 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 								break;
 							}
 							case R.id.option_delete: {
-								if (list.getAdapter() instanceof AnimateAdapter) {
-									AnimateAdapter<Listable> adapter = (AnimateAdapter<Listable>) list.getAdapter();
-									adapter.animateDismiss(checkedPositions.keyAt(i));
-								} else {
-									getHero().removeEquippedItem(equippedItem);
-								}
+								getHero().removeEquippedItem(equippedItem);
+								notifyChanged = true;
 								break;
 							}
 							}
@@ -617,7 +613,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 			if (list == null || fragment == null)
 				return false;
 
-			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+			SparseBooleanArray checkedPositions = ListViewCompat.getCheckedItemPositions(list);
 			int selected = 0;
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
@@ -702,7 +698,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 			if (list == null || fragment == null)
 				return false;
 
-			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+			SparseBooleanArray checkedPositions = ListViewCompat.getCheckedItemPositions(list);
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
 					if (checkedPositions.valueAt(i)) {
@@ -726,8 +722,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 								notifyChanged = true;
 								break;
 							case R.id.option_view_art:
-								fragment.getBaseActivity().replaceFragment("artInfo", fragment,
-										ArtInfoFragment.newInstance(art));
+								ArtInfoFragment.view(fragment.getActivity(), art, DsaTabActivity.ACTION_VIEW_ART);
 								mode.finish();
 								return true;
 							default:
@@ -780,7 +775,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 
 			int selected = 0;
 			boolean marked = false;
-			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+			SparseBooleanArray checkedPositions = ListViewCompat.getCheckedItemPositions(list);
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
 					if (checkedPositions.valueAt(i)) {
@@ -850,7 +845,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 			if (list == null || fragment == null)
 				return false;
 
-			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+			SparseBooleanArray checkedPositions = ListViewCompat.getCheckedItemPositions(list);
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
 					if (checkedPositions.valueAt(i)) {
@@ -861,8 +856,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 
 							switch (item.getItemId()) {
 							case R.id.option_view_spell:
-								fragment.getBaseActivity().replaceFragment("spellInfo", fragment,
-										SpellInfoFragment.newInstance(spell));
+								SpellInfoFragment.view(fragment.getActivity(), spell, DsaTabActivity.ACTION_VIEW_SPELL);
 								mode.finish();
 								return true;
 							case R.id.option_mark_favorite_spell:
@@ -922,7 +916,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 
 			int selected = 0;
 			boolean marked = false;
-			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+			SparseBooleanArray checkedPositions = ListViewCompat.getCheckedItemPositions(list);
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
 					if (checkedPositions.valueAt(i)) {
@@ -986,7 +980,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 			if (list == null || fragment == null)
 				return false;
 
-			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+			SparseBooleanArray checkedPositions = ListViewCompat.getCheckedItemPositions(list);
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
 					if (checkedPositions.valueAt(i)) {
@@ -1053,7 +1047,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 			if (list == null)
 				return false;
 
-			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+			SparseBooleanArray checkedPositions = ListViewCompat.getCheckedItemPositions(list);
 			int selected = 0;
 			boolean metaTalent = false;
 			if (checkedPositions != null) {
@@ -1094,13 +1088,12 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 	protected static final class NoteActionMode implements ActionMode.Callback {
 
 		private WeakReference<ListView> listView;
-		private WeakReference<AnimateAdapter<Listable>> animateAdapter;
 		private WeakReference<BaseListFragment> listFragment;
 
-		public NoteActionMode(BaseListFragment fragment, ListView listView, AnimateAdapter<Listable> animateAdapter) {
+		public NoteActionMode(BaseListFragment fragment, ListView listView) {
 			this.listFragment = new WeakReference<BaseListFragment>(fragment);
 			this.listView = new WeakReference<ListView>(listView);
-			this.animateAdapter = new WeakReference<AnimateAdapter<Listable>>(animateAdapter);
+
 		}
 
 		@Override
@@ -1109,11 +1102,10 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 
 			ListView list = listView.get();
 			BaseListFragment fragment = listFragment.get();
-			AnimateAdapter<Listable> adapter = animateAdapter.get();
-			if (list == null || fragment == null || adapter == null)
+			if (list == null || fragment == null)
 				return false;
 
-			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+			SparseBooleanArray checkedPositions = ListViewCompat.getCheckedItemPositions(list);
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
 					if (checkedPositions.valueAt(i)) {
@@ -1122,7 +1114,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 							Event event = (Event) obj;
 							if (item.getItemId() == R.id.option_delete) {
 								if (event.isDeletable()) {
-									adapter.animateDismiss(checkedPositions.keyAt(i));
+									fragment.getHero().removeEvent(event);
 									notifyNotesChanged = true;
 								}
 							} else if (item.getItemId() == R.id.option_edit) {
@@ -1135,7 +1127,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 						} else if (obj instanceof Connection) {
 							Connection connection = (Connection) obj;
 							if (item.getItemId() == R.id.option_delete) {
-								adapter.animateDismiss(checkedPositions.keyAt(i));
+								fragment.getHero().removeConnection(connection);
 								notifyNotesChanged = true;
 							} else if (item.getItemId() == R.id.option_edit) {
 								NotesEditFragment.edit(connection, fragment.getActivity(),
@@ -1188,7 +1180,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 			if (list == null || fragment == null)
 				return false;
 
-			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+			SparseBooleanArray checkedPositions = ListViewCompat.getCheckedItemPositions(list);
 
 			MenuItem view = menu.findItem(R.id.option_delete);
 			int selected = 0;
@@ -1275,6 +1267,66 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 		} else if (requestCode == DsaTabActivity.ACTION_EDIT_CUSTOM_PROBES) {
 			if (resultCode == Activity.RESULT_OK) {
 				fillListItems(getHero());
+			}
+		} else if (requestCode == DsaTabActivity.ACTION_EDIT_TABS) {
+			if (resultCode == Activity.RESULT_OK) {
+				fillListItems(getHero());
+			}
+		} else if (requestCode == DsaTabActivity.ACTION_VIEW_ART) {
+			if (resultCode == Activity.RESULT_OK) {
+				ArtInfo artInfo = (ArtInfo) data.getSerializableExtra(ArtInfoFragment.DATA_INTENT_ART_INFO);
+				if (artInfo != null) {
+					int value = data.getIntExtra(ArtInfoFragment.DATA_INTENT_ART_VALUE, Integer.MIN_VALUE);
+
+					Art art = getHero().getArt(artInfo.getName());
+
+					if (art != null) {
+
+						RuntimeExceptionDao<ArtInfo, Long> dao = DsaTabApplication.getInstance().getDBHelper()
+								.getRuntimeExceptionDao(ArtInfo.class);
+						dao.createOrUpdate(artInfo);
+
+						if (value != Integer.MIN_VALUE) {
+							art.setValue(value);
+						}
+						art.setInfo(artInfo);
+						art.setProbePattern(artInfo.getProbe());
+						art.fireValueChangedEvent();
+
+						Toast.makeText(getActivity(), "Kunstinformationen wurden gespeichert", Toast.LENGTH_SHORT)
+								.show();
+					}
+				}
+			}
+		} else if (requestCode == DsaTabActivity.ACTION_VIEW_SPELL) {
+			if (resultCode == Activity.RESULT_OK) {
+				SpellInfo spellInfo = (SpellInfo) data.getSerializableExtra(SpellInfoFragment.DATA_INTENT_SPELL_INFO);
+				if (spellInfo != null) {
+					int value = data.getIntExtra(SpellInfoFragment.DATA_INTENT_SPELL_VALUE, Integer.MIN_VALUE);
+					String comment = data.getStringExtra(SpellInfoFragment.DATA_INTENT_SPELL_COMMENT);
+					String variant = data.getStringExtra(SpellInfoFragment.DATA_INTENT_SPELL_VARIANT);
+					Spell spell = getHero().getSpell(spellInfo.getName());
+
+					if (spell != null) {
+
+						RuntimeExceptionDao<SpellInfo, Long> dao = DsaTabApplication.getInstance().getDBHelper()
+								.getRuntimeExceptionDao(SpellInfo.class);
+						dao.createOrUpdate(spellInfo);
+
+						if (value != Integer.MIN_VALUE) {
+							spell.setValue(value);
+						}
+						spell.setComments(comment);
+						spell.setVariant(variant);
+						spell.setInfo(spellInfo);
+						spell.setProbePattern(spellInfo.getProbe());
+						spell.fireValueChangedEvent();
+
+						Toast.makeText(getActivity(), "Zauberinformationen wurden gespeichert", Toast.LENGTH_SHORT)
+								.show();
+
+					}
+				}
 			}
 		}
 
@@ -1504,7 +1556,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View root = configureContainerView(inflater.inflate(R.layout.sheet_list, container, false));
 
-		itemList = (DynamicListView) root.findViewById(android.R.id.list);
+		itemList = (DynamicListViewEx) root.findViewById(android.R.id.list);
 		itemList.setOnItemCheckedListener(this);
 
 		mTalentCallback = new TalentActionMode(this, itemList);
@@ -1514,7 +1566,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 		mItemsCallback = new EquippedItemActionMode(this, itemList);
 		mCustomProbeCallback = new CustomProbeActionMode(this, itemList);
 
-		mCallback = new NoteActionMode(this, itemList, animateAdapter);
+		mCallback = new NoteActionMode(this, itemList);
 
 		return root;
 	}
@@ -1552,12 +1604,9 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 
 		itemListAdapter.filter(getListSettings());
 
-		animateAdapter = new AnimateAdapter<Listable>(itemListAdapter, this);
-		animateAdapter.setAbsListView(itemList);
+		itemList.setAdapter(itemListAdapter);
 
-		itemList.setAdapter(animateAdapter);
-
-		mNotesCallback = new NoteActionMode(this, itemList, animateAdapter);
+		mNotesCallback = new NoteActionMode(this, itemList);
 
 		refreshEmptyView(itemListAdapter);
 	}
@@ -1604,26 +1653,28 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 			return;
 		}
 
-		if (getListSettings().isAffected(value)) {
+		if (getListSettings() != null && getListSettings().isAffected(value)) {
 			itemListAdapter.notifyDataSetChanged();
 		} else {
 
 			if (value instanceof Attribute) {
 				Attribute attr = (Attribute) value;
 
-				switch (attr.getType()) {
-				case Behinderung: {
-					itemListAdapter.notifyDataSetChanged();
-					break;
-				}
-				case Körperkraft:
-					if (getListSettings().hasListItem(ListItemType.EquippedItem)) {
+				if (attr.getType() != null) {
+					switch (attr.getType()) {
+					case Behinderung: {
 						itemListAdapter.notifyDataSetChanged();
+						break;
 					}
-					break;
-				default:
-					// do nothing
-					break;
+					case Körperkraft:
+						if (getListSettings() != null && getListSettings().hasListItem(ListItemType.EquippedItem)) {
+							itemListAdapter.notifyDataSetChanged();
+						}
+						break;
+					default:
+						// do nothing
+						break;
+					}
 				}
 			}
 		}
@@ -2128,26 +2179,6 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 	 */
 	@Override
 	public void onItemContainerChanged(ItemContainer itemContainer) {
-
-	}
-
-	@Override
-	public void onDismiss(AbsListView list, int[] positions) {
-		for (int pos : positions) {
-			Listable item = itemListAdapter.getItem(pos);
-			itemListAdapter.remove(item);
-			if (item instanceof EquippedItem) {
-				getHero().removeEquippedItem((EquippedItem) item);
-			} else if (item instanceof Event)
-				getHero().removeEvent((Event) item);
-			else if (item instanceof Connection)
-				getHero().removeConnection((Connection) item);
-		}
-
-	}
-
-	@Override
-	public void onShow(AbsListView list, int[] positions) {
 
 	}
 

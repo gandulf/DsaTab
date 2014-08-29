@@ -11,13 +11,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
-import android.support.v7.app.ActionBar.TabListener;
 import android.support.v7.view.ActionMode;
 import android.support.v7.view.ActionMode.Callback;
 import android.text.Editable;
@@ -46,10 +44,10 @@ import com.dsatab.db.DataManager;
 import com.dsatab.fragment.BaseListFragment;
 import com.dsatab.util.Util;
 import com.gandulf.guilib.util.DefaultTextWatcher;
-import com.haarman.listviewanimations.view.DynamicListView;
+import com.gandulf.guilib.util.ListViewCompat;
+import com.gandulf.guilib.view.DynamicListViewEx;
 
-public class ItemListFragment extends BaseListFragment implements TabListener, OnItemClickListener,
-		LoaderCallbacks<Cursor> {
+public class ItemListFragment extends BaseListFragment implements OnItemClickListener, LoaderCallbacks<Cursor> {
 
 	public interface OnItemSelectedListener {
 		public boolean onItemSelected(Item item);
@@ -57,7 +55,7 @@ public class ItemListFragment extends BaseListFragment implements TabListener, O
 
 	private ItemCursorAdapter itemAdapter = null;
 
-	private DynamicListView itemList;
+	private DynamicListViewEx itemList;
 
 	private Collection<ItemType> itemTypes = null;
 	private String constraint, category;
@@ -102,7 +100,7 @@ public class ItemListFragment extends BaseListFragment implements TabListener, O
 
 			boolean notifyChanged = false;
 
-			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+			SparseBooleanArray checkedPositions = ListViewCompat.getCheckedItemPositions(list);
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
 					if (checkedPositions.valueAt(i)) {
@@ -113,16 +111,6 @@ public class ItemListFragment extends BaseListFragment implements TabListener, O
 							final Item item = DataManager.getItemByCursor((Cursor) obj);
 
 							switch (menuItem.getItemId()) {
-							case R.id.option_edit:
-
-								if (fragment.getActivity() instanceof ItemsActivity) {
-									ItemsActivity itemsActivity = ((ItemsActivity) fragment.getActivity());
-									itemsActivity.editItem(item, null);
-								} else {
-									ItemsActivity.edit(fragment.getActivity(), fragment.getHeroKey(), item,
-											ItemsActivity.ACTION_EDIT);
-								}
-								break;
 							case R.id.option_delete: {
 								DataManager.deleteItem(item);
 								notifyChanged = true;
@@ -142,7 +130,6 @@ public class ItemListFragment extends BaseListFragment implements TabListener, O
 
 		@Override
 		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-			mode.getMenuInflater().inflate(R.menu.menuitem_edit, menu);
 			mode.getMenuInflater().inflate(R.menu.menuitem_delete, menu);
 			return true;
 		}
@@ -167,7 +154,7 @@ public class ItemListFragment extends BaseListFragment implements TabListener, O
 			if (list == null || fragment == null)
 				return false;
 
-			SparseBooleanArray checkedPositions = list.getCheckedItemPositions();
+			SparseBooleanArray checkedPositions = ListViewCompat.getCheckedItemPositions(list);
 			int selected = 0;
 			if (checkedPositions != null) {
 				for (int i = checkedPositions.size() - 1; i >= 0; i--) {
@@ -177,8 +164,6 @@ public class ItemListFragment extends BaseListFragment implements TabListener, O
 					}
 				}
 			}
-
-			menu.findItem(R.id.option_edit).setEnabled(selected == 1);
 
 			return true;
 		}
@@ -210,11 +195,11 @@ public class ItemListFragment extends BaseListFragment implements TabListener, O
 			@Override
 			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
 				ItemType cardType = adapter.getItem(itemPosition);
+				itemTypes.clear();
 				if (cardType != null) {
-					filter(Arrays.asList(cardType), null, null);
-				} else {
-					filter(null, null, null);
+					itemTypes.add(cardType);
 				}
+				filter(itemTypes, null, null);
 				return false;
 			}
 		});
@@ -241,26 +226,6 @@ public class ItemListFragment extends BaseListFragment implements TabListener, O
 
 	}
 
-	@Override
-	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-		if (tab.getTag() instanceof ItemType) {
-			ItemType cardType = (ItemType) tab.getTag();
-			filter(Arrays.asList(cardType), null, null);
-		} else {
-			filter(null, null, null);
-		}
-	}
-
-	@Override
-	public void onTabReselected(Tab tab, FragmentTransaction ft) {
-
-	}
-
-	@Override
-	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -271,7 +236,7 @@ public class ItemListFragment extends BaseListFragment implements TabListener, O
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View root = inflater.inflate(R.layout.sheet_item_chooser, container, false);
 
-		itemList = (DynamicListView) root.findViewById(android.R.id.list);
+		itemList = (DynamicListViewEx) root.findViewById(android.R.id.list);
 		itemList.setOnItemCheckedListener(this);
 		itemList.setOnItemLongClickListener(this);
 		itemList.setOnItemClickListener(this);
@@ -349,9 +314,11 @@ public class ItemListFragment extends BaseListFragment implements TabListener, O
 		searchView.addTextChangedListener(new DefaultTextWatcher() {
 			@Override
 			public void afterTextChanged(Editable s) {
-				filter(itemTypes, null, "%" + s.toString() + "%");
+				filter(itemTypes, category, "%" + s.toString() + "%");
 			}
 		});
+
+		searchView.setHint(R.string.filter);
 		searchView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 
 		MenuItemCompat.setActionView(item, searchView);
@@ -408,11 +375,6 @@ public class ItemListFragment extends BaseListFragment implements TabListener, O
 		if (itemAdapter != null) {
 			itemAdapter.changeCursor(DataManager.getItemsCursor(constraint, type, category));
 		}
-	}
-
-	public Item getItem(int position) {
-		Cursor cursor = (Cursor) itemAdapter.getItem(position);
-		return DataManager.getItemByCursor(cursor);
 	}
 
 	public void refresh() {

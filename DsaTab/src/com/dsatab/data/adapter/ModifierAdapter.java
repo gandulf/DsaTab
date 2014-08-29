@@ -94,37 +94,15 @@ public class ModifierAdapter extends OpenArrayAdapter<Modifier> implements OnSee
 		int type = getItemViewType(position);
 
 		if (convertView == null) {
-			switch (type) {
-			case TYPE_MANUAL: {
-				convertView = inflater.inflate(R.layout.item_probe_modifier_manual, parent, false);
 
-				ViewHolderManual holder = new ViewHolderManual();
-				holder.text1 = (TextView) convertView.findViewById(android.R.id.text1);
-				holder.text2 = (CheckedTextView) convertView.findViewById(android.R.id.text2);
-				holder.seekBar = (SeekBarEx) convertView.findViewById(R.id.wheel);
-				holder.seekBar.setLabelRenderer(labelRenderer);
-				convertView.setTag(holder);
-				break;
-			}
-			case TYPE_STRING: {
-				convertView = (ViewGroup) inflater.inflate(R.layout.item_probe_modifier, parent, false);
-				ViewHolderString holder = new ViewHolderString();
-				holder.text1 = (TextView) convertView.findViewById(android.R.id.text1);
-				holder.text2 = (CheckedTextView) convertView.findViewById(android.R.id.text2);
-				convertView.setTag(holder);
-				break;
-			}
-			case TYPE_SPINNER: {
-				convertView = inflater.inflate(R.layout.item_probe_modifier_spinner, parent, false);
-
-				ViewHolderSpinner holder = new ViewHolderSpinner();
-				holder.text1 = (TextView) convertView.findViewById(android.R.id.text1);
-				holder.text2 = (CheckedTextView) convertView.findViewById(android.R.id.text2);
-				holder.spinner = (Spinner) convertView.findViewById(R.id.spinner);
-				convertView.setTag(holder);
-				break;
-			}
-			}
+			convertView = (ViewGroup) inflater.inflate(R.layout.item_probe_modifier, parent, false);
+			ViewHolderString holder = new ViewHolderString();
+			holder.text1 = (TextView) convertView.findViewById(android.R.id.text1);
+			holder.text2 = (CheckedTextView) convertView.findViewById(android.R.id.text2);
+			holder.seekBar = (SeekBarEx) convertView.findViewById(R.id.wheel);
+			holder.seekBar.setLabelRenderer(labelRenderer);
+			holder.spinner = (Spinner) convertView.findViewById(R.id.spinner);
+			convertView.setTag(holder);
 
 		}
 
@@ -132,7 +110,9 @@ public class ModifierAdapter extends OpenArrayAdapter<Modifier> implements OnSee
 		switch (type) {
 		case TYPE_MANUAL: {
 
-			ViewHolderManual holder = (ViewHolderManual) convertView.getTag();
+			ViewHolderString holder = (ViewHolderString) convertView.getTag();
+			Util.setVisibility(holder.spinner, false);
+			Util.setVisibility(holder.seekBar, true);
 
 			holder.seekBar.setOnSeekBarChangeListener(null);
 
@@ -163,12 +143,16 @@ public class ModifierAdapter extends OpenArrayAdapter<Modifier> implements OnSee
 
 			holder.text2.setOnClickListener(modificerClickListener);
 			holder.text2.setTag(modifier);
+
 			holder.seekBar.setLabel(holder.text2);
 			holder.seekBar.setTag(modifier);
 			break;
 		}
 		case TYPE_STRING: {
 			ViewHolderString holder = (ViewHolderString) convertView.getTag();
+			Util.setVisibility(holder.spinner, false);
+			Util.setVisibility(holder.seekBar, false, holder.text1);
+
 			holder.text1.setText(modifier.getTitle());
 
 			holder.text2.setText(Util.toProbe(-modifier.getModifier()));
@@ -180,8 +164,10 @@ public class ModifierAdapter extends OpenArrayAdapter<Modifier> implements OnSee
 			break;
 		}
 		case TYPE_SPINNER: {
+			final ViewHolderString holder = (ViewHolderString) convertView.getTag();
+			Util.setVisibility(holder.spinner, true);
+			Util.setVisibility(holder.seekBar, false);
 
-			final ViewHolderSpinner holder = (ViewHolderSpinner) convertView.getTag();
 			holder.text1.setText(modifier.getTitle());
 
 			SpinnerSimpleAdapter<String> adapter = new SpinnerSimpleAdapter<String>(getContext(),
@@ -306,20 +292,11 @@ public class ModifierAdapter extends OpenArrayAdapter<Modifier> implements OnSee
 		this.onModifierChangedListener = onModifierChangedListener;
 	}
 
-	private static class ViewHolderManual {
-		private TextView text1;
-		private CheckedTextView text2;
-		private SeekBarEx seekBar;
-	}
-
 	private static class ViewHolderString {
 		private TextView text1;
 		private CheckedTextView text2;
-	}
-
-	private static class ViewHolderSpinner {
-		private TextView text1;
-		private CheckedTextView text2;
+		private SeekBarEx seekBar;
 		private Spinner spinner;
 	}
+
 }

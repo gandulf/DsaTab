@@ -1,8 +1,24 @@
 <changelog>    
+<release version="4.3.2" versioncode="88">        
+    <change>Profilbild bei Navigation hinzugefügt</change>
+    <change>Regeln bei Modifikatoren können nun in "" gesetzt werden, falls ein Beistrich im Namen ist.</change>
+    <fix>Gegenstände wurden beim Behälterwechsel nicht aktualisiert</fix>
+    <fix>Drag&amp;Drop beim Bearbeiten von Tabs verbessert</fix>
+</release>
+
+<release version="4.3.1" versioncode="87">    
+    <change>Design überarbeitet: neue Icons, erste Anpassungen basierend auf Material Design Guides</change>        
+    <change>Kompatibilität mit HeldenSoftware beim Reimportieren verbessert</change>
+    <change>Popups bei Fernkampf, Ausweichen in Würfelleiste integriert</change>
+    <change>Modifikatoren in Würfelleiste können einzeln deaktiviert werden</change>
+    <change>Behälter Konfiguration überarbeitet</change>
+    <fix>Einige Bugfixes</fix>
+</release>
+
 <release version="4.2" versioncode="81">    
     <change>Held wird nun automatisch gespeichert. Kann unter Einstellungen abgeschaltet werden</change>
     <change>Flexible Tabs, der Inhalt von Listen kann nun unter 'Tabs anpassen' frei definiert werden</change>
-    <change>Ggenstände Verwaltung überarbeitet (Liste statt Gallery)</change>
+    <change>Gegenstände Verwaltung überarbeitet (Liste statt Gallery)</change>
     <change>Theme an Kitkat angepasst</change>
     <change>Native Auswahl für Zahlen von Android übernommen</change>
     <change>Tab Navigation wurde durch Sidebox ersetzt</change>

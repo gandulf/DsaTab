@@ -37,14 +37,16 @@ import com.dsatab.DsaTabConfiguration;
 import com.dsatab.DsaTabConfiguration.ArmorType;
 import com.dsatab.DsaTabConfiguration.WoundType;
 import com.dsatab.R;
+import com.dsatab.cloud.HeroExchange;
+import com.dsatab.data.HeroFileInfo.StorageType;
 import com.dsatab.fragment.BasePreferenceFragment;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Hint;
 import com.dsatab.util.Util;
+import com.dsatab.view.PreferenceWithButton;
 import com.dsatab.view.dialog.ChangeLogDialog;
 import com.dsatab.view.dialog.DirectoryChooserDialogHelper;
 import com.dsatab.view.dialog.DirectoryChooserDialogHelper.Result;
-import com.dsatab.view.PreferenceWithButton;
 import com.gandulf.guilib.download.AbstractDownloader;
 import com.gandulf.guilib.download.DownloaderWrapper;
 import com.gandulf.guilib.util.ResUtil;
@@ -103,11 +105,6 @@ public class DsaTabPreferenceActivity extends UnifiedPreferenceActivity implemen
 	public static final String KEY_STYLE_BG_WOUNDS_DELETE = "theme.wound.bg.delete";
 
 	public static final String KEY_EXCHANGE = "heldenAustauschScreen";
-
-	public static final String KEY_EXCHANGE_PROVIDER = "exchange_provider";
-
-	public static final String KEY_EXCHANGE_USERNAME = "exchange_username";
-	public static final String KEY_EXCHANGE_PASSWORD = "exchange_password";
 	public static final String KEY_EXCHANGE_TOKEN = "exchange_token";
 
 	public static final String KEY_SCREEN_ORIENTATION = "screen_orientation";
@@ -648,7 +645,13 @@ public class DsaTabPreferenceActivity extends UnifiedPreferenceActivity implemen
 										DsaTabApplication.getDsaTabHeroPath()));
 			} else if (KEY_DROPBOX.equals(key)) {
 				CheckBoxPreference cb = (CheckBoxPreference) preference;
-				cb.setChecked(sharedPreferences.getBoolean(key, false));
+				boolean connected = HeroExchange.isConnected(DsaTabApplication.getInstance(), StorageType.Dropbox);
+				if (sharedPreferences.getBoolean(KEY_DROPBOX, false) != connected) {
+					Editor edit = sharedPreferences.edit();
+					edit.putBoolean(KEY_DROPBOX, connected);
+					edit.commit();
+				}
+				cb.setChecked(sharedPreferences.getBoolean(key, connected));
 			}
 		}
 	}

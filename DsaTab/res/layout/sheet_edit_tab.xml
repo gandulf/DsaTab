@@ -4,9 +4,9 @@
     xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:id="@+id/slidepanel"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent" >
 
-    <com.haarman.listviewanimations.view.DynamicListView
+    <com.gandulf.guilib.view.DynamicListViewEx
         android:id="@+id/popup_tab_list"
         android:layout_width="250dp"
         android:layout_height="match_parent"
@@ -14,89 +14,97 @@
         android:background="?attr/listShadowBackground"
         android:divider="@null" />
 
-    <TabHost
-        android:id="@android:id/tabhost"
+    <LinearLayout
         android:layout_width="500dp"
         android:layout_height="match_parent"
         android:layout_weight="1" 
-        android:clickable="true">
+        android:background="?android:attr/windowBackground"
+        android:clickable="true"
+        android:orientation="vertical" >
 
-        <LinearLayout
+        <android.support.v7.widget.GridLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:layout_height="wrap_content"
+            auto:columnCount="2"
+            auto:orientation="horizontal"
+            auto:useDefaultMargins="true" >
 
-            <android.support.v7.widget.GridLayout
-                    android:id="@+id/tab1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    auto:columnCount="2"
-    auto:orientation="horizontal"
-    auto:useDefaultMargins="true" >
+            <ImageView
+                android:id="@+id/popup_edit_icon"
+                style="?attr/android:spinnerStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/icon_button_size"
+                auto:layout_column="0"
+                android:minWidth="@dimen/icon_button_size"
+                android:scaleType="fitCenter" />
 
+            <com.thebnich.floatinghintedittext.FloatingHintEditText
+                android:id="@+id/popup_edit_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                auto:layout_column="1"
+                auto:layout_gravity="fill_horizontal|bottom"
+                android:hint="@string/label_titel"
+                android:inputType="textPersonName" />
 
-                    <ImageView
-                        android:id="@+id/popup_edit_icon"
-                        style="?attr/android:spinnerStyle"
-                        android:layout_width="@dimen/icon_button_size"
-                        android:layout_height="@dimen/icon_button_size"
-                        auto:layout_column="0"
-                        android:scaleType="fitCenter" />
+            <CheckBox
+                android:id="@+id/popup_edit_diceslider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                auto:layout_columnSpan="2"
+                android:text="@string/show_dice" >
+            </CheckBox>
 
-                    <com.thebnich.floatinghintedittext.FloatingHintEditText
-                        android:id="@+id/popup_edit_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/label_titel"
-                        auto:layout_column="1"
-                        auto:layout_gravity="fill_horizontal"
-                        android:inputType="textPersonName" />
-                    
-                    <CheckBox
-                        android:id="@+id/popup_edit_diceslider"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        auto:layout_columnSpan="2"
-                        android:text="@string/show_dice" >
-                    </CheckBox>
+            <CheckBox
+                android:id="@+id/popup_edit_attributelist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                auto:layout_columnSpan="2"
+                android:text="@string/show_header" >
+            </CheckBox>
+        </android.support.v7.widget.GridLayout>
 
-                    <CheckBox
-                        android:id="@+id/popup_edit_attributelist"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        auto:layout_columnSpan="2"
-                        android:text="@string/show_header" >
-                    </CheckBox>
-                </android.support.v7.widget.GridLayout>
-            
-            <TabWidget
-                android:id="@android:id/tabs"
+        <TabHost
+            android:id="@android:id/tabhost"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-            </TabWidget>
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
 
-            <FrameLayout
-                android:id="@android:id/tabcontent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
-
-                
-
-                <fragment
-                    android:id="@+id/tab2"
+                <TabWidget
+                    android:id="@android:id/tabs"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    class="com.dsatab.fragment.TabListableConfigFragment"
-                    android:tag="list1" />
+                    android:layout_height="wrap_content" >
+                </TabWidget>
 
-                <fragment
-                    android:id="@+id/tab3"
+                <FrameLayout
+                    android:id="@android:id/tabcontent"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    class="com.dsatab.fragment.TabListableConfigFragment"
-                    android:tag="list2" />
-            </FrameLayout>
-        </LinearLayout>
-    </TabHost>
+                    android:layout_height="0dp"
+                    android:layout_weight="1"  >
+
+                    <fragment
+                        android:id="@+id/tab2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        class="com.dsatab.fragment.TabListableConfigFragment"
+                        android:tag="list1"
+                        tools:layout="@layout/_edit_tabinfo_list" />
+
+                    <fragment
+                        android:id="@+id/tab3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        class="com.dsatab.fragment.TabListableConfigFragment"
+                        android:tag="list2"
+                        tools:layout="@layout/_edit_tabinfo_list" />
+                </FrameLayout>
+            </LinearLayout>
+        </TabHost>
+    </LinearLayout>
 
 </android.support.v4.widget.SlidingPaneLayout>

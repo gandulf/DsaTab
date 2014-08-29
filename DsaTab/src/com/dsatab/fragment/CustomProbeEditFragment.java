@@ -130,7 +130,9 @@ public class CustomProbeEditFragment extends BaseEditFragment implements OnClick
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 
-		outState.putString(ICON_URI, iconUri.toString());
+		if (iconUri != null) {
+			outState.putString(ICON_URI, iconUri.toString());
+		}
 	}
 
 	public void setCustomProbe(CustomProbe probe) {

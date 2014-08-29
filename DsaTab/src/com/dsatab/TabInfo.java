@@ -10,7 +10,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -230,34 +229,6 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		return activityClazz;
 	}
 
-	public BaseFragment getFragment() {
-		BaseFragment fragment = null;
-		for (int i = 0; i < activityClazz.length; i++) {
-			fragment = getFragment(i);
-			if (fragment != null)
-				break;
-		}
-
-		return fragment;
-	}
-
-	public BaseFragment getFragment(int pos) {
-		BaseFragment fragment = null;
-		try {
-			if (activityClazz[pos] != null) {
-				fragment = activityClazz[pos].newInstance();
-				Bundle args = new Bundle();
-				args.putParcelable(BaseFragment.TAB_INFO, this);
-				args.putInt(BaseFragment.TAB_POSITION, pos);
-				fragment.setArguments(args);
-			}
-		} catch (Exception e) {
-			Debug.error(e);
-			return null;
-		}
-		return fragment;
-	}
-
 	public void setActivityClazz(int pos, Class<? extends BaseFragment> activityClazz) {
 		this.activityClazz[pos] = activityClazz;
 		updateListSettings(pos);
@@ -337,7 +308,7 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 
 	}
 
-	public void updateListSettings() {
+	private void updateListSettings() {
 		for (int i = 0; i < activityClazz.length; i++) {
 			updateListSettings(i);
 		}
@@ -362,15 +333,6 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 			updateListSettings();
 		}
 		return listSettings[pos];
-	}
-
-	public ListSettings getListSettings(BaseFragment baseFragment) {
-		for (int i = 0; i < activityClazz.length; i++) {
-			if (activityClazz[i] == baseFragment.getClass()) {
-				return getListSettings(i);
-			}
-		}
-		return null;
 	}
 
 	public ListSettings[] getListSettings() {

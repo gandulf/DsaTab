@@ -93,11 +93,6 @@ public class Item implements Serializable, Comparable<Item>, Cloneable, ItemCard
 
 	private int containerId = INVALID_POSITION;
 
-	/**
-	 * Indicates the position of the associated cell.
-	 */
-	private int cellNumber = INVALID_POSITION;
-
 	private Boolean hasCardImage;
 
 	private int count;
@@ -108,6 +103,8 @@ public class Item implements Serializable, Comparable<Item>, Cloneable, ItemCard
 
 		slot = "0";
 		count = 1;
+
+		itemSpecs = new ArrayList<ItemSpecification>(3);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -121,11 +118,13 @@ public class Item implements Serializable, Comparable<Item>, Cloneable, ItemCard
 
 	public void addSpecification(ItemSpecification itemSpecification) {
 		int version = 0;
-		for (ItemSpecification specification : getSpecifications()) {
+
+		for (ItemSpecification specification : itemSpecs) {
 			if (specification.getClass().equals(itemSpecification.getClass())) {
 				version++;
 			}
 		}
+
 		itemSpecification.setVersion(version);
 		itemSpecification.setItem(this);
 
@@ -139,8 +138,7 @@ public class Item implements Serializable, Comparable<Item>, Cloneable, ItemCard
 	}
 
 	public List<ItemSpecification> getSpecifications() {
-		if (itemSpecs == null) {
-			itemSpecs = new ArrayList<ItemSpecification>();
+		if (itemSpecs.isEmpty()) {
 			if (weaponSpecsHelper != null)
 				itemSpecs.addAll(weaponSpecsHelper);
 			if (shieldSpecsHelper != null)
@@ -156,6 +154,7 @@ public class Item implements Serializable, Comparable<Item>, Cloneable, ItemCard
 				addSpecification(new MiscSpecification(this, ItemType.Sonstiges));
 			}
 		}
+
 		return Collections.unmodifiableList(itemSpecs);
 	}
 
@@ -417,14 +416,6 @@ public class Item implements Serializable, Comparable<Item>, Cloneable, ItemCard
 
 	public void setContainerId(int screen) {
 		this.containerId = screen;
-	}
-
-	public int getCellNumber() {
-		return cellNumber;
-	}
-
-	public void setCellNumber(int cellNumber) {
-		this.cellNumber = cellNumber;
 	}
 
 	/*

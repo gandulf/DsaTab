@@ -24,7 +24,7 @@ import com.espian.showcaseview.targets.ViewTarget;
 
 public class Hint {
 
-	private static long hintShown = 0;
+	private static long hintShown = System.currentTimeMillis();
 
 	public static final String PREF_PREFIX_HINT_STORAGE = "dsatab_hint_";
 	public static final String VIEW_ID_PREFIX = "@id/";

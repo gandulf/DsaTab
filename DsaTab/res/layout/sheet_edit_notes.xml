@@ -16,7 +16,7 @@
 
         <TextView
             android:id="@+id/popup_notes_spn_category_label"
-            style="?android:attr/listSeparatorTextViewStyle"
+            style="@style/TextLabel.Float"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:labelFor="@+id/popup_notes_spn_category"
@@ -26,10 +26,10 @@
             android:id="@+id/popup_notes_spn_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            auto:layout_gravity="fill_horizontal" >
+            android:layout_marginTop="0dp"
+            auto:layout_gravity="fill_horizontal"
+            android:paddingTop="0dp" >
         </Spinner>
-
-        
 
         <com.thebnich.floatinghintedittext.FloatingHintEditText
             android:id="@+id/popup_notes_edit_name"
@@ -39,16 +39,13 @@
             android:inputType="textPersonName" >
         </com.thebnich.floatinghintedittext.FloatingHintEditText>
 
-        
-
         <com.thebnich.floatinghintedittext.FloatingHintEditText
             android:id="@+id/popup_notes_edit_so"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/label_social_state" >
+            android:hint="@string/label_social_state"
+            android:inputType="number" >
         </com.thebnich.floatinghintedittext.FloatingHintEditText>
-
-        
 
         <com.thebnich.floatinghintedittext.FloatingHintEditText
             android:id="@+id/popup_notes_edit_text"
@@ -60,7 +57,6 @@
             android:hint="@string/label_note"
             android:inputType="text|textMultiLine"
             android:minHeight="50dip" />
-        
     </android.support.v7.widget.GridLayout>
 
 </ScrollView>

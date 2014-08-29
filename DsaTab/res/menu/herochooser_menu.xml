@@ -1,16 +1,30 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
 
     <item
         android:id="@+id/option_refresh"
         android:icon="@drawable/ic_action_refresh"
-        app:showAsAction="withText|ifRoom"
-        android:title="@string/refresh"/>
-    
+        android:title="@string/refresh"
+        app:showAsAction="withText|ifRoom"/>
+    <item
+        android:id="@+id/option_connect"
+        android:icon="?attr/imgBarSplit"
+        android:title="Verbinden"
+        app:showAsAction="withText|ifRoom">
+        <menu>
+            <item
+                android:id="@+id/option_connect_dropbox"
+                android:title="Dropbox"/>            
+            <item
+                android:id="@+id/option_connect_heldenaustausch"
+                android:title="Heldenaustausch"/>
+        </menu>
+    </item>
     <item
         android:id="@+id/option_load_example_heroes"
         android:icon="@drawable/dsa_character"
-        app:showAsAction="withText|ifRoom"
+        android:title="Beispiel Helden laden"
         android:visible="false"
-        android:title="Beispiel Helden laden"/>
+        app:showAsAction="withText|ifRoom"/>
 
 </menu>

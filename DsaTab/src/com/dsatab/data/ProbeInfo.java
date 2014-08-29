@@ -1,5 +1,6 @@
 package com.dsatab.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -12,10 +13,13 @@ import com.dsatab.data.enums.AttributeType;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 
-public class ProbeInfo implements Cloneable {
+public class ProbeInfo implements Cloneable, Serializable {
 
-	// e.g.: MU/IN/KL (+5) or (MU/IN/KL) or +5 or MU IN KL or 10/MU/9
+	private static final long serialVersionUID = 2396412014329540630L;
 
+	/*
+	 * e.g.: MU/IN/KL (+5) or (MU/IN/KL) or +5 or MU IN KL or 10/MU/9
+	 */
 	private static final String pattern_post = "\\(?([+-]\\d+)?\\)?"; // (-+5)
 
 	private static final String pattern_mu = "([0-9A-Za-z-]+)\\s*[/ ]?\\s*"; // MU/
@@ -63,6 +67,8 @@ public class ProbeInfo implements Cloneable {
 		if (!TextUtils.isEmpty(s)) {
 			// remove all whitespaces from string
 			s = s.replace("/", " ");
+			s = s.replace(",", " ");
+			s = s.replace("\\", " ");
 			s = s.replace("(", " ");
 			s = s.replace(")", " ");
 			s = s.replace("+", " +");

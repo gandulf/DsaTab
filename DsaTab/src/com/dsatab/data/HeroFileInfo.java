@@ -190,7 +190,9 @@ public class HeroFileInfo implements JSONable, Serializable {
 			fis = exchange.getInputStream(this, FileType.Hero);
 			if (fis != null) {
 				XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+				factory.setValidating(false);
 				factory.setNamespaceAware(true);
+
 				XmlPullParser xpp = factory.newPullParser();
 				xpp.setInput(fis, HeldenXmlParser.ENCODING);
 
@@ -315,6 +317,12 @@ public class HeroFileInfo implements JSONable, Serializable {
 	@Override
 	public int hashCode() {
 		return getKey().hashCode();
+	}
+
+	@Override
+	public String toString() {
+		return "HeroFileInfo [name=" + name + ", key=" + key + ", id=" + id + ", version=" + version + ", storageType="
+				+ storageType + ", file=" + file + ", fileConfig=" + fileConfig + ", portraitUri=" + portraitUri + "]";
 	}
 
 }

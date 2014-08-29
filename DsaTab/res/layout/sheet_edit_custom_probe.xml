@@ -18,7 +18,8 @@
         <ImageView
             android:id="@+id/popup_edit_icon"
             style="?attr/android:spinnerStyle"
-            android:layout_width="@dimen/icon_button_size"
+            android:layout_width="wrap_content"
+            android:minWidth="@dimen/icon_button_size"
             android:layout_height="@dimen/icon_button_size"
             auto:layout_column="0"
             auto:layout_gravity="bottom|right"
@@ -100,7 +101,7 @@
         
         
         <TextView
-            style="?android:attr/listSeparatorTextViewStyle"
+            style="@style/TextLabel.Float"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             auto:layout_columnSpan="2"
@@ -111,12 +112,14 @@
             android:id="@+id/popup_edit_probe_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="0dp"
+            android:layout_marginTop="0dp"
             auto:layout_columnSpan="2"
             auto:layout_gravity="fill_horizontal" >
         </Spinner>
         
         <TextView
-            style="?android:attr/listSeparatorTextViewStyle"
+            style="@style/TextLabel.Float"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             auto:layout_columnSpan="2"
@@ -127,6 +130,9 @@
             android:id="@+id/popup_edit_modificator_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            
+            android:paddingTop="0dp"
+            android:layout_marginTop="0dp"
             auto:layout_columnSpan="2"
             auto:layout_gravity="fill_horizontal" >
         </Spinner>

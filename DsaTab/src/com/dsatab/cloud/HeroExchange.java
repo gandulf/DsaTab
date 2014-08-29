@@ -3,6 +3,7 @@ package com.dsatab.cloud;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +17,7 @@ import java.util.Map;
 import org.w3c.dom.Document;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -58,6 +60,24 @@ public class HeroExchange {
 
 		mDbxAcctMgr = DbxAccountManager.getInstance(context.getApplicationContext(), DsaTabApplication.DROPBOX_API_KEY,
 				DsaTabApplication.DROPBOX_API_SECRET);
+	}
+
+	public static boolean isConnected(Context context, StorageType type) {
+		switch (type) {
+		case Dropbox:
+			DbxAccountManager acctMgr = DbxAccountManager.getInstance(context.getApplicationContext(),
+					DsaTabApplication.DROPBOX_API_KEY, DsaTabApplication.DROPBOX_API_SECRET);
+			return acctMgr.hasLinkedAccount();
+		case FileSystem:
+			return true;
+		case HeldenAustausch:
+			String token = DsaTabApplication.getPreferences()
+					.getString(DsaTabPreferenceActivity.KEY_EXCHANGE_TOKEN, "");
+
+			return !TextUtils.isEmpty(token);
+		default:
+			return false;
+		}
 	}
 
 	public boolean isConnected(StorageType type) {
@@ -130,6 +150,8 @@ public class HeroExchange {
 				}
 			}
 			break;
+		case HeldenAustausch:
+			break;
 		}
 
 		return result;
@@ -143,6 +165,8 @@ public class HeroExchange {
 			}
 			break;
 		case FileSystem:
+			break;
+		case HeldenAustausch:
 			break;
 		}
 	}
@@ -234,61 +258,58 @@ public class HeroExchange {
 			return true;
 	}
 
-	public InputStream getInputStream(HeroFileInfo fileInfo, FileType fileType) {
-		try {
-			switch (fileInfo.getStorageType()) {
-			case FileSystem:
-				File file = new File(fileInfo.getPath(fileType));
-				if (file.exists() && file.canRead()) {
-					FileInputStream fis = new FileInputStream(file);
-					return fis;
-				} else {
+	public InputStream getInputStream(HeroFileInfo fileInfo, FileType fileType) throws IOException {
+
+		switch (fileInfo.getStorageType()) {
+		case FileSystem:
+			File file = new File(fileInfo.getPath(fileType));
+			if (file.exists() && file.canRead()) {
+				FileInputStream fis = new FileInputStream(file);
+				return fis;
+			} else {
+				throw new FileNotFoundException(file.getAbsolutePath());
+			}
+		case Dropbox:
+			DbxFileSystem dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr.getLinkedAccount());
+			DbxPath path = new DbxPath(fileInfo.getPath(fileType));
+			if (dbxFs.exists(path)) {
+				DbxFile dbxFile = dbxFs.open(path);
+
+				dbxFileMap.put(path.toString(), dbxFile);
+
+				return dbxFile.getReadStream();
+			} else {
+				throw new FileNotFoundException(path.toString());
+			}
+		case HeldenAustausch:
+
+			if (fileType == FileType.Hero) {
+				// nur für die Testphase, bis ein gültiges Zertifikate vorhanden ist
+				Helper.disableSSLCheck();
+				try {
+
+					String token = DsaTabApplication.getPreferences().getString(
+							DsaTabPreferenceActivity.KEY_EXCHANGE_TOKEN, "");
+
+					String stringheld = Helper.postRequest(token, "action", "returnheld", "format", "heldenxml",
+							"heldenid", fileInfo.getId());
+
+					ByteArrayInputStream bis = new ByteArrayInputStream(stringheld.getBytes());
+
+					return bis;
+
+				} catch (Exception e) {
+					Debug.error(e);
 					return null;
 				}
-			case Dropbox:
-				DbxFileSystem dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr.getLinkedAccount());
-				DbxPath path = new DbxPath(fileInfo.getPath(fileType));
-				if (dbxFs.exists(path)) {
-					DbxFile dbxFile = dbxFs.open(path);
-
-					dbxFileMap.put(path.toString(), dbxFile);
-
-					return dbxFile.getReadStream();
-				} else {
-					return null;
-				}
-			case HeldenAustausch:
-
-				if (fileType == FileType.Hero) {
-					// nur für die Testphase, bis ein gültiges Zertifikate vorhanden ist
-					Helper.disableSSLCheck();
-					try {
-
-						String token = DsaTabApplication.getPreferences().getString(
-								DsaTabPreferenceActivity.KEY_EXCHANGE_TOKEN, "");
-
-						String stringheld = Helper.postRequest(token, "action", "returnheld", "format", "heldenxml",
-								"heldenid", fileInfo.getId());
-
-						ByteArrayInputStream bis = new ByteArrayInputStream(stringheld.getBytes());
-
-						return bis;
-
-					} catch (Exception e) {
-						Debug.error(e);
-						return null;
-					}
-				} else {
-					// no config file for no
-					return null;
-				}
-			default:
+			} else {
+				// no config file for now
 				return null;
 			}
-		} catch (Exception e) {
-			Debug.error(e);
+		default:
 			return null;
 		}
+
 	}
 
 	public void closeStream(HeroFileInfo fileInfo, FileType fileType) {
@@ -301,41 +322,41 @@ public class HeroExchange {
 			if (file != null) {
 				file.close();
 			}
+			break;
+		case HeldenAustausch:
+			break;
 		}
 	}
 
-	public OutputStream getOutputStream(HeroFileInfo fileInfo, FileType fileType) {
-		try {
-			switch (fileInfo.getStorageType()) {
-			case FileSystem: {
-				File file = new File(fileInfo.getPath(fileType));
-				FileOutputStream fis = new FileOutputStream(file);
-				return fis;
+	public OutputStream getOutputStream(HeroFileInfo fileInfo, FileType fileType) throws IOException {
+
+		switch (fileInfo.getStorageType()) {
+		case FileSystem: {
+			File file = new File(fileInfo.getPath(fileType));
+			FileOutputStream fis = new FileOutputStream(file);
+			return fis;
+		}
+		case Dropbox: {
+			DbxFileSystem dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr.getLinkedAccount());
+			DbxPath path = new DbxPath(fileInfo.getPath(fileType));
+			DbxFile dbxFile;
+			if (dbxFs.exists(path)) {
+				dbxFile = dbxFs.open(path);
+			} else {
+				dbxFile = dbxFs.create(path);
 			}
-			case Dropbox: {
-				DbxFileSystem dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr.getLinkedAccount());
-				DbxPath path = new DbxPath(fileInfo.getPath(fileType));
-				DbxFile dbxFile;
-				if (dbxFs.exists(path)) {
-					dbxFile = dbxFs.open(path);
-				} else {
-					dbxFile = dbxFs.create(path);
-				}
-				dbxFileMap.put(path.toString(), dbxFile);
-				return dbxFile.getWriteStream();
-			}
-			case HeldenAustausch: {
-				File file = new File(fileInfo.getPath(fileType));
-				FileOutputStream fis = new FileOutputStream(file);
-				return fis;
-			}
-			default:
-				return null;
-			}
-		} catch (Exception e) {
-			Debug.error(e);
+			dbxFileMap.put(path.toString(), dbxFile);
+			return dbxFile.getWriteStream();
+		}
+		case HeldenAustausch: {
+			File file = new File(fileInfo.getPath(fileType));
+			FileOutputStream fis = new FileOutputStream(file);
+			return fis;
+		}
+		default:
 			return null;
 		}
+
 	}
 
 	/**
@@ -418,26 +439,27 @@ public class HeroExchange {
 			String token = DsaTabApplication.getPreferences()
 					.getString(DsaTabPreferenceActivity.KEY_EXCHANGE_TOKEN, "");
 
-			// HeldenListe anfordern
-			String stringHeldenliste = Helper.postRequest(token, "action", "listhelden");
+			if (!TextUtils.isEmpty(token)) {
+				// HeldenListe anfordern
+				String stringHeldenliste = Helper.postRequest(token, "action", "listhelden");
 
-			Document d = Helper.string2Doc(stringHeldenliste);
+				Document d = Helper.string2Doc(stringHeldenliste);
 
-			// Anzahl der Helden bestimmen
-			int anzahl = Helper.getDaten(d, "/helden/held").getLength();
-			// Die Namen der Helden anzeigen
+				// Anzahl der Helden bestimmen
+				int anzahl = Helper.getDaten(d, "/helden/held").getLength();
+				// Die Namen der Helden anzeigen
 
-			for (int i = 1; i <= anzahl; i++) {
-				String name = Helper.getDatenAsString(d, "/helden/held[" + i + "]/name");
-				String heldenid = Helper.getDatenAsString(d, "/helden/held[" + i + "]/heldenid");
-				String heldenKey = Helper.getDatenAsString(d, "/helden/held[" + i + "]/heldenkey");
-				String lastChange = Helper.getDatenAsString(d, "/helden/held[" + i + "]/heldlastchange");
+				for (int i = 1; i <= anzahl; i++) {
+					String name = Helper.getDatenAsString(d, "/helden/held[" + i + "]/name");
+					String heldenid = Helper.getDatenAsString(d, "/helden/held[" + i + "]/heldenid");
+					String heldenKey = Helper.getDatenAsString(d, "/helden/held[" + i + "]/heldenkey");
+					String lastChange = Helper.getDatenAsString(d, "/helden/held[" + i + "]/heldlastchange");
 
-				HeroFileInfo fileInfo = new HeroFileInfo(name, heldenid, heldenKey);
-				fileInfo.setStorageType(StorageType.HeldenAustausch);
-				heroes.add(fileInfo);
+					HeroFileInfo fileInfo = new HeroFileInfo(name, heldenid, heldenKey);
+					fileInfo.setStorageType(StorageType.HeldenAustausch);
+					heroes.add(fileInfo);
+				}
 			}
-
 		}
 		return heroes;
 	}

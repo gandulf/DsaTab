@@ -1,63 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.dsatab.view.CheckableRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.dsatab.view.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
     android:background="?attr/listItemBackground"
     android:minHeight="?android:attr/listPreferredItemHeight"
-    android:paddingRight="?attr/listPreferredItemPaddingRight"
-    android:paddingLeft="?attr/listPreferredItemPaddingLeft">
+    android:orientation="horizontal"
+    android:paddingLeft="?attr/listPreferredItemPaddingLeft"
+    android:paddingRight="0dp">
 
-    <ImageView
+    <com.nhaarman.listviewanimations.itemmanipulation.dragdrop.GripView
         android:id="@+id/drag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"        
-        android:layout_centerVertical="true"
-        android:paddingRight="4dp"
-        android:scaleType="centerInside"
-        android:src="?attr/imgDragVertical" />
-    
+        android:layout_width="16dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center_vertical" />
+
     <ImageView
         android:id="@android:id/icon1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="8dip"
-        android:layout_toRightOf="@id/drag"
-        android:visibility="visible" >
-
+        android:scaleType="centerInside" 
+        android:layout_gravity="center_vertical">
     </ImageView>
 
     <TextView
         android:id="@android:id/text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignWithParentIfMissing="true"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@android:id/icon1"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
         android:minWidth="150dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textStyle="bold" />
 
     <TextView
         android:id="@android:id/text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="8dp"
-        android:layout_toRightOf="@android:id/text1"
+        android:layout_gravity="center_vertical"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textStyle="bold" />
-    
+
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@android:id/text1"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textStyle="normal" />
-    
-</com.dsatab.view.CheckableRelativeLayout>
+
+    <ImageView
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:paddingBottom="?attr/dividerPadding"
+        android:paddingTop="?attr/dividerPadding"
+        android:scaleType="fitXY"
+        android:src="?attr/dividerVertical" >
+    </ImageView>
+
+    <ImageButton
+        android:id="@android:id/icon2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="?attr/selectableBackground"
+        android:focusable="false"
+        android:padding="@dimen/default_gap"
+        android:scaleType="centerInside"
+        android:src="?attr/imgDelete"
+        android:visibility="visible" >
+    </ImageButton>
+
+</com.dsatab.view.CheckableLinearLayout>

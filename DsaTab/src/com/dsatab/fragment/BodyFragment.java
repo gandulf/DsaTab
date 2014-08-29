@@ -160,7 +160,7 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 	public boolean onLongClick(View v) {
 		switch (v.getId()) {
 		case R.id.body_background:
-			Util.pickImage(getActivity(), DsaTabPreferenceActivity.ACTION_PICK_BG_WOUNDS_PATH);
+			Util.pickImage(this, DsaTabPreferenceActivity.ACTION_PICK_BG_WOUNDS_PATH);
 			return true;
 		}
 		return false;

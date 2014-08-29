@@ -1,10 +1,14 @@
 package com.dsatab.data;
 
+import java.io.Serializable;
+
 import android.os.SystemClock;
 
 import com.dsatab.data.enums.AttributeType;
 
-public abstract class BaseProbe implements Probe {
+public abstract class BaseProbe implements Probe, Serializable {
+
+	private static final long serialVersionUID = 7786696276206361948L;
 
 	public static long cacheValidationDate = 0;
 
@@ -13,11 +17,11 @@ public abstract class BaseProbe implements Probe {
 	private int modCache = Integer.MIN_VALUE;
 	private long cacheDate = 0;
 
-	protected AbstractBeing being;
+	protected transient AbstractBeing being;
 
 	public BaseProbe(AbstractBeing being) {
 		this.being = being;
-		probeInfo = new ProbeInfo();
+		this.probeInfo = new ProbeInfo();
 	}
 
 	@Override

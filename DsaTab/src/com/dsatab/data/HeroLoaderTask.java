@@ -83,7 +83,11 @@ public class HeroLoaderTask extends AsyncTaskLoader<Hero> {
 				throw new FileNotFoundException(fileInfo.toString());
 			}
 
-			fisConfig = exchange.getInputStream(fileInfo, FileType.Config);
+			try {
+				fisConfig = exchange.getInputStream(fileInfo, FileType.Config);
+			} catch (FileNotFoundException e) {
+				fisConfig = null;
+			}
 			hero = HeldenXmlParser.readHero(getContext(), fileInfo, fis, fisConfig);
 			if (hero != null) {
 				Editor editor = preferences.edit();

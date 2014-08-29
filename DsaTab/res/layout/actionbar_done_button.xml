@@ -29,5 +29,7 @@
         android:drawableLeft="?attr/imgBarAccept"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
+        android:maxLines="1"
+        android:ellipsize="middle"
         android:text="@string/menu_done" />
 </FrameLayout>

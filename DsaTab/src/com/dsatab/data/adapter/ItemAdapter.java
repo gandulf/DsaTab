@@ -14,18 +14,19 @@ import com.dsatab.data.filter.ItemCardListFilter;
 import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemCard;
+import com.dsatab.data.items.ItemContainer;
 import com.dsatab.util.Util;
 import com.dsatab.view.CheckableImageButton;
 import com.dsatab.view.EquippedItemListItem;
 import com.gandulf.guilib.data.OpenArrayAdapter;
-
-import fr.castorflex.android.flipimageview.library.FlipImageView.FlippableViewHolder;
 
 public class ItemAdapter extends OpenArrayAdapter<ItemCard> implements OnClickListener {
 
 	private Hero hero;
 
 	private ItemCardListFilter filter;
+
+	private int containerId = -1;
 
 	public ItemAdapter(Context context, Hero hero) {
 		super(context, 0, 0);
@@ -47,27 +48,19 @@ public class ItemAdapter extends OpenArrayAdapter<ItemCard> implements OnClickLi
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		ViewHolder holder;
 		EquippedItemListItem view;
 		if (!(convertView instanceof EquippedItemListItem)) {
 			view = (EquippedItemListItem) mInflater.inflate(R.layout.item_listitem_item, parent, false);
 			convertView = view;
-
-			holder = new ViewHolder();
-			holder.flip = view.getIcon1();
-			view.setTag(holder);
 		} else {
 			view = (EquippedItemListItem) convertView;
-			holder = (ViewHolder) view.getTag();
 		}
 
 		Item item = getItem(position).getItem();
 		view.setItem(item);
 
-		FlippableViewHolder.prepare(position, convertView, parent);
-
 		if (item != null && item.isEquipable()) {
-			for (int set = 0; set < Hero.MAXIMUM_SET_NUMBER; set++) {
+			for (int set = 0; set < Hero.INVENTORY_SET_COUNT; set++) {
 				CheckableImageButton setButton = view.getSet(set);
 				setButton.setChecked(false);
 				setButton.setOnClickListener(this);
@@ -80,10 +73,17 @@ public class ItemAdapter extends OpenArrayAdapter<ItemCard> implements OnClickLi
 						break;
 					}
 				}
+
+				if (containerId >= ItemContainer.SET1 && containerId <= ItemContainer.SET3) {
+					setButton.setVisibility(containerId == set ? View.VISIBLE : View.INVISIBLE);
+				} else {
+					setButton.setVisibility(View.VISIBLE);
+				}
 			}
 		} else {
-			for (int set = 0; set < Hero.MAXIMUM_SET_NUMBER; set++) {
+			for (int set = 0; set < Hero.INVENTORY_SET_COUNT; set++) {
 				view.getSet(set).setTag(null);
+				view.getSet(set).setVisibility(View.INVISIBLE);
 			}
 		}
 
@@ -119,8 +119,12 @@ public class ItemAdapter extends OpenArrayAdapter<ItemCard> implements OnClickLi
 
 	}
 
-	private static class ViewHolder extends FlippableViewHolder {
+	public int getContainerId() {
+		return containerId;
+	}
 
+	public void setContainerId(int activeSet) {
+		this.containerId = activeSet;
 	}
 
 }

@@ -159,6 +159,16 @@ public class ItemViewFragment extends BaseFragment {
 	}
 
 	@Override
+	public void onPrepareOptionsMenu(Menu menu) {
+		super.onPrepareOptionsMenu(menu);
+
+		MenuItem edit = menu.findItem(R.menu.menuitem_edit);
+		if (edit != null) {
+			edit.setVisible(item != null);
+		}
+	}
+
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.option_edit: {

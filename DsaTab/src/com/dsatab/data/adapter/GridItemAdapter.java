@@ -39,19 +39,6 @@ public class GridItemAdapter extends OpenArrayAdapter<ItemCard> {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dsatab.data.adapter.OpenArrayAdapter#getItem(int)
-	 */
-	@Override
-	public ItemCard getItem(int position) {
-		if (position < getCount())
-			return super.getItem(position);
-		else
-			return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see com.dsatab.data.adapter.OpenArrayAdapter#sort(java.util.Comparator)
 	 */
 	@Override
@@ -61,7 +48,7 @@ public class GridItemAdapter extends OpenArrayAdapter<ItemCard> {
 	}
 
 	public void prepare() {
-		sort(ItemCard.CELL_NUMBER_COMPARATOR);
+		// sort(ItemCard.CELL_NUMBER_COMPARATOR);
 	}
 
 	private void propagatePosition() {
@@ -69,7 +56,8 @@ public class GridItemAdapter extends OpenArrayAdapter<ItemCard> {
 		ItemCard card;
 		for (int i = 0; i < count; i++) {
 			card = getItem(i);
-			card.setCellNumber(i);
+			// TODO update list itself with position
+			// card.setCellNumber(i);
 		}
 
 	}

@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dsatab.R;
@@ -13,13 +14,11 @@ import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemSpecification;
 import com.dsatab.util.Util;
 
-import fr.castorflex.android.flipimageview.library.FlipImageView;
-
 public class EquippedItemListItem extends CheckableRelativeLayout {
 
 	private int textColor = 0;
 
-	private FlipImageView icon1;
+	private ImageView icon1;
 	private CheckableImageButton set1, set2, set3;
 	private TextView text1, text2;
 	private TextView countOverlay;
@@ -72,7 +71,7 @@ public class EquippedItemListItem extends CheckableRelativeLayout {
 
 		text1 = (TextView) findViewById(android.R.id.text1);
 		text2 = (TextView) findViewById(android.R.id.text2);
-		icon1 = (FlipImageView) findViewById(android.R.id.icon1);
+		icon1 = (ImageView) findViewById(android.R.id.icon1);
 
 		set1 = (CheckableImageButton) findViewById(R.id.set1);
 		set2 = (CheckableImageButton) findViewById(R.id.set2);
@@ -107,7 +106,7 @@ public class EquippedItemListItem extends CheckableRelativeLayout {
 
 	}
 
-	public FlipImageView getIcon1() {
+	public ImageView getIcon1() {
 		return icon1;
 	}
 
@@ -141,7 +140,6 @@ public class EquippedItemListItem extends CheckableRelativeLayout {
 	}
 
 	public void setItem(Item item) {
-
 		ItemSpecification itemSpecification = null;
 		if (item != null && !item.getSpecifications().isEmpty()) {
 			itemSpecification = item.getSpecifications().get(0);

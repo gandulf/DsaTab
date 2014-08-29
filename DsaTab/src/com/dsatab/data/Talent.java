@@ -9,6 +9,8 @@ import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 
 public class Talent extends MarkableElement implements Value, Listable {
 
+	private static final long serialVersionUID = -3361581759226651028L;
+
 	public static final Comparator<Talent> NAME_COMPARATOR = new Comparator<Talent>() {
 		/*
 		 * (non-Javadoc)

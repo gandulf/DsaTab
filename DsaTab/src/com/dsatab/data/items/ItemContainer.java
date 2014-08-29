@@ -8,9 +8,13 @@ import android.net.Uri;
 
 import com.dsatab.util.Debug;
 
-public class ItemContainer extends ArrayList<Item> {
+public class ItemContainer<T extends ItemCard> extends ArrayList<T> {
 
 	private static final long serialVersionUID = 1L;
+
+	public static final int SET1 = 0;
+	public static final int SET2 = 1;
+	public static final int SET3 = 2;
 
 	public static final int INVALID_ID = -1;
 	private int id = INVALID_ID;
@@ -27,10 +31,11 @@ public class ItemContainer extends ArrayList<Item> {
 
 	}
 
-	public ItemContainer(int id, String name) {
+	public ItemContainer(int id, String name, Uri iconUri) {
 		this();
 		this.id = id;
 		this.name = name;
+		this.iconUri = iconUri;
 	}
 
 	public int getId() {
@@ -70,8 +75,10 @@ public class ItemContainer extends ArrayList<Item> {
 			Debug.trace("itemcontainer calculated weight");
 			float weight = 0;
 
-			for (Item item : this) {
-				weight += item.getWeight();
+			for (T item : this) {
+				if (item.getItem() != null) {
+					weight += item.getItem().getWeight();
+				}
 			}
 
 			weightCache = weight;
@@ -80,28 +87,28 @@ public class ItemContainer extends ArrayList<Item> {
 	}
 
 	@Override
-	public void add(int index, Item object) {
+	public void add(int index, T object) {
 		weightCache = null;
 
 		super.add(index, object);
 	}
 
 	@Override
-	public boolean add(Item object) {
+	public boolean add(T object) {
 		weightCache = null;
 
 		return super.add(object);
 	}
 
 	@Override
-	public boolean addAll(Collection<? extends Item> collection) {
+	public boolean addAll(Collection<? extends T> collection) {
 		weightCache = null;
 
 		return super.addAll(collection);
 	}
 
 	@Override
-	public boolean addAll(int index, Collection<? extends Item> collection) {
+	public boolean addAll(int index, Collection<? extends T> collection) {
 		weightCache = null;
 
 		return super.addAll(index, collection);
@@ -115,7 +122,7 @@ public class ItemContainer extends ArrayList<Item> {
 	}
 
 	@Override
-	public Item remove(int index) {
+	public T remove(int index) {
 		weightCache = null;
 		return super.remove(index);
 	}
@@ -126,7 +133,7 @@ public class ItemContainer extends ArrayList<Item> {
 		return super.remove(object);
 	}
 
-	public List<Item> getItems() {
+	public List<T> getItems() {
 		return this;
 	}
 

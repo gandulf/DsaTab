@@ -3,7 +3,6 @@ package com.dsatab.fragment;
 import java.util.Arrays;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Resources;
@@ -55,6 +54,25 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 			return null;
 	}
 
+	public static <T extends BaseFragment> T newInstance(Class<T> fragmentClazz, TabInfo tabInfo, int position) {
+		T fragment = null;
+		if (fragmentClazz != null) {
+			try {
+				fragment = fragmentClazz.newInstance();
+				Bundle args = new Bundle();
+				args.putParcelable(BaseFragment.TAB_INFO, tabInfo);
+				args.putInt(BaseFragment.TAB_POSITION, position);
+				fragment.setArguments(args);
+			} catch (java.lang.InstantiationException e) {
+				Debug.error(e);
+			} catch (IllegalAccessException e) {
+				Debug.error(e);
+			}
+
+		}
+		return fragment;
+	}
+
 	private SharedPreferences preferences;
 
 	private ProbeListener probeListener;
@@ -74,27 +92,6 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 			tv.setTextColor(getResources().getColor(android.R.color.white));
 			tv.setBackgroundResource(Util.getThemeResourceId(getActivity(), R.attr.actionBarItemBackground));
 		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.support.v4.app.Fragment#onAttach(android.app.Activity)
-	 */
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-
-		// if we reattach a fragment there is already a view present
-		if (getView() != null && getActivity() != null) {
-			Hero hero = getHero();
-
-			if (hero != null) {
-				Debug.verbose("Loading hero in " + getClass() + " onAttach " + hero.getName());
-				loadHero(hero);
-			}
-		}
-
 	}
 
 	/*
@@ -142,7 +139,7 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 		return pos;
 	}
 
-	protected TabInfo getTabInfo() {
+	public TabInfo getTabInfo() {
 		TabInfo tabInfo = null;
 		if (getArguments() != null) {
 			tabInfo = getArguments().getParcelable(BaseFragment.TAB_INFO);
@@ -159,12 +156,7 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 	public void onDestroyView() {
 		super.onDestroyView();
 
-		// if (getView() != null) {
-		// Debug.verbose("Unbinding drawbale to free memory from fragment");
-		// Util.unbindDrawables(getView());
-		// }
-
-		// Debug.verbose(getClass().getName() + " destroyView");
+		Debug.trace(getClass().getName() + " destroyView");
 
 		Hero hero = getHero();
 		if (hero != null) {

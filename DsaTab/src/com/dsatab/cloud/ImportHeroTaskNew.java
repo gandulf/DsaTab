@@ -2,6 +2,7 @@ package com.dsatab.cloud;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.Arrays;
 
@@ -94,8 +95,13 @@ public class ImportHeroTaskNew extends AsyncTask<String, String, Integer> implem
 					heroInfo.getId());
 
 			// Create a file output stream
-			bufferedOutputStream = new BufferedWriter(new OutputStreamWriter(exchange.getOutputStream(heroInfo,
-					FileType.Hero)));
+
+			OutputStream out = exchange.getOutputStream(heroInfo, FileType.Hero);
+
+			if (out == null) {
+				throw new IOException("Unable to open outputstream: " + heroInfo);
+			}
+			bufferedOutputStream = new BufferedWriter(new OutputStreamWriter(out));
 			bufferedOutputStream.write(stringheld);
 
 			// Flush and close the buffers

@@ -24,6 +24,7 @@ import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.AbstractBeing;
 import com.dsatab.util.Util;
+import com.gandulf.guilib.util.FileFileFilter;
 
 public class ImageChooserDialog extends AlertDialog implements AdapterView.OnItemClickListener {
 
@@ -34,19 +35,25 @@ public class ImageChooserDialog extends AlertDialog implements AdapterView.OnIte
 
 	private Uri imageUri;
 
-	public static void pickPortrait(Activity activity, final AbstractBeing being) {
+	public static boolean hasPortraits() {
+		File portraitDir = DsaTabApplication.getDirectory(DsaTabApplication.DIR_PORTRAITS);
+		File[] files = portraitDir.listFiles(new FileFileFilter());
+		if (files != null && files.length > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean pickPortrait(Activity activity, final AbstractBeing being) {
 		final ImageChooserDialog pdialog = new ImageChooserDialog(activity);
 
 		File portraitDir = DsaTabApplication.getDirectory(DsaTabApplication.DIR_PORTRAITS);
-		File[] files = portraitDir.listFiles();
+		File[] files = portraitDir.listFiles(new FileFileFilter());
 		List<Uri> portraitPaths = null;
 		if (files != null) {
 			portraitPaths = new ArrayList<Uri>(files.length);
-
 			for (File file : files) {
-				if (file.isFile()) {
-					portraitPaths.add(Uri.fromFile(file));
-				}
+				portraitPaths.add(Uri.fromFile(file));
 			}
 		}
 
@@ -57,6 +64,8 @@ public class ImageChooserDialog extends AlertDialog implements AdapterView.OnIte
 					"Keine Portraits gefunden. Kopiere deine eigenen auf deine SD-Karte unter \"" + path
 							+ "\" oder lade die Standardportraits in den Einstellungen herunter.", Toast.LENGTH_LONG)
 					.show();
+
+			return false;
 		} else {
 			pdialog.setImages(portraitPaths);
 			pdialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -69,6 +78,7 @@ public class ImageChooserDialog extends AlertDialog implements AdapterView.OnIte
 				}
 			});
 			pdialog.show();
+			return true;
 		}
 	}
 

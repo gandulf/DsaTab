@@ -48,6 +48,7 @@ import android.os.Environment;
 import android.provider.MediaStore.Images.ImageColumns;
 import android.provider.MediaStore.Images.Media;
 import android.provider.MediaStore.MediaColumns;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.text.Html;
 import android.text.Spanned;
@@ -133,6 +134,20 @@ public class Util {
 		photoPickerIntent.setData(targetUri);
 
 		activity.startActivityForResult(Intent.createChooser(photoPickerIntent, "Bild auswählen"), action);
+	}
+
+	public static void pickImage(Fragment fragment, int action) {
+
+		Uri targetUri = Media.EXTERNAL_CONTENT_URI;
+		String folderPath = DsaTabApplication.getDirectory(DsaTabApplication.DIR_PORTRAITS).getAbsolutePath();
+		String folderBucketId = Integer.toString(folderPath.toLowerCase(Locale.GERMAN).hashCode());
+
+		targetUri = targetUri.buildUpon().appendQueryParameter(ImageColumns.BUCKET_ID, folderBucketId).build();
+
+		Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+		photoPickerIntent.setData(targetUri);
+
+		fragment.startActivityForResult(Intent.createChooser(photoPickerIntent, "Bild auswählen"), action);
 	}
 
 	public static File handleImagePick(Activity activity, String prefKey, Intent data) {

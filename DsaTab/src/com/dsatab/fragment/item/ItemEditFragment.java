@@ -85,9 +85,11 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 
 			@Override
 			public void afterTextChanged(Editable s) {
-				cloneItem.setName(s.toString());
-				itemView.setItem(cloneItem, itemSpecification);
-				imageView.setItem(cloneItem);
+				if (cloneItem != null) {
+					cloneItem.setName(s.toString());
+					itemView.setItem(cloneItem, itemSpecification);
+					imageView.setItem(cloneItem);
+				}
 			}
 		});
 
@@ -96,9 +98,11 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 
 			@Override
 			public void afterTextChanged(Editable s) {
-				cloneItem.setTitle(s.toString());
-				itemView.setItem(cloneItem, itemSpecification);
-				imageView.setItem(cloneItem);
+				if (cloneItem != null) {
+					cloneItem.setTitle(s.toString());
+					itemView.setItem(cloneItem, itemSpecification);
+					imageView.setItem(cloneItem);
+				}
 			}
 		});
 
@@ -257,11 +261,7 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 		origItem.setCategory((String) categorySpn.getSelectedItem());
 		origItem.setImageTextOverlay(cloneItem.isImageTextOverlay());
 
-		if (origItem.getId() != null) {
-			DataManager.updateItem(origItem);
-		} else {
-			DataManager.createItem(origItem);
-		}
+		DataManager.createOrUpdateItem(origItem);
 
 		if (getActivity().getIntent().hasExtra(ItemEditFragment.INTENT_EXTRA_HERO_KEY)) {
 			if (DsaTabApplication.getInstance().getHero().getItem(origItem.getId()) == null) {
@@ -289,7 +289,7 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 
 			@Override
 			public void onDismiss(DialogInterface dialog) {
-				if (pdialog.getImageUri() != null) {
+				if (pdialog.getImageUri() != null && cloneItem != null) {
 					cloneItem.setIconUri(pdialog.getImageUri());
 
 					itemView.setItem(cloneItem, itemSpecification);
@@ -315,8 +315,10 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		switch (buttonView.getId()) {
 		case R.id.popup_edit_overlay:
-			cloneItem.setImageTextOverlay(isChecked);
-			imageView.setItem(cloneItem);
+			if (cloneItem != null) {
+				cloneItem.setImageTextOverlay(isChecked);
+				imageView.setItem(cloneItem);
+			}
 			break;
 		}
 
@@ -331,9 +333,7 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.popup_edit_image:
-			Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
-			photoPickerIntent.setType("image/*");
-			startActivityForResult(Intent.createChooser(photoPickerIntent, "Bild auswählen"), ACTION_PHOTO);
+			Util.pickImage(this, ACTION_PHOTO);
 			break;
 		case R.id.popup_edit_icon:
 			pickIcon();

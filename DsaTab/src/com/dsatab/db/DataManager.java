@@ -44,6 +44,7 @@ import com.dsatab.data.items.ItemSpecification;
 import com.dsatab.util.Debug;
 import com.gandulf.guilib.util.ResUtil;
 import com.j256.ormlite.android.AndroidCompiledStatement;
+import com.j256.ormlite.dao.Dao.CreateOrUpdateStatus;
 import com.j256.ormlite.dao.GenericRawResults;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.stmt.PreparedQuery;
@@ -239,29 +240,17 @@ public class DataManager {
 		return result;
 	}
 
-	public static int updateItem(Item item) {
+	public static int createOrUpdateItem(Item item) {
 		RuntimeExceptionDao<Item, UUID> itemDao = DsaTabApplication.getInstance().getDBHelper().getItemDao();
 
-		int result = itemDao.update(item);
+		CreateOrUpdateStatus status = itemDao.createOrUpdate(item);
+		int result = status.getNumLinesChanged();
+
 		for (ItemSpecification itemSpec : item.getSpecifications()) {
 			RuntimeExceptionDao itemSpecDao = DsaTabApplication.getInstance().getDBHelper()
 					.getRuntimeDao(itemSpec.getClass());
 			itemSpecDao.createOrUpdate(itemSpec);
 		}
-
-		return result;
-	}
-
-	public static int createItem(Item item) {
-		RuntimeExceptionDao<Item, UUID> itemDao = DsaTabApplication.getInstance().getDBHelper().getItemDao();
-		int result = itemDao.create(item);
-
-		for (ItemSpecification itemSpec : item.getSpecifications()) {
-			RuntimeExceptionDao itemSpecDao = DsaTabApplication.getInstance().getDBHelper()
-					.getRuntimeDao(itemSpec.getClass());
-			itemSpecDao.create(itemSpec);
-		}
-		itemDao.update(item);
 
 		return result;
 	}

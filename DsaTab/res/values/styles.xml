@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:custom="http://schemas.android.com/apk/res-auto">
 
-    <style name="Widget.IconImageView" parent="@style/FlipImageView">
-        <item name="android:padding">@dimen/default_gap</item>
-        <item name="flipDrawable">@drawable/list_checked</item>
+    <style name="Widget.IconImageView">
+        <item name="android:padding">@dimen/default_gap</item>        
     </style>
         
     <style name="Widget.Button" parent="@android:style/Widget.Button">
@@ -76,9 +75,20 @@
     <style name="TextLabel.Mini">
         <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
         <item name="android:textSize">9sp</item>
-        <item name="android:textAllCaps">true</item>
+<!--         <item name="android:textAllCaps">true</item>  -->
         <item name="android:gravity">right|bottom</item>
         <item name="android:layout_height">match_parent</item>
+    </style>
+    
+    <style name="TextLabel.Float">
+        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+        <item name="android:textSize">@dimen/floatinghintedittext_hint_size</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:textColor">?android:attr/textColorHint</item>
+        
+        
     </style>
     
 </resources>

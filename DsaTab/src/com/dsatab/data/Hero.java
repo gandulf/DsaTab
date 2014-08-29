@@ -24,7 +24,6 @@ import android.text.TextUtils;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabPreferenceActivity;
-import com.dsatab.data.Purse.Currency;
 import com.dsatab.data.Talent.Flags;
 import com.dsatab.data.enums.ArmorPosition;
 import com.dsatab.data.enums.AttributeType;
@@ -66,8 +65,8 @@ public class Hero extends AbstractBeing {
 	public static final String PREFIX_FKWAFFE = "fkwaffe";
 	public static final String PREFIX_BK = "bk";
 
-	public static final int MAXIMUM_SET_NUMBER = 3;
-	public static final int FIRST_INVENTORY_SCREEN = MAXIMUM_SET_NUMBER;
+	public static final int INVENTORY_SET_COUNT = 3;
+	public static final int FIRST_INVENTORY_SCREEN = INVENTORY_SET_COUNT;
 
 	public enum CombatStyle {
 		Offensive, Defensive
@@ -115,8 +114,8 @@ public class Hero extends AbstractBeing {
 	public Hero(HeroFileInfo path) throws IOException, JSONException {
 		this.fileInfo = path;
 
-		this.equippedItems = new List[MAXIMUM_SET_NUMBER];
-		this.huntingWeapons = new HuntingWeapon[MAXIMUM_SET_NUMBER];
+		this.equippedItems = new List[INVENTORY_SET_COUNT];
+		this.huntingWeapons = new HuntingWeapon[INVENTORY_SET_COUNT];
 
 		this.changeEvents = new ArrayList<ChangeEvent>();
 		this.animals = new ArrayList<Animal>();
@@ -200,7 +199,7 @@ public class Hero extends AbstractBeing {
 	}
 
 	public EquippedItem getEquippedItem(int set, String name) {
-		if (name == null || set < 0 || set >= MAXIMUM_SET_NUMBER)
+		if (name == null || set < 0 || set >= INVENTORY_SET_COUNT)
 			return null;
 
 		for (EquippedItem item : getEquippedItems(set)) {
@@ -211,7 +210,7 @@ public class Hero extends AbstractBeing {
 	}
 
 	public EquippedItem getEquippedItem(UUID id) {
-		for (int i = 0; i < MAXIMUM_SET_NUMBER; i++) {
+		for (int i = 0; i < INVENTORY_SET_COUNT; i++) {
 			for (EquippedItem equippedItem : getEquippedItems(i)) {
 				if (equippedItem.getId().equals(id))
 					return equippedItem;
@@ -246,7 +245,7 @@ public class Hero extends AbstractBeing {
 	public List<EquippedItem> getAllEquippedItems() {
 		LinkedList<EquippedItem> items = new LinkedList<EquippedItem>();
 
-		for (int i = 0; i < MAXIMUM_SET_NUMBER; i++) {
+		for (int i = 0; i < INVENTORY_SET_COUNT; i++) {
 			items.addAll(getEquippedItems(i));
 		}
 
@@ -454,10 +453,6 @@ public class Hero extends AbstractBeing {
 		prepareAdvantages(context);
 		prepareSpeciaFeatures(context);
 		prepareSystemRules(context);
-
-		if (getPurse() != null && getPurse().getActiveCurrency() == null) {
-			getPurse().setActiveCurrency(Currency.Mittelreich);
-		}
 	}
 
 	private void prepareSpeciaFeatures(Context context) {
@@ -681,19 +676,19 @@ public class Hero extends AbstractBeing {
 		}
 	}
 
-	void fireItemContainerAddedEvent(ItemContainer item) {
+	void fireItemContainerAddedEvent(ItemContainer<Item> item) {
 		for (HeroInventoryChangedListener l : itemListener) {
 			l.onItemContainerAdded(item);
 		}
 	}
 
-	void fireItemContainerRemovedEvent(ItemContainer item) {
+	void fireItemContainerRemovedEvent(ItemContainer<Item> item) {
 		for (HeroInventoryChangedListener l : itemListener) {
 			l.onItemContainerRemoved(item);
 		}
 	}
 
-	public void fireItemContainerChangedEvent(ItemContainer item) {
+	public void fireItemContainerChangedEvent(ItemContainer<Item> item) {
 		for (HeroInventoryChangedListener l : itemListener) {
 			l.onItemContainerChanged(item);
 		}
@@ -785,7 +780,7 @@ public class Hero extends AbstractBeing {
 	 */
 	protected void removeItem(Item item, boolean cleanupEquippedItems) {
 		boolean found = false;
-		for (ItemContainer itemContainer : getItemContainers()) {
+		for (ItemContainer<Item> itemContainer : getItemContainers()) {
 			found = itemContainer.remove(item);
 			if (found) {
 				break;
@@ -843,7 +838,7 @@ public class Hero extends AbstractBeing {
 	 */
 	public boolean addItem(Item item) {
 
-		ItemContainer itemContainer = getItemContainer(item.getContainerId());
+		ItemContainer<Item> itemContainer = getItemContainer(item.getContainerId());
 		if (itemContainer == null) {
 			itemContainer = getItemContainers().get(0);
 			item.setContainerId(Hero.FIRST_INVENTORY_SCREEN);
@@ -859,7 +854,7 @@ public class Hero extends AbstractBeing {
 		return true;
 	}
 
-	public List<ItemContainer> getItemContainers() {
+	public List<ItemContainer<Item>> getItemContainers() {
 		return getHeroConfiguration().getItemContainers();
 	}
 
@@ -944,7 +939,7 @@ public class Hero extends AbstractBeing {
 	@SuppressWarnings("unchecked")
 	public Map<ArmorPosition, ArmorAttribute> getArmorAttributes(int set) {
 		if (armorAttributes == null) {
-			armorAttributes = new EnumMap[MAXIMUM_SET_NUMBER];
+			armorAttributes = new EnumMap[INVENTORY_SET_COUNT];
 		}
 
 		if (armorAttributes[set] == null) {
@@ -1688,7 +1683,7 @@ public class Hero extends AbstractBeing {
 	}
 
 	public List<Item> getItems(int screen) {
-		ItemContainer itemContainer = getItemContainer(screen);
+		ItemContainer<Item> itemContainer = getItemContainer(screen);
 		if (itemContainer != null)
 			return itemContainer.getItems();
 		else
@@ -1719,7 +1714,7 @@ public class Hero extends AbstractBeing {
 	public Item getItem(String name, String slot) {
 		Debug.trace("getItem " + name + ", slot=" + slot);
 
-		for (ItemContainer itemContainer : getItemContainers()) {
+		for (ItemContainer<Item> itemContainer : getItemContainers()) {
 			for (Item item : itemContainer.getItems()) {
 				if (item.getName().equals(name)) {
 					if (slot != null) {
@@ -1735,7 +1730,7 @@ public class Hero extends AbstractBeing {
 	}
 
 	public Item getItem(UUID id) {
-		for (ItemContainer itemContainer : getItemContainers()) {
+		for (ItemContainer<Item> itemContainer : getItemContainers()) {
 			for (Item item : itemContainer.getItems()) {
 				if (item.getId().equals(id)) {
 					return item;
@@ -2050,8 +2045,8 @@ public class Hero extends AbstractBeing {
 	 * @param containerId
 	 * @return
 	 */
-	public ItemContainer getItemContainer(int containerId) {
-		for (ItemContainer container : getItemContainers()) {
+	public ItemContainer<Item> getItemContainer(int containerId) {
+		for (ItemContainer<Item> container : getItemContainers()) {
 			if (container.getId() == containerId)
 				return container;
 		}
@@ -2061,10 +2056,10 @@ public class Hero extends AbstractBeing {
 	/**
 	 * @param itemContainer
 	 */
-	public void addItemContainer(ItemContainer itemContainer) {
+	public void addItemContainer(ItemContainer<Item> itemContainer) {
 		if (itemContainer.getId() == ItemContainer.INVALID_ID) {
-			int maxId = MAXIMUM_SET_NUMBER;
-			for (ItemContainer container : getItemContainers()) {
+			int maxId = INVENTORY_SET_COUNT;
+			for (ItemContainer<Item> container : getItemContainers()) {
 				maxId = Math.max(maxId, container.getId());
 			}
 			itemContainer.setId(maxId + 1);
@@ -2077,7 +2072,7 @@ public class Hero extends AbstractBeing {
 	/**
 	 * @param itemContainer
 	 */
-	public void removeItemContainer(ItemContainer itemContainer) {
+	public void removeItemContainer(ItemContainer<Item> itemContainer) {
 		getItemContainers().get(0).addAll(itemContainer.getItems());
 		getItemContainers().remove(itemContainer);
 

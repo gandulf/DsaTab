@@ -9,6 +9,8 @@ import com.gandulf.guilib.util.MathUtil;
 
 public class Attribute extends BaseProbe implements Value, Cloneable, Listable {
 
+	private static final long serialVersionUID = 36150483547787166L;
+
 	private static final String CONSTANT_BE = "BE";
 
 	protected AttributeType type;

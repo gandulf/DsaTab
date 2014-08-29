@@ -15,9 +15,6 @@ import com.dsatab.db.DataManager;
 import com.dsatab.util.Util;
 import com.dsatab.view.ItemListItem;
 
-import fr.castorflex.android.flipimageview.library.FlipImageView;
-import fr.castorflex.android.flipimageview.library.FlipImageView.FlippableViewHolder;
-
 public class ItemCursorAdapter extends SimpleCursorAdapter {
 
 	private LayoutInflater inflater;
@@ -63,7 +60,6 @@ public class ItemCursorAdapter extends SimpleCursorAdapter {
 			holder.text2 = (TextView) convertView.findViewById(android.R.id.text2);
 			holder.text3 = (TextView) convertView.findViewById(R.id.text3);
 			holder.icon1 = (ImageView) convertView.findViewById(android.R.id.icon1);
-			holder.flip = (FlipImageView) convertView.findViewById(android.R.id.icon1);
 
 			holder.icon2 = (ImageView) convertView.findViewById(android.R.id.icon2);
 			holder.icon_chain_bottom = (ImageView) convertView.findViewById(R.id.icon_chain_bottom);
@@ -72,8 +68,6 @@ public class ItemCursorAdapter extends SimpleCursorAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-
-		FlippableViewHolder.prepare(position, convertView, parent);
 
 		// this seems to be called even after stop in some rare occasions...
 		if (getCursor() != null && !getCursor().isClosed()) {
@@ -85,7 +79,7 @@ public class ItemCursorAdapter extends SimpleCursorAdapter {
 		return convertView;
 	}
 
-	private static class ViewHolder extends FlippableViewHolder {
+	private static class ViewHolder {
 		TextView text1, text2, text3;
 		ImageView icon1, icon2, icon_chain_top, icon_chain_bottom;
 	}

@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,8 +30,10 @@ import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,6 +91,8 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 	public static final int ACTION_EDIT_TABS = 1006;
 	public static final int ACTION_EDIT_NOTES = 1007;
 	public static final int ACTION_EDIT_CUSTOM_PROBES = 1008;
+	public static final int ACTION_VIEW_SPELL = 1009;
+	public static final int ACTION_VIEW_ART = 1010;
 
 	private static final String KEY_TAB_INFO = "tabInfo";
 
@@ -453,6 +458,9 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 		// Set the drawer toggle as the DrawerListener
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
+		if (DsaTabApplication.getInstance().isFirstRun()) {
+			mDrawerLayout.openDrawer(mDrawerList);
+		}
 	}
 
 	@Override
@@ -503,7 +511,7 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 	/**
 	 * 
 	 */
-	private void setupNavigationDrawer() {
+	public void setupNavigationDrawer() {
 		getSupportActionBar();
 		List<TabInfo> tabs;
 		if (getHeroConfiguration() != null)
@@ -555,10 +563,9 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 		return tabConfig;
 	}
 
-	public void notifyTabsChanged(TabInfo tabInfo) {
-		this.tabInfo = refreshTabInfo(0);
+	public void notifyTabsChanged(TabInfo oldTabInfo) {
 		setupNavigationDrawer();
-		showTab(tabInfo, true);
+		showTab(refreshTabInfo(0), true);
 	}
 
 	/**
@@ -654,6 +661,11 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 
 			if (fragment != null) {
 				dirty = !fragment.getClass().equals(tabInfo.getActivityClazz(i));
+
+				if (fragment instanceof BaseFragment) {
+					BaseFragment baseFragment = (BaseFragment) fragment;
+					dirty = !baseFragment.getTabInfo().equals(tabInfo);
+				}
 			}
 
 			if (tabInfo.getActivityClazz(i) != null) {
@@ -702,7 +714,7 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 				}
 
 				if (fragment == null) {
-					fragment = newTabInfo.getFragment(i);
+					fragment = BaseFragment.newInstance(newTabInfo.getActivityClazz(i), newTabInfo, i);
 					if (fragment != null) {
 						Debug.verbose("Creating new fragment and adding it" + tag + " " + fragment);
 
@@ -916,6 +928,14 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 		item = menu.add(Menu.NONE, R.id.option_save_hero, Menu.NONE, R.string.option_save_hero);
 		MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_NEVER);
 		item.setIcon(R.drawable.ic_menu_save);
+
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menuitem_search, menu);
+		SearchManager SManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+		MenuItem searchMenuItem = menu.findItem(R.id.action_search);
+		SearchView searchViewAction = (SearchView) MenuItemCompat.getActionView(searchMenuItem);
+		searchViewAction.setSearchableInfo(SManager.getSearchableInfo(getComponentName()));
+		searchViewAction.setIconifiedByDefault(true);
 
 		return super.onCreateOptionsMenu(menu);
 	}

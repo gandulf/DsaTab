@@ -25,6 +25,7 @@ import com.dsatab.data.items.ItemSpecification;
 import com.dsatab.data.items.MiscSpecification;
 import com.dsatab.data.items.Shield;
 import com.dsatab.data.items.Weapon;
+import com.dsatab.view.ListSettings.ListItemType;
 
 public class DsaUtil {
 
@@ -66,6 +67,13 @@ public class DsaUtil {
 		return v / 8000;
 	}
 
+	/**
+	 * Returns the probability of this probe 0..1
+	 * 
+	 * @param e1
+	 * @param taw
+	 * @return double (0..1)
+	 */
 	public static double testEigen(int e1, int taw) {
 		double result;
 		SharedPreferences preferences = DsaTabApplication.getPreferences();
@@ -157,6 +165,38 @@ public class DsaUtil {
 
 	private static boolean patzer(int w1, int w2, int w3) {
 		return (w1 == 20) && (w2 == 20) || (w2 == 20) && (w3 == 20) || (w1 == 20) && (w3 == 20);
+	}
+
+	public static int getResourceId(ListItemType itemType) {
+		switch (itemType) {
+		case Art:
+			return R.drawable.dsa_arts;
+		case Attribute:
+			return R.drawable.dsa_character;
+		case Document:
+			return R.drawable.dsa_notes;
+		case EquippedItem:
+			return R.drawable.dsa_sword;
+		case Modificator:
+			return R.drawable.dsa_modifier;
+		case Notes:
+			return R.drawable.dsa_notes;
+		case Purse:
+			return R.drawable.dsa_coins;
+		case Spell:
+			return R.drawable.dsa_spells;
+		case Talent:
+			return R.drawable.dsa_talents;
+		case Wound:
+			return R.drawable.dsa_wound_patch;
+		case Probe:
+			return R.drawable.dsa_dice;
+		case Header:
+			return R.drawable.dsa_speech;
+		default:
+			return 0;
+		}
+
 	}
 
 	public static int getResourceId(ItemType itemType) {

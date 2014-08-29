@@ -97,6 +97,8 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 
 	private Typeface poorRichFont;
 
+	private boolean firstRun;
+
 	/**
 	 * Convenient access, saves having to call and cast getApplicationContext()
 	 */
@@ -304,6 +306,11 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 
 		getPreferences().registerOnSharedPreferenceChangeListener(this);
 
+		firstRun = getPreferences().getBoolean("dsaTabFirstRun", true);
+
+		Editor edit = getPreferences().edit();
+		edit.putBoolean("dsaTabFirstRun", false);
+
 		TileSourceFactory.getTileSources().clear();
 		final ITileSource tileSource = new BitmapTileSource(TILESOURCE_AVENTURIEN, null, 2, 5, 256, ".jpg");
 		TileSourceFactory.addTileSource(tileSource);
@@ -315,17 +322,20 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 				String tokenValue = reader.readLine();
 				reader.close();
 				if (!TextUtils.isEmpty(tokenValue)) {
-					Editor edit = getPreferences().edit();
 					edit.putString(DsaTabPreferenceActivity.KEY_EXCHANGE_TOKEN, tokenValue.trim());
-					edit.commit();
 				}
 			} catch (FileNotFoundException e) {
 				Debug.error(e);
 			} catch (IOException e) {
 				Debug.error(e);
 			}
-
 		}
+
+		edit.commit();
+	}
+
+	public boolean isFirstRun() {
+		return firstRun;
 	}
 
 	private void cleanUp() {
@@ -369,7 +379,7 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 	}
 
 	public void saveHero(Activity activity) {
-		if (hero == null) {
+		if (hero == null || activity == null) {
 			return;
 		}
 
@@ -377,7 +387,13 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 			HeroExchange exchange = new HeroExchange(activity);
 
 			InputStream fis = exchange.getInputStream(hero.getFileInfo(), FileType.Hero);
-			Document dom;
+			if (fis == null) {
+				Debug.warning("Unable to read hero from input stream: " + hero.getFileInfo());
+				Toast.makeText(this, R.string.message_save_hero_failed, Toast.LENGTH_LONG).show();
+				return;
+			}
+
+			Document dom = null;
 			try {
 				dom = HeldenXmlParser.readDocument(fis);
 			} finally {
@@ -390,9 +406,11 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 
 			OutputStream out = exchange.getOutputStream(hero.getFileInfo(), FileType.Hero);
 			if (out == null) {
+				Debug.warning("Unable to write hero to output stream: " + hero.getFileInfo());
 				Toast.makeText(this, R.string.message_save_hero_failed, Toast.LENGTH_LONG).show();
 				return;
 			}
+
 			try {
 				HeldenXmlParser.writeHero(hero, dom, out);
 				hero.onPostHeroSaved();
@@ -402,6 +420,12 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 			}
 
 			OutputStream outConfig = exchange.getOutputStream(hero.getFileInfo(), FileType.Config);
+			if (outConfig == null) {
+				Debug.warning("Unable to write config file for hero: " + hero.getFileInfo());
+				Toast.makeText(this, R.string.message_save_hero_failed, Toast.LENGTH_LONG).show();
+				return;
+			}
+
 			try {
 				outConfig.write(hero.getHeroConfiguration().toJSONObject().toString().getBytes());
 			} finally {

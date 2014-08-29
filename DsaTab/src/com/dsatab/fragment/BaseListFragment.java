@@ -14,14 +14,11 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.dsatab.view.ListSettings;
-import com.gandulf.guilib.util.Debug;
-import com.haarman.listviewanimations.view.OnItemCheckedListener;
-import com.rokoder.android.lib.support.v4.widget.GridViewCompat;
+import com.gandulf.guilib.util.ListViewCompat;
+import com.gandulf.guilib.view.DynamicListViewEx.OnItemCheckedListener;
 
 public abstract class BaseListFragment extends BaseFragment implements OnItemLongClickListener, OnItemClickListener,
 		OnItemCheckedListener, View.OnClickListener {
@@ -35,8 +32,6 @@ public abstract class BaseListFragment extends BaseFragment implements OnItemLon
 	protected ListSettings getListSettings() {
 		if (listSettings == null) {
 			if (getTabPosition() >= 0 && getTabInfo() != null) {
-				// update filter settings to be correct type just to be sure
-				getTabInfo().updateListSettings();
 				listSettings = getTabInfo().getListSettings(getTabPosition());
 			}
 		}
@@ -48,22 +43,10 @@ public abstract class BaseListFragment extends BaseFragment implements OnItemLon
 		onCheckedChanged(parent);
 	}
 
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	protected void onCheckedChanged(AdapterView<?> parent) {
 		List<Object> checkedObjects = new ArrayList<Object>();
 
-		SparseBooleanArray checked = null;
-		if (parent instanceof GridViewCompat)
-			checked = ((GridViewCompat) parent).getCheckedItemPositions();
-		else if (parent instanceof ListView) {
-			checked = ((ListView) parent).getCheckedItemPositions();
-		} else if (parent instanceof GridView) {
-			if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-				checked = ((GridView) parent).getCheckedItemPositions();
-			} else {
-				Debug.warning("Using GridView with checked items does not work before honeycomb use gridviewcompat!");
-			}
-		}
+		SparseBooleanArray checked = ListViewCompat.getCheckedItemPositions(parent);
 
 		boolean hasCheckedElement = false;
 		if (checked != null) {
@@ -97,7 +80,6 @@ public abstract class BaseListFragment extends BaseFragment implements OnItemLon
 	 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget .AdapterView, android.view.View,
 	 * int, long)
 	 */
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 		if (mMode != null) {
@@ -127,25 +109,9 @@ public abstract class BaseListFragment extends BaseFragment implements OnItemLon
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-		GridViewCompat gridViewCompat = null;
-		if (parent instanceof GridViewCompat) {
-			gridViewCompat = (GridViewCompat) parent;
-		}
-
-		if (parent instanceof GridViewCompat)
-			((GridViewCompat) parent).setItemChecked(position, !gridViewCompat.isItemChecked(position));
-		else if (parent instanceof ListView) {
-			((ListView) parent).setItemChecked(position, !((ListView) parent).isItemChecked(position));
-		} else if (parent instanceof GridView) {
-			if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-				((GridView) parent).setItemChecked(position, !((GridView) parent).isItemChecked(position));
-			} else {
-				Debug.warning("Using GridView with checked items does not work before honeycomb use gridviewcompat!");
-			}
-		}
+		ListViewCompat.setItemChecked(parent, position, !ListViewCompat.isItemChecked(parent, position));
 
 		onCheckedChanged(parent);
-
 		return true;
 	}
 

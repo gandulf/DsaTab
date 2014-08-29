@@ -5,14 +5,14 @@
     android:layout_height="fill_parent"
     android:layout_margin="@dimen/default_gap" >
 
-    <com.haarman.listviewanimations.view.DynamicListView
+    <com.gandulf.guilib.view.DynamicListViewEx
         android:id="@+android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:cacheColorHint="#00000000"
         android:background="?attr/dropShadowBackground"
         android:divider="@null" />
-
+    
     <TextView
         android:id="@+android:id/empty"
         android:layout_width="wrap_content"

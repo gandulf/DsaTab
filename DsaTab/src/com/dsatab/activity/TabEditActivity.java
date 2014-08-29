@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SlidingPaneLayout;
@@ -39,13 +40,13 @@ import com.dsatab.util.Util;
 import com.dsatab.view.dialog.ImageChooserDialog;
 import com.gandulf.guilib.data.OpenArrayAdapter;
 import com.gandulf.guilib.util.DefaultTextWatcher;
-import com.haarman.listviewanimations.itemmanipulation.AnimateAdapter;
-import com.haarman.listviewanimations.itemmanipulation.OnAnimateCallback;
-import com.haarman.listviewanimations.itemmanipulation.SwipeDismissAdapter;
-import com.haarman.listviewanimations.view.DynamicListView;
+import com.gandulf.guilib.view.DynamicListViewEx;
+import com.nhaarman.listviewanimations.itemmanipulation.dragdrop.TouchViewDraggableManager;
+import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
+import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.SwipeDismissAdapter;
 
 public class TabEditActivity extends BaseActivity implements OnItemClickListener, OnClickListener,
-		OnCheckedChangeListener, OnAnimateCallback {
+		OnCheckedChangeListener, OnDismissCallback {
 
 	public static final String DATA_INTENT_TAB_INDEX = "tab.tabIndex";
 
@@ -56,9 +57,8 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 
 	private TabInfo currentInfo = null;
 
-	private DynamicListView tabsList;
+	private DynamicListViewEx tabsList;
 	private TabsAdapter tabsAdapter;
-	private AnimateAdapter<TabInfo> animateAdapter;
 
 	private TabListableConfigFragment list1;
 	private TabListableConfigFragment list2;
@@ -118,7 +118,7 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 
 		});
 
-		tabsList = (DynamicListView) findViewById(R.id.popup_tab_list);
+		tabsList = (DynamicListViewEx) findViewById(R.id.popup_tab_list);
 		tabsList.setOnItemClickListener(this);
 		tabsList.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 
@@ -133,9 +133,13 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 
 		SwipeDismissAdapter swipeAdapter = new SwipeDismissAdapter(tabsAdapter, this);
 		swipeAdapter.setAbsListView(tabsList);
-		animateAdapter = new AnimateAdapter<TabInfo>(swipeAdapter, this);
-		animateAdapter.setAbsListView(tabsList);
-		tabsList.setAdapter(animateAdapter);
+
+		tabsList.setAdapter(tabsAdapter);
+		tabsList.enableSwipeToDismiss(this);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			tabsList.enableDragAndDrop();
+			tabsList.setDraggableManager(new TouchViewDraggableManager(R.id.drag));
+		}
 
 		iconView = (ImageView) findViewById(R.id.popup_edit_icon);
 		iconView.setOnClickListener(this);
@@ -143,11 +147,18 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 		// Inflate a "Done" custom action bar view to serve as the "Up"
 		// affordance.
 		LayoutInflater inflater = LayoutInflater.from(getSupportActionBar().getThemedContext());
-		final View customActionBarView = inflater.inflate(R.layout.actionbar_custom_view_done, null);
+		final View customActionBarView = inflater.inflate(R.layout.actionbar_custom_view_done_discard_left, null);
 		customActionBarView.findViewById(R.id.actionbar_done).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				finish();
+				accept();
+			}
+		});
+
+		customActionBarView.findViewById(R.id.actionbar_discard).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				cancel();
 			}
 		});
 
@@ -185,18 +196,15 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuItem item = menu.add(Menu.NONE, R.id.option_tab_add, Menu.NONE, R.string.option_create_tab);
-		MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM
-				| MenuItemCompat.SHOW_AS_ACTION_WITH_TEXT);
+		MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
 		item.setIcon(R.drawable.ic_menu_add);
 
 		item = menu.add(Menu.NONE, R.id.option_tab_delete, Menu.NONE, R.string.label_delete);
-		MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM
-				| MenuItemCompat.SHOW_AS_ACTION_WITH_TEXT);
+		MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
 		item.setIcon(Util.getThemeResourceId(this, R.attr.imgBarDelete));
 
 		item = menu.add(Menu.NONE, R.id.option_tab_reset, Menu.NONE, R.string.option_reset_tabs);
-		MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM
-				| MenuItemCompat.SHOW_AS_ACTION_WITH_TEXT);
+		MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
 		item.setIcon(R.drawable.ic_menu_revert);
 
 		return true;
@@ -244,26 +252,22 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 		case R.id.option_tab_add:
 			TabInfo info = new TabInfo();
 			info.setIconUri(Util.getUriForResourceId(R.drawable.dsa_armor_fist));
-			animateAdapter.animateShow(tabsAdapter.getCount());
 			tabsAdapter.add(info);
 			selectTabInfo(info);
 			break;
 		case R.id.option_tab_delete:
-			animateAdapter.animateDismiss(tabsList.getCheckedItemPosition());
-			if (tabsList.getCheckedItemPosition() != AdapterView.INVALID_POSITION
-					&& tabsList.getCheckedItemPosition() < tabsAdapter.getCount()) {
-				selectTabInfo(tabsAdapter.getItem(tabsList.getCheckedItemPosition()));
-			} else {
-				tabsList.clearChoices();
-				selectTabInfo(null);
-			}
+			tabsList.dismiss(tabsList.getCheckedItemPosition());
 			break;
 		case R.id.option_tab_reset:
 			List<Integer> pos = new ArrayList<Integer>(tabsAdapter.getCount());
-			for (int i = 0; i < tabsAdapter.getCount(); i++)
+			for (int i = 0; i < tabsAdapter.getCount(); i++) {
 				pos.add(i);
-			animateAdapter.animateDismiss(pos);
+			}
+			tabsAdapter.setNotifyOnChange(false);
+			tabsAdapter.clear();
 			tabsAdapter.addAll(DsaTabApplication.getInstance().getHero().getHeroConfiguration().getDefaultTabs(null));
+			tabsAdapter.notifyDataSetChanged();
+
 			selectTabInfo(null);
 			break;
 		case android.R.id.home:
@@ -323,29 +327,26 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 	}
 
 	@Override
-	public void onDismiss(AbsListView list, int[] reverseSortedPositions) {
+	public void onDismiss(ViewGroup list, int[] reverseSortedPositions) {
 		if (list == tabsList) {
-			for (int position : reverseSortedPositions) {
-				if (tabsAdapter.getCount() > position) {
-					tabsAdapter.remove(position);
-				}
-			}
-
-			if (tabsList.getCheckedItemPosition() != AdapterView.INVALID_POSITION
-					&& tabsList.getCheckedItemPosition() < tabsAdapter.getCount()) {
-				selectTabInfo(tabsAdapter.getItem(tabsList.getCheckedItemPosition()));
-			} else {
-				tabsList.clearChoices();
-				selectTabInfo(null);
-			}
+			removeTabInfo(reverseSortedPositions);
 		}
 
 	}
 
-	@Override
-	public void onShow(AbsListView list, int[] pos) {
-		if (pos != null && pos.length > 0) {
-			list.smoothScrollToPosition(pos[0]);
+	private void removeTabInfo(int... reverseSortedPositions) {
+		for (int position : reverseSortedPositions) {
+			if (tabsAdapter.getCount() > position) {
+				tabsAdapter.remove(position);
+			}
+		}
+
+		if (tabsList.getCheckedItemPosition() != AdapterView.INVALID_POSITION
+				&& tabsList.getCheckedItemPosition() < tabsAdapter.getCount()) {
+			selectTabInfo(tabsAdapter.getItem(tabsList.getCheckedItemPosition()));
+		} else {
+			tabsList.clearChoices();
+			selectTabInfo(null);
 		}
 	}
 
@@ -357,25 +358,28 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
-		finish();
+		cancel();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Activity#finish()
-	 */
-	@Override
-	public void finish() {
-
+	protected void accept() {
 		Util.hideKeyboard(tabsList);
+
+		if (list1 != null)
+			list1.accept();
+		if (list2 != null)
+			list2.accept();
 		if (DsaTabApplication.getInstance().getHero() != null
 				&& DsaTabApplication.getInstance().getHero().getHeroConfiguration() != null) {
 			DsaTabApplication.getInstance().getHero().getHeroConfiguration().setTabs(tabsAdapter.getItems());
 		}
-
 		setResult(RESULT_OK);
-		super.finish();
+
+		finish();
+	}
+
+	protected void cancel() {
+		setResult(RESULT_CANCELED);
+		finish();
 	}
 
 	/*
@@ -427,7 +431,11 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 
 		@Override
 		public long getItemId(int position) {
-			return getItem(position).hashCode();
+			if (position >= 0 && position < getCount()) {
+				return getItem(position).hashCode();
+			} else {
+				return AdapterView.INVALID_ROW_ID;
+			}
 		}
 
 		public List<TabInfo> getItems() {

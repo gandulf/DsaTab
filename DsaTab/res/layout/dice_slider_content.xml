@@ -48,11 +48,18 @@
         android:paddingTop="@dimen/default_gap">
     </ListView>
 
+    <ImageView android:id="@+id/probe_modifier_container_divider" 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="?attr/dividerHorizontal" />
+    
     <LinearLayout
         android:id="@+id/dice_info_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:animateLayoutChanges="true"
         android:orientation="horizontal" >
 
         <com.thebnich.floatinghintedittext.FloatingHintTextView

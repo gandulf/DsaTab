@@ -1,5 +1,7 @@
 package com.dsatab.data.enums;
 
+import android.text.TextUtils;
+
 import com.dsatab.exception.FeatureTypeUnknownException;
 
 public enum FeatureType {
@@ -1290,7 +1292,7 @@ public enum FeatureType {
 
 	public static FeatureType byXmlName(String code) {
 
-		if (code == null)
+		if (TextUtils.isEmpty(code))
 			return null;
 
 		for (FeatureType attr : FeatureType.values()) {

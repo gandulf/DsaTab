@@ -1,6 +1,8 @@
 package com.dsatab.fragment;
 
 import net.simonvt.numberpicker.NumberPicker;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -10,140 +12,144 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
+import com.dsatab.activity.FragmentEditActivity;
 import com.dsatab.data.Hero;
 import com.dsatab.data.Spell;
 import com.dsatab.data.SpellInfo;
-import com.dsatab.data.Value;
 import com.dsatab.util.Debug;
-import com.j256.ormlite.dao.RuntimeExceptionDao;
 
-public class SpellInfoFragment extends BaseFragment {
+public class SpellInfoFragment extends BaseEditFragment {
 
-	private static final String DATA_INTENT_SPELL = "spell";
+	public static final String DATA_INTENT_SPELL_INFO = "spellInfo";
+	public static final String DATA_INTENT_SPELL_TITLE = "spellTitle";
+	public static final String DATA_INTENT_SPELL_COMMENT = "spellComment";
+	public static final String DATA_INTENT_SPELL_VARIANT = "spellVariant";
 
-	private static final String TAG = "spelldialog";
+	public static final String DATA_INTENT_SPELL_VALUE = "spellValue";
+	public static final String DATA_INTENT_SPELL_VALUE_MIN = "spellValueMin";
+	public static final String DATA_INTENT_SPELL_VALUE_MAX = "spellValueMax";
 
-	private Spell spell;
+	private SpellInfo spell;
+	private String comments, variant;
 
 	private View popupcontent = null;
 
 	private boolean editMode = false;
 
-	public static SpellInfoFragment newInstance(Spell spell) {
-		SpellInfoFragment f = new SpellInfoFragment();
+	public static void edit(Activity activity, Spell spell, int requestCode) {
+		Intent intent = new Intent(activity, FragmentEditActivity.class);
+		intent.setAction(Intent.ACTION_EDIT);
+		intent.putExtra(FragmentEditActivity.EDIT_FRAGMENT_CLASS, SpellInfoFragment.class);
+		intent.putExtra(DATA_INTENT_SPELL_INFO, spell.getInfo());
+		intent.putExtra(DATA_INTENT_SPELL_TITLE, spell.getTitle());
+		intent.putExtra(DATA_INTENT_SPELL_COMMENT, spell.getComments());
+		intent.putExtra(DATA_INTENT_SPELL_VARIANT, spell.getVariant());
+		if (spell.getValue() != null) {
+			intent.putExtra(DATA_INTENT_SPELL_VALUE, (int) spell.getValue());
+		}
+		intent.putExtra(DATA_INTENT_SPELL_VALUE_MIN, spell.getMinimum());
+		intent.putExtra(DATA_INTENT_SPELL_VALUE_MAX, spell.getMaximum());
 
-		// Supply num input as an argument.
-		Bundle args = new Bundle();
-		args.putSerializable(DATA_INTENT_SPELL, spell);
-		f.setArguments(args);
-
-		return f;
+		activity.startActivityForResult(intent, requestCode);
 	}
 
-	public Spell getSpell() {
-		return spell;
+	public static void view(Activity activity, Spell spell, int requestCode) {
+		Intent intent = new Intent(activity, FragmentEditActivity.class);
+		intent.setAction(Intent.ACTION_VIEW);
+		intent.putExtra(FragmentEditActivity.EDIT_FRAGMENT_CLASS, SpellInfoFragment.class);
+		intent.putExtra(DATA_INTENT_SPELL_INFO, spell.getInfo());
+		intent.putExtra(DATA_INTENT_SPELL_TITLE, spell.getTitle());
+		intent.putExtra(DATA_INTENT_SPELL_COMMENT, spell.getComments());
+		intent.putExtra(DATA_INTENT_SPELL_VARIANT, spell.getVariant());
+		if (spell.getValue() != null) {
+			intent.putExtra(DATA_INTENT_SPELL_VALUE, (int) spell.getValue());
+		}
+		intent.putExtra(DATA_INTENT_SPELL_VALUE_MIN, spell.getMinimum());
+		intent.putExtra(DATA_INTENT_SPELL_VALUE_MAX, spell.getMaximum());
+
+		activity.startActivityForResult(intent, requestCode);
 	}
 
-	protected void setSpellValue(Value value) {
+	protected void setSpellValue(Integer value, int min, int max) {
 
 		NumberPicker numberPicker = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_value);
 		if (numberPicker != null) {
 			if (value != null) {
-				Integer currentValue = value.getValue();
-				numberPicker.setMinValue(value.getMinimum());
-				numberPicker.setMaxValue(value.getMaximum());
-				if (currentValue != null) {
-					numberPicker.setValue(currentValue);
-				} else {
-					numberPicker.setValue(0);
-					numberPicker.setVisibility(View.GONE);
-				}
+				numberPicker.setMinValue(min);
+				numberPicker.setMaxValue(max);
+				numberPicker.setValue(value);
+				numberPicker.setVisibility(View.VISIBLE);
 			} else {
 				numberPicker.setVisibility(View.GONE);
 			}
 		}
 	}
 
-	public Spell accept() {
+	public Bundle accept() {
+		Bundle bundle = new Bundle();
 
 		if (editMode) {
 			try {
+
+				Integer value = null;
 				NumberPicker numberPicker = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_value);
 				if (numberPicker != null && numberPicker.getVisibility() == View.VISIBLE) {
-					spell.setValue(numberPicker.getValue());
+					value = numberPicker.getValue();
 				}
 
-				SpellInfo info = spell.getInfo();
+				spell.setCastDuration(getValue(R.id.popup_spell_castduration_edit));
+				spell.setCosts(getValue(R.id.popup_spell_costs_edit));
+				spell.setEffect(getValue(R.id.popup_spell_effect_edit));
+				spell.setTarget(getValue(R.id.popup_spell_target_edit));
+				spell.setRange(getValue(R.id.popup_spell_range_edit));
+				spell.setEffectDuration(getValue(R.id.popup_spell_effectduration_edit));
+				spell.setRepresentation(getValue(R.id.popup_spell_representation_edit));
+				spell.setSource(getValue(R.id.popup_spell_source_edit));
+				spell.setComplexity(getValue(R.id.popup_spell_complexity_edit));
+				spell.setMerkmale(getValue(R.id.popup_spell_merkmal_edit));
+				spell.setProbe(getValue(R.id.popup_spell_probe_edit));
 
-				info.setCastDuration(getValue(R.id.popup_spell_castduration_edit));
-				info.setCosts(getValue(R.id.popup_spell_costs_edit));
-				info.setEffect(getValue(R.id.popup_spell_effect_edit));
-				info.setTarget(getValue(R.id.popup_spell_target_edit));
-				info.setRange(getValue(R.id.popup_spell_range_edit));
-				info.setEffectDuration(getValue(R.id.popup_spell_effectduration_edit));
-				info.setRepresentation(getValue(R.id.popup_spell_representation_edit));
-				info.setSource(getValue(R.id.popup_spell_source_edit));
-				info.setComplexity(getValue(R.id.popup_spell_complexity_edit));
-				info.setMerkmale(getValue(R.id.popup_spell_merkmal_edit));
-				info.setProbe(getValue(R.id.popup_spell_probe_edit));
+				bundle.putString(DATA_INTENT_SPELL_COMMENT, getValue(R.id.popup_spell_comment_edit));
+				bundle.putString(DATA_INTENT_SPELL_VARIANT, getValue(R.id.popup_spell_variant_edit));
 
-				spell.setComments(getValue(R.id.popup_spell_comment_edit));
-				spell.setVariant(getValue(R.id.popup_spell_variant_edit));
-				spell.setProbePattern(info.getProbe());
-
-				RuntimeExceptionDao<SpellInfo, Long> dao = DsaTabApplication.getInstance().getDBHelper()
-						.getRuntimeExceptionDao(SpellInfo.class);
-				dao.createOrUpdate(info);
-
-				spell.fireValueChangedEvent();
-
-				Toast.makeText(getActivity(), "Zauberinformationen wurden gespeichert", Toast.LENGTH_SHORT).show();
-
-				getBaseActivity().getSupportFragmentManager().popBackStack();
+				bundle.putSerializable(DATA_INTENT_SPELL_INFO, spell);
+				if (value != null) {
+					bundle.putInt(DATA_INTENT_SPELL_VALUE, value);
+				}
 			} catch (NumberFormatException e) {
 				Debug.error(e);
 			}
-		} else {
-			getBaseActivity().getSupportFragmentManager().popBackStack();
 		}
 
-		return spell;
+		return bundle;
 	}
 
-	/**
-	 * 
-	 */
+	@Override
 	public void cancel() {
-		getBaseActivity().getSupportFragmentManager().popBackStack();
+
 	}
 
-	protected void setSpell(Spell spell) {
-		this.spell = spell;
+	protected void setSpell(CharSequence title, String comments, String variant, SpellInfo info) {
+		this.spell = info;
 		if (spell != null) {
+			set(R.id.popup_spell_title, title);
 
-			set(R.id.popup_spell_title, spell.getTitle());
-			setSpellValue(spell);
+			set(R.id.popup_spell_castduration, spell.getCastDurationDetailed());
+			set(R.id.popup_spell_costs, spell.getCosts());
+			set(R.id.popup_spell_effect, spell.getEffect());
+			set(R.id.popup_spell_target, spell.getTargetDetailed());
+			set(R.id.popup_spell_range, spell.getRangeDetailed());
+			set(R.id.popup_spell_effectduration, spell.getEffectDuration());
+			set(R.id.popup_spell_representation, spell.getRepresentation());
+			set(R.id.popup_spell_source, spell.getSource());
+			set(R.id.popup_spell_complexity, spell.getComplexity());
+			set(R.id.popup_spell_merkmal, spell.getMerkmale());
+			set(R.id.popup_spell_probe, spell.getProbe());
 
-			SpellInfo info = spell.getInfo();
-			if (info != null) {
-				set(R.id.popup_spell_castduration, info.getCastDurationDetailed());
-				set(R.id.popup_spell_costs, info.getCosts());
-				set(R.id.popup_spell_effect, info.getEffect());
-				set(R.id.popup_spell_target, info.getTargetDetailed());
-				set(R.id.popup_spell_range, info.getRangeDetailed());
-				set(R.id.popup_spell_effectduration, info.getEffectDuration());
-				set(R.id.popup_spell_representation, info.getRepresentation());
-				set(R.id.popup_spell_source, info.getSource());
-				set(R.id.popup_spell_complexity, info.getComplexity());
-				set(R.id.popup_spell_merkmal, info.getMerkmale());
-				set(R.id.popup_spell_probe, info.getProbe());
-			}
-			set(R.id.popup_spell_comment, spell.getComments());
-			set(R.id.popup_spell_variant, spell.getVariant());
+			set(R.id.popup_spell_comment, comments);
+			set(R.id.popup_spell_variant, variant);
 		}
 
 	}
@@ -165,11 +171,7 @@ public class SpellInfoFragment extends BaseFragment {
 		super.onCreateOptionsMenu(menu, inflater);
 
 		if (!editMode) {
-			inflater.inflate(R.menu.menuitem_ok, menu);
 			inflater.inflate(R.menu.menuitem_edit, menu);
-		} else {
-			inflater.inflate(R.menu.menuitem_ok, menu);
-			inflater.inflate(R.menu.menuitem_cancel, menu);
 		}
 	}
 
@@ -177,12 +179,6 @@ public class SpellInfoFragment extends BaseFragment {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
-		case R.id.option_ok:
-			accept();
-			return true;
-		case R.id.option_cancel:
-			cancel();
-			return true;
 		case R.id.option_edit:
 			switchMode(true);
 			return true;
@@ -196,42 +192,70 @@ public class SpellInfoFragment extends BaseFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		spell = (Spell) getArguments().getSerializable(DATA_INTENT_SPELL);
+		spell = (SpellInfo) getExtra().getSerializable(DATA_INTENT_SPELL_INFO);
+		CharSequence title = getExtra().getCharSequence(DATA_INTENT_SPELL_TITLE);
+		comments = getExtra().getString(DATA_INTENT_SPELL_COMMENT);
+		variant = getExtra().getString(DATA_INTENT_SPELL_VARIANT);
 
-		setSpell(spell);
-		switchMode(false);
+		int value = getExtra().getInt(DATA_INTENT_SPELL_VALUE, Integer.MIN_VALUE);
+		int min = getExtra().getInt(DATA_INTENT_SPELL_VALUE_MIN);
+		int max = getExtra().getInt(DATA_INTENT_SPELL_VALUE_MAX);
+
+		setSpell(title, comments, variant, spell);
+
+		if (value != Integer.MIN_VALUE)
+			setSpellValue(value, min, max);
+		else
+			setSpellValue(null, min, max);
+
+		if (Intent.ACTION_EDIT.equals(getAction())) {
+			setMode(true);
+		} else {
+			setMode(false);
+		}
 	}
 
 	/**
 	 * @param b
 	 */
 	private void switchMode(boolean edit) {
+		setMode(edit);
+
+		if (edit)
+			getEditActivity().inflateDoneDiscard();
+		else
+			getEditActivity().inflateDone();
+
+		getActivity().supportInvalidateOptionsMenu();
+
+	}
+
+	private void setMode(boolean edit) {
 		this.editMode = edit;
 		if (spell != null) {
-			SpellInfo info = spell.getInfo();
 
-			if (popupcontent.findViewById(R.id.popup_edit_value) != null)
-				popupcontent.findViewById(R.id.popup_edit_value).setEnabled(edit);
+			NumberPicker numberPicker = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_value);
+			if (numberPicker != null) {
+				numberPicker.setEnabled(edit);
+			}
 
-			edit(R.id.popup_spell_castduration, R.id.popup_spell_castduration_edit, info.getCastDurationDetailed(),
+			edit(R.id.popup_spell_castduration, R.id.popup_spell_castduration_edit, spell.getCastDurationDetailed(),
 					edit);
-			edit(R.id.popup_spell_costs, R.id.popup_spell_costs_edit, info.getCosts(), edit);
-			edit(R.id.popup_spell_effect, R.id.popup_spell_effect_edit, info.getEffect(), edit);
-			edit(R.id.popup_spell_target, R.id.popup_spell_target_edit, info.getTargetDetailed(), edit);
-			edit(R.id.popup_spell_range, R.id.popup_spell_range_edit, info.getRangeDetailed(), edit);
-			edit(R.id.popup_spell_effectduration, R.id.popup_spell_effectduration_edit, info.getEffectDuration(), edit);
-			edit(R.id.popup_spell_representation, R.id.popup_spell_representation_edit, info.getRepresentation(), edit);
-			edit(R.id.popup_spell_source, R.id.popup_spell_source_edit, info.getSource(), edit);
-			edit(R.id.popup_spell_complexity, R.id.popup_spell_complexity_edit, info.getComplexity(), edit);
-			edit(R.id.popup_spell_merkmal, R.id.popup_spell_merkmal_edit, info.getMerkmale(), edit);
+			edit(R.id.popup_spell_costs, R.id.popup_spell_costs_edit, spell.getCosts(), edit);
+			edit(R.id.popup_spell_effect, R.id.popup_spell_effect_edit, spell.getEffect(), edit);
+			edit(R.id.popup_spell_target, R.id.popup_spell_target_edit, spell.getTargetDetailed(), edit);
+			edit(R.id.popup_spell_range, R.id.popup_spell_range_edit, spell.getRangeDetailed(), edit);
+			edit(R.id.popup_spell_effectduration, R.id.popup_spell_effectduration_edit, spell.getEffectDuration(), edit);
+			edit(R.id.popup_spell_representation, R.id.popup_spell_representation_edit, spell.getRepresentation(), edit);
+			edit(R.id.popup_spell_source, R.id.popup_spell_source_edit, spell.getSource(), edit);
+			edit(R.id.popup_spell_complexity, R.id.popup_spell_complexity_edit, spell.getComplexity(), edit);
+			edit(R.id.popup_spell_merkmal, R.id.popup_spell_merkmal_edit, spell.getMerkmale(), edit);
 
-			edit(R.id.popup_spell_comment, R.id.popup_spell_comment_edit, spell.getComments(), edit);
-			edit(R.id.popup_spell_variant, R.id.popup_spell_variant_edit, spell.getVariant(), edit);
-			edit(R.id.popup_spell_probe, R.id.popup_spell_probe_edit, info.getProbe(), edit);
+			edit(R.id.popup_spell_comment, R.id.popup_spell_comment_edit, comments, edit);
+			edit(R.id.popup_spell_variant, R.id.popup_spell_variant_edit, variant, edit);
+
+			edit(R.id.popup_spell_probe, R.id.popup_spell_probe_edit, spell.getProbe(), edit);
 		}
-
-		getBaseActivity().supportInvalidateOptionsMenu();
-
 	}
 
 	private void set(int tfid, CharSequence v) {
@@ -255,7 +279,9 @@ public class SpellInfoFragment extends BaseFragment {
 		if (tf != null && et != null) {
 			tf.setVisibility(viewVisibility);
 			et.setVisibility(editVisibility);
+
 			et.setText(v);
+			tf.setText(v);
 		}
 
 	}

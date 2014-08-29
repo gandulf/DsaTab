@@ -19,7 +19,9 @@ public class Connection implements NotesItem, Listable {
 
 	private UUID id;
 
-	private String description, name, sozialStatus;
+	private String description, name;
+
+	private int sozialStatus = 1;
 
 	public Connection() {
 		this.id = UUID.randomUUID();
@@ -50,11 +52,11 @@ public class Connection implements NotesItem, Listable {
 		this.name = value;
 	}
 
-	public String getSozialStatus() {
+	public int getSozialStatus() {
 		return sozialStatus;
 	}
 
-	public void setSozialStatus(String value) {
+	public void setSozialStatus(int value) {
 		this.sozialStatus = value;
 	}
 

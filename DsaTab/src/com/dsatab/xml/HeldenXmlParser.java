@@ -48,7 +48,6 @@ import com.dsatab.data.HeroConfiguration;
 import com.dsatab.data.HeroFileInfo;
 import com.dsatab.data.Markable;
 import com.dsatab.data.Purse;
-import com.dsatab.data.Purse.Currency;
 import com.dsatab.data.Purse.PurseUnit;
 import com.dsatab.data.Spell;
 import com.dsatab.data.SpellInfo;
@@ -217,28 +216,30 @@ public class HeldenXmlParser {
 		list.addAll(DomUtil.getChildrenByTagName(heldElement, Xml.KEY_VORTEILE, Xml.KEY_VORTEIL));
 
 		for (Element element : list) {
-			FeatureType featureType;
+			FeatureType featureType = null;
 			try {
 				featureType = FeatureType.byXmlName(element.getAttributeValue(Xml.KEY_NAME).trim());
 			} catch (FeatureTypeUnknownException e) {
 				Debug.error(e);
 				continue;
 			}
-			Feature adv = new Feature(featureType);
-			String value = element.getAttributeValue(Xml.KEY_VALUE);
-			if (!TextUtils.isEmpty(value)) {
-				adv.addValue(value);
-			}
-			adv.setComment(element.getAttributeValue(Xml.KEY_COMMENT));
-
-			List<Element> auswahls = element.getChildren(Xml.KEY_AUSWAHL);
-			if (auswahls != null) {
-				for (Element auswahl : auswahls) {
-					adv.addValue(auswahl.getAttributeValue(Xml.KEY_VALUE));
+			if (featureType != null) {
+				Feature adv = new Feature(featureType);
+				String value = element.getAttributeValue(Xml.KEY_VALUE);
+				if (!TextUtils.isEmpty(value)) {
+					adv.addValue(value);
 				}
-			}
+				adv.setComment(element.getAttributeValue(Xml.KEY_COMMENT));
 
-			being.addFeature(adv);
+				List<Element> auswahls = element.getChildren(Xml.KEY_AUSWAHL);
+				if (auswahls != null) {
+					for (Element auswahl : auswahls) {
+						adv.addValue(auswahl.getAttributeValue(Xml.KEY_VALUE));
+					}
+				}
+
+				being.addFeature(adv);
+			}
 		}
 	}
 
@@ -555,7 +556,7 @@ public class HeldenXmlParser {
 
 			Connection connection = new Connection();
 			connection.setDescription(element.getAttributeValue(Xml.KEY_DESCRIPTION));
-			connection.setSozialStatus(element.getAttributeValue(Xml.KEY_SO));
+			connection.setSozialStatus(Util.parseInt(element.getAttributeValue(Xml.KEY_SO), 1));
 			connection.setName(element.getAttributeValue(Xml.KEY_NAME));
 			hero.addConnection(connection);
 		}
@@ -797,10 +798,6 @@ public class HeldenXmlParser {
 				Integer value = Util.parseInteger(m.getAttributeValue(Xml.KEY_ANZAHL));
 				hero.getPurse().setCoins(w, value);
 			}
-
-			String active = purseElement.getAttributeValue(Xml.KEY_ACTIVE);
-			if (active != null)
-				hero.getPurse().setActiveCurrency(Currency.valueOf(active));
 		}
 	}
 
@@ -842,7 +839,7 @@ public class HeldenXmlParser {
 
 			if (item == null) {
 				Debug.error(new InconsistentDataException("Unable to find an item with the name '" + itemName
-						+ "' in slot '" + itemSlot + "'."));
+						+ "' in slot '" + itemSlot + "':" + element.toString()));
 				continue;
 			}
 
@@ -963,8 +960,6 @@ public class HeldenXmlParser {
 					item.setCategory("Sonstiges");
 				}
 
-				if (element.getAttribute(Xml.KEY_CELL_NUMBER) != null)
-					item.setCellNumber(Util.parseInteger(element.getAttributeValue(Xml.KEY_CELL_NUMBER)));
 				if (element.getAttribute(Xml.KEY_SCREEN) != null) {
 					// there is only one inventory screen left...
 					int screen = Util.parseInt(element.getAttributeValue(Xml.KEY_SCREEN));
@@ -1400,11 +1395,6 @@ public class HeldenXmlParser {
 
 	private static void writePurse(Purse purse, Element element) {
 
-		if (purse.getActiveCurrency() != null)
-			element.setAttribute(Xml.KEY_ACTIVE, purse.getActiveCurrency().name());
-		else
-			element.removeAttribute(Xml.KEY_ACTIVE);
-
 		for (Entry<Purse.PurseUnit, Integer> entry : purse.getCoins().entrySet()) {
 			boolean found = false;
 			for (Element p : element.getChildren(Xml.KEY_MUENZE)) {
@@ -1454,6 +1444,10 @@ public class HeldenXmlParser {
 		Element itemsNode = getItemElement(heldElement);
 
 		Element ereignisse = heldElement.getChild(Xml.KEY_EREIGNISSE);
+		if (ereignisse == null) {
+			ereignisse = new Element(Xml.KEY_EREIGNISSE);
+			heldElement.addContent(ereignisse);
+		}
 
 		if (hero.getPortraitUri() != null)
 			heldElement.setAttribute(Xml.KEY_PORTRAIT_PATH, hero.getPortraitUri().toString());
@@ -1462,18 +1456,30 @@ public class HeldenXmlParser {
 
 		List<Element> domAttributes = DomUtil.getChildrenByTagName(heldElement, Xml.KEY_EIGENSCHAFTEN,
 				Xml.KEY_EIGENSCHAFT);
-		for (Element attribute : domAttributes) {
-			writeAttribute(hero, hero,
-					hero.getAttribute(AttributeType.valueOf(attribute.getAttributeValue(Xml.KEY_NAME))), attribute);
-			Debug.trace("Xml popuplate attr " + attribute);
+		for (Element attributeElement : domAttributes) {
+
+			Attribute attribute = hero.getAttribute(AttributeType.valueOf(attributeElement
+					.getAttributeValue(Xml.KEY_NAME)));
+
+			if (attribute != null) {
+				writeAttribute(hero, hero, attribute, attributeElement);
+				Debug.trace("Xml popuplate attr " + attributeElement);
+			} else {
+				Debug.trace("Xml popuplate attr not found " + attributeElement);
+			}
 		}
 
 		List<Element> talentList = DomUtil.getChildrenByTagName(heldElement, Xml.KEY_TALENTLISTE, Xml.KEY_TALENT);
 
 		for (Element talentElement : talentList) {
 			try {
-				writeTalent(hero, hero.getTalent(talentElement.getAttributeValue(Xml.KEY_NAME)), talentElement);
-				Debug.trace("Xml popuplate talent " + talentElement);
+				Talent talent = hero.getTalent(talentElement.getAttributeValue(Xml.KEY_NAME));
+				if (talent != null) {
+					writeTalent(hero, talent, talentElement);
+					Debug.trace("Xml popuplate talent " + talentElement);
+				} else {
+					Debug.trace("Xml popuplate talent not found " + talentElement);
+				}
 			} catch (TalentTypeUnknownException e) {
 				Debug.error("Skipping talent since it's unknown " + talentElement, e);
 			}
@@ -1482,21 +1488,33 @@ public class HeldenXmlParser {
 		List<Element> combatAttributesList = DomUtil.getChildrenByTagName(heldElement, Xml.KEY_KAMPF,
 				Xml.KEY_KAMPFWERTE);
 
-		for (Element combatTalent : combatAttributesList) {
+		for (Element combatTalentElement : combatAttributesList) {
 			try {
-				writeCombatTalent(hero, hero.getCombatTalent(combatTalent.getAttributeValue(Xml.KEY_NAME)),
-						combatTalent);
-				Debug.trace("Xml popuplate combattalent " + combatTalent);
+
+				BaseCombatTalent combatTalent = hero.getCombatTalent(combatTalentElement
+						.getAttributeValue(Xml.KEY_NAME));
+				if (combatTalent != null) {
+					writeCombatTalent(hero, combatTalent, combatTalentElement);
+					Debug.trace("Xml popuplate combattalent " + combatTalentElement);
+				} else {
+					Debug.trace("Xml popuplate combattalent not found " + combatTalentElement);
+				}
 			} catch (TalentTypeUnknownException e) {
-				Debug.error("Skipping combattalent since it's unknown " + combatTalent, e);
+				Debug.error("Skipping combattalent since it's unknown " + combatTalentElement, e);
 			}
 		}
 
 		List<Element> spellList = DomUtil.getChildrenByTagName(heldElement, Xml.KEY_ZAUBERLISTE, Xml.KEY_ZAUBER);
 
-		for (Element spell : spellList) {
-			writeSpell(hero, hero.getSpell(spell.getAttributeValue(Xml.KEY_NAME)), spell);
-			Debug.trace("Xml popuplate spell " + spell);
+		for (Element spellElement : spellList) {
+			Spell spell = hero.getSpell(spellElement.getAttributeValue(Xml.KEY_NAME));
+			if (spell != null) {
+				writeSpell(hero, spell, spellElement);
+				Debug.trace("Xml popuplate spell " + spellElement);
+			} else {
+				Debug.trace("Xml popuplate spell not found " + spellElement);
+			}
+
 		}
 
 		List<Element> sfs = DomUtil.getChildrenByTagName(heldElement, Xml.KEY_SF, Xml.KEY_SONDERFERTIGKEIT);
@@ -1506,6 +1524,8 @@ public class HeldenXmlParser {
 			if (art != null) {
 				writeArt(art, sf);
 				Debug.trace("Xml popuplate art " + sf);
+			} else {
+				Debug.trace("Xml popuplate art not found " + sf);
 			}
 		}
 
@@ -1593,7 +1613,7 @@ public class HeldenXmlParser {
 		}
 
 		// hunting weapon
-		for (int i = 0; i < Hero.MAXIMUM_SET_NUMBER; i++) {
+		for (int i = 0; i < Hero.INVENTORY_SET_COUNT; i++) {
 			boolean found = false;
 			for (Iterator<Element> iter = huntingWeaponElements.iterator(); iter.hasNext();) {
 				Element element = iter.next();
@@ -1921,12 +1941,6 @@ public class HeldenXmlParser {
 		} else {
 			element.removeAttribute(Xml.KEY_SCREEN);
 		}
-
-		if (itemInfo.getCellNumber() >= 0) {
-			element.setAttribute(Xml.KEY_CELL_NUMBER, Util.toString(itemInfo.getCellNumber()));
-		} else {
-			element.removeAttribute(Xml.KEY_CELL_NUMBER);
-		}
 	}
 
 	/**
@@ -1935,7 +1949,7 @@ public class HeldenXmlParser {
 	 */
 	private static void writeChangeEvent(ChangeEvent changeEvent, Element element) {
 		element.setAttribute(Xml.KEY_TIME, Xml.toString(changeEvent.getTime().getTime()));
-		element.setAttribute(Xml.KEY_ABENTEUERPUNKTE_UPPER, Xml.toString(changeEvent.getExperiencePoints()));
+		element.setAttribute(Xml.KEY_ABENTEUERPUNKTE_UPPER, Xml.toString(changeEvent.getExperiencePoints(), "0"));
 		element.setAttribute(Xml.KEY_ALT, Xml.toString(changeEvent.getOldValue()));
 		element.setAttribute(Xml.KEY_NEU, Xml.toString(changeEvent.getNewValue()));
 		if (!TextUtils.isEmpty(changeEvent.getInfo())) {
@@ -1955,7 +1969,7 @@ public class HeldenXmlParser {
 	 */
 	private static void writeConnection(Connection connection, Element element) {
 		element.setAttribute(Xml.KEY_DESCRIPTION, connection.getDescription());
-		element.setAttribute(Xml.KEY_SO, connection.getSozialStatus());
+		element.setAttribute(Xml.KEY_SO, Xml.toString(connection.getSozialStatus()));
 		element.setAttribute(Xml.KEY_NAME, connection.getName());
 	}
 

@@ -5,7 +5,9 @@
     android:background="?attr/listItemBackground"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:paddingLeft="?attr/listPreferredItemPaddingLeft"
-    android:paddingRight="0dp">
+    android:paddingStart="?attr/listPreferredItemPaddingLeft"
+    android:paddingRight="0dp"
+    android:paddingEnd="0dp">
     
     <ImageView
         android:id="@+id/talent_list_item_indicator"
@@ -19,6 +21,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/listPreferredItemHeight"
+    android:paddingLeft="0dp"
     android:paddingRight="?attr/listPreferredItemPaddingRight"
     android:weightSum="1.0">
 

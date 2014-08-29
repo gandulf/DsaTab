@@ -324,6 +324,10 @@ public class Art extends MarkableElement implements Value, Listable, Serializabl
 		// todo cannot change value of liturgie
 	}
 
+	public void setInfo(ArtInfo info) {
+		this.info = info;
+	}
+
 	@Override
 	public Integer getReferenceValue() {
 		return getValue();

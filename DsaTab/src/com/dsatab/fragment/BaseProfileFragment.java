@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
+import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.common.ClickSpan;
 import com.dsatab.common.ClickSpan.OnSpanClickListener;
 import com.dsatab.common.StyleableSpannableStringBuilder;
@@ -41,6 +42,8 @@ import com.dsatab.util.Util;
 import com.dsatab.view.dialog.ImageChooserDialog;
 import com.dsatab.view.dialog.PortraitViewDialog;
 import com.dsatab.view.dialog.WebInfoDialog;
+import com.gandulf.guilib.download.AbstractDownloader;
+import com.gandulf.guilib.download.DownloaderWrapper;
 import com.squareup.picasso.Picasso;
 
 public abstract class BaseProfileFragment extends BaseAttributesFragment implements OnClickListener,
@@ -67,17 +70,21 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
 				switch (item.getItemId()) {
 				case R.id.option_take_photo:
 					Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-					getActivity().startActivityForResult(camera, ACTION_PHOTO);
+					startActivityForResult(camera, ACTION_PHOTO);
 					break;
 				case R.id.option_pick_image:
-					File portraitsDir = DsaTabApplication.getDirectory(DsaTabApplication.DIR_PORTRAITS);
-					Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
-					photoPickerIntent.setDataAndType(Uri.fromFile(portraitsDir), "image/*");
-					getActivity().startActivityForResult(Intent.createChooser(photoPickerIntent, "Bild auswählen"),
-							ACTION_GALERY);
+					Util.pickImage(BaseProfileFragment.this, ACTION_GALERY);
 					break;
 				case R.id.option_pick_avatar:
-					ImageChooserDialog.pickPortrait(getBaseActivity(), getHero());
+					ImageChooserDialog.pickPortrait(getBaseActivity(), getBeing());
+					break;
+				case R.id.option_download_avatars:
+					AbstractDownloader downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath(),
+							getActivity());
+					downloader.addPath(DsaTabPreferenceActivity.PATH_WESNOTH_PORTRAITS);
+					downloader.downloadZip();
+					Toast.makeText(getActivity(), R.string.message_download_started_in_background, Toast.LENGTH_SHORT)
+							.show();
 					break;
 				}
 			}
@@ -111,7 +118,12 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
 		 */
 		@Override
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-			return false;
+			boolean portraits = ImageChooserDialog.hasPortraits();
+
+			menu.findItem(R.id.option_download_avatars).setVisible(!portraits);
+			menu.findItem(R.id.option_pick_avatar).setVisible(portraits);
+
+			return true;
 		}
 
 	}
@@ -156,7 +168,7 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
 		case ACTION_GALERY:
 			if (resultCode == Activity.RESULT_OK && getBeing() != null) {
 
-				Uri uri = data.getData();
+				Uri uri = Util.retrieveBitmapUri(getActivity(), data);
 				PhotoPicker picker = new PhotoPicker(uri, getActivity().getContentResolver());
 
 				try {
@@ -438,5 +450,6 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
 	@Override
 	public void onPortraitChanged() {
 		updatePortrait(getBeing());
+		getBaseActivity().setupNavigationDrawer();
 	}
 }

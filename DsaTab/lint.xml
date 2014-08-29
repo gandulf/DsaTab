@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
 
-    <!-- Disable this given check in this project -->
-
     <issue
         id="IconMissingDensityFolder"
         severity="ignore" />
-
+    
     <issue
         id="InvalidPackage"
         severity="ignore" />
@@ -18,19 +16,12 @@
     <!-- Ignore the ObsoleteLayoutParam issue in the given files -->
 
     <issue id="NewApi" >
-
         <ignore path="res/values/theme.xml" />
-
         <ignore path="res/values/theme_light.xml" />
-
         <ignore path="res/values-v11/theme.xml" />
-
         <ignore path="res/values-v11/theme_light.xml" />
-
         <ignore path="res/values/styles.xml" />
-
         <ignore path="res/values/styles_dsatabdark.xml" />
-
         <ignore path="res/values/styles_dsatablight.xml" />
     </issue>
 
@@ -39,5 +30,9 @@
     <issue
         id="HardcodedText"
         severity="warning" />
+    
+    <issue
+        id="AppCompatResource"
+        severity="ignore" />
 
 </lint>

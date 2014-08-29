@@ -177,11 +177,15 @@ public abstract class Xml {
 			return s;
 	}
 
-	public static String toString(Integer value) {
+	public static String toString(Integer value, String defaultValue) {
 		if (value != null)
 			return Integer.toString(value);
 		else
-			return "";
+			return defaultValue;
+	}
+
+	public static String toString(Integer value) {
+		return toString(value, "");
 	}
 
 	public static String toString(Float value) {

@@ -8,9 +8,11 @@ import java.util.Map;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -25,13 +27,14 @@ import com.dsatab.data.enums.EventCategory;
 import com.dsatab.data.enums.TalentGroupType;
 import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.modifier.Modificator;
+import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Util;
 import com.dsatab.view.ListSettings;
 import com.dsatab.view.ListSettings.ListItem;
 import com.dsatab.view.ListSettings.ListItemType;
-import com.haarman.listviewanimations.ArrayAdapter;
+import com.nhaarman.listviewanimations.ArrayAdapter;
 
-public class ListItemConfigAdapter extends ArrayAdapter<ListItem> implements OnItemSelectedListener {
+public class ListItemConfigAdapter extends ArrayAdapter<ListItem> implements OnItemSelectedListener, OnClickListener {
 
 	private LayoutInflater inflater;
 	private Hero hero;
@@ -135,6 +138,11 @@ public class ListItemConfigAdapter extends ArrayAdapter<ListItem> implements OnI
 			holder = new ViewHolder();
 			holder.text1 = (TextView) convertView.findViewById(android.R.id.text1);
 			holder.text2 = (TextView) convertView.findViewById(android.R.id.text2);
+			holder.icon1 = (ImageView) convertView.findViewById(android.R.id.icon1);
+			holder.icon2 = (ImageView) convertView.findViewById(android.R.id.icon2);
+			holder.icon2.setOnClickListener(this);
+			holder.icon2.setFocusable(false);
+
 			holder.spinner = (Spinner) convertView.findViewById(R.id.spinner);
 			holder.spinner.setFocusable(false);
 			convertView.setTag(holder);
@@ -157,7 +165,9 @@ public class ListItemConfigAdapter extends ArrayAdapter<ListItem> implements OnI
 			holder.spinner.setTag(listItem);
 			holder.text2.setVisibility(View.GONE);
 		}
-		holder.text1.setText(listItem.getType().name());
+		holder.text1.setText(listItem.getType().title());
+		holder.icon1.setImageResource(DsaUtil.getResourceId(listItem.getType()));
+		holder.icon2.setTag(listItem);
 
 		Util.applyRowStyle(convertView, position);
 		return convertView;
@@ -185,8 +195,22 @@ public class ListItemConfigAdapter extends ArrayAdapter<ListItem> implements OnI
 		}
 	}
 
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case android.R.id.icon2:
+			if (v.getTag() instanceof ListItem) {
+				ListItem listItem = (ListItem) v.getTag();
+				remove(listItem);
+			}
+			break;
+		}
+
+	}
+
 	private static final class ViewHolder {
 		TextView text1, text2;
 		Spinner spinner;
+		ImageView icon1, icon2;
 	}
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2007 The Android Open Source Project
+<!--
+     Copyright (C) 2007 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,30 +16,42 @@
 -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"    
-    android:layout_height="96dp">
+    android:layout_width="match_parent"
+    android:layout_height="96dp"
+    android:orientation="horizontal" >
 
     <ImageView
         android:id="@android:id/icon"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/profile_picture"
-        android:scaleType="centerCrop" />
-    
-    <TextView
-        android:id="@android:id/text1"
+        android:scaleType="centerCrop"
+        android:src="@drawable/profile_picture" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/Darker"
-        
-        android:gravity="bottom|right"
-        android:paddingBottom="16dp"
-        android:paddingRight="16dp"
-        
-        android:textStyle="bold"
-        android:textSize="22sp"
-        android:text="Silk Treuson"
-        android:textColor="@color/Brighter" />
+        android:background="@drawable/banner_scrim"
+        android:gravity="end"
+        android:paddingTop="42dp" >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@android:id/icon1"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_gravity="center_vertical"            
+             />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:id="@android:id/text1"            
+            android:paddingLeft="4dp"
+            android:paddingRight="8dp"
+            android:text="Silk Treuson"
+            android:textColor="@color/Brighter"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 </FrameLayout>
