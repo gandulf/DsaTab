@@ -207,14 +207,14 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 
 	public boolean checkProbe(Probe probe) {
 		if (getBaseActivity() != null)
-			return getBaseActivity().checkProbe(probe);
+			return getBaseActivity().checkProbe(getBeing(), probe);
 		else
 			return false;
 	}
 
 	public boolean checkProbe(Probe probe, boolean autoRoll) {
 		if (getBaseActivity() != null)
-			return getBaseActivity().checkProbe(probe, autoRoll);
+			return getBaseActivity().checkProbe(getBeing(), probe, autoRoll);
 		else
 			return false;
 	}
@@ -328,5 +328,9 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 		} else {
 			return null;
 		}
+	}
+
+	public boolean isDrawerOpened() {
+		return getBaseActivity() != null && getBaseActivity().isDrawerOpened();
 	}
 }

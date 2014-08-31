@@ -17,7 +17,8 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/default_gap"
             android:layout_weight="1"
-            style="@style/TextLabel.Small"            
+            style="@style/TextLabel.Small"
+            android:fontFamily="sans-serif-condensed"            
             android:ellipsize="end"
             android:singleLine="true" >
         </TextView>

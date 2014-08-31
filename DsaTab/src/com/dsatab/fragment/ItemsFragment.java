@@ -450,8 +450,8 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		containerAdapter.addAll(getHero().getItemContainers());
 
 		containerSpinnerAdapter = new ItemContainerAdapter(getActionBarActivity().getSupportActionBar()
-				.getThemedContext(), R.layout.item_spinneritem_view);
-		containerSpinnerAdapter.setDropDownViewResource(R.layout.item_spinneritem_view);
+				.getThemedContext(), R.layout.item_actionbar_spinneritem_view);
+		containerSpinnerAdapter.setDropDownViewResource(R.layout.item_actionbar_spinneritem_view);
 		containerSpinnerAdapter.add(set1);
 		containerSpinnerAdapter.add(set2);
 		containerSpinnerAdapter.add(set3);
@@ -575,17 +575,31 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	public void onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
 
-		SubMenu filterSet = menu.findItem(R.id.option_item_filter).getSubMenu();
-		ItemType[] itemType = ItemType.values();
-		for (int i = 0; i < filterSet.size(); i++) {
-			MenuItem item = filterSet.getItem(i);
-			item.setChecked(categoriesSelected.contains(itemType[item.getItemId()]));
+		if (menu.findItem(R.id.option_item_add_table) != null) {
+			menu.findItem(R.id.option_item_add_table).setVisible(!isDrawerOpened());
 		}
 
-		if (TYPE_GRID.equals(mScreenType)) {
-			menu.findItem(R.id.option_itemgrid_type_grid).setChecked(true);
-		} else {
-			menu.findItem(R.id.option_itemgrid_type_list).setChecked(true);
+		if (menu.findItem(R.id.option_add_container) != null) {
+			menu.findItem(R.id.option_add_container).setVisible(!isDrawerOpened());
+		}
+
+		if (menu.findItem(R.id.option_item_filter) != null) {
+			menu.findItem(R.id.option_item_filter).setVisible(!isDrawerOpened());
+			SubMenu filterSet = menu.findItem(R.id.option_item_filter).getSubMenu();
+			ItemType[] itemType = ItemType.values();
+			for (int i = 0; i < filterSet.size(); i++) {
+				MenuItem item = filterSet.getItem(i);
+				item.setChecked(categoriesSelected.contains(itemType[item.getItemId()]));
+			}
+		}
+
+		if (menu.findItem(R.id.option_itemgrid_type) != null) {
+			menu.findItem(R.id.option_itemgrid_type).setVisible(!isDrawerOpened());
+			if (TYPE_GRID.equals(mScreenType)) {
+				menu.findItem(R.id.option_itemgrid_type_grid).setChecked(true);
+			} else {
+				menu.findItem(R.id.option_itemgrid_type_list).setChecked(true);
+			}
 		}
 
 	}

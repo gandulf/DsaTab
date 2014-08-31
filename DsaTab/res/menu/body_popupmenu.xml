@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/option_list_items"
+        android:icon="@drawable/dsa_items"
+        app:showAsAction="withText|ifRoom"
+        android:title="Gegenstände anzeigen"/>
+    <item
+        android:id="@+id/option_take_hit"
+        android:icon="@drawable/dsa_wound_patch"
+        app:showAsAction="withText|ifRoom"
+        android:title="Treffer kassieren"/>
+<item
+        android:id="@+id/option_edit"
+        android:icon="?attr/imgBarEdit"
+        app:showAsAction="withText|ifRoom"
+        android:title="@string/label_edit"/>
+</menu>

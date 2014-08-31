@@ -85,6 +85,7 @@ import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Util;
 import com.dsatab.view.ItemListItem;
 import com.dsatab.view.ListSettings;
+import com.dsatab.view.dialog.TakeHitDialog;
 import com.dsatab.view.listener.EditListener;
 import com.dsatab.view.listener.OnActionListener;
 import com.dsatab.view.listener.ProbeListener;
@@ -423,10 +424,18 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				convertView = inflater.inflate(R.layout.item_listitem_wound, parent, false);
 				WoundViewHolder holder = new WoundViewHolder();
 
+				ImageButton takehit = (ImageButton) convertView.findViewById(R.id.dice_take_hit);
+				takehit.setOnClickListener(this);
+
+				ViewGroup woundContainer = (ViewGroup) convertView.findViewById(R.id.wound_container);
 				int width = parent.getWidth();
 				width -= (parent.getPaddingLeft() + parent.getPaddingRight());
 				int buttonSize = getContext().getResources().getDimensionPixelSize(R.dimen.icon_button_size);
 				int gap = getContext().getResources().getDimensionPixelSize(R.dimen.default_gap);
+
+				// remove takehitButtonWidth
+				width -= (buttonSize + gap);
+
 				int halfgap = gap / 2;
 				int buttonCount = (int) Math.floor(((float) width / (buttonSize + gap)));
 
@@ -462,7 +471,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 					woundButton.setChecked(false);
 					woundButton.setOnClickListener(this);
 					holder.wounds[i] = woundButton;
-					((ViewGroup) convertView).addView(woundButton);
+					woundContainer.addView(woundButton);
 				}
 
 				convertView.setTag(holder);
@@ -602,6 +611,13 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 
 	@Override
 	public void onClick(View v) {
+
+		switch (v.getId()) {
+		case R.id.dice_take_hit:
+			TakeHitDialog takeHitDialog = new TakeHitDialog(getContext(), hero, null);
+			takeHitDialog.show();
+			return;
+		}
 
 		if (v.getTag() == null && v instanceof ToggleButton) {
 
@@ -880,7 +896,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		holder.icon2.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				main.checkProbe(attribute, false);
+				main.checkProbe(hero, attribute, false);
 			}
 		});
 

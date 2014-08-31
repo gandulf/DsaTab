@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -35,20 +34,22 @@ public class ImageChooserDialog extends AlertDialog implements AdapterView.OnIte
 
 	private Uri imageUri;
 
-	public static boolean hasPortraits() {
-		File portraitDir = DsaTabApplication.getDirectory(DsaTabApplication.DIR_PORTRAITS);
-		File[] files = portraitDir.listFiles(new FileFileFilter());
+	public static interface OnImageSelectedListener {
+		public void onImageSelected(Uri imageUri);
+	}
+
+	public static boolean hasFiles(File dir) {
+		File[] files = dir.listFiles(new FileFileFilter());
 		if (files != null && files.length > 0) {
 			return true;
 		}
 		return false;
 	}
 
-	public static boolean pickPortrait(Activity activity, final AbstractBeing being) {
-		final ImageChooserDialog pdialog = new ImageChooserDialog(activity);
+	public static boolean pickFile(File dir, Context context, final OnImageSelectedListener imageSelectedListener) {
+		final ImageChooserDialog pdialog = new ImageChooserDialog(context);
 
-		File portraitDir = DsaTabApplication.getDirectory(DsaTabApplication.DIR_PORTRAITS);
-		File[] files = portraitDir.listFiles(new FileFileFilter());
+		File[] files = dir.listFiles(new FileFileFilter());
 		List<Uri> portraitPaths = null;
 		if (files != null) {
 			portraitPaths = new ArrayList<Uri>(files.length);
@@ -58,10 +59,10 @@ public class ImageChooserDialog extends AlertDialog implements AdapterView.OnIte
 		}
 
 		if (portraitPaths == null || portraitPaths.isEmpty()) {
-			String path = portraitDir.getAbsolutePath();
+			String path = dir.getAbsolutePath();
 			Toast.makeText(
-					activity,
-					"Keine Portraits gefunden. Kopiere deine eigenen auf deine SD-Karte unter \"" + path
+					context,
+					"Keine Bilder gefunden. Kopiere deine eigenen auf deine SD-Karte unter \"" + path
 							+ "\" oder lade die Standardportraits in den Einstellungen herunter.", Toast.LENGTH_LONG)
 					.show();
 
@@ -73,13 +74,30 @@ public class ImageChooserDialog extends AlertDialog implements AdapterView.OnIte
 				@Override
 				public void onDismiss(DialogInterface dialog) {
 					if (pdialog.getImageUri() != null) {
-						being.setPortraitUri(pdialog.getImageUri());
+						imageSelectedListener.onImageSelected(pdialog.getImageUri());
 					}
 				}
 			});
 			pdialog.show();
 			return true;
 		}
+
+	}
+
+	public static boolean hasPortraits() {
+		return hasFiles(DsaTabApplication.getDirectory(DsaTabApplication.DIR_PORTRAITS));
+	}
+
+	public static boolean pickPortrait(Context context, final AbstractBeing being) {
+
+		OnImageSelectedListener imageSelectedListener = new OnImageSelectedListener() {
+			@Override
+			public void onImageSelected(Uri imageUri) {
+				being.setPortraitUri(imageUri);
+			}
+		};
+
+		return pickFile(DsaTabApplication.getDirectory(DsaTabApplication.DIR_PORTRAITS), context, imageSelectedListener);
 	}
 
 	public ImageChooserDialog(Context context) {
@@ -160,8 +178,6 @@ public class ImageChooserDialog extends AlertDialog implements AdapterView.OnIte
 				tv = (ImageView) convertView;
 			} else {
 				tv = new ImageView(getContext());
-				int gap = getContext().getResources().getDimensionPixelSize(R.dimen.default_gap);
-				tv.setPadding(gap, gap, gap, gap);
 				tv.setScaleType(scaleType);
 			}
 

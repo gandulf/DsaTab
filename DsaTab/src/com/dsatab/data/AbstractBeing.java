@@ -3,6 +3,7 @@ package com.dsatab.data;
 import java.net.URI;
 import java.util.EnumMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -16,7 +17,9 @@ import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.FeatureType;
 import com.dsatab.data.enums.TalentGroupType;
 import com.dsatab.data.enums.TalentType;
+import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.modifier.Modificator;
+import com.dsatab.data.modifier.Modifier;
 import com.dsatab.util.Debug;
 import com.dsatab.view.listener.HeroChangedListener;
 
@@ -271,6 +274,10 @@ public abstract class AbstractBeing {
 	public abstract Integer getModifiedValue(AttributeType type, boolean includeBe, boolean includeLeAu);
 
 	public abstract int getModifier(Probe probe, boolean includeBe, boolean includeLeAu);
+
+	public abstract List<Modifier> getModifiers(Probe probe, boolean includeBe, boolean includeLeAu);
+
+	public abstract int getModifierTP(EquippedItem weapon);
 
 	public int getModifier(Probe probe) {
 		return getModifier(probe, true, true);

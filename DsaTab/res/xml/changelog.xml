@@ -1,4 +1,11 @@
 <changelog>    
+
+<release version="4.3.3" versioncode="89">        
+    <change>'Treffer kassieren'-Dialog bei mißlungener Parade hinzugefügt</change>
+    <change>Schriftbild überarbeitet (Roboto Light / Condensed)</change>
+    <fix>Begleiter Proben basieren nicht mehr auf den Modifikatoren des Helden</fix>
+</release>
+
 <release version="4.3.2" versioncode="88">        
     <change>Profilbild bei Navigation hinzugefügt</change>
     <change>Regeln bei Modifikatoren können nun in "" gesetzt werden, falls ein Beistrich im Namen ist.</change>

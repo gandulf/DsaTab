@@ -13,8 +13,8 @@ import au.com.bytecode.opencsv.CSVReader;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.data.ArtInfo;
 import com.dsatab.data.SpellInfo;
-import com.dsatab.data.enums.ArmorPosition;
 import com.dsatab.data.enums.ItemType;
+import com.dsatab.data.enums.Position;
 import com.dsatab.data.enums.TalentType;
 import com.dsatab.data.items.Armor;
 import com.dsatab.data.items.DistanceWeapon;
@@ -176,7 +176,7 @@ public class XmlParser {
 			CSVReader reader = new CSVReader(r, ';', '"', 1);
 			String[] lineData;
 
-			List<ArmorPosition> armorPositions = DsaTabApplication.getInstance().getConfiguration().getArmorPositions();
+			List<Position> armorPositions = DsaTabApplication.getInstance().getConfiguration().getArmorPositions();
 
 			RuntimeExceptionDao<Weapon, Integer> weaponDao = DsaTabApplication.getInstance().getDBHelper()
 					.getRuntimeDao(Weapon.class);
@@ -315,14 +315,14 @@ public class XmlParser {
 		return null;
 	}
 
-	private static Armor readArmor(Item item, String[] lineData, List<ArmorPosition> armorPositions) {
+	private static Armor readArmor(Item item, String[] lineData, List<Position> armorPositions) {
 
 		Armor w = new Armor(item);
 
 		w.setTotalBe(Util.parseFloat(lineData[4]));
 
 		int i = 5;
-		for (ArmorPosition pos : armorPositions) {
+		for (Position pos : armorPositions) {
 			w.setRs(pos, Util.parseInt(lineData[i++], 0));
 		}
 

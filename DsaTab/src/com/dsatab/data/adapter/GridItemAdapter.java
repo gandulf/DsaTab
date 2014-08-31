@@ -100,6 +100,7 @@ public class GridItemAdapter extends OpenArrayAdapter<ItemCard> {
 			cardView = (CardView) convertView;
 		} else {
 			cardView = new CardView(getContext());
+			cardView.setCheckable(true);
 			if (cardView.getBackground() != null)
 				cardView.getBackground().mutate();
 

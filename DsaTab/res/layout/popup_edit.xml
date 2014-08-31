@@ -3,11 +3,11 @@
     android:id="@+id/popup_edit_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/default_gap" 
-    android:showDividers="middle"
     android:divider="?attr/dividerHorizontal"
-    android:dividerPadding="12dp"
-    android:orientation="vertical">
+    android:dividerPadding="?attr/dividerPadding"
+    android:orientation="vertical"
+    android:padding="@dimen/default_gap"
+    android:showDividers="middle">
 
     <CheckBox
         android:id="@+id/popup_edit_be_calculation"
@@ -19,13 +19,12 @@
     <net.simonvt.numberpicker.NumberPicker
         android:id="@+id/popup_edit_text"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-    />
+        android:layout_height="200dp" />
 
     <ToggleButton
         android:id="@+id/popup_edit_combat_style"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"                >
+        android:layout_height="wrap_content" >
     </ToggleButton>
 
 </LinearLayout>

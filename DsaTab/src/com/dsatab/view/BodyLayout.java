@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.CheckedTextView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -16,7 +17,6 @@ import android.widget.ToggleButton;
 import com.dsatab.R;
 import com.dsatab.data.ArmorAttribute;
 import com.dsatab.data.WoundAttribute;
-import com.dsatab.data.enums.ArmorPosition;
 import com.dsatab.data.enums.Position;
 import com.dsatab.util.Util;
 
@@ -59,8 +59,8 @@ public class BodyLayout extends FrameLayout {
 
 	private int woundSizePx;
 
-	private Map<ArmorPosition, TextView> armorButtons = new HashMap<ArmorPosition, TextView>(
-			ArmorPosition.values().length);
+	private Map<Position, CheckedTextView> armorButtons = new HashMap<Position, CheckedTextView>(
+			Position.ARMOR_POSITIONS.size());
 	private Map<Position, ToggleButton[]> woundButtons = new HashMap<Position, ToggleButton[]>(Position.values().length);
 
 	private OnClickListener onArmorClickListener;
@@ -69,17 +69,12 @@ public class BodyLayout extends FrameLayout {
 
 	public static class LayoutParams extends FrameLayout.LayoutParams {
 		private Position position;
-		private ArmorPosition armorPosition;
+		private Position armorPosition;
 
-		public LayoutParams(int width, int height, Position position) {
+		public LayoutParams(int width, int height, Position woundPosition, Position armorPosition) {
 			super(width, height);
-			this.position = position;
-
-		}
-
-		public LayoutParams(int width, int height, ArmorPosition position) {
-			super(width, height);
-			this.armorPosition = position;
+			this.position = woundPosition;
+			this.armorPosition = armorPosition;
 		}
 
 		public Position getPosition() {
@@ -90,11 +85,11 @@ public class BodyLayout extends FrameLayout {
 			this.position = position;
 		}
 
-		public ArmorPosition getArmorPosition() {
+		public Position getArmorPosition() {
 			return armorPosition;
 		}
 
-		public void setArmorPosition(ArmorPosition armorPosition) {
+		public void setArmorPosition(Position armorPosition) {
 			this.armorPosition = armorPosition;
 		}
 
@@ -115,6 +110,16 @@ public class BodyLayout extends FrameLayout {
 		init();
 	}
 
+	public void setArmorAttributeChecked(Position position, boolean checked) {
+		armorButtons.get(position).setChecked(checked);
+	}
+
+	public void clearArmorAttributeChecked() {
+		for (CheckedTextView textView : armorButtons.values()) {
+			textView.setChecked(false);
+		}
+	}
+
 	public void setArmorAttribute(ArmorAttribute attr) {
 		TextView rsText = armorButtons.get(attr.getPosition());
 		if (rsText == null) {
@@ -123,7 +128,7 @@ public class BodyLayout extends FrameLayout {
 		setValue(rsText, attr);
 	}
 
-	public void setArmorAttributes(Map<ArmorPosition, ArmorAttribute> attributes) {
+	public void setArmorAttributes(Map<Position, ArmorAttribute> attributes) {
 
 		// remove old buttons if existing
 		for (TextView tv : armorButtons.values()) {
@@ -250,20 +255,21 @@ public class BodyLayout extends FrameLayout {
 		woundButton.setChecked(false);
 		woundButton.setOnCheckedChangeListener(onWoundClickListener);
 
-		addView(woundButton, new LayoutParams(woundSizePx, woundSizePx, attr.getPosition()));
+		addView(woundButton, new LayoutParams(woundSizePx, woundSizePx, attr.getPosition(), null));
 		return woundButton;
 	}
 
-	protected TextView addArmorButton(ArmorPosition pos) {
-		TextView rsText = new TextView(getContext());
+	protected TextView addArmorButton(Position pos) {
+		CheckedTextView rsText = new CheckedTextView(getContext());
 
+		rsText.setCheckMarkDrawable(0);
 		rsText.setBackgroundResource(R.drawable.icon_armor_btn);
 		rsText.setOnClickListener(onArmorClickListener);
 		rsText.setOnLongClickListener(onArmorLongClickListener);
 		rsText.setGravity(Gravity.CENTER);
 		rsText.setTextColor(getResources().getColor(android.R.color.primary_text_light));
 
-		addView(rsText, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, pos));
+		addView(rsText, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, null, pos));
 
 		armorButtons.put(pos, rsText);
 
@@ -322,16 +328,16 @@ public class BodyLayout extends FrameLayout {
 					case Brust:
 						chestWidth += child.getMeasuredWidth();
 						break;
-					case LeftLowerArm:
+					case LinkerArm:
 						leftArmWidth += child.getMeasuredWidth();
 						break;
-					case RightLowerArm:
+					case RechterArm:
 						rightArmWidth += child.getMeasuredWidth();
 						break;
-					case UpperLeg:
+					case LinkesBein:
 						upperLegWidth += child.getMeasuredWidth();
 						break;
-					case LowerLeg:
+					case RechtesBein:
 						lowerLegWidth += child.getMeasuredWidth();
 						break;
 					default:
@@ -402,25 +408,25 @@ public class BodyLayout extends FrameLayout {
 						ct = chestY;
 						cb = ct + child.getMeasuredHeight();
 						break;
-					case LeftLowerArm:
+					case LinkerArm:
 						cl = leftArmX;
 						cr = leftArmX = leftArmX + child.getMeasuredWidth();
 						ct = leftArmY;
 						cb = ct + child.getMeasuredHeight();
 						break;
-					case RightLowerArm:
+					case RechterArm:
 						cl = rightArmX;
 						cr = rightArmX = rightArmX + child.getMeasuredWidth();
 						ct = rightArmY;
 						cb = ct + child.getMeasuredHeight();
 						break;
-					case UpperLeg:
+					case LinkesBein:
 						cl = upperLegX;
 						cr = upperLegX = upperLegX + child.getMeasuredWidth();
 						ct = upperLegY;
 						cb = ct + child.getMeasuredHeight();
 						break;
-					case LowerLeg:
+					case RechtesBein:
 						cl = lowerLegX;
 						cr = lowerLegX = lowerLegX + child.getMeasuredWidth();
 						ct = lowerLegY;
@@ -499,7 +505,7 @@ public class BodyLayout extends FrameLayout {
 	@Override
 	public LayoutParams generateLayoutParams(AttributeSet attrs) {
 		return new LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-				android.view.ViewGroup.LayoutParams.WRAP_CONTENT, Position.Kopf);
+				android.view.ViewGroup.LayoutParams.WRAP_CONTENT, Position.Kopf, null);
 	}
 
 	@Override

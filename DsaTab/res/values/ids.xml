@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  
-  <item type="id" name="option_load_hero" />
+    
   <item type="id" name="option_save_hero" />
   <item type="id" name="option_export_hero" />
   <item type="id" name="option_filter" />  
@@ -11,7 +10,7 @@
     
   <item type="id" name="option_hero_import" />
   
-  <item type="id" name="option_tabs" />
+  
   <item type="id" name="option_tab_reset" />
   <item type="id" name="option_tab_add" />
   <item type="id" name="option_tab_delete" />

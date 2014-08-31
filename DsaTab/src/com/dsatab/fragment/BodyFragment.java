@@ -1,6 +1,7 @@
 package com.dsatab.fragment;
 
 import java.io.File;
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import android.app.Activity;
@@ -11,9 +12,11 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
@@ -41,6 +44,8 @@ import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemContainer;
 import com.dsatab.util.Util;
 import com.dsatab.view.BodyLayout;
+import com.dsatab.view.dialog.InlineEditDialog;
+import com.dsatab.view.dialog.TakeHitDialog;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
 
 public class BodyFragment extends BaseFragment implements OnClickListener, OnLongClickListener,
@@ -52,6 +57,113 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 
 	private ImageView bodyBackground;
 
+	protected ActionMode mMode;
+
+	protected ActionMode.Callback mCallback;
+
+	protected ArmorAttribute selectedArmorAttribute;
+
+	private static final class BodyActionMode implements ActionMode.Callback {
+
+		private WeakReference<BodyFragment> fragment;
+
+		public BodyActionMode(BodyFragment fragment) {
+			this.fragment = new WeakReference<BodyFragment>(fragment);
+		}
+
+		@Override
+		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+			BodyFragment bodyFragment = fragment.get();
+			if (bodyFragment == null || bodyFragment.getActivity() == null)
+				return false;
+
+			if (bodyFragment.getHero() != null) {
+				mode.getMenuInflater().inflate(R.menu.body_popupmenu, menu);
+				mode.setTitle("Wunden");
+				if (bodyFragment.selectedArmorAttribute != null) {
+					mode.setSubtitle(bodyFragment.selectedArmorAttribute.getName());
+				}
+			}
+			return true;
+		}
+
+		@Override
+		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+			BodyFragment bodyFragment = fragment.get();
+			if (bodyFragment == null || bodyFragment.getActivity() == null)
+				return false;
+
+			if (bodyFragment.selectedArmorAttribute != null) {
+				mode.setSubtitle(bodyFragment.selectedArmorAttribute.getName());
+			} else {
+				mode.setSubtitle(null);
+			}
+			return false;
+		}
+
+		@Override
+		public boolean onActionItemClicked(ActionMode mode, MenuItem menuItem) {
+			final BodyFragment bodyFragment = fragment.get();
+			if (bodyFragment == null || bodyFragment.getActivity() == null)
+				return false;
+
+			switch (menuItem.getItemId()) {
+			case R.id.option_list_items:
+				if (bodyFragment.selectedArmorAttribute != null) {
+					final List<EquippedItem> equippedItems = bodyFragment.getHero().getArmor(
+							bodyFragment.selectedArmorAttribute.getPosition());
+
+					if (equippedItems.isEmpty()) {
+						Toast.makeText(bodyFragment.getActivity(), "Keine Einträge gefunden", Toast.LENGTH_SHORT)
+								.show();
+					} else if (equippedItems.size() == 1) {
+						ItemsActivity.view(bodyFragment.getActivity(), bodyFragment.getHero(), equippedItems.get(0));
+					} else {
+						AlertDialog.Builder builder = new AlertDialog.Builder(bodyFragment.getActivity());
+						builder.setTitle("Rüstung");
+						final EquippedItemAdapter adapter = new EquippedItemAdapter(bodyFragment.getActivity(),
+								equippedItems);
+						builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								ItemsActivity.view(bodyFragment.getActivity(), bodyFragment.getHero(),
+										adapter.getItem(which));
+							}
+						});
+						builder.show().setCanceledOnTouchOutside(true);
+					}
+				}
+				mode.finish();
+				return true;
+			case R.id.option_take_hit:
+				TakeHitDialog takeHitDialog = new TakeHitDialog(bodyFragment.getActivity(), bodyFragment.getBeing(),
+						bodyFragment.selectedArmorAttribute.getPosition());
+				takeHitDialog.show();
+				mode.finish();
+				return true;
+			case R.id.option_edit:
+				InlineEditDialog inlineEditdialog = new InlineEditDialog(bodyFragment.getActivity(),
+						bodyFragment.selectedArmorAttribute);
+				inlineEditdialog.setTitle(bodyFragment.selectedArmorAttribute.getName());
+				inlineEditdialog.show();
+				mode.finish();
+				return true;
+			}
+			return false;
+		}
+
+		@Override
+		public void onDestroyActionMode(ActionMode actionMode) {
+			BodyFragment bodyFragment = fragment.get();
+			if (bodyFragment != null && bodyFragment.getActivity() != null)
+				bodyFragment.setSelectedArmorAttribute(null);
+
+			bodyFragment.mMode = null;
+
+		}
+
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -61,6 +173,8 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
+
+		mCallback = new BodyActionMode(this);
 	}
 
 	/*
@@ -191,26 +305,19 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 
 		// armor
 		if (v.getTag() instanceof ArmorAttribute) {
-			ArmorAttribute value = (ArmorAttribute) v.getTag();
 
-			final List<EquippedItem> equippedItems = getHero().getArmor(value.getPosition());
-
-			if (equippedItems.isEmpty()) {
-				Toast.makeText(getActivity(), "Keine Einträge gefunden", Toast.LENGTH_SHORT).show();
-			} else if (equippedItems.size() == 1) {
-				ItemsActivity.view(getActivity(), getHero(), equippedItems.get(0));
+			// on click on already selected armorattribute uncheck it
+			if (selectedArmorAttribute == v.getTag() && mMode != null) {
+				mMode.finish();
+				setSelectedArmorAttribute(null);
 			} else {
-				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-				builder.setTitle("Rüstung");
-				final EquippedItemAdapter adapter = new EquippedItemAdapter(getActivity(), equippedItems);
-				builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						ItemsActivity.view(getActivity(), getHero(), adapter.getItem(which));
-					}
-				});
-				builder.show().setCanceledOnTouchOutside(true);
-				;
+				setSelectedArmorAttribute((ArmorAttribute) v.getTag());
+
+				if (mMode == null) {
+					mMode = getActionBarActivity().startSupportActionMode(mCallback);
+				}
+				mMode.invalidate();
+
 			}
 
 		}
@@ -257,6 +364,15 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 		bodyLayout.setArmorAttributes(getHero().getArmorAttributes());
 		if (getActivity() != null) {
 			getActivity().supportInvalidateOptionsMenu();
+		}
+	}
+
+	protected void setSelectedArmorAttribute(ArmorAttribute selectedArmorAttribute) {
+		this.selectedArmorAttribute = selectedArmorAttribute;
+
+		bodyLayout.clearArmorAttributeChecked();
+		if (selectedArmorAttribute != null) {
+			bodyLayout.setArmorAttributeChecked(selectedArmorAttribute.getPosition(), true);
 		}
 	}
 

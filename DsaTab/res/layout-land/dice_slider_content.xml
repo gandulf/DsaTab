@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/contentLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
@@ -55,7 +54,6 @@
         android:src="?attr/dividerHorizontal" />
     
     <LinearLayout
-        android:id="@+id/dice_dices"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/default_gap"
@@ -94,8 +92,8 @@
 
         <ImageView
             android:id="@+id/dice_w20"
-            android:layout_width="@dimen/dice_size"
-            android:layout_height="@dimen/dice_size"
+            android:layout_width="@dimen/icon_button_size"
+            android:layout_height="@dimen/icon_button_size"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/default_gap"
             android:layout_marginRight="@dimen/default_gap"
@@ -105,8 +103,8 @@
 
         <ImageView
             android:id="@+id/dice_w6"
-            android:layout_width="@dimen/dice_size"
-            android:layout_height="@dimen/dice_size"
+            android:layout_width="@dimen/icon_button_size"
+            android:layout_height="@dimen/icon_button_size"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/default_gap"
             android:scaleType="fitCenter"
@@ -115,11 +113,20 @@
 
         <ImageButton
             android:id="@+id/dice_execute"
-            android:layout_width="@dimen/dice_size"
-            android:layout_height="@dimen/dice_size"
+            android:layout_width="@dimen/icon_button_size"
+            android:layout_height="@dimen/icon_button_size"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/default_gap"
             android:src="@drawable/ic_menu_play_clip" />
+        
+        <ImageButton
+            android:id="@+id/dice_take_hit"
+            android:layout_width="@dimen/icon_button_size"
+            android:layout_height="@dimen/icon_button_size"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/default_gap"
+            android:gravity="center"
+            android:src="@drawable/dsa_wound_patch" />
     </LinearLayout>
 
     <LinearLayout

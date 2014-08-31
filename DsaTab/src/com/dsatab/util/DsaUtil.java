@@ -15,8 +15,8 @@ import com.dsatab.data.CustomProbe;
 import com.dsatab.data.Probe;
 import com.dsatab.data.Spell;
 import com.dsatab.data.Talent;
-import com.dsatab.data.enums.ArmorPosition;
 import com.dsatab.data.enums.ItemType;
+import com.dsatab.data.enums.Position;
 import com.dsatab.data.items.Armor;
 import com.dsatab.data.items.DistanceWeapon;
 import com.dsatab.data.items.EquippedItem;
@@ -364,9 +364,9 @@ public class DsaUtil {
 		Item item = armor.getItem();
 
 		if (Armor.CATEGORY_HELM.equalsIgnoreCase(item.getCategory())) {
-			if (armor.getRs(ArmorPosition.Kopf) > 5)
+			if (armor.getRs(Position.Kopf) > 5)
 				return R.drawable.dsa_helm_full2;
-			else if (armor.getRs(ArmorPosition.Kopf) > 0)
+			else if (armor.getRs(Position.Kopf) > 0)
 				return R.drawable.dsa_helm_full;
 			else
 				return R.drawable.dsa_helm_half;

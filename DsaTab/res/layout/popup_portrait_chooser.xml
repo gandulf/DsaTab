@@ -5,6 +5,7 @@
 	    android:layout_height="fill_parent"
 	    android:columnWidth="@dimen/portrait_width_small"
 	    android:cacheColorHint="#00000000"
+	    android:drawSelectorOnTop="true"
 	    android:numColumns="auto_fit"
 	    android:stretchMode="columnWidth" >
 </GridView>

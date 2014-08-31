@@ -2,23 +2,33 @@
 <com.dsatab.view.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/listItemBackground"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:paddingRight="?attr/listPreferredItemPaddingRight"
-    android:paddingLeft="?attr/listPreferredItemPaddingLeft"
     android:layout_gravity="center"
-    android:gravity="center">
+    android:background="?attr/listItemBackground"
+    android:gravity="center"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:paddingLeft="?attr/listPreferredItemPaddingLeft"
+    android:paddingRight="?attr/listPreferredItemPaddingRight" 
+    android:divider="?attr/dividerVertical"
+    android:showDividers="middle"
+    android:dividerPadding="?attr/dividerPadding"
+    android:orientation="horizontal">
 
-    <!-- 
-    <ToggleButton
-        android:id="@+id/wound1"
+    <LinearLayout
+        android:id="@+id/wound_container"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:gravity="center" 
+        android:orientation="horizontal">
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/dice_take_hit"
         android:layout_width="@dimen/icon_button_size"
         android:layout_height="@dimen/icon_button_size"
-        android:layout_marginRight="@dimen/default_gap"
-        android:textOn=""
-        android:textOff=""
-        android:background="@drawable/icon_wound_btn" />
- -->
-    
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/default_gap"
+        android:gravity="center"
+        android:src="@drawable/dsa_wound_patch" />
 
 </com.dsatab.view.CheckableLinearLayout>

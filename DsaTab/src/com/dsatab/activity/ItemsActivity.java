@@ -195,7 +195,6 @@ public class ItemsActivity extends BaseActivity implements OnItemSelectedListene
 		}
 
 		getSupportActionBar().setDisplayShowHomeEnabled(true);
-		getSupportActionBar().setDisplayUseLogoEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
 

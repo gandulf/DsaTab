@@ -22,9 +22,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="true"
+        android:paddingTop="@dimen/default_gap"
         android:layout_toLeftOf="@+id/active"
         android:layout_toRightOf="@android:id/icon1"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:fontFamily="sans-serif-condensed"
         android:textStyle="bold" />
 
     <TextView
@@ -34,7 +36,7 @@
         android:layout_alignLeft="@android:id/text1"
         android:layout_alignRight="@android:id/text1"
         android:layout_below="@android:id/text1"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:textStyle="normal" />
 
     <CheckBox

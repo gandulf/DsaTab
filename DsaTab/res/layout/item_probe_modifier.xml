@@ -14,6 +14,7 @@
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:text="@string/label_talentname"
+        android:fontFamily="sans-serif-condensed"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <Spinner

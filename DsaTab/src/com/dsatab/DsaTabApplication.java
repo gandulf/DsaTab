@@ -37,6 +37,7 @@ import com.dsatab.db.DatabaseHelper;
 import com.dsatab.map.BitmapTileSource;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
+import com.dsatab.view.dialog.ChangeLogDialog;
 import com.dsatab.xml.HeldenXmlParser;
 import com.dsatab.xml.Xml;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
@@ -98,6 +99,7 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 	private Typeface poorRichFont;
 
 	private boolean firstRun;
+	private boolean newsShown = false;
 
 	/**
 	 * Convenient access, saves having to call and cast getApplicationContext()
@@ -376,6 +378,15 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 			OpenHelperManager.releaseHelper();
 			databaseHelper = null;
 		}
+	}
+
+	public void showNewsInfoPopup(Activity activity) {
+		if (newsShown)
+			return;
+
+		ChangeLogDialog logDialog = new ChangeLogDialog(activity);
+		logDialog.show();
+		newsShown = true;
 	}
 
 	public void saveHero(Activity activity) {

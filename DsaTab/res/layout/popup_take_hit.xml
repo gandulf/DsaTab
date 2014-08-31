@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/popup_edit_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/default_gap" >
+
+    <TextView
+        android:id="@+id/popup_position_label"
+        style="@style/TextLabel.Float"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Trefferzone" />
+
+    <Spinner
+        android:id="@+id/popup_position"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <net.simonvt.numberpicker.NumberPicker
+        android:id="@+id/popup_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+    
+    <ToggleButton
+        android:id="@+id/popup_damage_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ToggleButton>
+    
+    <CheckBox
+        android:id="@+id/popup_consider_rs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/label_consider_rs" >
+    </CheckBox>
+    
+    <CheckBox
+        android:id="@+id/popup_consider_wound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/label_consider_wound" >
+    </CheckBox>
+    
+
+</LinearLayout>

@@ -2,8 +2,8 @@ package com.dsatab.data.items;
 
 import java.util.Locale;
 
-import com.dsatab.data.enums.ArmorPosition;
 import com.dsatab.data.enums.ItemType;
+import com.dsatab.data.enums.Position;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -129,7 +129,7 @@ public class Armor extends ItemSpecification {
 		this.totalPieces = totalPieces;
 	}
 
-	public int getRs(ArmorPosition pos) {
+	public int getRs(Position pos) {
 		switch (pos) {
 		case Bauch:
 			return rsBauch;
@@ -153,7 +153,7 @@ public class Armor extends ItemSpecification {
 
 	}
 
-	public void setRs(ArmorPosition pos, int rs) {
+	public void setRs(Position pos, int rs) {
 
 		switch (pos) {
 		case Bauch:

@@ -17,6 +17,8 @@
     <string name="label_alter">Alter</string>
     <string name="label_ausbildung">Ausbildung</string>
     <string name="label_gewicht">Gewicht</string>
+    <string name="label_consider_rs">RS berücksichtigen</string>
+    <string name="label_consider_wound">Wunde berücksichtigen</string>
     <string name="label_groesse">Größe</string>
     <string name="label_rasse">Rasse</string>
     <string name="label_capacity">Kapazität</string>

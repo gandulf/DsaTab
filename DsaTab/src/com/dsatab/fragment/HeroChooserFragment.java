@@ -90,6 +90,12 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 	private AlertDialog dropboxDialog;
 	private AlertDialog heldenAustauschDialog;
 
+	public interface OnHeroSelectedListener {
+		public void onHeroSelected(HeroFileInfo heroFileInfo);
+	}
+
+	private OnHeroSelectedListener onHeroSelectedListener;
+
 	private final class HeroesActionMode implements ActionMode.Callback {
 
 		@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -262,6 +268,21 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 		return root;
 	}
 
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+
+		if (activity instanceof OnHeroSelectedListener) {
+			onHeroSelectedListener = (OnHeroSelectedListener) activity;
+		}
+	}
+
+	@Override
+	public void onDetach() {
+		onHeroSelectedListener = null;
+		super.onDetach();
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -370,6 +391,10 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 
 	@Override
 	public void onLoadFinished(Loader<List<HeroFileInfo>> loader, List<HeroFileInfo> heroes) {
+		// if the loader finishes after activity is gone already just skip it
+		if (getActionBarActivity() == null)
+			return;
+
 		getActionBarActivity().setSupportProgressBarIndeterminateVisibility(false);
 		if (loadingView.getVisibility() != View.GONE) {
 			loadingView.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
@@ -471,6 +496,10 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 			menuItem.setVisible(dropboxDialog != null);
 		}
 
+		menuItem = menu.findItem(R.id.option_search);
+		if (menuItem != null) {
+			menuItem.setVisible(false);
+		}
 	}
 
 	@Override
@@ -620,15 +649,18 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 					@Override
 					public void onHeroInfoLoaded(List<HeroFileInfo> infos) {
 						if (infos != null && !infos.isEmpty()) {
-							getBaseActivity().loadHero(infos.get(0));
-
+							if (onHeroSelectedListener != null) {
+								onHeroSelectedListener.onHeroSelected(infos.get(0));
+							}
 						}
 					}
 				};
 
 				exchange.download(hero, listener);
 			} else {
-				getBaseActivity().loadHero(hero);
+				if (onHeroSelectedListener != null) {
+					onHeroSelectedListener.onHeroSelected(hero);
+				}
 			}
 		}
 	}

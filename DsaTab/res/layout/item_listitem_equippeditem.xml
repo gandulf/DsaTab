@@ -50,7 +50,8 @@
         android:singleLine="true"
         android:marqueeRepeatLimit="marquee_forever"
         android:scrollHorizontally="true"        
-        android:textAppearance="?android:attr/textAppearanceMedium"        
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:fontFamily="sans-serif-condensed"        
         android:textStyle="bold" />
 
     <TextView
@@ -71,6 +72,7 @@
         android:layout_alignRight="@android:id/text1"
         android:layout_below="@android:id/text2"
         android:textAppearance="?android:attr/textAppearanceSmall"
+        android:fontFamily="sans-serif-light"
         android:textSize="12sp"
         android:textAllCaps="true"
         android:gravity="right"

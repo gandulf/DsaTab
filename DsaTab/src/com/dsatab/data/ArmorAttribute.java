@@ -3,7 +3,7 @@ package com.dsatab.data;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.dsatab.data.enums.ArmorPosition;
+import com.dsatab.data.enums.Position;
 
 public class ArmorAttribute extends EditableValue implements JSONable {
 
@@ -11,11 +11,11 @@ public class ArmorAttribute extends EditableValue implements JSONable {
 	private static final String FIELD_VALUE = "value";
 	private static final String FIELD_MANUAL = "manual";
 
-	private ArmorPosition position;
+	private Position position;
 
 	private boolean manual = false;
 
-	public ArmorAttribute(Hero hero, ArmorPosition position) {
+	public ArmorAttribute(Hero hero, Position position) {
 		super(hero, position.getName());
 		this.position = position;
 		this.minimum = 0;
@@ -24,7 +24,7 @@ public class ArmorAttribute extends EditableValue implements JSONable {
 	}
 
 	public ArmorAttribute(Hero hero, JSONObject json) throws JSONException {
-		this(hero, ArmorPosition.valueOf(json.getString(FIELD_POSITION)));
+		this(hero, Position.valueOf(json.getString(FIELD_POSITION)));
 
 		manual = json.getBoolean(FIELD_MANUAL);
 		value = json.getInt(FIELD_VALUE);
@@ -58,7 +58,7 @@ public class ArmorAttribute extends EditableValue implements JSONable {
 			setValue(getReferenceValue());
 	}
 
-	public ArmorPosition getPosition() {
+	public Position getPosition() {
 		return position;
 	}
 

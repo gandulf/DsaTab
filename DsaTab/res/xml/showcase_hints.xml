@@ -19,6 +19,14 @@
             title="Dynamische Listen"
             viewId="@android:id/list"/>               
     </fragment>
+    
+    <fragment name="DiceSliderFragment">
+        <hint
+            id="TAKE_HIT_SLIDER"
+            description="Man kann nicht immer nur austeilen, manchmal muss man auch einstecken.\n\n Klicke hier um die erlittenen Trefferpunkte automatisch von deinen Lebenspunkten oder Ausdauerpunkten abzuziehen und gegebenenfalls eine Wunde hinzuzufügen. Dein Rüstungsschutz kann dabei natürlich auch berücksichtigt werden."
+            title="Treffer kassieren"
+            viewId="@id/dice_take_hit"/>               
+    </fragment>
     <fragment name="ItemsFragment">
         <hint
             id="ITEMS_CONTAINER_MENU"

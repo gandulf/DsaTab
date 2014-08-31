@@ -1411,18 +1411,20 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 
 		if (getListSettings() != null) {
 			if (menu.findItem(R.id.option_set) != null) {
-				menu.findItem(R.id.option_set).setVisible(getListSettings().hasListItem(ListItemType.EquippedItem));
+				menu.findItem(R.id.option_set).setVisible(
+						!isDrawerOpened() && getListSettings().hasListItem(ListItemType.EquippedItem));
 			}
 			if (menu.findItem(R.id.option_modifier_add) != null) {
 				menu.findItem(R.id.option_modifier_add).setVisible(
-						getListSettings().hasListItem(ListItemType.Modificator));
+						!isDrawerOpened() && getListSettings().hasListItem(ListItemType.Modificator));
 			}
 			if (menu.findItem(R.id.option_documents_choose) != null) {
 				menu.findItem(R.id.option_documents_choose).setVisible(
-						getListSettings().hasListItem(ListItemType.Document));
+						!isDrawerOpened() && getListSettings().hasListItem(ListItemType.Document));
 			}
 
 			if (menu.findItem(R.id.option_note_filter) != null) {
+				menu.findItem(R.id.option_note_filter).setVisible(!isDrawerOpened());
 				SubMenu filterSet = menu.findItem(R.id.option_note_filter).getSubMenu();
 				EventCategory[] eventCategory = EventCategory.values();
 				for (int i = 0; i < filterSet.size(); i++) {
@@ -2007,7 +2009,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 					AbstractModificator modificator = (AbstractModificator) object;
 					modificator.setActive(!modificator.isActive());
 				} else if (object instanceof Probe) {
-					getBaseActivity().checkProbe((Probe) object);
+					getBaseActivity().checkProbe(getBeing(), (Probe) object);
 				} else if (object instanceof FileListable) {
 					FileListable fileListable = (FileListable) object;
 					File file = fileListable.getFile();

@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dsatab"
     android:installLocation="auto"
-    android:versionCode="88"    
-    android:versionName="4.3.2" >
+    android:versionCode="89"    
+    android:versionName="4.3.3">
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -63,6 +63,9 @@
         <activity
             android:name="com.dsatab.activity.FragmentEditActivity"
             android:label="Eintrag bearbeiten" />
+        <activity
+            android:name="com.dsatab.activity.HeroChooserActivity"
+            android:label="Held auswählen" />
         <activity
             android:name="com.dsatab.activity.TabEditActivity"
             android:label="Tab bearbeiten"

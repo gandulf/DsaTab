@@ -30,6 +30,7 @@ import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -46,6 +47,7 @@ import android.widget.Toast;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.TabInfo;
+import com.dsatab.data.AbstractBeing;
 import com.dsatab.data.Hero;
 import com.dsatab.data.HeroConfiguration;
 import com.dsatab.data.HeroFileInfo;
@@ -58,19 +60,17 @@ import com.dsatab.fragment.AttributeListFragment;
 import com.dsatab.fragment.BaseFragment;
 import com.dsatab.fragment.DiceSliderFragment;
 import com.dsatab.fragment.HeroChooserFragment;
+import com.dsatab.fragment.HeroChooserFragment.OnHeroSelectedListener;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
-import com.dsatab.view.dialog.ChangeLogDialog;
 import com.dsatab.view.listener.ShakeListener;
 import com.gandulf.guilib.util.ResUtil;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 public class DsaTabActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Hero>,
-		OnSharedPreferenceChangeListener, ListView.OnItemClickListener {
+		OnSharedPreferenceChangeListener, ListView.OnItemClickListener, OnHeroSelectedListener {
 
 	private static final String TAB_INDEX = "TAB_INDEX";
-
-	public static boolean newsShown = false;
 
 	private static final int DRAWER_ID_NONE = -1;
 	private static final int DRAWER_ID_HEROES = -2;
@@ -93,6 +93,7 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 	public static final int ACTION_EDIT_CUSTOM_PROBES = 1008;
 	public static final int ACTION_VIEW_SPELL = 1009;
 	public static final int ACTION_VIEW_ART = 1010;
+	public static final int ACTION_HERO_CHOOSER = 1011;
 
 	private static final String KEY_TAB_INFO = "tabInfo";
 
@@ -114,6 +115,9 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private TabDrawerAdapter tabDrawerAdapter;
+
+	private long backPressed;
+	private int oldActionBarNavigationMode = ActionBar.NAVIGATION_MODE_STANDARD;
 
 	public Hero getHero() {
 		return DsaTabApplication.getInstance().getHero();
@@ -143,7 +147,8 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 
 	private void updatePage(TabInfo tabInfo, FragmentTransaction ft) {
 
-		if (diceSliderFragment != null && diceSliderFragment.isAdded() && diceSliderFragment.getView() != null) {
+		if (ft != null && diceSliderFragment != null && diceSliderFragment.isAdded()
+				&& diceSliderFragment.getView() != null) {
 			if (tabInfo != null && tabInfo.isDiceSlider()) {
 				ft.show(diceSliderFragment);
 
@@ -165,7 +170,8 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 			}
 		}
 
-		if (attributeFragment != null && attributeFragment.isAdded() && attributeFragment.getView() != null) {
+		if (ft != null && attributeFragment != null && attributeFragment.isAdded()
+				&& attributeFragment.getView() != null) {
 			if (tabInfo != null && tabInfo.isAttributeList()) {
 
 				ft.show(attributeFragment);
@@ -209,25 +215,30 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 
 	}
 
-	private void initHero() {
+	private boolean initHero() {
 		// in case of orientation change the hero is already loaded, just recreate the menu etc...
 		if (DsaTabApplication.getInstance().getHero() != null) {
 			onHeroLoaded(DsaTabApplication.getInstance().getHero());
+			return true;
 		} else {
 			String heroFileInfoJson = preferences.getString(PREF_LAST_HERO, null);
 			if (heroFileInfoJson != null) {
 				try {
 					HeroFileInfo fileInfo = new HeroFileInfo(new JSONObject(heroFileInfoJson));
 					loadHero(fileInfo);
+					return true;
 				} catch (IllegalArgumentException e) {
 					Debug.error(e);
 					showHeroChooser();
+					return false;
 				} catch (JSONException e) {
 					Debug.error(e);
 					showHeroChooser();
+					return false;
 				}
 			} else {
 				showHeroChooser();
+				return false;
 			}
 		}
 	}
@@ -275,15 +286,15 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 					"Warnung: Unbekannte Helden-Software Version. Es kann keine vollständige Kompatibilität gewährleistet werden.",
 					Toast.LENGTH_LONG).show();
 			return false;
-		} else if (version < DsaTabApplication.HS_VERSION_INT) {
-			Toast.makeText(this,
-					"Warnung: Die Helden Xml Datei wurde nicht mit der aktuellen Helden-Software erstellt.",
-					Toast.LENGTH_LONG).show();
-			return false;
 		} else if (version > DsaTabApplication.HS_VERSION_INT) {
 			Toast.makeText(this, "Hinweis: DsaTab wurde noch nicht an die aktuellste Helden-Software angepasst.",
 					Toast.LENGTH_LONG).show();
 			return false;
+			// } else if (version < DsaTabApplication.HS_VERSION_INT) {
+			// Toast.makeText(this,
+			// "Warnung: Die Helden Xml Datei wurde nicht mit der aktuellen Helden-Software erstellt.",
+			// Toast.LENGTH_LONG).show();
+			// return false;
 		} else {
 			Toast.makeText(this, getString(R.string.hero_loaded, hero.getName()), Toast.LENGTH_SHORT).show();
 			return true;
@@ -422,9 +433,11 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 			return;
 		}
 		initDrawer();
-		initHero();
+		boolean heroLoaded = initHero();
 		setupNavigationDrawer();
-		showNewsInfoPopup();
+		if (heroLoaded) {
+			DsaTabApplication.getInstance().showNewsInfoPopup(this);
+		}
 	}
 
 	private void initDrawer() {
@@ -445,13 +458,29 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 			/** Called when a drawer has settled in a completely closed state. */
 			public void onDrawerClosed(View view) {
 				super.onDrawerClosed(view);
-				// getActionBar().setTitle(getS);
+				updatePage(tabInfo, null);
+				supportInvalidateOptionsMenu();
+
+				// if we have no navigationitems use default mode!
+				if (getSupportActionBar().getNavigationItemCount() == 0)
+					oldActionBarNavigationMode = ActionBar.NAVIGATION_MODE_STANDARD;
+
+				// only set navigationmode back to old value if it hasn't been changed by tab change
+				if (getSupportActionBar().getNavigationMode() == ActionBar.NAVIGATION_MODE_STANDARD) {
+					getSupportActionBar().setNavigationMode(oldActionBarNavigationMode);
+				}
 			}
 
 			/** Called when a drawer has settled in a completely open state. */
 			public void onDrawerOpened(View drawerView) {
 				super.onDrawerOpened(drawerView);
-				// getActionBar().setTitle(mDrawerTitle);
+
+				getSupportActionBar().setTitle(R.string.app_name);
+				getSupportActionBar().setIcon(R.drawable.icon);
+				supportInvalidateOptionsMenu();
+
+				oldActionBarNavigationMode = getSupportActionBar().getNavigationMode();
+				getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 			}
 		};
 
@@ -544,15 +573,6 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 				DrawerItemType.System));
 		tabDrawerAdapter.add(new DrawerItem(DRAWER_ID_SETTINGS, "EINSTELLUNGEN", R.drawable.ic_menu_preferences,
 				Color.TRANSPARENT, DrawerItemType.System));
-	}
-
-	private void showNewsInfoPopup() {
-		if (newsShown)
-			return;
-
-		ChangeLogDialog logDialog = new ChangeLogDialog(this);
-		logDialog.show();
-		newsShown = true;
 	}
 
 	private HeroConfiguration getHeroConfiguration() {
@@ -730,8 +750,6 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 				}
 
 			}
-			// ft.addToBackStack(tag);
-
 			updatePage(tabInfo, ft);
 			ft.commitAllowingStateLoss();
 			return true;
@@ -779,10 +797,27 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 	 */
 	@Override
 	public void onBackPressed() {
-		if (diceSliderFragment != null && diceSliderFragment.isVisible() && diceSliderFragment.isSliderOpened()) {
-			diceSliderFragment.collapsePanel();
+
+		boolean drawerOpen = mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mDrawerList);
+		boolean sliderOpen = diceSliderFragment != null && diceSliderFragment.isVisible()
+				&& diceSliderFragment.isPanelExpanded();
+
+		if (sliderOpen || drawerOpen) {
+
+			if (sliderOpen)
+				diceSliderFragment.collapsePanel();
+
+			if (drawerOpen)
+				mDrawerLayout.closeDrawer(mDrawerList);
 		} else {
-			super.onBackPressed();
+			if (backPressed + 2000 > System.currentTimeMillis()
+					|| getSupportFragmentManager().getBackStackEntryCount() > 0) {
+				super.onBackPressed();
+			} else {
+				Toast.makeText(getBaseContext(), "Erneut klicken um DsaTab zu schließen", Toast.LENGTH_SHORT).show();
+				backPressed = System.currentTimeMillis();
+			}
+
 		}
 	}
 
@@ -807,14 +842,14 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 		}
 	}
 
-	public boolean checkProbe(Probe probe) {
-		return checkProbe(probe, true);
+	public boolean checkProbe(AbstractBeing being, Probe probe) {
+		return checkProbe(being, probe, true);
 	}
 
-	public boolean checkProbe(Probe probe, boolean autoRoll) {
+	public boolean checkProbe(AbstractBeing being, Probe probe, boolean autoRoll) {
 		if (diceSliderFragment != null) {
-			if (probe != null && getHero() != null) {
-				diceSliderFragment.checkProbe(getHero(), probe, autoRoll);
+			if (probe != null && being != null) {
+				diceSliderFragment.checkProbe(being, probe, autoRoll);
 				return true;
 			}
 		}
@@ -954,12 +989,21 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 				switch (getHero().getActiveSet()) {
 				case 0:
 					item.setIcon(Util.getThemeResourceId(this, R.attr.imgBarSet1));
+					if (menu.findItem(R.id.option_set1) != null) {
+						menu.findItem(R.id.option_set1).setChecked(true);
+					}
 					break;
 				case 1:
 					item.setIcon(Util.getThemeResourceId(this, R.attr.imgBarSet2));
+					if (menu.findItem(R.id.option_set2) != null) {
+						menu.findItem(R.id.option_set2).setChecked(true);
+					}
 					break;
 				case 2:
 					item.setIcon(Util.getThemeResourceId(this, R.attr.imgBarSet3));
+					if (menu.findItem(R.id.option_set3) != null) {
+						menu.findItem(R.id.option_set3).setChecked(true);
+					}
 					break;
 				}
 			}
@@ -971,43 +1015,20 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 			item.setEnabled(getHero() != null);
 		}
 
-		item = menu.findItem(R.id.option_tabs);
-		if (item != null) {
-			item.setEnabled(getHero() != null);
-		}
+		boolean result = super.onPrepareOptionsMenu(menu);
 
-		item = menu.findItem(R.id.option_set);
-		if (getHero() != null) {
-
-			if (item != null) {
-				item.setEnabled(true);
-			}
-			switch (getHero().getActiveSet()) {
-			case 0:
-				if (menu.findItem(R.id.option_set1) != null) {
-					menu.findItem(R.id.option_set1).setChecked(true);
-				}
-				break;
-			case 1:
-				if (menu.findItem(R.id.option_set2) != null) {
-					menu.findItem(R.id.option_set2).setChecked(true);
-				}
-				break;
-			case 2:
-				if (menu.findItem(R.id.option_set3) != null) {
-					menu.findItem(R.id.option_set3).setChecked(true);
-				}
-				break;
-			default:
-				break;
-			}
-		} else {
-			if (item != null) {
-				item.setEnabled(false);
+		// hide all actions if drawer is opened (android design guideline)
+		if (isDrawerOpened()) {
+			for (int i = 0; i < menu.size(); i++) {
+				menu.getItem(i).setVisible(false);
 			}
 		}
 
-		return super.onPrepareOptionsMenu(menu);
+		return result;
+	}
+
+	public boolean isDrawerOpened() {
+		return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mDrawerList);
 	}
 
 	@Override
@@ -1025,9 +1046,6 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 		}
 
 		switch (item.getItemId()) {
-		case R.id.option_load_hero:
-			showHeroChooser();
-			return true;
 		case R.id.option_save_hero:
 			if (getHero() != null) {
 				DsaTabApplication.getInstance().saveHero(this);
@@ -1137,41 +1155,12 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 	}
 
 	protected void showHeroChooser() {
-
-		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-
-		for (int i = 0; i < TabInfo.MAX_TABS_PER_PAGE; i++) {
-			int containerId = containerIds[i];
-			ViewGroup fragmentContainer = containers.get(i);
-
-			// detach old fragment
-			Fragment oldFragment = getSupportFragmentManager().findFragmentById(containerId);
-			if (oldFragment != null) {
-				ft.detach(oldFragment);
-			}
-
-			if (i == 0) {
-				Fragment fragment = getSupportFragmentManager().findFragmentByTag(HeroChooserFragment.TAG);
-				if (fragment == null) {
-					fragment = new HeroChooserFragment();
-					fragmentContainer.setVisibility(View.VISIBLE);
-					ft.add(containerId, fragment, HeroChooserFragment.TAG);
-				} else {
-					fragmentContainer.setVisibility(View.VISIBLE);
-					ft.attach(fragment);
-				}
-			} else {
-				fragmentContainer.setVisibility(View.GONE);
-			}
-		}
-
-		updatePage(null, ft);
-		getSupportActionBar().setTitle(R.string.hero_chooser_title);
-
-		ft.commitAllowingStateLoss();
-
-		tabInfo = null;
-
+		Intent intent = new Intent(this, HeroChooserActivity.class);
+		startActivityForResult(intent, ACTION_CHOOSE_HERO);
 	}
 
+	@Override
+	public void onHeroSelected(HeroFileInfo heroFileInfo) {
+		loadHero(heroFileInfo);
+	}
 }

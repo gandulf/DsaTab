@@ -86,12 +86,12 @@ public class WoundModificator extends AbstractModificator {
 			case Brust:
 				info = "KO,KK,AT,PA -1; +1W6 SP";
 				break;
-			case LeftLowerArm:
-			case RightLowerArm:
+			case LinkerArm:
+			case RechterArm:
 				info = "KK,FF,AT,PA -2";
 				break;
-			case UpperLeg:
-			case LowerLeg:
+			case LinkesBein:
+			case RechtesBein:
 				info = "GE,INI,AT,PA -2; GS -1";
 				break;
 			default:
@@ -137,16 +137,16 @@ public class WoundModificator extends AbstractModificator {
 						modifier += -1 * getValue();
 					}
 					break;
-				case LeftLowerArm:
-				case RightLowerArm:
+				case LinkerArm:
+				case RechterArm:
 					if (type == AttributeType.Fingerfertigkeit || type == AttributeType.Körperkraft
 							|| type == AttributeType.at || type == AttributeType.fk || type == AttributeType.pa
 							|| type == AttributeType.Ausweichen) {
 						modifier += -2 * getValue();
 					}
 					break;
-				case UpperLeg:
-				case LowerLeg:
+				case LinkesBein:
+				case RechtesBein:
 					if (type == AttributeType.Gewandtheit || type == AttributeType.ini
 							|| type == AttributeType.Initiative_Aktuell || type == AttributeType.at
 							|| type == AttributeType.pa || type == AttributeType.fk || type == AttributeType.Ausweichen) {
@@ -193,8 +193,8 @@ public class WoundModificator extends AbstractModificator {
 					case Brust:
 						modifier += -1 * getValue();
 						break;
-					case LeftLowerArm:
-					case RightLowerArm:
+					case LinkerArm:
+					case RechterArm:
 
 						if (probe instanceof CombatProbe) {
 							CombatProbe combatProbe = (CombatProbe) probe;
@@ -210,7 +210,7 @@ public class WoundModificator extends AbstractModificator {
 									// + getValue());
 									break;
 								} else {
-									if (woundAttribute.getPosition() == Position.LeftLowerArm) {
+									if (woundAttribute.getPosition() == Position.LinkerArm) {
 										// Debug.verbose("Angriff/Parade mit Hauptwaffe und Wunde auf linkem Arm ignoriert");
 										break;
 									}
@@ -219,7 +219,7 @@ public class WoundModificator extends AbstractModificator {
 							if (equippedItem != null && equippedItem.getItemSpecification() instanceof Shield) {
 								// Shield w = (Shield)
 								// combatProbe.getEquippedItem().getItem();
-								if (woundAttribute.getPosition() == Position.RightLowerArm) {
+								if (woundAttribute.getPosition() == Position.RechterArm) {
 									// Debug.verbose("Angriff/Parade mit Schildwaffe und Wunde auf rechtem Arm ignoriert");
 									break;
 								}
@@ -229,8 +229,8 @@ public class WoundModificator extends AbstractModificator {
 						// getValue());
 						modifier += -2 * getValue();
 						break;
-					case UpperLeg:
-					case LowerLeg:
+					case LinkesBein:
+					case RechtesBein:
 						modifier += -2 * getValue();
 						break;
 					default:

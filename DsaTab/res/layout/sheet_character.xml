@@ -4,9 +4,9 @@
     xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:id="@+id/sheet_character"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"    
+    android:layout_height="fill_parent"
     android:fillViewport="true"
-    android:scrollbarStyle="outsideOverlay">
+    android:scrollbarStyle="outsideOverlay" >
 
     <LinearLayout
         android:id="@+id/gen_char_sheet"
@@ -17,7 +17,7 @@
         <LinearLayout
             android:id="@+id/gen_char"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"            
+            android:layout_height="wrap_content"
             android:orientation="horizontal" >
 
             <ImageView
@@ -48,20 +48,20 @@
                     <com.dsatab.view.FlexibleTextView
                         android:id="@+id/gen_name"
                         style="@style/TextValue.Small"
-                        auto:layout_gravity="fill_horizontal"                        
                         auto:layout_columnSpan="2"
+                        auto:layout_gravity="fill_horizontal"
                         android:ellipsize="middle"
+                        android:fontFamily="sans-serif-condensed"
                         android:text="@string/label_name" >
-
                     </com.dsatab.view.FlexibleTextView>
 
                     <com.thebnich.floatinghintedittext.FloatingHintTextView
                         android:id="@+id/gen_ausbildung"
                         style="@style/TextValue.Small"
-                        
-                        auto:layout_gravity="fill_horizontal"
                         auto:layout_columnSpan="2"
+                        auto:layout_gravity="fill_horizontal"
                         android:ellipsize="middle"
+                        android:fontFamily="sans-serif-condensed"
                         android:hint="@string/label_education"
                         android:singleLine="true" >
                     </com.thebnich.floatinghintedittext.FloatingHintTextView>
@@ -69,29 +69,28 @@
                     <com.thebnich.floatinghintedittext.FloatingHintTextView
                         android:id="@+id/gen_titel"
                         style="@style/TextValue.Small"
-                        
-                        auto:layout_gravity="fill_horizontal"
                         auto:layout_columnSpan="2"
+                        auto:layout_gravity="fill_horizontal"
                         android:ellipsize="middle"
+                        android:fontFamily="sans-serif-condensed"
                         android:hint="@string/label_titel"
                         android:singleLine="true" />
 
                     <com.thebnich.floatinghintedittext.FloatingHintTextView
                         android:id="@+id/gen_stand"
                         style="@style/TextValue.Small"
-                        
-                        auto:layout_gravity="fill_horizontal"
                         auto:layout_columnSpan="2"
+                        auto:layout_gravity="fill_horizontal"
                         android:ellipsize="middle"
+                        android:fontFamily="sans-serif-condensed"
                         android:hint="@string/label_stand"
                         android:singleLine="true" />
 
                     <com.thebnich.floatinghintedittext.FloatingHintTextView
                         android:id="@+id/gen_rasse"
                         style="@style/TextValue.Small"
-                        
-                        auto:layout_gravity="fill_horizontal"
                         auto:layout_columnSpan="2"
+                        auto:layout_gravity="fill_horizontal"
                         android:ellipsize="middle"
                         android:hint="@string/label_rasse"
                         android:singleLine="true" />
@@ -99,9 +98,8 @@
                     <com.thebnich.floatinghintedittext.FloatingHintTextView
                         android:id="@+id/gen_kultur"
                         style="@style/TextValue.Small"
-                        
-                        auto:layout_gravity="fill_horizontal"
                         auto:layout_columnSpan="2"
+                        auto:layout_gravity="fill_horizontal"
                         android:ellipsize="middle"
                         android:hint="@string/label_kultur"
                         android:singleLine="true" />
@@ -109,7 +107,6 @@
                     <com.thebnich.floatinghintedittext.FloatingHintTextView
                         android:id="@+id/gen_gewicht"
                         style="@style/TextValue.Small"
-                        
                         auto:layout_gravity="fill_horizontal"
                         android:hint="@string/label_gewicht"
                         android:singleLine="true" >
@@ -118,7 +115,6 @@
                     <com.thebnich.floatinghintedittext.FloatingHintTextView
                         android:id="@+id/gen_groesse"
                         style="@style/TextValue.Small"
-                        
                         auto:layout_gravity="fill_horizontal"
                         android:hint="@string/label_groesse"
                         android:singleLine="true" >
@@ -134,7 +130,7 @@
 
                     <com.thebnich.floatinghintedittext.FloatingHintTextView
                         android:id="@+id/gen_alter"
-                        style="@style/TextValue.Small"                        
+                        style="@style/TextValue.Small"
                         auto:layout_gravity="fill_horizontal"
                         android:ellipsize="middle"
                         android:hint="@string/label_alter"
@@ -143,9 +139,9 @@
 
                     <com.thebnich.floatinghintedittext.FloatingHintTextView
                         android:id="@+id/gen_aussehen"
-                        style="@style/TextValue.Small"                        
-                        auto:layout_gravity="fill_horizontal"
+                        style="@style/TextValue.Small"
                         auto:layout_columnSpan="2"
+                        auto:layout_gravity="fill_horizontal"
                         android:ellipsize="middle"
                         android:hint="@string/label_aussehen"
                         android:singleLine="true" >
@@ -154,7 +150,6 @@
                     <com.thebnich.floatinghintedittext.FloatingHintTextView
                         android:id="@+id/attr_st"
                         style="@style/TextValue.Small"
-                        
                         auto:layout_gravity="fill_horizontal"
                         android:ellipsize="none"
                         android:hint="@string/label_st"
@@ -164,7 +159,6 @@
                     <com.thebnich.floatinghintedittext.FloatingHintTextView
                         android:id="@+id/attr_ws"
                         style="@style/TextValue.Small"
-                        
                         auto:layout_gravity="fill_horizontal"
                         android:ellipsize="none"
                         android:hint="@string/label_ws"
@@ -174,9 +168,9 @@
                     <com.thebnich.floatinghintedittext.FloatingHintTextView
                         android:id="@+id/attr_gs"
                         style="@style/TextValue.Small"
-                        auto:layout_gravity="fill_horizontal"
                         auto:layout_column="0"
                         auto:layout_columnSpan="2"
+                        auto:layout_gravity="fill_horizontal"
                         android:ellipsize="none"
                         android:hint="@string/label_gs"
                         android:singleLine="true" >
@@ -187,11 +181,12 @@
                     android:id="@+id/details_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minHeight="18dp"
-                    android:minWidth="18dp"
                     android:layout_gravity="bottom|right"
                     android:layout_marginRight="@dimen/default_gap"
+                    android:layout_marginLeft="@dimen/default_gap"
                     android:background="@null"
+                    android:minHeight="18dp"
+                    android:minWidth="18dp"
                     android:scaleType="centerInside"
                     android:src="?attr/imgExpanderClose" />
             </FrameLayout>
@@ -200,7 +195,7 @@
         <LinearLayout
             android:id="@+id/gen_attributes_layout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"            
+            android:layout_height="wrap_content"
             android:baselineAligned="false" >
 
             <TableLayout
@@ -550,7 +545,7 @@
         <LinearLayout
             android:id="@+id/gen_attributes3"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"            
+            android:layout_height="wrap_content"
             android:background="?attr/dropShadowBackground"
             android:paddingLeft="@dimen/default_gap"
             android:paddingRight="@dimen/default_gap" >
@@ -582,7 +577,7 @@
                 android:id="@+id/attr_pa_label"
                 style="@style/TextLabel.Mini"
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"                
+                android:layout_height="fill_parent"
                 android:layout_marginLeft="@dimen/default_gap"
                 android:layout_weight="1"
                 android:background="?attr/selectableBackground"
@@ -606,7 +601,7 @@
                 android:id="@+id/attr_fk_label"
                 style="@style/TextLabel.Mini"
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"                
+                android:layout_height="fill_parent"
                 android:layout_marginLeft="@dimen/default_gap"
                 android:layout_weight="1"
                 android:background="?attr/selectableBackground"
@@ -630,7 +625,7 @@
                 android:id="@+id/attr_ini_label"
                 style="@style/TextLabel.Mini"
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"                
+                android:layout_height="fill_parent"
                 android:layout_marginLeft="@dimen/default_gap"
                 android:layout_weight="1"
                 android:background="?attr/selectableBackground"
@@ -650,64 +645,64 @@
             </Button>
         </LinearLayout>
 
-        
+        <com.dsatab.view.FlexibleTextView
+            android:id="@+id/gen_specialfeatures_title"
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:fontFamily="sans-serif-light"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_special_features" >
+        </com.dsatab.view.FlexibleTextView>
 
-            <com.dsatab.view.FlexibleTextView
-                android:id="@+id/gen_specialfeatures_title"
-                style="?android:attr/listSeparatorTextViewStyle"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/label_special_features" >
-            </com.dsatab.view.FlexibleTextView>
+        <com.dsatab.view.FlexibleTextView
+            android:id="@+id/gen_specialfeatures"
+            style="@style/TextValue.Small"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="none"
+            android:lineSpacingExtra="4dp"
+            android:paddingLeft="@dimen/default_gap"
+            android:paddingRight="@dimen/default_gap" >
+        </com.dsatab.view.FlexibleTextView>
 
-            <com.dsatab.view.FlexibleTextView
-                android:id="@+id/gen_specialfeatures"
-                style="@style/TextValue.Small"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="none"
-                android:lineSpacingExtra="4dp"
-                android:paddingLeft="@dimen/default_gap"
-                android:paddingRight="@dimen/default_gap" >
-            </com.dsatab.view.FlexibleTextView>
+        <com.dsatab.view.FlexibleTextView
+            android:id="@+id/gen_advantages_title"
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:fontFamily="sans-serif-light"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_advantages" >
+        </com.dsatab.view.FlexibleTextView>
 
-            <com.dsatab.view.FlexibleTextView
-                android:id="@+id/gen_advantages_title"
-                style="?android:attr/listSeparatorTextViewStyle"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/label_advantages" >
-            </com.dsatab.view.FlexibleTextView>
+        <com.dsatab.view.FlexibleTextView
+            android:id="@+id/gen_advantages"
+            style="@style/TextValue.Small"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="none"
+            android:lineSpacingExtra="4dp"
+            android:paddingLeft="@dimen/default_gap"
+            android:paddingRight="@dimen/default_gap" />
 
-            <com.dsatab.view.FlexibleTextView
-                android:id="@+id/gen_advantages"
-                style="@style/TextValue.Small"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="none"
-                android:lineSpacingExtra="4dp"
-                android:paddingLeft="@dimen/default_gap"
-                android:paddingRight="@dimen/default_gap" />
+        <com.dsatab.view.FlexibleTextView
+            android:id="@+id/gen_disadvantages_title"
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:fontFamily="sans-serif-light"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_disadvantages" >
+        </com.dsatab.view.FlexibleTextView>
 
-            <com.dsatab.view.FlexibleTextView
-                android:id="@+id/gen_disadvantages_title"
-                style="?android:attr/listSeparatorTextViewStyle"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/label_disadvantages" >
-            </com.dsatab.view.FlexibleTextView>
-
-            <com.dsatab.view.FlexibleTextView
-                android:id="@+id/gen_disadvantages"
-                style="@style/TextValue.Small"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="none"
-                android:lineSpacingExtra="4dp"
-                android:paddingLeft="@dimen/default_gap"
-                android:paddingRight="@dimen/default_gap" >
-            </com.dsatab.view.FlexibleTextView>
-        
+        <com.dsatab.view.FlexibleTextView
+            android:id="@+id/gen_disadvantages"
+            style="@style/TextValue.Small"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="none"
+            android:lineSpacingExtra="4dp"
+            android:paddingLeft="@dimen/default_gap"
+            android:paddingRight="@dimen/default_gap" >
+        </com.dsatab.view.FlexibleTextView>
     </LinearLayout>
 
 </ScrollView>

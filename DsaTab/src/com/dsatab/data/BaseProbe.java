@@ -1,12 +1,10 @@
 package com.dsatab.data;
 
-import java.io.Serializable;
-
 import android.os.SystemClock;
 
 import com.dsatab.data.enums.AttributeType;
 
-public abstract class BaseProbe implements Probe, Serializable {
+public abstract class BaseProbe implements Probe {
 
 	private static final long serialVersionUID = 7786696276206361948L;
 

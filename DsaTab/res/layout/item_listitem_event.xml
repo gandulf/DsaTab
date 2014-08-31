@@ -26,6 +26,7 @@
         android:layout_toLeftOf="@android:id/icon2"
         android:layout_toRightOf="@android:id/icon1"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:fontFamily="sans-serif-condensed"
         android:textStyle="bold" />
 
     <TextView
@@ -50,6 +51,7 @@
         android:gravity="bottom|right"
         android:textAllCaps="true"
         android:textAppearance="?android:attr/textAppearanceSmall"
+        android:fontFamily="sans-serif-light"
         android:textSize="12sp"
         android:textStyle="normal" />
     

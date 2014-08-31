@@ -7,6 +7,8 @@ import android.text.TextUtils;
 
 import com.dsatab.data.Hero.CombatStyle;
 import com.dsatab.data.enums.AttributeType;
+import com.dsatab.data.items.EquippedItem;
+import com.dsatab.data.modifier.Modifier;
 
 public class Animal extends AbstractBeing {
 
@@ -117,6 +119,16 @@ public class Animal extends AbstractBeing {
 	public int getModifier(Probe probe, boolean includeBe, boolean includeLeAu) {
 		int result = 0;
 		return result;
+	}
+
+	@Override
+	public List<Modifier> getModifiers(Probe probe, boolean includeBe, boolean includeLeAu) {
+		return new ArrayList<Modifier>(2);
+	}
+
+	@Override
+	public int getModifierTP(EquippedItem weapon) {
+		return 0;
 	}
 
 	@Override

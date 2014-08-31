@@ -13,7 +13,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.dsatab.activity.DsaTabPreferenceActivity;
-import com.dsatab.data.enums.ArmorPosition;
 import com.dsatab.data.enums.Position;
 import com.dsatab.fragment.AnimalFragment;
 import com.dsatab.fragment.BaseFragment;
@@ -108,8 +107,8 @@ public class DsaTabConfiguration {
 			return 0;
 	}
 
-	public List<ArmorPosition> getArmorPositions() {
-		return Arrays.asList(ArmorPosition.values());
+	public List<Position> getArmorPositions() {
+		return Position.ARMOR_POSITIONS;
 	}
 
 	public List<Position> getWoundPositions() {

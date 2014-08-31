@@ -39,6 +39,7 @@ import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.common.StyleableSpannableStringBuilder;
+import com.dsatab.data.AbstractBeing;
 import com.dsatab.data.Art;
 import com.dsatab.data.Attribute;
 import com.dsatab.data.CombatDistanceTalent;
@@ -64,6 +65,7 @@ import com.dsatab.util.Debug;
 import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Hint;
 import com.dsatab.util.Util;
+import com.dsatab.view.dialog.TakeHitDialog;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.view.ViewHelper;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
@@ -84,7 +86,6 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 	private SlidingUpPanelLayout slidingUpPanelLayout;
 
-	private boolean sliderOpened = false;
 	private boolean modifierVisible = true;
 
 	private TextView tfDiceTalentName;
@@ -98,7 +99,7 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 	private boolean animate = true;
 	private LinearLayout linDiceResult;
 
-	private ImageButton executeButton;
+	private ImageButton executeButton, takeHitButton;
 
 	private Animation shakeDice20;
 	private Animation shakeDice6;
@@ -128,7 +129,6 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 	private int soundFail;
 
 	private Context themedContext;
-	private Hero hero;
 
 	/*
 	 * (non-Javadoc)
@@ -178,6 +178,10 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		executeButton = (ImageButton) root.findViewById(R.id.dice_execute);
 		executeButton.setOnClickListener(this);
 		executeButton.setVisibility(View.GONE);
+
+		takeHitButton = (ImageButton) root.findViewById(R.id.dice_take_hit);
+		takeHitButton.setOnClickListener(this);
+		takeHitButton.setVisibility(View.GONE);
 
 		linDiceResult = (LinearLayout) root.findViewById(R.id.dice_dice_result);
 		linDiceResult.setOnClickListener(this);
@@ -251,6 +255,7 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		tfEffectValue.setText(null);
 
 		executeButton.setVisibility(View.GONE);
+		takeHitButton.setVisibility(View.GONE);
 		detailsSwitch.setVisibility(View.INVISIBLE);
 		linDiceResult.setBackgroundResource(0);
 
@@ -280,11 +285,7 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 	@Override
 	public void onHeroLoaded(Hero hero) {
-		this.hero = hero;
-	}
 
-	public boolean isSliderOpened() {
-		return sliderOpened;
 	}
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -346,6 +347,13 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 			break;
 		case R.id.details_switch:
 			setModifiersVisible(!isModifiersVisible(), true);
+			break;
+
+		case R.id.dice_take_hit:
+			if (probeData != null) {
+				TakeHitDialog inlineEditdialog = new TakeHitDialog(getActivity(), probeData.being, null);
+				inlineEditdialog.show();
+			}
 			break;
 		}
 		if (v == tfDice20) {
@@ -475,6 +483,14 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 				}
 				tfDiceTalentName.setTextColor(colorRed);
 
+				if (isCombatDefense(info.probe)) {
+					takeHitButton.setVisibility(View.VISIBLE);
+
+					Hint.showHint(getClass().getSimpleName(), "TAKE_HIT_SLIDER", getActivity());
+				} else {
+					takeHitButton.setVisibility(View.GONE);
+				}
+
 				if (info.sound && preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_SOUND_ROLL_DICE, true)
 						&& preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_SOUND_RESULT_DICE, true)) {
 					sounds.play(soundFail, 1.0f, 1.0f, 0, 0, 1.0f);
@@ -515,8 +531,10 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 					sounds.play(soundWin, 1.0f, 1.0f, 0, 0, 1.0f);
 				}
 
+				takeHitButton.setVisibility(View.GONE);
 			}
 		} else {
+			takeHitButton.setVisibility(View.GONE);
 			tfEffectValue.setVisibility(View.INVISIBLE);
 		}
 	}
@@ -530,14 +548,14 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		if (probeData != null) {
 			probeData.clearDice();
 		}
+
 	}
 
-	public void checkProbe(Hero hero, Probe probe, boolean autoRoll) {
+	public void checkProbe(AbstractBeing hero, Probe probe, boolean autoRoll) {
 
 		if (getActivity() != null) {
 			Hint.showRandomHint("DiceSlider", getActivity());
 		}
-		this.hero = hero;
 		this.probeAutoRoll = autoRoll;
 
 		clearDice();
@@ -558,14 +576,14 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 			break;
 		}
 
-		populateModifiers(probe);
+		populateModifiers(hero, probe);
 
 		if (probeData == null)
 			probeData = new ProbeData();
 		else
 			probeData.clear();
 
-		probeData.hero = hero;
+		probeData.being = hero;
 		probeData.probe = probe;
 		probeData.value = new Integer[] { value1, value2, value3 };
 
@@ -591,7 +609,7 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 	}
 
-	private void populateModifiers(Probe probe) {
+	private void populateModifiers(AbstractBeing hero, Probe probe) {
 		modifiers = hero.getModifiers(probe, true, true);
 
 		if (probe.getProbeInfo().getErschwernis() != null && probe.getProbeInfo().getErschwernis() != 0) {
@@ -642,11 +660,11 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 				int[] modificationValues = getResources().getIntArray(R.array.archeryModificationValues);
 				String[] modificationStrings = getResources().getStringArray(R.array.archeryModificationStrings);
-				if (getHero().hasFeature(FeatureType.Meisterschütze)) {
+				if (hero.hasFeature(FeatureType.Meisterschütze)) {
 					modificationStrings[SCHNELLSCHUSS_INDEX] = "Schnellschuß +0";
 					modificationValues[SCHNELLSCHUSS_INDEX] = 0;
 
-				} else if (getHero().hasFeature(FeatureType.Scharfschütze)) {
+				} else if (hero.hasFeature(FeatureType.Scharfschütze)) {
 					modificationStrings[SCHNELLSCHUSS_INDEX] = "Schnellschuß +1";
 					modificationValues[SCHNELLSCHUSS_INDEX] = 1;
 				}
@@ -726,6 +744,10 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		if (!slidingUpPanelLayout.isPanelHidden()) {
 			slidingUpPanelLayout.hidePanel();
 		}
+	}
+
+	public boolean isPanelExpanded() {
+		return (slidingUpPanelLayout != null && slidingUpPanelLayout.isPanelExpanded());
 	}
 
 	private void updateProgressView(ProbeData info, Modifier... modificators) {
@@ -911,6 +933,21 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		return lastCombatTalent;
 	}
 
+	private boolean isCombatDefense(Probe probe) {
+		if (probe instanceof CombatProbe) {
+			return !((CombatProbe) probe).isAttack();
+		} else if (probe instanceof CombatTalent) {
+			return false;
+		} else if (probe instanceof CombatMeleeAttribute) {
+			return !((CombatMeleeAttribute) probe).isAttack();
+		} else if (probe instanceof Attribute) {
+			Attribute attribute = (Attribute) probe;
+			return attribute.getType() == AttributeType.Ausweichen;
+		} else {
+			return false;
+		}
+	}
+
 	protected void addModifier(Modifier... mods) {
 		for (Modifier mod : mods) {
 			if (!modifiers.contains(mod)) {
@@ -946,19 +983,19 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 				double effect;
 
-				if (info.hero.hasFeature(FeatureType.Klingentänzer)) {
+				if (info.being.hasFeature(FeatureType.Klingentänzer)) {
 					if (info.dice[1] == null)
 						info.dice[1] = rollDice6();
 
-					effect = info.hero.getAttributeValue(AttributeType.ini) + info.dice[0] + info.dice[1]
+					effect = info.being.getAttributeValue(AttributeType.ini) + info.dice[0] + info.dice[1]
 							+ modifiersSum;
 				} else {
-					effect = info.hero.getAttributeValue(AttributeType.ini) + info.dice[0] + modifiersSum;
+					effect = info.being.getAttributeValue(AttributeType.ini) + info.dice[0] + modifiersSum;
 				}
 
 				showEffect(effect, null, info);
 
-				info.hero.getAttribute(AttributeType.Initiative_Aktuell).setValue((int) effect);
+				info.being.getAttribute(AttributeType.Initiative_Aktuell).setValue((int) effect);
 				return effect;
 			}
 		}
@@ -995,11 +1032,11 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 			int PATZER_THRESHOLD = 20;
 			if ((probe instanceof Spell || probe instanceof Art)) {
-				if (info.hero.hasFeature(FeatureType.WildeMagie)) {
+				if (info.being.hasFeature(FeatureType.WildeMagie)) {
 					PATZER_THRESHOLD = 19;
 				}
 			} else {
-				if (info.hero.hasFeature(FeatureType.Tollpatsch)) {
+				if (info.being.hasFeature(FeatureType.Tollpatsch)) {
 					PATZER_THRESHOLD = 19;
 				}
 			}
@@ -1029,7 +1066,7 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 					// Wege des Helden 251: Patzer bei Zaubern nur wenn der
 					// dritte Würfel auch 18,19,20 ist.
-					if (probe instanceof Spell && info.hero.hasFeature(FeatureType.FesteMatrix)) {
+					if (probe instanceof Spell && info.being.hasFeature(FeatureType.FesteMatrix)) {
 						for (int i = 0; i < 3; i++) {
 							// sobald einer der Würfel unter 18 ist, kann es
 							// kein Patzer gewesen sein
@@ -1160,14 +1197,14 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 				if (item.getItemSpecification() instanceof Weapon) {
 					Weapon weapon = (Weapon) item.getItemSpecification();
 
-					info.tp = weapon.getTp(hero.getModifiedValue(AttributeType.Körperkraft, true, true),
-							hero.getModifierTP(item), realSuccessOne, info.tpDices);
+					info.tp = weapon.getTp(info.being.getModifiedValue(AttributeType.Körperkraft, true, true),
+							info.being.getModifierTP(item), realSuccessOne, info.tpDices);
 
 				} else if (item.getItemSpecification() instanceof DistanceWeapon) {
 					DistanceWeapon weapon = (DistanceWeapon) item.getItemSpecification();
 
-					info.tp = weapon.getTp(hero.getModifiedValue(AttributeType.Körperkraft, true, true),
-							hero.getModifierTP(item), realSuccessOne, info.tpDices);
+					info.tp = weapon.getTp(info.being.getModifiedValue(AttributeType.Körperkraft, true, true),
+							info.being.getModifierTP(item), realSuccessOne, info.tpDices);
 				}
 
 				for (int i = diceSize; i < info.tpDices.size(); i++) {
@@ -1383,7 +1420,7 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 		Integer target;
 
-		Hero hero;
+		AbstractBeing being;
 
 		Probe probe;
 
@@ -1395,7 +1432,7 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 			value[0] = null;
 			value[1] = null;
 			value[2] = null;
-			hero = null;
+			being = null;
 			probe = null;
 			sound = true;
 

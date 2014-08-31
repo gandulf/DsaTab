@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|left"
         android:layout_weight="1"
-        
+        android:fontFamily="sans-serif-light"
         android:ellipsize="end"
         android:focusable="true" />
 

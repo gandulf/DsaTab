@@ -22,9 +22,6 @@ import com.dsatab.util.Util;
 import com.gandulf.guilib.util.Debug;
 import com.squareup.picasso.Picasso;
 
-/**
- * 
- */
 public class CardView extends ImageView implements Checkable {
 
 	private static final int HQ_IMAGE_SIZE = 600;
@@ -47,6 +44,7 @@ public class CardView extends ImageView implements Checkable {
 	private boolean highQuality = false;
 
 	boolean mChecked = false;
+	boolean mCheckable = false;
 
 	/**
 	 * @param context
@@ -76,9 +74,6 @@ public class CardView extends ImageView implements Checkable {
 	private void init() {
 
 		setDrawingCacheEnabled(false);
-		if (isFocusable()) {
-			setBackgroundResource(Util.getThemeResourceId(getContext(), R.attr.listItemBackground));
-		}
 		setScaleType(ScaleType.CENTER_INSIDE);
 
 		textBox = new Rect();
@@ -102,21 +97,39 @@ public class CardView extends ImageView implements Checkable {
 
 	@Override
 	public boolean isChecked() {
-		return mChecked;
+		return mCheckable && mChecked;
 	}
 
 	@Override
 	public void setChecked(boolean checked) {
-		if (mChecked != checked) {
+		if (mCheckable && mChecked != checked) {
 			mChecked = checked;
 			refreshDrawableState();
 		}
 	}
 
+	public boolean isCheckable() {
+		return mCheckable;
+	}
+
+	public void setCheckable(boolean checkable) {
+		this.mCheckable = checkable;
+
+		if (checkable && getBackground() == null) {
+			setBackgroundResource(Util.getThemeResourceId(getContext(), R.attr.listItemBackground));
+		}
+
+		if (!checkable && getBackground() != null) {
+			setBackgroundResource(0);
+		}
+	}
+
 	@Override
 	public void toggle() {
-		mChecked = !mChecked;
-		refreshDrawableState();
+		if (mCheckable) {
+			mChecked = !mChecked;
+			refreshDrawableState();
+		}
 	}
 
 	@Override

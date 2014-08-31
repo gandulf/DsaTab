@@ -9,21 +9,32 @@ public enum Position {
 	Head_Up("Kopf Oben"), Head_Side("Kopf seitl."), Head_Face("Gesicht"), Neck("Hals"), LeftShoulder("Linke Schulter",
 			"Schulter L"), LeftUpperArm("Linker Oberarm", "Oberarm L"), LeftLowerArm("Linker Unterarm", "Unterarm L"), RightShoulder(
 			"Rechte Schulter", "Schulter R"), RightUpperArm("Rechter Oberarm", "Oberarm R"), RightLowerArm(
-			"Rechter Unterarm", "Unterarm R"), Brust("Brust"), Bauch("Bauch"), Ruecken("Rücken"), Pelvis("Becken"), UpperLeg(
-			"Oberschenkel"), LowerLeg("Unterschenkel"), Kopf("Kopf"), LinkeHand("Linke Hand", "Hand L"), RechteHand(
-			"Rechte Hand", "Hand R"), LinkesBein("Linkes Bein", "Bein L"), RechtesBein("Rechtes Bein", "Bein R");
+			"Rechter Unterarm", "Unterarm R"), Brust("Brust", 4), Bauch("Bauch", 4), Ruecken("Rücken", 4), Pelvis(
+			"Becken"), UpperLeg("Oberschenkel"), LowerLeg("Unterschenkel"), Kopf("Kopf", 2), LinkeHand("Linke Hand",
+			"Hand L"), RechteHand("Rechte Hand", "Hand R"), LinkesBein("Linkes Bein", "Bein L", 2), RechtesBein(
+			"Rechtes Bein", "Bein R", 2), LinkerArm("Linker Arm", "Arm L", 1), RechterArm("Rechter Arm", "Arm R", 1);
 
 	protected String name;
 	protected String nameShort;
 
-	private Position(String name, String nameShort) {
+	protected int multiplier;
+
+	private Position(String name, String nameShort, int mul) {
 		this.name = name;
 		this.nameShort = nameShort;
+		this.multiplier = mul;
+	}
+
+	private Position(String name, int mul) {
+		this(name, name, mul);
+	}
+
+	private Position(String name, String nameShort) {
+		this(name, nameShort, 0);
 	}
 
 	private Position(String name) {
-		this.name = name;
-		this.nameShort = name;
+		this(name, name, 0);
 	}
 
 	public String getName() {
@@ -34,13 +45,22 @@ public enum Position {
 		return nameShort;
 	}
 
+	public int getMultiplier() {
+		return multiplier;
+	}
+
 	@Override
 	public String toString() {
 		return getName();
 	}
 
 	public static List<Position> WOUND_POSITIONS = new ArrayList<Position>(Arrays.asList(Position.Kopf, Position.Bauch,
-			Position.Brust, Position.LeftLowerArm, Position.RightLowerArm, Position.LowerLeg, Position.UpperLeg));
+			Position.Brust, Position.LinkerArm, Position.RechterArm, Position.LinkesBein, Position.RechtesBein));
+
+	// DO NOT CHANGE ORDER has to be the same of csv import file!!!
+	public static List<Position> ARMOR_POSITIONS = new ArrayList<Position>(Arrays.asList(Position.Kopf, Position.Brust,
+			Position.Ruecken, Position.Bauch, Position.LinkerArm, Position.RechterArm, Position.LinkesBein,
+			Position.RechtesBein));
 
 	public static final Position[] messer_dolch_stich = new Position[21];
 	static {

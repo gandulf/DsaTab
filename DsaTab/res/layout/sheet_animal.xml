@@ -42,6 +42,7 @@
                 style="@style/TextValue.Small"
                 auto:layout_columnSpan="2"
                 auto:layout_gravity="fill_horizontal"
+                android:fontFamily="sans-serif-condensed"
                 android:ellipsize="middle"
                 android:text="@string/label_name" >
             </com.thebnich.floatinghintedittext.FloatingHintTextView>
@@ -51,6 +52,7 @@
                 style="@style/TextValue.Small"
                 auto:layout_columnSpan="2"
                 auto:layout_gravity="fill_horizontal"
+                android:fontFamily="sans-serif-condensed"
                 android:ellipsize="middle"
                 android:hint="@string/label_familie"
                 android:singleLine="true" >
@@ -61,6 +63,7 @@
                 style="@style/TextValue.Small"
                 auto:layout_columnSpan="2"
                 auto:layout_gravity="fill_horizontal"
+                android:fontFamily="sans-serif-condensed"
                 android:ellipsize="middle"
                 android:hint="@string/label_gattung"
                 android:singleLine="true" >
@@ -109,7 +112,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="6"
                 android:background="?attr/dropShadowBackground"
-                android:paddingRight="@dimen/default_gap"
                 android:shrinkColumns="0"
                 android:stretchColumns="0" >
 
@@ -458,6 +460,7 @@
             <TextView
                 android:id="@+id/gen_specialfeatures_title"
                 style="?android:attr/listSeparatorTextViewStyle"
+                android:fontFamily="sans-serif-light"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/label_special_features" >
@@ -477,6 +480,7 @@
             <TextView
                 android:id="@+id/gen_advantages_title"
                 style="?android:attr/listSeparatorTextViewStyle"
+                android:fontFamily="sans-serif-light"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/label_advantages" >
@@ -495,6 +499,7 @@
             <TextView
                 android:id="@+id/gen_disadvantages_title"
                 style="?android:attr/listSeparatorTextViewStyle"
+                android:fontFamily="sans-serif-light"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/label_disadvantages" >
@@ -514,6 +519,7 @@
             <TextView
                 android:id="@+id/gen_attacks_title"
                 style="?android:attr/listSeparatorTextViewStyle"
+                android:fontFamily="sans-serif-light"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/label_attacks" />

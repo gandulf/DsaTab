@@ -25,7 +25,6 @@ import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.data.Talent.Flags;
-import com.dsatab.data.enums.ArmorPosition;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.FeatureType;
 import com.dsatab.data.enums.Hand;
@@ -78,7 +77,7 @@ public class Hero extends AbstractBeing {
 
 	private Map<String, Spell> spellsByName;
 
-	private Map<ArmorPosition, ArmorAttribute>[] armorAttributes;
+	private Map<Position, ArmorAttribute>[] armorAttributes;
 	private Map<Position, WoundAttribute> wounds;
 
 	private List<EquippedItem>[] equippedItems = null;
@@ -932,22 +931,22 @@ public class Hero extends AbstractBeing {
 		}
 	}
 
-	public Map<ArmorPosition, ArmorAttribute> getArmorAttributes() {
+	public Map<Position, ArmorAttribute> getArmorAttributes() {
 		return getArmorAttributes(activeSet);
 	}
 
 	@SuppressWarnings("unchecked")
-	public Map<ArmorPosition, ArmorAttribute> getArmorAttributes(int set) {
+	public Map<Position, ArmorAttribute> getArmorAttributes(int set) {
 		if (armorAttributes == null) {
 			armorAttributes = new EnumMap[INVENTORY_SET_COUNT];
 		}
 
 		if (armorAttributes[set] == null) {
 
-			final List<ArmorPosition> armorPositions = DsaTabApplication.getInstance().getConfiguration()
+			final List<Position> armorPositions = DsaTabApplication.getInstance().getConfiguration()
 					.getArmorPositions();
 
-			Map<ArmorPosition, ArmorAttribute> map = new EnumMap<ArmorPosition, ArmorAttribute>(ArmorPosition.class);
+			Map<Position, ArmorAttribute> map = new EnumMap<Position, ArmorAttribute>(Position.class);
 
 			if (getHeroConfiguration().getArmorAttributes(set) != null) {
 				for (ArmorAttribute rs : getHeroConfiguration().getArmorAttributes(set)) {
@@ -958,7 +957,7 @@ public class Hero extends AbstractBeing {
 			}
 
 			// fill not existing values with 0
-			for (ArmorPosition pos : armorPositions) {
+			for (Position pos : armorPositions) {
 				ArmorAttribute rs = map.get(pos);
 
 				if (rs == null) {
@@ -1227,7 +1226,16 @@ public class Hero extends AbstractBeing {
 							if (equippedPrimaryWeapon != null) {
 								int defenseValue = 0;
 								if (equippedPrimaryWeapon.getTalent().getDefense() != null) {
-									defenseValue = equippedPrimaryWeapon.getTalent().getDefense().getProbeValue(0);
+									defenseValue = equippedPrimaryWeapon.getCombatProbeDefense().getValue();
+
+									// only use positiv modifiers for now
+									List<Modifier> mods = getModifiers(equippedPrimaryWeapon.getCombatProbeDefense(),
+											false, false);
+									for (Modifier mod : mods) {
+										if (mod.getModifier() > 0) {
+											defenseValue += mod.getModifier();
+										}
+									}
 								}
 
 								if (defenseValue >= 21) {
@@ -1560,7 +1568,7 @@ public class Hero extends AbstractBeing {
 							rs1Armor = null;
 						}
 
-						for (ArmorPosition pos : ArmorPosition.values()) {
+						for (Position pos : Position.ARMOR_POSITIONS) {
 							float armorRs = armor.getRs(pos);
 
 							if (armor.isZonenHalfBe())
@@ -1623,7 +1631,7 @@ public class Hero extends AbstractBeing {
 		switch (DsaTabApplication.getInstance().getConfiguration().getArmorType()) {
 
 		case ZonenRuestung:
-			for (ArmorPosition pos : ArmorPosition.values()) {
+			for (Position pos : Position.ARMOR_POSITIONS) {
 				totalRs += (getArmorRs(pos) * pos.getMultiplier());
 			}
 			totalRs = (int) Math.round(totalRs / 20.0);
@@ -1650,7 +1658,7 @@ public class Hero extends AbstractBeing {
 		return (int) Math.ceil(totalRs);
 	}
 
-	public List<EquippedItem> getArmor(ArmorPosition pos) {
+	public List<EquippedItem> getArmor(Position pos) {
 		List<EquippedItem> items = new LinkedList<EquippedItem>();
 
 		for (EquippedItem equippedItem : getEquippedItems()) {
@@ -1664,7 +1672,7 @@ public class Hero extends AbstractBeing {
 		return items;
 	}
 
-	public int getArmorRs(ArmorPosition pos) {
+	public int getArmorRs(Position pos) {
 
 		int rs = 0;
 		for (EquippedItem equippedItem : getEquippedItems()) {

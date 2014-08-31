@@ -10,6 +10,8 @@ import com.dsatab.util.DsaUtil;
 
 public class MetaTalent extends Talent implements JSONable {
 
+	private static final long serialVersionUID = -3169303189622030920L;
+
 	private static final String FIELD_META_TYPE = "metaType";
 	private static final String FIELD_FAVORITE = "favorite";
 	private static final String FIELD_UNUSED = "unused";

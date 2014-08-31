@@ -17,6 +17,7 @@
             style="?android:attr/listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
             android:text="" >
         </TextView>
         
@@ -200,6 +201,7 @@
         <TextView
             android:id="@+id/popup_spell_hero_values"
             style="?android:attr/listSeparatorTextViewStyle"
+            android:fontFamily="sans-serif-light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/label_character_specific_values" >

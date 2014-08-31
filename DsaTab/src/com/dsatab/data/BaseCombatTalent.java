@@ -7,6 +7,8 @@ import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 
 public abstract class BaseCombatTalent extends Talent implements CombatTalent, Serializable {
 
+	private static final long serialVersionUID = -6119156329142917558L;
+
 	public BaseCombatTalent(Hero hero, TalentType type) {
 		super(hero, type);
 	}
