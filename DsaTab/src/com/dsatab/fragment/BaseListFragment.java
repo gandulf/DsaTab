@@ -5,10 +5,9 @@ import java.util.List;
 
 import android.annotation.TargetApi;
 import android.os.Build;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.view.ActionMode;
-import android.support.v7.view.ActionMode.Callback;
 import android.util.SparseBooleanArray;
+import android.view.ActionMode;
+import android.view.ActionMode.Callback;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -60,8 +59,7 @@ public abstract class BaseListFragment extends BaseFragment implements OnItemLon
 			if (mMode == null) {
 				Callback callback = getActionModeCallback(checkedObjects);
 				if (callback != null) {
-					mMode = ((ActionBarActivity) getActivity()).startSupportActionMode(callback);
-					customizeActionModeCloseButton();
+					mMode = getActivity().startActionMode(callback);
 					mMode.invalidate();
 				}
 			} else {
@@ -90,7 +88,7 @@ public abstract class BaseListFragment extends BaseFragment implements OnItemLon
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#setUserVisibleHint(boolean)
+	 * @see android.app.Fragment#setUserVisibleHint(boolean)
 	 */
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {

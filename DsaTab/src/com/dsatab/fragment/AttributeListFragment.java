@@ -10,7 +10,6 @@ import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
@@ -26,20 +25,10 @@ public class AttributeListFragment extends BaseAttributesFragment implements Her
 
 	public static final String TAG = "attributeListFragment";
 
-	private TextView tfName;
-
-	/**
-	 * 
-	 */
-	public AttributeListFragment() {
-
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
-	 * android.os.Bundle)
+	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,8 +38,6 @@ public class AttributeListFragment extends BaseAttributesFragment implements Her
 		LayoutInflater localInflater = inflater.cloneInContext(context);
 		// inflate using the cloned inflater, not the passed in default
 		View view = localInflater.inflate(R.layout.attributes_list, container, false);
-
-		tfName = (TextView) view.findViewById(R.id.attr_name);
 
 		return view;
 	}
@@ -65,7 +52,7 @@ public class AttributeListFragment extends BaseAttributesFragment implements Her
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onConfigurationChanged(android.content .res.Configuration)
+	 * @see android.app.Fragment#onConfigurationChanged(android.content .res.Configuration)
 	 */
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
@@ -90,12 +77,6 @@ public class AttributeListFragment extends BaseAttributesFragment implements Her
 
 	private void updateView() {
 		SharedPreferences preferences = DsaTabApplication.getPreferences();
-
-		if (preferences.getBoolean(DsaTabPreferenceActivity.KEY_HEADER_NAME, true)) {
-			tfName.setVisibility(View.VISIBLE);
-		} else {
-			tfName.setVisibility(View.GONE);
-		}
 
 		int visible = preferences.getBoolean(DsaTabPreferenceActivity.KEY_HEADER_LE, true) ? View.VISIBLE : View.GONE;
 		tfLE.setVisibility(visible);
@@ -245,9 +226,6 @@ public class AttributeListFragment extends BaseAttributesFragment implements Her
 	 */
 	@Override
 	public void onHeroLoaded(Hero hero) {
-		if (tfName != null)
-			tfName.setText(hero.getName());
-
 		fillAttributesList();
 	}
 

@@ -26,7 +26,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
 
-import com.bugsense.trace.BugSenseHandler;
 import com.dsatab.data.AbstractBeing;
 import com.dsatab.data.Animal;
 import com.dsatab.data.AnimalAttack;
@@ -82,6 +81,7 @@ import com.dsatab.exception.InconsistentDataException;
 import com.dsatab.exception.TalentTypeUnknownException;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
+import com.splunk.mint.Mint;
 
 /**
  * Xml Reader and Writer for the Heldensoftware HeldenXML
@@ -136,8 +136,8 @@ public class HeldenXmlParser {
 					+ "> element with in root node. HS-Version=" + hsVersion);
 		}
 
-		BugSenseHandler.clearCrashExtraData();
-		BugSenseHandler.addCrashExtraData("HS-Version", hsVersion);
+		Mint.clearExtraData();
+		Mint.addExtraData("HS-Version", hsVersion);
 
 		hero = new Hero(fileInfo);
 
@@ -625,7 +625,8 @@ public class HeldenXmlParser {
 			animal.addAttribute(attr);
 		}
 
-		if (!animal.hasAttribute(AttributeType.Lebensenergie_Aktuell)) {
+		if (animal.hasAttribute(AttributeType.Lebensenergie)
+				&& !animal.hasAttribute(AttributeType.Lebensenergie_Aktuell)) {
 			CustomAttribute le = new CustomAttribute(animal, AttributeType.Lebensenergie_Aktuell);
 			le.setValue(animal.getAttributeValue(AttributeType.Lebensenergie));
 			le.setReferenceValue(le.getValue());
@@ -633,7 +634,7 @@ public class HeldenXmlParser {
 			animal.addAttribute(le);
 		}
 
-		if (!animal.hasAttribute(AttributeType.Ausdauer_Aktuell)) {
+		if (animal.hasAttribute(AttributeType.Ausdauer) && !animal.hasAttribute(AttributeType.Ausdauer_Aktuell)) {
 			CustomAttribute le = new CustomAttribute(animal, AttributeType.Ausdauer_Aktuell);
 			le.setValue(animal.getAttributeValue(AttributeType.Ausdauer));
 			le.setReferenceValue(le.getValue());
@@ -641,7 +642,7 @@ public class HeldenXmlParser {
 			animal.addAttribute(le);
 		}
 
-		if (!animal.hasAttribute(AttributeType.Karmaenergie_Aktuell)) {
+		if (animal.hasAttribute(AttributeType.Karmaenergie) && !animal.hasAttribute(AttributeType.Karmaenergie_Aktuell)) {
 			CustomAttribute le = new CustomAttribute(animal, AttributeType.Karmaenergie_Aktuell);
 			le.setValue(animal.getAttributeValue(AttributeType.Karmaenergie));
 			le.setReferenceValue(le.getValue());
@@ -649,7 +650,8 @@ public class HeldenXmlParser {
 			animal.addAttribute(le);
 		}
 
-		if (!animal.hasAttribute(AttributeType.Astralenergie_Aktuell)) {
+		if (animal.hasAttribute(AttributeType.Astralenergie)
+				&& !animal.hasAttribute(AttributeType.Astralenergie_Aktuell)) {
 			CustomAttribute le = new CustomAttribute(animal, AttributeType.Astralenergie_Aktuell);
 			le.setValue(animal.getAttributeValue(AttributeType.Astralenergie));
 			le.setReferenceValue(le.getValue());
@@ -697,7 +699,7 @@ public class HeldenXmlParser {
 			if (dk != null) {
 				distance = dk.getAttributeValue(Xml.KEY_VALUE);
 			}
-			AnimalAttack animalAttack = new AnimalAttack(animal, attackName, atAttribute, paAttribute, tpDice, distance);
+			AnimalAttack animalAttack = new AnimalAttack(attackName, atAttribute, paAttribute, tpDice, distance);
 			animal.addAnimalAttack(animalAttack);
 		}
 

@@ -12,20 +12,18 @@ import java.util.List;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.LoaderManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.Loader;
 import android.content.SharedPreferences.Editor;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
-import android.support.v7.view.ActionMode;
 import android.text.TextUtils;
 import android.util.SparseBooleanArray;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -40,6 +38,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,12 +59,11 @@ import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.gandulf.guilib.data.OpenArrayAdapter;
 import com.gandulf.guilib.util.ListViewCompat;
-import com.rokoder.android.lib.support.v4.widget.GridViewCompat;
 
 public class HeroChooserFragment extends BaseFragment implements AdapterView.OnItemClickListener,
 		OnItemLongClickListener, LoaderManager.LoaderCallbacks<List<HeroFileInfo>>, OnClickListener {
 
-	public static final String TAG = "HroChooser";
+	public static final String TAG = "HeroChooser";
 
 	static final String PREF_DONT_SHOW_CONNECT = "dont_show_connect";
 
@@ -74,9 +72,8 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 	public static final String INTENT_NAME_HERO_FILE_INFO = "heroPath";
 
 	private static final String DUMMY_FILE = "Dummy.xml";
-	private static final String DUMMY_NAME = "Dummy";
 
-	private GridViewCompat list;
+	private GridView list;
 	private HeroAdapter adapter;
 
 	private ActionMode mMode;
@@ -250,7 +247,7 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 		empty = (TextView) root.findViewById(R.id.popup_hero_empty);
 		empty.setVisibility(View.GONE);
 
-		list = (GridViewCompat) root.findViewById(R.id.popup_hero_chooser_list);
+		list = (GridView) root.findViewById(R.id.popup_hero_chooser_list);
 		list.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 
 		list.setOnItemClickListener(this);
@@ -304,7 +301,7 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 
 		if (!exchange.isConnected(StorageType.Dropbox)) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			View popupcontent = getLayoutInflater(savedInstanceState).inflate(R.layout.popup_cloud, null);
+			View popupcontent = LayoutInflater.from(builder.getContext()).inflate(R.layout.popup_cloud, null);
 			builder.setView(popupcontent);
 			popupcontent.findViewById(R.id.connect_dropbox).setOnClickListener(this);
 
@@ -395,7 +392,7 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 		if (getActionBarActivity() == null)
 			return;
 
-		getActionBarActivity().setSupportProgressBarIndeterminateVisibility(false);
+		getActionBarActivity().setProgressBarIndeterminateVisibility(false);
 		if (loadingView.getVisibility() != View.GONE) {
 			loadingView.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
 			loadingView.setVisibility(View.GONE);
@@ -428,7 +425,7 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 
 		updateViews();
 
-		getActionBarActivity().supportInvalidateOptionsMenu();
+		getActionBarActivity().invalidateOptionsMenu();
 	}
 
 	@Override
@@ -457,8 +454,8 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 	}
 
 	protected void refresh() {
-		getActionBarActivity().setSupportProgressBarIndeterminateVisibility(true);
-		getActivity().getSupportLoaderManager().restartLoader(0, null, this);
+		getActionBarActivity().setProgressBarIndeterminateVisibility(true);
+		getActivity().getLoaderManager().restartLoader(0, null, this);
 	}
 
 	/*
@@ -470,23 +467,7 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 	public void onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
 
-		MenuItem menuItem = menu.findItem(R.id.option_hero_import);
-		if (menuItem != null) {
-			ConnectivityManager connMgr = (ConnectivityManager) getActivity().getSystemService(
-					Context.CONNECTIVITY_SERVICE);
-			if (connMgr != null) {
-				NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-				if (networkInfo != null && networkInfo.isConnected()) {
-					menuItem.setEnabled(true);
-				} else {
-					menuItem.setEnabled(false);
-				}
-			} else {
-				menuItem.setEnabled(false);
-			}
-		}
-
-		menuItem = menu.findItem(R.id.option_load_example_heroes);
+		MenuItem menuItem = menu.findItem(R.id.option_load_example_heroes);
 		if (menuItem != null) {
 			menuItem.setVisible(adapter != null && adapter.isEmpty());
 		}
@@ -494,11 +475,6 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 		menuItem = menu.findItem(R.id.option_connect_dropbox);
 		if (menuItem != null) {
 			menuItem.setVisible(dropboxDialog != null);
-		}
-
-		menuItem = menu.findItem(R.id.option_search);
-		if (menuItem != null) {
-			menuItem.setVisible(false);
 		}
 	}
 
@@ -555,18 +531,20 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 			TextView tag2 = (TextView) layout.findViewById(R.id.tag2);
 			ImageView iv = (ImageView) layout.findViewById(android.R.id.icon);
 
-			HeroFileInfo hero = getItem(position);
-			tv.setText(hero.getName());
+			HeroFileInfo heroInfo = getItem(position);
+			tv.setText(heroInfo.getName());
 
-			if (hero.getPortraitUri() != null) {
-				iv.setImageURI(Uri.parse(hero.getPortraitUri()));
+			if (heroInfo.getPortraitUri() != null) {
+				iv.setImageURI(Uri.parse(heroInfo.getPortraitUri()));
+			} else {
+				iv.setImageResource(R.drawable.profile_picture);
 			}
 
-			if (TextUtils.isEmpty(hero.getVersion())) {
+			if (TextUtils.isEmpty(heroInfo.getVersion())) {
 				version.setVisibility(View.GONE);
 			} else {
-				version.setText("v" + hero.getVersion());
-				int v = hero.getVersionInt();
+				version.setText("v" + heroInfo.getVersion());
+				int v = heroInfo.getVersionInt();
 				if (v < DsaTabApplication.HS_VERSION_INT) {
 					version.setBackgroundColor(getContext().getResources().getColor(R.color.ValueRedAlpha));
 				} else if (v > DsaTabApplication.HS_VERSION_INT) {
@@ -577,7 +555,7 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 				version.setVisibility(View.VISIBLE);
 			}
 
-			switch (hero.getStorageType()) {
+			switch (heroInfo.getStorageType()) {
 			case Dropbox:
 				tag1.setText("Dropbox");
 				tag1.setBackgroundColor(getContext().getResources().getColor(R.color.ValueBlueAlpha));
@@ -593,7 +571,7 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 				break;
 			}
 
-			if (hero.isOnline()) {
+			if (heroInfo.isOnline()) {
 				tag2.setText("Austausch");
 				tag2.setBackgroundColor(getContext().getResources().getColor(R.color.ValueGreenAlpha));
 				tag2.setVisibility(View.VISIBLE);
@@ -665,13 +643,12 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 		}
 	}
 
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 		if (mCallback == null) {
 			throw new IllegalArgumentException("ListView with Contextual Action Bar needs mCallback to be defined!");
 		}
-		GridViewCompat gridView = (GridViewCompat) parent;
+		GridView gridView = (GridView) parent;
 
 		gridView.setItemChecked(position, !gridView.isItemChecked(position));
 
@@ -689,7 +666,7 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 		if (hasCheckedElement) {
 			if (mMode == null) {
 				if (mCallback != null) {
-					mMode = getActionBarActivity().startSupportActionMode(mCallback);
+					mMode = getActionBarActivity().startActionMode(mCallback);
 					mMode.invalidate();
 				} else {
 					return false;

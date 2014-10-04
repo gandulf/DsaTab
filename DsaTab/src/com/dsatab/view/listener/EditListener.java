@@ -2,7 +2,6 @@ package com.dsatab.view.listener;
 
 import java.lang.ref.WeakReference;
 
-import android.content.Context;
 import android.view.View;
 
 import com.dsatab.R;
@@ -10,8 +9,8 @@ import com.dsatab.data.CombatMeleeTalent;
 import com.dsatab.data.Value;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.fragment.BaseFragment;
-import com.dsatab.view.dialog.InlineEditDialog;
-import com.dsatab.view.dialog.InlineEditFightDialog;
+import com.dsatab.fragment.dialog.InlineEditDialog;
+import com.dsatab.fragment.dialog.InlineEditFightDialog;
 
 public class EditListener implements View.OnClickListener, View.OnLongClickListener {
 
@@ -43,7 +42,7 @@ public class EditListener implements View.OnClickListener, View.OnLongClickListe
 		}
 
 		if (value != null && baseFragment.getActivity() != null) {
-			showEditPopup(baseFragment.getActivity(), value);
+			showEditPopup(baseFragment, value);
 		}
 
 	}
@@ -70,25 +69,19 @@ public class EditListener implements View.OnClickListener, View.OnLongClickListe
 		}
 
 		if (value != null && baseFragment.getActivity() != null) {
-			showEditPopup(baseFragment.getActivity(), value);
+			showEditPopup(baseFragment, value);
 			return true;
 		}
 		return false;
 
 	}
 
-	public static void showEditPopup(Context context, Value value) {
-
+	public static void showEditPopup(BaseFragment baseFragment, Value value) {
 		if (value instanceof CombatMeleeTalent) {
-			InlineEditFightDialog inlineEditFightdialog = new InlineEditFightDialog(context, (CombatMeleeTalent) value);
-			inlineEditFightdialog.setTitle(value.getName());
-			inlineEditFightdialog.show();
+			InlineEditFightDialog.show(baseFragment, (CombatMeleeTalent) value, 0);
 		} else if (value != null) {
-			InlineEditDialog inlineEditdialog = new InlineEditDialog(context, value);
-			inlineEditdialog.setTitle(value.getName());
-			inlineEditdialog.show();
+			InlineEditDialog.show(baseFragment, value, 0);
 		}
-
 	}
 
 }

@@ -22,10 +22,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="?attr/dividerVertical"
-            android:dividerPadding="?attr/dividerPadding"
+            android:divider="?android:attr/dividerVertical"
+            android:dividerPadding="?android:attr/dividerPadding"
             android:orientation="horizontal"
-            android:minHeight="?attr/listPreferredItemHeightSmall"
+            android:minHeight="?android:attr/listPreferredItemHeightSmall"
             android:showDividers="middle" >
 
             <TextView

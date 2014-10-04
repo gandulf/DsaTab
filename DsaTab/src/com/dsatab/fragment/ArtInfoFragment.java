@@ -1,6 +1,5 @@
 package com.dsatab.fragment;
 
-import net.simonvt.numberpicker.NumberPicker;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.dsatab.R;
@@ -203,7 +203,7 @@ public class ArtInfoFragment extends BaseEditFragment {
 		else
 			getEditActivity().inflateDone();
 
-		getActivity().supportInvalidateOptionsMenu();
+		getActivity().invalidateOptionsMenu();
 
 	}
 

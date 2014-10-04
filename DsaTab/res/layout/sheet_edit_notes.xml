@@ -7,12 +7,12 @@
     android:fillViewport="true"
     android:padding="@dimen/default_gap" >
 
-    <android.support.v7.widget.GridLayout
+    <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        auto:columnCount="1"
-        auto:orientation="vertical"
-        auto:useDefaultMargins="true" >
+        android:columnCount="1"
+        android:orientation="vertical"
+        android:useDefaultMargins="true" >
 
         <TextView
             android:id="@+id/popup_notes_spn_category_label"
@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
-            auto:layout_gravity="fill_horizontal"
+            android:layout_gravity="fill_horizontal"
             android:paddingTop="0dp" >
         </Spinner>
 
@@ -52,11 +52,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            auto:layout_gravity="fill"
+            android:layout_gravity="fill"
             android:gravity="top"
             android:hint="@string/label_note"
             android:inputType="text|textMultiLine"
             android:minHeight="50dip" />
-    </android.support.v7.widget.GridLayout>
+    </GridLayout>
 
 </ScrollView>

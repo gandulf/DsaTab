@@ -1,98 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:custom="http://schemas.android.com/apk/res-auto">
-    
-    <style name="DsaTabTheme.Dark" parent="@style/Theme.AppCompat">                
-        
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:custom="http://schemas.android.com/apk/res-auto">
+
+    <style name="DsaTabTheme.Dark" parent="@android:style/Theme.Holo">
+        <item name="android:dividerPadding">8dp</item>
         <item name="android:buttonStyle">@style/Widget.Button.Dark</item>
         <item name="android:imageButtonStyle">@style/Widget.Button.Dark</item>
         <item name="android:buttonStyleSmall">@style/Widget.Button.Small.Dark</item>
-                
-        <item name="imgChainTop">@drawable/chain_top_dark</item>
-        <item name="imgChainBottom">@drawable/chain_bottom_dark</item>
         
-        <item name="imgDragVertical">@drawable/drag_vertical_dark</item>
+        <item name="imgChainTop">@drawable/chain_top_dark</item>
+        <item name="imgChainBottom">@drawable/chain_bottom_dark</item>        
         <item name="imgCharacter">@drawable/character_dark</item>
         <item name="imgEmpty">@drawable/empty_dark</item>
-                
         <item name="imgExpanderOpen">@drawable/expander_open_holo_dark</item>
         <item name="imgExpanderClose">@drawable/expander_close_holo_dark</item>
-        
         <item name="imgFile">@drawable/ic_action_file_dark</item>
         <item name="imgBarFile">@drawable/ic_action_file_dark</item>
-        
         <item name="imgUp">@drawable/ic_action_up_dark</item>
-        <item name="imgBarUp">@drawable/ic_action_up_dark</item>        
-        
+        <item name="imgBarUp">@drawable/ic_action_up_dark</item>
         <item name="imgLove">@drawable/ic_action_love_dark</item>
         <item name="imgBarLove">@drawable/ic_action_love_dark</item>
-        
         <item name="imgAccept">@drawable/ic_action_done_dark</item>
         <item name="imgBarAccept">@drawable/ic_action_done_dark</item>
-        
         <item name="imgCancel">@drawable/ic_action_cancel_dark</item>
         <item name="imgBarCancel">@drawable/ic_action_cancel_dark</item>
-        
         <item name="imgDelete">@drawable/ic_action_delete_dark</item>
         <item name="imgBarDelete">@drawable/ic_action_delete_dark</item>
-        
-        <item name="imgStar">@drawable/ic_action_star_dark</item>               
+        <item name="imgStar">@drawable/ic_action_star_dark</item>
         <item name="imgBarStar">@drawable/ic_action_star_dark</item>
-        <item name="imgStarEmpty">@drawable/ic_action_star_empty_dark</item>               
-        <item name="imgBarStarEmpty">@drawable/ic_action_star_empty_dark</item>                
-        
-        <item name="imgInfo">@drawable/dsa_info_dark</item>               
+        <item name="imgStarEmpty">@drawable/ic_action_star_empty_dark</item>
+        <item name="imgBarStarEmpty">@drawable/ic_action_star_empty_dark</item>
+        <item name="imgInfo">@drawable/dsa_info_dark</item>
         <item name="imgBarInfo">@drawable/dsa_info_dark</item>
-        
         <item name="imgCamera">@drawable/ic_action_camera_dark</item>
         <item name="imgBarCamera">@drawable/ic_action_camera_dark</item>
-        
         <item name="imgUser">@drawable/ic_action_user_dark</item>
         <item name="imgBarUser">@drawable/ic_action_user_dark</item>
-        
         <item name="imgSplit">@drawable/ic_action_split_dark</item>
         <item name="imgBarSplit">@drawable/ic_action_split_dark</item>
-        
         <item name="imgEdit">@drawable/ic_action_edit_dark</item>
         <item name="imgBarEdit">@drawable/ic_action_edit_dark</item>
-        
         <item name="imgView">@drawable/ic_menu_view</item>
         <item name="imgBarView">@drawable/ic_menu_view</item>
-        
         <item name="imgSearch">@drawable/ic_menu_search_holo_dark</item>
         <item name="imgBarSearch">@drawable/ic_menu_search_holo_dark</item>
-        
         <item name="imgFilter">@drawable/ic_menu_find_holo_dark</item>
         <item name="imgBarFilter">@drawable/ic_menu_find_holo_dark</item>
-        
         <item name="imgSet">@drawable/dsa_set</item>
         <item name="imgSet1">@drawable/dsa_set1</item>
         <item name="imgSet2">@drawable/dsa_set2</item>
         <item name="imgSet3">@drawable/dsa_set3</item>
-        
         <item name="imgBarSet">@drawable/dsa_set</item>
         <item name="imgBarSet1">@drawable/dsa_set1</item>
         <item name="imgBarSet2">@drawable/dsa_set2</item>
         <item name="imgBarSet3">@drawable/dsa_set3</item>
-                
-        <item name="buttonStyleLeft" >@style/Widget.Button.Left.Dark</item>
+        
+        <item name="buttonStyleLeft">@style/Widget.Button.Left.Dark</item>
         <item name="buttonStyleRight">@style/Widget.Button.Right.Dark</item>
-        
         <item name="android:soundEffectsEnabled">false</item>
-        <item name="iconImageViewStyle">@style/Widget.IconImageView</item>
-                
         <item name="listItemBackground">@drawable/list_background_holo_dark</item>
-        <item name="listShadowBackground">@drawable/sliding_listshadow_bg_dark</item>                
-        <item name="selectableBackground">@drawable/abc_list_selector_holo_dark</item>        
-        <item name="numberPickerStyle">@style/NPWidget.Holo.NumberPicker</item>        
+        <item name="slidingPaneShadowBackground">@drawable/sliding_listshadow_bg_dark</item>
+        <item name="selectableBackground">@drawable/abc_list_selector_holo_dark</item>
         <item name="showcaseViewStyle">@style/ShowcaseView</item>
-        
         <item name="floatingHintEditTextStyle">@style/Widget.FloatingHintEditText</item>
         <item name="floatingHintTextViewStyle">@style/Widget.FloatingHintTextView</item>
-        
         <item name="dropShadowBackground">@drawable/container_dropshadow_dark</item>
-        
-        <item name="dividerPadding">6dip</item>
     </style>
-    
+
+    <style name="DsaTabTheme.Dark.Translucent">
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowContentOverlay">@null</item>        
+    </style>
+
 </resources>

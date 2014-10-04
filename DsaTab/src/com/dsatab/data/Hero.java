@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -133,7 +133,7 @@ public class Hero extends AbstractBeing {
 		this.freeExperience = new EditableValue(this, "Freie Abenteuerpunkte");
 		this.freeExperience.setMaximum(100000);
 
-		this.spellsByName = new HashMap<String, Spell>();
+		this.spellsByName = new LinkedHashMap<String, Spell>();
 
 		for (int i = 0; i < equippedItems.length; i++) {
 			this.equippedItems[i] = new LinkedList<EquippedItem>();
@@ -984,11 +984,16 @@ public class Hero extends AbstractBeing {
 	}
 
 	public int getLevel() {
-		int level = getExperience().getValue() - getFreeExperience().getValue();
+		if (getExperience() != null && getFreeExperience() != null && getExperience().getValue() != null
+				&& getFreeExperience().getValue() != null) {
+			int level = getExperience().getValue() - getFreeExperience().getValue();
 
-		level = level / 1000;
+			level = level / 1000;
 
-		return level;
+			return level;
+		} else {
+			return 0;
+		}
 	}
 
 	public EditableValue getFreeExperience() {
@@ -997,58 +1002,39 @@ public class Hero extends AbstractBeing {
 
 	protected void postLeRatioCheck() {
 
-		if (DsaTabApplication.getPreferences().getBoolean(DsaTabPreferenceActivity.KEY_HOUSE_RULES_LE_MODIFIER, true)) {
-			float newLeRatioCheck = getRatio(AttributeType.Lebensenergie_Aktuell);
+		float newLeRatioCheck = getRatio(AttributeType.Lebensenergie_Aktuell);
 
-			int newLeRatioLevel = 0;
+		int newLeRatioLevel = 0;
 
-			if (newLeRatioCheck < LeModificator.LEVEL_3)
-				newLeRatioLevel = 3;
-			else if (newLeRatioCheck < LeModificator.LEVEL_2)
-				newLeRatioLevel = 2;
-			else if (newLeRatioCheck < LeModificator.LEVEL_1)
-				newLeRatioLevel = 1;
+		if (newLeRatioCheck < LeModificator.LEVEL_3)
+			newLeRatioLevel = 3;
+		else if (newLeRatioCheck < LeModificator.LEVEL_2)
+			newLeRatioLevel = 2;
+		else if (newLeRatioCheck < LeModificator.LEVEL_1)
+			newLeRatioLevel = 1;
 
-			if (oldLeRatioLevel == null || oldLeRatioLevel != newLeRatioLevel)
-				fireModifierChangedEvent(leModificator);
+		if (oldLeRatioLevel == null || oldLeRatioLevel != newLeRatioLevel)
+			fireModifierChangedEvent(leModificator);
 
-			oldLeRatioLevel = newLeRatioLevel;
-		} else {
-			oldLeRatioLevel = null;
-			fireModifierRemovedEvent(leModificator);
-		}
+		oldLeRatioLevel = newLeRatioLevel;
 
-	}
-
-	public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-		if (DsaTabPreferenceActivity.KEY_HOUSE_RULES_AU_MODIFIER.equals(key)) {
-			postAuRatioCheck();
-		}
-
-		if (DsaTabPreferenceActivity.KEY_HOUSE_RULES_LE_MODIFIER.equals(key)) {
-			postLeRatioCheck();
-		}
 	}
 
 	protected void postAuRatioCheck() {
-		if (DsaTabApplication.getPreferences().getBoolean(DsaTabPreferenceActivity.KEY_HOUSE_RULES_AU_MODIFIER, true)) {
 
-			double newAuRatioCheck = getRatio(AttributeType.Ausdauer_Aktuell);
+		double newAuRatioCheck = getRatio(AttributeType.Ausdauer_Aktuell);
 
-			int newAuRatioLevel = 0;
-			if (newAuRatioCheck < AuModificator.LEVEL_2)
-				newAuRatioLevel = 2;
-			else if (newAuRatioCheck < AuModificator.LEVEL_1)
-				newAuRatioLevel = 1;
+		int newAuRatioLevel = 0;
+		if (newAuRatioCheck < AuModificator.LEVEL_2)
+			newAuRatioLevel = 2;
+		else if (newAuRatioCheck < AuModificator.LEVEL_1)
+			newAuRatioLevel = 1;
 
-			if (oldAuRatioLevel == null || oldAuRatioLevel != newAuRatioLevel)
-				fireModifierChangedEvent(auModificator);
+		if (oldAuRatioLevel == null || oldAuRatioLevel != newAuRatioLevel)
+			fireModifierChangedEvent(auModificator);
 
-			oldAuRatioLevel = newAuRatioLevel;
-		} else {
-			oldAuRatioLevel = null;
-			fireModifierRemovedEvent(auModificator);
-		}
+		oldAuRatioLevel = newAuRatioLevel;
+
 	}
 
 	/**

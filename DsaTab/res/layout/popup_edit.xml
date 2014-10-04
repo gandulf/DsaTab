@@ -3,8 +3,8 @@
     android:id="@+id/popup_edit_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:divider="?attr/dividerHorizontal"
-    android:dividerPadding="?attr/dividerPadding"
+    android:divider="?android:attr/dividerHorizontal"
+    android:dividerPadding="?android:attr/dividerPadding"
     android:orientation="vertical"
     android:padding="@dimen/default_gap"
     android:showDividers="middle">
@@ -16,15 +16,18 @@
         android:text="@string/label_auto_calculate_be" >
     </CheckBox>
 
-    <net.simonvt.numberpicker.NumberPicker
+    <NumberPicker
         android:id="@+id/popup_edit_text"
         android:layout_width="match_parent"
         android:layout_height="200dp" />
 
-    <ToggleButton
+    <Switch
         android:id="@+id/popup_edit_combat_style"
+        android:text="@string/combat_style"
+        android:textOn="@string/offensive"
+        android:textOff="@string/defensive"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-    </ToggleButton>
+    </Switch>
 
 </LinearLayout>

@@ -4,12 +4,12 @@
         <item
             android:id="@+id/option_view"
             android:icon="?attr/imgBarView"
-            app:showAsAction="withText|ifRoom"
+            android:showAsAction="withText|ifRoom"
             android:title="@string/details"/>
         <item
             android:id="@+id/option_move"
             android:icon="?attr/imgBarSet"
-            app:showAsAction="withText|ifRoom"
+            android:showAsAction="withText|ifRoom"
             android:title="@string/move">
             <menu>
             </menu>
@@ -17,30 +17,30 @@
         <item
             android:id="@+id/option_equipped"
             android:icon="?attr/imgBarSet"
-            app:showAsAction="withText|ifRoom"
+            android:showAsAction="withText|ifRoom"
             android:title="@string/equip">
             <menu>
                 <item
                     android:id="@+id/option_equipped_set1"
                     android:icon="?attr/imgBarSet1"
-                    app:showAsAction="withText"
+                    android:showAsAction="withText"
                     android:title="@string/set_1"/>
                 <item
                     android:id="@+id/option_equipped_set2"
                     android:icon="?attr/imgBarSet2"
-                    app:showAsAction="withText"
+                    android:showAsAction="withText"
                     android:title="@string/set_2"/>
                 <item
                     android:id="@+id/option_equipped_set3"
                     android:icon="?attr/imgBarSet3"
-                    app:showAsAction="withText"
+                    android:showAsAction="withText"
                     android:title="@string/set_3"/>
             </menu>
         </item>
         <item
             android:id="@+id/option_delete"
             android:icon="?attr/imgBarDelete"
-            app:showAsAction="withText|ifRoom"
+            android:showAsAction="withText|ifRoom"
             android:title="@string/label_delete"/>
     </group>
 

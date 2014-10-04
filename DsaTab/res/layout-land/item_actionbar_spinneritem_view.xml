@@ -3,12 +3,11 @@
     xmlns:guilib="http://schemas.android.com/apk/com.gandulf.guilib"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:paddingRight="?attr/listPreferredItemPaddingRight"
-    android:paddingLeft="?attr/listPreferredItemPaddingLeft">
+    android:paddingRight="?android:attr/listPreferredItemPaddingRight"
+    android:paddingLeft="?android:attr/listPreferredItemPaddingLeft">
 
     <ImageView
-        android:id="@android:id/icon1"
-        style="?attr/iconImageViewStyle"
+        android:id="@android:id/icon1"        
         android:layout_width="@dimen/icon_button_size"
         android:layout_height="@dimen/icon_button_size"
         android:layout_alignParentLeft="true"
@@ -64,7 +63,6 @@
     
     <ImageView
         android:id="@android:id/icon2"
-        style="?attr/iconImageViewStyle"
         android:layout_width="@dimen/icon_button_size"
         android:layout_height="@dimen/icon_button_size"
         android:layout_alignParentRight="true"

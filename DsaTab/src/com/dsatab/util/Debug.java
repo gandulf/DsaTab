@@ -2,9 +2,9 @@ package com.dsatab.util;
 
 import android.util.Log;
 
-import com.bugsense.trace.BugSenseHandler;
 import com.dsatab.BuildConfig;
 import com.dsatab.DsaTabApplication;
+import com.splunk.mint.Mint;
 
 /**
  * Functions and helpers to aid debugging. DebugMode can be toggled .
@@ -91,7 +91,7 @@ public class Debug {
 
 	public static void error(String message, Throwable e) {
 		if (e instanceof Exception && !BuildConfig.DEBUG) {
-			BugSenseHandler.sendException((Exception) e);
+			Mint.logException((Exception) e);
 		}
 		Log.e(tag, message);
 		e.printStackTrace();
@@ -117,7 +117,7 @@ public class Debug {
 	 */
 	public static void error(Throwable t) {
 		if (t instanceof Exception && !BuildConfig.DEBUG) {
-			BugSenseHandler.sendException((Exception) t);
+			Mint.logException((Exception) t);
 		}
 		Log.e(tag, t.getMessage(), t);
 	}

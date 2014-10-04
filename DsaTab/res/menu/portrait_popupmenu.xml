@@ -3,22 +3,22 @@
     <item
         android:id="@+id/option_pick_avatar"
         android:icon="?attr/imgBarUser"
-        app:showAsAction="withText|ifRoom"
+        android:showAsAction="withText|ifRoom"
         android:title="@string/choose_portrait"/>
     <item
         android:id="@+id/option_download_avatars"
         android:icon="?attr/imgBarUser"
-        app:showAsAction="withText|ifRoom"
+        android:showAsAction="withText|ifRoom"
         android:title="@string/download_portraits"/>
     <item
         android:id="@+id/option_take_photo"
         android:icon="?attr/imgBarCamera"
-        app:showAsAction="withText|ifRoom"
+        android:showAsAction="withText|ifRoom"
         android:title="@string/take_photo"/>
     <item
         android:id="@+id/option_pick_image"
         android:icon="?attr/imgBarView"
-        app:showAsAction="withText|ifRoom"
+        android:showAsAction="withText|ifRoom"
         android:title="@string/open_gallery"/>
 
 </menu>

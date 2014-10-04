@@ -27,16 +27,6 @@
             android:summary="Bei Proben auf einen Würfel wird auf die besten 2 aus 3 Würfen gewürfelt."
             android:title="2 von 3 Würfen" />
         <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="houseRules.leModifier"
-            android:summary="Modifikatoren durch niedrige Lebensenergie verwenden."
-            android:title="Niedrige LE Modifikatoren" />
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="houseRules.auModifier"
-            android:summary="Modifikatoren durch niedrige Ausdauer verwenden."
-            android:title="Niedrige AU Modifikatoren" />
-        <CheckBoxPreference
             android:defaultValue="false"
             android:key="houseRules.easierWounds"
             android:summary="Wundschwelle liegt bei KO/3 statt den üblichen KO/2."

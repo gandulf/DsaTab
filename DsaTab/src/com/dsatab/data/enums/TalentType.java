@@ -207,7 +207,7 @@ public enum TalentType {
 			"Prophezeien", TalentGroupType.Gaben, null), Geräuschhexerei("Geräuschhexerei", TalentGroupType.Gaben, null), Magiegespür(
 			"Magiegespür", TalentGroupType.Gaben, null), Tierempathiespeziell("Tierempathie (speziell)",
 			TalentGroupType.Gaben, null), Tierempathiealle("Tierempathie (alle)", TalentGroupType.Gaben, null), Empathie(
-			"Empathie", TalentGroupType.Gaben, null);
+			"Empathie", TalentGroupType.Gaben, null), Immanspiel("Immanspiel", TalentGroupType.Körperlich, null);
 
 	private static final String DEPRECATED_WACHE_NAME = "Wache";
 	private static final String DEPRECATED_KRÄUTERSUCHE_NAME1 = "Kräutersuchen";

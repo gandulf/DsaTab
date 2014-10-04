@@ -15,17 +15,18 @@
   -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="?attr/actionButtonStyle"
+    style="?android:attr/actionButtonStyle"
     android:id="@+id/actionbar_done"
     android:layout_width="0dp"
     android:layout_height="match_parent"
     android:layout_weight="1">
 
-    <TextView style="?attr/actionBarTabTextStyle"
+    <TextView style="?android:attr/actionBarTabTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:paddingRight="20dp"
+        android:paddingLeft="0dp"
         android:drawableLeft="?attr/imgBarAccept"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"

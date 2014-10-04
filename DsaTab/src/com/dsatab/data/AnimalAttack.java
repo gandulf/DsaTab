@@ -9,21 +9,20 @@ import com.dsatab.data.enums.TalentType;
 
 public class AnimalAttack implements CombatTalent, Serializable {
 
+	private static final long serialVersionUID = -3715752247828889650L;
+
 	private String name;
 
 	private CombatMeleeAttribute pa;
 
 	private CombatMeleeAttribute at;
 
-	private Animal animal;
-
 	private String distance;
 
 	private Dice tp;
 
-	public AnimalAttack(Animal animal, String name, CombatMeleeAttribute at, CombatMeleeAttribute pa, Dice tpdice,
-			String distance) {
-		this.animal = animal;
+	public AnimalAttack(String name, CombatMeleeAttribute at, CombatMeleeAttribute pa, Dice tpdice, String distance) {
+
 		this.name = name;
 
 		if (at != null)

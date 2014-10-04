@@ -3,11 +3,7 @@ package com.dsatab.data.adapter;
 import java.util.Collections;
 import java.util.List;
 
-import net.simonvt.numberpicker.NumberPicker;
-import net.simonvt.numberpicker.NumberPicker.OnValueChangeListener;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -16,12 +12,12 @@ import android.text.TextUtils;
 import android.text.TextUtils.TruncateAt;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -30,6 +26,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
+import android.widget.NumberPicker.OnValueChangeListener;
+import android.widget.PopupMenu;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Spinner;
@@ -144,7 +143,6 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 
 		@Override
 		public void onNothingSelected(AdapterView<?> arg0) {
-			// TODO Auto-generated method stub
 
 		}
 	};
@@ -424,17 +422,11 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				convertView = inflater.inflate(R.layout.item_listitem_wound, parent, false);
 				WoundViewHolder holder = new WoundViewHolder();
 
-				ImageButton takehit = (ImageButton) convertView.findViewById(R.id.dice_take_hit);
-				takehit.setOnClickListener(this);
-
 				ViewGroup woundContainer = (ViewGroup) convertView.findViewById(R.id.wound_container);
 				int width = parent.getWidth();
 				width -= (parent.getPaddingLeft() + parent.getPaddingRight());
 				int buttonSize = getContext().getResources().getDimensionPixelSize(R.dimen.icon_button_size);
 				int gap = getContext().getResources().getDimensionPixelSize(R.dimen.default_gap);
-
-				// remove takehitButtonWidth
-				width -= (buttonSize + gap);
 
 				int halfgap = gap / 2;
 				int buttonCount = (int) Math.floor(((float) width / (buttonSize + gap)));
@@ -612,13 +604,6 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 	@Override
 	public void onClick(View v) {
 
-		switch (v.getId()) {
-		case R.id.dice_take_hit:
-			TakeHitDialog takeHitDialog = new TakeHitDialog(getContext(), hero, null);
-			takeHitDialog.show();
-			return;
-		}
-
 		if (v.getTag() == null && v instanceof ToggleButton) {
 
 			final ToggleButton button = (ToggleButton) v;
@@ -631,25 +616,29 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				break;
 			case Trefferzonen:
 				button.setChecked(false);
+
 				final List<Position> positions = DsaTabApplication.getInstance().getConfiguration().getWoundPositions();
 
-				AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-				ArrayAdapter<Position> typeAdapter = new ArrayAdapter<Position>(getContext(),
-						android.R.layout.simple_list_item_1, positions);
-				builder.setTitle("Typ auswählen");
-				builder.setAdapter(typeAdapter, new DialogInterface.OnClickListener() {
+				PopupMenu popupMenu = new PopupMenu(getContext(), v);
+
+				for (int i = 0; i < positions.size(); i++) {
+					popupMenu.getMenu().add(0, i, i, positions.get(i).getName());
+				}
+
+				popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 
 					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						Position position = (Position) positions.get(which);
+					public boolean onMenuItemClick(MenuItem item) {
+						Position position = (Position) positions.get(item.getItemId());
 						WoundAttribute attr = hero.getWounds().get(position);
 						button.setChecked(true);
 						attr.addValue(1);
 						button.setTag(attr);
+						return true;
 					}
 				});
 
-				builder.show().setCanceledOnTouchOutside(true);
+				popupMenu.show();
 				break;
 			}
 		}
@@ -739,60 +728,79 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 					}
 				});
 				holder.button1.setVisibility(View.VISIBLE);
+				holder.button2.setVisibility(View.GONE);
 				break;
 			case Modificator:
-				holder.button1.setImageResource(R.drawable.dsa_modifier_add);
-				holder.button1.setOnClickListener(new View.OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						if (actionListener != null)
-							actionListener.onAction(OnActionListener.ACTION_MODIFICATOR_ADD);
-
-					}
-				});
-
-				holder.button1.setVisibility(View.VISIBLE);
+				// holder.button1.setImageResource(R.drawable.dsa_modifier_add);
+				// holder.button1.setOnClickListener(new View.OnClickListener() {
+				//
+				// @Override
+				// public void onClick(View v) {
+				// if (actionListener != null)
+				// actionListener.onAction(OnActionListener.ACTION_MODIFICATOR_ADD);
+				//
+				// }
+				// });
+				// holder.button1.setVisibility(View.VISIBLE);
+				holder.button1.setVisibility(View.GONE);
+				holder.button2.setVisibility(View.GONE);
 				break;
 			case Probe:
-				holder.button1.setImageResource(R.drawable.dsa_dice_add);
-				holder.button1.setOnClickListener(new View.OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						if (actionListener != null)
-							actionListener.onAction(OnActionListener.ACTION_CUSTOM_PROBE_ADD);
-
-					}
-				});
-				holder.button1.setVisibility(View.VISIBLE);
+				// holder.button1.setImageResource(R.drawable.dsa_dice_add);
+				// holder.button1.setOnClickListener(new View.OnClickListener() {
+				//
+				// @Override
+				// public void onClick(View v) {
+				// if (actionListener != null)
+				// actionListener.onAction(OnActionListener.ACTION_CUSTOM_PROBE_ADD);
+				//
+				// }
+				// });
+				// holder.button1.setVisibility(View.VISIBLE);
+				holder.button1.setVisibility(View.GONE);
+				holder.button2.setVisibility(View.GONE);
 				break;
 			case Notes:
+				// holder.button1.setImageResource(R.drawable.dsa_speech_add);
+				// holder.button1.setOnClickListener(new View.OnClickListener() {
+				//
+				// @Override
+				// public void onClick(View v) {
+				// if (actionListener != null)
+				// actionListener.onAction(OnActionListener.ACTION_NOTES_RECORD);
+				//
+				// }
+				// });
+				// holder.button1.setVisibility(View.VISIBLE);
+				//
+				// holder.button2.setImageResource(R.drawable.dsa_notes_add);
+				// holder.button2.setOnClickListener(new View.OnClickListener() {
+				//
+				// @Override
+				// public void onClick(View v) {
+				// if (actionListener != null)
+				// actionListener.onAction(OnActionListener.ACTION_NOTES_ADD);
+				//
+				// }
+				// });
+				// holder.button2.setVisibility(View.VISIBLE);
+				holder.button1.setVisibility(View.GONE);
+				holder.button2.setVisibility(View.GONE);
 
-				holder.button1.setImageResource(R.drawable.dsa_speech_add);
+				break;
+			case Wound:
+				holder.button1.setImageResource(R.drawable.dsa_wound_patch);
 				holder.button1.setOnClickListener(new View.OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
-						if (actionListener != null)
-							actionListener.onAction(OnActionListener.ACTION_NOTES_RECORD);
+						TakeHitDialog takeHitDialog = new TakeHitDialog(getContext(), hero, null);
+						takeHitDialog.show();
 
 					}
 				});
 				holder.button1.setVisibility(View.VISIBLE);
-
-				holder.button2.setImageResource(R.drawable.dsa_notes_add);
-				holder.button2.setOnClickListener(new View.OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						if (actionListener != null)
-							actionListener.onAction(OnActionListener.ACTION_NOTES_ADD);
-
-					}
-				});
-				holder.button2.setVisibility(View.VISIBLE);
-
+				holder.button2.setVisibility(View.GONE);
 				break;
 			default:
 				holder.button1.setVisibility(View.GONE);
@@ -922,9 +930,14 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		} else {
 			SeekViewHolder viewHolder = (SeekViewHolder) convertView.getTag();
 
-			viewHolder.seek.setMax(attribute.getMaximum());
-			viewHolder.seek.setMin(attribute.getMinimum());
-			viewHolder.seek.setValue(attribute.getValue());
+			if (attribute.getValue() != null) {
+				viewHolder.seek.setMax(attribute.getMaximum());
+				viewHolder.seek.setMin(attribute.getMinimum());
+				viewHolder.seek.setValue(attribute.getValue());
+				viewHolder.seek.setEnabled(true);
+			} else {
+				viewHolder.seek.setEnabled(false);
+			}
 			viewHolder.seek.setLabel(viewHolder.value);
 			viewHolder.seek.setTag(attribute);
 			viewHolder.seek.setOnSeekBarChangeListener(this);
@@ -1371,7 +1384,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 	public void onStopTrackingTouch(SeekBar seekBar) {
 		SeekBarEx seekBarEx = (SeekBarEx) seekBar;
 		Attribute attribute = (Attribute) seekBar.getTag();
-		if (attribute != null) {
+		if (attribute != null && attribute.getValue() != null) {
 			attribute.setValue(seekBarEx.getValue());
 		}
 	}

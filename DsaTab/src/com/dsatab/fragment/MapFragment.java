@@ -16,6 +16,7 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences.Editor;
@@ -23,7 +24,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,13 +93,27 @@ public class MapFragment extends BaseFragment {
 		getMapFiles();
 	}
 
+	@Override
+	public void hideActionBarItems() {
+		super.hideActionBarItems();
+
+		removeMapNavigation();
+	}
+
+	@Override
+	public void showActionBarItems() {
+		super.showActionBarItems();
+
+		initMapNavigation();
+	}
+
 	private void initMapNavigation() {
 
 		mapFiles = null;
 		mapNames = null;
 
 		if (!getMapNames().isEmpty()) {
-			ActionBar actionBar = getActionBarActivity().getSupportActionBar();
+			ActionBar actionBar = getActionBarActivity().getActionBar();
 
 			final ArrayAdapter<String> adapter = new ArrayAdapter<String>(actionBar.getThemedContext(),
 					android.R.layout.simple_spinner_item, getMapNames());
@@ -180,7 +194,7 @@ public class MapFragment extends BaseFragment {
 	}
 
 	private void removeMapNavigation() {
-		ActionBar actionBar = getActionBarActivity().getSupportActionBar();
+		ActionBar actionBar = getActionBarActivity().getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 		actionBar.setListNavigationCallbacks(null, null);
 	}
@@ -188,8 +202,7 @@ public class MapFragment extends BaseFragment {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
-	 * android.os.Bundle)
+	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -208,10 +221,13 @@ public class MapFragment extends BaseFragment {
 	private void initOSMMapView() {
 		if (osmMapView == null) {
 			File osmMapDir = DsaTabApplication.getDirectory(DsaTabApplication.DIR_OSM_MAPS);
+
 			ITileSource tileSource = TileSourceFactory.getTileSource(DsaTabApplication.TILESOURCE_AVENTURIEN);
 			MapTileProviderLocal tileProvider = new MapTileProviderLocal(osmMapDir.getAbsolutePath(), getActivity(),
 					tileSource);
+
 			osmMapView = new MapView(getActivity(), 256, new DefaultResourceProxyImpl(getActivity()), tileProvider);
+
 			osmMapView.setUseDataConnection(false);
 			osmMapView.setBuiltInZoomControls(true);
 			osmMapView.setMultiTouchControls(true);
@@ -249,7 +265,7 @@ public class MapFragment extends BaseFragment {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
+	 * @see android.app.Fragment#onActivityCreated(android.os.Bundle)
 	 */
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -463,7 +479,7 @@ public class MapFragment extends BaseFragment {
 			edit.putInt(PREF_KEY_OSM_ZOOM, osmMapView.getZoomLevel());
 			IGeoPoint center = osmMapView.getMapCenter();
 			edit.putInt(PREF_KEY_OSM_LATITUDE, center.getLatitudeE6());
-			edit.putInt(PREF_KEY_OSM_LATITUDE, center.getLongitudeE6());
+			edit.putInt(PREF_KEY_OSM_LONGITUDE, center.getLongitudeE6());
 		}
 		edit.commit();
 
@@ -477,22 +493,11 @@ public class MapFragment extends BaseFragment {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onResume()
+	 * @see android.app.Fragment#onResume()
 	 */
 	@Override
 	public void onResume() {
 		super.onResume();
-
-		if (osmMapView != null) {
-			osmMapView.getController().setZoom(getPreferences().getInt(PREF_KEY_OSM_ZOOM, DEFAULT_OSM_ZOOM));
-
-			int latitude = getPreferences().getInt(PREF_KEY_OSM_LATITUDE, -1);
-			int longitude = getPreferences().getInt(PREF_KEY_OSM_LONGITUDE, -1);
-			if (latitude != -1 && longitude != -1) {
-				IGeoPoint center = new GeoPoint(latitude, longitude);
-				osmMapView.getController().setCenter(center);
-			}
-		}
 
 		initMapNavigation();
 

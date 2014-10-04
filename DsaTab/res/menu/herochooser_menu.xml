@@ -3,14 +3,14 @@
 
     <item
         android:id="@+id/option_refresh"
-        android:icon="@drawable/ic_action_refresh"
+        android:icon="@drawable/ic_menu_refresh"
         android:title="@string/refresh"
-        app:showAsAction="withText|ifRoom"/>
+        android:showAsAction="withText|ifRoom"/>
     <item
         android:id="@+id/option_connect"
         android:icon="?attr/imgBarSplit"
         android:title="Verbinden"
-        app:showAsAction="withText|ifRoom">
+        android:showAsAction="withText|ifRoom">
         <menu>
             <item
                 android:id="@+id/option_connect_dropbox"
@@ -25,6 +25,6 @@
         android:icon="@drawable/dsa_character"
         android:title="Beispiel Helden laden"
         android:visible="false"
-        app:showAsAction="withText|ifRoom"/>
+        android:showAsAction="withText|ifRoom"/>
 
 </menu>

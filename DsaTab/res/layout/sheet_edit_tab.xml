@@ -11,7 +11,7 @@
         android:layout_width="250dp"
         android:layout_height="match_parent"
         android:layout_weight="0"
-        android:background="?attr/listShadowBackground"
+        android:background="?attr/slidingPaneShadowBackground"
         android:divider="@null" />
 
     <LinearLayout
@@ -22,19 +22,19 @@
         android:clickable="true"
         android:orientation="vertical" >
 
-        <android.support.v7.widget.GridLayout
+        <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            auto:columnCount="2"
-            auto:orientation="horizontal"
-            auto:useDefaultMargins="true" >
+            android:columnCount="2"
+            android:orientation="horizontal"
+            android:useDefaultMargins="true" >
 
             <ImageView
                 android:id="@+id/popup_edit_icon"
                 style="?attr/android:spinnerStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/icon_button_size"
-                auto:layout_column="0"
+                android:layout_column="0"
                 android:minWidth="@dimen/icon_button_size"
                 android:scaleType="fitCenter" />
 
@@ -42,8 +42,8 @@
                 android:id="@+id/popup_edit_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                auto:layout_column="1"
-                auto:layout_gravity="fill_horizontal|bottom"
+                android:layout_column="1"
+                android:layout_gravity="fill_horizontal|bottom"
                 android:hint="@string/label_titel"
                 android:inputType="textPersonName" />
 
@@ -51,18 +51,11 @@
                 android:id="@+id/popup_edit_diceslider"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                auto:layout_columnSpan="2"
+                android:layout_columnSpan="2"
                 android:text="@string/show_dice" >
             </CheckBox>
-
-            <CheckBox
-                android:id="@+id/popup_edit_attributelist"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                auto:layout_columnSpan="2"
-                android:text="@string/show_header" >
-            </CheckBox>
-        </android.support.v7.widget.GridLayout>
+            
+        </GridLayout>
 
         <TabHost
             android:id="@android:id/tabhost"

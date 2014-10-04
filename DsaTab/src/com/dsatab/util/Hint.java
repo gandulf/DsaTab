@@ -14,13 +14,14 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.XmlResourceParser;
+import android.graphics.Point;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabPreferenceActivity;
-import com.espian.showcaseview.ShowcaseView;
-import com.espian.showcaseview.targets.PointTarget;
-import com.espian.showcaseview.targets.ViewTarget;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.PointTarget;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
 public class Hint {
 
@@ -51,7 +52,7 @@ public class Hint {
 	}
 
 	protected static boolean hintDelayCheck() {
-		if (hintShown != 0 && System.currentTimeMillis() - hintShown < 1000 * 1) {
+		if (hintShown != 0 && System.currentTimeMillis() - hintShown < 1000 * 30) {
 			return false;
 		} else {
 			return true;
@@ -169,14 +170,21 @@ public class Hint {
 					DsaTabApplication.getInstance().getPackageName());
 			if (viewIdInt != 0) {
 				ViewTarget target = new ViewTarget(viewIdInt, activity);
-				ShowcaseView.insertShowcaseView(target, activity, title, description, null).show();
-				shown = true;
+
+				// check if view is onscreen
+				Point p = target.getPoint();
+				if (p.x >= 0 && p.y >= 0 && p.x < Util.getWidth(activity) && p.y < Util.getHeight(activity)) {
+					new ShowcaseView.Builder(activity).setTarget(target).setContentTitle(title)
+							.setContentText(description).build().show();
+					shown = true;
+				}
 			}
 		} else if (this.x >= 0 && this.y >= 0) {
 			int x = (int) (Util.getWidth(activity) * (this.x / 100.0f));
 			int y = (int) (Util.getHeight(activity) * (this.y / 100.0f));
 			PointTarget pointTarget = new PointTarget(x, y);
-			ShowcaseView.insertShowcaseView(pointTarget, activity, title, description, null).show();
+			new ShowcaseView.Builder(activity).setTarget(pointTarget).setContentTitle(title)
+					.setContentText(description).build().show();
 			shown = true;
 		}
 

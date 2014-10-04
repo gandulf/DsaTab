@@ -6,20 +6,20 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
 import android.app.Activity;
+import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
-import android.support.v4.content.Loader;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBar.Tab;
-import android.support.v7.view.ActionMode;
-import android.support.v7.view.ActionMode.Callback;
 import android.text.Editable;
 import android.util.SparseBooleanArray;
+import android.view.ActionMode;
+import android.view.ActionMode.Callback;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,7 +31,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
-import casidiablo.SimpleCursorLoader;
 
 import com.dsatab.R;
 import com.dsatab.activity.ItemsActivity;
@@ -62,7 +61,7 @@ public class ItemListFragment extends BaseListFragment implements OnItemClickLis
 
 	private OnItemSelectedListener itemSelectedListener;
 
-	protected static class ItemCursorLoader extends SimpleCursorLoader {
+	protected static class ItemCursorLoader extends CursorLoader {
 
 		private String constraint;
 		private Collection<ItemType> itemTypes = null;
@@ -184,7 +183,7 @@ public class ItemListFragment extends BaseListFragment implements OnItemClickLis
 		itemTypes = new HashSet<ItemType>();
 		itemAdapter = new ItemCursorAdapter(getActivity(), null);
 
-		ActionBar actionBar = getActionBarActivity().getSupportActionBar();
+		ActionBar actionBar = getActionBarActivity().getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
 		final ItemTypeAdapter adapter = new ItemTypeAdapter(actionBar.getThemedContext(),
@@ -204,7 +203,7 @@ public class ItemListFragment extends BaseListFragment implements OnItemClickLis
 			}
 		});
 
-		getActivity().getSupportLoaderManager().initLoader(0, null, this);
+		getActivity().getLoaderManager().initLoader(0, null, this);
 	}
 
 	public String getHeroKey() {
@@ -229,8 +228,7 @@ public class ItemListFragment extends BaseListFragment implements OnItemClickLis
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
-	 * android.os.Bundle)
+	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -247,12 +245,12 @@ public class ItemListFragment extends BaseListFragment implements OnItemClickLis
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
+	 * @see android.app.Fragment#onActivityCreated(android.os.Bundle)
 	 */
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 
-		ActionBar actionBar = getActionBarActivity().getSupportActionBar();
+		ActionBar actionBar = getActionBarActivity().getActionBar();
 		ItemType itemType = null;
 		if (!itemTypes.isEmpty()) {
 			itemType = itemTypes.iterator().next();
@@ -303,11 +301,10 @@ public class ItemListFragment extends BaseListFragment implements OnItemClickLis
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
 		MenuItem item = menu.add(Menu.NONE, R.id.option_search, Menu.NONE, "Suche");
-		MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM
-				| MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
 		item.setIcon(Util.getThemeResourceId(getActivity(), R.attr.imgBarSearch));
 
-		final AutoCompleteTextView searchView = new AutoCompleteTextView(getActionBarActivity().getSupportActionBar()
+		final AutoCompleteTextView searchView = new AutoCompleteTextView(getActionBarActivity().getActionBar()
 				.getThemedContext());
 		searchView.setCompoundDrawablesWithIntrinsicBounds(Util.getThemeResourceId(getActivity(), R.attr.imgBarSearch),
 				0, 0, 0);
@@ -320,8 +317,7 @@ public class ItemListFragment extends BaseListFragment implements OnItemClickLis
 
 		searchView.setHint(R.string.filter);
 		searchView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-
-		MenuItemCompat.setActionView(item, searchView);
+		item.setActionView(searchView);
 		// --
 
 		inflater.inflate(R.menu.menuitem_add_items, menu);
@@ -344,7 +340,7 @@ public class ItemListFragment extends BaseListFragment implements OnItemClickLis
 
 		if (requestCode == ItemsActivity.ACTION_EDIT || requestCode == ItemsActivity.ACTION_CREATE) {
 			if (resultCode == Activity.RESULT_OK) {
-				getActivity().getSupportLoaderManager().initLoader(0, null, this);
+				getActivity().getLoaderManager().initLoader(0, null, this);
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);
@@ -353,7 +349,7 @@ public class ItemListFragment extends BaseListFragment implements OnItemClickLis
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onOptionsItemSelected(android.view.MenuItem )
+	 * @see android.app.Fragment#onOptionsItemSelected(android.view.MenuItem )
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -379,7 +375,7 @@ public class ItemListFragment extends BaseListFragment implements OnItemClickLis
 
 	public void refresh() {
 		if (getActivity() != null) {
-			getActivity().getSupportLoaderManager().restartLoader(0, null, this);
+			getActivity().getLoaderManager().restartLoader(0, null, this);
 		}
 	}
 

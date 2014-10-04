@@ -6,8 +6,6 @@ import com.dsatab.data.enums.AttributeType;
 
 public abstract class BaseProbe implements Probe {
 
-	private static final long serialVersionUID = 7786696276206361948L;
-
 	public static long cacheValidationDate = 0;
 
 	protected ProbeInfo probeInfo;

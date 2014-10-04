@@ -6,29 +6,9 @@
     android:background="?attr/listItemBackground"
     android:gravity="center"
     android:minHeight="?android:attr/listPreferredItemHeight"
-    android:paddingLeft="?attr/listPreferredItemPaddingLeft"
-    android:paddingRight="?attr/listPreferredItemPaddingRight" 
-    android:divider="?attr/dividerVertical"
-    android:showDividers="middle"
-    android:dividerPadding="?attr/dividerPadding"
+    android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+    android:paddingRight="?android:attr/listPreferredItemPaddingRight"
+    android:id="@+id/wound_container"
     android:orientation="horizontal">
-
-    <LinearLayout
-        android:id="@+id/wound_container"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:gravity="center" 
-        android:orientation="horizontal">
-    </LinearLayout>
-
-    <ImageButton
-        android:id="@+id/dice_take_hit"
-        android:layout_width="@dimen/icon_button_size"
-        android:layout_height="@dimen/icon_button_size"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/default_gap"
-        android:gravity="center"
-        android:src="@drawable/dsa_wound_patch" />
 
 </com.dsatab.view.CheckableLinearLayout>

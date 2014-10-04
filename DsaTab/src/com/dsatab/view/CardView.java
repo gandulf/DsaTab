@@ -19,8 +19,6 @@ import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.items.ItemCard;
 import com.dsatab.util.Util;
-import com.gandulf.guilib.util.Debug;
-import com.squareup.picasso.Picasso;
 
 public class CardView extends ImageView implements Checkable {
 
@@ -72,9 +70,7 @@ public class CardView extends ImageView implements Checkable {
 	 */
 
 	private void init() {
-
-		setDrawingCacheEnabled(false);
-		setScaleType(ScaleType.CENTER_INSIDE);
+		setScaleType(ScaleType.FIT_CENTER);
 
 		textBox = new Rect();
 		paint = new Paint();
@@ -85,7 +81,6 @@ public class CardView extends ImageView implements Checkable {
 			paint.setTypeface(DsaTabApplication.getInstance().getPoorRichardFont());
 		}
 
-		initHoneycomb();
 	}
 
 	@TargetApi(11)
@@ -147,24 +142,11 @@ public class CardView extends ImageView implements Checkable {
 
 		if (item != null) {
 			if (item.hasImage()) {
-				Debug.verbose("Loading image from " + item.getImageUri().toString());
-				if (highQuality) {
-					Picasso.with(getContext()).load(item.getImageUri().toString()).placeholder(R.drawable.item_card)
-							.resize(HQ_IMAGE_SIZE, HQ_IMAGE_SIZE).centerInside().into(this);
-					// setImageBitmap(DataManager.getBitmap(item.getImageUri(), HQ_IMAGE_SIZE));
-					// setScaleType(ScaleType.CENTER_INSIDE);
-				} else {
-					Picasso.with(getContext()).load(item.getImageUri().toString())
-							.placeholder(R.drawable.item_card_small).resize(LQ_IMAGE_SIZE, LQ_IMAGE_SIZE)
-							.centerInside().into(this);
-					// setImageBitmap(DataManager.getBitmap(item.getImageUri(), LQ_IMAGE_SIZE));
-					// setScaleType(ScaleType.FIT_CENTER);
-				}
-				textGravity = Gravity.CENTER;
+				Util.setImage(this, item.getImageUri(), R.drawable.item_card);
 			} else {
-				textGravity = Gravity.CENTER;
 				setImageResource(R.drawable.item_card);
 			}
+			textGravity = Gravity.CENTER;
 
 			itemText = item.getTitle();
 			imageTextOverlay = item.isImageTextOverlay();

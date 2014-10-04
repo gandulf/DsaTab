@@ -2,12 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dsatab"
     android:installLocation="auto"
-    android:versionCode="89"    
-    android:versionName="4.3.3">
+    android:versionCode="91"
+    android:versionName="4.3.5">
 
     <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="19" />
+        android:minSdkVersion="14"
+        android:targetSdkVersion="21" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -34,7 +34,7 @@
         android:normalScreens="true"
         android:resizeable="true"
         android:smallScreens="true"
-        android:xlargeScreens="true" />
+        android:xlargeScreens="true"         />
 
     <application
         android:name="DsaTabApplication"
@@ -47,7 +47,8 @@
         android:theme="@style/DsaTabTheme.Light" >
         <activity
             android:name="com.dsatab.activity.DsaTabActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustUnspecified" >
+            android:windowSoftInputMode="stateAlwaysHidden|adjustUnspecified" 
+            android:theme="@style/DsaTabTheme.Light.Translucent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -92,7 +93,7 @@
         </receiver>
 
         <service
-            android:name="com.gandulf.guilib.download.UnzipIntentService"
+            android:name="com.gandulf.guilib.download.UnzipIntentService"            
             android:exported="false" >
         </service>
         <!--

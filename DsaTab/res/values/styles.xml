@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:custom="http://schemas.android.com/apk/res-auto">
-
-    <style name="Widget.IconImageView">
-        <item name="android:padding">@dimen/default_gap</item>        
-    </style>
         
     <style name="Widget.Button" parent="@android:style/Widget.Button">
         <item name="android:background">@drawable/btn_touch_light</item>
@@ -42,7 +38,7 @@
     <style name="Widget.Button.Small">
         <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
         <item name="android:minWidth">30dp</item>
-        <item name="android:minHeight">25dp</item>
+        <item name="android:minHeight">20dp</item>
     </style>
     
     <style name="Widget.Button.Small.Dark">
@@ -78,6 +74,7 @@
 <!--         <item name="android:textAllCaps">true</item>  -->
         <item name="android:gravity">right|bottom</item>
         <item name="android:layout_height">match_parent</item>
+        <item name="android:minWidth">20dp</item>
     </style>
     
     <style name="TextLabel.Float">
@@ -87,8 +84,14 @@
         <item name="android:layout_marginBottom">0dp</item>
         <item name="android:paddingBottom">0dp</item>
         <item name="android:textColor">?android:attr/textColorHint</item>
-        
-        
     </style>
     
+    
+    <style name="Widget.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@drawable/ab_solid_dark_holo</item>
+    </style>
+
+    <style name="Widget.ActionBar.Transparent">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
 </resources>

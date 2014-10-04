@@ -22,25 +22,32 @@ import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.bugsense.trace.BugSenseHandler;
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.cloud.HeroExchange;
 import com.dsatab.data.Hero;
 import com.dsatab.data.HeroFileInfo.FileType;
 import com.dsatab.db.DatabaseHelper;
+import com.dsatab.fragment.dialog.ChangeLogDialog;
 import com.dsatab.map.BitmapTileSource;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
-import com.dsatab.view.dialog.ChangeLogDialog;
 import com.dsatab.xml.HeldenXmlParser;
 import com.dsatab.xml.Xml;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.splunk.mint.Mint;
 
 public class DsaTabApplication extends Application implements OnSharedPreferenceChangeListener {
 
@@ -209,6 +216,8 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 		Debug.verbose("Checking dsatab dir " + getDsaTabPath() + " for subdirs");
 		File base = getDsaTabDirectory();
 
+		File mapsdir = getInstance().getExternalFilesDir(DIR_MAPS);
+
 		File recordingsDir = getDirectory(DIR_RECORDINGS);
 		File mapsDir = getDirectory(DIR_MAPS);
 		File osmmapsDir = getDirectory(DIR_OSM_MAPS);
@@ -238,15 +247,24 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 			throw new IllegalStateException("Application not created yet!");
 	}
 
-	public int getCustomTheme() {
+	public int getCustomTheme(boolean translucent) {
 		String theme = getPreferences().getString(DsaTabPreferenceActivity.KEY_THEME, THEME_DEFAULT);
 
 		if (THEME_LIGHT_PLAIN.equals(theme)) {
-			return R.style.DsaTabTheme_Light;
+			if (translucent)
+				return R.style.DsaTabTheme_Light_Translucent;
+			else
+				return R.style.DsaTabTheme_Light;
 		} else if (THEME_DARK_PLAIN.equals(theme)) {
-			return R.style.DsaTabTheme_Dark;
+			if (translucent)
+				return R.style.DsaTabTheme_Dark_Translucent;
+			else
+				return R.style.DsaTabTheme_Dark;
 		} else {
-			return R.style.DsaTabTheme_Light;
+			if (translucent)
+				return R.style.DsaTabTheme_Light_Translucent;
+			else
+				return R.style.DsaTabTheme_Light;
 		}
 
 	}
@@ -295,14 +313,14 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 
 		cleanUp();
 
-		setTheme(getCustomTheme());
+		setTheme(getCustomTheme(false));
 
 		configuration = new DsaTabConfiguration(this);
 
 		poorRichFont = Typeface.createFromAsset(this.getAssets(), "fonts/poorich.ttf");
 
 		if (!BuildConfig.DEBUG)
-			BugSenseHandler.initAndStartSession(this, BUGSENSE_API_KEY);
+			Mint.initAndStartSession(this, BUGSENSE_API_KEY);
 
 		checkDirectories();
 
@@ -334,6 +352,20 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 		}
 
 		edit.commit();
+
+		// Create global configuration and initialize ImageLoader with this config
+		// Create default options which will be used for every
+		// displayImage(...) call if no options will be passed to this method
+
+		DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
+				.imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).build();
+		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+				.defaultDisplayImageOptions(defaultOptions).threadPriority(Thread.NORM_PRIORITY - 2)
+				.denyCacheImageMultipleSizesInMemory().diskCacheFileNameGenerator(new Md5FileNameGenerator())
+				.diskCacheSize(50 * 1024 * 1024) // 50 Mb
+				.tasksProcessingOrder(QueueProcessingType.LIFO).build();
+		// Initialize ImageLoader with configuration.
+		ImageLoader.getInstance().init(config);
 	}
 
 	public boolean isFirstRun() {
@@ -384,8 +416,7 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 		if (newsShown)
 			return;
 
-		ChangeLogDialog logDialog = new ChangeLogDialog(activity);
-		logDialog.show();
+		ChangeLogDialog.show(activity, false, 0);
 		newsShown = true;
 	}
 

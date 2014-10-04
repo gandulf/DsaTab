@@ -3,7 +3,7 @@
     <item
         android:id="@+id/option_modifier_add"
         android:icon="@drawable/dsa_modifier_add"
-        app:showAsAction="withText|ifRoom"
+        android:showAsAction="withText|ifRoom"
         android:title="@string/create_modificator"/>
     
 </menu>

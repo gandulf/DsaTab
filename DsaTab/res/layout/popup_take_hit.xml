@@ -18,30 +18,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <net.simonvt.numberpicker.NumberPicker
+    <NumberPicker
         android:id="@+id/popup_edit_text"
         android:layout_width="match_parent"
         android:layout_height="200dp" />
     
-    <ToggleButton
-        android:id="@+id/popup_damage_type"
+    <Switch android:id="@+id/popup_damage_type"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </ToggleButton>
+        android:text="Schadensart"
+        android:textOn="TP"
+        android:textOff="AuP"
+        android:layout_height="wrap_content" />
     
-    <CheckBox
+    <Switch
         android:id="@+id/popup_consider_rs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/label_consider_rs" >
-    </CheckBox>
+        android:text="@string/label_consider_rs" />
     
-    <CheckBox
+    <Switch
         android:id="@+id/popup_consider_wound"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/label_consider_wound" >
-    </CheckBox>
+        android:text="@string/label_consider_wound" />
+    
     
 
 </LinearLayout>

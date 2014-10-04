@@ -20,7 +20,7 @@
             android:text="" >
         </TextView>
         
-        <net.simonvt.numberpicker.NumberPicker
+        <NumberPicker
             android:id="@+id/popup_edit_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

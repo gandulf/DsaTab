@@ -3,7 +3,7 @@
     <item
         android:id="@+id/option_probe_add"
         android:icon="@drawable/dsa_dice_add"
-        app:showAsAction="withText|ifRoom"
+        android:showAsAction="withText|ifRoom"
         android:title="@string/create_custom_probe"/>
     
 </menu>

@@ -20,10 +20,10 @@ import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.view.ActionMode;
-import android.support.v7.view.ActionMode.Callback;
 import android.text.TextUtils;
 import android.util.SparseBooleanArray;
+import android.view.ActionMode;
+import android.view.ActionMode.Callback;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -91,8 +91,11 @@ import com.dsatab.view.dialog.DirectoryChooserDialogHelper.Result;
 import com.dsatab.view.dialog.EquippedItemChooserDialog;
 import com.dsatab.view.listener.EditListener;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
+import com.dsatab.view.listener.OnClickActionListenerDelegate;
 import com.gandulf.guilib.util.ListViewCompat;
 import com.gandulf.guilib.view.DynamicListViewEx;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 
 public class ListableFragment extends BaseListFragment implements OnItemClickListener, HeroInventoryChangedListener,
@@ -102,6 +105,8 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 
 	private DynamicListViewEx itemList;
 	private ListableItemAdapter itemListAdapter;
+
+	private FloatingActionsMenu fabMenu;
 
 	protected static final class ModifierActionMode implements ActionMode.Callback {
 
@@ -555,7 +560,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 							Talent talent = (Talent) obj;
 							switch (item.getItemId()) {
 							case R.id.option_edit:
-								EditListener.showEditPopup(fragment.getActivity(), talent);
+								EditListener.showEditPopup(fragment, talent);
 								mode.finish();
 								return true;
 							case R.id.option_mark_favorite_talent:
@@ -989,7 +994,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 							Talent talent = (Talent) obj;
 							switch (item.getItemId()) {
 							case R.id.option_edit_talent:
-								EditListener.showEditPopup(fragment.getActivity(), talent);
+								EditListener.showEditPopup(fragment, talent);
 								mode.finish();
 								return true;
 							case R.id.option_mark_favorite_talent:
@@ -1437,6 +1442,8 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 	}
 
 	public boolean onAction(int actionId) {
+		fabMenu.collapse();
+
 		switch (actionId) {
 		case ACTION_NOTES_RECORD: {
 			recordEvent();
@@ -1551,8 +1558,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
-	 * android.os.Bundle)
+	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -1570,13 +1576,16 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 
 		mCallback = new NoteActionMode(this, itemList);
 
+		fabMenu = (FloatingActionsMenu) root.findViewById(R.id.fab_menu);
+		fabMenu.attachToListView(itemList);
+
 		return root;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
+	 * @see android.app.Fragment#onActivityCreated(android.os.Bundle)
 	 */
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -1683,6 +1692,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 	}
 
 	private void fillListItems(Hero hero) {
+		fabMenu.clearMenuItems();
 		itemListAdapter.setNotifyOnChange(false);
 		itemListAdapter.clear();
 		if (getListSettings() != null && getListSettings().getListItems() != null) {
@@ -1792,6 +1802,14 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 						itemListAdapter.add(hero.getUserModificators(listItem.getName()));
 					}
 					// itemListAdapter.add(new FooterListItem(ListItemType.Modificator));
+
+					FloatingActionButton modAdd = new FloatingActionButton(getActivity());
+					modAdd.setColorPressed(getResources().getColor(R.color.white_pressed));
+					modAdd.setColorNormal(getResources().getColor(R.color.white));
+					modAdd.setImageResource(R.drawable.dsa_modifier_add);
+					modAdd.setOnClickListener(new OnClickActionListenerDelegate(ACTION_MODIFICATOR_ADD, this));
+					fabMenu.addView(modAdd);
+
 					break;
 				case Header:
 					try {
@@ -1854,6 +1872,20 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 							}
 						}
 					}
+
+					FloatingActionButton notesRecord = new FloatingActionButton(getActivity());
+					notesRecord.setColorPressed(getResources().getColor(R.color.white_pressed));
+					notesRecord.setColorNormal(getResources().getColor(R.color.white));
+					notesRecord.setImageResource(R.drawable.dsa_speech_add);
+					notesRecord.setOnClickListener(new OnClickActionListenerDelegate(ACTION_NOTES_RECORD, this));
+					fabMenu.addView(notesRecord);
+
+					FloatingActionButton notesAdd = new FloatingActionButton(getActivity());
+					notesAdd.setColorPressed(getResources().getColor(R.color.white_pressed));
+					notesAdd.setColorNormal(getResources().getColor(R.color.white));
+					notesAdd.setImageResource(R.drawable.dsa_notes_add);
+					notesAdd.setOnClickListener(new OnClickActionListenerDelegate(ACTION_NOTES_ADD, this));
+					fabMenu.addView(notesAdd);
 					// itemListAdapter.add(new FooterListItem(ListItemType.Notes));
 					break;
 				case Purse:
@@ -1879,12 +1911,25 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 							itemListAdapter.add(probe);
 						}
 					}
+
+					FloatingActionButton probeAdd = new FloatingActionButton(getActivity());
+					probeAdd.setColorPressed(getResources().getColor(R.color.white_pressed));
+					probeAdd.setColorNormal(getResources().getColor(R.color.white));
+					probeAdd.setImageResource(R.drawable.dsa_dice_add);
+					probeAdd.setOnClickListener(new OnClickActionListenerDelegate(ACTION_CUSTOM_PROBE_ADD, this));
+					fabMenu.addView(probeAdd);
+
 					break;
 				}
 
 			}
 		}
 		itemListAdapter.notifyDataSetChanged();
+
+		if (!fabMenu.hasMenuItems())
+			fabMenu.setVisibility(View.GONE);
+		else
+			fabMenu.setVisibility(View.VISIBLE);
 	}
 
 	private void recordEvent() {
@@ -2081,7 +2126,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 	public void onActiveSetChanged(int newSet, int oldSet) {
 		fillListItems(getHero());
 		if (getActivity() != null) {
-			getActivity().supportInvalidateOptionsMenu();
+			getActivity().invalidateOptionsMenu();
 		}
 	}
 
@@ -2148,7 +2193,6 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 	 */
 	@Override
 	public void onItemChanged(Item item) {
-		// TODO Auto-generated method stub
 	}
 
 	/*

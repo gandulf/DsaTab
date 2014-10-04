@@ -5,8 +5,8 @@
     android:layout_height="wrap_content"
     android:background="?attr/listItemBackground"
     android:minHeight="?android:attr/listPreferredItemHeight"
-    android:paddingRight="?attr/listPreferredItemPaddingRight"
-    android:paddingLeft="?attr/listPreferredItemPaddingLeft" 
+    android:paddingRight="?android:attr/listPreferredItemPaddingRight"
+    android:paddingLeft="?android:attr/listPreferredItemPaddingLeft" 
     android:orientation="vertical">
 
     <Spinner
@@ -84,25 +84,25 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" >
 
-            <net.simonvt.numberpicker.NumberPicker
+            <NumberPicker
                 android:id="@+id/popup_purse_dukat"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <net.simonvt.numberpicker.NumberPicker
+            <NumberPicker
                 android:id="@+id/popup_purse_silver"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <net.simonvt.numberpicker.NumberPicker
+            <NumberPicker
                 android:id="@+id/popup_purse_heller"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <net.simonvt.numberpicker.NumberPicker
+            <NumberPicker
                 android:id="@+id/popup_purse_kreuzer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

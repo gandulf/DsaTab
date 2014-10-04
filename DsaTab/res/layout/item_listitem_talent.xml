@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     android:background="?attr/listItemBackground"
     android:minHeight="?android:attr/listPreferredItemHeight"
-    android:paddingLeft="?attr/listPreferredItemPaddingLeft"
-    android:paddingStart="?attr/listPreferredItemPaddingLeft"
+    android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+    android:paddingStart="?android:attr/listPreferredItemPaddingLeft"
     android:paddingRight="0dp"
     android:paddingEnd="0dp">
     
@@ -22,7 +22,7 @@
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:paddingLeft="0dp"
-    android:paddingRight="?attr/listPreferredItemPaddingRight"
+    android:paddingRight="?android:attr/listPreferredItemPaddingRight"
     android:weightSum="1.0">
 
     <TextView

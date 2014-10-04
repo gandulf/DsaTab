@@ -130,6 +130,7 @@ public class ImageChooserDialog extends AlertDialog implements AdapterView.OnIte
 
 		list = (GridView) popupcontent.findViewById(R.id.popup_portrait_chooser_list);
 		adapter = new PortraitAdapter(getContext());
+		adapter.setScaleType(scaleType);
 		list.setAdapter(adapter);
 		list.setOnItemClickListener(this);
 	}
@@ -150,13 +151,18 @@ public class ImageChooserDialog extends AlertDialog implements AdapterView.OnIte
 
 	public void setScaleType(ScaleType scaleType) {
 		this.scaleType = scaleType;
+		if (adapter != null) {
+			adapter.setScaleType(scaleType);
+		}
 	}
 
 	public void setGridColumnWidth(int width) {
 		list.setColumnWidth(width);
 	}
 
-	class PortraitAdapter extends ArrayAdapter<Uri> {
+	static class PortraitAdapter extends ArrayAdapter<Uri> {
+
+		private ScaleType scaleType;
 
 		public PortraitAdapter(Context context) {
 			super(context, 0);
@@ -168,6 +174,14 @@ public class ImageChooserDialog extends AlertDialog implements AdapterView.OnIte
 
 		public PortraitAdapter(Context context, Uri[] objects) {
 			super(context, 0, objects);
+		}
+
+		public ScaleType getScaleType() {
+			return scaleType;
+		}
+
+		public void setScaleType(ScaleType scaleType) {
+			this.scaleType = scaleType;
 		}
 
 		@Override

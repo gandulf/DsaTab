@@ -2,7 +2,6 @@ package com.dsatab.view.dialog;
 
 import java.util.List;
 
-import net.simonvt.numberpicker.NumberPicker;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,9 +12,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.CompoundButton;
+import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
@@ -38,7 +37,7 @@ public class TakeHitDialog extends AlertDialog implements DialogInterface.OnClic
 	private NumberPicker numberPicker;
 
 	private CompoundButton rsConsideration, woundConsideration;
-	private ToggleButton damageType;
+	private CompoundButton damageType;
 	private Spinner targetZone;
 	private TextView targetZoneLabel;
 
@@ -189,10 +188,10 @@ public class TakeHitDialog extends AlertDialog implements DialogInterface.OnClic
 
 		numberPicker = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_text);
 		numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-		numberPicker.setWrapSelectorWheel(false);
 		numberPicker.setMinValue(0);
 		numberPicker.setMaxValue(50);
 		numberPicker.setValue(0);
+		numberPicker.setWrapSelectorWheel(false);
 
 		rsConsideration = (CompoundButton) popupcontent.findViewById(R.id.popup_consider_rs);
 		rsConsideration.setText(getContext().getText(R.string.label_consider_rs) + " (" + getRS() + ")");
@@ -201,10 +200,7 @@ public class TakeHitDialog extends AlertDialog implements DialogInterface.OnClic
 		woundConsideration = (CompoundButton) popupcontent.findViewById(R.id.popup_consider_wound);
 		woundConsideration.setChecked(DsaTabApplication.getPreferences().getBoolean(PREF_CONSIDER_WOUND, true));
 
-		damageType = (ToggleButton) popupcontent.findViewById(R.id.popup_damage_type);
-
-		damageType.setTextOn("Trefferpunkte");
-		damageType.setTextOff("Ausdauerpunkte");
+		damageType = (CompoundButton) popupcontent.findViewById(R.id.popup_damage_type);
 		damageType.setChecked(DsaTabApplication.getPreferences().getBoolean(PREF_DAMAGE_TYPE, true));
 
 		setButton(BUTTON_POSITIVE, getContext().getText(android.R.string.ok), this);

@@ -4,7 +4,7 @@
     <item
         android:id="@+id/action_search"
         android:title="@string/search_wiki_hint"
-        app:actionViewClass="android.support.v7.widget.SearchView"
-        app:showAsAction="ifRoom"/>
+        android:actionViewClass="android.widget.SearchView"
+        android:showAsAction="ifRoom"/>
 
 </menu>

@@ -4,9 +4,9 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import android.app.Activity;
+import android.content.AsyncTaskLoader;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.support.v4.content.AsyncTaskLoader;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.activity.DsaTabActivity;

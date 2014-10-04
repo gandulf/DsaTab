@@ -2,6 +2,7 @@ package com.dsatab.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 
 import com.gandulf.guilib.listener.CheckableListenable;
@@ -11,6 +12,10 @@ public class CheckableFrameLayout extends FrameLayout implements CheckableListen
 	boolean mChecked = false;
 
 	private static final int[] CHECKED_STATE_SET = { android.R.attr.state_checked };
+
+	private float xFraction;
+
+	private float yFraction;
 
 	private OnCheckedChangeListener mOnCheckedChangeListener;
 
@@ -59,6 +64,63 @@ public class CheckableFrameLayout extends FrameLayout implements CheckableListen
 
 	public void setOnCheckedChangeListener(OnCheckedChangeListener onCheckedChangeListener) {
 		this.mOnCheckedChangeListener = onCheckedChangeListener;
+	}
+
+	private ViewTreeObserver.OnPreDrawListener preDrawYListener = null;
+	private ViewTreeObserver.OnPreDrawListener preDrawXListener = null;
+
+	public void setYFraction(float fraction) {
+
+		this.yFraction = fraction;
+
+		if (getHeight() == 0) {
+			if (preDrawYListener == null) {
+				preDrawYListener = new ViewTreeObserver.OnPreDrawListener() {
+					@Override
+					public boolean onPreDraw() {
+						getViewTreeObserver().removeOnPreDrawListener(preDrawYListener);
+						setYFraction(yFraction);
+						return true;
+					}
+				};
+				getViewTreeObserver().addOnPreDrawListener(preDrawYListener);
+			}
+			return;
+		}
+
+		float translationY = getHeight() * fraction;
+		setTranslationY(translationY);
+	}
+
+	public float getYFraction() {
+		return this.yFraction;
+	}
+
+	public void setXFraction(float fraction) {
+
+		this.xFraction = fraction;
+
+		if (getWidth() == 0) {
+			if (preDrawXListener == null) {
+				preDrawXListener = new ViewTreeObserver.OnPreDrawListener() {
+					@Override
+					public boolean onPreDraw() {
+						getViewTreeObserver().removeOnPreDrawListener(preDrawXListener);
+						setXFraction(xFraction);
+						return true;
+					}
+				};
+				getViewTreeObserver().addOnPreDrawListener(preDrawXListener);
+			}
+			return;
+		}
+
+		float translationX = getWidth() * fraction;
+		setTranslationX(translationX);
+	}
+
+	public float getXFraction() {
+		return this.xFraction;
 	}
 
 }

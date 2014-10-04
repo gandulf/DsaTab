@@ -6,14 +6,11 @@
         <attr name="buttonStyleLeft" format="reference"/>
         <attr name="buttonStyleRight" format="reference"/>
         
-        <attr name="iconImageViewStyle" format="reference"/>
-        
         <attr name="listItemBackground" format="reference"/>
-        <attr name="listShadowBackground" format="reference"/>
+        <attr name="slidingPaneShadowBackground" format="reference"/>
         <attr name="dropShadowBackground" format="reference"/>
         
-        <attr name="selectableBackground" format="reference" />
-        <attr name="imgDragVertical" format="reference"/>
+        <attr name="selectableBackground" format="reference" />        
         
         <attr name="imgChainTop" format="reference"/>
         <attr name="imgChainBottom" format="reference"/>

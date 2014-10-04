@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.dsatab.R;
 import com.dsatab.TabInfo;
 import com.dsatab.data.adapter.TabDrawerAdapter.DrawerItem;
+import com.dsatab.util.Util;
 import com.gandulf.guilib.data.OpenArrayAdapter;
 import com.gandulf.guilib.util.ColorUtil;
 
@@ -166,17 +167,12 @@ public class TabDrawerAdapter extends OpenArrayAdapter<DrawerItem> {
 			ImageView image = (ImageView) convertView.findViewById(android.R.id.icon);
 			CircleImageView circleImage = (CircleImageView) convertView.findViewById(android.R.id.icon1);
 			circleImage.setBorderWidth(2);
-			circleImage.setBorderColor(Color.WHITE);
+			circleImage.setBorderColor(Color.LTGRAY);
 
 			textView.setText(drawerInfo.text);
 
-			if (drawerInfo.image != null) {
-				image.setImageURI(drawerInfo.image);
-				circleImage.setImageURI(drawerInfo.image);
-			} else {
-				image.setImageResource(drawerInfo.imageId);
-				circleImage.setImageResource(drawerInfo.imageId);
-			}
+			Util.setImage(image, drawerInfo.image, drawerInfo.imageId);
+			Util.setImage(circleImage, drawerInfo.image, drawerInfo.imageId);
 
 			break;
 		}

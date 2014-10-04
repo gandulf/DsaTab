@@ -1,25 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
-  <item type="id" name="option_save_hero" />
-  <item type="id" name="option_export_hero" />
-  <item type="id" name="option_filter" />  
-  <item type="id" name="option_settings" />
   
   <item type="id" name="option_search" />
-    
-  <item type="id" name="option_hero_import" />
-  
-  
-  <item type="id" name="option_tab_reset" />
-  <item type="id" name="option_tab_add" />
-  <item type="id" name="option_tab_delete" />
-  
-  
-  <item type="id" name="option_items" />
-  
-  <item type="id" name="option_accept" />
-  <item type="id" name="option_cancel" />  
   
   <item type="id" name="TAG_KEY_VALUE" />
   <item type="id" name="TAG_KEY_PROBE" />

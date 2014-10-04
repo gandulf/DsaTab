@@ -4,15 +4,6 @@
             android:summary="Hier kannst du einstellen was alles in der Kopfzeile angezeigt werden soll."
             android:title="Kopfzeile konfigurieren">
                 
-    
-                
-        		<CheckBoxPreference        		
-                android:title="Name anzeigen"
-                android:defaultValue="false"                        
-                android:summaryOn="Zeige den Namen des aktuellen Helden an"
-                android:summaryOff="Zeige den Namen des aktuellen Helden nicht an"
-                android:key="header_name" />
-                
                 <CheckBoxPreference
                 
                 android:title="Lebensenergie anzeigen"

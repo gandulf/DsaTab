@@ -78,20 +78,20 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
-        <net.simonvt.numberpicker.NumberPicker
+        <NumberPicker
             android:id="@+id/popup_edit_text"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:layout_weight="3" />
 
-        <net.simonvt.numberpicker.NumberPicker
+        <NumberPicker
             android:id="@+id/popup_edit_at"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:layout_weight="2"
             android:orientation="vertical" />
 
-        <net.simonvt.numberpicker.NumberPicker
+        <NumberPicker
             android:id="@+id/popup_edit_pa"
             android:layout_width="0dp"
             android:layout_height="200dp"

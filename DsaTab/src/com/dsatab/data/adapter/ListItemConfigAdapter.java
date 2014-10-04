@@ -124,7 +124,10 @@ public class ListItemConfigAdapter extends ArrayAdapter<ListItem> implements OnI
 
 	@Override
 	public long getItemId(int position) {
-		return getItem(position).hashCode();
+		if (position >= 0 && position < getCount())
+			return getItem(position).hashCode();
+		else
+			return AdapterView.INVALID_ROW_ID;
 	}
 
 	@Override

@@ -1,6 +1,5 @@
 package com.dsatab.fragment;
 
-import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
@@ -10,9 +9,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.view.ActionMode;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,7 +25,6 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
@@ -42,9 +40,9 @@ import com.dsatab.data.adapter.EquippedItemAdapter;
 import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemContainer;
+import com.dsatab.fragment.dialog.InlineEditDialog;
 import com.dsatab.util.Util;
 import com.dsatab.view.BodyLayout;
-import com.dsatab.view.dialog.InlineEditDialog;
 import com.dsatab.view.dialog.TakeHitDialog;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
 
@@ -121,8 +119,7 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 					} else {
 						AlertDialog.Builder builder = new AlertDialog.Builder(bodyFragment.getActivity());
 						builder.setTitle("Rüstung");
-						final EquippedItemAdapter adapter = new EquippedItemAdapter(bodyFragment.getActivity(),
-								equippedItems);
+						final EquippedItemAdapter adapter = new EquippedItemAdapter(builder.getContext(), equippedItems);
 						builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
@@ -142,10 +139,7 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 				mode.finish();
 				return true;
 			case R.id.option_edit:
-				InlineEditDialog inlineEditdialog = new InlineEditDialog(bodyFragment.getActivity(),
-						bodyFragment.selectedArmorAttribute);
-				inlineEditdialog.setTitle(bodyFragment.selectedArmorAttribute.getName());
-				inlineEditdialog.show();
+				InlineEditDialog.show(bodyFragment, bodyFragment.selectedArmorAttribute, 0);
 				mode.finish();
 				return true;
 			}
@@ -194,8 +188,7 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
-	 * android.os.Bundle)
+	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -215,7 +208,7 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
+	 * @see android.app.Fragment#onActivityCreated(android.os.Bundle)
 	 */
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -284,7 +277,6 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 	public void onCheckedChanged(CompoundButton v, boolean checked) {
 		// wounds
 		if (v.getTag() instanceof WoundAttribute) {
-			ToggleButton iv = (ToggleButton) v;
 			WoundAttribute attribute = (WoundAttribute) v.getTag();
 
 			if (checked) {
@@ -314,7 +306,7 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 				setSelectedArmorAttribute((ArmorAttribute) v.getTag());
 
 				if (mMode == null) {
-					mMode = getActionBarActivity().startSupportActionMode(mCallback);
+					mMode = getActionBarActivity().startActionMode(mCallback);
 				}
 				mMode.invalidate();
 
@@ -327,7 +319,7 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onActivityResult(int, int, android.content.Intent)
+	 * @see android.app.Fragment#onActivityResult(int, int, android.content.Intent)
 	 */
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -338,11 +330,11 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 		if (resultCode == Activity.RESULT_OK) {
 
 			if (requestCode == DsaTabPreferenceActivity.ACTION_PICK_BG_WOUNDS_PATH) {
-				File bg = Util.handleImagePick(getActivity(), DsaTabPreferenceActivity.KEY_STYLE_BG_WOUNDS_PATH, data);
-				if (bg != null) {
+				Uri uri = Util.retrieveBitmapUri(getActivity(), data);
+				if (uri != null) {
 					SharedPreferences preferences = DsaTabApplication.getPreferences();
 					Editor edit = preferences.edit();
-					edit.putString(DsaTabPreferenceActivity.KEY_STYLE_BG_WOUNDS_PATH, bg.getAbsolutePath());
+					edit.putString(DsaTabPreferenceActivity.KEY_STYLE_BG_WOUNDS_PATH, uri.toString());
 					edit.commit();
 
 					Toast.makeText(getActivity(), "Hintergrundbild wurde verändert.", Toast.LENGTH_SHORT).show();
@@ -363,7 +355,7 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 		updateView();
 		bodyLayout.setArmorAttributes(getHero().getArmorAttributes());
 		if (getActivity() != null) {
-			getActivity().supportInvalidateOptionsMenu();
+			getActivity().invalidateOptionsMenu();
 		}
 	}
 
@@ -384,8 +376,8 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 	private void updateBackground() {
 		SharedPreferences preferences = DsaTabApplication.getPreferences();
 		if (preferences.contains(DsaTabPreferenceActivity.KEY_STYLE_BG_WOUNDS_PATH)) {
-			String filePath = preferences.getString(DsaTabPreferenceActivity.KEY_STYLE_BG_WOUNDS_PATH, null);
-			bodyBackground.setImageDrawable(Drawable.createFromPath(filePath));
+			Uri uri = Uri.parse(preferences.getString(DsaTabPreferenceActivity.KEY_STYLE_BG_WOUNDS_PATH, null));
+			bodyBackground.setImageURI(uri);
 		} else {
 			bodyBackground.setImageResource(Util.getThemeResourceId(getActivity(), R.attr.imgCharacter));
 		}

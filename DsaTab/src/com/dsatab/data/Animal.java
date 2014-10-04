@@ -12,8 +12,6 @@ import com.dsatab.data.modifier.Modifier;
 
 public class Animal extends AbstractBeing {
 
-	private Hero hero;
-
 	private String title;
 	private String species;
 
@@ -31,8 +29,7 @@ public class Animal extends AbstractBeing {
 	private List<AnimalAttack> animalAttacks;
 
 	public Animal(Hero hero) {
-		this.hero = hero;
-		this.configuration = hero.getHeroConfiguration();
+		configuration = hero.getHeroConfiguration();
 		animalAttacks = new ArrayList<AnimalAttack>();
 	}
 
@@ -159,12 +156,10 @@ public class Animal extends AbstractBeing {
 
 	@Override
 	public void setCombatStyle(CombatStyle style) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void setBeCalculation(boolean auto) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override

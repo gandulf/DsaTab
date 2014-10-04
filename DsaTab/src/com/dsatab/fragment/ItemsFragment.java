@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -17,10 +18,9 @@ import android.content.SharedPreferences.Editor;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SlidingPaneLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.view.ActionMode;
-import android.support.v7.view.ActionMode.Callback;
 import android.util.SparseBooleanArray;
+import android.view.ActionMode;
+import android.view.ActionMode.Callback;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,6 +31,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 import android.widget.ListView;
 
 import com.dsatab.DsaTabApplication;
@@ -53,7 +54,7 @@ import com.dsatab.view.listener.HeroInventoryChangedListener;
 import com.gandulf.guilib.util.ListViewCompat;
 import com.gandulf.guilib.util.ResUtil;
 import com.gandulf.guilib.view.DynamicListViewEx;
-import com.rokoder.android.lib.support.v4.widget.GridViewCompat;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 public class ItemsFragment extends BaseListFragment implements OnItemClickListener, HeroInventoryChangedListener {
 
@@ -76,13 +77,15 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 
 	private ItemContainerAdapter containerSpinnerAdapter;
 
-	private GridViewCompat itemGridCompat;
+	private GridView itemGridCompat;
 	private GridItemAdapter itemGridAdapter;
 
 	private SlidingPaneLayout slidingPaneLayout;
 
 	private DynamicListViewEx itemList;
 	private ItemAdapter itemListAdapter;
+
+	private FloatingActionsMenu fabMenu;
 
 	private int mCurrentContainerId = INVALID_SET;
 	private String mScreenType = TYPE_LIST;
@@ -449,8 +452,8 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		containerAdapter.add(set3);
 		containerAdapter.addAll(getHero().getItemContainers());
 
-		containerSpinnerAdapter = new ItemContainerAdapter(getActionBarActivity().getSupportActionBar()
-				.getThemedContext(), R.layout.item_actionbar_spinneritem_view);
+		containerSpinnerAdapter = new ItemContainerAdapter(getActionBarActivity().getActionBar().getThemedContext(),
+				R.layout.item_actionbar_spinneritem_view);
 		containerSpinnerAdapter.setDropDownViewResource(R.layout.item_actionbar_spinneritem_view);
 		containerSpinnerAdapter.add(set1);
 		containerSpinnerAdapter.add(set2);
@@ -502,6 +505,14 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		case R.id.fab_container_add:
+			ItemContainerEditFragment.insert(getActivity());
+			fabMenu.collapse();
+			break;
+		case R.id.fab_items_add:
+			showItemPopup();
+			fabMenu.collapse();
+			break;
 		case android.R.id.empty:
 			// do not remove tab in itemsfragment
 			break;
@@ -511,14 +522,26 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 
 	}
 
+	@Override
+	public void hideActionBarItems() {
+		super.hideActionBarItems();
+		removeItemsNavigation();
+	}
+
+	@Override
+	public void showActionBarItems() {
+		super.showActionBarItems();
+		initItemsNavigation();
+	}
+
 	private void removeItemsNavigation() {
-		ActionBar actionBar = getActionBarActivity().getSupportActionBar();
+		ActionBar actionBar = getActionBarActivity().getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 		actionBar.setListNavigationCallbacks(null, null);
 	}
 
 	private void initItemsNavigation() {
-		ActionBar actionBar = getActionBarActivity().getSupportActionBar();
+		ActionBar actionBar = getActionBarActivity().getActionBar();
 
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 		actionBar.setListNavigationCallbacks(containerSpinnerAdapter, new ActionBar.OnNavigationListener() {
@@ -596,8 +619,10 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		if (menu.findItem(R.id.option_itemgrid_type) != null) {
 			menu.findItem(R.id.option_itemgrid_type).setVisible(!isDrawerOpened());
 			if (TYPE_GRID.equals(mScreenType)) {
+				menu.findItem(R.id.option_itemgrid_type).setIcon(R.drawable.dsa_grid);
 				menu.findItem(R.id.option_itemgrid_type_grid).setChecked(true);
 			} else {
+				menu.findItem(R.id.option_itemgrid_type).setIcon(R.drawable.dsa_list);
 				menu.findItem(R.id.option_itemgrid_type_list).setChecked(true);
 			}
 		}
@@ -638,10 +663,12 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		case R.id.option_itemgrid_type_grid:
 			setScreenType(TYPE_GRID);
 			item.setChecked(true);
+			getActionBarActivity().invalidateOptionsMenu();
 			return true;
 		case R.id.option_itemgrid_type_list:
 			setScreenType(TYPE_LIST);
 			item.setChecked(true);
+			getActionBarActivity().invalidateOptionsMenu();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -651,15 +678,14 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
-	 * android.os.Bundle)
+	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View root = configureContainerView(inflater.inflate(R.layout.sheet_items, container, false));
 
 		containerList = (ListView) root.findViewById(R.id.container_list);
-		itemGridCompat = (GridViewCompat) root.findViewById(R.id.workspace);
+		itemGridCompat = (GridView) root.findViewById(R.id.workspace);
 
 		itemList = (DynamicListViewEx) root.findViewById(android.R.id.list);
 		itemList.setOnItemCheckedListener(this);
@@ -669,13 +695,21 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 
 		slidingPaneLayout = (SlidingPaneLayout) root.findViewById(R.id.sheet_items);
 
+		fabMenu = (FloatingActionsMenu) root.findViewById(R.id.fab_menu);
+
+		root.findViewById(R.id.fab_container_add).setOnClickListener(this);
+		root.findViewById(R.id.fab_items_add).setOnClickListener(this);
+
+		fabMenu.attachToListView(itemGridCompat);
+		fabMenu.attachToListView(itemList);
+
 		return root;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
+	 * @see android.app.Fragment#onActivityCreated(android.os.Bundle)
 	 */
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
@@ -711,8 +745,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 
 					if (mMode == null) {
 						if (mContainerCallback != null) {
-							mMode = getActionBarActivity().startSupportActionMode(mContainerCallback);
-							customizeActionModeCloseButton();
+							mMode = getActionBarActivity().startActionMode(mContainerCallback);
 							mMode.invalidate();
 							return true;
 						} else {
@@ -802,7 +835,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onStop()
+	 * @see android.app.Fragment#onStop()
 	 */
 	@Override
 	public void onStop() {
@@ -904,7 +937,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 			itemListAdapter.notifyDataSetChanged();
 			// itemListAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
 
-			ActionBar actionBar = getActionBarActivity().getSupportActionBar();
+			ActionBar actionBar = getActionBarActivity().getActionBar();
 			if (actionBar.getNavigationMode() == ActionBar.NAVIGATION_MODE_LIST) {
 				for (int i = 0; i < containerSpinnerAdapter.getCount(); i++) {
 					ItemContainer container = containerSpinnerAdapter.getItem(i);
@@ -1062,7 +1095,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 
 		containerAdapter.add(itemContainer);
 		if (getActivity() != null) {
-			getActivity().supportInvalidateOptionsMenu();
+			getActivity().invalidateOptionsMenu();
 		}
 	}
 
@@ -1078,7 +1111,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 
 		containerAdapter.remove(itemContainer);
 		if (getActivity() != null) {
-			getActivity().supportInvalidateOptionsMenu();
+			getActivity().invalidateOptionsMenu();
 		}
 	}
 

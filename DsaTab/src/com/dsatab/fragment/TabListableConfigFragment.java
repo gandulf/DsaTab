@@ -4,24 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.Spinner;
 
 import com.dsatab.DsaTabApplication;
@@ -214,7 +215,7 @@ public class TabListableConfigFragment extends Fragment implements View.OnClickL
 		if (listItem.getType() == ListItemType.Header) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle(R.string.title_insert_title);
-			final EditText editText = new EditText(getActivity());
+			final EditText editText = new EditText(builder.getContext());
 			editText.setText(listItem.getName());
 			builder.setView(editText);
 
@@ -267,30 +268,29 @@ public class TabListableConfigFragment extends Fragment implements View.OnClickL
 		switch (v.getId()) {
 		case R.id.popup_edit_add_list_item:
 
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
 			List<String> listTypeTitles = new ArrayList<String>();
 			for (ListItemType listItemType : ListItemType.values()) {
 				listTypeTitles.add(listItemType.title());
 			}
 
-			ArrayAdapter<String> typeAdapter = new ArrayAdapter<String>(getActivity(),
-					android.R.layout.simple_list_item_1, listTypeTitles);
+			PopupMenu popupMenu = new PopupMenu(getActivity(), v);
+			for (int i = 0; i < listTypeTitles.size(); i++) {
+				popupMenu.getMenu().add(0, i, i, listTypeTitles.get(i));
+			}
 
-			builder.setTitle("Typ auswählen");
-			builder.setAdapter(typeAdapter, new DialogInterface.OnClickListener() {
+			popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 
 				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					ListItem newListItem = new ListItem((ListItemType) ListItemType.values()[which]);
+				public boolean onMenuItemClick(MenuItem item) {
+					ListItem newListItem = new ListItem((ListItemType) ListItemType.values()[item.getItemId()]);
 					listItemAdapter.add(newListItem);
 					listSettings.getListItems().add(newListItem);
 
 					editListItem(newListItem);
+					return true;
 				}
 			});
-
-			builder.show().setCanceledOnTouchOutside(true);
+			popupMenu.show();
 			break;
 		}
 	}

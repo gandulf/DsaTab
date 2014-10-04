@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.dsatab.view.CheckableFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/sheet_body"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -71,4 +71,4 @@
             android:text="@string/label_total" />
     </LinearLayout>
 
-</FrameLayout>
+</com.dsatab.view.CheckableFrameLayout>

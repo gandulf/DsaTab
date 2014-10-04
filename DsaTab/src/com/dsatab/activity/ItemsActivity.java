@@ -5,11 +5,11 @@ import java.util.Collection;
 import java.util.UUID;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.view.MenuItem;
 import android.view.View;
@@ -139,12 +139,12 @@ public class ItemsActivity extends BaseActivity implements OnItemSelectedListene
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setTheme(DsaTabApplication.getInstance().getCustomTheme());
+		setTheme(DsaTabApplication.getInstance().getCustomTheme(false));
 		applyPreferencesToTheme();
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_items);
 
-		itemListFragment = (ItemListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_item_chooser);
+		itemListFragment = (ItemListFragment) getFragmentManager().findFragmentById(R.id.fragment_item_chooser);
 
 		slidingPaneLayout = (SlidingPaneLayout) findViewById(R.id.slidepanel);
 		// slidingPaneLayout.setParallaxDistance(100);
@@ -189,14 +189,14 @@ public class ItemsActivity extends BaseActivity implements OnItemSelectedListene
 
 		if (Intent.ACTION_PICK.equals(getIntent().getAction())) {
 			setTitle(R.string.choose_item);
-			getSupportActionBar().setDisplayShowTitleEnabled(true);
+			getActionBar().setDisplayShowTitleEnabled(true);
 		} else {
-			getSupportActionBar().setDisplayShowTitleEnabled(false);
+			getActionBar().setDisplayShowTitleEnabled(false);
 		}
 
-		getSupportActionBar().setDisplayShowHomeEnabled(true);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setHomeButtonEnabled(true);
+		getActionBar().setDisplayShowHomeEnabled(true);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
 
 		if (Intent.ACTION_EDIT.equals(getIntent().getAction()) || Intent.ACTION_INSERT.equals(getIntent().getAction()))
 			initEditFragment();
@@ -220,13 +220,13 @@ public class ItemsActivity extends BaseActivity implements OnItemSelectedListene
 
 	protected void initViewFragment() {
 
-		Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.details);
+		Fragment currentFragment = getFragmentManager().findFragmentById(R.id.details);
 		if (currentFragment instanceof ItemViewFragment) {
 			itemViewFragment = (ItemViewFragment) currentFragment;
 		} else {
 			itemViewFragment = new ItemViewFragment();
 
-			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+			FragmentTransaction ft = getFragmentManager().beginTransaction();
 			if (currentFragment != null)
 				ft.remove(currentFragment);
 			ft.add(R.id.details, itemViewFragment);
@@ -278,7 +278,7 @@ public class ItemsActivity extends BaseActivity implements OnItemSelectedListene
 				slidingPaneLayout.closePane();
 			}
 
-			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+			FragmentTransaction ft = getFragmentManager().beginTransaction();
 
 			if (itemEditFragment != null)
 				ft.hide(itemEditFragment);
@@ -304,7 +304,7 @@ public class ItemsActivity extends BaseActivity implements OnItemSelectedListene
 				slidingPaneLayout.closePane();
 			}
 
-			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+			FragmentTransaction ft = getFragmentManager().beginTransaction();
 
 			if (itemViewFragment != null)
 				ft.hide(itemViewFragment);
@@ -325,13 +325,13 @@ public class ItemsActivity extends BaseActivity implements OnItemSelectedListene
 
 	protected void initEditFragment() {
 
-		Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.details);
+		Fragment currentFragment = getFragmentManager().findFragmentById(R.id.details);
 		if (currentFragment instanceof ItemEditFragment) {
 			itemEditFragment = (ItemEditFragment) currentFragment;
 		} else {
 			itemEditFragment = new ItemEditFragment();
 
-			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+			FragmentTransaction ft = getFragmentManager().beginTransaction();
 			if (currentFragment != null)
 				ft.remove(currentFragment);
 

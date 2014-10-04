@@ -2,9 +2,8 @@ package com.dsatab.view.dialog;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Locale;
 
 import android.app.AlertDialog;
@@ -22,6 +21,7 @@ import android.widget.TextView;
 
 import com.dsatab.R;
 import com.dsatab.util.Util;
+import com.gandulf.guilib.util.DirectoryFileFilter;
 
 public class DirectoryChooserDialogHelper implements OnItemClickListener, OnClickListener {
 
@@ -29,15 +29,21 @@ public class DirectoryChooserDialogHelper implements OnItemClickListener, OnClic
 		void onChooseDirectory(String dir);
 	}
 
-	private List<File> entries = new ArrayList<File>();
+	private static final Comparator<File> NAMECOMPARATOR = new Comparator<File>() {
+		@Override
+		public int compare(File f1, File f2) {
+			return f1.getName().toLowerCase(Locale.GERMAN).compareTo(f2.getName().toLowerCase(Locale.GERMAN));
+		}
+	};
+
 	private File currentDir;
-	private Context context;
 	private ListView list;
+	private DirAdapter adapter;
 	private Result result = null;
 
 	public class DirAdapter extends ArrayAdapter<File> {
-		public DirAdapter(int resid) {
-			super(context, resid, entries);
+		public DirAdapter(Context context, int resid) {
+			super(context, resid, new ArrayList<File>());
 		}
 
 		/*
@@ -55,20 +61,22 @@ public class DirectoryChooserDialogHelper implements OnItemClickListener, OnClic
 		public View getView(int position, View convertView, ViewGroup parent) {
 			TextView textview = (TextView) super.getView(position, convertView, parent);
 
-			if (entries.get(position).equals(currentDir)) {
-				textview.setText(entries.get(position).getPath());
+			File item = getItem(position);
+
+			if (item.equals(currentDir)) {
+				textview.setText(item.getPath());
 				textview.setCompoundDrawablesWithIntrinsicBounds(
-						context.getResources().getDrawable(Util.getThemeResourceId(getContext(), R.attr.imgFile)),
+						getContext().getResources().getDrawable(Util.getThemeResourceId(getContext(), R.attr.imgFile)),
 						null, null, null);
-			} else if (entries.get(position).equals(currentDir.getParentFile())) {
+			} else if (item.equals(currentDir.getParentFile())) {
 				textview.setText("..");
 				textview.setCompoundDrawablesWithIntrinsicBounds(
-						context.getResources().getDrawable(Util.getThemeResourceId(getContext(), R.attr.imgUp)), null,
-						null, null);
+						getContext().getResources().getDrawable(Util.getThemeResourceId(getContext(), R.attr.imgUp)),
+						null, null, null);
 			} else {
-				textview.setText(entries.get(position).getName());
+				textview.setText(item.getName());
 				textview.setCompoundDrawablesWithIntrinsicBounds(
-						context.getResources().getDrawable(Util.getThemeResourceId(getContext(), R.attr.imgFile)),
+						getContext().getResources().getDrawable(Util.getThemeResourceId(getContext(), R.attr.imgFile)),
 						null, null, null);
 			}
 
@@ -76,38 +84,25 @@ public class DirectoryChooserDialogHelper implements OnItemClickListener, OnClic
 		}
 	}
 
-	private void listDirs() {
-		entries.clear();
-
-		// Get files
-		File[] files = currentDir.listFiles();
-
-		if (files != null) {
-			for (File file : files) {
-				if (!file.isDirectory())
-					continue;
-
-				entries.add(file);
-			}
-		}
-
-		Collections.sort(entries, new Comparator<File>() {
-			@Override
-			public int compare(File f1, File f2) {
-				return f1.getName().toLowerCase(Locale.GERMAN).compareTo(f2.getName().toLowerCase(Locale.GERMAN));
-			}
-		});
+	private void refreshAdapter() {
+		adapter.clear();
 
 		// Add the ".." entry and current dir
-		if (currentDir.getParent() != null)
-			entries.add(0, currentDir.getParentFile());
 		if (currentDir != null)
-			entries.add(0, currentDir);
+			adapter.add(currentDir);
+		if (currentDir.getParent() != null)
+			adapter.add(currentDir.getParentFile());
 
+		// Get files
+		File[] files = currentDir.listFiles(new DirectoryFileFilter());
+		if (files != null) {
+			Arrays.sort(files, NAMECOMPARATOR);
+			adapter.addAll(files);
+		}
 	}
 
 	public DirectoryChooserDialogHelper(Context ctx, Result res, String startDir) {
-		context = ctx;
+
 		result = res;
 
 		if (startDir != null)
@@ -115,10 +110,12 @@ public class DirectoryChooserDialogHelper implements OnItemClickListener, OnClic
 		else
 			currentDir = Environment.getExternalStorageDirectory();
 
-		listDirs();
-		DirAdapter adapter = new DirAdapter(android.R.layout.simple_list_item_1);
-
 		AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+
+		adapter = new DirAdapter(builder.getContext(), android.R.layout.simple_list_item_1);
+
+		refreshAdapter();
+
 		builder.setTitle("Verzeichnis auswählen");
 		builder.setAdapter(adapter, this);
 
@@ -146,17 +143,12 @@ public class DirectoryChooserDialogHelper implements OnItemClickListener, OnClic
 
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
-		if (pos < 0 || pos >= entries.size())
+		if (pos < 0 || pos >= adapter.getCount())
 			return;
 
-		if (entries.get(pos).getName().equals(".."))
-			currentDir = currentDir.getParentFile();
-		else
-			currentDir = entries.get(pos);
+		currentDir = adapter.getItem(pos);
 
-		listDirs();
-		DirAdapter adapter = new DirAdapter(android.R.layout.simple_list_item_1);
-		list.setAdapter(adapter);
+		refreshAdapter();
 	}
 
 	@Override

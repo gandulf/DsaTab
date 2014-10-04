@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import android.animation.LayoutTransition;
+import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -66,8 +67,6 @@ import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Hint;
 import com.dsatab.util.Util;
 import com.dsatab.view.dialog.TakeHitDialog;
-import com.nineoldandroids.animation.ObjectAnimator;
-import com.nineoldandroids.view.ViewHelper;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelSlideListener;
 
@@ -87,6 +86,8 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 	private SlidingUpPanelLayout slidingUpPanelLayout;
 
 	private boolean modifierVisible = true;
+
+	private ViewGroup sliderTitle, sliderAttributes;
 
 	private TextView tfDiceTalentName;
 
@@ -133,8 +134,7 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
-	 * android.os.Bundle)
+	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -144,6 +144,9 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		// inflate using the cloned inflater, not the passed in default
 
 		ViewGroup root = (ViewGroup) localInflater.inflate(R.layout.dice_slider_content, container, false);
+
+		sliderTitle = (ViewGroup) root.findViewById(R.id.slider_title);
+		sliderAttributes = (ViewGroup) root.findViewById(R.id.slider_attributes);
 
 		modifiersList = (ListView) root.findViewById(R.id.probe_modifier_container);
 		listDivider = root.findViewById(R.id.probe_modifier_container_divider);
@@ -207,7 +210,7 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 	public void setSlidingUpPanelLayout(SlidingUpPanelLayout slidingUpPanelLayout) {
 		this.slidingUpPanelLayout = slidingUpPanelLayout;
 
-		slidingUpPanelLayout.setDragView(findViewById(R.id.dice_talent));
+		slidingUpPanelLayout.setDragView(findViewById(R.id.slider));
 		slidingUpPanelLayout.setCoveredFadeColor(0);
 		slidingUpPanelLayout.setPanelSlideListener(this);
 		// slidingUpPanelLayout.setOverdrawHeight(10);
@@ -215,12 +218,19 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 	@Override
 	public void onPanelSlide(View panel, float slideOffset) {
+		sliderTitle.setVisibility(View.VISIBLE);
+		sliderAttributes.setVisibility(View.VISIBLE);
 
+		sliderTitle.setAlpha(slideOffset);
+		sliderAttributes.setAlpha(1.0f - slideOffset);
 	}
 
 	@Override
 	public void onPanelExpanded(View panel) {
 		enableLayoutTransition();
+
+		sliderTitle.setVisibility(View.VISIBLE);
+		sliderAttributes.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -231,9 +241,12 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 	@Override
 	public void onPanelCollapsed(View panel) {
 		if (detailsSwitch.getVisibility() == View.VISIBLE) {
-			detailsSwitch.startAnimation(AnimationUtils.loadAnimation(themedContext, R.anim.abc_fade_out));
+			detailsSwitch.startAnimation(AnimationUtils.loadAnimation(themedContext, android.R.anim.fade_out));
 		}
 		detailsSwitch.setVisibility(View.INVISIBLE);
+
+		sliderTitle.setVisibility(View.GONE);
+		sliderAttributes.setVisibility(View.VISIBLE);
 
 		resetPanelInformation();
 
@@ -288,18 +301,16 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 	}
 
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void disableLayoutTransition() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB && linDiceResult.getLayoutTransition() != null) {
+		if (linDiceResult.getLayoutTransition() != null) {
 			linDiceResult.setLayoutTransition(null);
 		}
 		animate = false;
 
 	}
 
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void enableLayoutTransition() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB && linDiceResult.getLayoutTransition() == null) {
+		if (linDiceResult.getLayoutTransition() == null) {
 			linDiceResult.setLayoutTransition(new LayoutTransition());
 		}
 
@@ -308,8 +319,7 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	private void initLayoutTransitions(ViewGroup root) {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-			// root.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && modifiersList.getLayoutTransition() != null) {
 			modifiersList.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
 		}
 	}
@@ -374,6 +384,8 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 	}
 
 	public void onModifierChanged(Modifier mod) {
+		if (getActivity() == null)
+			return;
 
 		if (EVADE_GEZIELT.equals(mod.getTitle())) {
 			for (Modifier m : modifiers) {
@@ -879,7 +891,7 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 	private void setModifiersVisible(boolean visible, final boolean animate) {
 
 		if (detailsSwitch.getVisibility() != View.VISIBLE) {
-			detailsSwitch.startAnimation(AnimationUtils.loadAnimation(themedContext, R.anim.abc_fade_in));
+			detailsSwitch.startAnimation(AnimationUtils.loadAnimation(themedContext, android.R.anim.fade_in));
 		}
 		detailsSwitch.setVisibility(View.VISIBLE);
 
@@ -887,12 +899,12 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 		if (isModifiersVisible()) {
 			if (animate) {
-				ObjectAnimator animator = ObjectAnimator.ofFloat(detailsSwitch, "rotation", 180, 0);
+				ObjectAnimator animator = ObjectAnimator.ofFloat(detailsSwitch, "rotation", 0f, 180f);
 				animator.setTarget(detailsSwitch);
 				animator.setDuration(500);
 				animator.start();
 			} else {
-				ViewHelper.setRotation(detailsSwitch, 0);
+				detailsSwitch.setRotation(180f);
 			}
 
 			// --
@@ -902,12 +914,12 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 		} else {
 			if (animate) {
-				ObjectAnimator animator = ObjectAnimator.ofFloat(detailsSwitch, "rotation", 0, 180);
+				ObjectAnimator animator = ObjectAnimator.ofFloat(detailsSwitch, "rotation", 180f, 0f);
 				animator.setTarget(detailsSwitch);
 				animator.setDuration(500);
 				animator.start();
 			} else {
-				ViewHelper.setRotation(detailsSwitch, 180);
+				detailsSwitch.setRotation(0f);
 			}
 
 			modifierAdapter.clear();

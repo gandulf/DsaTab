@@ -2,12 +2,12 @@
     
     <item android:id="@+id/option_edit"
           android:icon="?attr/imgBarEdit"
-          app:showAsAction="withText|ifRoom"
+          android:showAsAction="withText|ifRoom"
           android:title="@string/label_edit" />
     
     <item android:id="@+id/option_delete"
           android:icon="?attr/imgBarDelete"
-          app:showAsAction="withText|ifRoom"
+          android:showAsAction="withText|ifRoom"
           android:title="@string/label_delete" />                    
     
 </menu>

@@ -2,25 +2,25 @@
 <group android:id="@+id/group_art">		
 	<item android:id="@+id/option_view_art"
           android:icon="?attr/imgBarView"
-          app:showAsAction="withText|ifRoom"
+          android:showAsAction="withText|ifRoom"
           android:title="@string/details" />                    
     
 		<item android:id="@+id/option_mark"
             android:icon="?attr/imgBarStar"
-            app:showAsAction="withText|ifRoom"
+            android:showAsAction="withText|ifRoom"
             android:title="@string/selection">
 		 <menu>
 		    <item android:id="@+id/option_mark_favorite_art"
 		          android:icon="?attr/imgBarStar"
-		          app:showAsAction="withText"
+		          android:showAsAction="withText"
 		          android:title="@string/mark_as_favorite" />
 		    <item android:id="@+id/option_mark_unused_art"
 		          android:icon="?attr/imgBarStarEmpty"
-		          app:showAsAction="withText"
+		          android:showAsAction="withText"
 		          android:title="@string/mark_as_unused" />
 		    <item android:id="@+id/option_unmark_art"
 		          android:icon="?attr/imgBarCancel"
-		          app:showAsAction="withText"
+		          android:showAsAction="withText"
 		          android:title="@string/clear_selection" />
 		    </menu>
     </item>

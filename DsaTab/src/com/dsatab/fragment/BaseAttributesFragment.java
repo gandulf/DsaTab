@@ -24,7 +24,7 @@ public abstract class BaseAttributesFragment extends BaseFragment {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onViewCreated(android.view.View, android.os.Bundle)
+	 * @see android.app.Fragment#onViewCreated(android.view.View, android.os.Bundle)
 	 */
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -105,6 +105,7 @@ public abstract class BaseAttributesFragment extends BaseFragment {
 		Attribute attribute = getBeing().getAttribute(type);
 
 		fillAttributeValue(tv, attribute, prefix, includeBe);
+
 	}
 
 	protected void fillAttributeValue(TextView tv, Attribute attribute, String prefix, boolean includeBe) {

@@ -1,56 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<preference-headers xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:unified="http://schemas.android.com/apk/res-auto">
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <header
-    		unified:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsRulesFragment"
-    		unified:icon="@drawable/ic_menu_preferences"
-    		unified:title="Regeln"
-    		android:title="Regeln"
-    		unified:summary="Einstellungen die Regeln von DSA betreffend."
-    		unified:preferenceRes="@xml/preferences_hc_rules" />
-    
-	<header unified:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsDisplayFragment"
-            unified:icon="?attr/imgView"
-            unified:title="Darstellung"
-            android:title="Darstellung"
-            unified:summary="Einstellungen die Darstellung von DsaTab betreffend."
-            unified:preferenceRes="@xml/preferences_hc_display" />
-	
-	<header unified:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsDiceSliderFragment"
-            unified:icon="?attr/imgView"
-            unified:title="Würfelleiste"
-            android:title="Würfelleiste"
-            unified:summary="Darstellung und Verhalten der Würfelleite konfigurieren"
-            unified:preferenceRes="@xml/preferences_hc_diceslider" />
-	
-	<header unified:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsHeaderFragment"
-            unified:icon="?attr/imgView"
-            unified:title="Kopfzeile"
-            android:title="Kopfzeile"
-            unified:summary="Darstellung und Kopfzeile konfigurieren"
-            unified:preferenceRes="@xml/preferences_hc_header" />
-	
-	<header unified:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsSetupFragment"
-            unified:icon="@drawable/ic_menu_preferences"
-            unified:title="Setup"
-            android:title="Setup"
-            unified:summary="Systemeinstellungen DsaTab betreffend." 
-            unified:preferenceRes="@xml/preferences_hc_setup" />
-    
-	<header unified:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsInfoFragment"
-            unified:icon="?attr/imgInfo"
-            unified:title="Informationen"
-            android:title="Informationen"
-            unified:summary="Alle möglichen Informationen rund um DsaTab."
-            unified:preferenceRes="@xml/preferences_hc_info" />                            
-     
-    <header unified:icon="?attr/imgLove"
-            unified:title="Spenden"
-            android:title="Spenden"
-            unified:summary="Bringt dich direkt zur Spendenseite.">
-        <intent android:action="android.intent.action.VIEW"
-                android:data="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=gandulf%2ek%40gmx%2enet&amp;lc=DE&amp;item_name=Gandulf&amp;item_number=DsaTab&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted" />
+        android:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsRulesFragment"
+        android:icon="@drawable/dsa_modifier"
+        android:summary="Einstellungen die Regeln von DSA betreffend."
+        android:title="Regeln" />
+    <header
+        android:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsDisplayFragment"
+        android:icon="@drawable/ic_menu_view"
+        android:summary="Einstellungen die Darstellung von DsaTab betreffend."
+        android:title="Darstellung" />
+    <header
+        android:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsDiceSliderFragment"
+        android:icon="@drawable/dsa_dice"
+        android:summary="Darstellung und Verhalten der Würfelleite konfigurieren"
+        android:title="Würfelleiste" />
+    <header
+        android:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsHeaderFragment"
+        android:icon="@drawable/dsa_list"
+        android:summary="Darstellung und Kopfzeile konfigurieren"
+        android:title="Kopfzeile" />
+    <header
+        android:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsSetupFragment"
+        android:icon="@drawable/ic_menu_preferences"
+        android:summary="Systemeinstellungen DsaTab betreffend."
+        android:title="Setup" />
+    <header
+        android:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsInfoFragment"
+        android:icon="@drawable/dsa_info_light"
+        android:summary="Alle möglichen Informationen rund um DsaTab."
+        android:title="Informationen" />
+    <header
+        android:icon="@drawable/ic_action_love_light"
+        android:summary="Bringt dich direkt zur Spendenseite."
+        android:title="Spenden" >
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=gandulf%2ek%40gmx%2enet&amp;lc=DE&amp;item_name=Gandulf&amp;item_number=DsaTab&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted" />
     </header>
-    
+
 </preference-headers>

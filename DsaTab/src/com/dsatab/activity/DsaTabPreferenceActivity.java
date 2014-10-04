@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.saik0.android.unifiedpreference.UnifiedPreferenceActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -20,6 +19,7 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
@@ -40,18 +40,18 @@ import com.dsatab.R;
 import com.dsatab.cloud.HeroExchange;
 import com.dsatab.data.HeroFileInfo.StorageType;
 import com.dsatab.fragment.BasePreferenceFragment;
+import com.dsatab.fragment.dialog.ChangeLogDialog;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Hint;
 import com.dsatab.util.Util;
 import com.dsatab.view.PreferenceWithButton;
-import com.dsatab.view.dialog.ChangeLogDialog;
 import com.dsatab.view.dialog.DirectoryChooserDialogHelper;
 import com.dsatab.view.dialog.DirectoryChooserDialogHelper.Result;
 import com.gandulf.guilib.download.AbstractDownloader;
 import com.gandulf.guilib.download.DownloaderWrapper;
 import com.gandulf.guilib.util.ResUtil;
 
-public class DsaTabPreferenceActivity extends UnifiedPreferenceActivity implements OnSharedPreferenceChangeListener {
+public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
 	static final int REQUEST_LINK_TO_DBX = 1190;
 	public static final int ACTION_PICK_BG_PATH = 1001;
@@ -68,8 +68,6 @@ public class DsaTabPreferenceActivity extends UnifiedPreferenceActivity implemen
 
 	public static final String KEY_HOUSE_RULES = "houseRules";
 	public static final String KEY_HOUSE_RULES_2_OF_3_DICE = "houseRules.2of3Dice";
-	public static final String KEY_HOUSE_RULES_LE_MODIFIER = "houseRules.leModifier";
-	public static final String KEY_HOUSE_RULES_AU_MODIFIER = "houseRules.auModifier";
 	public static final String KEY_HOUSE_RULES_EASIER_WOUNDS = "houseRules.easierWounds";
 	public static final String KEY_HOUSE_RULES_MORE_WOUND_ZONES = "houseRules.moreWoundZones";
 	public static final String KEY_HOUSE_RULES_MORE_TARGET_ZONES = "houseRules.moreTargetZones";
@@ -114,7 +112,6 @@ public class DsaTabPreferenceActivity extends UnifiedPreferenceActivity implemen
 
 	public static final String KEY_DSA_LICENSE = "dsa_license";
 
-	public static final String KEY_HEADER_NAME = "header_name";
 	public static final String KEY_HEADER_LE = "header_le";
 	public static final String KEY_HEADER_AU = "header_au";
 	public static final String KEY_HEADER_KE = "header_ke";
@@ -251,12 +248,10 @@ public class DsaTabPreferenceActivity extends UnifiedPreferenceActivity implemen
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setTheme(DsaTabApplication.getInstance().getCustomPreferencesTheme());
-		setHeaderRes(com.dsatab.R.xml.preferences_headers);
-
 		super.onCreate(savedInstanceState);
 
-		// TODO getSupportActionBar().setDisplayShowHomeEnabled(true);
-		// TODO getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setDisplayShowHomeEnabled(true);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		SharedPreferences preferences = DsaTabApplication.getPreferences();
 		preferences.registerOnSharedPreferenceChangeListener(this);
@@ -265,19 +260,12 @@ public class DsaTabPreferenceActivity extends UnifiedPreferenceActivity implemen
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.saik0.android.unifiedpreference.UnifiedPreferenceActivity #onPostCreate(android.os.Bundle)
+	/**
+	 * Populate the activity with the top-level headers.
 	 */
 	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-
-		if (isSinglePane()) {
-			initPreferences(getPreferenceManager(), getPreferenceScreen());
-			onBindPreferenceSummariesToValues();
-		}
+	public void onBuildHeaders(List<Header> target) {
+		loadHeadersFromResource(com.dsatab.R.xml.preferences_headers, target);
 	}
 
 	@Override
@@ -479,7 +467,7 @@ public class DsaTabPreferenceActivity extends UnifiedPreferenceActivity implemen
 			AlertDialog.Builder builder = new AlertDialog.Builder(context);
 			builder.setTitle(R.string.title_credits);
 			builder.setCancelable(true);
-			WebView webView = new WebView(context);
+			WebView webView = new WebView(builder.getContext());
 			webView.getSettings().setDefaultTextEncodingName("utf-8");
 
 			String summary = ResUtil.loadResToString(R.raw.credits, context);
@@ -496,8 +484,9 @@ public class DsaTabPreferenceActivity extends UnifiedPreferenceActivity implemen
 			builder.show();
 			return true;
 		} else if (KEY_INFOS.equals(key)) {
-			ChangeLogDialog logDialog = new ChangeLogDialog(context);
-			logDialog.show(true);
+			if (context instanceof Activity) {
+				ChangeLogDialog.show(((Activity) context), true, 0);
+			}
 			return true;
 		} else if (KEY_DONATE.equals(key)) {
 			Uri uriUrl = Uri.parse(DsaTabApplication.PAYPAL_DONATION_URL);
@@ -508,7 +497,7 @@ public class DsaTabPreferenceActivity extends UnifiedPreferenceActivity implemen
 			AlertDialog.Builder builder = new AlertDialog.Builder(context);
 			builder.setTitle(R.string.title_credits);
 			builder.setCancelable(true);
-			WebView webView = new WebView(context);
+			WebView webView = new WebView(builder.getContext());
 			webView.getSettings().setDefaultTextEncodingName("utf-8");
 			String summary = ResUtil.loadResToString(R.raw.ulisses_license, context);
 			webView.loadDataWithBaseURL(null, summary, "text/html", "utf-8", null);

@@ -3,15 +3,14 @@ package com.dsatab.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.ActionBar;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -42,20 +41,34 @@ public class AnimalFragment extends BaseProfileFragment {
 
 	private int animalIndex = 0;
 
+	@Override
+	public void hideActionBarItems() {
+		super.hideActionBarItems();
+		removeAnimalNavigation();
+	}
+
+	@Override
+	public void showActionBarItems() {
+		super.showActionBarItems();
+		initAnimalNavigation();
+	}
+
 	private void initAnimalNavigation() {
-		ActionBar actionBar = getActionBarActivity().getSupportActionBar();
+		ActionBar actionBar = getActionBarActivity().getActionBar();
 
 		List<String> animalNames = new ArrayList<String>();
 		for (int i = 0; i < getHero().getAnimals().size(); i++) {
 			Animal animal = getHero().getAnimals().get(i);
 			animalNames.add(animal.getTitle());
 		}
+
 		if (animalNames.size() > 1) {
 			final ArrayAdapter<String> adapter = new ArrayAdapter<String>(actionBar.getThemedContext(),
 					android.R.layout.simple_spinner_item, animalNames);
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 			actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+			actionBar.setSelectedNavigationItem(animalIndex);
 			actionBar.setListNavigationCallbacks(adapter, new ActionBar.OnNavigationListener() {
 
 				@Override
@@ -66,15 +79,13 @@ public class AnimalFragment extends BaseProfileFragment {
 					return false;
 				}
 			});
-
-			actionBar.setSelectedNavigationItem(animalIndex);
 		} else {
 			removeAnimalNavigation();
 		}
 	}
 
 	private void removeAnimalNavigation() {
-		ActionBar actionBar = getActionBarActivity().getSupportActionBar();
+		ActionBar actionBar = getActionBarActivity().getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 		actionBar.setListNavigationCallbacks(null, null);
 	}
@@ -82,8 +93,7 @@ public class AnimalFragment extends BaseProfileFragment {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
-	 * android.os.Bundle)
+	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -142,7 +152,7 @@ public class AnimalFragment extends BaseProfileFragment {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#setUserVisibleHint(boolean)
+	 * @see android.app.Fragment#setUserVisibleHint(boolean)
 	 */
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -157,6 +167,16 @@ public class AnimalFragment extends BaseProfileFragment {
 		super.onResume();
 
 		animalIndex = getPreferences().getInt(PREF_KEY_LAST_ANIMAL, 0);
+
+		if (getHero() != null) {
+			if (animalIndex >= getHero().getAnimals().size() || animalIndex < 0)
+				animalIndex = 0;
+
+			onAnimalLoaded(getAnimal());
+		} else {
+			onAnimalLoaded(null);
+		}
+
 		initAnimalNavigation();
 
 	}
@@ -313,12 +333,11 @@ public class AnimalFragment extends BaseProfileFragment {
 		}
 		//
 
-		fillSpecialFeatures(getAnimal());
+		fillSpecialFeatures(animal);
 
 		// --
-		ImageView portrait = (ImageView) findViewById(R.id.gen_portrait);
-		portrait.setOnClickListener(this);
-		updatePortrait(getAnimal());
+		updatePortrait(animal);
+		updateBaseInfo(false);
 
 		TableLayout attribute2 = (TableLayout) findViewById(R.id.gen_attributes2);
 		Util.applyRowStyle(attribute2);
@@ -328,9 +347,9 @@ public class AnimalFragment extends BaseProfileFragment {
 		LinearLayout attackLayout = (LinearLayout) findViewById(R.id.animal_attacks);
 		attackLayout.removeAllViews();
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
-		if (getAnimal() != null && getAnimal().getAnimalAttacks() != null) {
+		if (animal != null && animal.getAnimalAttacks() != null) {
 			int position = 0;
-			for (AnimalAttack animalAttack : getAnimal().getAnimalAttacks()) {
+			for (AnimalAttack animalAttack : animal.getAnimalAttacks()) {
 				ItemListItem listItem = (ItemListItem) inflater.inflate(R.layout.item_listitem_equippeditem,
 						attackLayout, false);
 
@@ -399,6 +418,9 @@ public class AnimalFragment extends BaseProfileFragment {
 			tfINI.setText(getAnimal().getIniDice().toString());
 		else
 			tfINI.setText(null);
+
+		Util.setTextColor(tfINI, 0);
+
 		fillAttributeValue(tfLO, AttributeType.Loyalität, false);
 	}
 

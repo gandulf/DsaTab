@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.gandulf.guilib.view.HackeyDrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:guilib="http://schemas.android.com/apk/com.gandulf.guilib"
+<com.gandulf.guilib.view.HackeyDrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"    
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
@@ -13,24 +12,13 @@
         android:id="@+id/slidepanel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        guilib:panelHeight="@dimen/icon_button_size"
+        android:paddingTop="?android:attr/actionBarSize"        
         app:panelHeight="@dimen/icon_button_size"
         android:gravity="bottom">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <fragment
-                android:id="@+id/inc_attributes"
-                android:name="com.dsatab.fragment.AttributeListFragment"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                class="com.dsatab.fragment.AttributeListFragment"
-                android:tag="attributeListFragment"
-                tools:layout="@layout/attributes_list" >
-            </fragment>
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:id="@+id/viewpager"

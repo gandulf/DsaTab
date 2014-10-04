@@ -2,7 +2,7 @@
     <item
         android:id="@+id/option_cancel"
         android:icon="?attr/imgBarCancel"
-        app:showAsAction="withText|ifRoom"
+        android:showAsAction="withText|ifRoom"
         android:title="@string/menu_discard">
     </item>
 </menu>

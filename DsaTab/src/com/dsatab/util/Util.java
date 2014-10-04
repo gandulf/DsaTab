@@ -32,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -48,21 +49,18 @@ import android.os.Environment;
 import android.provider.MediaStore.Images.ImageColumns;
 import android.provider.MediaStore.Images.Media;
 import android.provider.MediaStore.MediaColumns;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.SpannedString;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -90,6 +88,8 @@ import com.dsatab.data.items.Shield;
 import com.dsatab.data.items.Weapon;
 import com.dsatab.view.listener.EditListener;
 import com.dsatab.view.listener.ProbeListener;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 public class Util {
 
@@ -757,6 +757,31 @@ public class Util {
 			}
 		} else {
 			tv.setText(null);
+			tv.setTag(null);
+			tv.setOnClickListener(null);
+			tv.setOnLongClickListener(null);
+		}
+	}
+
+	public static void setImage(ImageView view, Uri imageUri, int defaultPlaceholder) {
+		setImage(view, imageUri, defaultPlaceholder, null);
+	}
+
+	public static void setImage(ImageView view, Uri imageUri, int defaultPlaceholder,
+			ImageLoadingListener loadingListener) {
+		if (view == null)
+			return;
+
+		if (imageUri != null) {
+			String uri = imageUri.toString();
+
+			if (uri.startsWith("file:/") && !uri.startsWith("file:///")) {
+				uri = uri.replace("file:/", "file:///");
+			}
+
+			ImageLoader.getInstance().displayImage(uri, view, loadingListener);
+		} else {
+			view.setImageResource(defaultPlaceholder);
 		}
 	}
 
@@ -1119,19 +1144,6 @@ public class Util {
 		} else {
 			return null;
 		}
-	}
-
-	public static void inflateAcceptAbortMenu(Context context, Menu menu) {
-
-		MenuItem item = menu.add(Menu.NONE, R.id.option_accept, Menu.NONE, android.R.string.ok);
-		MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM
-				| MenuItemCompat.SHOW_AS_ACTION_WITH_TEXT);
-		item.setIcon(Util.getThemeResourceId(context, R.attr.imgBarAccept));
-
-		item = menu.add(Menu.NONE, R.id.option_cancel, Menu.NONE, android.R.string.cancel);
-		MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM
-				| MenuItemCompat.SHOW_AS_ACTION_WITH_TEXT);
-		item.setIcon(Util.getThemeResourceId(context, R.attr.imgBarCancel));
 	}
 
 	public static InputStream openHttpConnection(String urlString) throws IOException {

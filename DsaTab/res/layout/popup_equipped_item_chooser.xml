@@ -6,8 +6,8 @@
     android:padding="@dimen/default_gap"
     android:orientation="vertical" 
     android:showDividers="middle"
-    android:divider="?attr/dividerHorizontal"
-    android:dividerPadding="12dp">
+    android:divider="?android:attr/dividerHorizontal"
+    android:dividerPadding="?android:attr/dividerPadding">
 
     <ListView
         android:id="@+id/popup_equipped_item_list"

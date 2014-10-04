@@ -2,7 +2,7 @@
     <item
         android:id="@+id/option_ok"
         android:icon="?attr/imgBarAccept"
-        app:showAsAction="withText|ifRoom"
+        android:showAsAction="withText|ifRoom"
         android:title="@string/menu_done">
     </item>
 </menu>

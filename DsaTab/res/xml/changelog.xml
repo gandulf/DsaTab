@@ -1,5 +1,11 @@
 <changelog>    
 
+<release version="4.3.4" versioncode="90">
+    <change>Transparente Aktionbar für Charakter und Kartenansicht</change>
+    <fix>Actionbar wird nach dem Navigationsmenü wieder komplett befüllt</fix>
+    <fix>Begleiter werden auch beim 2. mal korrekt geladen</fix>
+</release>
+    
 <release version="4.3.3" versioncode="89">        
     <change>'Treffer kassieren'-Dialog bei mißlungener Parade hinzugefügt</change>
     <change>Schriftbild überarbeitet (Roboto Light / Condensed)</change>

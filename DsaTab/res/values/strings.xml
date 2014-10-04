@@ -83,8 +83,9 @@
     <string name="hero_loaded">%s geladen</string>
     <string name="hero_saved">%s gespeichert</string>    
     <string name="menu_assign_secondary_weapon">Zweitwaffe zuweisen</string>
-    <string name="offensive">Offensiver Kampfstil</string>
-    <string name="defensive">Defensiver Kampfstil</string>
+    <string name="combat_style">Kampfstil</string>
+    <string name="offensive">Offensiv</string>
+    <string name="defensive">Defensiv</string>
     <string name="menu_unassign_item">Zuweisung aufheben</string>
     <string name="menu_delete_item">Löschen</string>
     <string name="menu_assign_hunting_weapon">Als Jagdwaffe verwenden</string>
@@ -218,8 +219,7 @@
 	<string name="display">Darstellung</string>
 	
 	<string name="label_icon">Icon</string>
-	<string name="show_dice">Würfel anzeigen</string>
-	<string name="show_header">Kopfleiste anzeigen</string>
+	<string name="show_dice">Würfelleiste anzeigen</string>
 	
 	<string name="label_price">Preis</string>
 	<string name="label_weight">Gewicht</string>

@@ -18,5 +18,5 @@
     <item android:id="@+id/discard"
         android:title="@string/menu_discard"
         android:icon="@drawable/ic_action_discard"
-        app:showAsAction="never" />
+        android:showAsAction="never" />
 </menu>

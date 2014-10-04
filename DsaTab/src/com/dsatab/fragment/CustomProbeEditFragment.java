@@ -71,7 +71,7 @@ public class CustomProbeEditFragment extends BaseEditFragment implements OnClick
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
 	 * android.os.Bundle)
 	 */
 	@Override

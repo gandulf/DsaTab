@@ -73,7 +73,7 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
 	 * android.os.Bundle)
 	 */
 	@Override
@@ -163,7 +163,7 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onActivityResult(int, int, android.content.Intent)
+	 * @see android.app.Fragment#onActivityResult(int, int, android.content.Intent)
 	 */
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {

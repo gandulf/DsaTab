@@ -1,7 +1,7 @@
 package com.dsatab.fragment;
 
 import android.os.Bundle;
-import android.support.v4.preference.PreferenceFragment;
+import android.preference.PreferenceFragment;
 
 import com.dsatab.R;
 

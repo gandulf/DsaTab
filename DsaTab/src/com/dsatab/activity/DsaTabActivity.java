@@ -8,9 +8,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.app.LoaderManager;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.Loader;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -23,15 +27,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -42,6 +40,7 @@ import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.dsatab.DsaTabApplication;
@@ -117,7 +116,6 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 	private TabDrawerAdapter tabDrawerAdapter;
 
 	private long backPressed;
-	private int oldActionBarNavigationMode = ActionBar.NAVIGATION_MODE_STANDARD;
 
 	public Hero getHero() {
 		return DsaTabApplication.getInstance().getHero();
@@ -134,7 +132,7 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 
 		Bundle args = new Bundle();
 		args.putSerializable(KEY_HERO_PATH, heroPath);
-		getSupportLoaderManager().restartLoader(0, args, this);
+		getLoaderManager().restartLoader(0, args, this);
 	}
 
 	@Override
@@ -170,30 +168,8 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 			}
 		}
 
-		if (ft != null && attributeFragment != null && attributeFragment.isAdded()
-				&& attributeFragment.getView() != null) {
-			if (tabInfo != null && tabInfo.isAttributeList()) {
-
-				ft.show(attributeFragment);
-				// if (attributeFragment.getView().getVisibility() == View.GONE) {
-				// attributeFragment.getView().setVisibility(View.VISIBLE);
-				//
-				// Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_in_top);
-				// attributeFragment.getView().startAnimation(animation);
-				// }
-
-			} else {
-				ft.hide(attributeFragment);
-				// if (attributeFragment.getView().getVisibility() == View.VISIBLE) {
-				// Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_out_top);
-				// attributeFragment.getView().startAnimation(animation);
-				// attributeFragment.getView().setVisibility(View.GONE);
-				// }
-			}
-		}
-
 		if (tabInfo != null) {
-			getSupportActionBar().setTitle(tabInfo.getTitle());
+			getActionBar().setTitle(tabInfo.getTitle());
 			if (tabInfo.getIconUri() != null) {
 				Drawable d = ResUtil.getDrawableByUri(this, tabInfo.getIconUri());
 				if (d != null) {
@@ -202,17 +178,21 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 					if (tabInfo.getColor() != Color.TRANSPARENT) {
 						d.setColorFilter(new LightingColorFilter(tabInfo.getColor(), 1));
 					}
-					getSupportActionBar().setIcon(d);
+					getActionBar().setIcon(d);
 				} else {
-					getSupportActionBar().setIcon(R.drawable.icon);
+					getActionBar().setIcon(R.drawable.icon);
 				}
 			} else {
-				getSupportActionBar().setIcon(R.drawable.icon);
+				getActionBar().setIcon(R.drawable.icon);
 			}
 		} else {
-			getSupportActionBar().setIcon(R.drawable.icon);
+			getActionBar().setIcon(R.drawable.icon);
 		}
 
+	}
+
+	protected boolean isActionbarTranslucent() {
+		return true;
 	}
 
 	private boolean initHero() {
@@ -357,7 +337,7 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 
 	protected Fragment getCurrentFragment(int index) {
 		if (tabInfo != null) {
-			return getSupportFragmentManager().findFragmentByTag(tabInfo.getId().toString() + index);
+			return getFragmentManager().findFragmentByTag(tabInfo.getId().toString() + index);
 		} else {
 			return null;
 		}
@@ -370,7 +350,7 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setTheme(DsaTabApplication.getInstance().getCustomTheme());
+		setTheme(DsaTabApplication.getInstance().getCustomTheme(true));
 		applyPreferencesToTheme();
 		super.onCreate(savedInstanceState);
 
@@ -378,9 +358,9 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 
 		preferences = DsaTabApplication.getPreferences();
 
-		getSupportActionBar().setDisplayShowTitleEnabled(true);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setHomeButtonEnabled(true);
+		getActionBar().setDisplayShowTitleEnabled(true);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
 
 		DsaTabApplication.getPreferences().registerOnSharedPreferenceChangeListener(this);
 
@@ -411,10 +391,9 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 			tabInfo = getIntent().getParcelableExtra(INTENT_TAB_INFO);
 		}
 
-		attributeFragment = (AttributeListFragment) getSupportFragmentManager().findFragmentByTag(
-				AttributeListFragment.TAG);
+		attributeFragment = (AttributeListFragment) getFragmentManager().findFragmentByTag(AttributeListFragment.TAG);
 
-		diceSliderFragment = (DiceSliderFragment) getSupportFragmentManager().findFragmentByTag(DiceSliderFragment.TAG);
+		diceSliderFragment = (DiceSliderFragment) getFragmentManager().findFragmentByTag(DiceSliderFragment.TAG);
 		diceSliderFragment.setSlidingUpPanelLayout(slidingUpPanelLayout);
 
 		// Debug.verbose("onCreate Orientation =" + configuration.orientation);
@@ -433,11 +412,9 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 			return;
 		}
 		initDrawer();
-		boolean heroLoaded = initHero();
+		initHero();
 		setupNavigationDrawer();
-		if (heroLoaded) {
-			DsaTabApplication.getInstance().showNewsInfoPopup(this);
-		}
+
 	}
 
 	private void initDrawer() {
@@ -459,15 +436,12 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 			public void onDrawerClosed(View view) {
 				super.onDrawerClosed(view);
 				updatePage(tabInfo, null);
-				supportInvalidateOptionsMenu();
+				invalidateOptionsMenu();
 
-				// if we have no navigationitems use default mode!
-				if (getSupportActionBar().getNavigationItemCount() == 0)
-					oldActionBarNavigationMode = ActionBar.NAVIGATION_MODE_STANDARD;
-
-				// only set navigationmode back to old value if it hasn't been changed by tab change
-				if (getSupportActionBar().getNavigationMode() == ActionBar.NAVIGATION_MODE_STANDARD) {
-					getSupportActionBar().setNavigationMode(oldActionBarNavigationMode);
+				for (int i = 0; i < TabInfo.MAX_TABS_PER_PAGE; i++) {
+					if (getCurrentFragment(i) instanceof BaseFragment) {
+						((BaseFragment) getCurrentFragment(i)).showActionBarItems();
+					}
 				}
 			}
 
@@ -475,12 +449,15 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 			public void onDrawerOpened(View drawerView) {
 				super.onDrawerOpened(drawerView);
 
-				getSupportActionBar().setTitle(R.string.app_name);
-				getSupportActionBar().setIcon(R.drawable.icon);
-				supportInvalidateOptionsMenu();
+				getActionBar().setTitle(R.string.app_name);
+				getActionBar().setIcon(R.drawable.icon);
+				invalidateOptionsMenu();
 
-				oldActionBarNavigationMode = getSupportActionBar().getNavigationMode();
-				getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+				for (int i = 0; i < TabInfo.MAX_TABS_PER_PAGE; i++) {
+					if (getCurrentFragment(i) instanceof BaseFragment) {
+						((BaseFragment) getCurrentFragment(i)).hideActionBarItems();
+					}
+				}
 			}
 		};
 
@@ -541,7 +518,7 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 	 * 
 	 */
 	public void setupNavigationDrawer() {
-		getSupportActionBar();
+		getActionBar();
 		List<TabInfo> tabs;
 		if (getHeroConfiguration() != null)
 			tabs = getHeroConfiguration().getTabs();
@@ -673,7 +650,7 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 		boolean dirty = false;
 		for (int i = 0; i < TabInfo.MAX_TABS_PER_PAGE; i++) {
 			int containerId = containerIds[i];
-			Fragment fragment = getSupportFragmentManager().findFragmentById(containerId);
+			Fragment fragment = getFragmentManager().findFragmentById(containerId);
 
 			if (fragment == null && tabInfo.getActivityClazz(i) == null) {
 				continue;
@@ -697,7 +674,6 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 
 		}
 
-		dirty |= tabInfo.isAttributeList() != attributeFragment.isVisible();
 		dirty |= tabInfo.isDiceSlider() != diceSliderFragment.isVisible();
 
 		return dirty;
@@ -710,19 +686,20 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 			this.tabInfo = newTabInfo;
 			String tag = newTabInfo.getId().toString();
 
-			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+			FragmentTransaction ft = getFragmentManager().beginTransaction();
+			ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
 
 			for (int i = 0; i < TabInfo.MAX_TABS_PER_PAGE; i++) {
 				int containerId = containerIds[i];
 				ViewGroup fragmentContainer = containers.get(i);
 
 				// detach old fragment
-				Fragment oldFragment = getSupportFragmentManager().findFragmentById(containerId);
+				Fragment oldFragment = getFragmentManager().findFragmentById(containerId);
 				if (oldFragment != null) {
 					ft.detach(oldFragment);
 				}
 
-				Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag + i);
+				Fragment fragment = getFragmentManager().findFragmentByTag(tag + i);
 
 				// check wether fragment is still uptodate, if we changed the tpe of the fragment the manager has an old
 				// fragment,remove it if the class does not match
@@ -752,14 +729,19 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 			}
 			updatePage(tabInfo, ft);
 			ft.commitAllowingStateLoss();
+			onFragmentsUpdated();
 			return true;
 		} else {
 			return false;
 		}
 	}
 
+	private void onFragmentsUpdated() {
+		setActionbarTranslucent(tabInfo.isActionbarTranslucent());
+	}
+
 	public void replaceFragment(String tag, Fragment oldFragment, Fragment newFragment) {
-		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		FragmentTransaction ft = getFragmentManager().beginTransaction();
 
 		ViewGroup fragmentContainer = null;
 		int containerId = 0;
@@ -768,7 +750,7 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 			fragmentContainer = containers.get(i);
 
 			// detach old fragment
-			Fragment fragment = getSupportFragmentManager().findFragmentById(containerId);
+			Fragment fragment = getFragmentManager().findFragmentById(containerId);
 			if (fragment != null && oldFragment == fragment) {
 				ft.detach(oldFragment);
 				break;
@@ -787,7 +769,7 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 
 		updatePage(null, ft);
 		ft.commitAllowingStateLoss();
-
+		onFragmentsUpdated();
 	}
 
 	/*
@@ -810,8 +792,7 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 			if (drawerOpen)
 				mDrawerLayout.closeDrawer(mDrawerList);
 		} else {
-			if (backPressed + 2000 > System.currentTimeMillis()
-					|| getSupportFragmentManager().getBackStackEntryCount() > 0) {
+			if (backPressed + 2000 > System.currentTimeMillis() || getFragmentManager().getBackStackEntryCount() > 0) {
 				super.onBackPressed();
 			} else {
 				Toast.makeText(getBaseContext(), "Erneut klicken um DsaTab zu schließen", Toast.LENGTH_SHORT).show();
@@ -952,25 +933,24 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 			mShaker = null;
 			Debug.warning(e);
 		}
+
+		DsaTabApplication.getInstance().showNewsInfoPopup(this);
+
 		super.onResume();
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-
-		MenuItem item;
-
-		item = menu.add(Menu.NONE, R.id.option_save_hero, Menu.NONE, R.string.option_save_hero);
-		MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_NEVER);
-		item.setIcon(R.drawable.ic_menu_save);
-
 		MenuInflater inflater = getMenuInflater();
+
 		inflater.inflate(R.menu.menuitem_search, menu);
 		SearchManager SManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 		MenuItem searchMenuItem = menu.findItem(R.id.action_search);
 		SearchView searchViewAction = (SearchView) MenuItemCompat.getActionView(searchMenuItem);
 		searchViewAction.setSearchableInfo(SManager.getSearchableInfo(getComponentName()));
 		searchViewAction.setIconifiedByDefault(true);
+
+		inflater.inflate(R.menu.menuitem_savehero, menu);
 
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -1077,7 +1057,7 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.FragmentActivity#onSaveInstanceState(android.os .Bundle)
+	 * @see android.app.FragmentActivity#onSaveInstanceState(android.os .Bundle)
 	 */
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
@@ -1147,11 +1127,6 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 
 		if (attributeFragment != null && attributeFragment.isAdded())
 			attributeFragment.onSharedPreferenceChanged(sharedPreferences, key);
-
-		Hero hero = DsaTabApplication.getInstance().getHero();
-		if (hero != null) {
-			hero.onSharedPreferenceChanged(sharedPreferences, key);
-		}
 	}
 
 	protected void showHeroChooser() {

@@ -8,12 +8,12 @@
     android:fillViewport="true"
     android:padding="@dimen/default_gap" >
 
-    <android.support.v7.widget.GridLayout
+    <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        auto:columnCount="2"
-        auto:orientation="vertical"
-        auto:useDefaultMargins="true" >
+        android:columnCount="2"
+        android:orientation="vertical"
+        android:useDefaultMargins="true" >
 
         <ImageView
             android:id="@+id/popup_edit_icon"
@@ -21,18 +21,18 @@
             android:layout_width="wrap_content"
             android:minWidth="@dimen/icon_button_size"
             android:layout_height="@dimen/icon_button_size"
-            auto:layout_column="0"
-            auto:layout_gravity="bottom|right"
-            auto:layout_row="0"
+            android:layout_column="0"
+            android:layout_gravity="bottom|right"
+            android:layout_row="0"
              />
 
         <com.thebnich.floatinghintedittext.FloatingHintEditText
             android:id="@+id/popup_edit_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            auto:layout_column="1"
-            auto:layout_gravity="bottom|fill_horizontal"
-            auto:layout_row="0"
+            android:layout_column="1"
+            android:layout_gravity="bottom|fill_horizontal"
+            android:layout_row="0"
             android:hint="@string/label_name"
             android:inputType="text" >
 
@@ -43,8 +43,8 @@
             android:id="@+id/popup_edit_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            auto:layout_column="0"
-            auto:layout_columnSpan="2"
+            android:layout_column="0"
+            android:layout_columnSpan="2"
             android:hint="Beschreibung"
             android:inputType="text"/>
         
@@ -53,8 +53,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             
-            auto:layout_column="0"
-            auto:layout_columnSpan="2"
+            android:layout_column="0"
+            android:layout_columnSpan="2"
             android:hint="Fußnote"
             android:inputType="text"/>
         
@@ -64,7 +64,7 @@
             style="?android:attr/listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            auto:layout_columnSpan="2"
+            android:layout_columnSpan="2"
             android:text="Probe" />
 
         <com.thebnich.floatinghintedittext.FloatingHintEditText
@@ -72,8 +72,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             
-            auto:layout_column="0"
-            auto:layout_columnSpan="2"
+            android:layout_column="0"
+            android:layout_columnSpan="2"
             android:hint="Attribute (MU/KL/IN)"
             android:inputType="text"/>
         
@@ -83,8 +83,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             
-            auto:layout_column="0"
-            auto:layout_columnSpan="2"
+            android:layout_column="0"
+            android:layout_columnSpan="2"
             android:hint="BE (BE-2)"
             android:inputType="text"/>
         
@@ -94,8 +94,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             
-            auto:layout_column="0"
-            auto:layout_columnSpan="2"
+            android:layout_column="0"
+            android:layout_columnSpan="2"
             android:hint="Wert"
             android:inputType="number"/>
         
@@ -104,7 +104,7 @@
             style="@style/TextLabel.Float"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            auto:layout_columnSpan="2"
+            android:layout_columnSpan="2"
             android:labelFor="@+id/popup_edit_probe_type"
             android:text="Probenart" />
 
@@ -114,15 +114,15 @@
             android:layout_height="wrap_content"
             android:paddingTop="0dp"
             android:layout_marginTop="0dp"
-            auto:layout_columnSpan="2"
-            auto:layout_gravity="fill_horizontal" >
+            android:layout_columnSpan="2"
+            android:layout_gravity="fill_horizontal" >
         </Spinner>
         
         <TextView
             style="@style/TextLabel.Float"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            auto:layout_columnSpan="2"
+            android:layout_columnSpan="2"
             android:labelFor="@+id/popup_edit_modificator_type"
             android:text="Betroffene Modifikatoren" />
 
@@ -133,18 +133,18 @@
             
             android:paddingTop="0dp"
             android:layout_marginTop="0dp"
-            auto:layout_columnSpan="2"
-            auto:layout_gravity="fill_horizontal" >
+            android:layout_columnSpan="2"
+            android:layout_gravity="fill_horizontal" >
         </Spinner>
         
-        <android.support.v7.widget.Space
+        <Space
             android:id="@+id/space1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            auto:layout_column="0"
-            auto:layout_columnSpan="2"
-            auto:layout_gravity="left|top"
+            android:layout_column="0"
+            android:layout_columnSpan="2"
+            android:layout_gravity="left|top"
             />
-    </android.support.v7.widget.GridLayout>
+    </GridLayout>
 
 </ScrollView>

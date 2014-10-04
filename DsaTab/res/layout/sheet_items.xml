@@ -1,71 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SlidingPaneLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.dsatab.view.CheckableFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/sheet_items"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent" >
 
-    <LinearLayout
-        android:layout_width="250dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0"
-        android:background="?attr/listShadowBackground"
-        android:orientation="vertical" >
+    <android.support.v4.widget.SlidingPaneLayout
+        android:id="@+id/sheet_items"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
 
-        <TextView
-            style="?android:attr/listSeparatorTextViewStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/containers" />
+        <LinearLayout
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:background="?attr/slidingPaneShadowBackground"
+            android:orientation="vertical" >
 
-        <com.gandulf.guilib.view.DynamicListViewEx
-            android:id="@+id/container_list"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            <TextView
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/containers" />
+
+            <com.gandulf.guilib.view.DynamicListViewEx
+                android:id="@+id/container_list"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:animateLayoutChanges="true"
+                android:background="?attr/slidingPaneShadowBackground"
+                android:cacheColorHint="#00000000"
+                android:divider="@null" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="500dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:cacheColorHint="#00000000"
-            android:background="?attr/listShadowBackground"
-            android:animateLayoutChanges="true"
-            android:divider="@null" />
+            android:background="?android:attr/windowBackground" >
 
-    </LinearLayout>
-    
-    <FrameLayout android:layout_width="500dp"
-        android:layout_height="match_parent"
-        android:background="?android:attr/windowBackground"
-        android:layout_weight="1" >
+            <com.gandulf.guilib.view.DynamicListViewEx
+                android:id="@android:id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:cacheColorHint="#00000000"
+                android:divider="@null"
+                android:visibility="gone" />
 
-	    <com.gandulf.guilib.view.DynamicListViewEx
-	        android:id="@android:id/list"	        
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
-	        android:cacheColorHint="#00000000"
-	        android:divider="@null"
-	        android:visibility="gone" />
-	
-	    <com.rokoder.android.lib.support.v4.widget.GridViewCompat
-	        android:id="@+id/workspace"	        
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"        
-	        android:columnWidth="@dimen/workspace_cell_width"
-	        android:clipChildren="true"
-	        android:numColumns="auto_fit"
-	        android:stretchMode="none"
-	        android:cacheColorHint="#00000000"
-	        android:listSelector="?attr/listItemBackground"
-	        android:drawSelectorOnTop="true" />
-	    
-	    <TextView
-	        android:id="@+android:id/empty"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="center"
-	        android:drawablePadding="10dp"
-	        android:drawableTop="?attr/imgEmpty"
-	        android:gravity="center"
-	        android:text="@string/message_items_empty"
-	        android:visibility="gone" >
-	    </TextView>
+            <GridView
+                android:id="@+id/workspace"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:cacheColorHint="#00000000"
+                android:clipChildren="true"
+                android:columnWidth="@dimen/workspace_cell_width"
+                android:drawSelectorOnTop="true"
+                android:listSelector="?attr/listItemBackground"
+                android:numColumns="auto_fit"
+                android:stretchMode="none" />
 
-    </FrameLayout>
-</android.support.v4.widget.SlidingPaneLayout>
+            <TextView
+                android:id="@+android:id/empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawablePadding="10dp"
+                android:drawableTop="?attr/imgEmpty"
+                android:gravity="center"
+                android:text="@string/message_items_empty"
+                android:visibility="gone" >
+            </TextView>
+        </FrameLayout>
+    </android.support.v4.widget.SlidingPaneLayout>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/fab_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp" >
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_items_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/dsa_items_add"
+            app:colorNormal="@color/white"
+            app:colorPressed="@color/white_pressed" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_container_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/dsa_bag_add"
+            app:colorNormal="@color/white"
+            app:colorPressed="@color/white_pressed" />
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+</com.dsatab.view.CheckableFrameLayout>

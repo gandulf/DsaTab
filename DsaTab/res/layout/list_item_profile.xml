@@ -17,7 +17,7 @@
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="96dp"
+    android:layout_height="144dp"
     android:orientation="horizontal" >
 
     <ImageView
@@ -32,7 +32,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/banner_scrim"
         android:gravity="end"
-        android:paddingTop="42dp" >
+        android:paddingTop="90dp" >
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@android:id/icon1"

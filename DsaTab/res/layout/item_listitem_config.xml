@@ -6,7 +6,7 @@
     android:background="?attr/listItemBackground"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:orientation="horizontal"
-    android:paddingLeft="?attr/listPreferredItemPaddingLeft"
+    android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
     android:paddingRight="0dp">
 
     <com.nhaarman.listviewanimations.itemmanipulation.dragdrop.GripView
@@ -54,10 +54,10 @@
         android:layout_width="1dp"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
-        android:paddingBottom="?attr/dividerPadding"
-        android:paddingTop="?attr/dividerPadding"
+        android:paddingBottom="?android:attr/dividerPadding"
+        android:paddingTop="?android:attr/dividerPadding"
         android:scaleType="fitXY"
-        android:src="?attr/dividerVertical" >
+        android:src="?android:attr/dividerVertical" >
     </ImageView>
 
     <ImageButton

@@ -3,15 +3,14 @@ package com.dsatab.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SlidingPaneLayout;
-import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -52,7 +51,7 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 
 	private ImageView iconView;
 
-	private CheckBox diceslider, attribteList;
+	private CheckBox diceslider;
 	private EditText editTitle;
 
 	private TabInfo currentInfo = null;
@@ -73,7 +72,7 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		setTheme(DsaTabApplication.getInstance().getCustomTheme());
+		setTheme(DsaTabApplication.getInstance().getCustomTheme(false));
 		applyPreferencesToTheme();
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.sheet_edit_tab);
@@ -102,9 +101,6 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 
 		diceslider = (CheckBox) findViewById(R.id.popup_edit_diceslider);
 		diceslider.setOnCheckedChangeListener(this);
-
-		attribteList = (CheckBox) findViewById(R.id.popup_edit_attributelist);
-		attribteList.setOnCheckedChangeListener(this);
 
 		editTitle = (EditText) findViewById(R.id.popup_edit_title);
 		editTitle.addTextChangedListener(new DefaultTextWatcher() {
@@ -146,7 +142,7 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 
 		// Inflate a "Done" custom action bar view to serve as the "Up"
 		// affordance.
-		LayoutInflater inflater = LayoutInflater.from(getSupportActionBar().getThemedContext());
+		LayoutInflater inflater = LayoutInflater.from(getActionBar().getThemedContext());
 		final View customActionBarView = inflater.inflate(R.layout.actionbar_custom_view_done_discard_left, null);
 		customActionBarView.findViewById(R.id.actionbar_done).setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -164,7 +160,7 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 
 		// Show the custom action bar view and hide the normal Home icon and
 		// title.
-		final ActionBar actionBar = getSupportActionBar();
+		final ActionBar actionBar = getActionBar();
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM, ActionBar.DISPLAY_SHOW_CUSTOM
 				| ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
 		actionBar.setCustomView(customActionBarView);
@@ -178,8 +174,8 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 			return;
 		}
 
-		list1 = (TabListableConfigFragment) getSupportFragmentManager().findFragmentByTag("list1");
-		list2 = (TabListableConfigFragment) getSupportFragmentManager().findFragmentByTag("list2");
+		list1 = (TabListableConfigFragment) getFragmentManager().findFragmentByTag("list1");
+		list2 = (TabListableConfigFragment) getFragmentManager().findFragmentByTag("list2");
 
 		if (tabsAdapter.getCount() > 0) {
 
@@ -195,18 +191,9 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuItem item = menu.add(Menu.NONE, R.id.option_tab_add, Menu.NONE, R.string.option_create_tab);
-		MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
-		item.setIcon(R.drawable.ic_menu_add);
-
-		item = menu.add(Menu.NONE, R.id.option_tab_delete, Menu.NONE, R.string.label_delete);
-		MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
-		item.setIcon(Util.getThemeResourceId(this, R.attr.imgBarDelete));
-
-		item = menu.add(Menu.NONE, R.id.option_tab_reset, Menu.NONE, R.string.option_reset_tabs);
-		MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
-		item.setIcon(R.drawable.ic_menu_revert);
-
+		getMenuInflater().inflate(R.menu.menuitem_add, menu);
+		getMenuInflater().inflate(R.menu.menuitem_delete, menu);
+		getMenuInflater().inflate(R.menu.menuitem_reset, menu);
 		return true;
 	}
 
@@ -223,9 +210,6 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 			case R.id.popup_edit_diceslider:
 				currentInfo.setDiceSlider(isChecked);
 				break;
-			case R.id.popup_edit_attributelist:
-				currentInfo.setAttributeList(isChecked);
-				break;
 			}
 		}
 	}
@@ -237,7 +221,7 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 	 */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		MenuItem item = menu.findItem(R.id.option_tab_delete);
+		MenuItem item = menu.findItem(R.id.option_delete);
 		if (item != null) {
 			item.setEnabled(currentInfo != null);
 		}
@@ -249,16 +233,16 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
-		case R.id.option_tab_add:
+		case R.id.option_add:
 			TabInfo info = new TabInfo();
 			info.setIconUri(Util.getUriForResourceId(R.drawable.dsa_armor_fist));
 			tabsAdapter.add(info);
 			selectTabInfo(info);
 			break;
-		case R.id.option_tab_delete:
+		case R.id.option_delete:
 			tabsList.dismiss(tabsList.getCheckedItemPosition());
 			break;
-		case R.id.option_tab_reset:
+		case R.id.option_reset:
 			List<Integer> pos = new ArrayList<Integer>(tabsAdapter.getCount());
 			for (int i = 0; i < tabsAdapter.getCount(); i++) {
 				pos.add(i);
@@ -281,7 +265,6 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 		currentInfo = info;
 		if (info != null) {
 			diceslider.setChecked(info.isDiceSlider());
-			attribteList.setChecked(info.isAttributeList());
 
 			iconView.setImageURI(info.getIconUri());
 
@@ -296,13 +279,12 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 
 		editTitle.setEnabled(info != null);
 		diceslider.setEnabled(info != null);
-		attribteList.setEnabled(info != null);
 		iconView.setEnabled(info != null);
 
 		list1.setTabInfo(info, 0);
 		list2.setTabInfo(info, 1);
 
-		supportInvalidateOptionsMenu();
+		invalidateOptionsMenu();
 	}
 
 	private void pickIcon() {
@@ -353,7 +335,7 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.FragmentActivity#onBackPressed()
+	 * @see android.app.FragmentActivity#onBackPressed()
 	 */
 	@Override
 	public void onBackPressed() {

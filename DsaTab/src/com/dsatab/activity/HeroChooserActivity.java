@@ -1,8 +1,9 @@
 package com.dsatab.activity;
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
+import android.view.Window;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.data.HeroFileInfo;
@@ -18,18 +19,20 @@ public class HeroChooserActivity extends BaseActivity implements OnHeroSelectedL
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setTheme(DsaTabApplication.getInstance().getCustomTheme());
+		setTheme(DsaTabApplication.getInstance().getCustomTheme(false));
 		applyPreferencesToTheme();
 		super.onCreate(savedInstanceState);
 
-		getSupportActionBar().setDisplayShowHomeEnabled(true);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setHomeButtonEnabled(true);
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
-		fragment = (HeroChooserFragment) getSupportFragmentManager().findFragmentById(android.R.id.content);
+		getActionBar().setDisplayShowHomeEnabled(true);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
+
+		fragment = (HeroChooserFragment) getFragmentManager().findFragmentById(android.R.id.content);
 
 		if (fragment == null) {
-			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+			FragmentTransaction ft = getFragmentManager().beginTransaction();
 			if (fragment != null) {
 				ft.remove(fragment);
 			}

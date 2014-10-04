@@ -3,18 +3,14 @@ package com.dsatab.fragment;
 import java.util.Arrays;
 import java.util.List;
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.dsatab.DsaTabApplication;
-import com.dsatab.R;
 import com.dsatab.TabInfo;
 import com.dsatab.activity.DsaTabActivity;
 import com.dsatab.data.AbstractBeing;
@@ -24,7 +20,6 @@ import com.dsatab.data.Value;
 import com.dsatab.data.modifier.Modificator;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Hint;
-import com.dsatab.util.Util;
 import com.dsatab.view.listener.EditListener;
 import com.dsatab.view.listener.HeroChangedListener;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
@@ -81,31 +76,16 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 
 	private TargetListener targetListener;
 
-	protected void customizeActionModeCloseButton() {
-		int buttonId = Resources.getSystem().getIdentifier("action_mode_close_button", "id", "android");
-		View v = getActivity().findViewById(buttonId);
-		if (v == null)
-			return;
-		LinearLayout ll = (LinearLayout) v;
-		if (ll.getChildCount() > 1 && ll.getChildAt(1) != null) {
-			TextView tv = (TextView) ll.getChildAt(1);
-			tv.setTextColor(getResources().getColor(android.R.color.white));
-			tv.setBackgroundResource(Util.getThemeResourceId(getActivity(), R.attr.actionBarItemBackground));
-		}
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onResume()
+	 * @see android.app.Fragment#onResume()
 	 */
 	@Override
 	public void onResume() {
 		super.onResume();
 
-		if (getUserVisibleHint()) {
-			Hint.showRandomHint(getClass().getSimpleName(), getActivity());
-		}
+		Hint.showRandomHint(getClass().getSimpleName(), getActivity());
 	}
 
 	protected void onAttachListener(Hero hero) {
@@ -150,7 +130,7 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onDestroyView()
+	 * @see android.app.Fragment#onDestroyView()
 	 */
 	@Override
 	public void onDestroyView() {
@@ -171,7 +151,7 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
+	 * @see android.app.Fragment#onActivityCreated(android.os.Bundle)
 	 */
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -226,6 +206,14 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 			return (DsaTabActivity) getActivity();
 		else
 			return null;
+	}
+
+	public void hideActionBarItems() {
+
+	}
+
+	public void showActionBarItems() {
+
 	}
 
 	protected View findViewById(int id) {
@@ -322,12 +310,8 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 		return targetListener;
 	}
 
-	public ActionBarActivity getActionBarActivity() {
-		if (getActivity() instanceof ActionBarActivity) {
-			return (ActionBarActivity) getActivity();
-		} else {
-			return null;
-		}
+	public Activity getActionBarActivity() {
+		return getActivity();
 	}
 
 	public boolean isDrawerOpened() {

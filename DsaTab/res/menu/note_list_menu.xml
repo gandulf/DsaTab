@@ -3,19 +3,19 @@
 	<item
         android:id="@+id/option_note_add"
         android:icon="@drawable/dsa_notes_add"
-        app:showAsAction="withText|ifRoom"
+        android:showAsAction="withText|ifRoom"
         android:title="@string/create_note">
     </item>
     <item
         android:id="@+id/option_note_record"
         android:icon="@drawable/dsa_speech_add"
-        app:showAsAction="withText|ifRoom"
+        android:showAsAction="withText|ifRoom"
         android:title="@string/record_note">
     </item>
     <item
         android:id="@+id/option_note_filter"
         android:icon="?attr/imgBarFilter"
-        app:showAsAction="withText|ifRoom"
+        android:showAsAction="withText|ifRoom"
         android:title="@string/filter">
         <menu />
     </item>

@@ -32,7 +32,7 @@ import org.xml.sax.InputSource;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.support.v4.util.LruCache;
+import android.util.LruCache;
 import android.text.TextUtils;
 
 import com.dsatab.DsaTabApplication;

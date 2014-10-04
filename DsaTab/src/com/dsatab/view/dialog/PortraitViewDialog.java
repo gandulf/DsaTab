@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.dsatab.R;
-import com.squareup.picasso.Picasso;
+import com.dsatab.util.Util;
 
 public class PortraitViewDialog extends AlertDialog implements DialogInterface.OnClickListener {
 
@@ -47,8 +47,7 @@ public class PortraitViewDialog extends AlertDialog implements DialogInterface.O
 	}
 
 	private void load(Uri portraitUri) {
-		Picasso.with(getContext()).load(portraitUri).skipMemoryCache().placeholder(R.drawable.profile_picture)
-				.into(imageView);
+		Util.setImage(imageView, portraitUri, R.drawable.profile_picture);
 	}
 
 	private void load(Bitmap portrait) {

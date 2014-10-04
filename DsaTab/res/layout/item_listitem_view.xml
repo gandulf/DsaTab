@@ -5,17 +5,16 @@
     android:layout_height="wrap_content"
     android:background="?attr/listItemBackground"
     android:minHeight="?android:attr/listPreferredItemHeight"
-    android:paddingRight="?attr/listPreferredItemPaddingRight"
-    android:paddingLeft="?attr/listPreferredItemPaddingLeft">
+    android:paddingRight="?android:attr/listPreferredItemPaddingRight"
+    android:paddingLeft="?android:attr/listPreferredItemPaddingLeft">
 
     <ImageView
         android:id="@android:id/icon1"
-        style="?attr/iconImageViewStyle"
         android:layout_width="@dimen/icon_button_size"
         android:layout_height="@dimen/icon_button_size"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="4dip"
+        android:layout_marginRight="@dimen/default_gap"
         android:clickable="false"
         android:focusable="false"
         android:scaleType="centerInside"
@@ -68,12 +67,11 @@
     
     <ImageView
         android:id="@android:id/icon2"
-        style="?attr/iconImageViewStyle"
         android:layout_width="@dimen/icon_button_size"
         android:layout_height="@dimen/icon_button_size"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="4dip"
+        android:layout_marginLeft="@dimen/default_gap"
         android:clickable="false"
         android:focusable="false"
         android:scaleType="centerInside"

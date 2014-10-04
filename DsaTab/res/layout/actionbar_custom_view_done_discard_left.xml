@@ -18,9 +18,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:divider="?attr/dividerVertical"
-    android:dividerPadding="?attr/dividerPadding"
+    android:divider="?android:attr/dividerVertical"
+    android:dividerPadding="?android:attr/dividerPadding"
     android:showDividers="middle"
+    
     >
 
     <include layout="@layout/actionbar_done_button" />

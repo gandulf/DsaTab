@@ -14,10 +14,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.dsatab.data.JSONable;
+import com.dsatab.fragment.AnimalFragment;
 import com.dsatab.fragment.BaseFragment;
 import com.dsatab.fragment.BaseListFragment;
+import com.dsatab.fragment.CharacterFragment;
 import com.dsatab.fragment.ItemsFragment;
 import com.dsatab.fragment.ListableFragment;
+import com.dsatab.fragment.MapFragment;
 import com.dsatab.util.Util;
 import com.dsatab.view.ListSettings;
 import com.gandulf.guilib.util.Debug;
@@ -31,7 +34,6 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 	private static final String FIELD_PRIMARY_ACTIVITY_CLAZZ = "activityClazz1";
 	private static final String FIELD_SECONDARY_ACTIVITY_CLAZZ = "activityClazz2";
 	private static final String FIELD_DICE_SLIDER = "diceSlider";
-	private static final String FIELD_ATTRIBUTE_LIST = "attributeList";
 	private static final String FIELD_FILTER_SETTINGS = "filterSettings";
 	private static final String FIELD_TITLE = "title";
 	private static final String FIELD_ID = "id";
@@ -41,7 +43,6 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 
 	private String title;
 	private boolean diceSlider = true;
-	private boolean attributeList = true;
 
 	private transient UUID id;
 	private Uri iconUri;
@@ -58,7 +59,6 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		this.listSettings = new ListSettings[MAX_TABS_PER_PAGE];
 		this.iconUri = Util.getUriForResourceId(tabResourceId);
 		this.diceSlider = diceSlider;
-		this.attributeList = attributeList;
 		this.id = UUID.randomUUID();
 
 		updateListSettings();
@@ -99,7 +99,6 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		this.listSettings = new ListSettings[list.size()];
 		this.listSettings = list.toArray(listSettings);
 
-		this.attributeList = in.readInt() == 0 ? false : true;
 		this.title = in.readString();
 		updateListSettings();
 	}
@@ -156,9 +155,6 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 
 		this.id = UUID.randomUUID();
 
-		if (in.has(FIELD_ATTRIBUTE_LIST)) {
-			attributeList = in.optBoolean(FIELD_ATTRIBUTE_LIST, true);
-		}
 		listSettings = new ListSettings[MAX_TABS_PER_PAGE];
 		if (!in.isNull(FIELD_FILTER_SETTINGS)) {
 			JSONArray jsonArray = in.getJSONArray(FIELD_FILTER_SETTINGS);
@@ -277,6 +273,16 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		return diceSlider;
 	}
 
+	public boolean isActionbarTranslucent() {
+		boolean translucent = true;
+
+		for (Class clazz : activityClazz) {
+			translucent &= clazz == null || CharacterFragment.class.isAssignableFrom(clazz)
+					|| AnimalFragment.class.isAssignableFrom(clazz) || MapFragment.class.isAssignableFrom(clazz);
+		}
+		return translucent;
+	}
+
 	public boolean isEmpty() {
 		boolean empty = true;
 		for (Class<?> clazz : activityClazz) {
@@ -287,14 +293,6 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 
 	public void setDiceSlider(boolean diceSlider) {
 		this.diceSlider = diceSlider;
-	}
-
-	public boolean isAttributeList() {
-		return attributeList;
-	}
-
-	public void setAttributeList(boolean attributeList) {
-		this.attributeList = attributeList;
 	}
 
 	public int getTabCount() {
@@ -379,7 +377,6 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		dest.writeInt(diceSlider ? 1 : 0);
 		dest.writeString(id.toString());
 		dest.writeTypedList(Arrays.asList(listSettings));
-		dest.writeInt(attributeList ? 1 : 0);
 		dest.writeString(getTitle());
 	}
 
@@ -409,8 +406,6 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
 		out.put(FIELD_ID, id.toString());
 
 		out.put(FIELD_DICE_SLIDER, diceSlider);
-
-		out.put(FIELD_ATTRIBUTE_LIST, attributeList);
 
 		if (listSettings != null) {
 

@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import android.app.Activity;
-import android.support.v4.content.AsyncTaskLoader;
+import android.content.AsyncTaskLoader;
 
 import com.dsatab.data.HeroFileInfo;
 import com.dsatab.data.HeroFileInfo.StorageType;

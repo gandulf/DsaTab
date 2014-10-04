@@ -2,7 +2,9 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto">
     
-    <style name="DsaTabTheme.Light" parent="@style/Theme.AppCompat.Light.DarkActionBar">            		
+    <style name="DsaTabTheme.Light" parent="@android:style/Theme.Holo.Light.DarkActionBar">            		
+        
+        <item name="android:dividerPadding">8dp</item>
         
         <item name="android:buttonStyle">@style/Widget.Button</item>
         <item name="android:imageButtonStyle">@style/Widget.Button</item>
@@ -10,8 +12,7 @@
         
         <item name="imgChainTop">@drawable/chain_top_light</item>
         <item name="imgChainBottom">@drawable/chain_bottom_light</item>
-        
-        <item name="imgDragVertical">@drawable/drag_vertical_light</item>
+                
         <item name="imgCharacter">@drawable/character_light</item>
         <item name="imgEmpty">@drawable/empty_light</item>
                 
@@ -78,21 +79,22 @@
         <item name="buttonStyleLeft">@style/Widget.Button.Left</item>
         <item name="buttonStyleRight">@style/Widget.Button.Right</item>
         
-		<item name="android:soundEffectsEnabled">false</item>       
-        <item name="iconImageViewStyle">@style/Widget.IconImageView</item>
+		<item name="android:soundEffectsEnabled">false</item>               
         
         <item name="listItemBackground">@drawable/list_background_holo_light</item>
-        <item name="listShadowBackground">@drawable/sliding_listshadow_bg_light</item>
+        <item name="slidingPaneShadowBackground">@drawable/sliding_listshadow_bg_light</item>
         <item name="selectableBackground">@drawable/abc_list_selector_holo_light</item>        
-        <item name="numberPickerStyle">@style/NPWidget.Holo.Light.NumberPicker</item>
+        
         <item name="showcaseViewStyle">@style/ShowcaseView.Light</item>
         
         <item name="floatingHintEditTextStyle">@style/Widget.FloatingHintEditText</item>
         <item name="floatingHintTextViewStyle">@style/Widget.FloatingHintTextView</item>
         
         <item name="dropShadowBackground">@drawable/container_dropshadow_light</item>
-        
-        <item name="dividerPadding">6dip</item>
     </style>
     
+    <style name="DsaTabTheme.Light.Translucent">
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowContentOverlay">@null</item>        
+    </style>
 </resources>

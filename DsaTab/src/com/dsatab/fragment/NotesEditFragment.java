@@ -93,8 +93,7 @@ public class NotesEditFragment extends BaseEditFragment implements OnItemSelecte
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
-	 * android.os.Bundle)
+	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -114,7 +113,7 @@ public class NotesEditFragment extends BaseEditFragment implements OnItemSelecte
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
+	 * @see android.app.Fragment#onActivityCreated(android.os.Bundle)
 	 */
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -230,6 +229,7 @@ public class NotesEditFragment extends BaseEditFragment implements OnItemSelecte
 	 * 
 	 */
 	public Bundle accept() {
+		Util.hideKeyboard(editComment);
 
 		String descrition = editComment.getText().toString();
 		String name = editName.getText().toString();
@@ -242,59 +242,62 @@ public class NotesEditFragment extends BaseEditFragment implements OnItemSelecte
 		data.putInt(INTENT_NAME_EVENT_SOZIALSTATUS, so);
 		data.putSerializable(INTENT_NAME_EVENT_CATEGORY, category);
 		data.putString(INTENT_NAME_AUDIO_PATH, audioPath);
-		Util.hideKeyboard(editComment);
 
-		if (category == EventCategory.Bekanntschaft) {
-			if (notesItem instanceof Event) {
-				getHero().removeEvent((Event) notesItem);
-			} else if (notesItem instanceof Connection) {
-				Connection selectedEvent = (Connection) notesItem;
+		if (getHero() != null) {
+			if (category == EventCategory.Bekanntschaft) {
+				if (notesItem instanceof Event) {
+					getHero().removeEvent((Event) notesItem);
+				} else if (notesItem instanceof Connection) {
+					Connection selectedEvent = (Connection) notesItem;
 
-				// we have to fetch the original object from heroes, since we are working with a serialized copy of it
-				// here
-				for (Connection c : getHero().getConnections()) {
-					if (selectedEvent.equals(c)) {
-						selectedEvent = c;
+					// we have to fetch the original object from heroes, since we are working with a serialized copy of
+					// it
+					// here
+					for (Connection c : getHero().getConnections()) {
+						if (selectedEvent.equals(c)) {
+							selectedEvent = c;
+						}
 					}
-				}
 
-				selectedEvent.setDescription(descrition.trim());
-				selectedEvent.setName(name);
-				selectedEvent.setSozialStatus(so);
-				// TODO notify event changed
-			} else if (notesItem == null) {
-				Connection connection = new Connection();
-				connection.setName(name);
-				connection.setDescription(descrition);
-				connection.setSozialStatus(so);
-				getHero().addConnection(connection);
-			}
-		} else {
-			if (notesItem instanceof Connection) {
-				getHero().removeConnection((Connection) notesItem);
-			} else if (notesItem instanceof Event) {
-				Event selectedEvent = (Event) notesItem;
-				// we have to fetch the original object from heroes, since we are working with a serialized copy of it
-				// here
-				for (Event c : getHero().getEvents()) {
-					if (selectedEvent.equals(c)) {
-						selectedEvent = c;
+					selectedEvent.setDescription(descrition.trim());
+					selectedEvent.setName(name);
+					selectedEvent.setSozialStatus(so);
+					// TODO notify event changed
+				} else if (notesItem == null) {
+					Connection connection = new Connection();
+					connection.setName(name);
+					connection.setDescription(descrition);
+					connection.setSozialStatus(so);
+					getHero().addConnection(connection);
+				}
+			} else {
+				if (notesItem instanceof Connection) {
+					getHero().removeConnection((Connection) notesItem);
+				} else if (notesItem instanceof Event) {
+					Event selectedEvent = (Event) notesItem;
+					// we have to fetch the original object from heroes, since we are working with a serialized copy of
+					// it
+					// here
+					for (Event c : getHero().getEvents()) {
+						if (selectedEvent.equals(c)) {
+							selectedEvent = c;
+						}
 					}
+
+					selectedEvent.setName(name);
+					selectedEvent.setComment(descrition);
+					selectedEvent.setAudioPath(audioPath);
+					selectedEvent.setCategory(category);
+
+					// TODO notify event changed
+				} else if (notesItem == null) {
+					Event selectedEvent = new Event();
+					selectedEvent.setName(name);
+					selectedEvent.setCategory(category);
+					selectedEvent.setComment(descrition);
+					selectedEvent.setAudioPath(audioPath);
+					getHero().addEvent(selectedEvent);
 				}
-
-				selectedEvent.setName(name);
-				selectedEvent.setComment(descrition);
-				selectedEvent.setAudioPath(audioPath);
-				selectedEvent.setCategory(category);
-
-				// TODO notify event changed
-			} else if (notesItem == null) {
-				Event selectedEvent = new Event();
-				selectedEvent.setName(name);
-				selectedEvent.setCategory(category);
-				selectedEvent.setComment(descrition);
-				selectedEvent.setAudioPath(audioPath);
-				getHero().addEvent(selectedEvent);
 			}
 		}
 

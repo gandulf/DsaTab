@@ -3,7 +3,7 @@
     <item
         android:id="@+id/option_set"
         android:icon="?attr/imgBarSet"
-        app:showAsAction="withText|ifRoom"
+        android:showAsAction="withText|ifRoom"
         android:title="@string/set">
         <menu>
             <group android:checkableBehavior="single" >

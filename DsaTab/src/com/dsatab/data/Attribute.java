@@ -9,8 +9,6 @@ import com.gandulf.guilib.util.MathUtil;
 
 public class Attribute extends BaseProbe implements Value, Cloneable, Listable {
 
-	private static final long serialVersionUID = 36150483547787166L;
-
 	private static final String CONSTANT_BE = "BE";
 
 	protected AttributeType type;
@@ -321,7 +319,7 @@ public class Attribute extends BaseProbe implements Value, Cloneable, Listable {
 
 	@Override
 	public int getMaximum() {
-		int max = 0;
+		Integer max = null;
 
 		switch (type) {
 		case Lebensenergie_Aktuell:
@@ -364,7 +362,10 @@ public class Attribute extends BaseProbe implements Value, Cloneable, Listable {
 			break;
 		}
 
-		return max;
+		if (max != null)
+			return max;
+		else
+			return 99;
 	}
 
 	@Override

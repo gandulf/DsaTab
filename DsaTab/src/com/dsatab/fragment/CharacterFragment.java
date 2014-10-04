@@ -2,14 +2,11 @@ package com.dsatab.fragment;
 
 import java.util.List;
 
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -25,30 +22,22 @@ import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.modifier.Modificator;
 import com.dsatab.util.Hint;
 import com.dsatab.util.Util;
-import com.nineoldandroids.animation.ObjectAnimator;
-import com.nineoldandroids.view.ViewHelper;
 
 public class CharacterFragment extends BaseProfileFragment {
-
-	private static final String PREF_SHOW_BASEINFO = "SHOW_BASEINFO";
 
 	private TextView tfExperience, tfTotalLe, tfTotalAu, tfTotalAe, tfTotalKe, tfAT, tfPA, tfFK, tfINI, tfST;
 	private TextView tfLabelExperience, tfLabelAT, tfLabelPA, tfLabelFK, tfLabelINI;
 
 	private View charAttributesList;
-	private ImageButton detailsSwitch;
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
-	 * android.os.Bundle)
+	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View root = configureContainerView(inflater.inflate(R.layout.sheet_character, container, false));
-
-		detailsSwitch = (ImageButton) root.findViewById(R.id.details_switch);
 
 		charAttributesList = root.findViewById(R.id.gen_attributes);
 		tfExperience = (TextView) root.findViewById(R.id.attr_abp);
@@ -77,10 +66,9 @@ public class CharacterFragment extends BaseProfileFragment {
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		detailsSwitch.setOnClickListener(this);
+
 		tfExperience.setOnClickListener(getEditListener());
 		tfExperience.setOnLongClickListener(getEditListener());
-		findViewById(R.id.gen_description).setOnClickListener(this);
 
 		fillAttributeLabel((View) tfLabelMR.getParent(), AttributeType.Magieresistenz);
 		fillAttributeLabel((View) tfLabelSO.getParent(), AttributeType.Sozialstatus);
@@ -97,7 +85,7 @@ public class CharacterFragment extends BaseProfileFragment {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#setUserVisibleHint(boolean)
+	 * @see android.app.Fragment#setUserVisibleHint(boolean)
 	 */
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -110,22 +98,6 @@ public class CharacterFragment extends BaseProfileFragment {
 	@Override
 	public AbstractBeing getBeing() {
 		return getHero();
-	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.gen_description:
-		case R.id.details_switch:
-			Editor edit = getPreferences().edit();
-			edit.putBoolean(PREF_SHOW_BASEINFO, !getPreferences().getBoolean(PREF_SHOW_BASEINFO, true));
-			edit.commit();
-			updateBaseInfo(true);
-			break;
-		default:
-			super.onClick(v);
-		}
-
 	}
 
 	@Override
@@ -307,31 +279,21 @@ public class CharacterFragment extends BaseProfileFragment {
 	}
 
 	protected void updateBaseInfo(boolean animate) {
+		super.updateBaseInfo(animate);
 
 		HeroBaseInfo baseInfo = null;
 		if (getHero() != null) {
 			baseInfo = getHero().getBaseInfo();
 		}
 
-		boolean showDetails = getPreferences().getBoolean(PREF_SHOW_BASEINFO, true);
-
-		GridLayout descriptions = (GridLayout) findViewById(R.id.gen_description);
-
 		TextView aussehen = (TextView) findViewById(R.id.gen_aussehen);
 		TextView title = (TextView) findViewById(R.id.gen_titel);
 		TextView stand = (TextView) findViewById(R.id.gen_stand);
 		TextView kultur = (TextView) findViewById(R.id.gen_kultur);
+		TextView rasse = ((TextView) findViewById(R.id.gen_rasse));
+		TextView ausbildung = ((TextView) findViewById(R.id.gen_ausbildung));
 
-		if (showDetails) {
-
-			if (animate) {
-				ObjectAnimator animator = ObjectAnimator.ofFloat(detailsSwitch, "rotation", 180, 0);
-				animator.setTarget(detailsSwitch);
-				animator.setDuration(250);
-				animator.start();
-			} else {
-				ViewHelper.setRotation(detailsSwitch, 0);
-			}
+		if (isDescriptionExpanded()) {
 
 			if (baseInfo == null || TextUtils.isEmpty(baseInfo.getAussehen())) {
 				aussehen.setVisibility(View.GONE);
@@ -361,40 +323,31 @@ public class CharacterFragment extends BaseProfileFragment {
 				kultur.setVisibility(View.VISIBLE);
 			}
 
-			((TextView) findViewById(R.id.gen_rasse)).setVisibility(View.VISIBLE);
-			((TextView) findViewById(R.id.gen_ausbildung)).setVisibility(View.VISIBLE);
+			rasse.setVisibility(View.VISIBLE);
+			ausbildung.setVisibility(View.VISIBLE);
 		} else {
-			if (animate) {
-				ObjectAnimator animator = ObjectAnimator.ofFloat(detailsSwitch, "rotation", 0, 180);
-				animator.setTarget(detailsSwitch);
-				animator.setDuration(250);
-				animator.start();
-			} else {
-				ViewHelper.setRotation(detailsSwitch, 180);
-			}
 
 			aussehen.setVisibility(View.GONE);
 			kultur.setVisibility(View.GONE);
 			stand.setVisibility(View.GONE);
 			title.setVisibility(View.GONE);
-
-			((TextView) findViewById(R.id.gen_rasse)).setVisibility(View.GONE);
-			((TextView) findViewById(R.id.gen_ausbildung)).setVisibility(View.GONE);
+			rasse.setVisibility(View.GONE);
+			ausbildung.setVisibility(View.GONE);
 		}
 
 		if (baseInfo != null) {
 			((TextView) findViewById(R.id.gen_groesse)).setText(baseInfo.getGroesse() + " cm");
 			((TextView) findViewById(R.id.gen_gewicht)).setText(baseInfo.getGewicht() + " Stein");
-			((TextView) findViewById(R.id.gen_rasse)).setText(baseInfo.getRasse());
-			((TextView) findViewById(R.id.gen_ausbildung)).setText(baseInfo.getAusbildung());
+			rasse.setText(baseInfo.getRasse());
+			ausbildung.setText(baseInfo.getAusbildung());
 			((TextView) findViewById(R.id.gen_alter)).setText(Util.toString(baseInfo.getAlter()));
 			((TextView) findViewById(R.id.gen_haar_augen)).setText(baseInfo.getHaarFarbe() + " / "
 					+ baseInfo.getAugenFarbe());
 		} else {
 			((TextView) findViewById(R.id.gen_groesse)).setText(null);
 			((TextView) findViewById(R.id.gen_gewicht)).setText(null);
-			((TextView) findViewById(R.id.gen_rasse)).setText(null);
-			((TextView) findViewById(R.id.gen_ausbildung)).setText(null);
+			rasse.setText(null);
+			ausbildung.setText(null);
 			((TextView) findViewById(R.id.gen_alter)).setText(null);
 			((TextView) findViewById(R.id.gen_haar_augen)).setText(null);
 		}
@@ -403,5 +356,4 @@ public class CharacterFragment extends BaseProfileFragment {
 			descriptions.startLayoutAnimation();
 		}
 	}
-
 }
