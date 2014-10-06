@@ -21,7 +21,7 @@ import android.text.TextUtils;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
-import com.dsatab.TabInfo;
+import com.dsatab.config.TabInfo;
 import com.dsatab.data.Hero.CombatStyle;
 import com.dsatab.data.Purse.Currency;
 import com.dsatab.data.enums.AttributeType;

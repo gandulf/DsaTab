@@ -11,8 +11,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.dsatab.DsaTabApplication;
-import com.dsatab.TabInfo;
 import com.dsatab.activity.DsaTabActivity;
+import com.dsatab.config.TabInfo;
 import com.dsatab.data.AbstractBeing;
 import com.dsatab.data.Hero;
 import com.dsatab.data.Probe;

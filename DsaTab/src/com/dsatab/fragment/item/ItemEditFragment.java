@@ -1,9 +1,9 @@
 package com.dsatab.fragment.item;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.LayoutInflater;
@@ -18,7 +18,6 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 import android.widget.Spinner;
 
 import com.dsatab.DsaTabApplication;
@@ -31,11 +30,11 @@ import com.dsatab.data.items.ItemSpecification;
 import com.dsatab.data.items.MiscSpecification;
 import com.dsatab.db.DataManager;
 import com.dsatab.fragment.BaseFragment;
+import com.dsatab.fragment.dialog.ImageChooserDialog;
 import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Util;
 import com.dsatab.view.CardView;
 import com.dsatab.view.ItemListItem;
-import com.dsatab.view.dialog.ImageChooserDialog;
 import com.gandulf.guilib.util.DefaultTextWatcher;
 
 public class ItemEditFragment extends BaseFragment implements OnClickListener, OnCheckedChangeListener {
@@ -73,8 +72,7 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
-	 * android.os.Bundle)
+	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -280,17 +278,13 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 	}
 
 	private void pickIcon() {
-		final ImageChooserDialog pdialog = new ImageChooserDialog(getActivity());
 
-		pdialog.setImageIds(DsaTabApplication.getInstance().getConfiguration().getDsaIcons());
-		pdialog.setGridColumnWidth(getResources().getDimensionPixelSize(R.dimen.icon_button_size));
-		pdialog.setScaleType(ScaleType.FIT_CENTER);
-		pdialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+		ImageChooserDialog.pickIcons(this, new ImageChooserDialog.OnImageSelectedListener() {
 
 			@Override
-			public void onDismiss(DialogInterface dialog) {
-				if (pdialog.getImageUri() != null && cloneItem != null) {
-					cloneItem.setIconUri(pdialog.getImageUri());
+			public void onImageSelected(Uri imageUri) {
+				if (imageUri != null && cloneItem != null) {
+					cloneItem.setIconUri(imageUri);
 
 					itemView.setItem(cloneItem, itemSpecification);
 
@@ -300,8 +294,7 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 						iconView.setImageResource(DsaUtil.getResourceId(itemSpecification));
 				}
 			}
-		});
-		pdialog.show();
+		}, 0);
 
 	}
 

@@ -30,6 +30,7 @@ public class BaseActivity extends Activity {
 		}
 	};
 	private Drawable mActionBarBackgroundDrawable;
+	private int mActionBarBackgroundBaseAlpha = 255;
 	private boolean mActionBarTranslucent;
 
 	/*
@@ -46,13 +47,31 @@ public class BaseActivity extends Activity {
 		Hint.showRandomHint(getClass().getSimpleName(), this);
 	}
 
-	protected boolean isActionbarTranslucent() {
-		return false;
+	public boolean isActionbarTranslucent() {
+		return mActionBarTranslucent;
+	}
+
+	public int getActionbarBackgroundBaseAlpha() {
+		return mActionBarBackgroundBaseAlpha;
+	}
+
+	public void setActionbarBackgroundBaseAlpha(float alpha) {
+		setActionbarBackgroundBaseAlpha((int) (255 * alpha));
+
+	}
+
+	public void setActionbarBackgroundBaseAlpha(int alpha) {
+		mActionBarBackgroundBaseAlpha = alpha;
+	}
+
+	public void setActionbarBackgroundAlpha(float alpha) {
+		setActionbarBackgroundAlpha((int) (255 * alpha));
 	}
 
 	public void setActionbarBackgroundAlpha(int alpha) {
-		if (mActionBarBackgroundDrawable != null && mActionBarTranslucent)
+		if (mActionBarBackgroundDrawable != null) {
 			mActionBarBackgroundDrawable.setAlpha(alpha);
+		}
 	}
 
 	protected void applyPreferencesToTheme() {
@@ -96,14 +115,16 @@ public class BaseActivity extends Activity {
 			if (wrapper != null) {
 				wrapper.setPadding(0, 0, 0, 0);
 			}
-			mActionBarBackgroundDrawable.setAlpha(0);
+			setActionbarBackgroundAlpha(0);
+			setActionbarBackgroundBaseAlpha(0);
 		} else {
 			if (wrapper != null) {
 				int actionbarSize = getResources().getDimensionPixelSize(
 						Util.getThemeResourceId(this, android.R.attr.actionBarSize));
 				wrapper.setPadding(0, actionbarSize, 0, 0);
 			}
-			mActionBarBackgroundDrawable.setAlpha(255);
+			setActionbarBackgroundAlpha(255);
+			setActionbarBackgroundBaseAlpha(255);
 		}
 
 	}

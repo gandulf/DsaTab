@@ -3,8 +3,8 @@ package com.dsatab.fragment;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+import uk.me.lewisdeane.ldialogs.CustomDialog;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -41,9 +41,9 @@ import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemContainer;
 import com.dsatab.fragment.dialog.InlineEditDialog;
+import com.dsatab.fragment.dialog.TakeHitDialog;
 import com.dsatab.util.Util;
 import com.dsatab.view.BodyLayout;
-import com.dsatab.view.dialog.TakeHitDialog;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
 
 public class BodyFragment extends BaseFragment implements OnClickListener, OnLongClickListener,
@@ -117,7 +117,8 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 					} else if (equippedItems.size() == 1) {
 						ItemsActivity.view(bodyFragment.getActivity(), bodyFragment.getHero(), equippedItems.get(0));
 					} else {
-						AlertDialog.Builder builder = new AlertDialog.Builder(bodyFragment.getActivity());
+						CustomDialog.Builder builder = new CustomDialog.Builder(bodyFragment.getActivity());
+						builder.setDarkTheme(DsaTabApplication.getInstance().isDarkTheme());
 						builder.setTitle("Rüstung");
 						final EquippedItemAdapter adapter = new EquippedItemAdapter(builder.getContext(), equippedItems);
 						builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
@@ -133,9 +134,8 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 				mode.finish();
 				return true;
 			case R.id.option_take_hit:
-				TakeHitDialog takeHitDialog = new TakeHitDialog(bodyFragment.getActivity(), bodyFragment.getBeing(),
-						bodyFragment.selectedArmorAttribute.getPosition());
-				takeHitDialog.show();
+				TakeHitDialog.show(bodyFragment, bodyFragment.getBeing(),
+						bodyFragment.selectedArmorAttribute.getPosition(), 0);
 				mode.finish();
 				return true;
 			case R.id.option_edit:

@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.cloud.HeroExchange;
+import com.dsatab.config.DsaTabConfiguration;
 import com.dsatab.data.Hero;
 import com.dsatab.data.HeroFileInfo.FileType;
 import com.dsatab.db.DatabaseHelper;
@@ -245,6 +246,10 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 	private static void checkInstance() {
 		if (instance == null)
 			throw new IllegalStateException("Application not created yet!");
+	}
+
+	public boolean isDarkTheme() {
+		return R.style.DsaTabTheme_Dark == getCustomTheme(false);
 	}
 
 	public int getCustomTheme(boolean translucent) {

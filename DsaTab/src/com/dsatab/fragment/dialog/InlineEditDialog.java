@@ -1,19 +1,18 @@
 package com.dsatab.fragment.dialog;
 
-import android.app.AlertDialog;
+import uk.me.lewisdeane.ldialogs.CustomDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.NumberPicker;
 
+import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.ArmorAttribute;
 import com.dsatab.data.Attribute;
@@ -25,7 +24,7 @@ import com.dsatab.util.Debug;
 import com.dsatab.util.NumberPickerUtils;
 import com.dsatab.util.Util;
 
-public class InlineEditDialog extends DialogFragment implements DialogInterface.OnClickListener,
+public class InlineEditDialog extends DialogFragment implements android.content.DialogInterface.OnClickListener,
 		OnCheckedChangeListener {
 
 	public static final String TAG = "InlineEditDialog";
@@ -56,11 +55,17 @@ public class InlineEditDialog extends DialogFragment implements DialogInterface.
 		// TODO value should be set as argument
 		// Value value = (Value) args.get(KEY_VALUE);
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
+		if (value != null)
+			builder.setTitle(value.getName());
+		builder.setDarkTheme(DsaTabApplication.getInstance().isDarkTheme());
 
-		ViewGroup popupcontent = (ViewGroup) LayoutInflater.from(builder.getContext()).inflate(R.layout.popup_edit,
-				null, false);
-		builder.setView(popupcontent);
+		if (value != null && value.getReferenceValue() != null)
+			builder.setNegativeButton("Reset", this);
+
+		builder.setPositiveButton(android.R.string.ok, this);
+
+		View popupcontent = builder.setView(R.layout.popup_edit);
 
 		numberPicker = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_text);
 		numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
@@ -71,29 +76,6 @@ public class InlineEditDialog extends DialogFragment implements DialogInterface.
 
 		beCalculation = (CheckBox) popupcontent.findViewById(R.id.popup_edit_be_calculation);
 		beCalculation.setOnCheckedChangeListener(this);
-
-		builder.setPositiveButton("Ok", this);
-		builder.setNegativeButton("Reset", this);
-
-		AlertDialog dialog = builder.create();
-
-		if (dialog.getButton(AlertDialog.BUTTON_NEGATIVE) != null && value != null) {
-			dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setEnabled(value.getReferenceValue() != null);
-		}
-
-		dialog.setCanceledOnTouchOutside(true);
-
-		setValue(dialog, value);
-
-		return dialog;
-	}
-
-	protected Value getValue() {
-		return value;
-	}
-
-	protected void setValue(AlertDialog dialog, Value value) {
-		this.value = value;
 
 		if (value != null) {
 
@@ -124,11 +106,17 @@ public class InlineEditDialog extends DialogFragment implements DialogInterface.
 			combatStyleBtn.setVisibility(visible);
 			beCalculation.setVisibility(visible);
 
-			if (dialog.getButton(AlertDialog.BUTTON_NEGATIVE) != null) {
-				dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setEnabled(value.getReferenceValue() != null);
-			}
-			dialog.setTitle(value.getName());
 		}
+
+		// Now we can build the dialog.
+		CustomDialog dialog = builder.create();
+		dialog.setCanceledOnTouchOutside(true);
+
+		return dialog;
+	}
+
+	protected Value getValue() {
+		return value;
 	}
 
 	@Override
@@ -186,19 +174,13 @@ public class InlineEditDialog extends DialogFragment implements DialogInterface.
 		dismiss();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.content.DialogInterface.OnClickListener#onClick(android.content .DialogInterface, int)
-	 */
 	@Override
-	public void onClick(DialogInterface dialog, int which) {
-		switch (which) {
-		case AlertDialog.BUTTON_POSITIVE:
+	public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+		switch (paramInt) {
+		case DialogInterface.BUTTON_POSITIVE:
 			accept();
 			break;
-
-		case AlertDialog.BUTTON_NEGATIVE:
+		case DialogInterface.BUTTON_NEGATIVE:
 			value.reset();
 			dismiss();
 			break;

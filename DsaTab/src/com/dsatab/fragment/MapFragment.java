@@ -16,8 +16,8 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
+import uk.me.lewisdeane.ldialogs.CustomDialog;
 import android.app.ActionBar;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
@@ -286,7 +286,8 @@ public class MapFragment extends BaseFragment {
 		mAttacher = new PhotoViewAttacher(imageMapView);
 
 		if (!osmMapLoaded && getPreferences().getBoolean(PREF_KEY_OSM_ASK, true)) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
+			builder.setDarkTheme(DsaTabApplication.getInstance().isDarkTheme());
 			builder.setTitle("Neue Aventurien Karte");
 			builder.setMessage("Es gibt jetzt eine GoogleMaps ähnliche Karte von ganz Aventurien. Willst du dir das Kartenpaket (ca. 10MB) aus dem Internet herunterladen?");
 			builder.setCancelable(true);

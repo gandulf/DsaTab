@@ -23,7 +23,6 @@ import org.xml.sax.SAXException;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
-import com.dsatab.common.HttpRequest;
 import com.gandulf.guilib.util.Debug;
 
 public class Helper {

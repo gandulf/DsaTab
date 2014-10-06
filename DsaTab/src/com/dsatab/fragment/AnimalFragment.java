@@ -16,7 +16,6 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.dsatab.R;
-import com.dsatab.common.StyleableSpannableStringBuilder;
 import com.dsatab.data.AbstractBeing;
 import com.dsatab.data.Animal;
 import com.dsatab.data.AnimalAttack;
@@ -26,6 +25,7 @@ import com.dsatab.data.Value;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.modifier.Modificator;
 import com.dsatab.util.DsaUtil;
+import com.dsatab.util.StyleableSpannableStringBuilder;
 import com.dsatab.util.Util;
 import com.dsatab.view.ItemListItem;
 import com.dsatab.view.listener.HeroChangedListener;
@@ -316,7 +316,6 @@ public class AnimalFragment extends BaseProfileFragment {
 
 		// base
 		if (getAnimal() != null) {
-			((TextView) findViewById(R.id.gen_name)).setText(getAnimal().getTitle());
 			((TextView) findViewById(R.id.gen_family)).setText(getAnimal().getFamily());
 			((TextView) findViewById(R.id.gen_species)).setText(getAnimal().getSpecies());
 
@@ -324,7 +323,7 @@ public class AnimalFragment extends BaseProfileFragment {
 			((TextView) findViewById(R.id.gen_gewicht)).setText(Util.toString(DsaUtil.unzenToStein(getAnimal()
 					.getWeight())) + " Stein");
 		} else {
-			((TextView) findViewById(R.id.gen_name)).setText(null);
+
 			((TextView) findViewById(R.id.gen_family)).setText(null);
 			((TextView) findViewById(R.id.gen_species)).setText(null);
 

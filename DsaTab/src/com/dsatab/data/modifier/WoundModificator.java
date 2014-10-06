@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.dsatab.DsaTabApplication;
-import com.dsatab.DsaTabConfiguration.WoundType;
+import com.dsatab.config.DsaTabConfiguration.WoundType;
 import com.dsatab.data.Attribute;
 import com.dsatab.data.CombatDistanceTalent;
 import com.dsatab.data.CombatMeleeAttribute;

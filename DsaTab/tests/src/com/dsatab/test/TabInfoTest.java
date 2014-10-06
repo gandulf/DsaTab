@@ -3,7 +3,7 @@ package com.dsatab.test;
 import android.os.Parcel;
 import android.test.AndroidTestCase;
 
-import com.dsatab.TabInfo;
+import com.dsatab.config.TabInfo;
 import com.dsatab.fragment.ListableFragment;
 import com.dsatab.view.ListSettings;
 import com.dsatab.view.ListSettings.ListItem;

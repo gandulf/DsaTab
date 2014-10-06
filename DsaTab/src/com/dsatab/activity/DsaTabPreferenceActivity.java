@@ -6,9 +6,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import uk.me.lewisdeane.ldialogs.CustomDialog;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -33,20 +32,20 @@ import android.widget.Toast;
 
 import com.dropbox.sync.android.DbxAccountManager;
 import com.dsatab.DsaTabApplication;
-import com.dsatab.DsaTabConfiguration;
-import com.dsatab.DsaTabConfiguration.ArmorType;
-import com.dsatab.DsaTabConfiguration.WoundType;
 import com.dsatab.R;
 import com.dsatab.cloud.HeroExchange;
+import com.dsatab.config.DsaTabConfiguration;
+import com.dsatab.config.DsaTabConfiguration.ArmorType;
+import com.dsatab.config.DsaTabConfiguration.WoundType;
 import com.dsatab.data.HeroFileInfo.StorageType;
 import com.dsatab.fragment.BasePreferenceFragment;
 import com.dsatab.fragment.dialog.ChangeLogDialog;
+import com.dsatab.fragment.dialog.DirectoryChooserDialog;
+import com.dsatab.fragment.dialog.DirectoryChooserDialog.OnDirectoryChooserListener;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Hint;
 import com.dsatab.util.Util;
 import com.dsatab.view.PreferenceWithButton;
-import com.dsatab.view.dialog.DirectoryChooserDialogHelper;
-import com.dsatab.view.dialog.DirectoryChooserDialogHelper.Result;
 import com.gandulf.guilib.download.AbstractDownloader;
 import com.gandulf.guilib.download.DownloaderWrapper;
 import com.gandulf.guilib.util.ResUtil;
@@ -464,7 +463,7 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 			Toast.makeText(context, R.string.message_download_started_in_background, Toast.LENGTH_SHORT).show();
 			return true;
 		} else if (KEY_CREDITS.equals(key)) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			CustomDialog.Builder builder = new CustomDialog.Builder(context);
 			builder.setTitle(R.string.title_credits);
 			builder.setCancelable(true);
 			WebView webView = new WebView(builder.getContext());
@@ -474,13 +473,7 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 			summary = summary.replace("{hs-version}", DsaTabApplication.HS_VERSION);
 			webView.loadDataWithBaseURL(null, summary, "text/html", "utf-8", null);
 			builder.setView(webView);
-			builder.setNeutralButton(R.string.label_ok, new DialogInterface.OnClickListener() {
-
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					dialog.dismiss();
-				}
-			});
+			builder.setPositiveButton(R.string.label_ok, null);
 			builder.show();
 			return true;
 		} else if (KEY_INFOS.equals(key)) {
@@ -494,7 +487,7 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 			context.startActivity(launchBrowser);
 			return true;
 		} else if (KEY_DSA_LICENSE.equals(key)) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			CustomDialog.Builder builder = new CustomDialog.Builder(context);
 			builder.setTitle(R.string.title_credits);
 			builder.setCancelable(true);
 			WebView webView = new WebView(builder.getContext());
@@ -502,13 +495,7 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 			String summary = ResUtil.loadResToString(R.raw.ulisses_license, context);
 			webView.loadDataWithBaseURL(null, summary, "text/html", "utf-8", null);
 			builder.setView(webView);
-			builder.setNeutralButton(R.string.label_ok, new DialogInterface.OnClickListener() {
-
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					dialog.dismiss();
-				}
-			});
+			builder.setPositiveButton(R.string.label_ok, null);
 			builder.show();
 			return true;
 		} else if (KEY_STYLE_BG_PATH.equals(key)) {
@@ -532,7 +519,7 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 			Toast.makeText(context, R.string.message_background_image_reset, Toast.LENGTH_SHORT).show();
 			return true;
 		} else if (KEY_SETUP_SDCARD_PATH.equals(key)) {
-			Result resultListener = new Result() {
+			OnDirectoryChooserListener resultListener = new OnDirectoryChooserListener() {
 				/*
 				 * (non-Javadoc)
 				 * 
@@ -552,10 +539,13 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 					}
 				}
 			};
-			new DirectoryChooserDialogHelper(context, resultListener, DsaTabApplication.getDsaTabHeroPath());
+
+			DirectoryChooserDialog.show(null, context.getFragmentManager(),
+					DsaTabApplication.getDsaTabHeroPath(), resultListener, 0);
+
 			return true;
 		} else if (KEY_SETUP_SDCARD_HERO_PATH.equals(key)) {
-			Result resultListener = new Result() {
+			OnDirectoryChooserListener resultListener = new OnDirectoryChooserListener() {
 				/*
 				 * (non-Javadoc)
 				 * 
@@ -574,7 +564,8 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 					}
 				}
 			};
-			new DirectoryChooserDialogHelper(context, resultListener, DsaTabApplication.getDsaTabHeroPath());
+			DirectoryChooserDialog.show(null, context.getFragmentManager(),
+					DsaTabApplication.getDsaTabHeroPath(), resultListener, 0);
 			return true;
 		} else if (KEY_TIP_TODAY_RESET.equals(key)) {
 			Editor edit = preferences.edit();

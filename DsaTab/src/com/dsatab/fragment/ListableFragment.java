@@ -10,8 +10,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
+import uk.me.lewisdeane.ldialogs.CustomDialog;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -81,17 +81,18 @@ import com.dsatab.data.notes.Connection;
 import com.dsatab.data.notes.Event;
 import com.dsatab.data.notes.NotesItem;
 import com.dsatab.db.DataManager;
+import com.dsatab.fragment.dialog.DirectoryChooserDialog;
+import com.dsatab.fragment.dialog.EquippedItemChooserDialog;
+import com.dsatab.fragment.dialog.DirectoryChooserDialog.OnDirectoryChooserListener;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.dsatab.view.ListSettings;
 import com.dsatab.view.ListSettings.ListItem;
 import com.dsatab.view.ListSettings.ListItemType;
-import com.dsatab.view.dialog.DirectoryChooserDialogHelper;
-import com.dsatab.view.dialog.DirectoryChooserDialogHelper.Result;
-import com.dsatab.view.dialog.EquippedItemChooserDialog;
 import com.dsatab.view.listener.EditListener;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
 import com.dsatab.view.listener.OnClickActionListenerDelegate;
+import com.gandulf.guilib.util.FileFileFilter;
 import com.gandulf.guilib.util.ListViewCompat;
 import com.gandulf.guilib.view.DynamicListViewEx;
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -423,12 +424,10 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 								break;
 							case R.id.option_assign_secondary: {
 								final EquippedItem equippedPrimaryWeapon = equippedItem;
-								final EquippedItemChooserDialog bkDialog = new EquippedItemChooserDialog(
-										fragment.getActivity());
 
-								bkDialog.setEquippedItems(getHero().getEquippedItems(Weapon.class, Shield.class));
-								for (Iterator<EquippedItem> iter = bkDialog.getEquippedItems().iterator(); iter
-										.hasNext();) {
+								List<EquippedItem> equippedItems = new ArrayList<EquippedItem>(getHero()
+										.getEquippedItems(Weapon.class, Shield.class));
+								for (Iterator<EquippedItem> iter = equippedItems.iterator(); iter.hasNext();) {
 									EquippedItem eq = iter.next();
 									if (eq.getItemSpecification() instanceof Weapon) {
 										Weapon weapon = (Weapon) eq.getItemSpecification();
@@ -436,10 +435,10 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 											iter.remove();
 									}
 								}
-								bkDialog.setSelectedItem(equippedItem.getSecondaryItem());
 								// do not select item itself
-								bkDialog.getEquippedItems().remove(equippedPrimaryWeapon);
-								bkDialog.setOnAcceptListener(new EquippedItemChooserDialog.OnAcceptListener() {
+								equippedItems.remove(equippedPrimaryWeapon);
+
+								EquippedItemChooserDialog.OnAcceptListener acc = new EquippedItemChooserDialog.OnAcceptListener() {
 
 									@Override
 									public void onAccept(EquippedItem item, boolean bhKampf) {
@@ -475,9 +474,11 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 										}
 
 									}
-								});
+								};
 
-								bkDialog.show();
+								EquippedItemChooserDialog.show(fragment, equippedItems,
+										equippedItem.getSecondaryItem(), acc, 0);
+
 								break;
 							}
 							case R.id.option_unassign: {
@@ -491,7 +492,9 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 								break;
 							}
 							case R.id.option_select_version: {
-								AlertDialog.Builder builder = new AlertDialog.Builder(fragment.getActivity());
+								CustomDialog.Builder builder = new CustomDialog.Builder(fragment.getActivity());
+								builder.setDarkTheme(DsaTabApplication.getInstance().isDarkTheme());
+
 								List<String> specInfo = equippedItem.getItem().getSpecificationNames();
 								builder.setItems(specInfo.toArray(new String[0]),
 										new DialogInterface.OnClickListener() {
@@ -525,7 +528,8 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 									}
 								}
 								if (!specInfo.isEmpty()) {
-									AlertDialog.Builder builder = new AlertDialog.Builder(fragment.getActivity());
+									CustomDialog.Builder builder = new CustomDialog.Builder(fragment.getActivity());
+									builder.setDarkTheme(DsaTabApplication.getInstance().isDarkTheme());
 									builder.setItems(specName.toArray(new String[0]),
 											new DialogInterface.OnClickListener() {
 												@Override
@@ -1462,7 +1466,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 			return true;
 		}
 		case ACTION_DOCUMENTS_CHOOSE: {
-			Result resultListener = new Result() {
+			OnDirectoryChooserListener resultListener = new OnDirectoryChooserListener() {
 				/*
 				 * (non-Javadoc)
 				 * 
@@ -1499,7 +1503,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 			if (docFile == null || !docFile.isDirectory()) {
 				docFile = DsaTabApplication.getDirectory(DsaTabApplication.DIR_PDFS);
 			}
-			new DirectoryChooserDialogHelper(getActivity(), resultListener, docFile.getAbsolutePath());
+			DirectoryChooserDialog.show(this, docFile.getAbsolutePath(), resultListener, 0);
 			return true;
 		}
 
@@ -1836,7 +1840,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 						pdfsDir = DsaTabApplication.getDirectory(DsaTabApplication.DIR_PDFS);
 
 					if (pdfsDir != null && pdfsDir.exists() && pdfsDir.isDirectory()) {
-						File[] pdfFiles = pdfsDir.listFiles();
+						File[] pdfFiles = pdfsDir.listFiles(new FileFileFilter());
 						List<File> documents;
 						if (pdfFiles != null) {
 							documents = Arrays.asList(pdfFiles);
@@ -1949,7 +1953,8 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 			mediaRecorder.prepare();
 			mediaRecorder.start(); // Recording is now started
 
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
+			builder.setDarkTheme(DsaTabApplication.getInstance().isDarkTheme());
 			builder.setTitle(R.string.recording);
 			builder.setMessage(R.string.recording_message);
 			builder.setPositiveButton(R.string.label_save, new DialogInterface.OnClickListener() {
@@ -1992,7 +1997,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 				}
 			});
 
-			AlertDialog dialog = builder.show();
+			CustomDialog dialog = builder.show();
 
 			dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
 

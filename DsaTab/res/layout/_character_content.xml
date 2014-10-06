@@ -20,17 +20,7 @@
             android:paddingLeft="@dimen/default_gap"
             android:paddingRight="@dimen/default_gap"
             android:useDefaultMargins="true" >
-
-            <com.dsatab.view.FlexibleTextView
-                android:id="@+id/gen_name"
-                style="@style/TextValue.Small"
-                android:layout_columnSpan="2"
-                android:layout_gravity="fill_horizontal"
-                android:ellipsize="middle"
-                android:fontFamily="sans-serif-condensed"
-                android:text="@string/label_name" >
-            </com.dsatab.view.FlexibleTextView>
-
+           
             <com.thebnich.floatinghintedittext.FloatingHintTextView
                 android:id="@+id/gen_ausbildung"
                 style="@style/TextValue.Small"

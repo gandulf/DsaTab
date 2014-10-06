@@ -45,7 +45,7 @@ import android.widget.Toast;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
-import com.dsatab.TabInfo;
+import com.dsatab.config.TabInfo;
 import com.dsatab.data.AbstractBeing;
 import com.dsatab.data.Hero;
 import com.dsatab.data.HeroConfiguration;
@@ -189,10 +189,6 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 			getActionBar().setIcon(R.drawable.icon);
 		}
 
-	}
-
-	protected boolean isActionbarTranslucent() {
-		return true;
 	}
 
 	private boolean initHero() {
@@ -432,33 +428,69 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, R.string.drawer_open,
 				R.string.drawer_close) {
 
+			private boolean actionbarShown = true;
+
 			/** Called when a drawer has settled in a completely closed state. */
 			public void onDrawerClosed(View view) {
 				super.onDrawerClosed(view);
-				updatePage(tabInfo, null);
+				showActionBar();
 				invalidateOptionsMenu();
+			}
 
-				for (int i = 0; i < TabInfo.MAX_TABS_PER_PAGE; i++) {
-					if (getCurrentFragment(i) instanceof BaseFragment) {
-						((BaseFragment) getCurrentFragment(i)).showActionBarItems();
-					}
+			@Override
+			public void onDrawerSlide(View drawerView, float slideOffset) {
+				super.onDrawerSlide(drawerView, slideOffset);
+
+				if (slideOffset > 0.05f) {
+					hideActionBar();
+				} else {
+					showActionBar();
 				}
+
+				if (!isActionbarTranslucent() || getActionbarBackgroundBaseAlpha() > 0) {
+					setActionbarBackgroundAlpha(1f - slideOffset);
+				}
+
 			}
 
 			/** Called when a drawer has settled in a completely open state. */
 			public void onDrawerOpened(View drawerView) {
 				super.onDrawerOpened(drawerView);
-
-				getActionBar().setTitle(R.string.app_name);
-				getActionBar().setIcon(R.drawable.icon);
+				hideActionBar();
 				invalidateOptionsMenu();
+			}
 
-				for (int i = 0; i < TabInfo.MAX_TABS_PER_PAGE; i++) {
-					if (getCurrentFragment(i) instanceof BaseFragment) {
-						((BaseFragment) getCurrentFragment(i)).hideActionBarItems();
+			private void showActionBar() {
+
+				if (!actionbarShown) {
+					updatePage(tabInfo, null);
+					getActionBar().setDisplayHomeAsUpEnabled(true);
+
+					for (int i = 0; i < TabInfo.MAX_TABS_PER_PAGE; i++) {
+						if (getCurrentFragment(i) instanceof BaseFragment) {
+							((BaseFragment) getCurrentFragment(i)).showActionBarItems();
+						}
 					}
+					actionbarShown = true;
+				}
+
+			}
+
+			private void hideActionBar() {
+				if (actionbarShown) {
+					getActionBar().setTitle(null);
+					getActionBar().setIcon(android.R.color.transparent);
+					getActionBar().setDisplayHomeAsUpEnabled(false);
+
+					for (int i = 0; i < TabInfo.MAX_TABS_PER_PAGE; i++) {
+						if (getCurrentFragment(i) instanceof BaseFragment) {
+							((BaseFragment) getCurrentFragment(i)).hideActionBarItems();
+						}
+					}
+					actionbarShown = false;
 				}
 			}
+
 		};
 
 		// Set the drawer toggle as the DrawerListener

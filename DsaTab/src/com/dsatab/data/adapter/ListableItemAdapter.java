@@ -38,7 +38,6 @@ import android.widget.ToggleButton;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabActivity;
-import com.dsatab.common.StyleableSpannableStringBuilder;
 import com.dsatab.data.Art;
 import com.dsatab.data.ArtInfo;
 import com.dsatab.data.Attribute;
@@ -79,12 +78,13 @@ import com.dsatab.data.modifier.RulesModificator;
 import com.dsatab.data.modifier.WoundModificator;
 import com.dsatab.data.notes.Event;
 import com.dsatab.data.notes.NotesItem;
+import com.dsatab.fragment.dialog.TakeHitDialog;
 import com.dsatab.util.Debug;
 import com.dsatab.util.DsaUtil;
+import com.dsatab.util.StyleableSpannableStringBuilder;
 import com.dsatab.util.Util;
 import com.dsatab.view.ItemListItem;
 import com.dsatab.view.ListSettings;
-import com.dsatab.view.dialog.TakeHitDialog;
 import com.dsatab.view.listener.EditListener;
 import com.dsatab.view.listener.OnActionListener;
 import com.dsatab.view.listener.ProbeListener;
@@ -794,9 +794,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 
 					@Override
 					public void onClick(View v) {
-						TakeHitDialog takeHitDialog = new TakeHitDialog(getContext(), hero, null);
-						takeHitDialog.show();
-
+						TakeHitDialog.show(null, main.getFragmentManager(), hero, null, 0);
 					}
 				});
 				holder.button1.setVisibility(View.VISIBLE);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2007 The Android Open Source Project
+<!--
+     Copyright (C) 2007 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,28 +16,30 @@
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
-    >
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:orientation="horizontal" >
 
-    <ImageView android:id="@android:id/icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxHeight="32dip"
-        android:maxWidth="32dip"
-        android:scaleType="fitCenter"
+    <ImageView
+        android:id="@android:id/icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="12dp"/>
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="32dp"
+        android:scaleType="fitCenter" />
 
-    <TextView android:id="@android:id/text1"
-        android:layout_gravity="center_vertical"
-        android:textAppearance="?android:attr/textAppearanceSmall"
+    <TextView
+        android:id="@android:id/text1"
         android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_weight="1.0"
         android:textAllCaps="true"
-        android:layout_height="wrap_content" />
+        android:textColor="?android:attr/textColorSecondary"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </LinearLayout>

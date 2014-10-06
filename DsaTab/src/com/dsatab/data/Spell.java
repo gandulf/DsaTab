@@ -7,12 +7,12 @@ import java.util.EnumSet;
 import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 
-import com.dsatab.common.StyleableSpannableStringBuilder;
 import com.dsatab.data.listable.Listable;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 import com.dsatab.db.DataManager;
 import com.dsatab.exception.SpellUnknownException;
 import com.dsatab.util.Debug;
+import com.dsatab.util.StyleableSpannableStringBuilder;
 
 public class Spell extends MarkableElement implements Value, Listable, Serializable {
 

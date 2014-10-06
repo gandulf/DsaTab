@@ -1,12 +1,10 @@
 package com.dsatab.fragment.dialog;
 
-import android.app.AlertDialog;
+import uk.me.lewisdeane.ldialogs.CustomDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -18,7 +16,7 @@ import com.dsatab.R;
 import com.dsatab.data.adapter.SpinnerSimpleAdapter;
 import com.dsatab.db.DataManager;
 
-public class WebInfoDialog extends DialogFragment implements DialogInterface.OnClickListener, OnItemSelectedListener {
+public class WebInfoDialog extends DialogFragment implements OnItemSelectedListener {
 
 	public static final String TAG = "WebInfoDialog";
 
@@ -48,27 +46,24 @@ public class WebInfoDialog extends DialogFragment implements DialogInterface.OnC
 		Bundle args = getArguments();
 		String tag = args.getString(KEY_TAG);
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
 
-		View root = LayoutInflater.from(builder.getContext()).inflate(R.layout.popup_web_info, null, false);
+		builder.setPositiveButton(android.R.string.ok, null);
+		View popupContent = builder.setView(R.layout.popup_web_info);
 
-		content = (WebView) root.findViewById(R.id.web);
-		spinner = (Spinner) root.findViewById(R.id.spinner);
+		content = (WebView) popupContent.findViewById(R.id.web);
+		spinner = (Spinner) popupContent.findViewById(R.id.spinner);
 
 		infoAdapters = new SpinnerSimpleAdapter<String>(builder.getContext(), DataManager.getWebInfos(getActivity()));
 
 		spinner.setAdapter(infoAdapters);
 		spinner.setOnItemSelectedListener(this);
 
-		builder.setView(root);
-
 		WebSettings settings = content.getSettings();
 		settings.setDefaultTextEncodingName("utf-8");
 		setTag(tag);
 
-		builder.setPositiveButton(getString(R.string.label_ok), this);
-
-		AlertDialog dialog = builder.create();
+		CustomDialog dialog = builder.create();
 		dialog.setCanceledOnTouchOutside(true);
 		return dialog;
 
@@ -97,11 +92,6 @@ public class WebInfoDialog extends DialogFragment implements DialogInterface.OnC
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
 
-	}
-
-	@Override
-	public void onClick(DialogInterface dialog, int which) {
-		dialog.dismiss();
 	}
 
 }

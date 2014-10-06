@@ -30,16 +30,16 @@ import android.widget.Toast;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabPreferenceActivity;
-import com.dsatab.common.ClickSpan;
-import com.dsatab.common.ClickSpan.OnSpanClickListener;
-import com.dsatab.common.StyleableSpannableStringBuilder;
 import com.dsatab.data.AbstractBeing;
 import com.dsatab.data.Feature;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.db.DataManager;
+import com.dsatab.fragment.dialog.ImageChooserDialog;
 import com.dsatab.fragment.dialog.WebInfoDialog;
+import com.dsatab.util.ClickSpan;
+import com.dsatab.util.StyleableSpannableStringBuilder;
 import com.dsatab.util.Util;
-import com.dsatab.view.dialog.ImageChooserDialog;
+import com.dsatab.util.ClickSpan.OnSpanClickListener;
 import com.ecloud.pulltozoomview.PullToZoomScrollView;
 import com.gandulf.guilib.download.AbstractDownloader;
 import com.gandulf.guilib.download.DownloaderWrapper;
@@ -76,9 +76,9 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
 			final int headerHeight = findViewById(R.id.gen_portrait).getHeight()
 					- getActivity().getActionBar().getHeight();
 			final float ratio = (float) Math.min(Math.max(top, 0), headerHeight) / headerHeight;
-			final int newAlpha = (int) (ratio * 255);
-			if (getBaseActivity() != null) {
-				getBaseActivity().setActionbarBackgroundAlpha(newAlpha);
+			if (getBaseActivity() != null && getBaseActivity().isActionbarTranslucent()) {
+				getBaseActivity().setActionbarBackgroundAlpha(ratio);
+				getBaseActivity().setActionbarBackgroundBaseAlpha(ratio);
 			}
 		}
 	};
@@ -100,7 +100,7 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
 					Util.pickImage(BaseProfileFragment.this, ACTION_GALERY);
 					break;
 				case R.id.option_pick_avatar:
-					ImageChooserDialog.pickPortrait(getBaseActivity(), getBeing());
+					ImageChooserDialog.pickPortrait(BaseProfileFragment.this, getBeing(), 0);
 					break;
 				case R.id.option_download_avatars:
 					AbstractDownloader downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath(),

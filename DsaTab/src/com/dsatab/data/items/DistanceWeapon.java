@@ -7,11 +7,11 @@ import android.text.TextUtils;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
-import com.dsatab.common.StyleableSpannableStringBuilder;
 import com.dsatab.data.Dice;
 import com.dsatab.data.Dice.DiceRoll;
 import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.enums.TalentType;
+import com.dsatab.util.StyleableSpannableStringBuilder;
 import com.dsatab.util.Util;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.types.EnumStringType;

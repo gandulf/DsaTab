@@ -9,9 +9,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import uk.me.lewisdeane.ldialogs.CustomDialog;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -84,8 +84,8 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 
 	private View loadingView;
 	private TextView empty;
-	private AlertDialog dropboxDialog;
-	private AlertDialog heldenAustauschDialog;
+	private CustomDialog dropboxDialog;
+	private CustomDialog heldenAustauschDialog;
 
 	public interface OnHeroSelectedListener {
 		public void onHeroSelected(HeroFileInfo heroFileInfo);
@@ -300,10 +300,12 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 		}
 
 		if (!exchange.isConnected(StorageType.Dropbox)) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			View popupcontent = LayoutInflater.from(builder.getContext()).inflate(R.layout.popup_cloud, null);
-			builder.setView(popupcontent);
+			CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
+			builder.setDarkTheme(DsaTabApplication.getInstance().isDarkTheme());
+			View popupcontent = builder.setView(R.layout.popup_cloud);
 			popupcontent.findViewById(R.id.connect_dropbox).setOnClickListener(this);
+
+			builder.setTitle("Cloud Connect");
 
 			CheckBox show = (CheckBox) popupcontent.findViewById(R.id.cb_dont_show_again);
 			show.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -326,8 +328,9 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 			dropboxDialog.setCanceledOnTouchOutside(true);
 		}
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		final EditText editText = new EditText(getActivity());
+		CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
+		builder.setDarkTheme(DsaTabApplication.getInstance().isDarkTheme());
+		final EditText editText = new EditText(builder.getContext());
 		editText.setHint("Helden-Austausch Token");
 		editText.setText(DsaTabApplication.getPreferences().getString(DsaTabPreferenceActivity.KEY_EXCHANGE_TOKEN, ""));
 		builder.setTitle("Berechtigungstoken der Heldenaustauschseite");

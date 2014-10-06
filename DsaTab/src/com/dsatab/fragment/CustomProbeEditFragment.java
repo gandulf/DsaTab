@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.UUID;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 import android.widget.Spinner;
 
 import com.dsatab.DsaTabApplication;
@@ -28,8 +26,8 @@ import com.dsatab.data.CustomProbe;
 import com.dsatab.data.Probe.ProbeType;
 import com.dsatab.data.adapter.SpinnerSimpleAdapter;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
+import com.dsatab.fragment.dialog.ImageChooserDialog;
 import com.dsatab.util.Util;
-import com.dsatab.view.dialog.ImageChooserDialog;
 
 public class CustomProbeEditFragment extends BaseEditFragment implements OnClickListener, OnItemSelectedListener {
 
@@ -71,8 +69,7 @@ public class CustomProbeEditFragment extends BaseEditFragment implements OnClick
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
-	 * android.os.Bundle)
+	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -284,23 +281,13 @@ public class CustomProbeEditFragment extends BaseEditFragment implements OnClick
 	}
 
 	private void pickIcon() {
-		final ImageChooserDialog pdialog = new ImageChooserDialog(getActivity());
-
-		List<Integer> itemIcons = DsaTabApplication.getInstance().getConfiguration().getDsaIcons();
-		pdialog.setImageIds(itemIcons);
-		pdialog.setGridColumnWidth(getResources().getDimensionPixelSize(R.dimen.icon_button_size));
-		pdialog.setScaleType(ScaleType.FIT_CENTER);
-		pdialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+		ImageChooserDialog.pickIcons(this, new ImageChooserDialog.OnImageSelectedListener() {
 
 			@Override
-			public void onDismiss(DialogInterface dialog) {
-				if (pdialog.getImageUri() != null) {
-					iconUri = pdialog.getImageUri();
-					iconView.setImageURI(iconUri);
-				}
+			public void onImageSelected(Uri imageUri) {
+				iconView.setImageURI(imageUri);
 			}
-		});
-		pdialog.show();
+		}, 0);
 
 	}
 

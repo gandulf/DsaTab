@@ -39,7 +39,6 @@ import android.widget.TextView;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabPreferenceActivity;
-import com.dsatab.common.StyleableSpannableStringBuilder;
 import com.dsatab.data.AbstractBeing;
 import com.dsatab.data.Art;
 import com.dsatab.data.Attribute;
@@ -62,11 +61,12 @@ import com.dsatab.data.items.DistanceWeapon;
 import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.items.Weapon;
 import com.dsatab.data.modifier.Modifier;
+import com.dsatab.fragment.dialog.TakeHitDialog;
 import com.dsatab.util.Debug;
 import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Hint;
+import com.dsatab.util.StyleableSpannableStringBuilder;
 import com.dsatab.util.Util;
-import com.dsatab.view.dialog.TakeHitDialog;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelSlideListener;
 
@@ -218,19 +218,27 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 	@Override
 	public void onPanelSlide(View panel, float slideOffset) {
-		sliderTitle.setVisibility(View.VISIBLE);
-		sliderAttributes.setVisibility(View.VISIBLE);
+		if (sliderTitle != null) {
+			sliderTitle.setVisibility(View.VISIBLE);
+			sliderTitle.setAlpha(slideOffset);
+		}
 
-		sliderTitle.setAlpha(slideOffset);
-		sliderAttributes.setAlpha(1.0f - slideOffset);
+		if (sliderAttributes != null) {
+			sliderAttributes.setVisibility(View.VISIBLE);
+			sliderAttributes.setAlpha(1.0f - slideOffset);
+		}
 	}
 
 	@Override
 	public void onPanelExpanded(View panel) {
 		enableLayoutTransition();
+		if (sliderTitle != null) {
+			sliderTitle.setVisibility(View.VISIBLE);
+		}
 
-		sliderTitle.setVisibility(View.VISIBLE);
-		sliderAttributes.setVisibility(View.GONE);
+		if (sliderAttributes != null) {
+			sliderAttributes.setVisibility(View.GONE);
+		}
 	}
 
 	@Override
@@ -361,8 +369,7 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 
 		case R.id.dice_take_hit:
 			if (probeData != null) {
-				TakeHitDialog inlineEditdialog = new TakeHitDialog(getActivity(), probeData.being, null);
-				inlineEditdialog.show();
+				TakeHitDialog.show(this, probeData.being, null, 0);
 			}
 			break;
 		}

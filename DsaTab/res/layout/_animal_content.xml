@@ -22,16 +22,6 @@
             android:useDefaultMargins="true" >
 
             <com.thebnich.floatinghintedittext.FloatingHintTextView
-                android:id="@+id/gen_name"
-                style="@style/TextValue.Small"
-                android:layout_columnSpan="2"
-                android:layout_gravity="fill_horizontal"
-                android:ellipsize="middle"
-                android:fontFamily="sans-serif-condensed"
-                android:text="@string/label_name" >
-            </com.thebnich.floatinghintedittext.FloatingHintTextView>
-
-            <com.thebnich.floatinghintedittext.FloatingHintTextView
                 android:id="@+id/gen_family"
                 style="@style/TextValue.Small"
                 android:layout_columnSpan="2"

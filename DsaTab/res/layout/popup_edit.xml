@@ -26,6 +26,8 @@
         android:text="@string/combat_style"
         android:textOn="@string/offensive"
         android:textOff="@string/defensive"
+        android:layout_marginBottom="@dimen/default_gap"
+        android:layout_marginTop="@dimen/default_gap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     </Switch>

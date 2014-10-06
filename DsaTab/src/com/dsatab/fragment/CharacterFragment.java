@@ -252,7 +252,6 @@ public class CharacterFragment extends BaseProfileFragment {
 
 		fillSpecialFeatures(hero);
 
-		((TextView) findViewById(R.id.gen_name)).setText(hero.getName());
 		// --
 		ImageView portrait = (ImageView) findViewById(R.id.gen_portrait);
 		portrait.setOnClickListener(this);

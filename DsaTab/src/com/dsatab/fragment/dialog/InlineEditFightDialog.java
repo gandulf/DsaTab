@@ -1,24 +1,24 @@
 package com.dsatab.fragment.dialog;
 
-import android.app.AlertDialog;
+import uk.me.lewisdeane.ldialogs.CustomDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
 import android.widget.NumberPicker.OnValueChangeListener;
 import android.widget.TextView;
 
+import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.CombatMeleeAttribute;
 import com.dsatab.data.CombatMeleeTalent;
 import com.dsatab.data.Value;
 import com.dsatab.util.Util;
 
-public class InlineEditFightDialog extends DialogFragment implements DialogInterface.OnClickListener,
+public class InlineEditFightDialog extends DialogFragment implements android.content.DialogInterface.OnClickListener,
 		OnValueChangeListener {
 
 	public static final String TAG = "InlineEditFightDialog";
@@ -57,11 +57,10 @@ public class InlineEditFightDialog extends DialogFragment implements DialogInter
 		// TODO value should be set as argument
 		// Value value = (Value) args.get(KEY_VALUE);
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-		View popupcontent = LayoutInflater.from(builder.getContext()).inflate(R.layout.popup_edit_fight, null, false);
-
-		builder.setView(popupcontent);
+		CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
+		builder.setTitle(talent.getName());
+		builder.setDarkTheme(DsaTabApplication.getInstance().isDarkTheme());
+		View popupcontent = builder.setView(R.layout.popup_edit_fight);
 
 		numberPicker = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_text);
 		editAt = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_at);
@@ -76,35 +75,15 @@ public class InlineEditFightDialog extends DialogFragment implements DialogInter
 		editPa.setOnValueChangedListener(this);
 		editAt.setOnValueChangedListener(this);
 
-		builder.setPositiveButton("Ok", this);
-		builder.setNegativeButton("Reset", this);
+		if (talent != null && talent.getReferenceValue() != null)
+			builder.setNegativeButton("Reset", this);
 
-		AlertDialog dialog = builder.create();
-
-		if (dialog.getButton(AlertDialog.BUTTON_NEGATIVE) != null && talent != null) {
-			dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setEnabled(talent.getReferenceValue() != null);
-		}
-
-		dialog.setCanceledOnTouchOutside(true);
-
-		setValue(dialog, talent);
-
-		return dialog;
-
-	}
-
-	public CombatMeleeTalent getValue() {
-		return talent;
-	}
-
-	public void setValue(AlertDialog dialog, CombatMeleeTalent combatTalent) {
-		this.talent = combatTalent;
-
+		builder.setPositiveButton(android.R.string.ok, this);
 		singleValued = false;
 
-		valueTotal = combatTalent;
-		valueAt = combatTalent.getAttack();
-		valuePa = combatTalent.getDefense();
+		valueTotal = talent;
+		valueAt = talent.getAttack();
+		valuePa = talent.getDefense();
 
 		numberPicker.setMinValue(valueTotal.getMinimum());
 		numberPicker.setMaxValue(valueTotal.getMaximum());
@@ -130,11 +109,6 @@ public class InlineEditFightDialog extends DialogFragment implements DialogInter
 		numberPicker.setWrapSelectorWheel(false);
 		editAt.setWrapSelectorWheel(false);
 		editPa.setWrapSelectorWheel(false);
-
-		if (dialog.getButton(AlertDialog.BUTTON_NEGATIVE) != null)
-			dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setEnabled(valueTotal.getReferenceValue() != null);
-
-		dialog.setTitle(combatTalent.getName());
 
 		if (singleValued) {
 
@@ -162,10 +136,18 @@ public class InlineEditFightDialog extends DialogFragment implements DialogInter
 			textFreeLabel.setVisibility(View.VISIBLE);
 		}
 
+		CustomDialog dialog = builder.create();
 		updateView(dialog);
+		dialog.setCanceledOnTouchOutside(true);
+		return dialog;
+
 	}
 
-	private void updateView(AlertDialog dialog) {
+	public CombatMeleeTalent getValue() {
+		return talent;
+	}
+
+	private void updateView(CustomDialog dialog) {
 
 		if (singleValued) {
 
@@ -194,23 +176,17 @@ public class InlineEditFightDialog extends DialogFragment implements DialogInter
 			}
 			textFreeValue.setText(Util.toString(free));
 
-			if (dialog.getButton(AlertDialog.BUTTON_POSITIVE) != null)
-				dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(free >= 0);
+			if (dialog.getPositiveButton() != null)
+				dialog.getPositiveButton().setEnabled(free >= 0);
 
 		}
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.content.DialogInterface.OnClickListener#onClick(android.content .DialogInterface, int)
-	 */
 	@Override
-	public void onClick(DialogInterface dialog, int which) {
-		switch (which) {
-		case AlertDialog.BUTTON_POSITIVE:
-
+	public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+		switch (paramInt) {
+		case DialogInterface.BUTTON_POSITIVE:
 			if (singleValued) {
 				if (valueAt != null) {
 					valueTotal.setValue(numberPicker.getValue() - valueAt.getBaseValue());
@@ -231,8 +207,9 @@ public class InlineEditFightDialog extends DialogFragment implements DialogInter
 			}
 			Util.hideKeyboard(numberPicker);
 			dismiss();
+
 			break;
-		case AlertDialog.BUTTON_NEGATIVE:
+		case DialogInterface.BUTTON_NEGATIVE:
 			valueTotal.reset();
 
 			if (valueAt != null) {
@@ -250,7 +227,7 @@ public class InlineEditFightDialog extends DialogFragment implements DialogInter
 
 	@Override
 	public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-		updateView((AlertDialog) getDialog());
+		updateView((CustomDialog) getDialog());
 	}
 
 }

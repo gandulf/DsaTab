@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import com.dsatab.R;
 import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.items.Item;
-import com.dsatab.util.Util;
 import com.dsatab.view.ItemListItem;
 
 public class EquippedItemAdapter extends ArrayAdapter<EquippedItem> {
@@ -37,8 +36,6 @@ public class EquippedItemAdapter extends ArrayAdapter<EquippedItem> {
 		EquippedItem equippedItem = getItem(position);
 		Item e = equippedItem.getItem();
 		view.setItem(e);
-
-		Util.applyRowStyle(view, position);
 
 		return view;
 	}

@@ -12,6 +12,7 @@
         android:id="@+id/slider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:background="@drawable/container_shadow_bottom_dark" >
 
         <FrameLayout
@@ -79,6 +80,17 @@
         android:orientation="horizontal" >
 
         <com.thebnich.floatinghintedittext.FloatingHintTextView
+            android:id="@+id/dice_talent_value"
+            style="@style/TextValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_taw_short"
+            android:minWidth="48dp"
+            android:paddingLeft="@dimen/default_gap"
+            android:paddingRight="@dimen/default_gap"
+            android:textStyle="bold" />
+
+        <com.thebnich.floatinghintedittext.FloatingHintTextView
             android:id="@+id/dice_value"
             style="@style/TextValue"
             android:layout_width="wrap_content"
@@ -96,17 +108,6 @@
             android:minWidth="48dp"
             android:textStyle="bold" />
     </LinearLayout>
-
-    <com.thebnich.floatinghintedittext.FloatingHintTextView
-        android:id="@+id/dice_talent_value"
-        style="@style/TextValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/label_taw_short"
-        android:minWidth="48dp"
-        android:paddingLeft="@dimen/default_gap"
-        android:paddingRight="@dimen/default_gap"
-        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/dice_dice_result"

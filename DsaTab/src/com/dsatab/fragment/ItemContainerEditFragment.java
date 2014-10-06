@@ -1,7 +1,6 @@
 package com.dsatab.fragment;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,14 +10,13 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.FragmentEditActivity;
 import com.dsatab.data.items.ItemContainer;
+import com.dsatab.fragment.dialog.ImageChooserDialog;
 import com.dsatab.util.Util;
-import com.dsatab.view.dialog.ImageChooserDialog;
 
 public class ItemContainerEditFragment extends BaseEditFragment implements OnClickListener {
 
@@ -50,8 +48,7 @@ public class ItemContainerEditFragment extends BaseEditFragment implements OnCli
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
-	 * android.os.Bundle)
+	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -155,23 +152,13 @@ public class ItemContainerEditFragment extends BaseEditFragment implements OnCli
 	}
 
 	private void pickIcon() {
-		final ImageChooserDialog pdialog = new ImageChooserDialog(getActivity());
-
-		pdialog.setImageIds(DsaTabApplication.getInstance().getConfiguration().getDsaIcons());
-		pdialog.setGridColumnWidth(getResources().getDimensionPixelSize(R.dimen.icon_button_size));
-		pdialog.setScaleType(ScaleType.FIT_CENTER);
-		pdialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+		ImageChooserDialog.pickIcons(this, new ImageChooserDialog.OnImageSelectedListener() {
 
 			@Override
-			public void onDismiss(DialogInterface dialog) {
-				if (pdialog.getImageUri() != null) {
-					iconUri = pdialog.getImageUri();
-					iconView.setImageURI(iconUri);
-				}
+			public void onImageSelected(Uri imageUri) {
+				iconView.setImageURI(imageUri);
 			}
-		});
-		pdialog.show();
-
+		}, 0);
 	}
 
 }

@@ -5,8 +5,8 @@ import java.io.IOException;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
+import uk.me.lewisdeane.ldialogs.CustomDialog;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
@@ -51,6 +51,8 @@ public class ChangeLogDialog extends DialogFragment {
 
 	private int lastSeenVersion;
 
+	private int releaseHistoryMaxCount = 10;
+
 	private String html;
 
 	public static void show(Activity activity, boolean forceShow, int requestCode) {
@@ -59,6 +61,11 @@ public class ChangeLogDialog extends DialogFragment {
 		Bundle args = new Bundle();
 		args.putBoolean(KEY_FORCE_SHOW, forceShow);
 		dialog.setArguments(args);
+
+		if (forceShow)
+			dialog.releaseHistoryMaxCount = 100;
+		else
+			dialog.releaseHistoryMaxCount = 10;
 
 		boolean hasContent = dialog.hasContent(activity, forceShow);
 		// dialog.setTargetFragment(parent, requestCode);
@@ -89,7 +96,8 @@ public class ChangeLogDialog extends DialogFragment {
 
 		// Create webview and load html
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setTitle(title);
+		CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
+		builder.setTitle(title);
 
 		WebView webView = new WebView(builder.getContext());
 		webView.getSettings().setDefaultTextEncodingName("utf-8");
@@ -162,12 +170,14 @@ public class ChangeLogDialog extends DialogFragment {
 			_Result += summary;
 		}
 
+		int releaseCount = 0;
 		XmlResourceParser _xml = aResource.getXml(aResourceId);
 		try {
 			int eventType = _xml.getEventType();
-			while (eventType != XmlPullParser.END_DOCUMENT) {
+			while (eventType != XmlPullParser.END_DOCUMENT && releaseCount < releaseHistoryMaxCount) {
 				if ((eventType == XmlPullParser.START_TAG) && (_xml.getName().equals("release"))) {
 					_Result = _Result + parseReleaseTag(_xml);
+					releaseCount++;
 				}
 				eventType = _xml.next();
 			}

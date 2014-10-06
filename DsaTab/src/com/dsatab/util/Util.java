@@ -68,7 +68,6 @@ import android.widget.TextView;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
-import com.dsatab.common.StyleableSpannableStringBuilder;
 import com.dsatab.data.AbstractBeing;
 import com.dsatab.data.Attribute;
 import com.dsatab.data.CombatTalent;

@@ -17,7 +17,7 @@
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="144dp"
+    android:layout_height="135dp"
     android:orientation="horizontal" >
 
     <ImageView
@@ -27,32 +27,32 @@
         android:scaleType="centerCrop"
         android:src="@drawable/profile_picture" />
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/banner_scrim"
-        android:gravity="end"
-        android:paddingTop="90dp" >
+        android:background="#66000000">
+
+        <TextView
+            android:id="@android:id/text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:fontFamily="sans-serif-condensed"
+            android:paddingBottom="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="12dp"
+            android:text="Silk Treuson"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@android:id/icon1"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:layout_gravity="center_vertical"            
-             />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:id="@android:id/text1"
-            android:fontFamily="sans-serif-condensed"            
-            android:paddingLeft="4dp"
-            android:paddingRight="12dp"
-            android:text="Silk Treuson"
-            android:textColor="@color/Brighter"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="left|top"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp" />
+    </FrameLayout>
 
 </FrameLayout>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
@@ -9,32 +10,51 @@
     android:orientation="vertical" >
 
     <FrameLayout
+        android:id="@+id/slider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:background="@drawable/container_shadow_bottom_dark" >
 
-        <TextView
-            android:id="@+id/dice_talent"
+        <FrameLayout
+            android:id="@+id/slider_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/icon_button_size"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/dice_talent"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/icon_button_size"
+                android:layout_gravity="fill_vertical|fill_horizontal"
+                android:layout_marginLeft="@dimen/icon_button_size"
+                android:layout_marginRight="@dimen/icon_button_size"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:singleLine="true" />
+
+            <ImageButton
+                android:id="@+id/details_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|right"
+                android:layout_marginBottom="@dimen/default_gap"
+                android:layout_marginRight="@dimen/default_gap"
+                android:background="@null"
+                android:contentDescription="@string/label_misc_modifications"
+                android:scaleType="centerInside"
+                android:src="?attr/imgExpanderClose" />
+        </FrameLayout>
+
+        <fragment
+            android:id="@+id/slider_attributes"
+            android:name="com.dsatab.fragment.AttributeListFragment"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/icon_button_size"
-            android:layout_gravity="fill_vertical|fill_horizontal"
-            android:layout_marginLeft="@dimen/icon_button_size"
-            android:layout_marginRight="@dimen/icon_button_size"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:singleLine="true" />
-
-        <ImageButton
-            android:id="@+id/details_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|right"
-            android:layout_marginBottom="@dimen/default_gap"
-            android:layout_marginRight="@dimen/default_gap"
-            android:background="@null"
-            android:contentDescription="@string/label_misc_modifications"
-            android:scaleType="centerInside"
-            android:src="?attr/imgExpanderClose" />
+            class="com.dsatab.fragment.AttributeListFragment"
+            android:tag="attributeListFragment"
+            tools:layout="@layout/attributes_list" >
+        </fragment>
     </FrameLayout>
 
     <ListView
@@ -47,12 +67,13 @@
         android:paddingTop="@dimen/default_gap" >
     </ListView>
 
-    <ImageView android:id="@+id/probe_modifier_container_divider" 
+    <ImageView
+        android:id="@+id/probe_modifier_container_divider"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
         android:src="?android:attr/dividerHorizontal" />
-    
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -75,19 +96,18 @@
         <com.thebnich.floatinghintedittext.FloatingHintTextView
             android:id="@+id/dice_value"
             style="@style/TextValue"
-            android:minWidth="64dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-             />
+            android:minWidth="64dp" />
 
         <com.thebnich.floatinghintedittext.FloatingHintTextView
             android:id="@+id/dice_effect_value"
             style="@style/TextValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minWidth="48dp"
             android:layout_marginLeft="@dimen/default_gap"
             android:hint="@string/label_tap_short"
+            android:minWidth="48dp"
             android:textStyle="bold" />
 
         <ImageView
@@ -118,7 +138,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/default_gap"
             android:src="@drawable/ic_menu_play_clip" />
-        
+
         <ImageButton
             android:id="@+id/dice_take_hit"
             android:layout_width="@dimen/icon_button_size"

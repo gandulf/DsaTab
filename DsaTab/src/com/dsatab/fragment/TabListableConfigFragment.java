@@ -3,7 +3,7 @@ package com.dsatab.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.AlertDialog;
+import uk.me.lewisdeane.ldialogs.CustomDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Build;
@@ -27,7 +27,7 @@ import android.widget.Spinner;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
-import com.dsatab.TabInfo;
+import com.dsatab.config.TabInfo;
 import com.dsatab.data.adapter.ListItemConfigAdapter;
 import com.dsatab.data.adapter.SpinnerSimpleAdapter;
 import com.dsatab.util.Util;
@@ -213,7 +213,8 @@ public class TabListableConfigFragment extends Fragment implements View.OnClickL
 
 	protected void editListItem(final ListItem listItem) {
 		if (listItem.getType() == ListItemType.Header) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
+			builder.setDarkTheme(DsaTabApplication.getInstance().isDarkTheme());
 			builder.setTitle(R.string.title_insert_title);
 			final EditText editText = new EditText(builder.getContext());
 			editText.setText(listItem.getName());
