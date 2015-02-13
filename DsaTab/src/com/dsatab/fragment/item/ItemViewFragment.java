@@ -2,7 +2,6 @@ package com.dsatab.fragment.item;
 
 import java.util.UUID;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -57,8 +56,7 @@ public class ItemViewFragment extends BaseFragment {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
-	 * android.os.Bundle)
+	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -74,8 +72,7 @@ public class ItemViewFragment extends BaseFragment {
 		imageView.setVisibility(View.GONE);
 
 		itemView = (ItemListItem) root.findViewById(R.id.inc_gal_item_view);
-		itemView.setTextColor(Color.BLACK);
-		itemView.setBackgroundColor(getResources().getColor(R.color.Brighter));
+		itemView.setBackgroundResource(0);
 
 		categoryView = (TextView) root.findViewById(R.id.popup_edit_category);
 

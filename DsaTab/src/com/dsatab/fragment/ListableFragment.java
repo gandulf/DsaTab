@@ -20,6 +20,7 @@ import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.graphics.Palette;
 import android.text.TextUtils;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
@@ -82,8 +83,8 @@ import com.dsatab.data.notes.Event;
 import com.dsatab.data.notes.NotesItem;
 import com.dsatab.db.DataManager;
 import com.dsatab.fragment.dialog.DirectoryChooserDialog;
-import com.dsatab.fragment.dialog.EquippedItemChooserDialog;
 import com.dsatab.fragment.dialog.DirectoryChooserDialog.OnDirectoryChooserListener;
+import com.dsatab.fragment.dialog.EquippedItemChooserDialog;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.dsatab.view.ListSettings;
@@ -1479,10 +1480,9 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 					if (directory.exists()) {
 						if (getHero() != null) {
 							getHero().getHeroConfiguration().setProperty(
-									DsaTabPreferenceActivity.KEY_SETUP_SDCARD_PATH_PREFIX + DsaTabApplication.DIR_PDFS,
+									DsaTabPreferenceActivity.KEY_CUSTOM_DIRECTORY + DsaTabPreferenceActivity.DIR_PDFS,
 									dir);
 						}
-						DsaTabApplication.setDirectory(DsaTabApplication.DIR_PDFS, directory);
 						fillListItems(getHero());
 					} else {
 						Toast.makeText(getActivity(), "Verzeichnis existiert nicht. Wähle bitte ein anderes aus.",
@@ -1494,14 +1494,14 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 			File docFile = null;
 			if (getHero() != null) {
 				String dir = getHero().getHeroConfiguration().getProperty(
-						DsaTabPreferenceActivity.KEY_SETUP_SDCARD_PATH_PREFIX + DsaTabApplication.DIR_PDFS);
+						DsaTabPreferenceActivity.KEY_CUSTOM_DIRECTORY + DsaTabPreferenceActivity.DIR_PDFS);
 				if (!TextUtils.isEmpty(dir)) {
 					docFile = new File(dir);
 				}
 			}
 
 			if (docFile == null || !docFile.isDirectory()) {
-				docFile = DsaTabApplication.getDirectory(DsaTabApplication.DIR_PDFS);
+				docFile = DsaTabApplication.getDirectory(DsaTabPreferenceActivity.DIR_PDFS);
 			}
 			DirectoryChooserDialog.show(this, docFile.getAbsolutePath(), resultListener, 0);
 			return true;
@@ -1586,6 +1586,13 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 		return root;
 	}
 
+	public void applyPalette(Palette palette) {
+		if (palette != null) {
+			fabMenu.setAddButtonColorNormal(palette.getMutedColor(fabMenu.getAddButtonColorNormal()));
+			fabMenu.setAddButtonColorPressed(palette.getLightMutedColor(fabMenu.getAddButtonColorPressed()));
+		}
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -1609,7 +1616,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 	@Override
 	public void onHeroLoaded(Hero hero) {
 
-		itemListAdapter = new ListableItemAdapter(getBaseActivity(), hero, getListSettings());
+		itemListAdapter = new ListableItemAdapter(getDsaActivity(), hero, getListSettings());
 		itemListAdapter.setProbeListener(getProbeListener());
 		itemListAdapter.setTargetListener(getTargetListener());
 		itemListAdapter.setEditListener(getEditListener());
@@ -1832,12 +1839,13 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 					File pdfsDir = null;
 
 					String dir = getHero().getHeroConfiguration().getProperty(
-							DsaTabPreferenceActivity.KEY_SETUP_SDCARD_PATH_PREFIX + DsaTabApplication.DIR_PDFS);
+							DsaTabPreferenceActivity.KEY_CUSTOM_DIRECTORY + DsaTabPreferenceActivity.DIR_PDFS);
 					if (!TextUtils.isEmpty(dir)) {
 						pdfsDir = new File(dir);
 					}
-					if (pdfsDir == null || !pdfsDir.isDirectory())
-						pdfsDir = DsaTabApplication.getDirectory(DsaTabApplication.DIR_PDFS);
+					if (pdfsDir == null || !pdfsDir.isDirectory()) {
+						pdfsDir = DsaTabApplication.getDirectory(DsaTabPreferenceActivity.DIR_PDFS);
+					}
 
 					if (pdfsDir != null && pdfsDir.exists() && pdfsDir.isDirectory()) {
 						File[] pdfFiles = pdfsDir.listFiles(new FileFileFilter());
@@ -2059,7 +2067,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 					AbstractModificator modificator = (AbstractModificator) object;
 					modificator.setActive(!modificator.isActive());
 				} else if (object instanceof Probe) {
-					getBaseActivity().checkProbe(getBeing(), (Probe) object);
+					getDsaActivity().checkProbe(getBeing(), (Probe) object);
 				} else if (object instanceof FileListable) {
 					FileListable fileListable = (FileListable) object;
 					File file = fileListable.getFile();

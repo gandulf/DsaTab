@@ -38,6 +38,7 @@ public class ImageChooserDialog extends DialogFragment implements AdapterView.On
 
 	private ScaleType scaleType = ScaleType.CENTER_CROP;
 	private int columnWidth;
+	private int columnHeight;
 
 	private Uri imageUri;
 
@@ -55,7 +56,7 @@ public class ImageChooserDialog extends DialogFragment implements AdapterView.On
 		return false;
 	}
 
-	public static void pick(Fragment parent, File dir, final OnImageSelectedListener imageSelectedListener,
+	public static void pickPortrait(Fragment parent, File dir, final OnImageSelectedListener imageSelectedListener,
 			int requestCode) {
 		ImageChooserDialog dialog = new ImageChooserDialog();
 
@@ -78,6 +79,12 @@ public class ImageChooserDialog extends DialogFragment implements AdapterView.On
 			return;
 		} else {
 			dialog.imageSelectedListener = imageSelectedListener;
+
+			dialog.setGridColumnHeight(DsaTabApplication.getInstance().getResources()
+					.getDimensionPixelSize(R.dimen.portrait_height_small));
+			dialog.setGridColumnWidth(DsaTabApplication.getInstance().getResources()
+					.getDimensionPixelSize(R.dimen.portrait_width_small));
+
 			dialog.setArguments(args);
 			dialog.setTargetFragment(parent, requestCode);
 			dialog.show(parent.getFragmentManager(), TAG);
@@ -118,7 +125,7 @@ public class ImageChooserDialog extends DialogFragment implements AdapterView.On
 			}
 		};
 
-		pick(parent, DsaTabApplication.getDirectory(DsaTabApplication.DIR_PORTRAITS), imageSelectedListener,
+		pickPortrait(parent, DsaTabApplication.getDirectory(DsaTabApplication.DIR_PORTRAITS), imageSelectedListener,
 				requestCode);
 	}
 
@@ -140,6 +147,7 @@ public class ImageChooserDialog extends DialogFragment implements AdapterView.On
 
 		list = (GridView) popupcontent.findViewById(R.id.popup_portrait_chooser_list);
 		adapter = new PortraitAdapter(builder.getContext());
+		adapter.setMinHeight(columnHeight);
 		adapter.setScaleType(scaleType);
 		list.setAdapter(adapter);
 		list.setOnItemClickListener(this);
@@ -193,9 +201,15 @@ public class ImageChooserDialog extends DialogFragment implements AdapterView.On
 		}
 	}
 
+	public void setGridColumnHeight(int height) {
+		this.columnHeight = height;
+	}
+
 	static class PortraitAdapter extends ArrayAdapter<Uri> {
 
 		private ScaleType scaleType;
+
+		private int minHeight;
 
 		public PortraitAdapter(Context context) {
 			super(context, 0);
@@ -217,6 +231,14 @@ public class ImageChooserDialog extends DialogFragment implements AdapterView.On
 			this.scaleType = scaleType;
 		}
 
+		public int getMinHeight() {
+			return minHeight;
+		}
+
+		public void setMinHeight(int minHeight) {
+			this.minHeight = minHeight;
+		}
+
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -226,6 +248,7 @@ public class ImageChooserDialog extends DialogFragment implements AdapterView.On
 			} else {
 				tv = new ImageView(getContext());
 				tv.setScaleType(scaleType);
+				tv.setMinimumHeight(minHeight);
 			}
 
 			Uri file = getItem(position);

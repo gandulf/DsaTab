@@ -1,9 +1,9 @@
 package com.dsatab.activity;
 
-import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +26,10 @@ public class FragmentEditActivity extends BaseActivity {
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setTheme(DsaTabApplication.getInstance().getCustomTheme(false));
+		setTheme(DsaTabApplication.getInstance().getCustomTheme());
 		applyPreferencesToTheme();
 		super.onCreate(savedInstanceState);
-
+		setContentView(R.layout.main_blank);
 		try {
 
 			if (getIntent() == null || !getIntent().hasExtra(EDIT_FRAGMENT_CLASS)) {
@@ -37,7 +37,7 @@ public class FragmentEditActivity extends BaseActivity {
 						+ getIntent());
 			}
 
-			fragment = (BaseEditFragment) getFragmentManager().findFragmentById(android.R.id.content);
+			fragment = (BaseEditFragment) getFragmentManager().findFragmentById(R.id.content);
 
 			Class<? extends BaseEditFragment> fragmentClass = (Class<? extends BaseEditFragment>) getIntent()
 					.getExtras().getSerializable(EDIT_FRAGMENT_CLASS);
@@ -52,7 +52,7 @@ public class FragmentEditActivity extends BaseActivity {
 
 				fragment = fragmentClass.newInstance();
 				fragment.setArguments(getIntent().getExtras());
-				ft.add(android.R.id.content, fragment);
+				ft.add(R.id.content, fragment);
 				ft.commit();
 
 			}
@@ -81,7 +81,7 @@ public class FragmentEditActivity extends BaseActivity {
 
 	public void inflateDoneDiscard() {
 		// Inflate a "Done/Discard" custom action bar view.
-		LayoutInflater inflater = LayoutInflater.from(getActionBar().getThemedContext());
+		LayoutInflater inflater = LayoutInflater.from(getSupportActionBar().getThemedContext());
 		final View customActionBarView = inflater.inflate(R.layout.actionbar_custom_view_done_discard, null);
 		customActionBarView.findViewById(R.id.actionbar_done).setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -106,7 +106,7 @@ public class FragmentEditActivity extends BaseActivity {
 
 		// Show the custom action bar view and hide the normal Home icon and
 		// title.
-		final ActionBar actionBar = getActionBar();
+		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM, ActionBar.DISPLAY_SHOW_CUSTOM
 				| ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
 		actionBar.setCustomView(customActionBarView, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -115,7 +115,7 @@ public class FragmentEditActivity extends BaseActivity {
 
 	public void inflateDone() {
 		// Inflate a "Done/Discard" custom action bar view.
-		LayoutInflater inflater = LayoutInflater.from(getActionBar().getThemedContext());
+		LayoutInflater inflater = LayoutInflater.from(getSupportActionBar().getThemedContext());
 		final View customActionBarView = inflater.inflate(R.layout.actionbar_custom_view_done, null);
 		customActionBarView.findViewById(R.id.actionbar_done).setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -132,7 +132,7 @@ public class FragmentEditActivity extends BaseActivity {
 
 		// Show the custom action bar view and hide the normal Home icon and
 		// title.
-		final ActionBar actionBar = getActionBar();
+		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM, ActionBar.DISPLAY_SHOW_CUSTOM
 				| ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
 		actionBar.setCustomView(customActionBarView, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,

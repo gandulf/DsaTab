@@ -29,49 +29,47 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dropbox.sync.android.DbxException;
+import com.bingzer.android.driven.dropbox.app.DropboxActivity;
+import com.bingzer.android.driven.gdrive.app.GoogleDriveActivity;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
-import com.dsatab.activity.DsaTabActivity;
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.cloud.AuthorizationException;
 import com.dsatab.cloud.HeroExchange;
 import com.dsatab.cloud.HeroExchange.OnHeroExchangeListener;
+import com.dsatab.cloud.HeroExchange.StorageType;
+import com.dsatab.cloud.HeroesLoaderTask;
 import com.dsatab.cloud.HeroesSyncTask;
 import com.dsatab.data.Hero;
 import com.dsatab.data.HeroFileInfo;
-import com.dsatab.data.HeroFileInfo.StorageType;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.gandulf.guilib.data.OpenArrayAdapter;
 import com.gandulf.guilib.util.ListViewCompat;
 
 public class HeroChooserFragment extends BaseFragment implements AdapterView.OnItemClickListener,
-		OnItemLongClickListener, LoaderManager.LoaderCallbacks<List<HeroFileInfo>>, OnClickListener {
+		OnItemLongClickListener, LoaderManager.LoaderCallbacks<List<HeroFileInfo>> {
 
 	public static final String TAG = "HeroChooser";
 
-	static final String PREF_DONT_SHOW_CONNECT = "dont_show_connect";
-
-	static final int REQUEST_LINK_TO_DBX = 1190;
-
+	static final int CONNECT_EXCHANGE_RESULT = 1191;
 	public static final String INTENT_NAME_HERO_FILE_INFO = "heroPath";
 
 	private static final String DUMMY_FILE = "Dummy.xml";
+
+	private static final int LOCAL_LOADER = 1;
+	private static final int REMOTE_LOADER = 2;
 
 	private GridView list;
 	private HeroAdapter adapter;
@@ -84,7 +82,6 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 
 	private View loadingView;
 	private TextView empty;
-	private CustomDialog dropboxDialog;
 	private CustomDialog heldenAustauschDialog;
 
 	public interface OnHeroSelectedListener {
@@ -133,16 +130,19 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 														heroInfo.getName()), Toast.LENGTH_SHORT).show();
 									}
 
+									@Override
+									public void onError(String errorMessage, Throwable exception) {
+										Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
+									}
+
 								};
 								exchange.download(heroInfo, listener);
 							}
 							break;
 						case R.id.option_upload:
 							try {
-								exchange.upload(StorageType.Dropbox, heroInfo);
+								exchange.upload(heroInfo);
 								notifyChanged = true;
-							} catch (DbxException e) {
-								Debug.error(e);
 							} catch (IOException e) {
 								Debug.error(e);
 							}
@@ -254,11 +254,6 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 		list.setOnItemLongClickListener(this);
 
 		adapter = new HeroAdapter(getActivity(), R.layout.item_hero_chooser, new ArrayList<HeroFileInfo>());
-		try {
-			adapter.addAll(exchange.getHeroes(StorageType.FileSystem, StorageType.Dropbox));
-		} catch (Exception e) {
-			Debug.error(e);
-		}
 		list.setAdapter(adapter);
 
 		loadingView = root.findViewById(R.id.loading);
@@ -291,42 +286,8 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 
 		setHasOptionsMenu(true);
 
-		exchange = new HeroExchange(getActivity());
+		exchange = DsaTabApplication.getInstance().getExchange();
 		mCallback = new HeroesActionMode();
-
-		String error = Util.checkFileWriteAccess(DsaTabApplication.getDsaTabHeroDirectory());
-		if (error != null) {
-			Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();
-		}
-
-		if (!exchange.isConnected(StorageType.Dropbox)) {
-			CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
-			builder.setDarkTheme(DsaTabApplication.getInstance().isDarkTheme());
-			View popupcontent = builder.setView(R.layout.popup_cloud);
-			popupcontent.findViewById(R.id.connect_dropbox).setOnClickListener(this);
-
-			builder.setTitle("Cloud Connect");
-
-			CheckBox show = (CheckBox) popupcontent.findViewById(R.id.cb_dont_show_again);
-			show.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-				@Override
-				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-					Editor editor = getActivity().getPreferences(Activity.MODE_PRIVATE).edit();
-					editor.putBoolean(PREF_DONT_SHOW_CONNECT, isChecked);
-					editor.commit();
-				}
-			});
-
-			if (DsaTabApplication.getInstance().isFirstRun()
-					|| getActivity().getPreferences(Activity.MODE_PRIVATE).getBoolean(PREF_DONT_SHOW_CONNECT, false)) {
-				dropboxDialog = builder.create();
-			} else {
-				dropboxDialog = builder.show();
-			}
-
-			dropboxDialog.setCanceledOnTouchOutside(true);
-		}
 
 		CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
 		builder.setDarkTheme(DsaTabApplication.getInstance().isDarkTheme());
@@ -347,7 +308,7 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 		});
 		heldenAustauschDialog = builder.create();
 
-		refresh();
+		getLoaderManager().initLoader(LOCAL_LOADER, null, this);
 	}
 
 	private void loadExampleHeroes() {
@@ -355,7 +316,7 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 		FileOutputStream fos = null;
 		InputStream fis = null;
 		try {
-			File out = new File(DsaTabApplication.getDsaTabHeroPath() + DUMMY_FILE);
+			File out = new File(DsaTabApplication.getInternalHeroDirectory(), DUMMY_FILE);
 			fos = new FileOutputStream(out);
 			fis = new BufferedInputStream(getResources().getAssets().open(DUMMY_FILE));
 			byte[] buffer = new byte[8 * 1024];
@@ -373,12 +334,16 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 			Util.close(fis);
 		}
 
-		refresh();
+		refresh(LOCAL_LOADER);
 	}
 
 	@Override
 	public Loader<List<HeroFileInfo>> onCreateLoader(int id, Bundle args) {
-		return new HeroesSyncTask(getActivity(), exchange);
+		if (id == LOCAL_LOADER) {
+			return new HeroesLoaderTask(getActivity());
+		} else {
+			return new HeroesSyncTask(getActivity(), exchange);
+		}
 	}
 
 	@Override
@@ -395,7 +360,7 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 		if (getActionBarActivity() == null)
 			return;
 
-		getActionBarActivity().setProgressBarIndeterminateVisibility(false);
+		getBaseActivity().setToolbarRefreshing(false);
 		if (loadingView.getVisibility() != View.GONE) {
 			loadingView.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
 			loadingView.setVisibility(View.GONE);
@@ -421,27 +386,31 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 				}
 			}
 
-		}
+			List<HeroFileInfo> fileInfos = adapter.getItems();
+			for (HeroFileInfo fileInfo : heroes) {
+				int index = fileInfos.indexOf(fileInfo);
+				if (index >= 0) {
+					HeroFileInfo info = fileInfos.get(index);
+					info.merge(fileInfo);
+				} else {
+					adapter.add(fileInfo);
+				}
+			}
+			adapter.notifyDataSetChanged();
+		} else if (loader instanceof HeroesLoaderTask) {
+			HeroesLoaderTask heroLoader = (HeroesLoaderTask) loader;
 
-		adapter.clear();
-		adapter.addAll(heroes);
+			for (Exception e : heroLoader.getExceptions()) {
+				Toast.makeText(getActivity(), R.string.download_error, Toast.LENGTH_SHORT).show();
+				Debug.error(e);
+			}
+			adapter.clear();
+			adapter.addAll(heroes);
+		}
 
 		updateViews();
 
 		getActionBarActivity().invalidateOptionsMenu();
-	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.connect_dropbox:
-			exchange.syncDropbox(REQUEST_LINK_TO_DBX);
-			if (dropboxDialog != null) {
-				dropboxDialog.dismiss();
-			}
-			break;
-		}
-
 	}
 
 	private void updateViews() {
@@ -449,16 +418,16 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 			list.setVisibility(View.INVISIBLE);
 
 			empty.setVisibility(View.VISIBLE);
-			empty.setText(Util.getText(R.string.message_heroes_empty, DsaTabApplication.getDsaTabHeroPath()));
+			empty.setText(Util.getText(R.string.message_heroes_empty, DsaTabApplication.getExternalHeroPath()));
 		} else {
 			list.setVisibility(View.VISIBLE);
 			empty.setVisibility(View.GONE);
 		}
 	}
 
-	protected void refresh() {
-		getActionBarActivity().setProgressBarIndeterminateVisibility(true);
-		getActivity().getLoaderManager().restartLoader(0, null, this);
+	protected void refresh(int loader) {
+		getBaseActivity().setToolbarRefreshing(true);
+		getActivity().getLoaderManager().restartLoader(loader, null, this);
 	}
 
 	/*
@@ -477,7 +446,12 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 
 		menuItem = menu.findItem(R.id.option_connect_dropbox);
 		if (menuItem != null) {
-			menuItem.setVisible(dropboxDialog != null);
+			menuItem.setVisible(!exchange.isConnected(StorageType.Dropbox));
+		}
+
+		menuItem = menu.findItem(R.id.option_connect_drive);
+		if (menuItem != null) {
+			menuItem.setVisible(!exchange.isConnected(StorageType.Drive));
 		}
 	}
 
@@ -491,13 +465,21 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.option_refresh:
-			refresh();
+			refresh(REMOTE_LOADER);
 			return true;
 		case R.id.option_load_example_heroes:
 			loadExampleHeroes();
 			break;
 		case R.id.option_connect_dropbox:
-			dropboxDialog.show();
+			if (!exchange.isConnected(StorageType.Dropbox)) {
+				DropboxActivity.launch(getActivity(), CONNECT_EXCHANGE_RESULT, DsaTabApplication.DROPBOX_API_KEY,
+						DsaTabApplication.DROPBOX_API_SECRET);
+			}
+			return true;
+		case R.id.option_connect_drive:
+			if (!exchange.isConnected(StorageType.Drive)) {
+				GoogleDriveActivity.launch(getActivity(), CONNECT_EXCHANGE_RESULT);
+			}
 			return true;
 		case R.id.option_connect_heldenaustausch:
 			heldenAustauschDialog.show();
@@ -558,24 +540,37 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 				version.setVisibility(View.VISIBLE);
 			}
 
-			switch (heroInfo.getStorageType()) {
-			case Dropbox:
-				tag1.setText("Dropbox");
-				tag1.setBackgroundColor(getContext().getResources().getColor(R.color.ValueBlueAlpha));
-				tag1.setVisibility(View.VISIBLE);
-				break;
-			case FileSystem:
-				tag1.setText("Phone");
-				tag1.setBackgroundColor(getContext().getResources().getColor(R.color.ValueYellowAlpha));
-				tag1.setVisibility(View.VISIBLE);
-				break;
-			default:
+			if (heroInfo.getStorageType() != null) {
+				switch (heroInfo.getStorageType()) {
+				case Dropbox:
+					tag1.setText("Dropbox");
+					tag1.setBackgroundColor(getContext().getResources().getColor(R.color.ValueBlueAlpha));
+					tag1.setVisibility(View.VISIBLE);
+					break;
+				case Drive:
+					tag1.setText("Drive");
+					tag1.setBackgroundColor(getContext().getResources().getColor(R.color.ValueViolettAlpha));
+					tag1.setVisibility(View.VISIBLE);
+					break;
+				case FileSystem:
+					tag1.setText("Storage");
+					tag1.setBackgroundColor(getContext().getResources().getColor(R.color.ValueRedAlpha));
+					tag1.setVisibility(View.VISIBLE);
+					break;
+				case HeldenAustausch:
+					tag1.setText("Austausch");
+					tag1.setBackgroundColor(getContext().getResources().getColor(R.color.ValueYellowAlpha));
+					tag1.setVisibility(View.VISIBLE);
+				default:
+					tag1.setVisibility(View.GONE);
+					break;
+				}
+			} else {
 				tag1.setVisibility(View.GONE);
-				break;
 			}
 
-			if (heroInfo.isOnline()) {
-				tag2.setText("Austausch");
+			if (heroInfo.isInternal()) {
+				tag2.setText("Phone");
 				tag2.setBackgroundColor(getContext().getResources().getColor(R.color.ValueGreenAlpha));
 				tag2.setVisibility(View.VISIBLE);
 			} else {
@@ -594,11 +589,9 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-		if (requestCode == DsaTabActivity.ACTION_PREFERENCES) {
-			refresh();
-		} else if (requestCode == REQUEST_LINK_TO_DBX) {
+		if (requestCode == CONNECT_EXCHANGE_RESULT) {
 			if (resultCode == Activity.RESULT_OK) {
-				refresh();
+				refresh(REMOTE_LOADER);
 			} else {
 				// ... Link failed or was cancelled by the user.
 			}
@@ -625,7 +618,6 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 
 			HeroFileInfo hero = (HeroFileInfo) list.getItemAtPosition(position);
 			if (hero.getStorageType() == StorageType.HeldenAustausch) {
-				HeroExchange exchange = new HeroExchange(getActivity());
 				OnHeroExchangeListener listener = new OnHeroExchangeListener() {
 					@Override
 					public void onHeroInfoLoaded(List<HeroFileInfo> infos) {
@@ -634,6 +626,11 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 								onHeroSelectedListener.onHeroSelected(infos.get(0));
 							}
 						}
+					}
+
+					@Override
+					public void onError(String errorMessage, Throwable exception) {
+						Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
 					}
 				};
 

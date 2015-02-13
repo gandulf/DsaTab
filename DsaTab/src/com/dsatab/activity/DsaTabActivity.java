@@ -7,6 +7,7 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -21,30 +22,31 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.graphics.Palette;
+import android.support.v7.graphics.Palette.PaletteAsyncListener;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
+import com.dsatab.cloud.HeroSaveTask;
 import com.dsatab.config.TabInfo;
 import com.dsatab.data.AbstractBeing;
 import com.dsatab.data.Hero;
@@ -55,7 +57,6 @@ import com.dsatab.data.Probe;
 import com.dsatab.data.adapter.TabDrawerAdapter;
 import com.dsatab.data.adapter.TabDrawerAdapter.DrawerItem;
 import com.dsatab.data.adapter.TabDrawerAdapter.DrawerItemType;
-import com.dsatab.fragment.AttributeListFragment;
 import com.dsatab.fragment.BaseFragment;
 import com.dsatab.fragment.DiceSliderFragment;
 import com.dsatab.fragment.HeroChooserFragment;
@@ -64,10 +65,13 @@ import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.dsatab.view.listener.ShakeListener;
 import com.gandulf.guilib.util.ResUtil;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 public class DsaTabActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Hero>,
-		OnSharedPreferenceChangeListener, ListView.OnItemClickListener, OnHeroSelectedListener {
+		OnSharedPreferenceChangeListener, ListView.OnItemClickListener, OnHeroSelectedListener, ImageLoadingListener,
+		PaletteAsyncListener {
 
 	private static final String TAB_INDEX = "TAB_INDEX";
 
@@ -101,7 +105,6 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 
 	protected SharedPreferences preferences;
 
-	private AttributeListFragment attributeFragment;
 	private DiceSliderFragment diceSliderFragment;
 
 	private ShakeListener mShaker;
@@ -112,7 +115,7 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
-	private ActionBarDrawerToggle mDrawerToggle;
+	private android.support.v7.app.ActionBarDrawerToggle mDrawerToggle;
 	private TabDrawerAdapter tabDrawerAdapter;
 
 	private long backPressed;
@@ -124,7 +127,8 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 	public final void loadHero(HeroFileInfo heroPath) {
 
 		if (getHero() != null && preferences.getBoolean(DsaTabPreferenceActivity.KEY_AUTO_SAVE, true)) {
-			DsaTabApplication.getInstance().saveHero(this);
+			HeroSaveTask heroSaveTask = new HeroSaveTask(this, getHero());
+			heroSaveTask.execute();
 		}
 
 		loadingView.setVisibility(View.VISIBLE);
@@ -169,7 +173,7 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 		}
 
 		if (tabInfo != null) {
-			getActionBar().setTitle(tabInfo.getTitle());
+			getSupportActionBar().setTitle(tabInfo.getTitle());
 			if (tabInfo.getIconUri() != null) {
 				Drawable d = ResUtil.getDrawableByUri(this, tabInfo.getIconUri());
 				if (d != null) {
@@ -178,15 +182,15 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 					if (tabInfo.getColor() != Color.TRANSPARENT) {
 						d.setColorFilter(new LightingColorFilter(tabInfo.getColor(), 1));
 					}
-					getActionBar().setIcon(d);
+					getSupportActionBar().setIcon(d);
 				} else {
-					getActionBar().setIcon(R.drawable.icon);
+					getSupportActionBar().setIcon(R.drawable.icon);
 				}
 			} else {
-				getActionBar().setIcon(R.drawable.icon);
+				getSupportActionBar().setIcon(R.drawable.icon);
 			}
 		} else {
-			getActionBar().setIcon(R.drawable.icon);
+			getSupportActionBar().setIcon(R.drawable.icon);
 		}
 
 	}
@@ -346,24 +350,22 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setTheme(DsaTabApplication.getInstance().getCustomTheme(true));
+		setTheme(DsaTabApplication.getInstance().getCustomTheme());
 		applyPreferencesToTheme();
 		super.onCreate(savedInstanceState);
-
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		setContentView(R.layout.main_tab_view);
+		// requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
 		preferences = DsaTabApplication.getPreferences();
-
-		getActionBar().setDisplayShowTitleEnabled(true);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setHomeButtonEnabled(true);
 
 		DsaTabApplication.getPreferences().registerOnSharedPreferenceChangeListener(this);
 
 		// start tracing to "/sdcard/calc.trace"
 		// android.os.Debug.startMethodTracing("dsatab");
 
-		setContentView(R.layout.main_tab_view);
+		getSupportActionBar().setDisplayShowHomeEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setHomeButtonEnabled(true);
 
 		containers = new ArrayList<ViewGroup>(2);
 		for (int i = 0; i < containerIds.length; i++) {
@@ -387,8 +389,6 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 			tabInfo = getIntent().getParcelableExtra(INTENT_TAB_INFO);
 		}
 
-		attributeFragment = (AttributeListFragment) getFragmentManager().findFragmentByTag(AttributeListFragment.TAG);
-
 		diceSliderFragment = (DiceSliderFragment) getFragmentManager().findFragmentByTag(DiceSliderFragment.TAG);
 		diceSliderFragment.setSlidingUpPanelLayout(slidingUpPanelLayout);
 
@@ -407,6 +407,7 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 			return;
 		}
+
 		initDrawer();
 		initHero();
 		setupNavigationDrawer();
@@ -420,13 +421,13 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 		tabDrawerAdapter = new TabDrawerAdapter(this, new ArrayList<DrawerItem>());
 		// Set the adapter for the list view
 		mDrawerList.setAdapter(tabDrawerAdapter);
-
+		mDrawerList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 		// Set the list's click listener
 		mDrawerList.setOnItemClickListener(this);
 		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
-		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, R.string.drawer_open,
-				R.string.drawer_close) {
+		mDrawerToggle = new android.support.v7.app.ActionBarDrawerToggle(this, mDrawerLayout, toolbar,
+				R.string.drawer_open, R.string.drawer_close) {
 
 			private boolean actionbarShown = true;
 
@@ -447,10 +448,6 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 					showActionBar();
 				}
 
-				if (!isActionbarTranslucent() || getActionbarBackgroundBaseAlpha() > 0) {
-					setActionbarBackgroundAlpha(1f - slideOffset);
-				}
-
 			}
 
 			/** Called when a drawer has settled in a completely open state. */
@@ -464,7 +461,6 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 
 				if (!actionbarShown) {
 					updatePage(tabInfo, null);
-					getActionBar().setDisplayHomeAsUpEnabled(true);
 
 					for (int i = 0; i < TabInfo.MAX_TABS_PER_PAGE; i++) {
 						if (getCurrentFragment(i) instanceof BaseFragment) {
@@ -478,9 +474,7 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 
 			private void hideActionBar() {
 				if (actionbarShown) {
-					getActionBar().setTitle(null);
-					getActionBar().setIcon(android.R.color.transparent);
-					getActionBar().setDisplayHomeAsUpEnabled(false);
+					getSupportActionBar().setTitle(null);
 
 					for (int i = 0; i < TabInfo.MAX_TABS_PER_PAGE; i++) {
 						if (getCurrentFragment(i) instanceof BaseFragment) {
@@ -498,6 +492,7 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 
 		if (DsaTabApplication.getInstance().isFirstRun()) {
 			mDrawerLayout.openDrawer(mDrawerList);
+			setActionbarBackgroundAlpha(0f);
 		}
 	}
 
@@ -546,11 +541,75 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 		mDrawerLayout.closeDrawer(mDrawerList);
 	}
 
+	private void colorize(Bitmap photo) {
+		Palette.generateAsync(photo, this);
+	}
+
+	@Override
+	public void onGenerated(Palette palette) {
+		DsaTabApplication.getInstance().setPalette(palette);
+		applyPalette(palette);
+	}
+
+	@Override
+	public void onLoadingComplete(String uri, View view, Bitmap bitmap) {
+		colorize(bitmap);
+	}
+
+	@Override
+	public void onLoadingCancelled(String arg0, View arg1) {
+
+	}
+
+	@Override
+	public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
+
+	}
+
+	@Override
+	public void onLoadingStarted(String arg0, View arg1) {
+
+	}
+
+	@SuppressLint("NewApi")
+	public void applyPalette(Palette palette) {
+		super.applyPalette(palette);
+		tabDrawerAdapter.applyPalette(palette);
+
+		// getWindow().setBackgroundDrawable(new ColorDrawable(palette.getDarkMutedColor().getRgb()));
+		//
+		// TextView titleView = (TextView) findViewById(R.id.title);
+		// titleView.setTextColor(palette.getVibrantColor().getRgb());
+		//
+		// TextView descriptionView = (TextView) findViewById(R.id.description);
+		// descriptionView.setTextColor(palette.getLightVibrantColor().getRgb());
+		//
+		// colorRipple(R.id.info, palette.getDarkMutedColor().getRgb(), palette.getDarkVibrantColor().getRgb());
+		// colorRipple(R.id.star, palette.getMutedColor().getRgb(), palette.getVibrantColor().getRgb());
+		//
+		// View infoView = findViewById(R.id.information_container);
+		// infoView.setBackgroundColor(palette.getLightMutedColor().getRgb());
+		//
+		// AnimatedPathView star = (AnimatedPathView) findViewById(R.id.star_container);
+		// star.setFillColor(palette.getVibrantColor().getRgb());
+		// star.setStrokeColor(palette.getLightVibrantColor().getRgb());
+
+		if (diceSliderFragment != null && diceSliderFragment.isAdded()) {
+			diceSliderFragment.applyPalette(palette);
+		}
+
+		for (int i = 0; i < TabInfo.MAX_TABS_PER_PAGE; i++) {
+			if (getCurrentFragment(i) != null && getCurrentFragment(i) instanceof BaseFragment) {
+				((BaseFragment) getCurrentFragment(i)).applyPalette(palette);
+			}
+		}
+	}
+
 	/**
 	 * 
 	 */
 	public void setupNavigationDrawer() {
-		getActionBar();
+		getSupportActionBar();
 		List<TabInfo> tabs;
 		if (getHeroConfiguration() != null)
 			tabs = getHeroConfiguration().getTabs();
@@ -560,8 +619,11 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 		tabDrawerAdapter.clear();
 
 		if (getHero() != null) {
-			tabDrawerAdapter.add(new DrawerItem(DRAWER_ID_NONE, getHero().getName(), getHero().getPortraitUri(),
-					Color.RED, DrawerItemType.Profile));
+			DrawerItem profile = new DrawerItem(DRAWER_ID_NONE, getHero().getName(), getHero().getPortraitUri(),
+					R.drawable.profile_picture, Color.RED, DrawerItemType.Profile);
+
+			profile.setSubText(getHero().getBaseInfo().getAusbildung());
+			tabDrawerAdapter.add(profile);
 		}
 		if (!tabs.isEmpty()) {
 			int tabIndex = 0;
@@ -846,10 +908,6 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 		setupNavigationDrawer();
 		showTab(refreshTabInfo(defaultTabIndex), true);
 
-		if (attributeFragment != null && attributeFragment.isAdded()) {
-			attributeFragment.loadHero(hero);
-		}
-
 		if (diceSliderFragment != null && diceSliderFragment.isAdded()) {
 			diceSliderFragment.loadHero(hero);
 		}
@@ -920,8 +978,8 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 		DsaTabApplication.getPreferences().unregisterOnSharedPreferenceChangeListener(this);
 
 		if (getHero() != null && preferences.getBoolean(DsaTabPreferenceActivity.KEY_AUTO_SAVE, true)) {
-			DsaTabApplication.getInstance().saveHero(this);
-
+			HeroSaveTask heroSaveTask = new HeroSaveTask(this, getHero());
+			heroSaveTask.execute();
 		}
 
 		if (getHeroConfiguration() != null && getHeroConfiguration().getTabs() != null) {
@@ -976,12 +1034,17 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 		MenuInflater inflater = getMenuInflater();
 
 		inflater.inflate(R.menu.menuitem_search, menu);
-		SearchManager SManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-		MenuItem searchMenuItem = menu.findItem(R.id.action_search);
-		SearchView searchViewAction = (SearchView) MenuItemCompat.getActionView(searchMenuItem);
-		searchViewAction.setSearchableInfo(SManager.getSearchableInfo(getComponentName()));
-		searchViewAction.setIconifiedByDefault(true);
 
+		MenuItem searchMenuItem = menu.findItem(R.id.action_search);
+		if (searchMenuItem != null) {
+			android.support.v7.widget.SearchView searchViewAction = (android.support.v7.widget.SearchView) MenuItemCompat
+					.getActionView(searchMenuItem);
+			if (searchViewAction != null) {
+				SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+				searchViewAction.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
+				searchViewAction.setIconifiedByDefault(true);
+			}
+		}
 		inflater.inflate(R.menu.menuitem_savehero, menu);
 
 		return super.onCreateOptionsMenu(menu);
@@ -1060,7 +1123,8 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 		switch (item.getItemId()) {
 		case R.id.option_save_hero:
 			if (getHero() != null) {
-				DsaTabApplication.getInstance().saveHero(this);
+				HeroSaveTask heroSaveTask = new HeroSaveTask(this, getHero());
+				heroSaveTask.execute();
 			}
 			return true;
 		case R.id.option_set1:
@@ -1157,8 +1221,8 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 			}
 		}
 
-		if (attributeFragment != null && attributeFragment.isAdded())
-			attributeFragment.onSharedPreferenceChanged(sharedPreferences, key);
+		if (diceSliderFragment != null && diceSliderFragment.isAdded())
+			diceSliderFragment.onSharedPreferenceChanged(sharedPreferences, key);
 	}
 
 	protected void showHeroChooser() {

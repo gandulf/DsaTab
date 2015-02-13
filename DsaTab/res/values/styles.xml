@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:custom="http://schemas.android.com/apk/res-auto">
-        
+
     <style name="Widget.Button" parent="@android:style/Widget.Button">
         <item name="android:background">@drawable/btn_touch_light</item>
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
@@ -10,7 +10,7 @@
         <item name="android:ellipsize">end</item>
         <item name="android:layout_gravity">center_vertical</item>
     </style>
-    
+
     <style name="Widget.Button.Dark">
         <item name="android:background">@drawable/btn_touch_dark</item>
     </style>
@@ -19,7 +19,7 @@
         <item name="android:background">@drawable/btn_touch_light_left</item>
         <item name="android:layout_marginRight">0dp</item>
     </style>
-    
+
     <style name="Widget.Button.Left.Dark">
         <item name="android:background">@drawable/btn_touch_dark_left</item>
         <item name="android:layout_marginRight">0dp</item>
@@ -29,31 +29,30 @@
         <item name="android:background">@drawable/btn_touch_light_right</item>
         <item name="android:layout_marginLeft">0dp</item>
     </style>
-    
+
     <style name="Widget.Button.Right.Dark">
         <item name="android:background">@drawable/btn_touch_dark_right</item>
         <item name="android:layout_marginLeft">0dp</item>
-    </style>  
-    
+    </style>
+
     <style name="Widget.Button.Small">
         <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
         <item name="android:minWidth">30dp</item>
         <item name="android:minHeight">20dp</item>
     </style>
-    
+
     <style name="Widget.Button.Small.Dark">
         <item name="android:background">@drawable/btn_touch_small_dark</item>
     </style>
-    
-    
+
     <style name="TextValue" parent="@android:style/Widget.TextView">
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:ellipsize">end</item>
         <item name="android:padding">@dimen/default_gap</item>
     </style>
-    
-	<style name="TextValue.Small">
+
+    <style name="TextValue.Small">
         <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
     </style>
 
@@ -70,13 +69,13 @@
 
     <style name="TextLabel.Mini">
         <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
-        <item name="android:textSize">9sp</item>
-<!--         <item name="android:textAllCaps">true</item>  -->
+        <item name="android:textSize">11sp</item>
+        <!-- <item name="android:textAllCaps">true</item> -->
         <item name="android:gravity">right|bottom</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:minWidth">20dp</item>
     </style>
-    
+
     <style name="TextLabel.Float">
         <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
         <item name="android:textSize">@dimen/floatinghintedittext_hint_size</item>
@@ -85,13 +84,5 @@
         <item name="android:paddingBottom">0dp</item>
         <item name="android:textColor">?android:attr/textColorHint</item>
     </style>
-    
-    
-    <style name="Widget.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@drawable/ab_solid_dark_holo</item>
-    </style>
 
-    <style name="Widget.ActionBar.Transparent">
-        <item name="android:background">@android:color/transparent</item>
-    </style>
 </resources>

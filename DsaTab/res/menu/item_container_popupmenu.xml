@@ -4,17 +4,20 @@
         android:id="@+id/option_add"
         android:icon="@drawable/dsa_bag_add"
         android:showAsAction="withText|ifRoom"
+        app:showAsAction="withText|ifRoom"
         android:title="@string/label_create">
     </item>
     <item
         android:id="@+id/option_edit"
         android:icon="?attr/imgBarEdit"
         android:showAsAction="withText|ifRoom"
+        app:showAsAction="withText|ifRoom"
         android:title="@string/label_edit"/>
     <item
         android:id="@+id/option_delete"
         android:icon="?attr/imgBarDelete"
         android:showAsAction="withText|ifRoom"
+        app:showAsAction="withText|ifRoom"
         android:title="@string/label_delete"/>
 
 </menu>

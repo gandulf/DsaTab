@@ -1,39 +1,35 @@
 package com.dsatab.cloud;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import org.w3c.dom.Document;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
-import android.widget.Toast;
 
-import com.dropbox.sync.android.DbxAccountManager;
-import com.dropbox.sync.android.DbxException;
-import com.dropbox.sync.android.DbxFile;
-import com.dropbox.sync.android.DbxFileInfo;
-import com.dropbox.sync.android.DbxFileSystem;
-import com.dropbox.sync.android.DbxPath;
+import com.bingzer.android.driven.Credential;
+import com.bingzer.android.driven.DrivenException;
+import com.bingzer.android.driven.LocalFile;
+import com.bingzer.android.driven.RemoteFile;
+import com.bingzer.android.driven.Result;
+import com.bingzer.android.driven.StorageProvider;
+import com.bingzer.android.driven.contracts.Task;
+import com.bingzer.android.driven.dropbox.Dropbox;
+import com.bingzer.android.driven.gdrive.GoogleDrive;
+import com.bingzer.android.driven.local.ExternalDrive;
 import com.dsatab.DsaTabApplication;
-import com.dsatab.R;
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.data.HeroFileInfo;
 import com.dsatab.data.HeroFileInfo.FileType;
-import com.dsatab.data.HeroFileInfo.StorageType;
 import com.dsatab.util.Debug;
 
 public class HeroExchange {
@@ -43,56 +39,89 @@ public class HeroExchange {
 	public static final int RESULT_CANCELED = 3;
 	public static final int RESULT_EMPTY = 4;
 
-	private Activity context;
+	private Context context;
 
-	// dropbox
-	private DbxAccountManager mDbxAcctMgr;
-	private DbxPath dsatabBasePath;
-	private Map<String, DbxFile> dbxFileMap;
+	private StorageProvider dropBox = new Dropbox();
+	private StorageProvider drive = new GoogleDrive();
+	private StorageProvider external = new ExternalDrive();
+
+	public static StorageType[] storageTypes = new StorageType[] { StorageType.Drive, StorageType.Dropbox,
+			StorageType.HeldenAustausch };
 
 	public interface OnHeroExchangeListener {
 		public void onHeroInfoLoaded(List<HeroFileInfo> info);
+
+		public void onError(String errorMessage, Throwable exception);
+
 	};
 
-	public HeroExchange(Activity context) {
+	public HeroExchange(Context context) {
 		this.context = context;
-		dbxFileMap = new HashMap<String, DbxFile>();
 
-		mDbxAcctMgr = DbxAccountManager.getInstance(context.getApplicationContext(), DsaTabApplication.DROPBOX_API_KEY,
-				DsaTabApplication.DROPBOX_API_SECRET);
+		Task<Result<DrivenException>> task = new Task<Result<DrivenException>>() {
+			@Override
+			public void onCompleted(Result<DrivenException> result) {
+
+			}
+		};
+
+		if (dropBox.hasSavedCredential(context)) {
+			dropBox.authenticateAsync(context, task);
+		}
+		if (drive.hasSavedCredential(context)) {
+			drive.authenticateAsync(context, task);
+		}
+
+		if (!TextUtils.isEmpty(DsaTabApplication.getExternalHeroPath())) {
+			Credential credential = new Credential(context, DsaTabApplication.getExternalHeroPath());
+			external.authenticateAsync(credential, task);
+		}
+
 	}
 
-	public static boolean isConnected(Context context, StorageType type) {
-		switch (type) {
-		case Dropbox:
-			DbxAccountManager acctMgr = DbxAccountManager.getInstance(context.getApplicationContext(),
-					DsaTabApplication.DROPBOX_API_KEY, DsaTabApplication.DROPBOX_API_SECRET);
-			return acctMgr.hasLinkedAccount();
-		case FileSystem:
-			return true;
-		case HeldenAustausch:
-			String token = DsaTabApplication.getPreferences()
-					.getString(DsaTabPreferenceActivity.KEY_EXCHANGE_TOKEN, "");
+	private StorageProvider getProvider(HeroFileInfo fileInfo) {
 
-			return !TextUtils.isEmpty(token);
-		default:
-			return false;
+		return getProvider(fileInfo.getStorageType());
+	}
+
+	private StorageProvider getProvider(StorageType type) {
+		StorageProvider provider = null;
+		if (type != null) {
+			switch (type) {
+			case Drive:
+				provider = drive;
+				break;
+			case Dropbox:
+				provider = dropBox;
+				break;
+			case FileSystem:
+				provider = external;
+				break;
+			case HeldenAustausch:
+				provider = null;
+			}
 		}
+
+		if (provider != null && !provider.isAuthenticated() && provider.hasSavedCredential(context)) {
+
+			Task<Result<DrivenException>> task = new Task<Result<DrivenException>>() {
+				@Override
+				public void onCompleted(Result<DrivenException> result) {
+
+				}
+			};
+			provider.authenticateAsync(context, task);
+		}
+
+		return provider;
 	}
 
 	public boolean isConnected(StorageType type) {
 		switch (type) {
-		case Dropbox:
-			return mDbxAcctMgr.hasLinkedAccount();
-		case FileSystem:
-			return true;
 		case HeldenAustausch:
-			String token = DsaTabApplication.getPreferences()
-					.getString(DsaTabPreferenceActivity.KEY_EXCHANGE_TOKEN, "");
-
-			return !TextUtils.isEmpty(token);
+			return isConfigured();
 		default:
-			return false;
+			return getProvider(type).isAuthenticated();
 		}
 	}
 
@@ -102,20 +131,13 @@ public class HeroExchange {
 		return !TextUtils.isEmpty(token);
 	}
 
-	public boolean syncDropbox(int requestCode) {
-		if (!mDbxAcctMgr.hasLinkedAccount()) {
-			mDbxAcctMgr.startLink(context, requestCode);
-			return true;
-		} else {
-			return false;
+	private RemoteFile getBasePath(StorageProvider provider) {
+		RemoteFile base = provider.get("dsatab");
+		if (base == null || !base.isDirectory()) {
+			base = provider.create("dsatab");
 		}
-	}
 
-	private DbxPath getDropboxBasePath() {
-		if (dsatabBasePath == null)
-			dsatabBasePath = new DbxPath("dsatab");
-
-		return dsatabBasePath;
+		return base;
 	}
 
 	public boolean delete(HeroFileInfo fileInfo) {
@@ -123,240 +145,87 @@ public class HeroExchange {
 
 		switch (fileInfo.getStorageType()) {
 
-		case FileSystem:
-			File heroFile = new File(fileInfo.getPath(FileType.Hero));
-			result |= heroFile.delete();
-
-			File configFile = new File(fileInfo.getPath(FileType.Config));
-			result |= configFile.delete();
-			break;
-
-		case Dropbox:
-			if (mDbxAcctMgr != null && mDbxAcctMgr.hasLinkedAccount()) {
-				try {
-					DbxPath heroPath = new DbxPath(fileInfo.getPath(FileType.Hero));
-					DbxPath configPath = new DbxPath(fileInfo.getPath(FileType.Hero));
-
-					DbxFileSystem dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr.getLinkedAccount());
-
-					if (dbxFs.exists(heroPath))
-						dbxFs.delete(heroPath);
-					if (dbxFs.exists(configPath))
-						dbxFs.delete(configPath);
-
-					result = true;
-				} catch (Exception e) {
-					Debug.error(e);
-				}
-			}
-			break;
 		case HeldenAustausch:
 			break;
+		default:
+			getProvider(fileInfo).delete(fileInfo.getPath(FileType.Hero));
+			getProvider(fileInfo).delete(fileInfo.getPath(FileType.Config));
 		}
 
 		return result;
 	}
 
-	public void upload(StorageType type, HeroFileInfo fileInfo) throws DbxException, IOException {
-		switch (type) {
-		case Dropbox:
-			if (mDbxAcctMgr != null && mDbxAcctMgr.hasLinkedAccount()) {
-				uploadToDropbox(fileInfo);
-			}
-			break;
-		case FileSystem:
-			break;
-		case HeldenAustausch:
-			break;
-		}
-	}
-
-	protected HeroFileInfo uploadToDropbox(HeroFileInfo fileInfo) throws DbxException, IOException {
-		HeroFileInfo result = null;
-
-		if (fileInfo.getStorageType() != StorageType.Dropbox) {
-			DbxFileSystem dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr.getLinkedAccount());
-
-			DbxFile dbxFile = null, dbxFileConfig = null;
-			DbxPath heroPath = null, configPath = null;
-
-			InputStream heroIs = getInputStream(fileInfo, FileType.Hero);
-			if (heroIs != null) {
-				heroPath = new DbxPath(getDropboxBasePath(), fileInfo.getName() + HeroFileInfo.HERO_FILE_EXTENSION);
-				if (dbxFs.exists(heroPath)) {
-					dbxFile = dbxFs.open(heroPath);
-				} else {
-					dbxFile = dbxFs.create(heroPath);
-				}
-				writeToDbxFile(dbxFile, heroIs);
-				closeStream(fileInfo, FileType.Hero);
-			}
-
-			InputStream configIs = getInputStream(fileInfo, FileType.Config);
-			if (configIs != null) {
-				configPath = new DbxPath(getDropboxBasePath(), fileInfo.getName() + HeroFileInfo.CONFIG_FILE_EXTENSION);
-				if (dbxFs.exists(configPath)) {
-					dbxFileConfig = dbxFs.open(configPath);
-				} else {
-					dbxFileConfig = dbxFs.create(configPath);
-				}
-
-				writeToDbxFile(dbxFileConfig, configIs);
-				closeStream(fileInfo, FileType.Config);
-			}
-
-			if (heroPath != null) {
-				// delete the old file
-				if (fileInfo.getStorageType() == StorageType.FileSystem) {
-					delete(fileInfo);
-				}
-
-				result = new HeroFileInfo(heroPath, configPath, this);
+	public void upload(HeroFileInfo heroInfo) throws IOException {
+		StorageProvider storage = getProvider(heroInfo);
+		if (storage != null) {
+			LocalFile local = heroInfo.getLocalFile(FileType.Hero);
+			RemoteFile remote = null;
+			if (TextUtils.isEmpty(heroInfo.getRemoteHeroId())) {
+				remote = storage.create(getBasePath(storage), local);
+				heroInfo.setRemoteHeroId(remote.getId());
 			} else {
-				result = null;
+				remote = storage.id(heroInfo.getRemoteHeroId());
+				remote.upload(local);
 			}
-		} else {
-			result = fileInfo;
-		}
-		return result;
-	}
 
-	private void writeToDbxFile(DbxFile dbxFile, InputStream is) throws IOException {
-		byte[] buffer = new byte[1024];
+			LocalFile localConfig = heroInfo.getLocalFile(FileType.Config);
+			RemoteFile remoteConfig = null;
+			if (TextUtils.isEmpty(heroInfo.getRemoteConfigId())) {
+				remoteConfig = storage.create(getBasePath(storage), localConfig);
+				heroInfo.setRemoteConfigId(remoteConfig.getId());
+			} else {
+				remoteConfig = storage.id(heroInfo.getRemoteConfigId());
+				remoteConfig.upload(localConfig);
+			}
 
-		OutputStream os = dbxFile.getWriteStream();
-		int length = 0;
-		while ((length = is.read(buffer)) > 0) {
-			os.write(buffer, 0, length);
 		}
-		os.close();
-		is.close();
-		dbxFile.close();
 	}
 
 	public void download(HeroFileInfo heroInfo, OnHeroExchangeListener listener) {
 
-		if (!checkSettings())
-			return;
+		StorageProvider storage = getProvider(heroInfo);
 
-		final SharedPreferences preferences = DsaTabApplication.getPreferences();
+		if (storage != null) {
+			if (!TextUtils.isEmpty(heroInfo.getRemoteHeroId())) {
+				LocalFile local = heroInfo.getLocalFile(FileType.Hero);
+				RemoteFile remote = storage.id(heroInfo.getRemoteHeroId());
+				remote.download(local);
+			}
 
-		ImportHeroTaskNew importFileTask = new ImportHeroTaskNew(context, heroInfo, preferences.getString(
-				DsaTabPreferenceActivity.KEY_EXCHANGE_TOKEN, ""));
-		importFileTask.setOnHeroExchangeListener(listener);
-		importFileTask.execute();
-	}
-
-	private boolean checkSettings() {
-		if (!isConfigured()) {
-
-			Toast.makeText(context, R.string.message_insert_login_token_first, Toast.LENGTH_LONG).show();
-
-			DsaTabPreferenceActivity.startPreferenceActivity(context);
-			return false;
-		} else
-			return true;
+			if (!TextUtils.isEmpty(heroInfo.getRemoteConfigId())) {
+				LocalFile localConfig = heroInfo.getLocalFile(FileType.Config);
+				RemoteFile remoteConfig = storage.id(heroInfo.getRemoteConfigId());
+				remoteConfig.download(localConfig);
+			}
+		} else {
+			if (isConfigured()) {
+				final SharedPreferences preferences = DsaTabApplication.getPreferences();
+				ImportHeroTask importFileTask = new ImportHeroTask(context, heroInfo, preferences.getString(
+						DsaTabPreferenceActivity.KEY_EXCHANGE_TOKEN, ""));
+				importFileTask.setOnHeroExchangeListener(listener);
+				importFileTask.execute();
+			} else {
+				Debug.warning("Heldenaustausch: Not configured skipping download");
+			}
+		}
 	}
 
 	public InputStream getInputStream(HeroFileInfo fileInfo, FileType fileType) throws IOException {
-
-		switch (fileInfo.getStorageType()) {
-		case FileSystem:
-			File file = new File(fileInfo.getPath(fileType));
-			if (file.exists() && file.canRead()) {
-				FileInputStream fis = new FileInputStream(file);
-				return fis;
-			} else {
-				throw new FileNotFoundException(file.getAbsolutePath());
-			}
-		case Dropbox:
-			DbxFileSystem dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr.getLinkedAccount());
-			DbxPath path = new DbxPath(fileInfo.getPath(fileType));
-			if (dbxFs.exists(path)) {
-				DbxFile dbxFile = dbxFs.open(path);
-
-				dbxFileMap.put(path.toString(), dbxFile);
-
-				return dbxFile.getReadStream();
-			} else {
-				throw new FileNotFoundException(path.toString());
-			}
-		case HeldenAustausch:
-
-			if (fileType == FileType.Hero) {
-				// nur für die Testphase, bis ein gültiges Zertifikate vorhanden ist
-				Helper.disableSSLCheck();
-				try {
-
-					String token = DsaTabApplication.getPreferences().getString(
-							DsaTabPreferenceActivity.KEY_EXCHANGE_TOKEN, "");
-
-					String stringheld = Helper.postRequest(token, "action", "returnheld", "format", "heldenxml",
-							"heldenid", fileInfo.getId());
-
-					ByteArrayInputStream bis = new ByteArrayInputStream(stringheld.getBytes());
-
-					return bis;
-
-				} catch (Exception e) {
-					Debug.error(e);
-					return null;
-				}
-			} else {
-				// no config file for now
-				return null;
-			}
-		default:
+		File file = fileInfo.getFile(fileType);
+		if (file != null && file.exists() && file.canRead()) {
+			return new FileInputStream(file);
+		} else {
 			return null;
-		}
-
-	}
-
-	public void closeStream(HeroFileInfo fileInfo, FileType fileType) {
-		switch (fileInfo.getStorageType()) {
-		case FileSystem:
-			break;
-		case Dropbox:
-			DbxPath path = new DbxPath(fileInfo.getPath(fileType));
-			DbxFile file = dbxFileMap.remove(path.toString());
-			if (file != null) {
-				file.close();
-			}
-			break;
-		case HeldenAustausch:
-			break;
 		}
 	}
 
 	public OutputStream getOutputStream(HeroFileInfo fileInfo, FileType fileType) throws IOException {
-
-		switch (fileInfo.getStorageType()) {
-		case FileSystem: {
-			File file = new File(fileInfo.getPath(fileType));
-			FileOutputStream fis = new FileOutputStream(file);
-			return fis;
-		}
-		case Dropbox: {
-			DbxFileSystem dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr.getLinkedAccount());
-			DbxPath path = new DbxPath(fileInfo.getPath(fileType));
-			DbxFile dbxFile;
-			if (dbxFs.exists(path)) {
-				dbxFile = dbxFs.open(path);
-			} else {
-				dbxFile = dbxFs.create(path);
-			}
-			dbxFileMap.put(path.toString(), dbxFile);
-			return dbxFile.getWriteStream();
-		}
-		case HeldenAustausch: {
-			File file = new File(fileInfo.getPath(fileType));
-			FileOutputStream fis = new FileOutputStream(file);
-			return fis;
-		}
-		default:
+		File file = fileInfo.getFile(fileType);
+		if (file != null) {
+			return new FileOutputStream(file);
+		} else {
 			return null;
 		}
-
 	}
 
 	/**
@@ -366,7 +235,7 @@ public class HeroExchange {
 	 * @throws Exception
 	 */
 	public List<HeroFileInfo> getHeroes() throws Exception {
-		return getHeroes(StorageType.FileSystem, StorageType.Dropbox, StorageType.HeldenAustausch);
+		return getHeroes(storageTypes);
 	}
 
 	public List<HeroFileInfo> getHeroes(StorageType... storageTypes) throws Exception {
@@ -393,47 +262,6 @@ public class HeroExchange {
 		List<HeroFileInfo> heroes = new ArrayList<HeroFileInfo>();
 
 		switch (storageType) {
-		case FileSystem: {
-			File heroesDir = DsaTabApplication.getDsaTabHeroDirectory();
-			File[] files = heroesDir.listFiles();
-			if (files != null && heroesDir.exists() && heroesDir.canRead()) {
-				for (File file : files) {
-					if (file.isFile()
-							&& file.getName().toLowerCase(Locale.GERMAN).endsWith(HeroFileInfo.HERO_FILE_EXTENSION)) {
-						HeroFileInfo info = new HeroFileInfo(file, null, this);
-						if (info != null) {
-							heroes.add(info);
-						}
-					}
-				}
-			} else {
-				Debug.warning("Unable to read directory " + heroesDir.getAbsolutePath()
-						+ ". Make sure the directory exists and contains your heros");
-			}
-			break;
-		}
-		case Dropbox: {
-
-			if (mDbxAcctMgr.hasLinkedAccount()) {
-				DbxFileSystem dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr.getLinkedAccount());
-
-				if (dbxFs.isFolder(getDropboxBasePath())) {
-					List<DbxFileInfo> files = dbxFs.listFolder(getDropboxBasePath());
-
-					for (DbxFileInfo fileInfo : files) {
-						if (fileInfo.path.getName().endsWith(HeroFileInfo.HERO_FILE_EXTENSION)) {
-							HeroFileInfo info = new HeroFileInfo(fileInfo.path, null, this);
-
-							if (info != null) {
-								heroes.add(info);
-							}
-						}
-					}
-				}
-			}
-
-			break;
-		}
 		case HeldenAustausch:
 
 			String token = DsaTabApplication.getPreferences()
@@ -456,12 +284,40 @@ public class HeroExchange {
 					String lastChange = Helper.getDatenAsString(d, "/helden/held[" + i + "]/heldlastchange");
 
 					HeroFileInfo fileInfo = new HeroFileInfo(name, heldenid, heldenKey);
-					fileInfo.setStorageType(StorageType.HeldenAustausch);
 					heroes.add(fileInfo);
 				}
 			}
+			break;
+		default:
+			StorageProvider storage = getProvider(storageType);
+			if (storage.isAuthenticated()) {
+				List<RemoteFile> files = storage.list(getBasePath(storage));
+
+				if (files != null) {
+					for (RemoteFile file : files) {
+						if (file.getName().toLowerCase(Locale.GERMAN).endsWith(HeroFileInfo.HERO_FILE_EXTENSION)) {
+
+							String configName = file.getName().replace(HeroFileInfo.HERO_FILE_EXTENSION,
+									HeroFileInfo.CONFIG_FILE_EXTENSION);
+							RemoteFile remoteConfig = storage.get(getBasePath(storage), configName);
+
+							HeroFileInfo info = new HeroFileInfo(file, remoteConfig, storageType, this);
+							download(info, null);
+							info.prepare(this);
+							heroes.add(info);
+						}
+					}
+				} else {
+					Debug.warning("Unable to read directory " + getBasePath(storage).getName()
+							+ ". Make sure the directory exists and contains your heroes");
+				}
+			}
+			break;
 		}
 		return heroes;
 	}
 
+	public enum StorageType {
+		FileSystem, Dropbox, Drive, HeldenAustausch
+	}
 }

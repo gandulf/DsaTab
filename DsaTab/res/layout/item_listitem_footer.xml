@@ -7,7 +7,7 @@
     android:divider="?android:attr/dividerVertical"
     android:dividerPadding="?android:attr/dividerPadding"
     android:orientation="horizontal"
-    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:minHeight="?attr/listPreferredItemHeight"
     android:paddingLeft="0dp"
     android:paddingRight="0dp" >
 

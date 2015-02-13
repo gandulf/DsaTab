@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
+import android.support.v7.graphics.Palette;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,8 @@ public class TabDrawerAdapter extends OpenArrayAdapter<DrawerItem> {
 
 	private LayoutInflater inflater;
 
+	private Palette palette;
+
 	public enum DrawerItemType {
 		Header, Tab, System, Profile
 	};
@@ -39,6 +42,7 @@ public class TabDrawerAdapter extends OpenArrayAdapter<DrawerItem> {
 
 		int id;
 		String text;
+		String subText;
 		Uri image;
 		int imageId;
 		int color;
@@ -48,10 +52,11 @@ public class TabDrawerAdapter extends OpenArrayAdapter<DrawerItem> {
 			this(-1, text, 0, -1, DrawerItemType.Header);
 		}
 
-		public DrawerItem(int id, String text, Uri image, int color, DrawerItemType drawerItemType) {
+		public DrawerItem(int id, String text, Uri image, int imageResourceId, int color, DrawerItemType drawerItemType) {
 			this.id = id;
 			this.text = text;
 			this.image = image;
+			this.imageId = imageResourceId;
 			this.type = drawerItemType;
 			this.color = color;
 		}
@@ -96,12 +101,24 @@ public class TabDrawerAdapter extends OpenArrayAdapter<DrawerItem> {
 			return color;
 		}
 
+		public String getSubText() {
+			return subText;
+		}
+
+		public void setSubText(String subText) {
+			this.subText = subText;
+		}
 	}
 
 	public TabDrawerAdapter(Context context, List<DrawerItem> objects) {
 		super(context, 0, objects);
 
 		inflater = LayoutInflater.from(context);
+	}
+
+	public void applyPalette(Palette palette) {
+		this.palette = palette;
+		notifyDataSetChanged();
 	}
 
 	@Override
@@ -147,7 +164,7 @@ public class TabDrawerAdapter extends OpenArrayAdapter<DrawerItem> {
 				convertView = inflater.inflate(R.layout.list_item_icon_text, parent, false);
 				break;
 			case TYPE_SYSTEM:
-				convertView = inflater.inflate(R.layout.list_item_icon_text_small, parent, false);
+				convertView = inflater.inflate(R.layout.list_item_text, parent, false);
 				break;
 			case TYPE_PROFILE:
 				convertView = inflater.inflate(R.layout.list_item_profile, parent, false);
@@ -158,32 +175,58 @@ public class TabDrawerAdapter extends OpenArrayAdapter<DrawerItem> {
 
 		switch (itemViewType) {
 		case TYPE_HEADER: {
-			TextView textView = (TextView) convertView.findViewById(android.R.id.text1);
-			textView.setText(drawerInfo.text);
+			TextView textView1 = (TextView) convertView.findViewById(android.R.id.text1);
+			if (textView1 != null) {
+				textView1.setText(drawerInfo.text);
+			}
+			TextView textView2 = (TextView) convertView.findViewById(android.R.id.text2);
+			if (textView2 != null) {
+				textView2.setText(drawerInfo.subText);
+			}
 			break;
 		}
 		case TYPE_PROFILE: {
 			TextView textView = (TextView) convertView.findViewById(android.R.id.text1);
+			TextView textView2 = (TextView) convertView.findViewById(android.R.id.text2);
+
 			ImageView image = (ImageView) convertView.findViewById(android.R.id.icon);
 			CircleImageView circleImage = (CircleImageView) convertView.findViewById(android.R.id.icon1);
 
 			textView.setText(drawerInfo.text);
+			if (textView2 != null) {
+				textView2.setText(drawerInfo.subText);
+			}
+			image.setImageResource(R.drawable.profile_picture);
+			circleImage.setImageResource(R.drawable.profile_picture);
 
 			Util.setImage(image, drawerInfo.image, drawerInfo.imageId);
 			Util.setImage(circleImage, drawerInfo.image, drawerInfo.imageId);
 
+			if (palette != null) {
+				textView.setTextColor(palette.getLightVibrantColor(Color.WHITE));
+				textView2.setTextColor(palette.getLightVibrantColor(Color.GRAY));
+			}
 			break;
 		}
 		case TYPE_SYSTEM:
 		case TYPE_TAB: {
-			TextView textView = (TextView) convertView.findViewById(android.R.id.text1);
-			ImageView image = (ImageView) convertView.findViewById(android.R.id.icon);
-			textView.setText(drawerInfo.text);
+			TextView textView1 = (TextView) convertView.findViewById(android.R.id.text1);
+			if (textView1 != null) {
+				textView1.setText(drawerInfo.text);
+			}
 
-			if (drawerInfo.image != null) {
-				image.setImageURI(drawerInfo.image);
-			} else {
-				image.setImageResource(drawerInfo.imageId);
+			TextView textView2 = (TextView) convertView.findViewById(android.R.id.text2);
+			if (textView2 != null) {
+				textView2.setText(drawerInfo.subText);
+			}
+
+			ImageView image = (ImageView) convertView.findViewById(android.R.id.icon);
+			if (image != null) {
+				if (drawerInfo.image != null) {
+					image.setImageURI(drawerInfo.image);
+				} else {
+					image.setImageResource(drawerInfo.imageId);
+				}
 			}
 
 			if (drawerInfo.color != Color.TRANSPARENT && convertView.getBackground() != null) {

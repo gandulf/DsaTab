@@ -24,7 +24,7 @@
         <item android:drawable="@drawable/abc_list_selector_background_transition_holo_light" android:state_focused="false" android:state_pressed="true"/>
         <item android:drawable="@drawable/abc_list_focused_holo" android:state_focused="true"/>
         
-		    <item android:state_checked="true" android:drawable="@color/ValueGreen" />
+		    <item android:state_checked="true" android:drawable="@android:color/holo_blue_bright" />
 		    <item android:drawable="@color/RowEven" />
         </selector>
     </item>
@@ -37,7 +37,7 @@
         <item android:drawable="@drawable/abc_list_selector_background_transition_holo_light" android:state_focused="false" android:state_pressed="true"/>
         <item android:drawable="@drawable/abc_list_focused_holo" android:state_focused="true"/>
                     
-		    <item android:state_checked="true" android:drawable="@color/ValueGreen" />
+		    <item android:state_checked="true" android:drawable="@android:color/holo_blue_bright" />
 		    <item android:drawable="@color/RowOdd" />
         </selector>
     </item>
@@ -50,7 +50,7 @@
         <item android:drawable="@drawable/abc_list_selector_background_transition_holo_light" android:state_focused="false" android:state_pressed="true"/>
         <item android:drawable="@drawable/abc_list_focused_holo" android:state_focused="true"/>
                     
-		    <item android:state_checked="true" android:drawable="@color/ValueGreen" />
+		    <item android:state_checked="true" android:drawable="@android:color/holo_blue_bright" />
 		    <item android:drawable="@color/RowFavoriteEven" />            
         </selector>
     </item>
@@ -63,7 +63,7 @@
         <item android:drawable="@drawable/abc_list_selector_background_transition_holo_light" android:state_focused="false" android:state_pressed="true"/>
         <item android:drawable="@drawable/abc_list_focused_holo" android:state_focused="true"/>
                     
-		    <item android:state_checked="true" android:drawable="@color/ValueGreen" />
+		    <item android:state_checked="true" android:drawable="@android:color/holo_blue_bright" />
 		    <item android:drawable="@color/RowFavoriteOdd" />
         </selector>
     </item>
@@ -76,7 +76,7 @@
         <item android:drawable="@drawable/abc_list_selector_background_transition_holo_light" android:state_focused="false" android:state_pressed="true"/>
         <item android:drawable="@drawable/abc_list_focused_holo" android:state_focused="true"/>
         
-		    <item android:state_checked="true" android:drawable="@color/ValueGreen" />
+		    <item android:state_checked="true" android:drawable="@android:color/holo_blue_bright" />
 		    <item android:drawable="@color/RowUnusedEven" />
         </selector>
     </item>
@@ -89,7 +89,7 @@
         <item android:drawable="@drawable/abc_list_selector_background_transition_holo_light" android:state_focused="false" android:state_pressed="true"/>
         <item android:drawable="@drawable/abc_list_focused_holo" android:state_focused="true"/>
                     
-		    <item android:state_checked="true" android:drawable="@color/ValueGreen" />
+		    <item android:state_checked="true" android:drawable="@android:color/holo_blue_bright" />
 		    <item android:drawable="@color/RowUnusedOdd" />
         </selector>
     </item>

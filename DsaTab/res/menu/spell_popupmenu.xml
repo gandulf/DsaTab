@@ -4,11 +4,13 @@
 		<item android:id="@+id/option_view_spell"
 	          android:icon="?attr/imgBarView"
 	          android:showAsAction="withText|ifRoom"
+	          app:showAsAction="withText|ifRoom"
 	          android:title="@string/details" />          	          
 		
 		<item android:id="@+id/option_mark"
             android:icon="?attr/imgBarStar"            
             android:showAsAction="withText|ifRoom"
+            app:showAsAction="withText|ifRoom"
             android:title="@string/selection">
 		 <menu>
         

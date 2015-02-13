@@ -3,11 +3,9 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="?attr/listItemBackground"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
-    android:paddingStart="?android:attr/listPreferredItemPaddingLeft"
-    android:paddingRight="0dp"
-    android:paddingEnd="0dp">
+    android:minHeight="?attr/listPreferredItemHeight"
+    android:paddingLeft="?attr/listPreferredItemPaddingLeft"    
+    android:paddingRight="0dp">
     
     <ImageView
         android:id="@+id/talent_list_item_indicator"
@@ -20,9 +18,9 @@
 <LinearLayout 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:minHeight="?attr/listPreferredItemHeight"
     android:paddingLeft="0dp"
-    android:paddingRight="?android:attr/listPreferredItemPaddingRight"
+    android:paddingRight="?attr/listPreferredItemPaddingRight"
     android:weightSum="1.0">
 
     <TextView

@@ -30,14 +30,17 @@ import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.Toast;
 
-import com.dropbox.sync.android.DbxAccountManager;
+import com.bingzer.android.driven.DrivenException;
+import com.bingzer.android.driven.Result;
+import com.bingzer.android.driven.StorageProvider;
+import com.bingzer.android.driven.contracts.Task;
+import com.bingzer.android.driven.dropbox.Dropbox;
+import com.bingzer.android.driven.dropbox.app.DropboxActivity;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
-import com.dsatab.cloud.HeroExchange;
 import com.dsatab.config.DsaTabConfiguration;
 import com.dsatab.config.DsaTabConfiguration.ArmorType;
 import com.dsatab.config.DsaTabConfiguration.WoundType;
-import com.dsatab.data.HeroFileInfo.StorageType;
 import com.dsatab.fragment.BasePreferenceFragment;
 import com.dsatab.fragment.dialog.ChangeLogDialog;
 import com.dsatab.fragment.dialog.DirectoryChooserDialog;
@@ -75,9 +78,10 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 	public static final String KEY_WOUND_TYPE = "woundType";
 	public static final String KEY_FULLSCREEN = "fullscreen";
 
+	@Deprecated
 	public static final String KEY_SETUP_SDCARD_PATH = "sdcardPath";
-
-	public static final String KEY_SETUP_SDCARD_PATH_PREFIX = KEY_SETUP_SDCARD_PATH + ".";
+	public static final String KEY_CUSTOM_DIRECTORY = "sdcardPath";
+	public static final String DIR_PDFS = "pdfs";
 
 	public static final String KEY_SETUP_SDCARD_HERO_PATH = "sdcardHeroPath";
 
@@ -249,13 +253,13 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 		setTheme(DsaTabApplication.getInstance().getCustomPreferencesTheme());
 		super.onCreate(savedInstanceState);
 
-		getActionBar().setDisplayShowHomeEnabled(true);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		// getSupportActionBar().setDisplayShowHomeEnabled(true);
+		// getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		SharedPreferences preferences = DsaTabApplication.getPreferences();
 		preferences.registerOnSharedPreferenceChangeListener(this);
 
-		updateFullscreenStatus(getWindow(), preferences.getBoolean(DsaTabPreferenceActivity.KEY_FULLSCREEN, true));
+		updateFullscreenStatus(getWindow(), preferences.getBoolean(DsaTabPreferenceActivity.KEY_FULLSCREEN, false));
 
 	}
 
@@ -380,7 +384,7 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
-	protected static void cleanOldFiles() {
+	protected static void cleanCardFiles() {
 		File cardsDir = DsaTabApplication.getDirectory(DsaTabApplication.DIR_CARDS);
 
 		File[] dirs = cardsDir.listFiles(new FileFilter() {
@@ -423,41 +427,41 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 			final SharedPreferences preferences) {
 		AbstractDownloader downloader;
 		if (KEY_DOWNLOAD_ALL.equals(key)) {
-			cleanOldFiles();
-			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath(), context);
+			cleanCardFiles();
+			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDirectory(), context);
 			downloader.addPath(context.getString(R.string.path_items));
 			downloader.addPath(PATH_WESNOTH_PORTRAITS);
 			downloader.downloadZip();
 			Toast.makeText(context, R.string.message_download_started_in_background, Toast.LENGTH_SHORT).show();
 			return true;
 		} else if (KEY_DOWNLOAD_MAPS.equals(key)) {
-			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath() + DsaTabApplication.DIR_MAPS,
+			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDirectory(DsaTabApplication.DIR_MAPS),
 					context);
 			downloader.addPath(PATH_OFFICIAL_MAP_PACK);
 			downloader.downloadZip();
 			Toast.makeText(context, R.string.message_download_started_in_background, Toast.LENGTH_SHORT).show();
 			return true;
 		} else if (KEY_DOWNLOAD_ITEMS.equals(key)) {
-			cleanOldFiles();
-			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath(), context);
+			cleanCardFiles();
+			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDirectory(), context);
 			downloader.addPath(context.getString(R.string.path_items));
 			downloader.downloadZip();
 			Toast.makeText(context, R.string.message_download_started_in_background, Toast.LENGTH_SHORT).show();
 			return true;
 		} else if (KEY_DOWNLOAD_WESNOTH_PORTRAITS.equals(key)) {
-			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath(), context);
+			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDirectory(), context);
 			downloader.addPath(PATH_WESNOTH_PORTRAITS);
 			downloader.downloadZip();
 			Toast.makeText(context, R.string.message_download_started_in_background, Toast.LENGTH_SHORT).show();
 			return true;
 		} else if (KEY_DOWNLOAD_BACKGROUNDS.equals(key)) {
-			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath(), context);
+			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDirectory(), context);
 			downloader.addPath(PATH_BACKGROUNDS);
 			downloader.downloadZip();
 			Toast.makeText(context, R.string.message_download_started_in_background, Toast.LENGTH_SHORT).show();
 			return true;
 		} else if (KEY_DOWNLOAD_OSMMAPS.equals(key)) {
-			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath(), context);
+			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDirectory(), context);
 			downloader.addPath(PATH_OSM_MAP_PACK);
 			downloader.downloadZip();
 			Toast.makeText(context, R.string.message_download_started_in_background, Toast.LENGTH_SHORT).show();
@@ -469,7 +473,7 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 			WebView webView = new WebView(builder.getContext());
 			webView.getSettings().setDefaultTextEncodingName("utf-8");
 
-			String summary = ResUtil.loadResToString(R.raw.credits, context);
+			String summary = ResUtil.loadResToString(R.raw.credits, context.getResources());
 			summary = summary.replace("{hs-version}", DsaTabApplication.HS_VERSION);
 			webView.loadDataWithBaseURL(null, summary, "text/html", "utf-8", null);
 			builder.setView(webView);
@@ -492,7 +496,7 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 			builder.setCancelable(true);
 			WebView webView = new WebView(builder.getContext());
 			webView.getSettings().setDefaultTextEncodingName("utf-8");
-			String summary = ResUtil.loadResToString(R.raw.ulisses_license, context);
+			String summary = ResUtil.loadResToString(R.raw.ulisses_license, context.getResources());
 			webView.loadDataWithBaseURL(null, summary, "text/html", "utf-8", null);
 			builder.setView(webView);
 			builder.setPositiveButton(R.string.label_ok, null);
@@ -540,8 +544,8 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 				}
 			};
 
-			DirectoryChooserDialog.show(null, context.getFragmentManager(),
-					DsaTabApplication.getDsaTabHeroPath(), resultListener, 0);
+			DirectoryChooserDialog.show(null, context.getFragmentManager(), DsaTabApplication.getExternalHeroPath(),
+					resultListener, 0);
 
 			return true;
 		} else if (KEY_SETUP_SDCARD_HERO_PATH.equals(key)) {
@@ -564,8 +568,8 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 					}
 				}
 			};
-			DirectoryChooserDialog.show(null, context.getFragmentManager(),
-					DsaTabApplication.getDsaTabHeroPath(), resultListener, 0);
+			DirectoryChooserDialog.show(null, context.getFragmentManager(), DsaTabApplication.getExternalHeroPath(),
+					resultListener, 0);
 			return true;
 		} else if (KEY_TIP_TODAY_RESET.equals(key)) {
 			Editor edit = preferences.edit();
@@ -578,20 +582,27 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 			Toast.makeText(context, R.string.message_tips_reset, Toast.LENGTH_SHORT).show();
 			return true;
 		} else if (KEY_DROPBOX.equals(key)) {
-			DbxAccountManager mDbxAcctMgr = DbxAccountManager.getInstance(context.getApplicationContext(),
-					DsaTabApplication.DROPBOX_API_KEY, DsaTabApplication.DROPBOX_API_SECRET);
-
+			StorageProvider dropbox = new Dropbox();
+			dropbox.authenticate(context);
 			CheckBoxPreference cb = (CheckBoxPreference) preference;
 
-			if (cb.isChecked() && !mDbxAcctMgr.hasLinkedAccount()) {
+			if (!dropbox.isAuthenticated()) {
+				DropboxActivity
+						.launch(context, DsaTabApplication.DROPBOX_API_KEY, DsaTabApplication.DROPBOX_API_SECRET);
+			} else {
+				dropbox.clearSavedCredential(context);
+			}
+			if (cb.isChecked() && !dropbox.isAuthenticated()) {
 				Editor edit = preferences.edit();
 				edit.putBoolean(key, false);
 				edit.commit();
 				cb.setChecked(false);
-				mDbxAcctMgr.startLink(context, REQUEST_LINK_TO_DBX);
+
+				DropboxActivity
+						.launch(context, DsaTabApplication.DROPBOX_API_KEY, DsaTabApplication.DROPBOX_API_SECRET);
 			}
-			if (!cb.isChecked() && mDbxAcctMgr.hasLinkedAccount()) {
-				mDbxAcctMgr.unlink();
+			if (!cb.isChecked() && dropbox.isAuthenticated()) {
+				dropbox.clearSavedCredential(context);
 			}
 
 		}
@@ -614,24 +625,30 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 			} else if (KEY_STYLE_BG_WOUNDS_PATH.equals(key)) {
 				((PreferenceWithButton) preference).setWidgetVisibility(sharedPreferences
 						.contains(KEY_STYLE_BG_WOUNDS_PATH) ? View.VISIBLE : View.GONE);
-			} else if (KEY_SETUP_SDCARD_PATH.equals(key)) {
-				preference.setSummary(DsaTabApplication.getInstance().getString(R.string.pref_sdcardPath_description)
-						+ ": " + sharedPreferences.getString(KEY_SETUP_SDCARD_PATH, DsaTabApplication.getDsaTabPath()));
 			} else if (KEY_SETUP_SDCARD_HERO_PATH.equals(key)) {
-				preference
-						.setSummary(DsaTabApplication.getInstance().getString(R.string.pref_sdcardHeroPath_description)
-								+ ": "
-								+ sharedPreferences.getString(KEY_SETUP_SDCARD_HERO_PATH,
-										DsaTabApplication.getDsaTabHeroPath()));
+				preference.setSummary(DsaTabApplication.getInstance().getString(
+						R.string.pref_sdcardHeroPath_description)
+						+ ": "
+						+ sharedPreferences.getString(KEY_SETUP_SDCARD_HERO_PATH,
+								DsaTabApplication.getExternalHeroPath()));
 			} else if (KEY_DROPBOX.equals(key)) {
 				CheckBoxPreference cb = (CheckBoxPreference) preference;
-				boolean connected = HeroExchange.isConnected(DsaTabApplication.getInstance(), StorageType.Dropbox);
-				if (sharedPreferences.getBoolean(KEY_DROPBOX, false) != connected) {
+				Dropbox dropbox = new Dropbox();
+				Task<Result<DrivenException>> task = new Task<Result<DrivenException>>() {
+					@Override
+					public void onCompleted(Result<DrivenException> result) {
+
+					}
+				};
+				if (dropbox.hasSavedCredential(DsaTabApplication.getInstance())) {
+					dropbox.authenticateAsync(DsaTabApplication.getInstance(), task);
+				}
+				if (sharedPreferences.getBoolean(KEY_DROPBOX, false) != dropbox.isAuthenticated()) {
 					Editor edit = sharedPreferences.edit();
-					edit.putBoolean(KEY_DROPBOX, connected);
+					edit.putBoolean(KEY_DROPBOX, dropbox.isAuthenticated());
 					edit.commit();
 				}
-				cb.setChecked(sharedPreferences.getBoolean(key, connected));
+				cb.setChecked(sharedPreferences.getBoolean(key, dropbox.isAuthenticated()));
 			}
 		}
 	}
@@ -669,23 +686,6 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 		@Override
 		public int getPreferenceResourceId() {
 			return R.xml.preferences_hc_display;
-		}
-	}
-
-	public static class PrefsHeaderFragment extends BasePreferenceFragment {
-		@Override
-		public void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see com.dsatab.activity.DsaTabPreferenceActivity.BasePreferenceFragment #getPreferenceResourceId()
-		 */
-		@Override
-		public int getPreferenceResourceId() {
-			return R.xml.preferences_hc_header;
 		}
 	}
 

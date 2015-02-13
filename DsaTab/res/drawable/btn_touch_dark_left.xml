@@ -4,7 +4,7 @@
     <item android:state_pressed="true">
         <layer-list>
             <!-- White Top color -->
-            <item android:top="5dp" android:right="0dp" android:bottom="3dp" android:left="3dp">
+            <item android:top="4dp" android:right="0dp" android:bottom="3dp" android:left="3dp">
                 <shape android:shape="rectangle">
                     <solid android:color="#222222" />
                     <corners android:topLeftRadius="14dp" android:bottomLeftRadius="14dp" />
@@ -23,7 +23,7 @@
                 </shape>
 			</item>
             <!-- White Top color -->
-            <item android:top="3dp" android:right="0dp" android:bottom="5dp" android:left="3dp">
+            <item android:top="3dp" android:right="0dp" android:bottom="4dp" android:left="3dp">
                 <shape android:shape="rectangle">
                     <solid android:color="#222222" />
                     <corners android:topLeftRadius="14dp" android:bottomLeftRadius="14dp" />

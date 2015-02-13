@@ -139,7 +139,7 @@ public class ItemsActivity extends BaseActivity implements OnItemSelectedListene
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setTheme(DsaTabApplication.getInstance().getCustomTheme(false));
+		setTheme(DsaTabApplication.getInstance().getCustomTheme());
 		applyPreferencesToTheme();
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_items);
@@ -147,7 +147,8 @@ public class ItemsActivity extends BaseActivity implements OnItemSelectedListene
 		itemListFragment = (ItemListFragment) getFragmentManager().findFragmentById(R.id.fragment_item_chooser);
 
 		slidingPaneLayout = (SlidingPaneLayout) findViewById(R.id.slidepanel);
-		// slidingPaneLayout.setParallaxDistance(100);
+		slidingPaneLayout.setCoveredFadeColor(0);
+		slidingPaneLayout.setSliderFadeColor(0);
 
 		slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
 
@@ -189,14 +190,14 @@ public class ItemsActivity extends BaseActivity implements OnItemSelectedListene
 
 		if (Intent.ACTION_PICK.equals(getIntent().getAction())) {
 			setTitle(R.string.choose_item);
-			getActionBar().setDisplayShowTitleEnabled(true);
+			getSupportActionBar().setDisplayShowTitleEnabled(true);
 		} else {
-			getActionBar().setDisplayShowTitleEnabled(false);
+			getSupportActionBar().setDisplayShowTitleEnabled(false);
 		}
 
-		getActionBar().setDisplayShowHomeEnabled(true);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setHomeButtonEnabled(true);
+		getSupportActionBar().setDisplayShowHomeEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setHomeButtonEnabled(true);
 
 		if (Intent.ACTION_EDIT.equals(getIntent().getAction()) || Intent.ACTION_INSERT.equals(getIntent().getAction()))
 			initEditFragment();

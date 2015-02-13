@@ -4,6 +4,7 @@
         android:id="@+id/option_reset"
         android:icon="@drawable/ic_menu_revert"
         android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
         android:title="@string/option_reset_tabs"/>
 
 </menu>

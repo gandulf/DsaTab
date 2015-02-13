@@ -1,11 +1,12 @@
 package com.dsatab.activity;
 
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.Window;
 
 import com.dsatab.DsaTabApplication;
+import com.dsatab.R;
 import com.dsatab.data.HeroFileInfo;
 import com.dsatab.fragment.HeroChooserFragment;
 import com.dsatab.fragment.HeroChooserFragment.OnHeroSelectedListener;
@@ -19,17 +20,18 @@ public class HeroChooserActivity extends BaseActivity implements OnHeroSelectedL
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setTheme(DsaTabApplication.getInstance().getCustomTheme(false));
+		setTheme(DsaTabApplication.getInstance().getCustomTheme());
 		applyPreferencesToTheme();
+
 		super.onCreate(savedInstanceState);
 
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		setContentView(R.layout.main_blank);
 
-		getActionBar().setDisplayShowHomeEnabled(true);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setHomeButtonEnabled(true);
+		getSupportActionBar().setDisplayShowHomeEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setHomeButtonEnabled(true);
 
-		fragment = (HeroChooserFragment) getFragmentManager().findFragmentById(android.R.id.content);
+		fragment = (HeroChooserFragment) getFragmentManager().findFragmentById(R.id.content);
 
 		if (fragment == null) {
 			FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -39,11 +41,21 @@ public class HeroChooserActivity extends BaseActivity implements OnHeroSelectedL
 
 			fragment = new HeroChooserFragment();
 			fragment.setArguments(getIntent().getExtras());
-			ft.add(android.R.id.content, fragment);
+			ft.add(R.id.content, fragment);
 			ft.commit();
 		}
 
 		DsaTabApplication.getInstance().showNewsInfoPopup(this);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		if (fragment != null) {
+			fragment.onActivityResult(requestCode, resultCode, data);
+		}
+
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	@Override

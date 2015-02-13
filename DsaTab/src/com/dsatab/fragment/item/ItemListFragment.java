@@ -6,8 +6,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-import android.app.ActionBar;
-import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
@@ -16,6 +14,9 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBar.Tab;
 import android.text.Editable;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
@@ -183,26 +184,6 @@ public class ItemListFragment extends BaseListFragment implements OnItemClickLis
 		itemTypes = new HashSet<ItemType>();
 		itemAdapter = new ItemCursorAdapter(getActivity(), null);
 
-		ActionBar actionBar = getActionBarActivity().getActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
-
-		final ItemTypeAdapter adapter = new ItemTypeAdapter(actionBar.getThemedContext(),
-				android.R.layout.simple_spinner_item, Arrays.asList(ItemType.values()));
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-		actionBar.setListNavigationCallbacks(adapter, new ActionBar.OnNavigationListener() {
-
-			@Override
-			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-				ItemType cardType = adapter.getItem(itemPosition);
-				itemTypes.clear();
-				if (cardType != null) {
-					itemTypes.add(cardType);
-				}
-				filter(itemTypes, null, null);
-				return false;
-			}
-		});
-
 		getActivity().getLoaderManager().initLoader(0, null, this);
 	}
 
@@ -250,7 +231,25 @@ public class ItemListFragment extends BaseListFragment implements OnItemClickLis
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 
-		ActionBar actionBar = getActionBarActivity().getActionBar();
+		ActionBar actionBar = getActionBarActivity().getSupportActionBar();
+
+		final ItemTypeAdapter adapter = new ItemTypeAdapter(actionBar.getThemedContext(),
+				android.R.layout.simple_spinner_item, Arrays.asList(ItemType.values()));
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		actionBar.setListNavigationCallbacks(adapter, new ActionBar.OnNavigationListener() {
+
+			@Override
+			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+				ItemType cardType = adapter.getItem(itemPosition);
+				itemTypes.clear();
+				if (cardType != null) {
+					itemTypes.add(cardType);
+				}
+				filter(itemTypes, null, null);
+				return false;
+			}
+		});
+
 		ItemType itemType = null;
 		if (!itemTypes.isEmpty()) {
 			itemType = itemTypes.iterator().next();
@@ -304,7 +303,7 @@ public class ItemListFragment extends BaseListFragment implements OnItemClickLis
 		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
 		item.setIcon(Util.getThemeResourceId(getActivity(), R.attr.imgBarSearch));
 
-		final AutoCompleteTextView searchView = new AutoCompleteTextView(getActionBarActivity().getActionBar()
+		final AutoCompleteTextView searchView = new AutoCompleteTextView(getActionBarActivity().getSupportActionBar()
 				.getThemedContext());
 		searchView.setCompoundDrawablesWithIntrinsicBounds(Util.getThemeResourceId(getActivity(), R.attr.imgBarSearch),
 				0, 0, 0);
@@ -314,10 +313,9 @@ public class ItemListFragment extends BaseListFragment implements OnItemClickLis
 				filter(itemTypes, category, "%" + s.toString() + "%");
 			}
 		});
-
 		searchView.setHint(R.string.filter);
 		searchView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-		item.setActionView(searchView);
+		MenuItemCompat.setActionView(item, searchView);
 		// --
 
 		inflater.inflate(R.menu.menuitem_add_items, menu);

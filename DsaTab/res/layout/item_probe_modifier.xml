@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:minHeight="?android:attr/listPreferredItemHeightSmall"
-    android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
-    android:paddingRight="?android:attr/listPreferredItemPaddingRight" >
+    android:minHeight="?attr/listPreferredItemHeightSmall"
+    android:paddingLeft="?attr/listPreferredItemPaddingLeft"
+    android:paddingRight="?attr/listPreferredItemPaddingRight" >
 
     <TextView
         android:id="@android:id/text1"
@@ -36,15 +36,21 @@
         android:layout_marginRight="@dimen/default_gap"
         android:layout_weight="1" />
 
-    <CheckedTextView
+    <TextView
         android:id="@android:id/text2"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="center_vertical|right"
-        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-        android:checked="true"
+        android:layout_gravity="center_vertical|right"                
         android:gravity="right|center_vertical"
         android:maxLines="1"
+        android:fontFamily="sans-serif-condensed"
         android:textAppearance="?android:attr/textAppearanceSmall" />
-
+    
+    <CheckBox android:id="@android:id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical|right"
+        android:gravity="right|center_vertical"
+        android:checked="true" 
+        />
 </LinearLayout>

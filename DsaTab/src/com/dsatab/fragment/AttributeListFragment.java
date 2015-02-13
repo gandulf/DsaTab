@@ -2,17 +2,12 @@ package com.dsatab.fragment;
 
 import java.util.List;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.ContextThemeWrapper;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.dsatab.DsaTabApplication;
-import com.dsatab.R;
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.data.Attribute;
 import com.dsatab.data.Hero;
@@ -21,26 +16,7 @@ import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.modifier.Modificator;
 import com.dsatab.view.listener.HeroChangedListener;
 
-public class AttributeListFragment extends BaseAttributesFragment implements HeroChangedListener {
-
-	public static final String TAG = "attributeListFragment";
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
-	 */
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		// create ContextThemeWrapper from the original Activity Context with the custom theme
-		Context context = new ContextThemeWrapper(getActivity(), R.style.DsaTabTheme_Dark);
-		// clone the inflater using the ContextThemeWrapper
-		LayoutInflater localInflater = inflater.cloneInContext(context);
-		// inflate using the cloned inflater, not the passed in default
-		View view = localInflater.inflate(R.layout.attributes_list, container, false);
-
-		return view;
-	}
+public abstract class AttributeListFragment extends BaseAttributesFragment implements HeroChangedListener {
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {

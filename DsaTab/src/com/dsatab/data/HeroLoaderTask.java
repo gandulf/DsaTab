@@ -29,7 +29,7 @@ public class HeroLoaderTask extends AsyncTaskLoader<Hero> {
 	public HeroLoaderTask(Activity context, HeroFileInfo heroFileInfo) {
 		super(context);
 		this.fileInfo = heroFileInfo;
-		this.exchange = new HeroExchange(context);
+		this.exchange = DsaTabApplication.getInstance().getExchange();
 
 	}
 
@@ -111,8 +111,6 @@ public class HeroLoaderTask extends AsyncTaskLoader<Hero> {
 			Debug.error(e);
 			return null;
 		} finally {
-			exchange.closeStream(fileInfo, FileType.Hero);
-			exchange.closeStream(fileInfo, FileType.Config);
 			Util.close(fis);
 			Util.close(fisConfig);
 		}

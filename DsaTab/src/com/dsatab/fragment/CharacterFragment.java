@@ -82,19 +82,6 @@ public class CharacterFragment extends BaseProfileFragment {
 		super.onActivityCreated(savedInstanceState);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Fragment#setUserVisibleHint(boolean)
-	 */
-	@Override
-	public void setUserVisibleHint(boolean isVisibleToUser) {
-		super.setUserVisibleHint(isVisibleToUser);
-		if (!isVisibleToUser && mMode != null) {
-			mMode.finish();
-		}
-	}
-
 	@Override
 	public AbstractBeing getBeing() {
 		return getHero();
@@ -292,7 +279,7 @@ public class CharacterFragment extends BaseProfileFragment {
 		TextView rasse = ((TextView) findViewById(R.id.gen_rasse));
 		TextView ausbildung = ((TextView) findViewById(R.id.gen_ausbildung));
 
-		if (isDescriptionExpanded()) {
+		if (isDescriptionDetailsExpanded()) {
 
 			if (baseInfo == null || TextUtils.isEmpty(baseInfo.getAussehen())) {
 				aussehen.setVisibility(View.GONE);
@@ -301,10 +288,10 @@ public class CharacterFragment extends BaseProfileFragment {
 				aussehen.setVisibility(View.VISIBLE);
 			}
 
-			if (baseInfo == null || TextUtils.isEmpty(baseInfo.getTitel())) {
+			if (baseInfo == null || TextUtils.isEmpty(baseInfo.getTitle())) {
 				title.setVisibility(View.GONE);
 			} else {
-				title.setText(baseInfo.getTitel());
+				title.setText(baseInfo.getTitle());
 				title.setVisibility(View.VISIBLE);
 			}
 

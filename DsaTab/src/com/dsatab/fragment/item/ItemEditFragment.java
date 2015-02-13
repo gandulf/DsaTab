@@ -2,7 +2,6 @@ package com.dsatab.fragment.item;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -114,8 +113,7 @@ public class ItemEditFragment extends BaseFragment implements OnClickListener, O
 		imageView.setHighQuality(true);
 
 		itemView = (ItemListItem) root.findViewById(R.id.inc_gal_item_view);
-		itemView.setTextColor(Color.BLACK);
-		itemView.setBackgroundColor(getResources().getColor(R.color.Brighter));
+		itemView.setBackgroundResource(0);
 
 		categorySpn = (Spinner) root.findViewById(R.id.popup_edit_category);
 		categoryAdapter = new SpinnerSimpleAdapter<String>(getActivity(), DataManager.getItemCategories());

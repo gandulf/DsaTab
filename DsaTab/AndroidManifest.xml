@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dsatab"
     android:installLocation="auto"
-    android:versionCode="92"
-    android:versionName="4.3.6">
+    android:versionCode="94"
+    android:versionName="4.4" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <uses-feature
         android:name="android.hardware.microphone"
@@ -34,7 +35,7 @@
         android:normalScreens="true"
         android:resizeable="true"
         android:smallScreens="true"
-        android:xlargeScreens="true"         />
+        android:xlargeScreens="true" />
 
     <application
         android:name="DsaTabApplication"
@@ -42,13 +43,12 @@
         android:hardwareAccelerated="true"
         android:icon="@drawable/icon"
         android:label="DsaTab"
-        android:supportsRtl="false"
         android:largeHeap="true"
+        android:supportsRtl="false"
         android:theme="@style/DsaTabTheme.Light" >
         <activity
-            android:name="com.dsatab.activity.DsaTabActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustUnspecified" 
-            android:theme="@style/DsaTabTheme.Light.Translucent">
+            android:name="com.dsatab.activity.DsaTabActivity"            
+            android:windowSoftInputMode="stateAlwaysHidden|adjustUnspecified" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -84,28 +84,19 @@
                 android:resource="@xml/searchable" />
         </activity>
 
-        <receiver
-            android:name="com.gandulf.guilib.download.DownloadBroadcastReceiver"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
-            </intent-filter>
-        </receiver>
+        <!-- Driven External Storage -->
+        <activity
+            android:name="com.bingzer.android.driven.local.app.ExternalDriveActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <service
-            android:name="com.gandulf.guilib.download.UnzipIntentService"            
-            android:exported="false" >
-        </service>
-        <!--
-        service
-            android:name="com.dsatab.common.ExportHeroService"
-            android:exported="false" >
-        </service
-        -->
-
-
+        <!-- Driven Drive -->
+        <activity
+            android:name="com.bingzer.android.driven.gdrive.app.GoogleDriveActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- Dropbox BEGIN -->
-        <activity android:name="com.dropbox.sync.android.DbxAuthActivity" />
+        <activity
+            android:name="com.bingzer.android.driven.dropbox.app.DropboxActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name="com.dropbox.client2.android.AuthActivity"
             android:launchMode="singleTask" >
@@ -118,19 +109,29 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-        <service
-            android:name="com.dropbox.sync.android.DbxSyncService"
-            android:enabled="true"
-            android:exported="false"
-            android:label="Dropbox Sync" />
-
         <!-- Dropbox END -->
 
+        <receiver
+            android:name="com.gandulf.guilib.download.DownloadBroadcastReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.gandulf.guilib.download.UnzipIntentService"            
+            android:exported="false" >
+        </service>
+        
         <meta-data
             android:name="android.app.default_searchable"
             android:value="com.dsatab.activity.SearchableActivity"
             android:voiceSearchMode="showVoiceSearchButton|launchRecognizer" />
+        
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

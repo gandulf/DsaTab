@@ -12,8 +12,5 @@
 	<img src="file:///android_asset/btn_donate_LG.gif" alt="Donate" border="0"/></a>
 	</p>
 	
-	<p>Ein <strong>dickes Dankeschön</strong> an alle die DsaTab bereits erworben haben als es noch kostenpflichtig war. 
-	Ohne euch hätte ich die Entwicklung nie soweit vorantreiben können.</p>
-	
-	<p>DsaTab funktioniert am besten mit Helden Dateien erstellt durch die <a href="http://www.helden-software.de/">Helden-Software</a> mit der Version {hs-version}.</p>
+	<p>DsaTab funktioniert am besten mit Helden Dateien erstellt durch die <a href="http://www.helden-software.de/">Helden-Software</a> ab der Version {hs-version}.</p>
 </div>

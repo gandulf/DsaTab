@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.dsatab.view.CheckableRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.dsatab.view.CheckableFrameLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/portrait_height_small"
-    android:background="?attr/dropShadowBackground">
+    android:layout_height="@dimen/portrait_height_small">
 
     <ImageView
         android:id="@android:id/icon"
@@ -14,11 +14,18 @@
         android:src="@drawable/profile_picture" >
     </ImageView>
 
+    <ImageView
+        android:id="@android:id/icon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:focusable="false"
+        
+        android:src="@drawable/banner_scrim" >
+    </ImageView>
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@android:id/text1"
-        android:layout_alignParentRight="true"
+        android:layout_height="wrap_content"        
         android:orientation="horizontal" >
 
         <TextView
@@ -53,13 +60,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/Darker"
         android:duplicateParentState="false"
         android:ellipsize="marquee"
         android:focusable="false"
         android:gravity="center_vertical|left"
+        android:layout_gravity="bottom"
         android:marqueeRepeatLimit="marquee_forever"
         android:padding="@dimen/default_gap"
+        android:fontFamily="sans-serif-condensed"
         android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@android:color/primary_text_dark" >
@@ -70,8 +78,7 @@
         style="@style/TextLabel.Mini"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:layout_gravity="top|right"
         android:background="@color/ValueRedAlpha"
         android:duplicateParentState="false"
         android:focusable="false"
@@ -80,4 +87,4 @@
         android:textColor="@android:color/primary_text_dark" >
     </TextView>
 
-</com.dsatab.view.CheckableRelativeLayout>
+</com.dsatab.view.CheckableFrameLayout>

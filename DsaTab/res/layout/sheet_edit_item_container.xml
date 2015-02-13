@@ -17,7 +17,7 @@
 
         <ImageView
             android:id="@+id/popup_edit_icon"
-            style="?attr/android:spinnerStyle"
+            style="?attr/spinnerStyle"
             android:layout_width="wrap_content"
             android:minWidth="@dimen/icon_button_size"
             android:layout_height="@dimen/icon_button_size"

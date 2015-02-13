@@ -4,9 +4,9 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
     android:background="?attr/listItemBackground"
-    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:minHeight="?attr/listPreferredItemHeight"
     android:orientation="horizontal"
-    android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+    android:paddingLeft="?attr/listPreferredItemPaddingLeft"
     android:paddingRight="0dp">
 
     <com.nhaarman.listviewanimations.itemmanipulation.dragdrop.GripView

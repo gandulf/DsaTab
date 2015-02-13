@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:custom="http://schemas.android.com/apk/res-auto">
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <style name="DsaTabTheme.Dark" parent="@android:style/Theme.Holo">
+    <style name="DsaTabTheme.Dark" parent="@style/Theme.AppCompat">
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowContentOverlay">@null</item>        
+        
+        <!--
+         colorAccent is used as the default value for colorControlActivated
+         which is used to tint widgets
+        -->
+        <item name="colorAccent">@color/ValueBlue</item>
+        
         <item name="android:dividerPadding">8dp</item>
         <item name="android:buttonStyle">@style/Widget.Button.Dark</item>
         <item name="android:imageButtonStyle">@style/Widget.Button.Dark</item>
         <item name="android:buttonStyleSmall">@style/Widget.Button.Small.Dark</item>
+        <item name="android:soundEffectsEnabled">false</item>
         
         <item name="imgChainTop">@drawable/chain_top_dark</item>
         <item name="imgChainBottom">@drawable/chain_bottom_dark</item>        
@@ -41,8 +55,8 @@
         <item name="imgBarEdit">@drawable/ic_action_edit_dark</item>
         <item name="imgView">@drawable/ic_menu_view</item>
         <item name="imgBarView">@drawable/ic_menu_view</item>
-        <item name="imgSearch">@drawable/ic_menu_search_holo_dark</item>
-        <item name="imgBarSearch">@drawable/ic_menu_search_holo_dark</item>
+        <item name="imgSearch">@drawable/ic_search_white_36dp</item>
+        <item name="imgBarSearch">@drawable/ic_search_white_36dp</item>
         <item name="imgFilter">@drawable/ic_menu_find_holo_dark</item>
         <item name="imgBarFilter">@drawable/ic_menu_find_holo_dark</item>
         <item name="imgSet">@drawable/dsa_set</item>
@@ -54,21 +68,15 @@
         <item name="imgBarSet2">@drawable/dsa_set2</item>
         <item name="imgBarSet3">@drawable/dsa_set3</item>
         
+        <item name="cardViewStyle">@style/CardView.Dark</item>
         <item name="buttonStyleLeft">@style/Widget.Button.Left.Dark</item>
-        <item name="buttonStyleRight">@style/Widget.Button.Right.Dark</item>
-        <item name="android:soundEffectsEnabled">false</item>
-        <item name="listItemBackground">@drawable/list_background_holo_dark</item>
-        <item name="slidingPaneShadowBackground">@drawable/sliding_listshadow_bg_dark</item>
+        <item name="buttonStyleRight">@style/Widget.Button.Right.Dark</item>        
+        <item name="listItemBackground">@drawable/list_background_holo_dark</item> 
+        <item name="slidingPaneShadowBackground">@drawable/slider_shadow</item>
         <item name="selectableBackground">@drawable/abc_list_selector_holo_dark</item>
         <item name="showcaseViewStyle">@style/ShowcaseView</item>
         <item name="floatingHintEditTextStyle">@style/Widget.FloatingHintEditText</item>
-        <item name="floatingHintTextViewStyle">@style/Widget.FloatingHintTextView</item>
-        <item name="dropShadowBackground">@drawable/container_dropshadow_dark</item>
-    </style>
-
-    <style name="DsaTabTheme.Dark.Translucent">
-        <item name="android:windowActionBarOverlay">true</item>
-        <item name="android:windowContentOverlay">@null</item>        
+        <item name="floatingHintTextViewStyle">@style/Widget.FloatingHintTextView</item>        
     </style>
 
 </resources>

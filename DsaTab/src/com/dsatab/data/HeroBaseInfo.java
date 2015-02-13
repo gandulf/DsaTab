@@ -40,10 +40,6 @@ public class HeroBaseInfo {
 		return look;
 	}
 
-	public String getTitel() {
-		return title;
-	}
-
 	public String getStand() {
 		return rank;
 	}

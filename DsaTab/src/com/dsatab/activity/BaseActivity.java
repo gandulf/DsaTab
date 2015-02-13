@@ -1,10 +1,16 @@
 package com.dsatab.activity;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.graphics.Palette;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -13,25 +19,16 @@ import com.dsatab.R;
 import com.dsatab.util.Hint;
 import com.dsatab.util.Util;
 
-public class BaseActivity extends Activity {
+public class BaseActivity extends ActionBarActivity {
 
-	private Drawable.Callback mDrawableCallback = new Drawable.Callback() {
-		@Override
-		public void invalidateDrawable(Drawable who) {
-			getActionBar().setBackgroundDrawable(who);
-		}
+	protected Toolbar toolbar;
 
-		@Override
-		public void scheduleDrawable(Drawable who, Runnable what, long when) {
-		}
-
-		@Override
-		public void unscheduleDrawable(Drawable who, Runnable what) {
-		}
-	};
 	private Drawable mActionBarBackgroundDrawable;
+	private int mOriginalWrapperPadding = 0;
 	private int mActionBarBackgroundBaseAlpha = 255;
 	private boolean mActionBarTranslucent;
+
+	private boolean toolbarRefreshing = false;
 
 	/*
 	 * (non-Javadoc)
@@ -41,10 +38,64 @@ public class BaseActivity extends Activity {
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
+
 		SharedPreferences preferences = DsaTabApplication.getPreferences();
 		updateFullscreenStatus(preferences.getBoolean(DsaTabPreferenceActivity.KEY_FULLSCREEN, false));
 
 		Hint.showRandomHint(getClass().getSimpleName(), this);
+
+		prepareToolbar();
+
+		if (DsaTabApplication.getInstance().getPalette() != null) {
+			applyPalette(DsaTabApplication.getInstance().getPalette());
+		}
+	}
+
+	@SuppressLint("NewApi")
+	public void applyPalette(Palette palette) {
+		if (palette != null) {
+			getToolbar().setBackgroundColor(palette.getDarkMutedColor(Color.BLUE));
+			getToolbar().setTitleTextColor(palette.getLightVibrantColor(Color.WHITE));
+
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+				getWindow().setStatusBarColor(palette.getDarkMutedColor(Color.BLUE));
+			}
+		}
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+
+		final MenuItem refreshItem = menu.findItem(R.id.option_refresh);
+		if (refreshItem != null) {
+			if (toolbarRefreshing) {
+				refreshItem.setActionView(R.layout._toolbar_progress);
+			} else {
+				refreshItem.setActionView(null);
+			}
+		}
+
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+	public boolean isToolbarRefreshing() {
+		return toolbarRefreshing;
+	}
+
+	public void setToolbarRefreshing(boolean toolbarRefreshing) {
+		this.toolbarRefreshing = toolbarRefreshing;
+
+		supportInvalidateOptionsMenu();
+	}
+
+	@Override
+	public void setContentView(int layoutResID) {
+		super.setContentView(layoutResID);
+
+		toolbar = (Toolbar) findViewById(R.id.toolbar);
+		if (toolbar != null) {
+			setSupportActionBar(toolbar);
+		}
 	}
 
 	public boolean isActionbarTranslucent() {
@@ -69,6 +120,8 @@ public class BaseActivity extends Activity {
 	}
 
 	public void setActionbarBackgroundAlpha(int alpha) {
+		prepareToolbar();
+
 		if (mActionBarBackgroundDrawable != null) {
 			mActionBarBackgroundDrawable.setAlpha(alpha);
 		}
@@ -97,31 +150,39 @@ public class BaseActivity extends Activity {
 		getWindow().getDecorView().requestLayout();
 	}
 
-	protected void setActionbarTranslucent(boolean translucent) {
-		mActionBarTranslucent = translucent;
+	public Toolbar getToolbar() {
+		return toolbar;
+	}
 
-		if (mActionBarBackgroundDrawable == null) {
-			mActionBarBackgroundDrawable = getResources().getDrawable(R.drawable.ab_solid_dark_holo);
-			mActionBarBackgroundDrawable.setAlpha(0);
-			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
-				mActionBarBackgroundDrawable.setCallback(mDrawableCallback);
-			}
+	private void prepareToolbar() {
+		if (mActionBarBackgroundDrawable == null && toolbar != null) {
+			mActionBarBackgroundDrawable = toolbar.getBackground().mutate();
+			mActionBarBackgroundDrawable.setAlpha(255);
+			toolbar.setBackgroundDrawable(mActionBarBackgroundDrawable);
+
+			View wrapper = findViewById(R.id.slidepanel);
+			if (wrapper != null)
+				mOriginalWrapperPadding = wrapper.getPaddingTop();
 		}
+	}
 
-		getActionBar().setBackgroundDrawable(mActionBarBackgroundDrawable);
+	protected void setActionbarTranslucent(boolean translucent) {
+		prepareToolbar();
+
+		mActionBarTranslucent = translucent;
 
 		View wrapper = findViewById(R.id.slidepanel);
 		if (translucent) {
 			if (wrapper != null) {
-				wrapper.setPadding(0, 0, 0, 0);
+				wrapper.setPadding(wrapper.getPaddingLeft(), mOriginalWrapperPadding, wrapper.getPaddingRight(),
+						wrapper.getPaddingBottom());
 			}
 			setActionbarBackgroundAlpha(0);
 			setActionbarBackgroundBaseAlpha(0);
 		} else {
 			if (wrapper != null) {
-				int actionbarSize = getResources().getDimensionPixelSize(
-						Util.getThemeResourceId(this, android.R.attr.actionBarSize));
-				wrapper.setPadding(0, actionbarSize, 0, 0);
+				wrapper.setPadding(wrapper.getPaddingLeft(), mOriginalWrapperPadding + toolbar.getHeight(),
+						wrapper.getPaddingRight(), wrapper.getPaddingBottom());
 			}
 			setActionbarBackgroundAlpha(255);
 			setActionbarBackgroundBaseAlpha(255);

@@ -11,9 +11,11 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-import com.dropbox.sync.android.DbxPath;
+import com.bingzer.android.driven.LocalFile;
+import com.bingzer.android.driven.RemoteFile;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.cloud.HeroExchange;
+import com.dsatab.cloud.HeroExchange.StorageType;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.dsatab.xml.HeldenXmlParser;
@@ -26,10 +28,6 @@ public class HeroFileInfo implements JSONable, Serializable {
 
 	private static final long serialVersionUID = 2900488398093511704L;
 
-	public enum StorageType {
-		FileSystem, Dropbox, HeldenAustausch
-	}
-
 	public enum FileType {
 		Hero, Config
 	}
@@ -39,6 +37,8 @@ public class HeroFileInfo implements JSONable, Serializable {
 	private static final String JSON_ID = "id";
 	private static final String JSON_FILE = "file";
 	private static final String JSON_FILE_CONFIG = "fileConfig";
+	private static final String JSON_HERO_REMOTE = "heroRemote";
+	private static final String JSON_CONFIG_REMOTE = "configRemote";
 	private static final String JSON_PORTRAIT_URI = "portraitUri";
 	private static final String JSON_STORAGE_TYPE = "storageType";
 	private static final String JSON_VERSION = "version";
@@ -53,8 +53,11 @@ public class HeroFileInfo implements JSONable, Serializable {
 
 	private StorageType storageType;
 
-	private String file;
-	private String fileConfig;
+	private String remoteHeroId;
+	private String remoteConfigId;
+
+	private File file;
+	private File fileConfig;
 
 	private String portraitUri;
 
@@ -67,52 +70,56 @@ public class HeroFileInfo implements JSONable, Serializable {
 		storageType = StorageType.valueOf(json.optString(JSON_STORAGE_TYPE, StorageType.FileSystem.name()));
 
 		if (json.has(JSON_FILE))
-			file = json.optString(JSON_FILE);
+			file = new File(json.optString(JSON_FILE));
 		else
-			initHeroFile();
+			file = new File(DsaTabApplication.getInternalHeroDirectory(), getId() + HeroFileInfo.HERO_FILE_EXTENSION);
 
 		if (json.has(JSON_FILE_CONFIG))
-			fileConfig = json.optString(JSON_FILE_CONFIG);
+			fileConfig = new File(json.optString(JSON_FILE_CONFIG));
 		else
-			initConfigFile();
+			fileConfig = new File(file.getAbsolutePath().replace(HERO_FILE_EXTENSION, CONFIG_FILE_EXTENSION));
+
+		remoteHeroId = json.optString(JSON_HERO_REMOTE);
+		remoteConfigId = json.optString(JSON_CONFIG_REMOTE);
 
 		portraitUri = json.optString(JSON_PORTRAIT_URI);
+
 	}
 
-	public HeroFileInfo(DbxPath heroFile, DbxPath configFile, HeroExchange exchange) throws IllegalArgumentException {
-		boolean valid = false;
+	public HeroFileInfo(File internalHeroFile, File internalConfigFile, HeroExchange exchange)
+			throws IllegalArgumentException {
 
-		this.storageType = StorageType.Dropbox;
-		this.file = heroFile.toString();
-		if (configFile == null) {
-			this.fileConfig = file.replace(HERO_FILE_EXTENSION, CONFIG_FILE_EXTENSION);
-		} else {
-			this.fileConfig = configFile.toString();
+		storageType = null;
+		file = internalHeroFile;
+		fileConfig = internalConfigFile;
+
+		if (fileConfig == null) {
+			fileConfig = new File(file.getAbsolutePath().replace(HERO_FILE_EXTENSION, CONFIG_FILE_EXTENSION));
 		}
 
-		valid = readData(exchange);
-		if (!valid) {
-			throw new IllegalArgumentException("Given File " + heroFile.getName()
-					+ " is no valid xml file. Does not contain a " + Xml.KEY_HELD + " tag");
-		}
+		prepare(exchange);
 	}
 
-	public HeroFileInfo(File heroFile, File configFile, HeroExchange exchange) throws IllegalArgumentException {
-		boolean valid = false;
+	public HeroFileInfo(RemoteFile heroFile, RemoteFile configFile, StorageType storageType, HeroExchange exchange)
+			throws IllegalArgumentException {
 
-		storageType = StorageType.FileSystem;
-		this.file = heroFile.getAbsolutePath();
-		if (configFile == null) {
-			initConfigFile();
+		this.storageType = storageType;
+
+		remoteHeroId = heroFile.getId();
+
+		if (configFile != null) {
+			remoteConfigId = configFile.getId();
+		}
+
+		file = new File(DsaTabApplication.getInternalHeroDirectory(), heroFile.getName());
+		if (configFile != null) {
+			fileConfig = new File(DsaTabApplication.getInternalHeroDirectory(), configFile.getName());
 		} else {
-			fileConfig = configFile.getAbsolutePath();
+			fileConfig = new File(DsaTabApplication.getInternalHeroDirectory(), heroFile.getName().replace(
+					HERO_FILE_EXTENSION, CONFIG_FILE_EXTENSION));
 		}
 
-		valid = readData(exchange);
-		if (!valid) {
-			throw new IllegalArgumentException("Given File " + heroFile.getAbsolutePath()
-					+ " is no valid xml file. Does not contain a " + Xml.KEY_HELD + " tag");
-		}
+		prepare(exchange);
 	}
 
 	public HeroFileInfo(String name, String id, String key) {
@@ -122,8 +129,17 @@ public class HeroFileInfo implements JSONable, Serializable {
 		this.key = key;
 		this.storageType = StorageType.HeldenAustausch;
 
-		initHeroFile();
-		initConfigFile();
+		file = new File(DsaTabApplication.getInternalHeroDirectory(), getId() + HeroFileInfo.HERO_FILE_EXTENSION);
+		fileConfig = new File(DsaTabApplication.getInternalHeroDirectory(), getId()
+				+ HeroFileInfo.CONFIG_FILE_EXTENSION);
+	}
+
+	public String getRemoteHeroId() {
+		return remoteHeroId;
+	}
+
+	public String getRemoteConfigId() {
+		return remoteConfigId;
 	}
 
 	public void merge(HeroFileInfo fileInfo) {
@@ -139,29 +155,10 @@ public class HeroFileInfo implements JSONable, Serializable {
 			fileConfig = fileInfo.fileConfig;
 		if (portraitUri == null)
 			portraitUri = fileInfo.portraitUri;
-	}
-
-	private void initHeroFile() {
-		if (storageType == StorageType.FileSystem || storageType == StorageType.HeldenAustausch && file == null) {
-			File file = new File(DsaTabApplication.getDsaTabPath(), getId() + HeroFileInfo.HERO_FILE_EXTENSION);
-			this.file = file.getAbsolutePath();
-		}
-	}
-
-	private void initConfigFile() {
-		if (storageType == StorageType.FileSystem || storageType == StorageType.HeldenAustausch && fileConfig == null) {
-			File oldFile = new File(getPath(FileType.Hero) + ".dsatab");
-			File file = new File(getPath(FileType.Hero).replace(HERO_FILE_EXTENSION, CONFIG_FILE_EXTENSION));
-
-			if (oldFile.exists() && oldFile.canRead() && oldFile.length() > 0) {
-				if (!file.exists())
-					oldFile.renameTo(file);
-				else
-					oldFile.delete();
-			}
-
-			this.fileConfig = file.getAbsolutePath();
-		}
+		if (remoteConfigId == null)
+			remoteConfigId = fileInfo.remoteConfigId;
+		if (remoteHeroId == null)
+			remoteHeroId = fileInfo.remoteHeroId;
 	}
 
 	public StorageType getStorageType() {
@@ -172,7 +169,43 @@ public class HeroFileInfo implements JSONable, Serializable {
 		this.storageType = storageType;
 	}
 
+	public void setRemoteHeroId(String remoteHeroId) {
+		this.remoteHeroId = remoteHeroId;
+	}
+
+	public void setRemoteConfigId(String remoteConfigId) {
+		this.remoteConfigId = remoteConfigId;
+	}
+
 	public String getPath(FileType fileType) {
+		switch (fileType) {
+		case Hero:
+			return file.getAbsolutePath();
+		case Config:
+			return fileConfig.getAbsolutePath();
+		default:
+			return null;
+		}
+	}
+
+	public LocalFile getLocalFile(FileType fileType) {
+		switch (fileType) {
+		case Hero:
+			if (file != null)
+				return new LocalFile(file);
+			else
+				return null;
+		case Config:
+			if (fileConfig != null)
+				return new LocalFile(fileConfig);
+			else
+				return null;
+		default:
+			return null;
+		}
+	}
+
+	public File getFile(FileType fileType) {
 		switch (fileType) {
 		case Hero:
 			return file;
@@ -183,9 +216,10 @@ public class HeroFileInfo implements JSONable, Serializable {
 		}
 	}
 
-	protected boolean readData(HeroExchange exchange) {
+	public boolean prepare(HeroExchange exchange) {
 		boolean valid = false;
 		InputStream fis = null;
+
 		try {
 			fis = exchange.getInputStream(this, FileType.Hero);
 			if (fis != null) {
@@ -218,7 +252,6 @@ public class HeroFileInfo implements JSONable, Serializable {
 		} catch (IOException e) {
 			Debug.error(e);
 		} finally {
-			exchange.closeStream(this, FileType.Hero);
 			Util.close(fis);
 		}
 		return valid;
@@ -281,6 +314,10 @@ public class HeroFileInfo implements JSONable, Serializable {
 		return id != null;
 	}
 
+	public boolean isInternal() {
+		return file != null && file.exists();
+	}
+
 	@Override
 	public JSONObject toJSONObject() throws JSONException {
 		JSONObject jsonObject = new JSONObject();
@@ -316,7 +353,10 @@ public class HeroFileInfo implements JSONable, Serializable {
 
 	@Override
 	public int hashCode() {
-		return getKey().hashCode();
+		if (getKey() != null)
+			return getKey().hashCode();
+		else
+			return super.hashCode();
 	}
 
 	@Override

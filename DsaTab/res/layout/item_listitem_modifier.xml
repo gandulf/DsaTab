@@ -3,9 +3,9 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="?attr/listItemBackground"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:paddingRight="?android:attr/listPreferredItemPaddingRight"
-    android:paddingLeft="?android:attr/listPreferredItemPaddingLeft">
+    android:minHeight="?attr/listPreferredItemHeight"
+    android:paddingRight="?attr/listPreferredItemPaddingRight"
+    android:paddingLeft="?attr/listPreferredItemPaddingLeft">
 
     <ImageView
         android:id="@android:id/icon1"

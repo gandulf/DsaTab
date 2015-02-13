@@ -56,6 +56,9 @@ public class ChangeLogDialog extends DialogFragment {
 	private String html;
 
 	public static void show(Activity activity, boolean forceShow, int requestCode) {
+		if (activity == null)
+			return;
+
 		ChangeLogDialog dialog = new ChangeLogDialog();
 
 		Bundle args = new Bundle();
@@ -67,10 +70,10 @@ public class ChangeLogDialog extends DialogFragment {
 		else
 			dialog.releaseHistoryMaxCount = 10;
 
-		boolean hasContent = dialog.hasContent(activity, forceShow);
+		boolean hasContent = dialog.hasContent(DsaTabApplication.getInstance().getResources(), forceShow);
 		// dialog.setTargetFragment(parent, requestCode);
 
-		if (hasContent) {
+		if (hasContent && activity != null) {
 			dialog.show(activity.getFragmentManager(), TAG);
 		}
 	}
@@ -79,8 +82,8 @@ public class ChangeLogDialog extends DialogFragment {
 		lastSeenVersion = getSeenVersion();
 	}
 
-	public boolean hasContent(Activity activity, boolean forceShow) {
-		html = getHTMLChangelog(R.xml.changelog, activity.getResources());
+	public boolean hasContent(Resources res, boolean forceShow) {
+		html = getHTMLChangelog(R.xml.changelog, res);
 
 		return !TextUtils.isEmpty(html) && (forceShow || newChangelogFound);
 	}
@@ -164,7 +167,7 @@ public class ChangeLogDialog extends DialogFragment {
 		String _Result = "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />"
 				+ getStyle() + "</head><body>";
 
-		String summary = ResUtil.loadResToString(R.raw.donate, getActivity());
+		String summary = ResUtil.loadResToString(R.raw.donate, aResource);
 		if (summary != null) {
 			summary = summary.replace("{hs-version}", DsaTabApplication.HS_VERSION);
 			_Result += summary;

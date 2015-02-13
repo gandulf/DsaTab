@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">        
-        	<Preference        		
-                android:name="@string/pref_sdcardPath_title"
-                android:summary="@string/pref_sdcardPath_description"
-                android:defaultValue="dsatab/"
-                android:title="@string/pref_sdcardPath_title"
-                android:key="sdcardPath" />
+        	
 			<Preference        		
                 android:name="@string/pref_sdcardHeroPath_title"
                 android:summary="@string/pref_sdcardHeroPath_description"

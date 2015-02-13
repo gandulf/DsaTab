@@ -4,6 +4,7 @@
         android:id="@+id/option_set"
         android:icon="?attr/imgBarSet"
         android:showAsAction="withText|ifRoom"
+        app:showAsAction="withText|ifRoom"
         android:title="@string/set">
         <menu>
             <group android:checkableBehavior="single" >

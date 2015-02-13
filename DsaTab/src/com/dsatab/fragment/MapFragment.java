@@ -17,13 +17,14 @@ import org.osmdroid.views.MapView;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
 import uk.me.lewisdeane.ldialogs.CustomDialog;
-import android.app.ActionBar;
 import android.content.DialogInterface;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,12 +42,11 @@ import com.dsatab.map.MapTileProviderLocal;
 import com.dsatab.util.Util;
 import com.gandulf.guilib.download.AbstractDownloader;
 import com.gandulf.guilib.download.DownloaderWrapper;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
 
 public class MapFragment extends BaseFragment {
 
-	/**
-	 * 
-	 */
 	private static final String OSM_AVENTURIEN = "OSM_AVENTURIEN";
 
 	private static final String PREF_KEY_LAST_MAP_COORDINATES = "lastMapCoordinates";
@@ -113,7 +113,7 @@ public class MapFragment extends BaseFragment {
 		mapNames = null;
 
 		if (!getMapNames().isEmpty()) {
-			ActionBar actionBar = getActionBarActivity().getActionBar();
+			ActionBar actionBar = getActionBarActivity().getSupportActionBar();
 
 			final ArrayAdapter<String> adapter = new ArrayAdapter<String>(actionBar.getThemedContext(),
 					android.R.layout.simple_spinner_item, getMapNames());
@@ -194,7 +194,7 @@ public class MapFragment extends BaseFragment {
 	}
 
 	private void removeMapNavigation() {
-		ActionBar actionBar = getActionBarActivity().getActionBar();
+		ActionBar actionBar = getActionBarActivity().getSupportActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 		actionBar.setListNavigationCallbacks(null, null);
 	}
@@ -297,8 +297,8 @@ public class MapFragment extends BaseFragment {
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
 
-					AbstractDownloader downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDsaTabPath(),
-							getActivity());
+					AbstractDownloader downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDirectory()
+							.getAbsolutePath(), getActivity());
 					downloader.addPath(DsaTabPreferenceActivity.PATH_OSM_MAP_PACK);
 					downloader.downloadZip();
 				}
@@ -388,7 +388,11 @@ public class MapFragment extends BaseFragment {
 		protected Bitmap doInBackground(String... urls) {
 			File file = new File(DsaTabApplication.getDirectory(DsaTabApplication.DIR_MAPS), urls[0]);
 			publishProgress(file.getName());
-			return Util.decodeBitmap(file, 1000);
+
+			ImageSize imageSize = new ImageSize(1000, 1000);
+			String uri = Uri.fromFile(file).toString();
+
+			return ImageLoader.getInstance().loadImageSync(Uri.decode(uri), imageSize);
 		}
 
 		/*

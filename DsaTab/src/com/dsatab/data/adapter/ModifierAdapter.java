@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.CheckedTextView;
+import android.widget.CheckBox;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Spinner;
@@ -54,9 +54,9 @@ public class ModifierAdapter extends OpenArrayAdapter<Modifier> implements OnSee
 			if (view.getTag() instanceof Modifier) {
 				Modifier mod = (Modifier) view.getTag();
 				boolean active = mod.toggleActive();
-				if (view instanceof CheckedTextView) {
-					CheckedTextView checkedTextView = (CheckedTextView) view;
-					checkedTextView.setChecked(active);
+				if (view instanceof CheckBox) {
+					CheckBox checked = (CheckBox) view;
+					checked.setChecked(active);
 				}
 
 				onModifierChanged(mod);
@@ -69,6 +69,8 @@ public class ModifierAdapter extends OpenArrayAdapter<Modifier> implements OnSee
 		super(context, 0, objects);
 
 		inflater = LayoutInflater.from(context);
+
+		inflater = inflater.cloneInContext(context);
 	}
 
 	@Override
@@ -98,7 +100,8 @@ public class ModifierAdapter extends OpenArrayAdapter<Modifier> implements OnSee
 			convertView = (ViewGroup) inflater.inflate(R.layout.item_probe_modifier, parent, false);
 			ViewHolderString holder = new ViewHolderString();
 			holder.text1 = (TextView) convertView.findViewById(android.R.id.text1);
-			holder.text2 = (CheckedTextView) convertView.findViewById(android.R.id.text2);
+			holder.text2 = (TextView) convertView.findViewById(android.R.id.text2);
+			holder.checkBox = (CheckBox) convertView.findViewById(android.R.id.checkbox);
 			holder.seekBar = (SeekBarEx) convertView.findViewById(R.id.wheel);
 			holder.seekBar.setLabelRenderer(labelRenderer);
 			holder.spinner = (Spinner) convertView.findViewById(R.id.spinner);
@@ -138,11 +141,12 @@ public class ModifierAdapter extends OpenArrayAdapter<Modifier> implements OnSee
 			holder.text1.setText(modifier.getTitle());
 
 			holder.text2.setText(Util.toProbe(holder.seekBar.getValue()));
-			holder.text2.setChecked(modifier.isActive());
+
 			Util.setTextColor(holder.text2, -holder.seekBar.getValue());
 
-			holder.text2.setOnClickListener(modificerClickListener);
-			holder.text2.setTag(modifier);
+			holder.checkBox.setChecked(modifier.isActive());
+			holder.checkBox.setOnClickListener(modificerClickListener);
+			holder.checkBox.setTag(modifier);
 
 			holder.seekBar.setLabel(holder.text2);
 			holder.seekBar.setTag(modifier);
@@ -156,9 +160,10 @@ public class ModifierAdapter extends OpenArrayAdapter<Modifier> implements OnSee
 			holder.text1.setText(modifier.getTitle());
 
 			holder.text2.setText(Util.toProbe(-modifier.getModifier()));
-			holder.text2.setChecked(modifier.isActive());
-			holder.text2.setOnClickListener(modificerClickListener);
-			holder.text2.setTag(modifier);
+
+			holder.checkBox.setTag(modifier);
+			holder.checkBox.setChecked(modifier.isActive());
+			holder.checkBox.setOnClickListener(modificerClickListener);
 
 			Util.setTextColor(holder.text2, modifier.getModifier());
 			break;
@@ -218,10 +223,11 @@ public class ModifierAdapter extends OpenArrayAdapter<Modifier> implements OnSee
 			});
 
 			holder.text2.setText(Util.toProbe(-modifier.getModifier()));
-			holder.text2.setChecked(modifier.isActive());
-			holder.text2.setOnClickListener(modificerClickListener);
-			holder.text2.setTag(modifier);
 			Util.setTextColor(holder.text2, modifier.getModifier());
+
+			holder.checkBox.setTag(modifier);
+			holder.checkBox.setChecked(modifier.isActive());
+			holder.checkBox.setOnClickListener(modificerClickListener);
 
 			break;
 		}
@@ -294,7 +300,8 @@ public class ModifierAdapter extends OpenArrayAdapter<Modifier> implements OnSee
 
 	private static class ViewHolderString {
 		private TextView text1;
-		private CheckedTextView text2;
+		private TextView text2;
+		private CheckBox checkBox;
 		private SeekBarEx seekBar;
 		private Spinner spinner;
 	}

@@ -3,6 +3,7 @@
         android:id="@+id/option_ok"
         android:icon="?attr/imgBarAccept"
         android:showAsAction="withText|ifRoom"
+        app:showAsAction="withText|ifRoom"
         android:title="@string/menu_done">
     </item>
 </menu>

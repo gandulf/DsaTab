@@ -4,10 +4,7 @@
     android:layout_height="fill_parent">
 
     <com.gandulf.guilib.view.DynamicListViewEx
-        android:id="@android:id/list"
-        android:divider="@null"
-        android:background="?attr/slidingPaneShadowBackground"
-        android:cacheColorHint="#00000000"
+        android:id="@android:id/list"        
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
 

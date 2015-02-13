@@ -7,8 +7,8 @@ import java.util.List;
 import android.app.Activity;
 import android.content.AsyncTaskLoader;
 
+import com.dsatab.cloud.HeroExchange.StorageType;
 import com.dsatab.data.HeroFileInfo;
-import com.dsatab.data.HeroFileInfo.StorageType;
 
 public class HeroesSyncTask extends AsyncTaskLoader<List<HeroFileInfo>> {
 
@@ -60,20 +60,12 @@ public class HeroesSyncTask extends AsyncTaskLoader<List<HeroFileInfo>> {
 		try {
 			List<HeroFileInfo> heroes = new ArrayList<HeroFileInfo>();
 
-			try {
-				heroes.addAll(exchange.getHeroes(StorageType.FileSystem));
-			} catch (Exception e) {
-				exception.add(e);
-			}
-			try {
-				heroes.addAll(exchange.getHeroes(StorageType.Dropbox));
-			} catch (Exception e) {
-				exception.add(e);
-			}
-			try {
-				heroes.addAll(exchange.getHeroes(StorageType.HeldenAustausch));
-			} catch (Exception e) {
-				exception.add(e);
+			for (StorageType type : HeroExchange.storageTypes) {
+				try {
+					heroes.addAll(exchange.getHeroes(type));
+				} catch (Exception e) {
+					exception.add(e);
+				}
 			}
 
 			List<HeroFileInfo> fileInfos = new ArrayList<HeroFileInfo>();

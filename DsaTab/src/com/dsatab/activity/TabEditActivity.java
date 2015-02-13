@@ -3,7 +3,6 @@ package com.dsatab.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SlidingPaneLayout;
+import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -71,13 +71,14 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		setTheme(DsaTabApplication.getInstance().getCustomTheme(false));
+		setTheme(DsaTabApplication.getInstance().getCustomTheme());
 		applyPreferencesToTheme();
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.sheet_edit_tab);
+		setContentView(R.layout.main_edit_tabs);
 
 		SlidingPaneLayout slidingPaneLayout = (SlidingPaneLayout) findViewById(R.id.slidepanel);
-		// slidingPaneLayout.setParallaxDistance(100);
+		slidingPaneLayout.setCoveredFadeColor(0);
+		slidingPaneLayout.setSliderFadeColor(0);
 		slidingPaneLayout.openPane();
 
 		TabHost tabHost = (TabHost) findViewById(android.R.id.tabhost);
@@ -141,7 +142,7 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 
 		// Inflate a "Done" custom action bar view to serve as the "Up"
 		// affordance.
-		LayoutInflater inflater = LayoutInflater.from(getActionBar().getThemedContext());
+		LayoutInflater inflater = LayoutInflater.from(getSupportActionBar().getThemedContext());
 		final View customActionBarView = inflater.inflate(R.layout.actionbar_custom_view_done_discard_left, null);
 		customActionBarView.findViewById(R.id.actionbar_done).setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -159,7 +160,7 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 
 		// Show the custom action bar view and hide the normal Home icon and
 		// title.
-		final ActionBar actionBar = getActionBar();
+		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM, ActionBar.DISPLAY_SHOW_CUSTOM
 				| ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
 		actionBar.setCustomView(customActionBarView);

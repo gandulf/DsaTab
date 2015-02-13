@@ -4,10 +4,9 @@
     xmlns:auto="http://schemas.android.com/apk/res-auto"
     xmlns:guilib="http://schemas.android.com/apk/com.gandulf.guilib"
     android:id="@+id/popup_edit_image"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:focusable="false"
-    android:clickable="false"
-    android:scaleType="fitCenter" >
+    android:clickable="false">
 
 </com.dsatab.view.CardView>

@@ -5,13 +5,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
 
-import org.jdom2.Document;
-import org.jdom2.Element;
 import org.osmdroid.tileprovider.tilesource.ITileSource;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 
@@ -26,21 +22,17 @@ import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.v7.graphics.Palette;
 import android.text.TextUtils;
-import android.widget.Toast;
 
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.cloud.HeroExchange;
 import com.dsatab.config.DsaTabConfiguration;
 import com.dsatab.data.Hero;
-import com.dsatab.data.HeroFileInfo.FileType;
 import com.dsatab.db.DatabaseHelper;
 import com.dsatab.fragment.dialog.ChangeLogDialog;
 import com.dsatab.map.BitmapTileSource;
 import com.dsatab.util.Debug;
-import com.dsatab.util.Util;
-import com.dsatab.xml.HeldenXmlParser;
-import com.dsatab.xml.Xml;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -71,13 +63,9 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 
 	public static final String DIR_OSM_MAPS = "osm_map";
 
-	public static final String DIR_PDFS = "pdfs";
-
 	public static final String DIR_PORTRAITS = "portraits";
 
 	public static final String DIR_CARDS = "cards";
-
-	public static final String DIR_BACKGROUNDS = "backgrounds";
 
 	public static final String DIR_RECORDINGS = "recordings";
 
@@ -89,6 +77,8 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 	public static final String THEME_DARK_PLAIN = "dark_plain";
 	public static final String THEME_DEFAULT = THEME_LIGHT_PLAIN;
 
+	public static final String DIR_HEROES = "heroes";
+
 	// instance
 	private static DsaTabApplication instance = null;
 
@@ -96,7 +86,6 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 	 * Cache for corrected path
 	 */
 	private static String basePath, heroPath;
-	private static File baseDir, heroDir;
 
 	public Hero hero = null;
 
@@ -104,10 +93,14 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 
 	private DatabaseHelper databaseHelper = null;
 
+	private HeroExchange exchange;
+
 	private Typeface poorRichFont;
 
 	private boolean firstRun;
 	private boolean newsShown = false;
+
+	private Palette palette;
 
 	/**
 	 * Convenient access, saves having to call and cast getApplicationContext()
@@ -117,44 +110,9 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 		return instance;
 	}
 
-	public static File getDsaTabDirectory() {
-		if (baseDir == null) {
-			baseDir = new File(getDsaTabPath());
-			if (!baseDir.exists())
-				baseDir.mkdirs();
-		}
-		return baseDir;
-	}
-
-	public static File getDsaTabHeroDirectory() {
-		if (heroDir == null) {
-			heroDir = new File(getDsaTabHeroPath());
-			if (!heroDir.exists())
-				heroDir.mkdirs();
-		}
-		return heroDir;
-	}
-
-	public static void setDirectory(String name, File dir) {
-		Editor edit = getPreferences().edit();
-		edit.putString(DsaTabPreferenceActivity.KEY_SETUP_SDCARD_PATH_PREFIX + name, dir.getAbsolutePath());
-		edit.commit();
-
-	}
-
 	public static File getDirectory(String name) {
-		File dirFile = null;
-		if (getPreferences().contains(DsaTabPreferenceActivity.KEY_SETUP_SDCARD_PATH_PREFIX + name)) {
-			File dir = new File(getPreferences().getString(
-					DsaTabPreferenceActivity.KEY_SETUP_SDCARD_PATH_PREFIX + name, null));
+		File dirFile = getInstance().getExternalFilesDir(name);
 
-			if (dir.exists() && dir.isDirectory()) {
-				dirFile = dir;
-			}
-		}
-		if (dirFile == null) {
-			dirFile = new File(getDsaTabDirectory(), name);
-		}
 		if (!dirFile.exists())
 			dirFile.mkdirs();
 		return dirFile;
@@ -168,19 +126,13 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 	 */
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-		if (key.equals(DsaTabPreferenceActivity.KEY_SETUP_SDCARD_PATH)) {
-			basePath = null;
-			baseDir = null;
-			checkDirectories();
-		} else if (key.equals(DsaTabPreferenceActivity.KEY_SETUP_SDCARD_HERO_PATH)) {
+		if (key.equals(DsaTabPreferenceActivity.KEY_SETUP_SDCARD_HERO_PATH)) {
 			heroPath = null;
-			heroDir = null;
-			checkDirectories();
 		}
-
 	}
 
-	public static String getDsaTabPath() {
+	@Deprecated
+	private static String getDsaTabPath() {
 		if (basePath == null) {
 			basePath = getPreferences().getString(DsaTabPreferenceActivity.KEY_SETUP_SDCARD_PATH, DEFAULT_SD_CARD);
 
@@ -195,7 +147,15 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 		return basePath;
 	}
 
-	public static String getDsaTabHeroPath() {
+	public static File getInternalHeroDirectory() {
+		return getDirectory(DIR_HEROES);
+	}
+
+	public static File getDirectory() {
+		return getDirectory("");
+	}
+
+	public static String getExternalHeroPath() {
 		if (heroPath == null) {
 			heroPath = getPreferences().getString(DsaTabPreferenceActivity.KEY_SETUP_SDCARD_HERO_PATH, DEFAULT_SD_CARD);
 
@@ -203,7 +163,6 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 				heroPath += "/";
 
 			if (!heroPath.startsWith("/")) {
-
 				heroPath = SD_CARD_PATH_PREFIX + heroPath;
 			}
 
@@ -212,23 +171,12 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 		return heroPath;
 	}
 
-	private static void checkDirectories() {
+	public Palette getPalette() {
+		return palette;
+	}
 
-		Debug.verbose("Checking dsatab dir " + getDsaTabPath() + " for subdirs");
-		File base = getDsaTabDirectory();
-
-		File mapsdir = getInstance().getExternalFilesDir(DIR_MAPS);
-
-		File recordingsDir = getDirectory(DIR_RECORDINGS);
-		File mapsDir = getDirectory(DIR_MAPS);
-		File osmmapsDir = getDirectory(DIR_OSM_MAPS);
-		File cardsDir = getDirectory(DIR_CARDS);
-		File portraitsDir = getDirectory(DIR_PORTRAITS);
-		File pdfsDir = getDirectory(DIR_PDFS);
-		File bgDir = getDirectory(DIR_BACKGROUNDS);
-
-		Debug.verbose("Checking dsatab hero dir " + getDsaTabHeroPath());
-		File heroes = getDsaTabHeroDirectory();
+	public void setPalette(Palette palette) {
+		this.palette = palette;
 	}
 
 	public static SharedPreferences getPreferences() {
@@ -249,27 +197,18 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 	}
 
 	public boolean isDarkTheme() {
-		return R.style.DsaTabTheme_Dark == getCustomTheme(false);
+		return R.style.DsaTabTheme_Dark == getCustomTheme();
 	}
 
-	public int getCustomTheme(boolean translucent) {
+	public int getCustomTheme() {
 		String theme = getPreferences().getString(DsaTabPreferenceActivity.KEY_THEME, THEME_DEFAULT);
 
 		if (THEME_LIGHT_PLAIN.equals(theme)) {
-			if (translucent)
-				return R.style.DsaTabTheme_Light_Translucent;
-			else
-				return R.style.DsaTabTheme_Light;
+			return R.style.DsaTabTheme_Light;
 		} else if (THEME_DARK_PLAIN.equals(theme)) {
-			if (translucent)
-				return R.style.DsaTabTheme_Dark_Translucent;
-			else
-				return R.style.DsaTabTheme_Dark;
+			return R.style.DsaTabTheme_Dark;
 		} else {
-			if (translucent)
-				return R.style.DsaTabTheme_Light_Translucent;
-			else
-				return R.style.DsaTabTheme_Light;
+			return R.style.DsaTabTheme_Light;
 		}
 
 	}
@@ -318,7 +257,7 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 
 		cleanUp();
 
-		setTheme(getCustomTheme(false));
+		setTheme(getCustomTheme());
 
 		configuration = new DsaTabConfiguration(this);
 
@@ -327,7 +266,7 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 		if (!BuildConfig.DEBUG)
 			Mint.initAndStartSession(this, BUGSENSE_API_KEY);
 
-		checkDirectories();
+		migrateDirectories();
 
 		getPreferences().registerOnSharedPreferenceChangeListener(this);
 
@@ -340,7 +279,7 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 		final ITileSource tileSource = new BitmapTileSource(TILESOURCE_AVENTURIEN, null, 2, 5, 256, ".jpg");
 		TileSourceFactory.addTileSource(tileSource);
 
-		File token = new File(getDsaTabDirectory(), "token.txt");
+		File token = new File(getDirectory(), "token.txt");
 		if (token.exists()) {
 			try {
 				BufferedReader reader = new BufferedReader(new FileReader(token));
@@ -371,10 +310,44 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 				.tasksProcessingOrder(QueueProcessingType.LIFO).build();
 		// Initialize ImageLoader with configuration.
 		ImageLoader.getInstance().init(config);
+
+		exchange = new HeroExchange(getBaseContext());
+	}
+
+	private void migrateDirectories() {
+		File oldDir = new File(getDsaTabPath());
+
+		if (oldDir.isDirectory()) {
+
+			File[] files = oldDir.listFiles();
+
+			if (files != null) {
+				for (File f : files) {
+
+					if (f.isDirectory()) {
+						File newfile = getInstance().getExternalFilesDir(f.getName());
+						f.renameTo(newfile);
+					} else {
+						File newfile = new File(getDirectory(), f.getName());
+						f.renameTo(newfile);
+					}
+				}
+			}
+
+			files = oldDir.listFiles();
+			if (files == null || files.length == 0) {
+				oldDir.delete();
+			}
+		}
+
 	}
 
 	public boolean isFirstRun() {
 		return firstRun;
+	}
+
+	public HeroExchange getExchange() {
+		return exchange;
 	}
 
 	private void cleanUp() {
@@ -423,71 +396,6 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 
 		ChangeLogDialog.show(activity, false, 0);
 		newsShown = true;
-	}
-
-	public void saveHero(Activity activity) {
-		if (hero == null || activity == null) {
-			return;
-		}
-
-		try {
-			HeroExchange exchange = new HeroExchange(activity);
-
-			InputStream fis = exchange.getInputStream(hero.getFileInfo(), FileType.Hero);
-			if (fis == null) {
-				Debug.warning("Unable to read hero from input stream: " + hero.getFileInfo());
-				Toast.makeText(this, R.string.message_save_hero_failed, Toast.LENGTH_LONG).show();
-				return;
-			}
-
-			Document dom = null;
-			try {
-				dom = HeldenXmlParser.readDocument(fis);
-			} finally {
-				exchange.closeStream(hero.getFileInfo(), FileType.Hero);
-				Util.close(fis);
-			}
-
-			Element heroElement = dom.getRootElement().getChild(Xml.KEY_HELD);
-			HeldenXmlParser.onPreHeroSaved(hero, heroElement);
-
-			OutputStream out = exchange.getOutputStream(hero.getFileInfo(), FileType.Hero);
-			if (out == null) {
-				Debug.warning("Unable to write hero to output stream: " + hero.getFileInfo());
-				Toast.makeText(this, R.string.message_save_hero_failed, Toast.LENGTH_LONG).show();
-				return;
-			}
-
-			try {
-				HeldenXmlParser.writeHero(hero, dom, out);
-				hero.onPostHeroSaved();
-			} finally {
-				exchange.closeStream(hero.getFileInfo(), FileType.Hero);
-				Util.close(out);
-			}
-
-			OutputStream outConfig = exchange.getOutputStream(hero.getFileInfo(), FileType.Config);
-			if (outConfig == null) {
-				Debug.warning("Unable to write config file for hero: " + hero.getFileInfo());
-				Toast.makeText(this, R.string.message_save_hero_failed, Toast.LENGTH_LONG).show();
-				return;
-			}
-
-			try {
-				outConfig.write(hero.getHeroConfiguration().toJSONObject().toString().getBytes());
-			} finally {
-				exchange.closeStream(hero.getFileInfo(), FileType.Config);
-				Util.close(outConfig);
-			}
-
-			if (!getPreferences().getBoolean(DsaTabPreferenceActivity.KEY_AUTO_SAVE, true)) {
-				Toast.makeText(this, getString(R.string.hero_saved, hero.getName()), Toast.LENGTH_SHORT).show();
-			}
-
-		} catch (Exception e) {
-			Toast.makeText(this, R.string.message_save_hero_failed, Toast.LENGTH_LONG).show();
-			Debug.error(e);
-		}
 	}
 
 	public DatabaseHelper getDBHelper() {

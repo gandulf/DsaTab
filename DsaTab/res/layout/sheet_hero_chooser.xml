@@ -16,6 +16,8 @@
             android:columnWidth="@dimen/portrait_width_small"
             android:drawSelectorOnTop="true"
             android:gravity="center"
+            android:horizontalSpacing="4dp"
+            android:verticalSpacing="4dp"
             android:numColumns="auto_fit"
             android:stretchMode="columnWidth" />
 

@@ -3,9 +3,9 @@ package com.dsatab.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.ActionBar;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +54,7 @@ public class AnimalFragment extends BaseProfileFragment {
 	}
 
 	private void initAnimalNavigation() {
-		ActionBar actionBar = getActionBarActivity().getActionBar();
+		ActionBar actionBar = getActionBarActivity().getSupportActionBar();
 
 		List<String> animalNames = new ArrayList<String>();
 		for (int i = 0; i < getHero().getAnimals().size(); i++) {
@@ -85,7 +85,7 @@ public class AnimalFragment extends BaseProfileFragment {
 	}
 
 	private void removeAnimalNavigation() {
-		ActionBar actionBar = getActionBarActivity().getActionBar();
+		ActionBar actionBar = getActionBarActivity().getSupportActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 		actionBar.setListNavigationCallbacks(null, null);
 	}
@@ -146,19 +146,6 @@ public class AnimalFragment extends BaseProfileFragment {
 			if (animal != null && this instanceof HeroChangedListener) {
 				animal.removeHeroChangedListener(this);
 			}
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Fragment#setUserVisibleHint(boolean)
-	 */
-	@Override
-	public void setUserVisibleHint(boolean isVisibleToUser) {
-		super.setUserVisibleHint(isVisibleToUser);
-		if (!isVisibleToUser && mMode != null) {
-			mMode.finish();
 		}
 	}
 

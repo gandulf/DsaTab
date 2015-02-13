@@ -1256,7 +1256,7 @@ public class Hero extends AbstractBeing {
 								}
 							}
 
-							if (primaryWeapon && hasFeature(FeatureType.ParierwaffenI)) {
+							if (primaryWeapon && hasFeature(FeatureType.ParierwaffenII)) {
 								if (outValue != null)
 									outValue[0] += 2;
 								if (outModifiers != null)

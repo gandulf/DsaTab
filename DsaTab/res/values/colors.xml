@@ -16,6 +16,7 @@
 	
 	<color name="ValueRed">#FFe51c23</color>
 	<color name="ValueGreen">#259b24</color>
+	<color name="ValueBlue">#33b5e5</color>
 	
 	<color name="ValueRedAlpha">#CCe51c23</color>
 	<color name="ValueBlueAlpha">#CC5677fc</color>

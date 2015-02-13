@@ -12,13 +12,14 @@
 
     <ImageView
         android:id="@+id/popup_edit_icon"
-        style="?attr/android:spinnerStyle"
+        style="?attr/spinnerStyle"
         android:layout_width="wrap_content"
-        android:minWidth="@dimen/icon_button_size"
         android:layout_height="@dimen/icon_button_size"
         android:layout_column="0"
         android:layout_gravity="bottom|right"
-        android:layout_row="0" />
+        android:layout_row="0"
+        android:minWidth="@dimen/icon_button_size"
+        android:scaleType="centerInside" />
 
     <com.thebnich.floatinghintedittext.FloatingHintEditText
         android:id="@+id/popup_edit_name"
@@ -55,17 +56,17 @@
             android:id="@+id/popup_edit_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_gravity="right|fill_horizontal"
+            android:layout_weight="1"
             android:hint="@string/label_price"
             android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
-            android:layout_gravity="left|center_vertical"
             android:text="@string/label_kreuzer"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -73,18 +74,18 @@
             android:id="@+id/popup_edit_weight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="right|fill_horizontal"
             android:layout_marginLeft="4dp"
             android:layout_weight="1"
-            android:layout_gravity="right|fill_horizontal"
             android:hint="@string/label_weight"
             android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
-            android:layout_gravity="right|center_vertical"
             android:text="@string/label_ounces"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </LinearLayout>
@@ -104,11 +105,11 @@
         android:id="@+id/popup_edit_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="0dp"
-        android:layout_marginTop="0dp"
         android:layout_columnSpan="2"
         android:layout_gravity="start|end"
+        android:layout_marginTop="0dp"
         android:layout_row="9"
+        android:paddingTop="0dp"
         tools:listitem="@android:layout/simple_spinner_item" />
 
     <CheckBox
@@ -120,19 +121,25 @@
         android:layout_row="10"
         android:text="@string/display_name_above_image" />
 
-    <Space
-        android:id="@+id/space1"
+    <Space        
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_column="0"
         android:layout_gravity="fill" />
 
-    <include
-        android:id="@+id/inc_gal_item_view"
+    <android.support.v7.widget.CardView
+        style="?attr/cardViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_columnSpan="2"
-        android:layout_gravity="start|end"
-        layout="@layout/item_listitem_view" />
+        android:layout_gravity="start|end" >
+
+        <include
+            android:id="@+id/inc_gal_item_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/item_listitem_view"
+            />
+    </android.support.v7.widget.CardView>
 
 </GridLayout>

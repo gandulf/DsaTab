@@ -102,8 +102,7 @@ public class CombatShieldTalent extends BaseCombatTalent {
 						&& (hero.hasFeature(FeatureType.ParierwaffenI) || hero.hasFeature(FeatureType.ParierwaffenII))) {
 					EquippedItem equippedWeapon = paradeItem.getSecondaryItem();
 					// check wether mainweapon has a defense value
-					// TODO modifiers on main weapon should be considered here
-					// too!!!
+					// TODO modifiers on main weapon should be considered here too!!!
 					if (equippedWeapon.getTalent() instanceof CombatMeleeTalent
 							&& equippedWeapon.getTalent().getDefense() != null) {
 						baseValue = equippedWeapon.getTalent().getDefense().getValue();

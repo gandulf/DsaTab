@@ -16,11 +16,7 @@
         android:icon="@drawable/dsa_dice"
         android:summary="Darstellung und Verhalten der Würfelleite konfigurieren"
         android:title="Würfelleiste" />
-    <header
-        android:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsHeaderFragment"
-        android:icon="@drawable/dsa_list"
-        android:summary="Darstellung und Kopfzeile konfigurieren"
-        android:title="Kopfzeile" />
+    
     <header
         android:fragment="com.dsatab.activity.DsaTabPreferenceActivity$PrefsSetupFragment"
         android:icon="@drawable/ic_menu_preferences"

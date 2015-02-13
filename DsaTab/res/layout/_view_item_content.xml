@@ -14,9 +14,10 @@
         android:layout_width="@dimen/icon_button_size"
         android:layout_height="@dimen/icon_button_size"
         android:layout_column="0"
-        android:layout_gravity="bottom|right"
+        android:layout_gravity="bottom|end"
         android:layout_row="0"
-        android:layout_rowSpan="1" />
+        android:layout_rowSpan="1"
+        android:scaleType="centerInside" />
 
     <com.thebnich.floatinghintedittext.FloatingHintTextView
         android:id="@+id/popup_edit_name"
@@ -31,9 +32,9 @@
         android:id="@+id/popup_edit_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_column="0"
         android:layout_columnSpan="2"
         android:layout_gravity="start|end"
-        android:layout_column="0"
         android:layout_row="1"
         android:hint="@string/label_titel" />
 
@@ -48,19 +49,19 @@
             android:id="@+id/popup_edit_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="start|fill_horizontal"
             android:layout_weight="1"
-            android:layout_gravity="left|fill_horizontal"
             android:hint="@string/label_price" />
 
         <com.thebnich.floatinghintedittext.FloatingHintTextView
             android:id="@+id/popup_edit_weight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="start|fill_horizontal"
+            android:layout_marginStart="4dp"
             android:layout_marginLeft="4dp"
             android:layout_weight="1"
-            android:layout_gravity="left|fill_horizontal"
             android:hint="@string/label_weight" />
-        
     </LinearLayout>
 
     <com.thebnich.floatinghintedittext.FloatingHintTextView
@@ -73,18 +74,23 @@
         android:hint="@string/label_category" />
 
     <Space
-        android:id="@+id/space1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_column="0"
         android:layout_gravity="fill" />
 
-    <include
-        android:id="@+id/inc_gal_item_view"
+    <android.support.v7.widget.CardView
+        style="?attr/cardViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_columnSpan="2"
-        android:layout_gravity="start|end"
-        layout="@layout/item_listitem_view" />
+        android:layout_gravity="start|end" >
+
+        <include
+            android:id="@+id/inc_gal_item_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/item_listitem_view" />
+    </android.support.v7.widget.CardView>
 
 </GridLayout>

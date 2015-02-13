@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.gandulf.guilib.view.HackeyDrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"    
+<com.gandulf.guilib.view.HackeyDrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
@@ -8,78 +8,85 @@
 
     <!-- The main content view -->
 
-    <com.sothree.slidinguppanel.SlidingUpPanelLayout
-        android:id="@+id/slidepanel"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="?android:attr/actionBarSize"        
-        app:panelHeight="@dimen/icon_button_size"
-        android:gravity="bottom">
+        android:layout_height="match_parent" >
 
-        <RelativeLayout
+        <com.sothree.slidinguppanel.SlidingUpPanelLayout
+            android:id="@+id/slidepanel"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:id="@+id/viewpager"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignWithParentIfMissing="true"
-                android:layout_below="@+id/inc_attributes"                
-                android:baselineAligned="false" >
-
-                <FrameLayout
-                    android:id="@+id/pane_left"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" >
-                </FrameLayout>
-
-                <FrameLayout
-                    android:id="@+id/pane_right"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" >
-                </FrameLayout>
-            </LinearLayout>
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            app:panelHeight="56dp" >
 
             <FrameLayout
-                android:id="@+id/loading"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/Darker"
-                android:visibility="gone" >
+                android:layout_height="match_parent">
 
-                <ProgressBar
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:indeterminate="true" />
+                <LinearLayout
+                    android:id="@+id/viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:baselineAligned="false" >
+
+                    <FrameLayout
+                        android:id="@+id/pane_left"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" >
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/pane_right"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" >
+                    </FrameLayout>
+                </LinearLayout>
+
+                <FrameLayout
+                    android:id="@+id/loading"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/Darker"
+                    android:visibility="gone" >
+
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:indeterminate="true" />
+                </FrameLayout>
             </FrameLayout>
-        </RelativeLayout>
 
-        <fragment
-            android:id="@+id/inc_dice_slider"
-            android:name="com.dsatab.fragment.DiceSliderFragment"
+            <fragment
+                android:id="@+id/inc_dice_slider"
+                android:name="com.dsatab.fragment.DiceSliderFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                class="com.dsatab.fragment.DiceSliderFragment"
+                android:tag="diceSliderFragment"
+                tools:layout="@layout/dice_slider_content" >
+            </fragment>
+        </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+        
+        <include
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            class="com.dsatab.fragment.DiceSliderFragment"
-            android:tag="diceSliderFragment"
-            tools:layout="@layout/dice_slider_content" >
-        </fragment>
-    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
-
+            layout="@layout/_toolbar" />
+    </FrameLayout>
     <!-- The navigation drawer -->
 
     <ListView
         android:id="@+id/left_drawer"
         android:layout_width="240dp"
         android:layout_height="match_parent"
-        android:layout_gravity="start"        
-        android:divider="#00000000"
+        android:layout_gravity="start"
         android:background="?android:attr/colorBackground"
         android:cacheColorHint="?android:attr/colorBackground"
-        android:choiceMode="singleChoice" />
+        android:drawSelectorOnTop="true"
+        android:choiceMode="singleChoice"
+        android:divider="#00000000" />
 
 </com.gandulf.guilib.view.HackeyDrawerLayout>

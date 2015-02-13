@@ -4,7 +4,7 @@
     xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:id="@+id/gen_portrait_container"
     android:layout_width="match_parent"    
-    android:layout_height="150dp">
+    android:layout_height="160dp">
 
     <ImageView
         android:id="@+id/gen_portrait"
@@ -21,7 +21,7 @@
         android:background="@drawable/banner_scrim"
         android:layout_gravity="bottom"
         android:gravity="end"
-        android:paddingBottom="16dp"
+        android:paddingBottom="8dp"
         android:paddingTop="42dp"
         android:animateLayoutChanges="true" >
 

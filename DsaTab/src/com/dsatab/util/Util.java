@@ -1,6 +1,5 @@
 package com.dsatab.util;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -39,7 +38,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -265,81 +263,6 @@ public class Util {
 	public static Spanned getText(int resourceId, java.lang.Object... formatArgs) {
 		return Html.fromHtml(String.format(
 				Html.toHtml(new SpannedString(DsaTabApplication.getInstance().getText(resourceId))), formatArgs));
-	}
-
-	public static Bitmap decodeBitmap(final File f, final int suggestedSize) {
-		if (f == null) {
-			return null;
-		}
-		if (f.exists() == false) {
-			return null;
-		}
-
-		return decodeBitmap(Uri.fromFile(f), suggestedSize);
-	}
-
-	public static Bitmap decodeBitmap(Uri uri, int maxImageSize) {
-		try {
-
-			Bitmap b = null;
-			InputStream is = null;
-			BufferedInputStream bis = null;
-
-			// Decode image size
-			BitmapFactory.Options o;
-			try {
-				is = DsaTabApplication.getInstance().getBaseContext().getContentResolver().openInputStream(uri);
-				bis = new BufferedInputStream(is);
-
-				o = new BitmapFactory.Options();
-				o.inJustDecodeBounds = true;
-				BitmapFactory.decodeStream(bis, null, o);
-			} finally {
-				if (is != null)
-					is.close();
-			}
-			is = null;
-			bis = null;
-
-			// Find the correct scale value.It should be the power of 2
-			final int requiredSize = maxImageSize;
-			int widthTmp = o.outWidth, heightTmp = o.outHeight;
-			int scale = 1;
-			while (true) {
-				if ((widthTmp / 2) < requiredSize || (heightTmp / 2) < requiredSize) {
-					break;
-				}
-				widthTmp /= 2;
-				heightTmp /= 2;
-				scale *= 2;
-			}
-
-			// Decode with inSampleSize
-			BitmapFactory.Options o2 = new BitmapFactory.Options();
-			o2.inSampleSize = scale;
-			o2.inDither = false;
-			o2.inInputShareable = true;
-			o2.inPurgeable = true;
-			o2.inTempStorage = new byte[32 * 1024];
-
-			try {
-				is = DsaTabApplication.getInstance().getBaseContext().getContentResolver().openInputStream(uri);
-				bis = new BufferedInputStream(is);
-				b = BitmapFactory.decodeStream(bis, null, o2);
-			} finally {
-				if (is != null)
-					is.close();
-			}
-			return b;
-
-		} catch (final FileNotFoundException e) {
-			Debug.warning("Could not find bitmap file for:" + uri);
-			return null;
-		} catch (final Throwable e) {
-			Debug.error(e);
-			System.gc();
-			return null;
-		}
 	}
 
 	public static String checkFileWriteAccess(File file) {
@@ -778,6 +701,8 @@ public class Util {
 				uri = uri.replace("file:/", "file:///");
 			}
 
+			uri = Uri.decode(uri);
+
 			ImageLoader.getInstance().displayImage(uri, view, loadingListener);
 		} else {
 			view.setImageResource(defaultPlaceholder);
@@ -1171,21 +1096,6 @@ public class Util {
 		return in;
 	}
 
-	public static Bitmap retrieveBitmap(Context context, Intent data, int maxSize) {
-
-		String filePath = retrieveBitmapPath(context, data);
-
-		if (filePath != null) {
-			File file = new File(filePath);
-			if (file.exists()) {
-				Bitmap yourSelectedImage = Util.decodeBitmap(file, maxSize);
-				return yourSelectedImage;
-			}
-		}
-
-		return null;
-	}
-
 	public static File saveBitmap(Bitmap pic, String photoName) {
 		FileOutputStream fOut = null;
 		try {
@@ -1212,22 +1122,6 @@ public class Util {
 
 	public static Uri retrieveBitmapUri(Context context, Intent data) {
 		return data.getData();
-	}
-
-	public static String retrieveBitmapPath(Context context, Intent data) {
-		Uri selectedImage = data.getData();
-		String[] filePathColumn = { MediaColumns.DATA };
-
-		Cursor cursor = context.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-
-		if (cursor != null) {
-			cursor.moveToFirst();
-			int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-			String filePath = cursor.getString(columnIndex);
-			cursor.close();
-			return filePath;
-		}
-		return null;
 	}
 
 	/**

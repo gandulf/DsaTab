@@ -3,14 +3,16 @@ package com.dsatab.fragment;
 import java.util.Arrays;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.graphics.Palette;
 import android.view.View;
 
 import com.dsatab.DsaTabApplication;
+import com.dsatab.activity.BaseActivity;
 import com.dsatab.activity.DsaTabActivity;
 import com.dsatab.config.TabInfo;
 import com.dsatab.data.AbstractBeing;
@@ -86,6 +88,13 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 		super.onResume();
 
 		Hint.showRandomHint(getClass().getSimpleName(), getActivity());
+	}
+
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+
+		applyPalette(DsaTabApplication.getInstance().getPalette());
 	}
 
 	protected void onAttachListener(Hero hero) {
@@ -186,24 +195,31 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 	}
 
 	public boolean checkProbe(Probe probe) {
-		if (getBaseActivity() != null)
-			return getBaseActivity().checkProbe(getBeing(), probe);
+		if (getDsaActivity() != null)
+			return getDsaActivity().checkProbe(getBeing(), probe);
 		else
 			return false;
 	}
 
 	public boolean checkProbe(Probe probe, boolean autoRoll) {
-		if (getBaseActivity() != null)
-			return getBaseActivity().checkProbe(getBeing(), probe, autoRoll);
+		if (getDsaActivity() != null)
+			return getDsaActivity().checkProbe(getBeing(), probe, autoRoll);
 		else
 			return false;
 	}
 
 	public abstract void onHeroLoaded(Hero hero);
 
-	protected DsaTabActivity getBaseActivity() {
+	protected DsaTabActivity getDsaActivity() {
 		if (getActivity() instanceof DsaTabActivity)
 			return (DsaTabActivity) getActivity();
+		else
+			return null;
+	}
+
+	protected BaseActivity getBaseActivity() {
+		if (getActivity() instanceof BaseActivity)
+			return (BaseActivity) getActivity();
 		else
 			return null;
 	}
@@ -278,7 +294,7 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 				getHero().getHeroConfiguration().getTabs().remove(tabInfo);
 			}
 			unloadHero(getHero());
-			getBaseActivity().notifyTabsChanged(tabInfo);
+			getDsaActivity().notifyTabsChanged(tabInfo);
 		}
 	}
 
@@ -310,11 +326,15 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 		return targetListener;
 	}
 
-	public Activity getActionBarActivity() {
-		return getActivity();
+	public ActionBarActivity getActionBarActivity() {
+		return (ActionBarActivity) getActivity();
 	}
 
 	public boolean isDrawerOpened() {
-		return getBaseActivity() != null && getBaseActivity().isDrawerOpened();
+		return getDsaActivity() != null && getDsaActivity().isDrawerOpened();
+	}
+
+	public void applyPalette(Palette palette) {
+
 	}
 }

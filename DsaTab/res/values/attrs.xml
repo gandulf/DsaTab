@@ -2,13 +2,14 @@
 <resources>
                 
     <declare-styleable name="DsaTabTheme">
-                
+        
+        <attr name="cardViewStyle" format="reference"/>
+        
         <attr name="buttonStyleLeft" format="reference"/>
         <attr name="buttonStyleRight" format="reference"/>
         
         <attr name="listItemBackground" format="reference"/>
-        <attr name="slidingPaneShadowBackground" format="reference"/>
-        <attr name="dropShadowBackground" format="reference"/>
+        <attr name="slidingPaneShadowBackground" format="reference"/>        
         
         <attr name="selectableBackground" format="reference" />        
         

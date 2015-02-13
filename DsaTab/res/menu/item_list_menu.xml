@@ -4,36 +4,42 @@
         android:id="@+id/option_item_add_table"
         android:icon="@drawable/dsa_items_add"
         android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
         android:title="@string/add_item"/>
     
     <item
         android:id="@+id/option_add_container"
         android:icon="@drawable/dsa_bag_add"
-        android:showAsAction="ifRoom"        
+        android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"        
         android:title="@string/create_container"/>
     
     <item
         android:id="@+id/option_item_filter"
         android:icon="?attr/imgBarFilter"
         android:showAsAction="withText|ifRoom"
+        app:showAsAction="withText|ifRoom"
         android:title="@string/filter">
         <menu />
     </item>    
     <item
         android:id="@+id/option_itemgrid_type"
         android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
         android:title="@string/display">
         <menu>
             <group android:checkableBehavior="single" >
                 <item
                     android:id="@+id/option_itemgrid_type_list"
-                    android:showAsAction="withText"   
+                    android:showAsAction="withText"
+                    app:showAsAction="withText"   
                     android:icon="@drawable/dsa_list"                 
                     android:title="@string/list"/>
                 <item
                     android:id="@+id/option_itemgrid_type_grid"
                     android:icon="@drawable/dsa_grid"
                     android:showAsAction="withText"
+                    app:showAsAction="withText"
                     android:title="@string/grid"/>
             </group>
         </menu>

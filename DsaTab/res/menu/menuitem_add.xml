@@ -3,6 +3,7 @@
         android:id="@+id/option_add"
         android:icon="@drawable/ic_menu_add"
         android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
         android:title="@string/label_create">
     </item>
 </menu>

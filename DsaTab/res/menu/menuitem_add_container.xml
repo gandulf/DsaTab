@@ -3,6 +3,7 @@
         android:id="@+id/option_add_container"
         android:icon="@drawable/dsa_bag_add"
         android:showAsAction="withText|ifRoom"
+        app:showAsAction="withText|ifRoom"
         android:orderInCategory="99"
         android:title="@string/create_container">
     </item>

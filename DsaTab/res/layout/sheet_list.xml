@@ -1,16 +1,14 @@
-<com.dsatab.view.CheckableFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"    
     android:id="@+id/sheet_list"
+    style="?attr/cardViewStyle"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
     <com.gandulf.guilib.view.DynamicListViewEx
         android:id="@+android:id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:cacheColorHint="#00000000"
-        android:background="?attr/dropShadowBackground"
-        android:divider="@null" />
+        android:layout_height="match_parent" />
     
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/fab_menu"
@@ -18,9 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"        
         android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp">
-
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+        android:layout_marginRight="16dp"/>
     
     <TextView
         android:id="@+android:id/empty"
@@ -33,7 +29,5 @@
         android:text="@string/message_empty"
         android:visibility="gone" >
     </TextView>
-    
-     
 
-</com.dsatab.view.CheckableFrameLayout>
+</android.support.v7.widget.CardView>

@@ -21,6 +21,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.graphics.Palette;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
@@ -49,7 +50,6 @@ import com.dsatab.data.CombatProbe;
 import com.dsatab.data.CombatTalent;
 import com.dsatab.data.Dice;
 import com.dsatab.data.Dice.DiceRoll;
-import com.dsatab.data.Hero;
 import com.dsatab.data.Probe;
 import com.dsatab.data.Probe.ProbeType;
 import com.dsatab.data.Spell;
@@ -70,8 +70,8 @@ import com.dsatab.util.Util;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelSlideListener;
 
-public class DiceSliderFragment extends BaseFragment implements View.OnClickListener, OnModifierChangedListener,
-		PanelSlideListener {
+public class DiceSliderFragment extends AttributeListFragment implements View.OnClickListener,
+		OnModifierChangedListener, PanelSlideListener {
 
 	public static final String TAG = "diceSliderFragment";
 
@@ -196,6 +196,14 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 	}
 
 	@Override
+	public void applyPalette(Palette palette) {
+		super.applyPalette(palette);
+		if (palette != null) {
+			getView().setBackgroundColor(palette.getDarkMutedColor(Color.BLACK));
+		}
+	}
+
+	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 
@@ -304,11 +312,6 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 		themedContext = null;
 	}
 
-	@Override
-	public void onHeroLoaded(Hero hero) {
-
-	}
-
 	private void disableLayoutTransition() {
 		if (linDiceResult.getLayoutTransition() != null) {
 			linDiceResult.setLayoutTransition(null);
@@ -391,6 +394,7 @@ public class DiceSliderFragment extends BaseFragment implements View.OnClickList
 	}
 
 	public void onModifierChanged(Modifier mod) {
+
 		if (getActivity() == null)
 			return;
 

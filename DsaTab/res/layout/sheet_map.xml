@@ -38,6 +38,7 @@
         android:id="@+id/map_progress_text"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_gravity="center"
         android:gravity="center"
         android:text="@string/message_map_loading"
         android:visibility="gone" >

@@ -9,7 +9,6 @@ import java.util.Set;
 import java.util.UUID;
 
 import android.annotation.TargetApi;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +17,7 @@ import android.content.SharedPreferences.Editor;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SlidingPaneLayout;
+import android.support.v7.app.ActionBar;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.ActionMode.Callback;
@@ -452,8 +452,8 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		containerAdapter.add(set3);
 		containerAdapter.addAll(getHero().getItemContainers());
 
-		containerSpinnerAdapter = new ItemContainerAdapter(getActionBarActivity().getActionBar().getThemedContext(),
-				R.layout.item_actionbar_spinneritem_view);
+		containerSpinnerAdapter = new ItemContainerAdapter(getActionBarActivity().getSupportActionBar()
+				.getThemedContext(), R.layout.item_actionbar_spinneritem_view);
 		containerSpinnerAdapter.setDropDownViewResource(R.layout.item_actionbar_spinneritem_view);
 		containerSpinnerAdapter.add(set1);
 		containerSpinnerAdapter.add(set2);
@@ -535,13 +535,13 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	}
 
 	private void removeItemsNavigation() {
-		ActionBar actionBar = getActionBarActivity().getActionBar();
+		ActionBar actionBar = getActionBarActivity().getSupportActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 		actionBar.setListNavigationCallbacks(null, null);
 	}
 
 	private void initItemsNavigation() {
-		ActionBar actionBar = getActionBarActivity().getActionBar();
+		ActionBar actionBar = getActionBarActivity().getSupportActionBar();
 
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 		actionBar.setListNavigationCallbacks(containerSpinnerAdapter, new ActionBar.OnNavigationListener() {
@@ -694,6 +694,8 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		mItemListCallback = new ItemsActionMode(this, itemList);
 
 		slidingPaneLayout = (SlidingPaneLayout) root.findViewById(R.id.sheet_items);
+		slidingPaneLayout.setCoveredFadeColor(0);
+		slidingPaneLayout.setSliderFadeColor(0);
 
 		fabMenu = (FloatingActionsMenu) root.findViewById(R.id.fab_menu);
 
@@ -759,7 +761,6 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 			});
 		}
 
-		// slidingPaneLayout.setParallaxDistance(100);
 		slidingPaneLayout.openPane();
 
 		super.onActivityCreated(savedInstanceState);
@@ -774,7 +775,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 				if (itemId != null) {
 					Item item = DataManager.getItemById(itemId).duplicate();
 					if (isSetIndex(mCurrentContainerId)) {
-						getHero().addEquippedItem(getBaseActivity(), item, null, null, mCurrentContainerId);
+						getHero().addEquippedItem(getDsaActivity(), item, null, null, mCurrentContainerId);
 					} else {
 						item.setContainerId(mCurrentContainerId);
 						getHero().addItem(item);
@@ -937,7 +938,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 			itemListAdapter.notifyDataSetChanged();
 			// itemListAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
 
-			ActionBar actionBar = getActionBarActivity().getActionBar();
+			ActionBar actionBar = getActionBarActivity().getSupportActionBar();
 			if (actionBar.getNavigationMode() == ActionBar.NAVIGATION_MODE_LIST) {
 				for (int i = 0; i < containerSpinnerAdapter.getCount(); i++) {
 					ItemContainer container = containerSpinnerAdapter.getItem(i);

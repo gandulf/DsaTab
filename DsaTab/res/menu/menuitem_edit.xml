@@ -3,5 +3,6 @@
         android:id="@+id/option_edit"
         android:icon="?attr/imgBarEdit"
         android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
         android:title="@string/label_edit"/>
 </menu>

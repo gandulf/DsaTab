@@ -1,19 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" >
 
-    <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-        
-        <item
+    <item
         android:id="@+id/option_download"
         android:icon="@drawable/dsa_modifier"
         android:showAsAction="withText|ifRoom"
+        app:showAsAction="withText|ifRoom"
         android:title="@string/menu_download_item"/>
-        <item
+    <item
         android:id="@+id/option_upload"
         android:icon="@drawable/dsa_modifier"
         android:showAsAction="withText|ifRoom"
+        app:showAsAction="withText|ifRoom"
         android:title="@string/menu_upload_item"/>
-        <item
+    <item
         android:id="@+id/option_delete"
         android:icon="?attr/imgBarDelete"
         android:showAsAction="withText|ifRoom"
-        android:title="@string/menu_delete_item"/>        
-    </menu>
+        app:showAsAction="withText|ifRoom"
+        android:title="@string/menu_delete_item"/>
+
+</menu>

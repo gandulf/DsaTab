@@ -10,9 +10,9 @@ import org.jdom2.xpath.XPathFactory;
 
 import android.test.InstrumentationTestCase;
 
+import com.dsatab.cloud.HeroExchange.StorageType;
 import com.dsatab.data.Hero;
 import com.dsatab.data.HeroFileInfo;
-import com.dsatab.data.HeroFileInfo.StorageType;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.FeatureType;
 import com.dsatab.data.enums.Hand;
