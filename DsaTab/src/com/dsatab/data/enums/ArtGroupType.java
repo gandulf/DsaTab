@@ -1,9 +1,9 @@
 package com.dsatab.data.enums;
 
+import com.dsatab.data.Art;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import com.dsatab.data.Art;
 
 public enum ArtGroupType {
 

@@ -1,13 +1,13 @@
 package com.dsatab.data.items;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import android.net.Uri;
 
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class ItemContainer<T extends ItemCard> extends ArrayList<T> {
 

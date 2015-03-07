@@ -1,10 +1,5 @@
 package com.dsatab.db;
 
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -23,6 +18,11 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * Database helper class used to manage the creation and upgrading of your database. This class also usually provides

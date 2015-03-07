@@ -1,7 +1,5 @@
 package com.dsatab.data.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
@@ -10,6 +8,8 @@ import android.widget.TextView;
 
 import com.dsatab.R;
 import com.dsatab.data.enums.EventCategory;
+
+import java.util.List;
 
 public class EventCatgoryAdapter extends SpinnerSimpleAdapter<EventCategory> {
 

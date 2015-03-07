@@ -1,14 +1,14 @@
 package com.dsatab.cloud;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.AsyncTaskLoader;
 
 import com.dsatab.cloud.HeroExchange.StorageType;
 import com.dsatab.data.HeroFileInfo;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class HeroesSyncTask extends AsyncTaskLoader<List<HeroFileInfo>> {
 

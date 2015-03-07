@@ -1,8 +1,5 @@
 package com.dsatab.data.items;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.text.TextUtils;
 
 import com.dsatab.DsaTabApplication;
@@ -14,6 +11,9 @@ import com.dsatab.util.StyleableSpannableStringBuilder;
 import com.dsatab.util.Util;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @DatabaseTable(tableName = "item_weapon")
 public class Weapon extends CloseCombatItem {

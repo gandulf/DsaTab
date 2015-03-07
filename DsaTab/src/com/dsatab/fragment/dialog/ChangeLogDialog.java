@@ -1,11 +1,5 @@
 package com.dsatab.fragment.dialog;
 
-import java.io.IOException;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-
-import uk.me.lewisdeane.ldialogs.CustomDialog;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -19,9 +13,15 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.WebView;
 
+import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.gandulf.guilib.util.ResUtil;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
 
 /*
  * Class to show a changelog dialog
@@ -99,10 +99,10 @@ public class ChangeLogDialog extends DialogFragment {
 
 		// Create webview and load html
 
-		CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
+		AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(getActivity());
 		builder.setTitle(title);
 
-		WebView webView = new WebView(builder.getContext());
+		WebView webView = new WebView(DsaTabApplication.getInstance().getContextWrapper(getActivity()));
 		webView.getSettings().setDefaultTextEncodingName("utf-8");
 		webView.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
 

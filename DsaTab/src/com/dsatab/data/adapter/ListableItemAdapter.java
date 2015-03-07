@@ -1,8 +1,5 @@
 package com.dsatab.data.adapter;
 
-import java.util.Collections;
-import java.util.List;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -91,6 +88,9 @@ import com.dsatab.view.listener.ProbeListener;
 import com.dsatab.view.listener.TargetListener;
 import com.gandulf.guilib.data.OpenArrayAdapter;
 import com.gandulf.guilib.view.SeekBarEx;
+
+import java.util.Collections;
+import java.util.List;
 
 public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements OnSeekBarChangeListener,
 		OnCheckedChangeListener, OnClickListener {

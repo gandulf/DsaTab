@@ -1,12 +1,12 @@
 package com.dsatab.view.listener;
 
-import java.lang.ref.WeakReference;
-
 import android.view.View;
 
 import com.dsatab.activity.DsaTabActivity;
 import com.dsatab.data.items.EquippedItem;
 import com.dsatab.fragment.BaseFragment;
+
+import java.lang.ref.WeakReference;
 
 public class TargetListener implements View.OnClickListener {
 

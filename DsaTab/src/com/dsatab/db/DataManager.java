@@ -1,5 +1,33 @@
 package com.dsatab.db;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.text.TextUtils;
+import android.util.LruCache;
+
+import com.dsatab.DsaTabApplication;
+import com.dsatab.data.ArtInfo;
+import com.dsatab.data.SpellInfo;
+import com.dsatab.data.enums.ItemType;
+import com.dsatab.data.items.Item;
+import com.dsatab.data.items.ItemSpecification;
+import com.dsatab.util.Debug;
+import com.gandulf.guilib.util.ResUtil;
+import com.j256.ormlite.android.AndroidCompiledStatement;
+import com.j256.ormlite.dao.Dao.CreateOrUpdateStatus;
+import com.j256.ormlite.dao.GenericRawResults;
+import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.SelectArg;
+import com.j256.ormlite.stmt.StatementBuilder.StatementType;
+import com.j256.ormlite.stmt.Where;
+import com.j256.ormlite.support.DatabaseConnection;
+
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,34 +53,6 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-
-import android.content.Context;
-import android.database.Cursor;
-import android.util.LruCache;
-import android.text.TextUtils;
-
-import com.dsatab.DsaTabApplication;
-import com.dsatab.data.ArtInfo;
-import com.dsatab.data.SpellInfo;
-import com.dsatab.data.enums.ItemType;
-import com.dsatab.data.items.Item;
-import com.dsatab.data.items.ItemSpecification;
-import com.dsatab.util.Debug;
-import com.gandulf.guilib.util.ResUtil;
-import com.j256.ormlite.android.AndroidCompiledStatement;
-import com.j256.ormlite.dao.Dao.CreateOrUpdateStatus;
-import com.j256.ormlite.dao.GenericRawResults;
-import com.j256.ormlite.dao.RuntimeExceptionDao;
-import com.j256.ormlite.stmt.PreparedQuery;
-import com.j256.ormlite.stmt.QueryBuilder;
-import com.j256.ormlite.stmt.SelectArg;
-import com.j256.ormlite.stmt.StatementBuilder.StatementType;
-import com.j256.ormlite.stmt.Where;
-import com.j256.ormlite.support.DatabaseConnection;
 
 /**
  * @author Gandulf

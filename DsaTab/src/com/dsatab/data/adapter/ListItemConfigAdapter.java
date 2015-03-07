@@ -1,10 +1,5 @@
 package com.dsatab.data.adapter;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +28,11 @@ import com.dsatab.view.ListSettings;
 import com.dsatab.view.ListSettings.ListItem;
 import com.dsatab.view.ListSettings.ListItemType;
 import com.nhaarman.listviewanimations.ArrayAdapter;
+
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 
 public class ListItemConfigAdapter extends ArrayAdapter<ListItem> implements OnItemSelectedListener, OnClickListener {
 

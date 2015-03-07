@@ -6,8 +6,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import android.app.Activity;
 import android.content.AsyncTaskLoader;
+import android.content.Context;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.data.HeroFileInfo;
@@ -19,7 +19,7 @@ public class HeroesLoaderTask extends AsyncTaskLoader<List<HeroFileInfo>> {
 
 	private List<HeroFileInfo> fileInfos;
 
-	public HeroesLoaderTask(Activity context) {
+	public HeroesLoaderTask(Context context) {
 		super(context);
 		this.exception = new ArrayList<Exception>();
 	}
@@ -67,7 +67,13 @@ public class HeroesLoaderTask extends AsyncTaskLoader<List<HeroFileInfo>> {
 					HeroFileInfo heroFileInfo = new HeroFileInfo(file, null, DsaTabApplication.getInstance()
 							.getExchange());
 
-					fileInfos.add(heroFileInfo);
+					int index = fileInfos.indexOf(heroFileInfo);
+					if (index >= 0) {
+						HeroFileInfo info = fileInfos.get(index);
+						info.merge(heroFileInfo);
+					} else {
+						fileInfos.add(heroFileInfo);
+					}
 				}
 			}
 			return fileInfos;

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
@@ -25,12 +24,13 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.LightingColorFilter;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.graphics.Palette;
 import android.support.v7.graphics.Palette.PaletteAsyncListener;
 import android.text.TextUtils;
@@ -39,14 +39,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.cloud.HeroSaveTask;
+import com.dsatab.cloud.HeroesLoaderTask;
 import com.dsatab.config.TabInfo;
 import com.dsatab.data.AbstractBeing;
 import com.dsatab.data.Hero;
@@ -54,32 +52,32 @@ import com.dsatab.data.HeroConfiguration;
 import com.dsatab.data.HeroFileInfo;
 import com.dsatab.data.HeroLoaderTask;
 import com.dsatab.data.Probe;
-import com.dsatab.data.adapter.TabDrawerAdapter;
-import com.dsatab.data.adapter.TabDrawerAdapter.DrawerItem;
-import com.dsatab.data.adapter.TabDrawerAdapter.DrawerItemType;
 import com.dsatab.fragment.BaseFragment;
 import com.dsatab.fragment.DiceSliderFragment;
 import com.dsatab.fragment.HeroChooserFragment;
-import com.dsatab.fragment.HeroChooserFragment.OnHeroSelectedListener;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.dsatab.view.listener.ShakeListener;
 import com.gandulf.guilib.util.ResUtil;
+import com.heinrichreimersoftware.materialdrawer.DrawerFrameLayout;
+import com.heinrichreimersoftware.materialdrawer.DrawerView;
+import com.heinrichreimersoftware.materialdrawer.structure.DrawerHeaderItem;
+import com.heinrichreimersoftware.materialdrawer.structure.DrawerProfile;
+import com.heinrichreimersoftware.materialdrawer.structure.DrawerProfile.OnProfileSwitchListener;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
-public class DsaTabActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Hero>,
-		OnSharedPreferenceChangeListener, ListView.OnItemClickListener, OnHeroSelectedListener, ImageLoadingListener,
-		PaletteAsyncListener {
+public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceChangeListener,
+		com.heinrichreimersoftware.materialdrawer.structure.DrawerItem.OnItemClickListener, OnProfileSwitchListener,
+		ImageLoadingListener, PaletteAsyncListener {
 
 	private static final String TAB_INDEX = "TAB_INDEX";
 
-	private static final int DRAWER_ID_NONE = -1;
-	private static final int DRAWER_ID_HEROES = -2;
-	private static final int DRAWER_ID_ITEMS = -3;
-	private static final int DRAWER_ID_SETTINGS = -4;
-	private static final int DRAWER_ID_TABS = -5;
+	private static final int DRAWER_ID_HEROES = 1001;
+	private static final int DRAWER_ID_ITEMS = 1002;
+	private static final int DRAWER_ID_SETTINGS = 1003;
+	private static final int DRAWER_ID_TABS = 1004;
 
 	protected static final String INTENT_TAB_INFO = "tabInfo";
 
@@ -100,6 +98,9 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 
 	private static final String KEY_TAB_INFO = "tabInfo";
 
+	private static final int LOADER_HERO_INFOS = 1;
+	private static final int LOADER_HERO = 2;
+
 	private static final int[] containerIds = { R.id.pane_left, R.id.pane_right };
 	private List<ViewGroup> containers;
 
@@ -111,14 +112,100 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 
 	private TabInfo tabInfo;
 
-	private View loadingView;
-
-	private DrawerLayout mDrawerLayout;
-	private ListView mDrawerList;
-	private android.support.v7.app.ActionBarDrawerToggle mDrawerToggle;
-	private TabDrawerAdapter tabDrawerAdapter;
+	private DrawerFrameLayout mDrawerLayout;
+	private DrawerView mDrawer;
+	private ActionBarDrawerToggle drawerToggle;
 
 	private long backPressed;
+
+	private HeroFileInfo heroFileInfo;
+
+	private static class HeroLoaderCallback implements LoaderManager.LoaderCallbacks<Hero> {
+
+		private DsaTabActivity context;
+
+		public HeroLoaderCallback(DsaTabActivity context) {
+			this.context = context;
+		}
+
+		@Override
+		public Loader<Hero> onCreateLoader(int id, Bundle args) {
+			if (id == LOADER_HERO) {
+				return new HeroLoaderTask(context, (HeroFileInfo) args.getSerializable(KEY_HERO_PATH));
+			} else {
+				return null;
+			}
+		}
+
+		@Override
+		public void onLoadFinished(Loader<Hero> loader, Hero hero) {
+			Debug.verbose("loading of hero finished");
+			context.setToolbarRefreshing(false);
+
+			// Swap the new cursor in. (The framework will take care of closing the
+			// old cursor once we return.)
+			if (loader instanceof HeroLoaderTask) {
+				HeroLoaderTask heroLoader = (HeroLoaderTask) loader;
+
+				if (heroLoader.getException() != null) {
+					Toast.makeText(context, heroLoader.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+				}
+			}
+			DsaTabApplication.getInstance().setHero(hero);
+
+			if (hero != null) {
+				context.checkHsVersion(hero);
+			}
+			context.onHeroLoaded(hero);
+		}
+
+		@Override
+		public void onLoaderReset(Loader<Hero> loader) {
+			// This is called when the last Cursor provided to onLoadFinished()
+			// above is about to be closed. We need to make sure we are no
+			// longer using it.
+			// mAdapter.swapCursor(null);
+		}
+	}
+
+	private static class HeroesLoaderCallback implements LoaderManager.LoaderCallbacks<List<HeroFileInfo>> {
+
+		private DsaTabActivity context;
+
+		public HeroesLoaderCallback(DsaTabActivity context, DrawerView drawerView) {
+			this.context = context;
+		}
+
+		@Override
+		public Loader<List<HeroFileInfo>> onCreateLoader(int id, Bundle args) {
+			if (id == LOADER_HERO_INFOS) {
+				return new HeroesLoaderTask(context);
+			} else {
+				return null;
+			}
+		}
+
+		@Override
+		public void onLoaderReset(Loader<List<HeroFileInfo>> loader) {
+
+		}
+
+		@Override
+		public void onLoadFinished(Loader<List<HeroFileInfo>> loader, List<HeroFileInfo> heroes) {
+			if (loader instanceof HeroesLoaderTask) {
+				Debug.verbose("loading of hero files finished");
+				HeroesLoaderTask heroLoader = (HeroesLoaderTask) loader;
+
+				for (Exception e : heroLoader.getExceptions()) {
+					Toast.makeText(context, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+					Debug.error(e);
+				}
+
+			}
+			context.setupDrawerProfiles(heroes);
+		}
+
+	}
 
 	public Hero getHero() {
 		return DsaTabApplication.getInstance().getHero();
@@ -130,13 +217,12 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 			HeroSaveTask heroSaveTask = new HeroSaveTask(this, getHero());
 			heroSaveTask.execute();
 		}
+		setToolbarRefreshing(true);
 
-		loadingView.setVisibility(View.VISIBLE);
-		loadingView.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
-
+		heroFileInfo = heroPath;
 		Bundle args = new Bundle();
 		args.putSerializable(KEY_HERO_PATH, heroPath);
-		getLoaderManager().restartLoader(0, args, this);
+		getLoaderManager().restartLoader(LOADER_HERO, args, new HeroLoaderCallback(this));
 	}
 
 	@Override
@@ -174,6 +260,12 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 
 		if (tabInfo != null) {
 			getSupportActionBar().setTitle(tabInfo.getTitle());
+
+			int tabIndex = getHeroConfiguration().getTabs().indexOf(tabInfo);
+			if (tabIndex >= 0) {
+				mDrawer.selectItem(tabIndex);
+			}
+
 			if (tabInfo.getIconUri() != null) {
 				Drawable d = ResUtil.getDrawableByUri(this, tabInfo.getIconUri());
 				if (d != null) {
@@ -196,6 +288,7 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 	}
 
 	private boolean initHero() {
+
 		// in case of orientation change the hero is already loaded, just recreate the menu etc...
 		if (DsaTabApplication.getInstance().getHero() != null) {
 			onHeroLoaded(DsaTabApplication.getInstance().getHero());
@@ -207,11 +300,7 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 					HeroFileInfo fileInfo = new HeroFileInfo(new JSONObject(heroFileInfoJson));
 					loadHero(fileInfo);
 					return true;
-				} catch (IllegalArgumentException e) {
-					Debug.error(e);
-					showHeroChooser();
-					return false;
-				} catch (JSONException e) {
+				} catch (Exception e) {
 					Debug.error(e);
 					showHeroChooser();
 					return false;
@@ -221,34 +310,6 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 				return false;
 			}
 		}
-	}
-
-	@Override
-	public Loader<Hero> onCreateLoader(int id, Bundle args) {
-		// Debug.verbose("Creating loader for " + args.getString(KEY_HERO_PATH));
-		return new HeroLoaderTask(this, (HeroFileInfo) args.getSerializable(KEY_HERO_PATH));
-	}
-
-	@Override
-	public void onLoadFinished(Loader<Hero> loader, Hero hero) {
-		loadingView.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-		loadingView.setVisibility(View.GONE);
-
-		// Swap the new cursor in. (The framework will take care of closing the
-		// old cursor once we return.)
-		if (loader instanceof HeroLoaderTask) {
-			HeroLoaderTask heroLoader = (HeroLoaderTask) loader;
-
-			if (heroLoader.getException() != null) {
-				Toast.makeText(this, heroLoader.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-			}
-		}
-		DsaTabApplication.getInstance().setHero(hero);
-
-		if (hero != null) {
-			checkHsVersion(hero);
-		}
-		onHeroLoaded(hero);
 	}
 
 	protected boolean checkHsVersion(Hero hero) {
@@ -281,14 +342,6 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 		}
 	}
 
-	@Override
-	public void onLoaderReset(Loader<Hero> loader) {
-		// This is called when the last Cursor provided to onLoadFinished()
-		// above is about to be closed. We need to make sure we are no
-		// longer using it.
-		// mAdapter.swapCursor(null);
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -300,10 +353,10 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 		if (requestCode == ACTION_CHOOSE_HERO) {
 
 			if (resultCode == RESULT_OK) {
-				HeroFileInfo herofileInfo = (HeroFileInfo) data
+				HeroFileInfo heroFileInfo = (HeroFileInfo) data
 						.getSerializableExtra(HeroChooserFragment.INTENT_NAME_HERO_FILE_INFO);
-				Debug.verbose("HeroChooserActivity returned with path:" + herofileInfo);
-				loadHero(herofileInfo);
+				Debug.verbose("HeroChooserActivity returned with path:" + heroFileInfo);
+				loadHero(heroFileInfo);
 			} else if (resultCode == RESULT_CANCELED) {
 				if (getHero() == null) {
 					finish();
@@ -320,7 +373,7 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 			}
 		} else if (requestCode == ACTION_EDIT_TABS) {
 			if (resultCode == Activity.RESULT_OK) {
-				setupNavigationDrawer();
+				setupDrawerItems(getHero());
 				showTab(tabInfo, false);
 			}
 		}
@@ -354,7 +407,6 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 		applyPreferencesToTheme();
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_tab_view);
-		// requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
 		preferences = DsaTabApplication.getPreferences();
 
@@ -371,8 +423,6 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 		for (int i = 0; i < containerIds.length; i++) {
 			containers.add((ViewGroup) findViewById(containerIds[i]));
 		}
-
-		loadingView = findViewById(R.id.loading);
 
 		SlidingUpPanelLayout slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.slidepanel);
 
@@ -410,115 +460,13 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 
 		initDrawer();
 		initHero();
-		setupNavigationDrawer();
 
-	}
-
-	private void initDrawer() {
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
-		tabDrawerAdapter = new TabDrawerAdapter(this, new ArrayList<DrawerItem>());
-		// Set the adapter for the list view
-		mDrawerList.setAdapter(tabDrawerAdapter);
-		mDrawerList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-		// Set the list's click listener
-		mDrawerList.setOnItemClickListener(this);
-		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-
-		mDrawerToggle = new android.support.v7.app.ActionBarDrawerToggle(this, mDrawerLayout, toolbar,
-				R.string.drawer_open, R.string.drawer_close) {
-
-			private boolean actionbarShown = true;
-
-			/** Called when a drawer has settled in a completely closed state. */
-			public void onDrawerClosed(View view) {
-				super.onDrawerClosed(view);
-				showActionBar();
-				invalidateOptionsMenu();
-			}
-
-			@Override
-			public void onDrawerSlide(View drawerView, float slideOffset) {
-				super.onDrawerSlide(drawerView, slideOffset);
-
-				if (slideOffset > 0.05f) {
-					hideActionBar();
-				} else {
-					showActionBar();
-				}
-
-			}
-
-			/** Called when a drawer has settled in a completely open state. */
-			public void onDrawerOpened(View drawerView) {
-				super.onDrawerOpened(drawerView);
-				hideActionBar();
-				invalidateOptionsMenu();
-			}
-
-			private void showActionBar() {
-
-				if (!actionbarShown) {
-					updatePage(tabInfo, null);
-
-					for (int i = 0; i < TabInfo.MAX_TABS_PER_PAGE; i++) {
-						if (getCurrentFragment(i) instanceof BaseFragment) {
-							((BaseFragment) getCurrentFragment(i)).showActionBarItems();
-						}
-					}
-					actionbarShown = true;
-				}
-
-			}
-
-			private void hideActionBar() {
-				if (actionbarShown) {
-					getSupportActionBar().setTitle(null);
-
-					for (int i = 0; i < TabInfo.MAX_TABS_PER_PAGE; i++) {
-						if (getCurrentFragment(i) instanceof BaseFragment) {
-							((BaseFragment) getCurrentFragment(i)).hideActionBarItems();
-						}
-					}
-					actionbarShown = false;
-				}
-			}
-
-		};
-
-		// Set the drawer toggle as the DrawerListener
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-		if (DsaTabApplication.getInstance().isFirstRun()) {
-			mDrawerLayout.openDrawer(mDrawerList);
-			setActionbarBackgroundAlpha(0f);
-		}
+		getLoaderManager().initLoader(LOADER_HERO_INFOS, null, new HeroesLoaderCallback(this, mDrawer));
 	}
 
 	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-		// Sync the toggle state after onRestoreInstanceState has occurred.
-		if (mDrawerToggle != null) {
-			mDrawerToggle.syncState();
-		}
-	}
-
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-		if (mDrawerToggle != null) {
-			mDrawerToggle.onConfigurationChanged(newConfig);
-		}
-	}
-
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-		DrawerItem item = (DrawerItem) parent.getItemAtPosition(position);
-
-		switch (item.getId()) {
+	public void onClick(com.heinrichreimersoftware.materialdrawer.structure.DrawerItem drawerItem, long id, int position) {
+		switch ((int) drawerItem.getId()) {
 		case DRAWER_ID_HEROES:
 			showHeroChooser();
 			break;
@@ -534,11 +482,169 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 			}
 			break;
 		default:
-			showTab(item.getId());
+			showTab(position);
 			break;
 		}
+		mDrawer.selectItem(position);
+		mDrawerLayout.closeDrawer();
+	}
 
-		mDrawerLayout.closeDrawer(mDrawerList);
+	private DrawerProfile updateDrawerProfile(DrawerProfile drawerProfile, HeroFileInfo heroInfo) {
+		if (drawerProfile == null) {
+			drawerProfile = new DrawerProfile();
+
+		}
+
+		Drawable profileImage = null;
+
+		if (heroInfo.getPortraitUri() != null)
+			profileImage = ResUtil.getDrawableByUri(this, Uri.parse(heroInfo.getPortraitUri()));
+		else
+			profileImage = getResources().getDrawable(R.drawable.profile_picture);
+
+		drawerProfile.setAvatar(profileImage).setBackground(getResources().getDrawable(R.drawable.profile_background))
+				.setName(heroInfo.getName()).setDescription(heroInfo.getVersion());
+
+		drawerProfile.setTag(heroInfo);
+
+		BitmapDrawable bitmapProfile = null;
+		if (profileImage instanceof BitmapDrawable) {
+			bitmapProfile = (BitmapDrawable) profileImage;
+			drawerProfile.setRoundedAvatar(bitmapProfile);
+		}
+
+		mDrawer.addProfile(drawerProfile);
+
+		return drawerProfile;
+	}
+
+	public void setupDrawerProfile(Hero hero) {
+
+		for (DrawerProfile profile : mDrawer.getProfiles()) {
+			if (hero.getFileInfo().equals(profile.getTag())) {
+				updateDrawerProfile(profile, hero.getFileInfo());
+				break;
+			}
+		}
+	}
+
+	/**
+    *
+    */
+	public void setupDrawerProfiles(List<HeroFileInfo> heroes) {
+
+		mDrawer.removeOnProfileSwitchListener();
+		mDrawer.clearProfiles();
+
+		DrawerProfile currentProfile = null;
+		for (HeroFileInfo heroInfo : heroes) {
+			DrawerProfile profile = updateDrawerProfile(null, heroInfo);
+
+			if (heroFileInfo != null && heroInfo.equals(heroFileInfo)) {
+				currentProfile = profile;
+			}
+		}
+
+		mDrawer.setOnProfileSwitchListener(this);
+		mDrawer.selectProfile(currentProfile);
+
+	}
+
+	/**
+     *
+     */
+	public void setupDrawerItems(Hero hero) {
+		List<TabInfo> tabs;
+		if (hero != null && hero.getHeroConfiguration() != null)
+			tabs = hero.getHeroConfiguration().getTabs();
+		else
+			tabs = Collections.emptyList();
+
+		mDrawerLayout.clearItems();
+
+		if (tabs != null) {
+			for (TabInfo tabInfo : tabs) {
+				mDrawerLayout.addItem(new com.heinrichreimersoftware.materialdrawer.structure.DrawerItem().setImage(
+						ResUtil.getDrawableByUri(this, tabInfo.getIconUri())).setTextPrimary(tabInfo.getTitle()));
+			}
+		}
+
+		mDrawerLayout.addItem(new DrawerHeaderItem().setTitle("System"));
+
+		mDrawerLayout.addItem(new com.heinrichreimersoftware.materialdrawer.structure.DrawerItem()
+				.setImage(getResources().getDrawable(R.drawable.dsa_group)).setTextPrimary("Helden")
+				.setId(DRAWER_ID_HEROES));
+
+		if (hero != null) {
+			mDrawerLayout.addItem(new com.heinrichreimersoftware.materialdrawer.structure.DrawerItem()
+					.setImage(getResources().getDrawable(R.drawable.ic_menu_moreoverflow))
+					.setTextPrimary("Tabs anpassen").setId(DRAWER_ID_TABS));
+		}
+
+		mDrawerLayout.addItem(new com.heinrichreimersoftware.materialdrawer.structure.DrawerItem()
+				.setImage(getResources().getDrawable(R.drawable.dsa_items)).setTextPrimary("Gegenstände")
+				.setId(DRAWER_ID_ITEMS));
+
+		mDrawerLayout.addItem(new com.heinrichreimersoftware.materialdrawer.structure.DrawerItem()
+				.setImage(getResources().getDrawable(R.drawable.ic_menu_preferences)).setTextPrimary("Einstellungen")
+				.setId(DRAWER_ID_SETTINGS));
+
+	}
+
+	private void initDrawer() {
+		mDrawerLayout = (DrawerFrameLayout) findViewById(R.id.drawer_layout);
+		mDrawerLayout.setClickable(true);
+		mDrawer = ((DrawerView) findViewById(R.id.mdDrawer));
+
+		drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.drawer_open,
+				R.string.drawer_close) {
+
+			public void onDrawerClosed(View view) {
+				invalidateOptionsMenu();
+			}
+
+			public void onDrawerOpened(View drawerView) {
+				invalidateOptionsMenu();
+			}
+		};
+
+		mDrawerLayout.setStatusBarBackgroundColor(Util.getThemeColors(this, R.attr.colorPrimaryDark));
+		mDrawer.setOnItemClickListener(this);
+		mDrawer.setOnProfileSwitchListener(this);
+		mDrawerLayout.setDrawerListener(drawerToggle);
+		mDrawerLayout.closeDrawer();
+
+		if (DsaTabApplication.getInstance().isFirstRun()) {
+			mDrawerLayout.openDrawer();
+		}
+	}
+
+	@Override
+	public void onSwitch(DrawerProfile oldProfile, long oldId, DrawerProfile newProfile, long newId) {
+
+		HeroFileInfo newHeroInfo = (HeroFileInfo) newProfile.getTag();
+
+		if (getHero() != null && getHero().getFileInfo().equals(newHeroInfo))
+			return;
+
+		mDrawer.closeProfileList();
+		mDrawerLayout.closeDrawer();
+		loadHero(newHeroInfo);
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		drawerToggle.onConfigurationChanged(newConfig);
+	}
+
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		drawerToggle.syncState();
+		if (tabInfo != null) {
+			setActionbarTranslucent(tabInfo.isActionbarTranslucent());
+		}
 	}
 
 	private void colorize(Bitmap photo) {
@@ -573,8 +679,10 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 
 	@SuppressLint("NewApi")
 	public void applyPalette(Palette palette) {
+		if (!DsaTabApplication.getPreferences().getBoolean(DsaTabPreferenceActivity.KEY_USE_PALETTE, false))
+			return;
+
 		super.applyPalette(palette);
-		tabDrawerAdapter.applyPalette(palette);
 
 		// getWindow().setBackgroundDrawable(new ColorDrawable(palette.getDarkMutedColor().getRgb()));
 		//
@@ -605,47 +713,6 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 		}
 	}
 
-	/**
-	 * 
-	 */
-	public void setupNavigationDrawer() {
-		getSupportActionBar();
-		List<TabInfo> tabs;
-		if (getHeroConfiguration() != null)
-			tabs = getHeroConfiguration().getTabs();
-		else
-			tabs = Collections.emptyList();
-
-		tabDrawerAdapter.clear();
-
-		if (getHero() != null) {
-			DrawerItem profile = new DrawerItem(DRAWER_ID_NONE, getHero().getName(), getHero().getPortraitUri(),
-					R.drawable.profile_picture, Color.RED, DrawerItemType.Profile);
-
-			profile.setSubText(getHero().getBaseInfo().getAusbildung());
-			tabDrawerAdapter.add(profile);
-		}
-		if (!tabs.isEmpty()) {
-			int tabIndex = 0;
-			for (TabInfo tabInfo : tabs) {
-				tabDrawerAdapter.add(new DrawerItem(tabIndex++, tabInfo));
-			}
-		}
-
-		tabDrawerAdapter.add(new DrawerItem("System"));
-
-		tabDrawerAdapter.add(new DrawerItem(DRAWER_ID_HEROES, "HELDEN", R.drawable.dsa_group, Color.TRANSPARENT,
-				DrawerItemType.System));
-		if (getHero() != null) {
-			tabDrawerAdapter.add(new DrawerItem(DRAWER_ID_TABS, "TABS ANPASSEN", R.drawable.ic_menu_moreoverflow,
-					Color.TRANSPARENT, DrawerItemType.System));
-		}
-		tabDrawerAdapter.add(new DrawerItem(DRAWER_ID_ITEMS, "GEGENSTÄNDE", R.drawable.dsa_items, Color.TRANSPARENT,
-				DrawerItemType.System));
-		tabDrawerAdapter.add(new DrawerItem(DRAWER_ID_SETTINGS, "EINSTELLUNGEN", R.drawable.ic_menu_preferences,
-				Color.TRANSPARENT, DrawerItemType.System));
-	}
-
 	private HeroConfiguration getHeroConfiguration() {
 		HeroConfiguration tabConfig = null;
 		if (getHero() != null) {
@@ -655,7 +722,7 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 	}
 
 	public void notifyTabsChanged(TabInfo oldTabInfo) {
-		setupNavigationDrawer();
+		setupDrawerItems(getHero());
 		showTab(refreshTabInfo(0), true);
 	}
 
@@ -874,7 +941,7 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 	@Override
 	public void onBackPressed() {
 
-		boolean drawerOpen = mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mDrawerList);
+		boolean drawerOpen = mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mDrawer);
 		boolean sliderOpen = diceSliderFragment != null && diceSliderFragment.isVisible()
 				&& diceSliderFragment.isPanelExpanded();
 
@@ -884,7 +951,7 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 				diceSliderFragment.collapsePanel();
 
 			if (drawerOpen)
-				mDrawerLayout.closeDrawer(mDrawerList);
+				mDrawerLayout.closeDrawer();
 		} else {
 			if (backPressed + 2000 > System.currentTimeMillis() || getFragmentManager().getBackStackEntryCount() > 0) {
 				super.onBackPressed();
@@ -905,7 +972,7 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 
 		int defaultTabIndex = preferences.getInt(TAB_INDEX, 0);
 
-		setupNavigationDrawer();
+		setupDrawerItems(hero);
 		showTab(refreshTabInfo(defaultTabIndex), true);
 
 		if (diceSliderFragment != null && diceSliderFragment.isAdded()) {
@@ -1103,7 +1170,7 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 	}
 
 	public boolean isDrawerOpened() {
-		return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mDrawerList);
+		return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mDrawer);
 	}
 
 	@Override
@@ -1111,12 +1178,7 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 
 		// Pass the event to ActionBarDrawerToggle, if it returns
 		// true, then it has handled the app icon touch event
-		if ((item != null) && (item.getItemId() == 16908332)) {
-			if (this.mDrawerLayout.isDrawerVisible(8388611))
-				this.mDrawerLayout.closeDrawer(8388611);
-			else {
-				this.mDrawerLayout.openDrawer(8388611);
-			}
+		if (drawerToggle.onOptionsItemSelected(item)) {
 			return true;
 		}
 
@@ -1230,8 +1292,4 @@ public class DsaTabActivity extends BaseActivity implements LoaderManager.Loader
 		startActivityForResult(intent, ACTION_CHOOSE_HERO);
 	}
 
-	@Override
-	public void onHeroSelected(HeroFileInfo heroFileInfo) {
-		loadHero(heroFileInfo);
-	}
 }

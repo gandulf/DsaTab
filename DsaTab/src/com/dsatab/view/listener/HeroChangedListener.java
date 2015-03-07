@@ -1,9 +1,9 @@
 package com.dsatab.view.listener;
 
-import java.util.List;
-
 import com.dsatab.data.Value;
 import com.dsatab.data.modifier.Modificator;
+
+import java.util.List;
 
 public interface HeroChangedListener {
 

@@ -1,26 +1,5 @@
 package com.dsatab.xml;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map.Entry;
-import java.util.UUID;
-
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
-import org.jdom2.output.XMLOutputter;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.xml.sax.InputSource;
-
 import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
@@ -82,6 +61,27 @@ import com.dsatab.exception.TalentTypeUnknownException;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.splunk.mint.Mint;
+
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.XMLOutputter;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xml.sax.InputSource;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map.Entry;
+import java.util.UUID;
 
 /**
  * Xml Reader and Writer for the Heldensoftware HeldenXML

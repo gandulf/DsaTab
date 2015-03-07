@@ -1,11 +1,11 @@
 package com.dsatab.data.modifier;
 
-import java.util.List;
-
 import com.dsatab.data.Probe;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.listable.Listable;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
+
+import java.util.List;
 
 public interface Modificator extends Listable {
 

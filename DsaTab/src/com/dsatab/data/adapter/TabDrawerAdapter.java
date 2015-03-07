@@ -1,7 +1,5 @@
 package com.dsatab.data.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff.Mode;
@@ -20,6 +18,8 @@ import com.dsatab.data.adapter.TabDrawerAdapter.DrawerItem;
 import com.dsatab.util.Util;
 import com.gandulf.guilib.data.OpenArrayAdapter;
 import com.gandulf.guilib.util.ColorUtil;
+
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 

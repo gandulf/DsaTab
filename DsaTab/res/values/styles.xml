@@ -71,7 +71,7 @@
         <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
         <item name="android:textSize">11sp</item>
         <!-- <item name="android:textAllCaps">true</item> -->
-        <item name="android:gravity">right|bottom</item>
+        <item name="android:gravity">right|center_vertical</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:minWidth">20dp</item>
     </style>

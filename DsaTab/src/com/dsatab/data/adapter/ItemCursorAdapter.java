@@ -2,12 +2,12 @@ package com.dsatab.data.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import com.dsatab.R;

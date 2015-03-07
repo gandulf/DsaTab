@@ -1,8 +1,8 @@
 package com.dsatab.data.listable;
 
-import java.io.File;
-
 import com.dsatab.R;
+
+import java.io.File;
 
 public class FileListable implements Listable {
 

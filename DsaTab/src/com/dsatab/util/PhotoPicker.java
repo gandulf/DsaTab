@@ -1,10 +1,5 @@
 package com.dsatab.util;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InvalidObjectException;
-
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -16,6 +11,11 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore.Images.ImageColumns;
 import android.provider.MediaStore.Images.Media;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InvalidObjectException;
 
 public class PhotoPicker {
 

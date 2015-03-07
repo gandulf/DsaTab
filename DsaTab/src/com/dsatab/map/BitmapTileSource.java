@@ -1,11 +1,5 @@
 package com.dsatab.map;
 
-import java.io.InputStream;
-
-import org.osmdroid.ResourceProxy.string;
-import org.osmdroid.tileprovider.MapTile;
-import org.osmdroid.tileprovider.tilesource.BitmapTileSourceBase;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -13,6 +7,12 @@ import android.graphics.drawable.Drawable;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.util.Debug;
+
+import org.osmdroid.ResourceProxy.string;
+import org.osmdroid.tileprovider.MapTile;
+import org.osmdroid.tileprovider.tilesource.BitmapTileSourceBase;
+
+import java.io.InputStream;
 
 public class BitmapTileSource extends BitmapTileSourceBase {
 

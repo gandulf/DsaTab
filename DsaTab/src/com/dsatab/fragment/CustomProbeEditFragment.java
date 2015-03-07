@@ -1,10 +1,5 @@
 package com.dsatab.fragment;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -28,6 +23,11 @@ import com.dsatab.data.adapter.SpinnerSimpleAdapter;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 import com.dsatab.fragment.dialog.ImageChooserDialog;
 import com.dsatab.util.Util;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 public class CustomProbeEditFragment extends BaseEditFragment implements OnClickListener, OnItemSelectedListener {
 

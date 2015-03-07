@@ -1,12 +1,5 @@
 package com.dsatab.cloud;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.util.Arrays;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
@@ -19,6 +12,13 @@ import com.dsatab.data.HeroFileInfo;
 import com.dsatab.data.HeroFileInfo.FileType;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
 
 public class ImportHeroTask extends AsyncTask<String, String, Integer> implements OnCancelListener {
 

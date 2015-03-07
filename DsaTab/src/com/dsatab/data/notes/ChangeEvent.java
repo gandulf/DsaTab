@@ -1,8 +1,8 @@
 package com.dsatab.data.notes;
 
-import java.util.Date;
-
 import com.dsatab.DsaTabApplication;
+
+import java.util.Date;
 
 public class ChangeEvent {
 

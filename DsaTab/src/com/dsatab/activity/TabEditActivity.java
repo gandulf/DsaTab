@@ -1,8 +1,5 @@
 package com.dsatab.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -42,6 +39,9 @@ import com.gandulf.guilib.view.DynamicListViewEx;
 import com.nhaarman.listviewanimations.itemmanipulation.dragdrop.TouchViewDraggableManager;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.SwipeDismissAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TabEditActivity extends BaseActivity implements OnItemClickListener, OnClickListener,
 		OnCheckedChangeListener, OnDismissCallback {

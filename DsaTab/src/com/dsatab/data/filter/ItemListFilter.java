@@ -1,9 +1,5 @@
 package com.dsatab.data.filter;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Locale;
-
 import android.text.TextUtils;
 
 import com.dsatab.data.enums.ItemType;
@@ -11,6 +7,10 @@ import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemSpecification;
 import com.gandulf.guilib.data.OpenArrayAdapter;
 import com.gandulf.guilib.data.OpenFilter;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Locale;
 
 public class ItemListFilter extends OpenFilter<Item> {
 

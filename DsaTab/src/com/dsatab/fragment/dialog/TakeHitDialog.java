@@ -1,15 +1,15 @@
 package com.dsatab.fragment.dialog;
 
-import java.util.List;
-
-import uk.me.lewisdeane.ldialogs.CustomDialog;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -18,6 +18,7 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.AbstractBeing;
@@ -29,6 +30,8 @@ import com.dsatab.data.adapter.SpinnerSimpleAdapter;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.Position;
 import com.dsatab.util.Util;
+
+import java.util.List;
 
 public class TakeHitDialog extends DialogFragment implements DialogInterface.OnClickListener, OnItemSelectedListener {
 
@@ -71,10 +74,13 @@ public class TakeHitDialog extends DialogFragment implements DialogInterface.OnC
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-		CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
-		builder.setDarkTheme(DsaTabApplication.getInstance().isDarkTheme());
+		AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(getActivity());
 
-		View popupcontent = builder.setView(R.layout.popup_take_hit);
+        Context context = DsaTabApplication.getInstance().getContextWrapper(getActivity());
+        LayoutInflater inflater = LayoutInflater.from(context);
+		View popupcontent = inflater.inflate(R.layout.popup_take_hit, null, false);
+
+        builder.setView(popupcontent);
 		builder.setIcon(R.drawable.dsa_wound_patch);
 		builder.setTitle("Treffer kassieren");
 
@@ -82,7 +88,7 @@ public class TakeHitDialog extends DialogFragment implements DialogInterface.OnC
 		targetZoneLabel = (TextView) popupcontent.findViewById(R.id.popup_position_label);
 
 		final List<Position> positions = DsaTabApplication.getInstance().getConfiguration().getArmorPositions();
-		SpinnerSimpleAdapter<Position> typeAdapter = new SpinnerSimpleAdapter<Position>(builder.getContext(),
+		SpinnerSimpleAdapter<Position> typeAdapter = new SpinnerSimpleAdapter<Position>(context,
 				android.R.layout.simple_spinner_item, positions);
 
 		typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -100,7 +106,7 @@ public class TakeHitDialog extends DialogFragment implements DialogInterface.OnC
 		numberPicker.setWrapSelectorWheel(false);
 
 		rsConsideration = (CompoundButton) popupcontent.findViewById(R.id.popup_consider_rs);
-		rsConsideration.setText(builder.getContext().getText(R.string.label_consider_rs) + " (" + getRS() + ")");
+		rsConsideration.setText(context.getText(R.string.label_consider_rs) + " (" + getRS() + ")");
 		rsConsideration.setChecked(DsaTabApplication.getPreferences().getBoolean(PREF_CONSIDER_RS, true));
 
 		woundConsideration = (CompoundButton) popupcontent.findViewById(R.id.popup_consider_wound);
@@ -112,7 +118,7 @@ public class TakeHitDialog extends DialogFragment implements DialogInterface.OnC
 		builder.setPositiveButton(android.R.string.ok, this);
 		builder.setNegativeButton(android.R.string.cancel, this);
 
-		CustomDialog dialog = builder.create();
+		AlertDialog dialog = builder.create();
 
 		dialog.setCanceledOnTouchOutside(true);
 

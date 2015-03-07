@@ -1,9 +1,5 @@
 package com.dsatab.fragment;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -25,6 +21,10 @@ import com.dsatab.data.notes.Connection;
 import com.dsatab.data.notes.Event;
 import com.dsatab.data.notes.NotesItem;
 import com.dsatab.util.Util;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class NotesEditFragment extends BaseEditFragment implements OnItemSelectedListener {
 

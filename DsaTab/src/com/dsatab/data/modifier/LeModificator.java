@@ -1,8 +1,5 @@
 package com.dsatab.data.modifier;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.dsatab.data.Art;
 import com.dsatab.data.Attribute;
 import com.dsatab.data.CombatDistanceTalent;
@@ -15,6 +12,9 @@ import com.dsatab.data.Spell;
 import com.dsatab.data.Talent;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class LeModificator extends AbstractModificator {
 

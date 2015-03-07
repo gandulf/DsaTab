@@ -1,13 +1,5 @@
 package com.dsatab.data;
 
-import java.net.URI;
-import java.util.EnumMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-
 import android.net.Uri;
 import android.os.SystemClock;
 import android.text.TextUtils;
@@ -22,6 +14,14 @@ import com.dsatab.data.modifier.Modificator;
 import com.dsatab.data.modifier.Modifier;
 import com.dsatab.util.Debug;
 import com.dsatab.view.listener.HeroChangedListener;
+
+import java.net.URI;
+import java.util.EnumMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 public abstract class AbstractBeing {
 	private String name;

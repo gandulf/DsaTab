@@ -53,6 +53,9 @@ public class BaseActivity extends ActionBarActivity {
 
 	@SuppressLint("NewApi")
 	public void applyPalette(Palette palette) {
+		if (!DsaTabApplication.getPreferences().getBoolean(DsaTabPreferenceActivity.KEY_USE_PALETTE, false))
+			return;
+
 		if (palette != null) {
 			getToolbar().setBackgroundColor(palette.getDarkMutedColor(Color.BLUE));
 			getToolbar().setTitleTextColor(palette.getLightVibrantColor(Color.WHITE));
@@ -180,8 +183,11 @@ public class BaseActivity extends ActionBarActivity {
 			setActionbarBackgroundAlpha(0);
 			setActionbarBackgroundBaseAlpha(0);
 		} else {
+			int actionBarHeightId = Util.getThemeResourceId(this, R.attr.actionBarSize);
+			float toolbarHeight = getResources().getDimension(actionBarHeightId);
+
 			if (wrapper != null) {
-				wrapper.setPadding(wrapper.getPaddingLeft(), mOriginalWrapperPadding + toolbar.getHeight(),
+				wrapper.setPadding(wrapper.getPaddingLeft(), (int) (mOriginalWrapperPadding + toolbarHeight),
 						wrapper.getPaddingRight(), wrapper.getPaddingBottom());
 			}
 			setActionbarBackgroundAlpha(255);

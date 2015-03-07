@@ -1,7 +1,5 @@
 package com.dsatab.data.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,6 +17,8 @@ import com.dsatab.util.Util;
 import com.dsatab.view.CheckableImageButton;
 import com.dsatab.view.EquippedItemListItem;
 import com.gandulf.guilib.data.OpenArrayAdapter;
+
+import java.util.List;
 
 public class ItemAdapter extends OpenArrayAdapter<ItemCard> implements OnClickListener {
 

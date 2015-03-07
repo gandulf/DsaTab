@@ -1,17 +1,19 @@
 package com.dsatab.fragment.dialog;
 
-import uk.me.lewisdeane.ldialogs.CustomDialog;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.NumberPicker;
 
+import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.ArmorAttribute;
@@ -55,18 +57,19 @@ public class InlineEditDialog extends DialogFragment implements android.content.
 		// TODO value should be set as argument
 		// Value value = (Value) args.get(KEY_VALUE);
 
-		CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
+		AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(getActivity());
 		if (value != null)
 			builder.setTitle(value.getName());
-		builder.setDarkTheme(DsaTabApplication.getInstance().isDarkTheme());
+
 
 		if (value != null && value.getReferenceValue() != null)
 			builder.setNegativeButton("Reset", this);
 
 		builder.setPositiveButton(android.R.string.ok, this);
 
-		View popupcontent = builder.setView(R.layout.popup_edit);
-
+        LayoutInflater inflater = LayoutInflater.from(DsaTabApplication.getInstance().getContextWrapper(getActivity()));
+		View popupcontent = inflater.inflate(R.layout.popup_edit,null,false);
+        builder.setView(popupcontent);
 		numberPicker = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_text);
 		numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 		numberPickerUtils = new NumberPickerUtils(numberPicker);
@@ -109,7 +112,7 @@ public class InlineEditDialog extends DialogFragment implements android.content.
 		}
 
 		// Now we can build the dialog.
-		CustomDialog dialog = builder.create();
+		AlertDialog dialog = builder.create();
 		dialog.setCanceledOnTouchOutside(true);
 
 		return dialog;

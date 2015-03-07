@@ -1,11 +1,11 @@
 package com.dsatab.data.modifier;
 
-import java.util.Comparator;
-
 import com.dsatab.data.Attribute;
 import com.dsatab.data.Hero;
 import com.dsatab.data.Probe;
 import com.dsatab.data.enums.AttributeType;
+
+import java.util.Comparator;
 
 public abstract class AbstractModificator implements Modificator {
 

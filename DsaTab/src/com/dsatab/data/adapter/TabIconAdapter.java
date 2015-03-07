@@ -1,7 +1,5 @@
 package com.dsatab.data.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import com.dsatab.R;
+
+import java.util.List;
 
 public class TabIconAdapter extends ArrayAdapter<Integer> {
 

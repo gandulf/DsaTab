@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import uk.me.lewisdeane.ldialogs.CustomDialog;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,14 +21,19 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.bingzer.android.driven.DrivenException;
 import com.bingzer.android.driven.Result;
 import com.bingzer.android.driven.StorageProvider;
@@ -127,6 +131,8 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 	public static final String KEY_AUTO_SAVE = "hero_auto_save";
 	public static final String KEY_DROPBOX = "dropbox";
 
+	public static final String KEY_USE_PALETTE = "usePalette";
+
 	public static final String SCREEN_ORIENTATION_AUTO = "auto";
 	public static final String SCREEN_ORIENTATION_LANDSCAPE = "landscape";
 	public static final String SCREEN_ORIENTATION_PORTRAIT = "portrait";
@@ -142,11 +148,14 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 	public static final String PATH_BACKGROUNDS = "http://dl.dropboxusercontent.com/u/15750588/dsatab-backgrounds.zip";
 
 	private static final String[] RESTART_KEYS = { KEY_THEME };
+
 	static {
 		Arrays.sort(RESTART_KEYS);
 	}
 
 	private boolean restartRequired = false;
+
+	private Toolbar toolbar;
 
 	public static void startPreferenceActivity(Activity context) {
 		context.startActivityForResult(new Intent(context, DsaTabPreferenceActivity.class),
@@ -261,6 +270,35 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 
 		updateFullscreenStatus(getWindow(), preferences.getBoolean(DsaTabPreferenceActivity.KEY_FULLSCREEN, false));
 
+	}
+
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+
+		LinearLayout root = (LinearLayout) findViewById(android.R.id.list).getParent().getParent().getParent();
+		toolbar = (Toolbar) LayoutInflater.from(this).inflate(R.layout._toolbar, root, false);
+		root.addView(toolbar, 0); // insert at top
+
+		toolbar.setClickable(true);
+		toolbar.setNavigationIcon(getResIdFromAttribute(this, R.attr.homeAsUpIndicator));
+		toolbar.setTitle(R.string.settings);
+		toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
+
+	}
+
+	private static int getResIdFromAttribute(final Activity activity, final int attr) {
+		if (attr == 0) {
+			return 0;
+		}
+		final TypedValue typedvalueattr = new TypedValue();
+		activity.getTheme().resolveAttribute(attr, typedvalueattr, true);
+		return typedvalueattr.resourceId;
 	}
 
 	/**
@@ -467,10 +505,10 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 			Toast.makeText(context, R.string.message_download_started_in_background, Toast.LENGTH_SHORT).show();
 			return true;
 		} else if (KEY_CREDITS.equals(key)) {
-			CustomDialog.Builder builder = new CustomDialog.Builder(context);
+			AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(context);
 			builder.setTitle(R.string.title_credits);
 			builder.setCancelable(true);
-			WebView webView = new WebView(builder.getContext());
+			WebView webView = new WebView(DsaTabApplication.getInstance().getContextWrapper(context));
 			webView.getSettings().setDefaultTextEncodingName("utf-8");
 
 			String summary = ResUtil.loadResToString(R.raw.credits, context.getResources());
@@ -491,10 +529,10 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 			context.startActivity(launchBrowser);
 			return true;
 		} else if (KEY_DSA_LICENSE.equals(key)) {
-			CustomDialog.Builder builder = new CustomDialog.Builder(context);
+			AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(context);
 			builder.setTitle(R.string.title_credits);
 			builder.setCancelable(true);
-			WebView webView = new WebView(builder.getContext());
+			WebView webView = new WebView(DsaTabApplication.getInstance().getContextWrapper(context));
 			webView.getSettings().setDefaultTextEncodingName("utf-8");
 			String summary = ResUtil.loadResToString(R.raw.ulisses_license, context.getResources());
 			webView.loadDataWithBaseURL(null, summary, "text/html", "utf-8", null);

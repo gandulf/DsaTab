@@ -1,9 +1,9 @@
 package com.dsatab.data;
 
+import com.dsatab.data.enums.Position;
+
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.dsatab.data.enums.Position;
 
 public class ArmorAttribute extends EditableValue implements JSONable {
 

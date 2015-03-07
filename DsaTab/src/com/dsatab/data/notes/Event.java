@@ -1,14 +1,14 @@
 package com.dsatab.data.notes;
 
-import java.util.Comparator;
-import java.util.UUID;
+import com.dsatab.data.JSONable;
+import com.dsatab.data.enums.EventCategory;
+import com.dsatab.data.listable.Listable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.dsatab.data.JSONable;
-import com.dsatab.data.enums.EventCategory;
-import com.dsatab.data.listable.Listable;
+import java.util.Comparator;
+import java.util.UUID;
 
 public class Event implements JSONable, NotesItem, Listable {
 

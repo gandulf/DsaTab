@@ -1,12 +1,12 @@
 package com.dsatab.data;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import android.text.TextUtils;
 
 import com.dsatab.data.enums.FeatureType;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Feature {
 

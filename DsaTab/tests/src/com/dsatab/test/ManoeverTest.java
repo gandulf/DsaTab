@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.lang.Exception;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
@@ -29,45 +30,26 @@ public class ManoeverTest extends AndroidTestCase {
 		super();
 	}
 
-	public void testLoadMonever() {
+	public void testLoadManoever() throws Exception{
 
 		String tag = "Finte";
 		String data = null;
 
-		try {
-			XPathFactory factory = XPathFactory.newInstance();
-			XPath xPath = factory.newXPath();
-			InputStream is = getContext().getResources().getAssets().open("data/manoever.html");
-			NodeList shows = (NodeList) xPath.evaluate("//div[@id='" + tag + "']", new InputSource(is),
-					XPathConstants.NODESET);
+        XPathFactory factory = XPathFactory.newInstance();
+        XPath xPath = factory.newXPath();
+        InputStream is = getContext().getResources().getAssets().open("data/manoever.html");
+        NodeList shows = (NodeList) xPath.evaluate("//div[@id='" + tag + "']", new InputSource(is),
+                XPathConstants.NODESET);
 
-			for (int i = 0; i < shows.getLength(); i++) {
-				Element show = (Element) shows.item(i);
+        for (int i = 0; i < shows.getLength(); i++) {
+            Element show = (Element) shows.item(i);
 
-				StringWriter writer = new StringWriter();
-				Transformer transformer = TransformerFactory.newInstance().newTransformer();
-				transformer.transform(new DOMSource(show), new StreamResult(writer));
-				data = writer.toString();
-			}
-		} catch (XPathExpressionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TransformerConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TransformerFactoryConfigurationError e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TransformerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            StringWriter writer = new StringWriter();
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.transform(new DOMSource(show), new StreamResult(writer));
+            data = writer.toString();
+        }
+
 
 	}
 

@@ -1,7 +1,5 @@
 package com.dsatab.data.adapter;
 
-import java.util.Collection;
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +12,8 @@ import com.dsatab.data.Hero;
 import com.dsatab.data.items.ItemContainer;
 import com.dsatab.util.Util;
 import com.gandulf.guilib.data.OpenArrayAdapter;
+
+import java.util.Collection;
 
 public class ItemContainerAdapter extends OpenArrayAdapter<ItemContainer<?>> {
 

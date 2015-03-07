@@ -1,8 +1,5 @@
 package com.dsatab.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.util.SparseBooleanArray;
@@ -18,6 +15,9 @@ import android.widget.TextView;
 import com.dsatab.view.ListSettings;
 import com.gandulf.guilib.util.ListViewCompat;
 import com.gandulf.guilib.view.DynamicListViewEx.OnItemCheckedListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class BaseListFragment extends BaseFragment implements OnItemLongClickListener, OnItemClickListener,
 		OnItemCheckedListener, View.OnClickListener {

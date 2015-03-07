@@ -1,9 +1,5 @@
 package com.dsatab.data;
 
-import java.io.Serializable;
-import java.util.Comparator;
-import java.util.EnumSet;
-
 import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 
@@ -13,6 +9,10 @@ import com.dsatab.db.DataManager;
 import com.dsatab.exception.SpellUnknownException;
 import com.dsatab.util.Debug;
 import com.dsatab.util.StyleableSpannableStringBuilder;
+
+import java.io.Serializable;
+import java.util.Comparator;
+import java.util.EnumSet;
 
 public class Spell extends MarkableElement implements Value, Listable, Serializable {
 

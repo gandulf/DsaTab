@@ -1,14 +1,14 @@
 package com.dsatab.data;
 
-import java.security.SecureRandom;
-import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.text.TextUtils;
 
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
+
+import java.security.SecureRandom;
+import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Dice {
 

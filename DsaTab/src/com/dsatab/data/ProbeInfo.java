@@ -1,17 +1,17 @@
 package com.dsatab.data;
 
+import android.text.TextUtils;
+
+import com.dsatab.data.enums.AttributeType;
+import com.dsatab.util.Debug;
+import com.dsatab.util.Util;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
-
-import android.text.TextUtils;
-
-import com.dsatab.data.enums.AttributeType;
-import com.dsatab.util.Debug;
-import com.dsatab.util.Util;
 
 public class ProbeInfo implements Cloneable, Serializable {
 

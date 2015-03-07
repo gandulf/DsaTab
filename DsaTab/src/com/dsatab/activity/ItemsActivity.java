@@ -1,9 +1,5 @@
 package com.dsatab.activity;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.UUID;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -27,6 +23,10 @@ import com.dsatab.fragment.item.ItemEditFragment;
 import com.dsatab.fragment.item.ItemListFragment;
 import com.dsatab.fragment.item.ItemListFragment.OnItemSelectedListener;
 import com.dsatab.fragment.item.ItemViewFragment;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.UUID;
 
 public class ItemsActivity extends BaseActivity implements OnItemSelectedListener {
 

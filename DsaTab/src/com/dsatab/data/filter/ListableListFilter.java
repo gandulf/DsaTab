@@ -1,7 +1,5 @@
 package com.dsatab.data.filter;
 
-import java.util.Locale;
-
 import com.dsatab.data.Markable;
 import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.listable.Listable;
@@ -10,6 +8,8 @@ import com.dsatab.data.notes.Event;
 import com.dsatab.view.ListSettings;
 import com.gandulf.guilib.data.OpenArrayAdapter;
 import com.gandulf.guilib.data.OpenFilter;
+
+import java.util.Locale;
 
 public class ListableListFilter<T extends Listable> extends OpenFilter<T> {
 

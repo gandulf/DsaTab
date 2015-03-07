@@ -1,10 +1,7 @@
 package com.dsatab.fragment;
 
-import java.lang.ref.WeakReference;
-import java.util.List;
-
-import uk.me.lewisdeane.ldialogs.CustomDialog;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,12 +17,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabActivity;
@@ -45,6 +44,9 @@ import com.dsatab.fragment.dialog.TakeHitDialog;
 import com.dsatab.util.Util;
 import com.dsatab.view.BodyLayout;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
+
+import java.lang.ref.WeakReference;
+import java.util.List;
 
 public class BodyFragment extends BaseFragment implements OnClickListener, OnLongClickListener,
 		HeroInventoryChangedListener, OnCheckedChangeListener {
@@ -117,18 +119,26 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 					} else if (equippedItems.size() == 1) {
 						ItemsActivity.view(bodyFragment.getActivity(), bodyFragment.getHero(), equippedItems.get(0));
 					} else {
-						CustomDialog.Builder builder = new CustomDialog.Builder(bodyFragment.getActivity());
-						builder.setDarkTheme(DsaTabApplication.getInstance().isDarkTheme());
+						AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(bodyFragment.getActivity());
+
 						builder.setTitle("Rüstung");
-						final EquippedItemAdapter adapter = new EquippedItemAdapter(builder.getContext(), equippedItems);
-						builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								ItemsActivity.view(bodyFragment.getActivity(), bodyFragment.getHero(),
-										adapter.getItem(which));
-							}
-						});
-						builder.show().setCanceledOnTouchOutside(true);
+						final EquippedItemAdapter adapter = new EquippedItemAdapter(DsaTabApplication.getInstance().getContextWrapper(bodyFragment.getActivity()), equippedItems);
+						builder.setAdapter(adapter);
+
+						AlertDialog dialog = builder.create();
+
+                        dialog.setCanceledOnTouchOutside(true);
+                        dialog.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                                    ItemsActivity.view(bodyFragment.getActivity(), bodyFragment.getHero(),
+                                            adapter.getItem(position));
+
+                            }
+                        });
+
+
 					}
 				}
 				mode.finish();

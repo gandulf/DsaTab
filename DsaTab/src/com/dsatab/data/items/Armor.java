@@ -1,11 +1,11 @@
 package com.dsatab.data.items;
 
-import java.util.Locale;
-
 import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.enums.Position;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+
+import java.util.Locale;
 
 @DatabaseTable(tableName = "item_armor")
 public class Armor extends ItemSpecification {

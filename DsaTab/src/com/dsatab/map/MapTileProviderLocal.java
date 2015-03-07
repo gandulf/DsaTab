@@ -1,5 +1,7 @@
 package com.dsatab.map;
 
+import android.content.Context;
+
 import org.osmdroid.tileprovider.IRegisterReceiver;
 import org.osmdroid.tileprovider.MapTileProviderArray;
 import org.osmdroid.tileprovider.modules.INetworkAvailablityCheck;
@@ -7,8 +9,6 @@ import org.osmdroid.tileprovider.modules.NetworkAvailabliltyCheck;
 import org.osmdroid.tileprovider.tilesource.ITileSource;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.tileprovider.util.SimpleRegisterReceiver;
-
-import android.content.Context;
 
 public class MapTileProviderLocal extends MapTileProviderArray {
 

@@ -1,11 +1,11 @@
 package com.dsatab.data;
 
-import java.util.Comparator;
-import java.util.EnumSet;
-
 import com.dsatab.data.enums.TalentType;
 import com.dsatab.data.listable.Listable;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
+
+import java.util.Comparator;
+import java.util.EnumSet;
 
 public class Talent extends MarkableElement implements Value, Listable {
 

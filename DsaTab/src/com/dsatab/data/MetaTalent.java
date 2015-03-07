@@ -1,12 +1,12 @@
 package com.dsatab.data;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.dsatab.data.enums.TalentType;
 import com.dsatab.data.items.EquippedItem;
 import com.dsatab.util.Debug;
 import com.dsatab.util.DsaUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MetaTalent extends Talent implements JSONable {
 

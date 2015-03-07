@@ -1,20 +1,11 @@
 package com.dsatab.config;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
-import com.dsatab.R.drawable;
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.data.enums.Position;
 import com.dsatab.fragment.AnimalFragment;
@@ -26,6 +17,14 @@ import com.dsatab.fragment.ListableFragment;
 import com.dsatab.fragment.MapFragment;
 import com.dsatab.fragment.NotesEditFragment;
 import com.dsatab.fragment.item.ItemListFragment;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  *  

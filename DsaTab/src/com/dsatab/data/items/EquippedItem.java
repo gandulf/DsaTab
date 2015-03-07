@@ -1,8 +1,5 @@
 package com.dsatab.data.items;
 
-import java.io.Serializable;
-import java.util.UUID;
-
 import android.content.Context;
 import android.net.Uri;
 import android.widget.Toast;
@@ -19,6 +16,9 @@ import com.dsatab.data.enums.UsageType;
 import com.dsatab.data.listable.Listable;
 import com.dsatab.util.Util;
 import com.gandulf.guilib.util.Debug;
+
+import java.io.Serializable;
+import java.util.UUID;
 
 public class EquippedItem implements ItemCard, Listable, Serializable {
 

@@ -1,9 +1,5 @@
 package com.dsatab.data.modifier;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-
 import com.dsatab.data.Art;
 import com.dsatab.data.Attribute;
 import com.dsatab.data.CombatMeleeAttribute;
@@ -20,6 +16,10 @@ import com.dsatab.data.items.Armor;
 import com.dsatab.data.items.DistanceWeapon;
 import com.dsatab.data.items.Shield;
 import com.dsatab.data.items.Weapon;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class RulesModificator extends AbstractModificator {
 

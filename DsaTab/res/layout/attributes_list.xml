@@ -2,9 +2,9 @@
 <com.dsatab.view.CheckableFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/default_gap">
+    android:padding="@dimen/default_gap" >
 
-    <com.wefika.flowlayout.FlowLayout        
+    <com.wefika.flowlayout.FlowLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
@@ -13,86 +13,78 @@
             android:id="@+id/attr_le_label"
             style="@style/TextLabel.Mini"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"            
+            android:layout_height="wrap_content"
             android:text="@string/label_le_short" />
 
-        <Button
+        <TextView
             android:id="@+id/attr_le"
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </Button>
+            android:layout_height="wrap_content" />
 
         <com.dsatab.view.FlexibleTextView
             android:id="@+id/attr_au_label"
             style="@style/TextLabel.Mini"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            
             android:text="@string/label_au_short" />
 
-        <Button
+        <TextView
             android:id="@+id/attr_au"
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </Button>
+            android:layout_height="wrap_content" >
+        </TextView>
 
         <com.dsatab.view.FlexibleTextView
             android:id="@+id/attr_ae_label"
             style="@style/TextLabel.Mini"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"            
+            android:layout_height="wrap_content"
             android:text="@string/label_ae_short" />
 
-        <Button
+        <TextView
             android:id="@+id/attr_ae"
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </Button>
+            android:layout_height="wrap_content" >
+        </TextView>
 
         <com.dsatab.view.FlexibleTextView
             android:id="@+id/attr_ke_label"
             style="@style/TextLabel.Mini"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"            
+            android:layout_height="wrap_content"
             android:text="@string/label_ke_short" />
 
-        <Button
+        <TextView
             android:id="@+id/attr_ke"
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </Button>
+            android:layout_height="wrap_content" >
+        </TextView>
 
         <com.dsatab.view.FlexibleTextView
             android:id="@+id/attr_be_label"
             style="@style/TextLabel.Mini"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"            
+            android:layout_height="wrap_content"
             android:text="@string/label_be_short" />
 
-        <Button
+        <TextView
             android:id="@+id/attr_be"
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </Button>
+            android:layout_height="wrap_content" >
+        </TextView>
 
         <com.dsatab.view.FlexibleTextView
             android:id="@+id/attr_mr_label"
             style="@style/TextLabel.Mini"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"            
+            android:layout_height="wrap_content"
             android:text="@string/label_mr_short" />
 
-        <Button
+        <TextView
             android:id="@+id/attr_mr"
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </Button>
+            android:layout_height="wrap_content" >
+        </TextView>
 
         <com.dsatab.view.FlexibleTextView
             android:id="@+id/attr_gs_label"
@@ -102,11 +94,10 @@
             android:text="@string/label_gs_short" />
 
         <TextView
-            android:id="@+id/attr_gs"
-            style="@style/TextLabel.Mini"
+            android:id="@+id/attr_gs"            
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minWidth="0dp">
+            android:minWidth="0dp" >
         </TextView>
 
         <com.dsatab.view.FlexibleTextView
@@ -117,12 +108,11 @@
             android:text="@string/label_ws_short" />
 
         <TextView
-            android:id="@+id/attr_ws"
-            style="@style/TextLabel.Mini"
+            android:id="@+id/attr_ws"            
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minWidth="0dp"
-            android:ellipsize="none" >
+            android:ellipsize="none"
+            android:minWidth="0dp" >
         </TextView>
 
         <com.dsatab.view.FlexibleTextView
@@ -133,14 +123,13 @@
             android:singleLine="true"
             android:text="@string/label_mu_short" />
 
-        <Button
+        <TextView
             android:id="@+id/attr_mu"
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="none"
             android:singleLine="true" >
-        </Button>
+        </TextView>
 
         <com.dsatab.view.FlexibleTextView
             android:id="@+id/attr_kl_label"
@@ -150,14 +139,13 @@
             android:singleLine="true"
             android:text="@string/label_kl_short" />
 
-        <Button
+        <TextView
             android:id="@+id/attr_kl"
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="none"
             android:singleLine="true" >
-        </Button>
+        </TextView>
 
         <com.dsatab.view.FlexibleTextView
             android:id="@+id/attr_in_label"
@@ -167,14 +155,13 @@
             android:singleLine="true"
             android:text="@string/label_in_short" />
 
-        <Button
+        <TextView
             android:id="@+id/attr_in"
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="none"
             android:singleLine="true" >
-        </Button>
+        </TextView>
 
         <com.dsatab.view.FlexibleTextView
             android:id="@+id/attr_ch_label"
@@ -184,14 +171,13 @@
             android:singleLine="true"
             android:text="@string/label_ch_short" />
 
-        <Button
+        <TextView
             android:id="@+id/attr_ch"
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="none"
             android:singleLine="true" >
-        </Button>
+        </TextView>
 
         <com.dsatab.view.FlexibleTextView
             android:id="@+id/attr_ff_label"
@@ -201,14 +187,13 @@
             android:singleLine="true"
             android:text="@string/label_ff_short" />
 
-        <Button
+        <TextView
             android:id="@+id/attr_ff"
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="none"
             android:singleLine="true" >
-        </Button>
+        </TextView>
 
         <com.dsatab.view.FlexibleTextView
             android:id="@+id/attr_ge_label"
@@ -218,14 +203,13 @@
             android:singleLine="true"
             android:text="@string/label_ge_short" />
 
-        <Button
+        <TextView
             android:id="@+id/attr_ge"
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="none"
             android:singleLine="true" >
-        </Button>
+        </TextView>
 
         <com.dsatab.view.FlexibleTextView
             android:id="@+id/attr_ko_label"
@@ -235,14 +219,13 @@
             android:singleLine="true"
             android:text="@string/label_ko_short" />
 
-        <Button
+        <TextView
             android:id="@+id/attr_ko"
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="none"
             android:singleLine="true" >
-        </Button>
+        </TextView>
 
         <com.dsatab.view.FlexibleTextView
             android:id="@+id/attr_kk_label"
@@ -252,14 +235,13 @@
             android:singleLine="true"
             android:text="@string/label_kk_short" />
 
-        <Button
+        <TextView
             android:id="@+id/attr_kk"
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="none"
             android:singleLine="true" >
-        </Button>
+        </TextView>
     </com.wefika.flowlayout.FlowLayout>
 
 </com.dsatab.view.CheckableFrameLayout>

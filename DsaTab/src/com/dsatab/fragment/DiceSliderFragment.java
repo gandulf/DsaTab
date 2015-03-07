@@ -23,7 +23,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.graphics.Palette;
 import android.util.TypedValue;
-import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -199,7 +198,7 @@ public class DiceSliderFragment extends AttributeListFragment implements View.On
 	public void applyPalette(Palette palette) {
 		super.applyPalette(palette);
 		if (palette != null) {
-			getView().setBackgroundColor(palette.getDarkMutedColor(Color.BLACK));
+			getView().setBackgroundColor(palette.getLightMutedColor(Color.WHITE));
 		}
 	}
 
@@ -208,7 +207,8 @@ public class DiceSliderFragment extends AttributeListFragment implements View.On
 		super.onAttach(activity);
 
 		// create ContextThemeWrapper from the original Activity Context with the custom theme
-		themedContext = new ContextThemeWrapper(activity, R.style.DsaTabTheme_Dark);
+		// themedContext = new ContextThemeWrapper(activity, R.style.DsaTabTheme_Dark);
+		themedContext = activity;
 	}
 
 	public SlidingUpPanelLayout getSlidingUpPanelLayout() {
@@ -527,8 +527,8 @@ public class DiceSliderFragment extends AttributeListFragment implements View.On
 					linDiceResult.setBackgroundResource(R.drawable.probe_green_highlight);
 				} else {
 					tfDiceTalentName.setText(info.probe.getName() + " gelungen");
-					tfEffectValue.setTextColor(getResources().getColor(android.R.color.secondary_text_dark));
-					tfDiceTalentName.setTextColor(getResources().getColor(android.R.color.primary_text_dark));
+					tfEffectValue.setTextColor(Util.getThemeColors(themedContext, R.attr.colorPrimary));
+					tfDiceTalentName.setTextColor(Util.getThemeColors(themedContext, R.attr.colorPrimary));
 					linDiceResult.setBackgroundResource(0);
 				}
 
@@ -860,8 +860,7 @@ public class DiceSliderFragment extends AttributeListFragment implements View.On
 					break;
 				}
 
-				tfEffectValue.setTextColor(DsaTabApplication.getInstance().getResources()
-						.getColor(android.R.color.secondary_text_dark));
+				tfEffectValue.setTextColor(Util.getThemeColors(themedContext, R.attr.colorPrimary));
 
 				if (probability != null) {
 					tfEffectValue.setText(probabilityFormat.format(probability));
@@ -887,7 +886,7 @@ public class DiceSliderFragment extends AttributeListFragment implements View.On
 	private void updateView(ProbeData info) {
 
 		tfDiceTalentName.setText(probeData.probe.getName());
-		tfDiceTalentName.setTextColor(getResources().getColor(android.R.color.primary_text_dark));
+		tfDiceTalentName.setTextColor(Util.getThemeColors(themedContext, R.attr.colorPrimary));
 
 		if (!isAutoRoll()) {
 			executeButton.setImageResource(DsaUtil.getResourceId(probeData.probe));

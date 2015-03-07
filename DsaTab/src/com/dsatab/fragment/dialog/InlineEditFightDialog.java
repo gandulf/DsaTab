@@ -1,16 +1,18 @@
 package com.dsatab.fragment.dialog;
 
-import uk.me.lewisdeane.ldialogs.CustomDialog;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
 import android.widget.NumberPicker.OnValueChangeListener;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.CombatMeleeAttribute;
@@ -57,11 +59,12 @@ public class InlineEditFightDialog extends DialogFragment implements android.con
 		// TODO value should be set as argument
 		// Value value = (Value) args.get(KEY_VALUE);
 
-		CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
+		AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(getActivity());
 		builder.setTitle(talent.getName());
-		builder.setDarkTheme(DsaTabApplication.getInstance().isDarkTheme());
-		View popupcontent = builder.setView(R.layout.popup_edit_fight);
 
+        LayoutInflater inflater = LayoutInflater.from(DsaTabApplication.getInstance().getContextWrapper(getActivity()));
+		View popupcontent = inflater.inflate(R.layout.popup_edit_fight, null, false);
+        builder.setView(popupcontent);
 		numberPicker = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_text);
 		editAt = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_at);
 		editPa = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_pa);
@@ -136,7 +139,7 @@ public class InlineEditFightDialog extends DialogFragment implements android.con
 			textFreeLabel.setVisibility(View.VISIBLE);
 		}
 
-		CustomDialog dialog = builder.create();
+		AlertDialog dialog = builder.create();
 		updateView(dialog);
 		dialog.setCanceledOnTouchOutside(true);
 		return dialog;
@@ -147,7 +150,7 @@ public class InlineEditFightDialog extends DialogFragment implements android.con
 		return talent;
 	}
 
-	private void updateView(CustomDialog dialog) {
+	private void updateView(AlertDialog dialog) {
 
 		if (singleValued) {
 
@@ -176,8 +179,8 @@ public class InlineEditFightDialog extends DialogFragment implements android.con
 			}
 			textFreeValue.setText(Util.toString(free));
 
-			if (dialog.getPositiveButton() != null)
-				dialog.getPositiveButton().setEnabled(free >= 0);
+			if (dialog.getButton(AlertDialog.BUTTON_POSITIVE) != null)
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(free >= 0);
 
 		}
 
@@ -227,7 +230,7 @@ public class InlineEditFightDialog extends DialogFragment implements android.con
 
 	@Override
 	public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-		updateView((CustomDialog) getDialog());
+		updateView((AlertDialog) getDialog());
 	}
 
 }

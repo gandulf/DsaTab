@@ -1,7 +1,5 @@
 package com.dsatab.fragment;
 
-import java.util.List;
-
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -22,6 +20,8 @@ import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.modifier.Modificator;
 import com.dsatab.util.Hint;
 import com.dsatab.util.Util;
+
+import java.util.List;
 
 public class CharacterFragment extends BaseProfileFragment {
 

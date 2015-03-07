@@ -1,9 +1,5 @@
 package com.dsatab.data.adapter;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +11,10 @@ import com.dsatab.data.filter.ItemCardListFilter;
 import com.dsatab.data.items.ItemCard;
 import com.dsatab.view.CardView;
 import com.gandulf.guilib.data.OpenArrayAdapter;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 public class GridItemAdapter extends OpenArrayAdapter<ItemCard> {
 

@@ -1,13 +1,13 @@
 package com.dsatab.view.listener;
 
-import java.lang.ref.WeakReference;
-
 import android.view.View;
 
 import com.dsatab.R;
 import com.dsatab.data.Probe;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.fragment.BaseFragment;
+
+import java.lang.ref.WeakReference;
 
 public class ProbeListener implements View.OnClickListener, View.OnLongClickListener {
 

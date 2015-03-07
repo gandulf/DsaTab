@@ -1,11 +1,6 @@
 package com.dsatab.fragment.dialog;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-
-import uk.me.lewisdeane.ldialogs.CustomDialog;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
@@ -21,10 +16,16 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.util.Util;
 import com.gandulf.guilib.util.DirectoryFileFilter;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 
 public class DirectoryChooserDialog extends DialogFragment implements OnItemClickListener {
 
@@ -126,14 +127,12 @@ public class DirectoryChooserDialog extends DialogFragment implements OnItemClic
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-		CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
-		builder.setDarkTheme(DsaTabApplication.getInstance().isDarkTheme());
-
-		adapter = new DirAdapter(builder.getContext(), android.R.layout.simple_list_item_1);
+        AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(getActivity());
+		adapter = new DirAdapter(DsaTabApplication.getInstance().getContextWrapper(getActivity()), android.R.layout.simple_list_item_1);
 		refreshAdapter();
 
 		builder.setTitle("Verzeichnis auswählen");
-		builder.setAdapter(adapter, null);
+		builder.setAdapter(adapter);
 
 		builder.setNegativeButton(android.R.string.cancel, null);
 		builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -145,7 +144,7 @@ public class DirectoryChooserDialog extends DialogFragment implements OnItemClic
 			}
 		});
 
-		CustomDialog dialog = builder.create();
+		AlertDialog dialog = builder.create();
 		dialog.getListView().setOnItemClickListener(this);
 		return dialog;
 	}

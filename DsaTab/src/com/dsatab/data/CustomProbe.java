@@ -1,16 +1,16 @@
 package com.dsatab.data;
 
-import java.util.UUID;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.net.Uri;
 
 import com.dsatab.R;
 import com.dsatab.data.listable.Listable;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 import com.dsatab.util.Util;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.UUID;
 
 public class CustomProbe extends BaseProbe implements JSONable, Listable {
 

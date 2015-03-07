@@ -1,16 +1,5 @@
 package com.dsatab.view;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
@@ -31,6 +20,17 @@ import com.dsatab.data.listable.FileListable;
 import com.dsatab.data.listable.PurseListable;
 import com.dsatab.data.modifier.Modificator;
 import com.dsatab.util.Util;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class ListSettings implements JSONable, Serializable, Parcelable {
 

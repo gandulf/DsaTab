@@ -1,8 +1,5 @@
 package com.dsatab.view;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -19,6 +16,9 @@ import com.dsatab.data.ArmorAttribute;
 import com.dsatab.data.WoundAttribute;
 import com.dsatab.data.enums.Position;
 import com.dsatab.util.Util;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class BodyLayout extends FrameLayout {
 

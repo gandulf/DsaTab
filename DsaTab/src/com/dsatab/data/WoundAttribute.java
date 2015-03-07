@@ -1,10 +1,10 @@
 package com.dsatab.data;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.dsatab.data.enums.Position;
 import com.dsatab.data.modifier.WoundModificator;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class WoundAttribute extends EditableValue implements JSONable {
 

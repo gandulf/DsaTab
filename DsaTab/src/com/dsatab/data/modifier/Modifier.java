@@ -1,8 +1,8 @@
 package com.dsatab.data.modifier;
 
-import java.util.Collection;
-
 import com.dsatab.util.Util;
+
+import java.util.Collection;
 
 public class Modifier {
 

@@ -1,28 +1,26 @@
 package com.dsatab.map;
 
-import java.io.File;
+import android.graphics.drawable.Drawable;
+
+import com.dsatab.util.Debug;
 
 import org.osmdroid.tileprovider.IRegisterReceiver;
 import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.tileprovider.MapTileRequestState;
 import org.osmdroid.tileprovider.modules.MapTileFileStorageProviderBase;
-import org.osmdroid.tileprovider.modules.MapTileFilesystemProvider;
 import org.osmdroid.tileprovider.modules.MapTileModuleProviderBase;
 import org.osmdroid.tileprovider.tilesource.BitmapTileSourceBase.LowMemoryException;
 import org.osmdroid.tileprovider.tilesource.ITileSource;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import android.graphics.drawable.Drawable;
+import java.io.File;
 
 public class MapTileAbsoluteFilesystemProvider extends MapTileFileStorageProviderBase {
 
 	// ===========================================================
 	// Constants
 	// ===========================================================
-
-	private static final Logger logger = LoggerFactory.getLogger(MapTileFilesystemProvider.class);
+	public static final int MAXIMUM_ZOOMLEVEL = 8;
 
 	// ===========================================================
 	// Fields
@@ -91,12 +89,12 @@ public class MapTileAbsoluteFilesystemProvider extends MapTileFileStorageProvide
 
 	@Override
 	public int getMinimumZoomLevel() {
-		return mTileSource != null ? mTileSource.getMinimumZoomLevel() : MAXIMUM_ZOOMLEVEL;
+		return mTileSource != null ? mTileSource.getMinimumZoomLevel() : MINIMUM_ZOOMLEVEL;
 	}
 
 	@Override
 	public int getMaximumZoomLevel() {
-		return mTileSource != null ? mTileSource.getMaximumZoomLevel() : MINIMUM_ZOOMLEVEL;
+		return mTileSource != null ? mTileSource.getMaximumZoomLevel() : MAXIMUM_ZOOMLEVEL;
 	}
 
 	@Override
@@ -122,7 +120,7 @@ public class MapTileAbsoluteFilesystemProvider extends MapTileFileStorageProvide
 			// if there's no sdcard then don't do anything
 			if (!getSdCardAvailable()) {
 				if (DEBUGMODE) {
-					logger.debug("No sdcard - do nothing for tile: " + tile);
+					Debug.verbose("No sdcard - do nothing for tile: " + tile);
 				}
 				return null;
 			}
@@ -148,7 +146,7 @@ public class MapTileAbsoluteFilesystemProvider extends MapTileFileStorageProvide
 						return drawable;
 					} catch (LowMemoryException e) {
 						// low memory so empty the queue
-						logger.warn("LowMemoryException downloading MapTile: " + tile + " : " + e);
+						Debug.warning("LowMemoryException downloading MapTile: " + tile + " : " + e);
 						throw new CantContinueException(e);
 					}
 				} else {
@@ -163,7 +161,7 @@ public class MapTileAbsoluteFilesystemProvider extends MapTileFileStorageProvide
 						return null;
 					} catch (LowMemoryException e) {
 						// low memory so empty the queue
-						logger.warn("LowMemoryException downloading MapTile: " + tile + " : " + e);
+						Debug.warning("LowMemoryException downloading MapTile: " + tile + " : " + e);
 						throw new CantContinueException(e);
 					}
 				}

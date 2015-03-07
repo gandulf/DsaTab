@@ -3,23 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:animateLayoutChanges="true"
-    android:background="@drawable/abc_ab_bottom_solid_dark_holo"
     android:clickable="true"
+    android:elevation="8dp"    
     android:gravity="center|top"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/slider"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/container_shadow_bottom_dark" >
+        android:layout_height="56dp"
+        android:layout_gravity="center">
 
         <FrameLayout
             android:id="@+id/slider_title"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/icon_button_size"
+            android:layout_height="match_parent"
             android:visibility="gone" >
 
             <TextView
@@ -37,24 +35,21 @@
                 android:id="@+id/details_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top|right"
-                android:layout_marginBottom="@dimen/default_gap"
-                android:layout_marginRight="@dimen/default_gap"
+                android:layout_gravity="top|end"
+                android:layout_margin="@dimen/default_gap"
                 android:background="@null"
                 android:contentDescription="@string/label_misc_modifications"
-                android:scaleType="centerInside"
+                android:scaleType="fitXY"
                 android:src="?attr/imgExpanderClose" />
         </FrameLayout>
 
-        <fragment
-            android:id="@+id/slider_attributes"
-            android:name="com.dsatab.fragment.AttributeListFragment"
+        
+        <include
             android:layout_width="fill_parent"
-            android:layout_height="@dimen/icon_button_size"
-            class="com.dsatab.fragment.AttributeListFragment"
-            android:tag="attributeListFragment"
-            tools:layout="@layout/attributes_list" >
-        </fragment>
+            android:layout_height="?attr/actionBarSize" 
+            layout="@layout/attributes_list" android:id="@+id/slider_attributes" />
+        
+        
     </FrameLayout>
 
     <ListView
@@ -62,7 +57,6 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:animateLayoutChanges="true"
         android:paddingBottom="@dimen/default_gap"
         android:paddingTop="@dimen/default_gap" >
     </ListView>

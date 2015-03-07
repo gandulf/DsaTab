@@ -13,6 +13,7 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -24,6 +25,7 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v7.graphics.Palette;
 import android.text.TextUtils;
+import android.view.ContextThemeWrapper;
 
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.cloud.HeroExchange;
@@ -44,8 +46,8 @@ import com.splunk.mint.Mint;
 
 public class DsaTabApplication extends Application implements OnSharedPreferenceChangeListener {
 
-	public static final int HS_VERSION_INT = 5330;
-	public static final String HS_VERSION = "5.3.3";
+	public static final int HS_VERSION_INT = 5410;
+	public static final String HS_VERSION = "5.4.1";
 
 	public static final String TILESOURCE_AVENTURIEN = "AVENTURIEN";
 
@@ -108,6 +110,13 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 	public static DsaTabApplication getInstance() {
 		checkInstance();
 		return instance;
+	}
+
+	public ContextThemeWrapper getContextWrapper(Context context) {
+		if (isDarkTheme())
+			return new ContextThemeWrapper(context, R.style.DsaTabTheme_Dark);
+		else
+			return new ContextThemeWrapper(context, R.style.DsaTabTheme_Light);
 	}
 
 	public static File getDirectory(String name) {

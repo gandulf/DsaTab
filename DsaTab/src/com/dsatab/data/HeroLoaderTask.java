@@ -1,8 +1,5 @@
 package com.dsatab.data;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-
 import android.app.Activity;
 import android.content.AsyncTaskLoader;
 import android.content.SharedPreferences;
@@ -15,6 +12,9 @@ import com.dsatab.data.HeroFileInfo.FileType;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.dsatab.xml.HeldenXmlParser;
+
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class HeroLoaderTask extends AsyncTaskLoader<Hero> {
 

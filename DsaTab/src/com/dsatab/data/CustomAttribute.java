@@ -1,12 +1,12 @@
 package com.dsatab.data;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.FeatureType;
 import com.dsatab.data.enums.TalentType;
 import com.dsatab.util.Util;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class CustomAttribute extends Attribute implements JSONable {
 

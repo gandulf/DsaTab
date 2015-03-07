@@ -1,14 +1,14 @@
 package com.dsatab.data.items;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import android.text.TextUtils;
 
 import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.enums.TalentType;
 import com.j256.ormlite.field.DatabaseField;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public abstract class CloseCombatItem extends ItemSpecification {
 

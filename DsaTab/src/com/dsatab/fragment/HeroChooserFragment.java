@@ -1,17 +1,8 @@
 package com.dsatab.fragment;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import uk.me.lewisdeane.ldialogs.CustomDialog;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -40,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.bingzer.android.driven.dropbox.app.DropboxActivity;
 import com.bingzer.android.driven.gdrive.app.GoogleDriveActivity;
 import com.dsatab.DsaTabApplication;
@@ -57,6 +49,15 @@ import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.gandulf.guilib.data.OpenArrayAdapter;
 import com.gandulf.guilib.util.ListViewCompat;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HeroChooserFragment extends BaseFragment implements AdapterView.OnItemClickListener,
 		OnItemLongClickListener, LoaderManager.LoaderCallbacks<List<HeroFileInfo>> {
@@ -82,7 +83,7 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 
 	private View loadingView;
 	private TextView empty;
-	private CustomDialog heldenAustauschDialog;
+	private AlertDialog heldenAustauschDialog;
 
 	public interface OnHeroSelectedListener {
 		public void onHeroSelected(HeroFileInfo heroFileInfo);
@@ -289,9 +290,9 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 		exchange = DsaTabApplication.getInstance().getExchange();
 		mCallback = new HeroesActionMode();
 
-		CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
-		builder.setDarkTheme(DsaTabApplication.getInstance().isDarkTheme());
-		final EditText editText = new EditText(builder.getContext());
+		AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(getActivity());
+
+		final EditText editText = new EditText(DsaTabApplication.getInstance().getContextWrapper(getActivity()));
 		editText.setHint("Helden-Austausch Token");
 		editText.setText(DsaTabApplication.getPreferences().getString(DsaTabPreferenceActivity.KEY_EXCHANGE_TOKEN, ""));
 		builder.setTitle("Berechtigungstoken der Heldenaustauschseite");

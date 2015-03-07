@@ -1,10 +1,12 @@
 package com.dsatab.fragment.dialog;
 
-import uk.me.lewisdeane.ldialogs.CustomDialog;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -12,6 +14,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Spinner;
 
+import com.afollestad.materialdialogs.AlertDialogWrapper;
+import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.adapter.SpinnerSimpleAdapter;
 import com.dsatab.db.DataManager;
@@ -46,15 +50,20 @@ public class WebInfoDialog extends DialogFragment implements OnItemSelectedListe
 		Bundle args = getArguments();
 		String tag = args.getString(KEY_TAG);
 
-		CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
+		AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(getActivity());
 
 		builder.setPositiveButton(android.R.string.ok, null);
-		View popupContent = builder.setView(R.layout.popup_web_info);
+        Context context = DsaTabApplication.getInstance().getContextWrapper(getActivity());
+
+        LayoutInflater inflater = LayoutInflater.from(context);
+
+		View popupContent = inflater.inflate(R.layout.popup_web_info,null,false);
+                builder.setView(popupContent);
 
 		content = (WebView) popupContent.findViewById(R.id.web);
 		spinner = (Spinner) popupContent.findViewById(R.id.spinner);
 
-		infoAdapters = new SpinnerSimpleAdapter<String>(builder.getContext(), DataManager.getWebInfos(getActivity()));
+		infoAdapters = new SpinnerSimpleAdapter<String>(context, DataManager.getWebInfos(getActivity()));
 
 		spinner.setAdapter(infoAdapters);
 		spinner.setOnItemSelectedListener(this);
@@ -63,7 +72,7 @@ public class WebInfoDialog extends DialogFragment implements OnItemSelectedListe
 		settings.setDefaultTextEncodingName("utf-8");
 		setTag(tag);
 
-		CustomDialog dialog = builder.create();
+		AlertDialog dialog = builder.create();
 		dialog.setCanceledOnTouchOutside(true);
 		return dialog;
 

@@ -1,25 +1,27 @@
 package com.dsatab.fragment.dialog;
 
-import java.util.Collections;
-import java.util.List;
-
-import uk.me.lewisdeane.ldialogs.CustomDialog;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.ListView;
 
+import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.adapter.EquippedItemAdapter;
 import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.items.Weapon;
+
+import java.util.Collections;
+import java.util.List;
 
 public class EquippedItemChooserDialog extends DialogFragment implements AdapterView.OnItemClickListener,
 		DialogInterface.OnClickListener {
@@ -59,12 +61,13 @@ public class EquippedItemChooserDialog extends DialogFragment implements Adapter
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-		CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
-		builder.setDarkTheme(DsaTabApplication.getInstance().isDarkTheme());
-
+		AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(getActivity());
 		builder.setTitle("Wähle einen Gegenstand...");
 
-		View popupcontent = builder.setView(R.layout.popup_equipped_item_chooser);
+        LayoutInflater inflater =  LayoutInflater.from(DsaTabApplication.getInstance().getContextWrapper(getActivity()));
+
+		View popupcontent = inflater.inflate(R.layout.popup_equipped_item_chooser, null, false);
+        builder.setView(popupcontent);
 
 		builder.setPositiveButton(android.R.string.ok, this);
 		builder.setNegativeButton(android.R.string.cancel, this);
@@ -72,14 +75,14 @@ public class EquippedItemChooserDialog extends DialogFragment implements Adapter
 		itemList = (ListView) popupcontent.findViewById(R.id.popup_equipped_item_list);
 		itemList.setOnItemClickListener(this);
 
-		itemAdapter = new EquippedItemAdapter(builder.getContext(), equippedItems);
+		itemAdapter = new EquippedItemAdapter(DsaTabApplication.getInstance().getContextWrapper(getActivity()), equippedItems);
 
 		itemList.setAdapter(itemAdapter);
 		itemList.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 
 		bhKampf = (CheckBox) popupcontent.findViewById(R.id.popup_equipped_item_bk);
 
-		CustomDialog dialog = builder.create();
+		AlertDialog dialog = builder.create();
 
 		dialog.setCanceledOnTouchOutside(true);
 

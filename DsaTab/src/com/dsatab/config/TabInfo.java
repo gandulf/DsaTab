@@ -1,14 +1,5 @@
 package com.dsatab.config;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -24,6 +15,15 @@ import com.dsatab.fragment.MapFragment;
 import com.dsatab.util.Util;
 import com.dsatab.view.ListSettings;
 import com.gandulf.guilib.util.Debug;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 public class TabInfo implements Parcelable, JSONable, Cloneable {
 

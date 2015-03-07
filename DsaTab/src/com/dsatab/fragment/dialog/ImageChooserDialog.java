@@ -1,10 +1,6 @@
 package com.dsatab.fragment.dialog;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import uk.me.lewisdeane.ldialogs.CustomDialog;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
@@ -12,6 +8,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -21,11 +18,16 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.AbstractBeing;
 import com.dsatab.util.Util;
 import com.gandulf.guilib.util.FileFileFilter;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ImageChooserDialog extends DialogFragment implements AdapterView.OnItemClickListener {
 
@@ -139,14 +141,16 @@ public class ImageChooserDialog extends DialogFragment implements AdapterView.On
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-		CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
-		builder.setDarkTheme(DsaTabApplication.getInstance().isDarkTheme());
-		builder.setListTitleStyle(true);
+		AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(getActivity());
+		// builder.setListTitleStyle(true);
+        Context context = DsaTabApplication.getInstance().getContextWrapper(getActivity());
+        LayoutInflater inflater = LayoutInflater.from(context);
 
-		View popupcontent = builder.setView(R.layout.popup_portrait_chooser);
+		View popupcontent = inflater.inflate(R.layout.popup_portrait_chooser,null,false);
+        builder.setView(popupcontent);
 
 		list = (GridView) popupcontent.findViewById(R.id.popup_portrait_chooser_list);
-		adapter = new PortraitAdapter(builder.getContext());
+		adapter = new PortraitAdapter(context);
 		adapter.setMinHeight(columnHeight);
 		adapter.setScaleType(scaleType);
 		list.setAdapter(adapter);
@@ -160,7 +164,7 @@ public class ImageChooserDialog extends DialogFragment implements AdapterView.On
 			adapter.add(uri);
 		}
 
-		CustomDialog dialog = builder.create();
+		AlertDialog dialog = builder.create();
 		dialog.setCanceledOnTouchOutside(true);
 		return dialog;
 

@@ -1,8 +1,5 @@
 package com.dsatab.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -29,6 +26,9 @@ import com.dsatab.util.StyleableSpannableStringBuilder;
 import com.dsatab.util.Util;
 import com.dsatab.view.ItemListItem;
 import com.dsatab.view.listener.HeroChangedListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AnimalFragment extends BaseProfileFragment {
 

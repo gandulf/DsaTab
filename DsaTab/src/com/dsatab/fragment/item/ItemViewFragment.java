@@ -1,7 +1,5 @@
 package com.dsatab.fragment.item;
 
-import java.util.UUID;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,6 +20,8 @@ import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Util;
 import com.dsatab.view.CardView;
 import com.dsatab.view.ItemListItem;
+
+import java.util.UUID;
 
 public class ItemViewFragment extends BaseFragment {
 

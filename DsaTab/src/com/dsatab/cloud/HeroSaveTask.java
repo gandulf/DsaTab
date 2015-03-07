@@ -1,11 +1,5 @@
 package com.dsatab.cloud;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import org.jdom2.Document;
-import org.jdom2.Element;
-
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.widget.Toast;
@@ -19,6 +13,12 @@ import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.dsatab.xml.HeldenXmlParser;
 import com.dsatab.xml.Xml;
+
+import org.jdom2.Document;
+import org.jdom2.Element;
+
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class HeroSaveTask extends AsyncTask<Void, Void, Boolean> {
 

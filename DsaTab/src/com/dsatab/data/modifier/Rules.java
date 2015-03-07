@@ -1,8 +1,5 @@
 package com.dsatab.data.modifier;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.dsatab.data.BaseCombatTalent;
 import com.dsatab.data.CombatProbe;
 import com.dsatab.data.Hero;
@@ -14,6 +11,9 @@ import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.items.Item;
 import com.dsatab.data.items.Weapon;
 import com.dsatab.util.Util;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Rules {
 

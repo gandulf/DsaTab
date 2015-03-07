@@ -1,14 +1,14 @@
 package com.dsatab.data;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.text.TextUtils;
 
 import com.dsatab.data.Hero.CombatStyle;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.modifier.Modifier;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Animal extends AbstractBeing {
 

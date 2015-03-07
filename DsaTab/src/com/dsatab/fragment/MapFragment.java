@@ -1,22 +1,5 @@
 package com.dsatab.fragment;
 
-import java.io.File;
-import java.io.FilenameFilter;
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-
-import org.osmdroid.DefaultResourceProxyImpl;
-import org.osmdroid.api.IGeoPoint;
-import org.osmdroid.tileprovider.tilesource.ITileSource;
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
-import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.MapView;
-
-import uk.co.senab.photoview.PhotoViewAttacher;
-import uk.me.lewisdeane.ldialogs.CustomDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
@@ -34,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabPreferenceActivity;
@@ -44,6 +28,23 @@ import com.gandulf.guilib.download.AbstractDownloader;
 import com.gandulf.guilib.download.DownloaderWrapper;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
+
+import org.osmdroid.DefaultResourceProxyImpl;
+import org.osmdroid.api.IGeoPoint;
+import org.osmdroid.tileprovider.tilesource.ITileSource;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+
+import java.io.File;
+import java.io.FilenameFilter;
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class MapFragment extends BaseFragment {
 
@@ -286,8 +287,7 @@ public class MapFragment extends BaseFragment {
 		mAttacher = new PhotoViewAttacher(imageMapView);
 
 		if (!osmMapLoaded && getPreferences().getBoolean(PREF_KEY_OSM_ASK, true)) {
-			CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
-			builder.setDarkTheme(DsaTabApplication.getInstance().isDarkTheme());
+			AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(getActivity());
 			builder.setTitle("Neue Aventurien Karte");
 			builder.setMessage("Es gibt jetzt eine GoogleMaps ähnliche Karte von ganz Aventurien. Willst du dir das Kartenpaket (ca. 10MB) aus dem Internet herunterladen?");
 			builder.setCancelable(true);
@@ -365,7 +365,8 @@ public class MapFragment extends BaseFragment {
 
 			String coords = getPreferences().getString(PREF_KEY_LAST_MAP_COORDINATES, null);
 			if (coords != null) {
-				mAttacher.setSuppViewMatrix(Util.parseFloats(coords));
+                // TODO load original settings
+				// mAttacher.setSuppViewMatrix(Util.parseFloats(coords));
 			}
 
 		}
@@ -479,7 +480,8 @@ public class MapFragment extends BaseFragment {
 
 		Editor edit = getPreferences().edit();
 		edit.putString(PREF_KEY_LAST_MAP, activeMap);
-		edit.putString(PREF_KEY_LAST_MAP_COORDINATES, Util.toString(mAttacher.getSuppViewMatrix()));
+        // TODO store settings
+		//edit.putString(PREF_KEY_LAST_MAP_COORDINATES, Util.toString(mAttacher.getSuppViewMatrix()));
 		if (osmMapView != null) {
 			edit.putInt(PREF_KEY_OSM_ZOOM, osmMapView.getZoomLevel());
 			IGeoPoint center = osmMapView.getMapCenter();

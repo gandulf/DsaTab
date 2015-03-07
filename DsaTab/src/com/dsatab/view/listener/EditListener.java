@@ -1,7 +1,5 @@
 package com.dsatab.view.listener;
 
-import java.lang.ref.WeakReference;
-
 import android.view.View;
 
 import com.dsatab.R;
@@ -11,6 +9,8 @@ import com.dsatab.data.enums.AttributeType;
 import com.dsatab.fragment.BaseFragment;
 import com.dsatab.fragment.dialog.InlineEditDialog;
 import com.dsatab.fragment.dialog.InlineEditFightDialog;
+
+import java.lang.ref.WeakReference;
 
 public class EditListener implements View.OnClickListener, View.OnLongClickListener {
 

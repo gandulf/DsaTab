@@ -1,9 +1,9 @@
 package com.dsatab.xml;
 
+import org.jdom2.Element;
+
 import java.util.LinkedList;
 import java.util.List;
-
-import org.jdom2.Element;
 
 public class DomUtil {
 

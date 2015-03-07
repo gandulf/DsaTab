@@ -1,10 +1,5 @@
 package com.dsatab.data;
 
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.EnumSet;
-
 import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 
@@ -18,6 +13,11 @@ import com.dsatab.exception.DsaTabRuntimeException;
 import com.dsatab.util.Debug;
 import com.dsatab.util.StyleableSpannableStringBuilder;
 import com.dsatab.util.Util;
+
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.EnumSet;
 
 public class Art extends MarkableElement implements Value, Listable, Serializable {
 

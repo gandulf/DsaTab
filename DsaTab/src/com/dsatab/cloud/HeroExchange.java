@@ -1,17 +1,5 @@
 package com.dsatab.cloud;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
-import org.w3c.dom.Document;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
@@ -31,6 +19,18 @@ import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.data.HeroFileInfo;
 import com.dsatab.data.HeroFileInfo.FileType;
 import com.dsatab.util.Debug;
+
+import org.w3c.dom.Document;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class HeroExchange {
 

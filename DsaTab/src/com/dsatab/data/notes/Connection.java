@@ -1,10 +1,10 @@
 package com.dsatab.data.notes;
 
-import java.util.Comparator;
-import java.util.UUID;
-
 import com.dsatab.data.enums.EventCategory;
 import com.dsatab.data.listable.Listable;
+
+import java.util.Comparator;
+import java.util.UUID;
 
 public class Connection implements NotesItem, Listable {
 

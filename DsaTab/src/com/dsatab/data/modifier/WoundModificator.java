@@ -1,8 +1,5 @@
 package com.dsatab.data.modifier;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.dsatab.DsaTabApplication;
 import com.dsatab.config.DsaTabConfiguration.WoundType;
 import com.dsatab.data.Attribute;
@@ -19,6 +16,9 @@ import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.items.Shield;
 import com.dsatab.data.items.Weapon;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class WoundModificator extends AbstractModificator {
 

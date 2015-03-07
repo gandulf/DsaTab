@@ -1,7 +1,5 @@
 package com.dsatab.data.adapter;
 
-import java.util.Collection;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -23,6 +21,8 @@ import com.gandulf.guilib.data.OpenArrayAdapter;
 import com.gandulf.guilib.util.Debug;
 import com.gandulf.guilib.view.SeekBarEx;
 import com.gandulf.guilib.view.SeekBarEx.SeekBarLabelRenderer;
+
+import java.util.Collection;
 
 public class ModifierAdapter extends OpenArrayAdapter<Modifier> implements OnSeekBarChangeListener {
 

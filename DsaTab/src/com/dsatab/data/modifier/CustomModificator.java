@@ -1,19 +1,7 @@
 package com.dsatab.data.modifier;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.text.TextUtils;
 import android.widget.Toast;
-import au.com.bytecode.opencsv.CSVReader;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.data.Art;
@@ -34,6 +22,19 @@ import com.dsatab.data.items.Weapon;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.UUID;
+
+import au.com.bytecode.opencsv.CSVReader;
 
 public class CustomModificator extends AbstractModificator implements JSONable {
 

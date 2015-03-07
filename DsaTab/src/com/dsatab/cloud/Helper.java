@@ -1,5 +1,14 @@
 package com.dsatab.cloud;
 
+import com.dsatab.DsaTabApplication;
+import com.dsatab.R;
+import com.gandulf.guilib.util.Debug;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.URLEncoder;
@@ -15,15 +24,6 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-
-import com.dsatab.DsaTabApplication;
-import com.dsatab.R;
-import com.gandulf.guilib.util.Debug;
 
 public class Helper {
 

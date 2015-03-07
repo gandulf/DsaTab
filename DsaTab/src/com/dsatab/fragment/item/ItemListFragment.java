@@ -1,11 +1,5 @@
 package com.dsatab.fragment.item;
 
-import java.lang.ref.WeakReference;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
@@ -46,6 +40,12 @@ import com.dsatab.util.Util;
 import com.gandulf.guilib.util.DefaultTextWatcher;
 import com.gandulf.guilib.util.ListViewCompat;
 import com.gandulf.guilib.view.DynamicListViewEx;
+
+import java.lang.ref.WeakReference;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
 
 public class ItemListFragment extends BaseListFragment implements OnItemClickListener, LoaderCallbacks<Cursor> {
 

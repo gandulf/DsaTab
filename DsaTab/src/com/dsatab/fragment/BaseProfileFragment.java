@@ -44,6 +44,7 @@ import com.dsatab.R;
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.data.AbstractBeing;
 import com.dsatab.data.Feature;
+import com.dsatab.data.Hero;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.db.DataManager;
 import com.dsatab.fragment.dialog.ImageChooserDialog;
@@ -618,7 +619,9 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
 	@Override
 	public void onPortraitChanged() {
 		updatePortrait(getBeing());
-		getDsaActivity().setupNavigationDrawer();
+		if (getBeing() instanceof Hero) {
+			getDsaActivity().setupDrawerProfile((Hero) getBeing());
+		}
 	}
 
 }

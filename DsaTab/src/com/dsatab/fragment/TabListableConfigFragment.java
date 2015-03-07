@@ -1,9 +1,5 @@
 package com.dsatab.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import uk.me.lewisdeane.ldialogs.CustomDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Build;
@@ -25,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
 
+import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.config.TabInfo;
@@ -36,6 +33,9 @@ import com.dsatab.view.ListSettings.ListItem;
 import com.dsatab.view.ListSettings.ListItemType;
 import com.gandulf.guilib.view.DynamicListViewEx;
 import com.nhaarman.listviewanimations.itemmanipulation.dragdrop.TouchViewDraggableManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TabListableConfigFragment extends Fragment implements View.OnClickListener, OnItemClickListener,
 		OnItemSelectedListener, OnCheckedChangeListener {
@@ -213,10 +213,10 @@ public class TabListableConfigFragment extends Fragment implements View.OnClickL
 
 	protected void editListItem(final ListItem listItem) {
 		if (listItem.getType() == ListItemType.Header) {
-			CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
-			builder.setDarkTheme(DsaTabApplication.getInstance().isDarkTheme());
+			AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(getActivity());
+
 			builder.setTitle(R.string.title_insert_title);
-			final EditText editText = new EditText(builder.getContext());
+			final EditText editText = new EditText(DsaTabApplication.getInstance().getContextWrapper(getActivity()));
 			editText.setText(listItem.getName());
 			builder.setView(editText);
 

@@ -1,11 +1,11 @@
 package com.dsatab.data;
 
+import com.dsatab.data.Talent.Flags;
+import com.dsatab.data.enums.TalentGroupType;
+
 import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.List;
-
-import com.dsatab.data.Talent.Flags;
-import com.dsatab.data.enums.TalentGroupType;
 
 public class TalentGroup {
 

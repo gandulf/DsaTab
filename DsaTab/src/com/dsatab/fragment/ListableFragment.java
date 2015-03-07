@@ -1,17 +1,7 @@
 package com.dsatab.fragment;
 
-import java.io.File;
-import java.io.IOException;
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
-
-import uk.me.lewisdeane.ldialogs.CustomDialog;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -39,6 +29,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabActivity;
@@ -99,6 +90,16 @@ import com.gandulf.guilib.view.DynamicListViewEx;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
+
+import java.io.File;
+import java.io.IOException;
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
 
 public class ListableFragment extends BaseListFragment implements OnItemClickListener, HeroInventoryChangedListener,
 		com.dsatab.view.listener.OnActionListener {
@@ -493,8 +494,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 								break;
 							}
 							case R.id.option_select_version: {
-								CustomDialog.Builder builder = new CustomDialog.Builder(fragment.getActivity());
-								builder.setDarkTheme(DsaTabApplication.getInstance().isDarkTheme());
+								AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(fragment.getActivity());
 
 								List<String> specInfo = equippedItem.getItem().getSpecificationNames();
 								builder.setItems(specInfo.toArray(new String[0]),
@@ -529,8 +529,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 									}
 								}
 								if (!specInfo.isEmpty()) {
-									CustomDialog.Builder builder = new CustomDialog.Builder(fragment.getActivity());
-									builder.setDarkTheme(DsaTabApplication.getInstance().isDarkTheme());
+									AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(fragment.getActivity());
 									builder.setItems(specName.toArray(new String[0]),
 											new DialogInterface.OnClickListener() {
 												@Override
@@ -1961,8 +1960,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 			mediaRecorder.prepare();
 			mediaRecorder.start(); // Recording is now started
 
-			CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
-			builder.setDarkTheme(DsaTabApplication.getInstance().isDarkTheme());
+			AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(getActivity());
 			builder.setTitle(R.string.recording);
 			builder.setMessage(R.string.recording_message);
 			builder.setPositiveButton(R.string.label_save, new DialogInterface.OnClickListener() {
@@ -2005,7 +2003,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 				}
 			});
 
-			CustomDialog dialog = builder.show();
+			AlertDialog dialog = builder.show();
 
 			dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
 

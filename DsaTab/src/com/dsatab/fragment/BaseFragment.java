@@ -14,6 +14,7 @@ import android.view.View;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.activity.BaseActivity;
 import com.dsatab.activity.DsaTabActivity;
+import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.config.TabInfo;
 import com.dsatab.data.AbstractBeing;
 import com.dsatab.data.Hero;
@@ -94,7 +95,8 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
-		applyPalette(DsaTabApplication.getInstance().getPalette());
+		if (DsaTabApplication.getPreferences().getBoolean(DsaTabPreferenceActivity.KEY_USE_PALETTE, false))
+			applyPalette(DsaTabApplication.getInstance().getPalette());
 	}
 
 	protected void onAttachListener(Hero hero) {

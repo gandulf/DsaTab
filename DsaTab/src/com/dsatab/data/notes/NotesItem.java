@@ -1,10 +1,10 @@
 package com.dsatab.data.notes;
 
-import java.io.Serializable;
-import java.util.Comparator;
-
 import com.dsatab.data.enums.EventCategory;
 import com.dsatab.data.listable.Listable;
+
+import java.io.Serializable;
+import java.util.Comparator;
 
 public interface NotesItem extends Serializable, Listable {
 

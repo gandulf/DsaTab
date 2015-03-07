@@ -1,7 +1,5 @@
 package com.dsatab.fragment;
 
-import java.util.List;
-
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -15,6 +13,8 @@ import com.dsatab.data.Value;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.modifier.Modificator;
 import com.dsatab.view.listener.HeroChangedListener;
+
+import java.util.List;
 
 public abstract class AttributeListFragment extends BaseAttributesFragment implements HeroChangedListener {
 

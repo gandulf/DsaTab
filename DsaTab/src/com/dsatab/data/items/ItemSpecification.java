@@ -1,9 +1,9 @@
 package com.dsatab.data.items;
 
-import java.io.Serializable;
-
 import com.dsatab.data.enums.ItemType;
 import com.j256.ormlite.field.DatabaseField;
+
+import java.io.Serializable;
 
 public abstract class ItemSpecification implements Cloneable, Serializable {
 

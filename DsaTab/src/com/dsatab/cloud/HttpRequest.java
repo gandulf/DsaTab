@@ -1,11 +1,8 @@
 package com.dsatab.cloud;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
+import android.net.http.AndroidHttpClient;
+
+import com.gandulf.guilib.util.Debug;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -21,9 +18,12 @@ import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
-import android.net.http.AndroidHttpClient;
-
-import com.gandulf.guilib.util.Debug;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 
 public class HttpRequest {
 
