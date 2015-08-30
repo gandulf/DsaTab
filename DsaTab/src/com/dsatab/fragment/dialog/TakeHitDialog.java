@@ -18,7 +18,6 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.AbstractBeing;
@@ -74,10 +73,10 @@ public class TakeHitDialog extends DialogFragment implements DialogInterface.OnC
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-		AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(getActivity());
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        Context context = DsaTabApplication.getInstance().getContextWrapper(getActivity());
-        LayoutInflater inflater = LayoutInflater.from(context);
+
+        LayoutInflater inflater = LayoutInflater.from(builder.getContext());
 		View popupcontent = inflater.inflate(R.layout.popup_take_hit, null, false);
 
         builder.setView(popupcontent);
@@ -88,7 +87,7 @@ public class TakeHitDialog extends DialogFragment implements DialogInterface.OnC
 		targetZoneLabel = (TextView) popupcontent.findViewById(R.id.popup_position_label);
 
 		final List<Position> positions = DsaTabApplication.getInstance().getConfiguration().getArmorPositions();
-		SpinnerSimpleAdapter<Position> typeAdapter = new SpinnerSimpleAdapter<Position>(context,
+		SpinnerSimpleAdapter<Position> typeAdapter = new SpinnerSimpleAdapter<Position>(builder.getContext(),
 				android.R.layout.simple_spinner_item, positions);
 
 		typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -106,7 +105,7 @@ public class TakeHitDialog extends DialogFragment implements DialogInterface.OnC
 		numberPicker.setWrapSelectorWheel(false);
 
 		rsConsideration = (CompoundButton) popupcontent.findViewById(R.id.popup_consider_rs);
-		rsConsideration.setText(context.getText(R.string.label_consider_rs) + " (" + getRS() + ")");
+		rsConsideration.setText(getText(R.string.label_consider_rs) + " (" + getRS() + ")");
 		rsConsideration.setChecked(DsaTabApplication.getPreferences().getBoolean(PREF_CONSIDER_RS, true));
 
 		woundConsideration = (CompoundButton) popupcontent.findViewById(R.id.popup_consider_wound);

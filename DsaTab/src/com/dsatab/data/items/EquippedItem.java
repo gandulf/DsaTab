@@ -2,6 +2,7 @@ package com.dsatab.data.items;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.design.widget.Snackbar;
 import android.widget.Toast;
 
 import com.dsatab.data.CombatDistanceTalent;

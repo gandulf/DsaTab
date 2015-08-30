@@ -1,14 +1,15 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"    
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/sheet_list"
     style="?attr/cardViewStyle"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
     <com.gandulf.guilib.view.DynamicListViewEx
-        android:id="@+android:id/list"
+        android:id="@android:id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
     
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/fab_menu"
@@ -19,7 +20,7 @@
         android:layout_marginRight="16dp"/>
     
     <TextView
-        android:id="@+android:id/empty"
+        android:id="@android:id/empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

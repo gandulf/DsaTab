@@ -1,13 +1,13 @@
 package com.dsatab.fragment;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,7 +24,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabActivity;
@@ -119,24 +118,24 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 					} else if (equippedItems.size() == 1) {
 						ItemsActivity.view(bodyFragment.getActivity(), bodyFragment.getHero(), equippedItems.get(0));
 					} else {
-						AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(bodyFragment.getActivity());
+						AlertDialog.Builder builder = new AlertDialog.Builder(bodyFragment.getActivity());
 
 						builder.setTitle("Rüstung");
-						final EquippedItemAdapter adapter = new EquippedItemAdapter(DsaTabApplication.getInstance().getContextWrapper(bodyFragment.getActivity()), equippedItems);
-						builder.setAdapter(adapter);
+						final EquippedItemAdapter adapter = new EquippedItemAdapter(builder.getContext(), equippedItems);
+						builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog, int position) {
+								ItemsActivity.view(bodyFragment.getActivity(), bodyFragment.getHero(),
+										adapter.getItem(position));
+
+							}
+						});
 
 						AlertDialog dialog = builder.create();
 
                         dialog.setCanceledOnTouchOutside(true);
-                        dialog.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                                    ItemsActivity.view(bodyFragment.getActivity(), bodyFragment.getHero(),
-                                            adapter.getItem(position));
-
-                            }
-                        });
 
 
 					}

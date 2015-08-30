@@ -16,7 +16,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.util.Util;
@@ -27,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class DirectoryChooserDialog extends DialogFragment implements OnItemClickListener {
+public class DirectoryChooserDialog extends DialogFragment implements DialogInterface.OnClickListener {
 
 	public static final String TAG = "DirectoryChooserDialogHelper";
 
@@ -127,12 +126,12 @@ public class DirectoryChooserDialog extends DialogFragment implements OnItemClic
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(getActivity());
-		adapter = new DirAdapter(DsaTabApplication.getInstance().getContextWrapper(getActivity()), android.R.layout.simple_list_item_1);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		adapter = new DirAdapter(builder.getContext(), android.R.layout.simple_list_item_1);
 		refreshAdapter();
 
 		builder.setTitle("Verzeichnis auswählen");
-		builder.setAdapter(adapter);
+		builder.setAdapter(adapter,this);
 
 		builder.setNegativeButton(android.R.string.cancel, null);
 		builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -145,12 +144,11 @@ public class DirectoryChooserDialog extends DialogFragment implements OnItemClic
 		});
 
 		AlertDialog dialog = builder.create();
-		dialog.getListView().setOnItemClickListener(this);
 		return dialog;
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
+	public void onClick(DialogInterface dialogInterface, int pos) {
 		if (pos < 0 || pos >= adapter.getCount())
 			return;
 

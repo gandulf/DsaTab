@@ -23,6 +23,7 @@ import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.multidex.MultiDexApplication;
 import android.support.v7.graphics.Palette;
 import android.text.TextUtils;
 import android.view.ContextThemeWrapper;
@@ -44,7 +45,7 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.splunk.mint.Mint;
 
-public class DsaTabApplication extends Application implements OnSharedPreferenceChangeListener {
+public class DsaTabApplication extends MultiDexApplication implements OnSharedPreferenceChangeListener {
 
 	public static final int HS_VERSION_INT = 5410;
 	public static final String HS_VERSION = "5.4.1";
@@ -101,8 +102,6 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 
 	private boolean firstRun;
 	private boolean newsShown = false;
-
-	private Palette palette;
 
 	/**
 	 * Convenient access, saves having to call and cast getApplicationContext()
@@ -180,14 +179,6 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 		return heroPath;
 	}
 
-	public Palette getPalette() {
-		return palette;
-	}
-
-	public void setPalette(Palette palette) {
-		this.palette = palette;
-	}
-
 	public static SharedPreferences getPreferences() {
 		return PreferenceManager.getDefaultSharedPreferences(getInstance());
 	}
@@ -261,6 +252,7 @@ public class DsaTabApplication extends Application implements OnSharedPreference
 
 	@Override
 	public void onCreate() {
+		super.onCreate();
 		// provide an instance for our static accessors
 		instance = this;
 

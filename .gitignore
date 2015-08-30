@@ -173,3 +173,6 @@ pip-log.txt
 .idea
 
 .gradle
+gradle
+gradlew
+gradlew.bat

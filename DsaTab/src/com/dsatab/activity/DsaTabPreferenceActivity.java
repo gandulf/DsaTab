@@ -1,11 +1,5 @@
 package com.dsatab.activity;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,19 +15,20 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.bingzer.android.driven.DrivenException;
 import com.bingzer.android.driven.Result;
 import com.bingzer.android.driven.StorageProvider;
@@ -57,7 +52,14 @@ import com.gandulf.guilib.download.AbstractDownloader;
 import com.gandulf.guilib.download.DownloaderWrapper;
 import com.gandulf.guilib.util.ResUtil;
 
-public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
+import java.io.File;
+import java.io.FileFilter;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.prefs.Preferences;
+
+public class DsaTabPreferenceActivity extends AppCompatPreferenceActivity implements OnSharedPreferenceChangeListener {
 
 	static final int REQUEST_LINK_TO_DBX = 1190;
 	public static final int ACTION_PICK_BG_PATH = 1001;
@@ -80,7 +82,6 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 
 	public static final String KEY_ARMOR_TYPE = "armorType";
 	public static final String KEY_WOUND_TYPE = "woundType";
-	public static final String KEY_FULLSCREEN = "fullscreen";
 
 	@Deprecated
 	public static final String KEY_SETUP_SDCARD_PATH = "sdcardPath";
@@ -131,8 +132,6 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 	public static final String KEY_AUTO_SAVE = "hero_auto_save";
 	public static final String KEY_DROPBOX = "dropbox";
 
-	public static final String KEY_USE_PALETTE = "usePalette";
-
 	public static final String SCREEN_ORIENTATION_AUTO = "auto";
 	public static final String SCREEN_ORIENTATION_LANDSCAPE = "landscape";
 	public static final String SCREEN_ORIENTATION_PORTRAIT = "portrait";
@@ -157,6 +156,8 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 
 	private Toolbar toolbar;
 
+	private ViewGroup container;
+
 	public static void startPreferenceActivity(Activity context) {
 		context.startActivityForResult(new Intent(context, DsaTabPreferenceActivity.class),
 				DsaTabActivity.ACTION_PREFERENCES);
@@ -178,10 +179,10 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 
 				if (preference != null) {
 					if (preference.getKey().equals(KEY_STYLE_BG_PATH)) {
-						handlePreferenceClick((Activity) v.getContext(), preference,
+						handlePreferenceClick((DsaTabPreferenceActivity) v.getContext(), preference,
 								DsaTabPreferenceActivity.KEY_STYLE_BG_DELETE, mgr.getSharedPreferences());
 					} else if (preference.getKey().equals(KEY_STYLE_BG_WOUNDS_PATH)) {
-						handlePreferenceClick((Activity) v.getContext(), preference,
+						handlePreferenceClick((DsaTabPreferenceActivity) v.getContext(), preference,
 								DsaTabPreferenceActivity.KEY_STYLE_BG_WOUNDS_DELETE, mgr.getSharedPreferences());
 					}
 				}
@@ -262,33 +263,8 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 		setTheme(DsaTabApplication.getInstance().getCustomPreferencesTheme());
 		super.onCreate(savedInstanceState);
 
-		// getSupportActionBar().setDisplayShowHomeEnabled(true);
-		// getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 		SharedPreferences preferences = DsaTabApplication.getPreferences();
 		preferences.registerOnSharedPreferenceChangeListener(this);
-
-		updateFullscreenStatus(getWindow(), preferences.getBoolean(DsaTabPreferenceActivity.KEY_FULLSCREEN, false));
-
-	}
-
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-
-		LinearLayout root = (LinearLayout) findViewById(android.R.id.list).getParent().getParent().getParent();
-		toolbar = (Toolbar) LayoutInflater.from(this).inflate(R.layout._toolbar, root, false);
-		root.addView(toolbar, 0); // insert at top
-
-		toolbar.setClickable(true);
-		toolbar.setNavigationIcon(getResIdFromAttribute(this, R.attr.homeAsUpIndicator));
-		toolbar.setTitle(R.string.settings);
-		toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
 
 	}
 
@@ -307,6 +283,14 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 	@Override
 	public void onBuildHeaders(List<Header> target) {
 		loadHeadersFromResource(com.dsatab.R.xml.preferences_headers, target);
+
+		setContentView(R.layout.main_preferences);
+
+		ActionBar bar = getSupportActionBar();
+		bar.setHomeButtonEnabled(true);
+		bar.setDisplayHomeAsUpEnabled(true);
+		bar.setDisplayShowTitleEnabled(true);
+		bar.setHomeAsUpIndicator(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
 	}
 
 	@Override
@@ -330,10 +314,6 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		handlePreferenceChange(findPreference(key), sharedPreferences, key);
-
-		if (KEY_FULLSCREEN.equals(key)) {
-			updateFullscreenStatus(getWindow(), sharedPreferences.getBoolean(KEY_FULLSCREEN, true));
-		}
 
 		if (!restartRequired && Arrays.binarySearch(RESTART_KEYS, key) >= 0)
 			restartRequired = true;
@@ -372,7 +352,7 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 	@Override
 	protected void onStop() {
 		if (restartRequired) {
-			Toast.makeText(this, R.string.message_changes_require_restart_of_app, Toast.LENGTH_LONG).show();
+			Snackbar.make(getListView(), R.string.message_changes_require_restart_of_app, Snackbar.LENGTH_LONG).show();
 		}
 		super.onStop();
 	}
@@ -400,7 +380,7 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 					edit.putString(KEY_STYLE_BG_PATH, bg.getAbsolutePath());
 					edit.commit();
 
-					Toast.makeText(this, R.string.message_background_image_changed, Toast.LENGTH_SHORT).show();
+					Snackbar.make(getListView(), R.string.message_background_image_changed, Snackbar.LENGTH_SHORT).show();
 				}
 			} else if (requestCode == ACTION_PICK_BG_WOUNDS_PATH) {
 				File bg = Util.handleImagePick(this, KEY_STYLE_BG_WOUNDS_PATH, data);
@@ -410,7 +390,7 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 					edit.putString(KEY_STYLE_BG_WOUNDS_PATH, bg.getAbsolutePath());
 					edit.commit();
 
-					Toast.makeText(this, R.string.message_background_image_changed, Toast.LENGTH_SHORT).show();
+					Snackbar.make(getListView(), R.string.message_background_image_changed, Snackbar.LENGTH_SHORT).show();
 				}
 			} else if (requestCode == REQUEST_LINK_TO_DBX) {
 				SharedPreferences preferences = DsaTabApplication.getPreferences();
@@ -449,19 +429,7 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 		}
 	}
 
-	protected static void updateFullscreenStatus(Window window, boolean bUseFullscreen) {
-		if (bUseFullscreen) {
-			window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-			window.clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-		} else {
-			window.addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-			window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		}
-
-		window.getDecorView().requestLayout();
-	}
-
-	public static boolean handlePreferenceClick(final Activity context, Preference preference, final String key,
+	public static boolean handlePreferenceClick(final DsaTabPreferenceActivity context, Preference preference, final String key,
 			final SharedPreferences preferences) {
 		AbstractDownloader downloader;
 		if (KEY_DOWNLOAD_ALL.equals(key)) {
@@ -470,45 +438,45 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 			downloader.addPath(context.getString(R.string.path_items));
 			downloader.addPath(PATH_WESNOTH_PORTRAITS);
 			downloader.downloadZip();
-			Toast.makeText(context, R.string.message_download_started_in_background, Toast.LENGTH_SHORT).show();
+			Snackbar.make(context.getListView(), R.string.message_download_started_in_background, Snackbar.LENGTH_SHORT).show();
 			return true;
 		} else if (KEY_DOWNLOAD_MAPS.equals(key)) {
 			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDirectory(DsaTabApplication.DIR_MAPS),
 					context);
 			downloader.addPath(PATH_OFFICIAL_MAP_PACK);
 			downloader.downloadZip();
-			Toast.makeText(context, R.string.message_download_started_in_background, Toast.LENGTH_SHORT).show();
+			Snackbar.make(context.getListView(), R.string.message_download_started_in_background, Snackbar.LENGTH_SHORT).show();
 			return true;
 		} else if (KEY_DOWNLOAD_ITEMS.equals(key)) {
 			cleanCardFiles();
 			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDirectory(), context);
 			downloader.addPath(context.getString(R.string.path_items));
 			downloader.downloadZip();
-			Toast.makeText(context, R.string.message_download_started_in_background, Toast.LENGTH_SHORT).show();
+			Snackbar.make(context.getListView(), R.string.message_download_started_in_background, Snackbar.LENGTH_SHORT).show();
 			return true;
 		} else if (KEY_DOWNLOAD_WESNOTH_PORTRAITS.equals(key)) {
 			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDirectory(), context);
 			downloader.addPath(PATH_WESNOTH_PORTRAITS);
 			downloader.downloadZip();
-			Toast.makeText(context, R.string.message_download_started_in_background, Toast.LENGTH_SHORT).show();
+			Snackbar.make(context.getListView(), R.string.message_download_started_in_background, Snackbar.LENGTH_SHORT).show();
 			return true;
 		} else if (KEY_DOWNLOAD_BACKGROUNDS.equals(key)) {
 			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDirectory(), context);
 			downloader.addPath(PATH_BACKGROUNDS);
 			downloader.downloadZip();
-			Toast.makeText(context, R.string.message_download_started_in_background, Toast.LENGTH_SHORT).show();
+			Snackbar.make(context.getListView(), R.string.message_download_started_in_background, Snackbar.LENGTH_SHORT).show();
 			return true;
 		} else if (KEY_DOWNLOAD_OSMMAPS.equals(key)) {
 			downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDirectory(), context);
 			downloader.addPath(PATH_OSM_MAP_PACK);
 			downloader.downloadZip();
-			Toast.makeText(context, R.string.message_download_started_in_background, Toast.LENGTH_SHORT).show();
+			Snackbar.make(context.getListView(), R.string.message_download_started_in_background, Snackbar.LENGTH_SHORT).show();
 			return true;
 		} else if (KEY_CREDITS.equals(key)) {
-			AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(context);
+			AlertDialog.Builder builder = new AlertDialog.Builder(context);
 			builder.setTitle(R.string.title_credits);
 			builder.setCancelable(true);
-			WebView webView = new WebView(DsaTabApplication.getInstance().getContextWrapper(context));
+			WebView webView = new WebView(builder.getContext());
 			webView.getSettings().setDefaultTextEncodingName("utf-8");
 
 			String summary = ResUtil.loadResToString(R.raw.credits, context.getResources());
@@ -529,10 +497,10 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 			context.startActivity(launchBrowser);
 			return true;
 		} else if (KEY_DSA_LICENSE.equals(key)) {
-			AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(context);
+			AlertDialog.Builder builder = new AlertDialog.Builder(context);
 			builder.setTitle(R.string.title_credits);
 			builder.setCancelable(true);
-			WebView webView = new WebView(DsaTabApplication.getInstance().getContextWrapper(context));
+			WebView webView = new WebView(builder.getContext());
 			webView.getSettings().setDefaultTextEncodingName("utf-8");
 			String summary = ResUtil.loadResToString(R.raw.ulisses_license, context.getResources());
 			webView.loadDataWithBaseURL(null, summary, "text/html", "utf-8", null);
@@ -551,14 +519,14 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 			edit.remove(KEY_STYLE_BG_WOUNDS_PATH);
 			edit.commit();
 
-			Toast.makeText(context, R.string.message_background_image_reset, Toast.LENGTH_SHORT).show();
+			Snackbar.make(context.getListView(), R.string.message_background_image_reset, Snackbar.LENGTH_SHORT).show();
 			return true;
 		} else if (KEY_STYLE_BG_DELETE.equals(key)) {
 			Editor edit = preferences.edit();
 			edit.remove(KEY_STYLE_BG_PATH);
 			edit.commit();
 
-			Toast.makeText(context, R.string.message_background_image_reset, Toast.LENGTH_SHORT).show();
+			Snackbar.make(context.getListView(), R.string.message_background_image_reset, Snackbar.LENGTH_SHORT).show();
 			return true;
 		} else if (KEY_SETUP_SDCARD_PATH.equals(key)) {
 			OnDirectoryChooserListener resultListener = new OnDirectoryChooserListener() {
@@ -576,8 +544,8 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 						edit.putString(KEY_SETUP_SDCARD_PATH, dir);
 						edit.commit();
 					} else {
-						Toast.makeText(context, R.string.message_no_write_access_in_directory_choose_another,
-								Toast.LENGTH_LONG).show();
+						Snackbar.make(context.getListView(), R.string.message_no_write_access_in_directory_choose_another,
+								Snackbar.LENGTH_LONG).show();
 					}
 				}
 			};
@@ -601,8 +569,8 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 						edit.putString(KEY_SETUP_SDCARD_HERO_PATH, dir);
 						edit.commit();
 					} else {
-						Toast.makeText(context, R.string.message_no_write_access_in_directory_choose_another,
-								Toast.LENGTH_LONG).show();
+						Snackbar.make(context.getListView(), R.string.message_no_write_access_in_directory_choose_another,
+								Snackbar.LENGTH_LONG).show();
 					}
 				}
 			};
@@ -617,7 +585,7 @@ public class DsaTabPreferenceActivity extends PreferenceActivity implements OnSh
 				}
 			}
 			edit.commit();
-			Toast.makeText(context, R.string.message_tips_reset, Toast.LENGTH_SHORT).show();
+			Snackbar.make(context.getListView(), R.string.message_tips_reset, Snackbar.LENGTH_SHORT).show();
 			return true;
 		} else if (KEY_DROPBOX.equals(key)) {
 			StorageProvider dropbox = new Dropbox();

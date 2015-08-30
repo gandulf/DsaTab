@@ -9,11 +9,11 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.WebView;
 
-import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.gandulf.guilib.util.ResUtil;
@@ -99,10 +99,10 @@ public class ChangeLogDialog extends DialogFragment {
 
 		// Create webview and load html
 
-		AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(getActivity());
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setTitle(title);
 
-		WebView webView = new WebView(DsaTabApplication.getInstance().getContextWrapper(getActivity()));
+		WebView webView = new WebView(builder.getContext());
 		webView.getSettings().setDefaultTextEncodingName("utf-8");
 		webView.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
 

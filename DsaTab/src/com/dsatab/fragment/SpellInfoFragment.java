@@ -216,7 +216,7 @@ public class SpellInfoFragment extends BaseEditFragment {
 	}
 
 	/**
-	 * @param b
+	 * @param edit
 	 */
 	private void switchMode(boolean edit) {
 		setMode(edit);

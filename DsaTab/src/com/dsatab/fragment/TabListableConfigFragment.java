@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -21,7 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
 
-import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.config.TabInfo;
@@ -213,10 +213,10 @@ public class TabListableConfigFragment extends Fragment implements View.OnClickL
 
 	protected void editListItem(final ListItem listItem) {
 		if (listItem.getType() == ListItemType.Header) {
-			AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(getActivity());
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
 			builder.setTitle(R.string.title_insert_title);
-			final EditText editText = new EditText(DsaTabApplication.getInstance().getContextWrapper(getActivity()));
+			final EditText editText = new EditText(builder.getContext());
 			editText.setText(listItem.getName());
 			builder.setView(editText);
 

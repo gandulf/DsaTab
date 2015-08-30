@@ -702,8 +702,9 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		root.findViewById(R.id.fab_container_add).setOnClickListener(this);
 		root.findViewById(R.id.fab_items_add).setOnClickListener(this);
 
-		fabMenu.attachToListView(itemGridCompat);
-		fabMenu.attachToListView(itemList);
+		// TODO with ultimaterecyclerview
+		// fabMenu.attachToListView(itemGridCompat);
+		// fabMenu.attachToListView(itemList);
 
 		return root;
 	}

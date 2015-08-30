@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.dsatab.view.CheckableFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:guilib="http://schemas.android.com/apk/com.gandulf.guilib"
-    xmlns:auto="http://schemas.android.com/apk/res-auto"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
-    <com.ecloud.pulltozoomview.PullToZoomScrollView
-        android:id="@+id/scroll_view"
+    <include
+        layout="@layout/_character_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        auto:scrollContentView="@layout/_character_content"
-        auto:scrollZoomView="@layout/_being_header" >
-    </com.ecloud.pulltozoomview.PullToZoomScrollView>
+        android:layout_height="wrap_content"/>
 
-</com.dsatab.view.CheckableFrameLayout>
+</android.support.v4.widget.NestedScrollView>

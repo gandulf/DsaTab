@@ -6,8 +6,8 @@ buildscript {
         // }        
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.1.2'
-        classpath 'com.github.ksoichiro:gradle-eclipse-aar-plugin:0.1.1'
+        classpath 'com.android.tools.build:gradle:1.3.0'
+        classpath 'com.github.ksoichiro:gradle-eclipse-aar-plugin:0.1.3'
     }
 }
 
@@ -17,33 +17,37 @@ apply plugin: 'com.github.ksoichiro.eclipse.aar'
 group = 'com.dsatab'
 
 repositories {
-	mavenCentral()
+    mavenLocal()
+    mavenCentral()
     jcenter()
- 	mavenLocal()
 	maven {
 		url uri('https://mint.splunk.com/gradle/')
 	}
 }
 
 dependencies {
-    compile 'com.google.android.gms:play-services:+'
-    compile 'com.android.support:cardview-v7:+'
-    compile 'com.android.support:appcompat-v7:+'
-    compile 'com.android.support:recyclerview-v7:+'
-    compile 'com.android.support:gridlayout-v7:+'
-    compile 'com.android.support:palette-v7:+'
+    compile 'com.google.android.gms:play-services-identity:7.8.0'
+    compile 'com.google.android.gms:play-services-drive:7.8.0'
+    compile 'com.android.support:cardview-v7:23.+'
+    compile 'com.android.support:appcompat-v7:23.+'
+    compile 'com.android.support:recyclerview-v7:23.+'
+    compile 'com.android.support:gridlayout-v7:23.+'
+
+    compile 'com.android.support:multidex:1.0.1'
+
+    compile 'com.android.support:design:23.0.0'
     
+    compile 'com.getbase:floatingactionbutton:1.10.0-gako'
+     
     compile 'com.github.amlcurran.showcaseview:library:5.0.0'
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
-    compile 'de.hdodenhof:circleimageview:1.2.1'
-    compile 'com.afollestad:material-dialogs:0.6.3.1'
+    compile 'de.hdodenhof:circleimageview:1.2.1'    
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
     compile 'org.osmdroid:osmdroid-android:4.3'
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
     compile 'com.heinrichreimersoftware.materialdrawer:library:2.0-gako'
-    compile 'com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.6.2'
-    compile 'com.nispok:snackbar:2.10.2'
-
+    compile 'com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.7.4'    
+    
     // Driven
     compile 'com.bingzer.android.driven:driven:1.0.0'
     compile 'com.bingzer.android.driven:driven-gdrive:1.0.0'
@@ -57,6 +61,8 @@ dependencies {
     compile 'org.jdom:jdom2:2.0.5'
     compile 'com.splunk.mint:mint:4.0.9'
 
+    compile 'com.squareup.okhttp:okhttp:2.5.0'
+
     compile project(':guiLib')
     // compile fileTree(dir: 'libs')
 }
@@ -64,15 +70,20 @@ dependencies {
 
 // Configure plugin
 eclipseAar {
-    androidTarget = 'android-21'
+    androidTarget = 'android-23'
     aarDependenciesDir = 'aarDependencies'
 }
 
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
-    
+    compileSdkVersion 23
+    buildToolsVersion "23.0.0"
+
+    defaultConfig {
+        // Enabling multidex support.
+        multiDexEnabled true
+    }
+
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'

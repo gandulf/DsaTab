@@ -1,11 +1,5 @@
 package com.dsatab.activity;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
@@ -29,6 +23,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.graphics.Palette;
@@ -39,7 +34,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
@@ -53,7 +48,7 @@ import com.dsatab.data.HeroFileInfo;
 import com.dsatab.data.HeroLoaderTask;
 import com.dsatab.data.Probe;
 import com.dsatab.fragment.BaseFragment;
-import com.dsatab.fragment.DiceSliderFragment;
+import com.dsatab.fragment.dialog.DiceSliderFragment;
 import com.dsatab.fragment.HeroChooserFragment;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
@@ -68,9 +63,15 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceChangeListener,
-		com.heinrichreimersoftware.materialdrawer.structure.DrawerItem.OnItemClickListener, OnProfileSwitchListener,
-		ImageLoadingListener, PaletteAsyncListener {
+		com.heinrichreimersoftware.materialdrawer.structure.DrawerItem.OnItemClickListener, OnProfileSwitchListener
+		 {
 
 	private static final String TAB_INDEX = "TAB_INDEX";
 
@@ -105,8 +106,6 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
 	private List<ViewGroup> containers;
 
 	protected SharedPreferences preferences;
-
-	private DiceSliderFragment diceSliderFragment;
 
 	private ShakeListener mShaker;
 
@@ -148,7 +147,7 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
 				HeroLoaderTask heroLoader = (HeroLoaderTask) loader;
 
 				if (heroLoader.getException() != null) {
-					Toast.makeText(context, heroLoader.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+					Snackbar.make(context.mDrawerLayout, heroLoader.getException().getLocalizedMessage(), Snackbar.LENGTH_SHORT).show();
 				}
 			}
 			DsaTabApplication.getInstance().setHero(hero);
@@ -197,7 +196,7 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
 				HeroesLoaderTask heroLoader = (HeroesLoaderTask) loader;
 
 				for (Exception e : heroLoader.getExceptions()) {
-					Toast.makeText(context, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+					Snackbar.make(context.mDrawerLayout, e.getLocalizedMessage(), Snackbar.LENGTH_SHORT).show();
 					Debug.error(e);
 				}
 
@@ -234,29 +233,6 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
 	}
 
 	private void updatePage(TabInfo tabInfo, FragmentTransaction ft) {
-
-		if (ft != null && diceSliderFragment != null && diceSliderFragment.isAdded()
-				&& diceSliderFragment.getView() != null) {
-			if (tabInfo != null && tabInfo.isDiceSlider()) {
-				ft.show(diceSliderFragment);
-
-				// if (diceSliderFragment.getView().getVisibility() == View.GONE) {
-				// diceSliderFragment.getView().setVisibility(View.VISIBLE);
-				//
-				// Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_in_bottom);
-				// diceSliderFragment.getView().startAnimation(animation);
-				// }
-
-			} else {
-				ft.hide(diceSliderFragment);
-
-				// if (diceSliderFragment.getView().getVisibility() == View.VISIBLE) {
-				// Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_out_bottom);
-				// diceSliderFragment.getView().startAnimation(animation);
-				// diceSliderFragment.getView().setVisibility(View.GONE);
-				// }
-			}
-		}
 
 		if (tabInfo != null) {
 			getSupportActionBar().setTitle(tabInfo.getTitle());
@@ -315,21 +291,21 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
 	protected boolean checkHsVersion(Hero hero) {
 
 		if (TextUtils.isEmpty(hero.getFileInfo().getVersion())) {
-			Toast.makeText(this, getString(R.string.hero_loaded, hero.getName()), Toast.LENGTH_SHORT).show();
+			Snackbar.make(mDrawerLayout, getString(R.string.hero_loaded, hero.getName()), Snackbar.LENGTH_SHORT).show();
 			return false;
 		}
 
 		int version = hero.getFileInfo().getVersionInt();
 
 		if (version < 0) {
-			Toast.makeText(
-					this,
+			Snackbar.make(
+					mDrawerLayout,
 					"Warnung: Unbekannte Helden-Software Version. Es kann keine vollständige Kompatibilität gewährleistet werden.",
-					Toast.LENGTH_LONG).show();
+					Snackbar.LENGTH_LONG).show();
 			return false;
 		} else if (version > DsaTabApplication.HS_VERSION_INT) {
-			Toast.makeText(this, "Hinweis: DsaTab wurde noch nicht an die aktuellste Helden-Software angepasst.",
-					Toast.LENGTH_LONG).show();
+			Snackbar.make(mDrawerLayout, "Hinweis: DsaTab wurde noch nicht an die aktuellste Helden-Software angepasst.",
+					Snackbar.LENGTH_LONG).show();
 			return false;
 			// } else if (version < DsaTabApplication.HS_VERSION_INT) {
 			// Toast.makeText(this,
@@ -337,7 +313,7 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
 			// Toast.LENGTH_LONG).show();
 			// return false;
 		} else {
-			Toast.makeText(this, getString(R.string.hero_loaded, hero.getName()), Toast.LENGTH_SHORT).show();
+			Snackbar.make(mDrawerLayout, getString(R.string.hero_loaded, hero.getName()), Snackbar.LENGTH_SHORT).show();
 			return true;
 		}
 	}
@@ -438,9 +414,6 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
 		if (tabInfo == null && getIntent() != null) {
 			tabInfo = getIntent().getParcelableExtra(INTENT_TAB_INFO);
 		}
-
-		diceSliderFragment = (DiceSliderFragment) getFragmentManager().findFragmentByTag(DiceSliderFragment.TAG);
-		diceSliderFragment.setSlidingUpPanelLayout(slidingUpPanelLayout);
 
 		// Debug.verbose("onCreate Orientation =" + configuration.orientation);
 		if (DsaTabPreferenceActivity.SCREEN_ORIENTATION_LANDSCAPE.equals(orientation)
@@ -642,75 +615,7 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		drawerToggle.syncState();
-		if (tabInfo != null) {
-			setActionbarTranslucent(tabInfo.isActionbarTranslucent());
-		}
-	}
 
-	private void colorize(Bitmap photo) {
-		Palette.generateAsync(photo, this);
-	}
-
-	@Override
-	public void onGenerated(Palette palette) {
-		DsaTabApplication.getInstance().setPalette(palette);
-		applyPalette(palette);
-	}
-
-	@Override
-	public void onLoadingComplete(String uri, View view, Bitmap bitmap) {
-		colorize(bitmap);
-	}
-
-	@Override
-	public void onLoadingCancelled(String arg0, View arg1) {
-
-	}
-
-	@Override
-	public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
-
-	}
-
-	@Override
-	public void onLoadingStarted(String arg0, View arg1) {
-
-	}
-
-	@SuppressLint("NewApi")
-	public void applyPalette(Palette palette) {
-		if (!DsaTabApplication.getPreferences().getBoolean(DsaTabPreferenceActivity.KEY_USE_PALETTE, false))
-			return;
-
-		super.applyPalette(palette);
-
-		// getWindow().setBackgroundDrawable(new ColorDrawable(palette.getDarkMutedColor().getRgb()));
-		//
-		// TextView titleView = (TextView) findViewById(R.id.title);
-		// titleView.setTextColor(palette.getVibrantColor().getRgb());
-		//
-		// TextView descriptionView = (TextView) findViewById(R.id.description);
-		// descriptionView.setTextColor(palette.getLightVibrantColor().getRgb());
-		//
-		// colorRipple(R.id.info, palette.getDarkMutedColor().getRgb(), palette.getDarkVibrantColor().getRgb());
-		// colorRipple(R.id.star, palette.getMutedColor().getRgb(), palette.getVibrantColor().getRgb());
-		//
-		// View infoView = findViewById(R.id.information_container);
-		// infoView.setBackgroundColor(palette.getLightMutedColor().getRgb());
-		//
-		// AnimatedPathView star = (AnimatedPathView) findViewById(R.id.star_container);
-		// star.setFillColor(palette.getVibrantColor().getRgb());
-		// star.setStrokeColor(palette.getLightVibrantColor().getRgb());
-
-		if (diceSliderFragment != null && diceSliderFragment.isAdded()) {
-			diceSliderFragment.applyPalette(palette);
-		}
-
-		for (int i = 0; i < TabInfo.MAX_TABS_PER_PAGE; i++) {
-			if (getCurrentFragment(i) != null && getCurrentFragment(i) instanceof BaseFragment) {
-				((BaseFragment) getCurrentFragment(i)).applyPalette(palette);
-			}
-		}
 	}
 
 	private HeroConfiguration getHeroConfiguration() {
@@ -835,8 +740,6 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
 
 		}
 
-		dirty |= tabInfo.isDiceSlider() != diceSliderFragment.isVisible();
-
 		return dirty;
 	}
 
@@ -898,7 +801,7 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
 	}
 
 	private void onFragmentsUpdated() {
-		setActionbarTranslucent(tabInfo.isActionbarTranslucent());
+
 	}
 
 	public void replaceFragment(String tag, Fragment oldFragment, Fragment newFragment) {
@@ -942,21 +845,15 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
 	public void onBackPressed() {
 
 		boolean drawerOpen = mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mDrawer);
-		boolean sliderOpen = diceSliderFragment != null && diceSliderFragment.isVisible()
-				&& diceSliderFragment.isPanelExpanded();
 
-		if (sliderOpen || drawerOpen) {
 
-			if (sliderOpen)
-				diceSliderFragment.collapsePanel();
-
-			if (drawerOpen)
-				mDrawerLayout.closeDrawer();
+		if (drawerOpen) {
+			mDrawerLayout.closeDrawer();
 		} else {
 			if (backPressed + 2000 > System.currentTimeMillis() || getFragmentManager().getBackStackEntryCount() > 0) {
 				super.onBackPressed();
 			} else {
-				Toast.makeText(getBaseContext(), "Erneut klicken um DsaTab zu schließen", Toast.LENGTH_SHORT).show();
+				Snackbar.make(mDrawerLayout, "Erneut klicken um DsaTab zu schließen", Snackbar.LENGTH_SHORT).show();
 				backPressed = System.currentTimeMillis();
 			}
 
@@ -966,7 +863,7 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
 	protected void onHeroLoaded(Hero hero) {
 
 		if (hero == null) {
-			Toast.makeText(this, R.string.message_load_hero_failed, Toast.LENGTH_LONG).show();
+			Snackbar.make(mDrawerLayout, R.string.message_load_hero_failed, Snackbar.LENGTH_LONG).show();
 			return;
 		}
 
@@ -974,10 +871,7 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
 
 		setupDrawerItems(hero);
 		showTab(refreshTabInfo(defaultTabIndex), true);
-
-		if (diceSliderFragment != null && diceSliderFragment.isAdded()) {
-			diceSliderFragment.loadHero(hero);
-		}
+		updatePortrait(hero);
 	}
 
 	public boolean checkProbe(AbstractBeing being, Probe probe) {
@@ -985,12 +879,11 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
 	}
 
 	public boolean checkProbe(AbstractBeing being, Probe probe, boolean autoRoll) {
-		if (diceSliderFragment != null) {
-			if (probe != null && being != null) {
-				diceSliderFragment.checkProbe(being, probe, autoRoll);
-				return true;
-			}
+		if (probe != null && being != null) {
+			DiceSliderFragment.show(this, being, probe, autoRoll, 0);
+			return true;
 		}
+
 		return false;
 	}
 
@@ -1008,6 +901,20 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
 		}
 	}
 
+	public void updatePortrait(AbstractBeing being) {
+
+		Uri portraitUri = null;
+		if (being != null) {
+			portraitUri = being.getPortraitUri();
+
+			toolbar.setTitle(being.getName());
+		} else {
+			toolbar.setTitle(getString(R.string.app_name));
+		}
+		ImageView portraitView = (ImageView) findViewById(R.id.toolbar_portrait);
+		Util.setImage(portraitView, portraitUri, R.drawable.profile_picture);
+	}
+
 	private void registerShakeDice() {
 		try {
 			if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_SENSOR_ACCELEROMETER)) {
@@ -1018,10 +925,10 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
 						@Override
 						public void onShake() {
 							vibe.vibrate(100);
-							if (diceSliderFragment != null) {
-								diceSliderFragment.expandPanel();
-								diceSliderFragment.rollDice20();
-							}
+//							if (diceSliderFragment != null) {
+//								diceSliderFragment.expandPanel();
+//								diceSliderFragment.rollDice20();
+							//}
 						}
 					});
 
@@ -1271,10 +1178,6 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
 			}
 		}
 
-		if (DsaTabPreferenceActivity.KEY_FULLSCREEN.equals(key)) {
-			updateFullscreenStatus(preferences.getBoolean(DsaTabPreferenceActivity.KEY_FULLSCREEN, false));
-		}
-
 		// notify other listeners (fragments, heroes)
 		for (int i = 0; i < TabInfo.MAX_TABS_PER_PAGE; i++) {
 			if (getCurrentFragment(i) instanceof OnSharedPreferenceChangeListener) {
@@ -1283,8 +1186,6 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
 			}
 		}
 
-		if (diceSliderFragment != null && diceSliderFragment.isAdded())
-			diceSliderFragment.onSharedPreferenceChanged(sharedPreferences, key);
 	}
 
 	protected void showHeroChooser() {

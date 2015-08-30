@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.AbstractBeing;
@@ -141,16 +140,16 @@ public class ImageChooserDialog extends DialogFragment implements AdapterView.On
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-		AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(getActivity());
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		// builder.setListTitleStyle(true);
-        Context context = DsaTabApplication.getInstance().getContextWrapper(getActivity());
-        LayoutInflater inflater = LayoutInflater.from(context);
+
+        LayoutInflater inflater = LayoutInflater.from(builder.getContext());
 
 		View popupcontent = inflater.inflate(R.layout.popup_portrait_chooser,null,false);
         builder.setView(popupcontent);
 
 		list = (GridView) popupcontent.findViewById(R.id.popup_portrait_chooser_list);
-		adapter = new PortraitAdapter(context);
+		adapter = new PortraitAdapter(builder.getContext());
 		adapter.setMinHeight(columnHeight);
 		adapter.setScaleType(scaleType);
 		list.setAdapter(adapter);

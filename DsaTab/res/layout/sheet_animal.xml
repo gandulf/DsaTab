@@ -6,12 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <com.ecloud.pulltozoomview.PullToZoomScrollView
+    <include
+        layout="@layout/_animal_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scroll_view"
-        auto:scrollContentView="@layout/_animal_content"
-        auto:scrollZoomView="@layout/_being_header" >
-    </com.ecloud.pulltozoomview.PullToZoomScrollView>
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

@@ -322,7 +322,7 @@ public class AnimalFragment extends BaseProfileFragment {
 		fillSpecialFeatures(animal);
 
 		// --
-		updatePortrait(animal);
+		getDsaActivity().updatePortrait(animal);
 		updateBaseInfo(false);
 
 		TableLayout attribute2 = (TableLayout) findViewById(R.id.gen_attributes2);

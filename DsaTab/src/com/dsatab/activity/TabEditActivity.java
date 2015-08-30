@@ -3,20 +3,22 @@ package com.dsatab.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.NinePatchDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -25,26 +27,30 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.config.TabInfo;
+import com.dsatab.data.adapter.TabInfoDraggableItemAdapter;
 import com.dsatab.fragment.TabListableConfigFragment;
 import com.dsatab.fragment.dialog.ImageChooserDialog;
 import com.dsatab.util.Util;
 import com.gandulf.guilib.data.OpenArrayAdapter;
 import com.gandulf.guilib.util.DefaultTextWatcher;
-import com.gandulf.guilib.view.DynamicListViewEx;
-import com.nhaarman.listviewanimations.itemmanipulation.dragdrop.TouchViewDraggableManager;
-import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
-import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.SwipeDismissAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
+import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimator;
+import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
+import com.h6ah4i.android.widget.advrecyclerview.decoration.SimpleListDividerDecorator;
+import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
+import com.h6ah4i.android.widget.advrecyclerview.selectable.RecyclerViewSelectionManager;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
+import com.h6ah4i.android.widget.advrecyclerview.touchguard.RecyclerViewTouchActionGuardManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TabEditActivity extends BaseActivity implements OnItemClickListener, OnClickListener,
-		OnCheckedChangeListener, OnDismissCallback {
+public class TabEditActivity extends BaseActivity implements OnClickListener, OnCheckedChangeListener,
+		TabInfoDraggableItemAdapter.EventListener {
 
 	public static final String DATA_INTENT_TAB_INDEX = "tab.tabIndex";
 
@@ -55,8 +61,15 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 
 	private TabInfo currentInfo = null;
 
-	private DynamicListViewEx tabsList;
-	private TabsAdapter tabsAdapter;
+	private RecyclerView recyclerView;
+	private TabInfoDraggableItemAdapter mAdapter;
+
+	private RecyclerView.LayoutManager mLayoutManager;
+	private RecyclerView.Adapter mWrappedAdapter;
+	private RecyclerViewDragDropManager mRecyclerViewDragDropManager;
+	private RecyclerViewSwipeManager mRecyclerViewSwipeManager;
+	private RecyclerViewSelectionManager mRecyclerViewSelectionManager;
+	private RecyclerViewTouchActionGuardManager mRecyclerViewTouchActionGuardManager;
 
 	private TabListableConfigFragment list1;
 	private TabListableConfigFragment list2;
@@ -66,6 +79,97 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 		editTab.putExtra(TabEditActivity.DATA_INTENT_TAB_INDEX, tabIndex);
 		editTab.setAction(Intent.ACTION_EDIT);
 		activity.startActivityForResult(editTab, requestCode);
+	}
+
+	protected void initRecycler(List<TabInfo> tabInfos) {
+		recyclerView = (RecyclerView) findViewById(R.id.popup_tab_list);
+		recyclerView.setHasFixedSize(false);
+
+		// touch guard manager  (this class is required to suppress scrolling while swipe-dismiss animation is running)
+		mRecyclerViewTouchActionGuardManager = new RecyclerViewTouchActionGuardManager();
+		mRecyclerViewTouchActionGuardManager.setInterceptVerticalScrollingWhileAnimationRunning(true);
+		mRecyclerViewTouchActionGuardManager.setEnabled(true);
+
+		// drag & drop manager
+		mRecyclerViewDragDropManager = new RecyclerViewDragDropManager();
+		mRecyclerViewDragDropManager.setDraggingItemShadowDrawable(
+				(NinePatchDrawable) getResources().getDrawable(R.drawable.material_shadow_z3));
+
+		// swipe manager
+		mRecyclerViewSwipeManager = new RecyclerViewSwipeManager();
+
+		//selection manager
+		mRecyclerViewSelectionManager = new RecyclerViewSelectionManager();
+
+		mLayoutManager = new LinearLayoutManager(this);
+		//adapter
+		mAdapter = new TabInfoDraggableItemAdapter(this, tabInfos);
+		mAdapter.setEventListener(this);
+
+		mWrappedAdapter = mRecyclerViewDragDropManager.createWrappedAdapter(mAdapter);     // wrap for dragging
+		mWrappedAdapter = mRecyclerViewSwipeManager.createWrappedAdapter(mWrappedAdapter);      // wrap for swiping
+		mWrappedAdapter = mRecyclerViewSelectionManager.createWrappedAdapter(mWrappedAdapter);  // wrap for selection
+
+		final GeneralItemAnimator animator = new SwipeDismissItemAnimator();
+
+		recyclerView.setLayoutManager(mLayoutManager);
+		recyclerView.setAdapter(mWrappedAdapter);  // requires *wrapped* adapter
+		recyclerView.setItemAnimator(animator);
+
+		// additional decorations
+		//noinspection StatementWithEmptyBody
+		if (supportsViewElevation()) {
+			// Lollipop or later has native drop shadow feature. ItemShadowDecorator is not required.
+		} else {
+			recyclerView.addItemDecoration(new ItemShadowDecorator((NinePatchDrawable) getResources().getDrawable(R.drawable.material_shadow_z1)));
+		}
+
+		recyclerView.addItemDecoration(new SimpleListDividerDecorator(getResources().getDrawable(R.drawable.abc_list_divider_mtrl_alpha), true));
+
+		// NOTE:
+		// The initialization order is very important! This order determines the priority of touch event handling.
+		//
+		// priority: TouchActionGuard> Selection > Swipe > DragAndDrop
+		mRecyclerViewTouchActionGuardManager.attachRecyclerView(recyclerView);
+		mRecyclerViewSelectionManager.attachRecyclerView(recyclerView);
+		mRecyclerViewSwipeManager.attachRecyclerView(recyclerView);
+		mRecyclerViewDragDropManager.attachRecyclerView(recyclerView);
+
+
+
+		if (mAdapter.getItemCount() > 0) {
+			int index = getIntent().getExtras().getInt(DATA_INTENT_TAB_INDEX, 0);
+			if (index >= 0 && index < mAdapter.getItemCount()) {
+				mAdapter.setSelected(index);
+			}else
+				mAdapter.setSelected(0);
+		} else {
+			selectTabInfo(null);
+		}
+
+	}
+
+	@Override
+	public void onItemViewClicked(int position, View v) {
+		selectTabInfo(mAdapter.get(position));
+	}
+
+	@Override
+	public void onItemSelected(int position, boolean value) {
+
+	}
+
+	@Override
+	public void onItemRemoved(int position) {
+
+	}
+
+	public int getScreenHeight() {
+		return findViewById(android.R.id.content).getHeight();
+	}
+
+	private boolean supportsViewElevation() {
+		return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
 	}
 
 	/** Called when the activity is first created. */
@@ -114,29 +218,6 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 
 		});
 
-		tabsList = (DynamicListViewEx) findViewById(R.id.popup_tab_list);
-		tabsList.setOnItemClickListener(this);
-		tabsList.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-
-		List<TabInfo> tabs;
-		if (DsaTabApplication.getInstance().getHero() != null
-				&& DsaTabApplication.getInstance().getHero().getHeroConfiguration() != null) {
-			tabs = new ArrayList<TabInfo>(DsaTabApplication.getInstance().getHero().getHeroConfiguration().getTabs());
-		} else {
-			tabs = new ArrayList<TabInfo>();
-		}
-		tabsAdapter = new TabsAdapter(this, tabs);
-
-		SwipeDismissAdapter swipeAdapter = new SwipeDismissAdapter(tabsAdapter, this);
-		swipeAdapter.setAbsListView(tabsList);
-
-		tabsList.setAdapter(tabsAdapter);
-		tabsList.enableSwipeToDismiss(this);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-			tabsList.enableDragAndDrop();
-			tabsList.setDraggableManager(new TouchViewDraggableManager(R.id.drag));
-		}
-
 		iconView = (ImageView) findViewById(R.id.popup_edit_icon);
 		iconView.setOnClickListener(this);
 
@@ -168,7 +249,7 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 		setResult(RESULT_OK);
 
 		if (DsaTabApplication.getInstance().getHero() == null) {
-			Toast.makeText(this, R.string.message_can_only_edit_tabs_if_hero_loaded, Toast.LENGTH_SHORT).show();
+			Snackbar.make(slidingPaneLayout, R.string.message_can_only_edit_tabs_if_hero_loaded, Snackbar.LENGTH_SHORT).show();
 			setResult(RESULT_CANCELED);
 			super.finish();
 			return;
@@ -177,16 +258,23 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 		list1 = (TabListableConfigFragment) getFragmentManager().findFragmentByTag("list1");
 		list2 = (TabListableConfigFragment) getFragmentManager().findFragmentByTag("list2");
 
-		if (tabsAdapter.getCount() > 0) {
+		// recylelist
 
-			int index = getIntent().getExtras().getInt(DATA_INTENT_TAB_INDEX, 0);
-			if (index >= 0 && index < tabsAdapter.getCount())
-				selectTabInfo(tabsAdapter.getItem(index));
-			else
-				selectTabInfo(tabsAdapter.getItem(0));
+		List<TabInfo> tabs;
+		if (DsaTabApplication.getInstance().getHero() != null
+				&& DsaTabApplication.getInstance().getHero().getHeroConfiguration() != null) {
+			tabs = new ArrayList<TabInfo>(DsaTabApplication.getInstance().getHero().getHeroConfiguration().getTabs());
 		} else {
-			selectTabInfo(null);
+			tabs = new ArrayList<TabInfo>();
 		}
+
+		// noinspection ConstantConditions
+
+		// mRecyclerViewDragDropManager.setDraggingItemShadowDrawable((NinePatchDrawable) getResources().getDrawable(
+		// R.drawable.material_shadow_z3));
+
+		// adapter
+		initRecycler(tabs);
 	}
 
 	@Override
@@ -236,23 +324,20 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 		case R.id.option_add:
 			TabInfo info = new TabInfo();
 			info.setIconUri(Util.getUriForResourceId(R.drawable.dsa_armor_fist));
-			tabsAdapter.add(info);
-			selectTabInfo(info);
+			mAdapter.insert(info);
+			mAdapter.setSelected(mAdapter.getItemCount() - 1);
 			break;
 		case R.id.option_delete:
-			tabsList.dismiss(tabsList.getCheckedItemPosition());
+			// for (Integer pos : mAdapter.getSelectedPositions()) {
+			// mAdapter.remove(pos);
+			// }
 			break;
 		case R.id.option_reset:
-			List<Integer> pos = new ArrayList<Integer>(tabsAdapter.getCount());
-			for (int i = 0; i < tabsAdapter.getCount(); i++) {
-				pos.add(i);
+			mAdapter.clear();
+			for (TabInfo tabInfo : DsaTabApplication.getInstance().getHero().getHeroConfiguration()
+					.getDefaultTabs(null)) {
+				mAdapter.insert(tabInfo);
 			}
-			tabsAdapter.setNotifyOnChange(false);
-			tabsAdapter.clear();
-			tabsAdapter.addAll(DsaTabApplication.getInstance().getHero().getHeroConfiguration().getDefaultTabs(null));
-			tabsAdapter.notifyDataSetChanged();
-
-			selectTabInfo(null);
 			break;
 		case android.R.id.home:
 			finish();
@@ -268,9 +353,10 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 
 			iconView.setImageURI(info.getIconUri());
 
-			int pos = tabsAdapter.indexOf(info);
-			tabsList.setItemChecked(pos, true);
-			tabsList.smoothScrollToPosition(pos);
+			// TODO
+			// int pos = mAdapter.getIndex(info);
+			// mAdapter.setSelected(pos, mAdapter.getItemId(pos), true);
+			// ultimateRecyclerView.smoothScrollToPosition(pos);
 
 			editTitle.setText(info.getTitle());
 		} else {
@@ -300,30 +386,6 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 
 	}
 
-	@Override
-	public void onDismiss(ViewGroup list, int[] reverseSortedPositions) {
-		if (list == tabsList) {
-			removeTabInfo(reverseSortedPositions);
-		}
-
-	}
-
-	private void removeTabInfo(int... reverseSortedPositions) {
-		for (int position : reverseSortedPositions) {
-			if (tabsAdapter.getCount() > position) {
-				tabsAdapter.remove(position);
-			}
-		}
-
-		if (tabsList.getCheckedItemPosition() != AdapterView.INVALID_POSITION
-				&& tabsList.getCheckedItemPosition() < tabsAdapter.getCount()) {
-			selectTabInfo(tabsAdapter.getItem(tabsList.getCheckedItemPosition()));
-		} else {
-			tabsList.clearChoices();
-			selectTabInfo(null);
-		}
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -336,7 +398,7 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 	}
 
 	protected void accept() {
-		Util.hideKeyboard(tabsList);
+		Util.hideKeyboard(recyclerView);
 
 		if (list1 != null)
 			list1.accept();
@@ -344,7 +406,7 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 			list2.accept();
 		if (DsaTabApplication.getInstance().getHero() != null
 				&& DsaTabApplication.getInstance().getHero().getHeroConfiguration() != null) {
-			DsaTabApplication.getInstance().getHero().getHeroConfiguration().setTabs(tabsAdapter.getItems());
+			DsaTabApplication.getInstance().getHero().getHeroConfiguration().setTabs(mAdapter.getItems());
 		}
 		setResult(RESULT_OK);
 
@@ -369,23 +431,6 @@ public class TabEditActivity extends BaseActivity implements OnItemClickListener
 			break;
 		}
 
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget .AdapterView, android.view.View,
-	 * int, long)
-	 */
-	@Override
-	public void onItemClick(final AdapterView<?> parent, View view, int position, long id) {
-		switch (parent.getId()) {
-		// list of tabs on the left
-		case R.id.popup_tab_list:
-			TabInfo info = tabsAdapter.getItem(position);
-			selectTabInfo(info);
-			break;
-		}
 	}
 
 	static class TabsAdapter extends OpenArrayAdapter<TabInfo> {

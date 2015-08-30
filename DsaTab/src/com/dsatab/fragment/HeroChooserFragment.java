@@ -2,7 +2,6 @@ package com.dsatab.fragment;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,6 +11,7 @@ import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
@@ -31,7 +31,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.bingzer.android.driven.dropbox.app.DropboxActivity;
 import com.bingzer.android.driven.gdrive.app.GoogleDriveActivity;
 import com.dsatab.DsaTabApplication;
@@ -290,9 +289,9 @@ public class HeroChooserFragment extends BaseFragment implements AdapterView.OnI
 		exchange = DsaTabApplication.getInstance().getExchange();
 		mCallback = new HeroesActionMode();
 
-		AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(getActivity());
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-		final EditText editText = new EditText(DsaTabApplication.getInstance().getContextWrapper(getActivity()));
+		final EditText editText = new EditText(builder.getContext());
 		editText.setHint("Helden-Austausch Token");
 		editText.setText(DsaTabApplication.getPreferences().getString(DsaTabPreferenceActivity.KEY_EXCHANGE_TOKEN, ""));
 		builder.setTitle("Berechtigungstoken der Heldenaustauschseite");

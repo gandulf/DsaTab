@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:key="displayDiceSliderScreen"
     android:summary="Hier kannst du die Würfelleiste konfigurieren."
-    android:title="Würfelleiste konfigurieren" >
+    android:title="Würfelleiste" >
 
     <CheckBoxPreference
         android:defaultValue="true"

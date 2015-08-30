@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.dsatab"
     android:installLocation="auto"
     android:versionCode="94"
@@ -7,7 +8,7 @@
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="21" />
+        android:targetSdkVersion="23" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -40,12 +41,14 @@
     <application
         android:name="DsaTabApplication"
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/icon"
         android:label="DsaTab"
         android:largeHeap="true"
         android:supportsRtl="false"
-        android:theme="@style/DsaTabTheme.Light" >
+        android:theme="@style/DsaTabTheme.Light" 
+        tools:replace="android:icon,android:label">
         <activity
             android:name="com.dsatab.activity.DsaTabActivity"            
             android:windowSoftInputMode="stateAlwaysHidden|adjustUnspecified" >

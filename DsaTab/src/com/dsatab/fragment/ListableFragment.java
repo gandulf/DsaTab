@@ -1,7 +1,6 @@
 package com.dsatab.fragment;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,7 +8,9 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.graphics.Palette;
 import android.text.TextUtils;
 import android.util.SparseBooleanArray;
@@ -29,7 +30,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabActivity;
@@ -494,7 +494,8 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 								break;
 							}
 							case R.id.option_select_version: {
-								AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(fragment.getActivity());
+								AlertDialog.Builder builder = new AlertDialog.Builder(
+										fragment.getActivity());
 
 								List<String> specInfo = equippedItem.getItem().getSpecificationNames();
 								builder.setItems(specInfo.toArray(new String[0]),
@@ -529,7 +530,8 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 									}
 								}
 								if (!specInfo.isEmpty()) {
-									AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(fragment.getActivity());
+									AlertDialog.Builder builder = new AlertDialog.Builder(
+											fragment.getActivity());
 									builder.setItems(specName.toArray(new String[0]),
 											new DialogInterface.OnClickListener() {
 												@Override
@@ -1570,6 +1572,10 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 		itemList = (DynamicListViewEx) root.findViewById(android.R.id.list);
 		itemList.setOnItemCheckedListener(this);
 
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			itemList.setNestedScrollingEnabled(true);
+		}
+
 		mTalentCallback = new TalentActionMode(this, itemList);
 		mSpellCallback = new SpellActionMode(this, itemList);
 		mArtCallback = new ArtActionMode(this, itemList);
@@ -1580,7 +1586,9 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 		mCallback = new NoteActionMode(this, itemList);
 
 		fabMenu = (FloatingActionsMenu) root.findViewById(R.id.fab_menu);
-		fabMenu.attachToListView(itemList);
+
+		// TODO redo with ultimaterecclerview
+		// fabMenu.attachToListView(itemList);
 
 		return root;
 	}
@@ -1960,7 +1968,7 @@ public class ListableFragment extends BaseListFragment implements OnItemClickLis
 			mediaRecorder.prepare();
 			mediaRecorder.start(); // Recording is now started
 
-			AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(getActivity());
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle(R.string.recording);
 			builder.setMessage(R.string.recording_message);
 			builder.setPositiveButton(R.string.label_save, new DialogInterface.OnClickListener() {

@@ -1,56 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clickable="true"
-    android:elevation="8dp"    
-    android:gravity="center|top"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:clickable="true"
+              android:elevation="8dp"
+              android:gravity="center|top"
+              android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/slider"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_gravity="center">
 
-        <FrameLayout
-            android:id="@+id/slider_title"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" >
+    <TextView
+        android:id="@+id/dice_talent"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/icon_button_size"
+        android:layout_gravity="fill_vertical|fill_horizontal"
+        android:layout_marginLeft="@dimen/icon_button_size"
+        android:layout_marginRight="@dimen/icon_button_size"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:singleLine="true"/>
 
-            <TextView
-                android:id="@+id/dice_talent"
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/icon_button_size"
-                android:layout_gravity="fill_vertical|fill_horizontal"
-                android:layout_marginLeft="@dimen/icon_button_size"
-                android:layout_marginRight="@dimen/icon_button_size"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:singleLine="true" />
-
-            <ImageButton
-                android:id="@+id/details_switch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|end"
-                android:layout_margin="@dimen/default_gap"
-                android:background="@null"
-                android:contentDescription="@string/label_misc_modifications"
-                android:scaleType="fitXY"
-                android:src="?attr/imgExpanderClose" />
-        </FrameLayout>
-
-        
-        <include
-            android:layout_width="fill_parent"
-            android:layout_height="?attr/actionBarSize" 
-            layout="@layout/attributes_list" android:id="@+id/slider_attributes" />
-        
-        
-    </FrameLayout>
 
     <ListView
         android:id="@+id/probe_modifier_container"
@@ -58,7 +26,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:paddingBottom="@dimen/default_gap"
-        android:paddingTop="@dimen/default_gap" >
+        android:paddingTop="@dimen/default_gap">
     </ListView>
 
     <ImageView
@@ -66,7 +34,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
-        android:src="?android:attr/dividerHorizontal" />
+        android:src="?android:attr/dividerHorizontal"/>
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -74,7 +42,7 @@
         android:layout_marginBottom="@dimen/default_gap"
         android:animateLayoutChanges="true"
         android:gravity="center"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <com.thebnich.floatinghintedittext.FloatingHintTextView
             android:id="@+id/dice_talent_value"
@@ -85,14 +53,14 @@
             android:minWidth="48dp"
             android:paddingLeft="@dimen/default_gap"
             android:paddingRight="@dimen/default_gap"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <com.thebnich.floatinghintedittext.FloatingHintTextView
             android:id="@+id/dice_value"
             style="@style/TextValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minWidth="64dp" />
+            android:minWidth="64dp"/>
 
         <com.thebnich.floatinghintedittext.FloatingHintTextView
             android:id="@+id/dice_effect_value"
@@ -102,7 +70,7 @@
             android:layout_marginLeft="@dimen/default_gap"
             android:hint="@string/label_tap_short"
             android:minWidth="48dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <ImageView
             android:id="@+id/dice_w20"
@@ -112,7 +80,7 @@
             android:layout_marginLeft="@dimen/default_gap"
             android:layout_marginRight="@dimen/default_gap"
             android:scaleType="fitCenter"
-            android:src="@drawable/w20" >
+            android:src="@drawable/w20">
         </ImageView>
 
         <ImageView
@@ -122,7 +90,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/default_gap"
             android:scaleType="fitCenter"
-            android:src="@drawable/w6_6" >
+            android:src="@drawable/w6_6">
         </ImageView>
 
         <ImageButton
@@ -131,7 +99,7 @@
             android:layout_height="@dimen/icon_button_size"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/default_gap"
-            android:src="@drawable/ic_menu_play_clip" />
+            android:src="@drawable/ic_menu_play_clip"/>
 
         <ImageButton
             android:id="@+id/dice_take_hit"
@@ -140,7 +108,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/default_gap"
             android:gravity="center"
-            android:src="@drawable/dsa_wound_patch" />
+            android:src="@drawable/dsa_wound_patch"/>
     </LinearLayout>
 
     <LinearLayout
@@ -152,7 +120,7 @@
         android:minHeight="@dimen/dices_size_with_2gap"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/default_gap"
-        android:paddingTop="@dimen/default_gap" >
+        android:paddingTop="@dimen/default_gap">
     </LinearLayout>
 
 </LinearLayout>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:title="Darstellung">
         <ListPreference
             android:defaultValue="light_plain"
             android:entries="@array/themes"
@@ -25,10 +26,10 @@
             android:summary="Definiere die Ausrichtung deiner Oberfläche:"
             android:title="Bildschirmausrichtung" />
 
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="fullscreen"
-            android:summary="Im Vollbildmodus wird weder die Titel- noch die Statusleiste angezeigt."
-            android:title="Vollbild" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="usePalette"
+        android:summary="DsaTab farblich an das Profilbild anpassen"
+        android:title="Dynamische Farbanpassung" />
                 
 </PreferenceScreen>

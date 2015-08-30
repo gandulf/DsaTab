@@ -13,7 +13,6 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.NumberPicker;
 
-import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.ArmorAttribute;
@@ -57,7 +56,7 @@ public class InlineEditDialog extends DialogFragment implements android.content.
 		// TODO value should be set as argument
 		// Value value = (Value) args.get(KEY_VALUE);
 
-		AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(getActivity());
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		if (value != null)
 			builder.setTitle(value.getName());
 
@@ -67,7 +66,7 @@ public class InlineEditDialog extends DialogFragment implements android.content.
 
 		builder.setPositiveButton(android.R.string.ok, this);
 
-        LayoutInflater inflater = LayoutInflater.from(DsaTabApplication.getInstance().getContextWrapper(getActivity()));
+        LayoutInflater inflater = LayoutInflater.from(builder.getContext());
 		View popupcontent = inflater.inflate(R.layout.popup_edit,null,false);
         builder.setView(popupcontent);
 		numberPicker = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_text);

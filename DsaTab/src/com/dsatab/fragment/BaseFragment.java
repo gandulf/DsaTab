@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.view.View;
 
@@ -89,14 +90,6 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 		super.onResume();
 
 		Hint.showRandomHint(getClass().getSimpleName(), getActivity());
-	}
-
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-
-		if (DsaTabApplication.getPreferences().getBoolean(DsaTabPreferenceActivity.KEY_USE_PALETTE, false))
-			applyPalette(DsaTabApplication.getInstance().getPalette());
 	}
 
 	protected void onAttachListener(Hero hero) {
@@ -328,15 +321,12 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 		return targetListener;
 	}
 
-	public ActionBarActivity getActionBarActivity() {
-		return (ActionBarActivity) getActivity();
+	public AppCompatActivity getActionBarActivity() {
+		return (AppCompatActivity) getActivity();
 	}
 
 	public boolean isDrawerOpened() {
 		return getDsaActivity() != null && getDsaActivity().isDrawerOpened();
 	}
 
-	public void applyPalette(Palette palette) {
-
-	}
 }

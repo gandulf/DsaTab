@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+	<color name="primary">#673ab7</color>
+	<color name="primary_dark">#512da8</color>
+	<color name="accent">#ffc400</color>
+	<color name="text_primary">#D9FFFFFF</color>
+	<color name="text_secondary">#D9000000</color>
+
+
 	<color name="Darker">#40000000</color>
 	<color name="Brighter">#60FFFFFF</color>
 	
@@ -20,5 +26,18 @@
 	<color name="ValueViolettAlpha">#CC9c27b0</color>
 	<color name="ValueGreenAlpha">#CC259b24</color>
 	<color name="ValueYellowAlpha">#CCffeb3b</color>
-		
+
+	<color name="bg_item_normal_state">#fff0f0f0</color>
+    <color name="bg_item_normal_pressed_state">#ffe0e0e0</color>
+    <color name="bg_item_dragging_state">#ffffdddd</color>
+    <color name="bg_item_dragging_active_state">#ffff9999</color>
+    <color name="bg_item_swiping_state">#ffddddff</color>
+    <color name="bg_item_swiping_active_state">#ff9999ff</color>
+    
+    <!-- fab color -->
+    <color name="half_black">#808080</color>
+    <color name="white">#fafafa</color>
+    <color name="white_pressed">#f1f1f1</color>
+    <color name="pink">#e91e63</color>
+    <color name="pink_pressed">#ec407a</color>		
 </resources>

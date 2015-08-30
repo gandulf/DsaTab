@@ -3,6 +3,11 @@ package com.dsatab.cloud;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.gandulf.guilib.util.Debug;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -27,7 +32,12 @@ import javax.xml.xpath.XPathFactory;
 
 public class Helper {
 
+
+
 	static public String postRequest(String token, String... strings) throws Exception {
+
+		OkHttpClient client = new OkHttpClient();
+
 		StringBuilder body = new StringBuilder();
 		body.append("token=");
 		body.append(URLEncoder.encode(token, "UTF-8"));
@@ -38,17 +48,29 @@ public class Helper {
 			body.append("=");
 			body.append(URLEncoder.encode(strings[i + 1], "UTF-8"));
 		}
-		HttpRequest httpRequest = new HttpRequest();
-		String result = httpRequest.sendPost("https://online.helden-software.de/index.php", body.toString(),
-				"application/x-www-form-urlencoded; charset=utf-8");
 
-		httpRequest.close();
 
-		if (result == null) {
+
+
+		RequestBody requestBody = RequestBody.create(MediaType.parse("application/x-www-form-urlencoded; charset=utf-8"), body.toString());
+		Request request = new Request.Builder()
+				.url("https://online.helden-software.de/index.php")
+				.post(requestBody)
+				.addHeader("Accept", "text/html,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5")
+				.build();
+
+		String result=null;
+		try {
+			Response response = client.newCall(request).execute();
+			result =  response.body().string();
+
+			if (result.contains("Anmeldung fehlgeschlagen")) {
+				throw new AuthorizationException(token);
+			}
+		} catch (IOException e) {
+			Debug.verbose("HttpUtils: " + e);
 			throw new IOException(DsaTabApplication.getInstance().getString(
 					R.string.message_connection_to_server_failed));
-		} else if (result.contains("Anmeldung fehlgeschlagen")) {
-			throw new AuthorizationException(token);
 		}
 
 		return result;

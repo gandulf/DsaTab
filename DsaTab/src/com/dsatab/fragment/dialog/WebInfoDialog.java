@@ -14,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Spinner;
 
-import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.adapter.SpinnerSimpleAdapter;
@@ -50,12 +49,11 @@ public class WebInfoDialog extends DialogFragment implements OnItemSelectedListe
 		Bundle args = getArguments();
 		String tag = args.getString(KEY_TAG);
 
-		AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(getActivity());
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
 		builder.setPositiveButton(android.R.string.ok, null);
-        Context context = DsaTabApplication.getInstance().getContextWrapper(getActivity());
 
-        LayoutInflater inflater = LayoutInflater.from(context);
+        LayoutInflater inflater = LayoutInflater.from(builder.getContext());
 
 		View popupContent = inflater.inflate(R.layout.popup_web_info,null,false);
                 builder.setView(popupContent);
@@ -63,7 +61,7 @@ public class WebInfoDialog extends DialogFragment implements OnItemSelectedListe
 		content = (WebView) popupContent.findViewById(R.id.web);
 		spinner = (Spinner) popupContent.findViewById(R.id.spinner);
 
-		infoAdapters = new SpinnerSimpleAdapter<String>(context, DataManager.getWebInfos(getActivity()));
+		infoAdapters = new SpinnerSimpleAdapter<String>(builder.getContext(), DataManager.getWebInfos(getActivity()));
 
 		spinner.setAdapter(infoAdapters);
 		spinner.setOnItemSelectedListener(this);

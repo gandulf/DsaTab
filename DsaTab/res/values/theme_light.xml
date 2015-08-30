@@ -3,26 +3,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <style name="DsaTabTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="DsaTabTheme.Light" parent="Base.DsaTabTheme.Light">
+    </style>
+
+    <style name="Base.DsaTabTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- 
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
- 		-->        
+
         <item name="windowActionModeOverlay">true</item>
         <item name="android:windowActionModeOverlay">true</item>
         <item name="android:windowActionBarOverlay">true</item>        
         <item name="android:windowContentOverlay">@null</item>
-        
-        <!--  fix for showcaseview to no overlap bottom menu -->
+-->
+        <!--  fix for showcaseview to no overlap bottom menu
         <item name="android:windowDrawsSystemBarBackgrounds" tools:ignore="NewApi">false</item>
+        -->
         <!--
          colorAccent is used as the default value for colorControlActivated
          which is used to tint widgets
         -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+
+        <!--
         <item name="colorPrimaryDark">@color/primary_dark_material_light</item>
         <item name="colorPrimary">@color/primary_material_light</item>
         <item name="colorAccent">@color/accent_material_light</item>
-        
+        -->
         <item name="android:dividerPadding">8dp</item>
         <item name="android:buttonStyle">@style/Widget.Button</item>
         <item name="android:imageButtonStyle">@style/Widget.Button</item>
@@ -83,7 +92,7 @@
         <item name="slidingPaneShadowBackground">@drawable/slider_shadow</item>
         <item name="selectableBackground">@drawable/abc_list_selector_holo_light</item>
         <item name="showcaseViewStyle">@style/ShowcaseView.Light</item>
-
+ 
         <item name="floatingHintEditTextStyle">@style/FloatingHintEditText</item>
         <item name="floatingHintTextViewStyle">@style/FloatingHintTextView</item>
 

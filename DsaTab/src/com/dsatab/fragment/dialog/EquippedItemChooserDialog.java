@@ -13,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.ListView;
 
-import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.adapter.EquippedItemAdapter;
@@ -61,10 +60,10 @@ public class EquippedItemChooserDialog extends DialogFragment implements Adapter
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-		AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(getActivity());
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setTitle("Wähle einen Gegenstand...");
 
-        LayoutInflater inflater =  LayoutInflater.from(DsaTabApplication.getInstance().getContextWrapper(getActivity()));
+        LayoutInflater inflater =  LayoutInflater.from(builder.getContext());
 
 		View popupcontent = inflater.inflate(R.layout.popup_equipped_item_chooser, null, false);
         builder.setView(popupcontent);
@@ -75,7 +74,7 @@ public class EquippedItemChooserDialog extends DialogFragment implements Adapter
 		itemList = (ListView) popupcontent.findViewById(R.id.popup_equipped_item_list);
 		itemList.setOnItemClickListener(this);
 
-		itemAdapter = new EquippedItemAdapter(DsaTabApplication.getInstance().getContextWrapper(getActivity()), equippedItems);
+		itemAdapter = new EquippedItemAdapter(builder.getContext(), equippedItems);
 
 		itemList.setAdapter(itemAdapter);
 		itemList.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);

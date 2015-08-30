@@ -81,16 +81,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/dsa_items_add"
-            app:colorNormal="@color/white"
-            app:colorPressed="@color/white_pressed" />
+            app:fab_colorNormal="@color/white"
+            app:fab_colorPressed="@color/white_pressed" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_container_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/dsa_bag_add"
-            app:colorNormal="@color/white"
-            app:colorPressed="@color/white_pressed" />
+            app:fab_colorNormal="@color/white"
+            app:fab_colorPressed="@color/white_pressed" />
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 </com.dsatab.view.CheckableFrameLayout>

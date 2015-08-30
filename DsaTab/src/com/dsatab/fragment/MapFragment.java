@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabPreferenceActivity;
@@ -287,7 +287,8 @@ public class MapFragment extends BaseFragment {
 		mAttacher = new PhotoViewAttacher(imageMapView);
 
 		if (!osmMapLoaded && getPreferences().getBoolean(PREF_KEY_OSM_ASK, true)) {
-			AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(getActivity());
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle("Neue Aventurien Karte");
 			builder.setMessage("Es gibt jetzt eine GoogleMaps ähnliche Karte von ganz Aventurien. Willst du dir das Kartenpaket (ca. 10MB) aus dem Internet herunterladen?");
 			builder.setCancelable(true);

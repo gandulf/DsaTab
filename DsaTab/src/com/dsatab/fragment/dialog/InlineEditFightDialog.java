@@ -12,7 +12,6 @@ import android.widget.NumberPicker;
 import android.widget.NumberPicker.OnValueChangeListener;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.CombatMeleeAttribute;
@@ -59,10 +58,10 @@ public class InlineEditFightDialog extends DialogFragment implements android.con
 		// TODO value should be set as argument
 		// Value value = (Value) args.get(KEY_VALUE);
 
-		AlertDialogWrapper.Builder builder = new AlertDialogWrapper.Builder(getActivity());
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setTitle(talent.getName());
 
-        LayoutInflater inflater = LayoutInflater.from(DsaTabApplication.getInstance().getContextWrapper(getActivity()));
+        LayoutInflater inflater = LayoutInflater.from(builder.getContext());
 		View popupcontent = inflater.inflate(R.layout.popup_edit_fight, null, false);
         builder.setView(popupcontent);
 		numberPicker = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_text);
