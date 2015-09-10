@@ -144,18 +144,6 @@
         </GridLayout>
 
         <ImageButton
-            android:id="@+id/details_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_margin="@dimen/default_gap"
-            android:background="@null"
-            android:minHeight="18dp"
-            android:minWidth="18dp"
-            android:scaleType="fitXY"
-            android:src="?attr/imgExpanderClose" />
-
-        <ImageButton
             android:id="@+id/details_hide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

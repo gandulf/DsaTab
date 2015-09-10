@@ -1,12 +1,17 @@
 package com.dsatab.data.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v4.view.ViewCompat;
+import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -24,19 +29,45 @@ import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.modifier.Modificator;
 import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Util;
+import com.dsatab.util.ViewUtils;
 import com.dsatab.view.ListSettings;
 import com.dsatab.view.ListSettings.ListItem;
 import com.dsatab.view.ListSettings.ListItemType;
-import com.nhaarman.listviewanimations.ArrayAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
+import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemViewHolder;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-public class ListItemConfigAdapter extends ArrayAdapter<ListItem> implements OnItemSelectedListener, OnClickListener {
+public class ListItemConfigAdapter  extends OpenRecyclerAdapter<ListItemConfigAdapter.ViewHolder,ListItem> implements
+		DraggableItemAdapter<ListItemConfigAdapter.ViewHolder>, OnItemSelectedListener, OnClickListener {
 
-	private LayoutInflater inflater;
+	public class ViewHolder extends AbstractDraggableItemViewHolder {
+		ViewGroup mContainer;
+		View mDragHandle;
+
+		TextView text1, text2;
+		Spinner spinner;
+		ImageView icon1, icon2;
+
+		public ViewHolder(View v) {
+			super(v);
+			mContainer = (ViewGroup) v.findViewById(R.id.container);
+			mDragHandle = v.findViewById(R.id.drag);
+
+			text1 = (TextView) v.findViewById(android.R.id.text1);
+			text2 = (TextView) v.findViewById(android.R.id.text2);
+			icon1 = (ImageView) v.findViewById(android.R.id.icon1);
+			icon2 = (ImageView) v.findViewById(android.R.id.icon2);
+			spinner = (Spinner) v.findViewById(R.id.spinner);
+		}
+
+
+	}
+
 	private Hero hero;
 
 	private static final String NAME_EMPTY = "Alle";
@@ -51,7 +82,8 @@ public class ListItemConfigAdapter extends ArrayAdapter<ListItem> implements OnI
 		this.context = context;
 
 		spinnerAdapters = new EnumMap<ListSettings.ListItemType, SpinnerSimpleAdapter<String>>(ListItemType.class);
-		inflater = LayoutInflater.from(context);
+
+		setHasStableIds(true);
 	}
 
 	protected SpinnerSimpleAdapter<String> getAdapter(ListItemType type) {
@@ -118,42 +150,31 @@ public class ListItemConfigAdapter extends ArrayAdapter<ListItem> implements OnI
 	}
 
 	@Override
-	public boolean hasStableIds() {
-		return true;
-	}
-
-	@Override
 	public long getItemId(int position) {
-		if (position >= 0 && position < getCount())
+		if (position >= 0 && position < getItemCount())
 			return getItem(position).hashCode();
 		else
 			return AdapterView.INVALID_ROW_ID;
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+		final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+		final View v = inflater.inflate(R.layout.item_listitem_config, parent, false);
+		return new ViewHolder(v);
+	}
 
-		ViewHolder holder;
 
-		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.item_listitem_config, parent, false);
-
-			holder = new ViewHolder();
-			holder.text1 = (TextView) convertView.findViewById(android.R.id.text1);
-			holder.text2 = (TextView) convertView.findViewById(android.R.id.text2);
-			holder.icon1 = (ImageView) convertView.findViewById(android.R.id.icon1);
-			holder.icon2 = (ImageView) convertView.findViewById(android.R.id.icon2);
-			holder.icon2.setOnClickListener(this);
-			holder.icon2.setFocusable(false);
-
-			holder.spinner = (Spinner) convertView.findViewById(R.id.spinner);
-			holder.spinner.setFocusable(false);
-			convertView.setTag(holder);
-		} else {
-			holder = (ViewHolder) convertView.getTag();
-		}
+	@Override
+	public void onBindViewHolder(ViewHolder holder, int position) {
+		super.onBindViewHolder(holder, position);
 
 		final ListItem listItem = getItem(position);
+
+		holder.itemView.setOnClickListener(this);
+		holder.itemView.setTag(listItem);
+
+		holder.icon2.setOnClickListener(this);
 
 		if (listItem.getType() == ListItemType.Header) {
 			holder.spinner.setVisibility(View.GONE);
@@ -172,8 +193,34 @@ public class ListItemConfigAdapter extends ArrayAdapter<ListItem> implements OnI
 		holder.icon1.setImageResource(DsaUtil.getResourceId(listItem.getType()));
 		holder.icon2.setTag(listItem);
 
-		Util.applyRowStyle(convertView, position);
-		return convertView;
+		Util.applyRowStyle(holder.itemView, position);
+
+	}
+
+	@Override
+	public void onMoveItem(int fromPosition, int toPosition) {
+		moveItem(fromPosition, toPosition);
+	}
+
+	@Override
+	public boolean onCheckCanStartDrag(ViewHolder holder, int position, int x, int y) {
+		// x, y --- relative from the itemView's top-left
+		final View containerView = holder.mContainer;
+		final View dragHandleView = holder.mDragHandle;
+		if (dragHandleView != null) {
+			final int offsetX = containerView.getLeft() + (int) (ViewCompat.getTranslationX(containerView) + 0.5f);
+			final int offsetY = containerView.getTop() + (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
+
+			return ViewUtils.hitTest(dragHandleView, x - offsetX, y - offsetY);
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public ItemDraggableRange onGetItemDraggableRange(ViewHolder holder, int position) {
+		// no drag-sortable range specified
+		return null;
 	}
 
 	@Override
@@ -201,19 +248,55 @@ public class ListItemConfigAdapter extends ArrayAdapter<ListItem> implements OnI
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case android.R.id.icon2:
-			if (v.getTag() instanceof ListItem) {
-				ListItem listItem = (ListItem) v.getTag();
-				remove(listItem);
-			}
+			case android.R.id.icon2:
+				if (v.getTag() instanceof ListItem) {
+					remove((ListItem) v.getTag());
+				}
+			default:
+				if (v.getTag() instanceof ListItem) {
+					editListItem((ListItem) v.getTag());
+				}
 			break;
 		}
 
 	}
 
-	private static final class ViewHolder {
-		TextView text1, text2;
-		Spinner spinner;
-		ImageView icon1, icon2;
+	public void editListItem(final ListItem listItem) {
+
+		if (listItem.getType() == ListItemType.Header) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+			builder.setTitle(R.string.title_insert_title);
+			final EditText editText = new EditText(builder.getContext());
+			editText.setText(listItem.getName());
+			builder.setView(editText);
+
+			DialogInterface.OnClickListener clickListener = new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					switch (which) {
+						case DialogInterface.BUTTON_POSITIVE:
+
+							if (TextUtils.isEmpty(editText.getText()))
+								listItem.setName(null);
+							else
+								listItem.setName(editText.getText().toString());
+
+							Util.hideKeyboard(editText);
+							notifyDataSetChanged();
+							break;
+						case DialogInterface.BUTTON_NEGATIVE:
+							Util.hideKeyboard(editText);
+							break;
+					}
+				}
+			};
+
+			builder.setPositiveButton(android.R.string.ok, clickListener);
+			builder.setNegativeButton(android.R.string.cancel, clickListener);
+			builder.show();
+		}
 	}
+
 }

@@ -19,15 +19,14 @@
         android:gravity="center"
         android:singleLine="true"/>
 
-
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/probe_modifier_container"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:paddingBottom="@dimen/default_gap"
         android:paddingTop="@dimen/default_gap">
-    </ListView>
+    </android.support.v7.widget.RecyclerView>
 
     <ImageView
         android:id="@+id/probe_modifier_container_divider"

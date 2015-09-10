@@ -277,47 +277,37 @@ public class CharacterFragment extends BaseProfileFragment {
 		TextView rasse = ((TextView) findViewById(R.id.gen_rasse));
 		TextView ausbildung = ((TextView) findViewById(R.id.gen_ausbildung));
 
-		if (isDescriptionDetailsExpanded()) {
 
-			if (baseInfo == null || TextUtils.isEmpty(baseInfo.getAussehen())) {
-				aussehen.setVisibility(View.GONE);
-			} else {
-				aussehen.setText(baseInfo.getAussehen());
-				aussehen.setVisibility(View.VISIBLE);
-			}
 
-			if (baseInfo == null || TextUtils.isEmpty(baseInfo.getTitle())) {
-				title.setVisibility(View.GONE);
-			} else {
-				title.setText(baseInfo.getTitle());
-				title.setVisibility(View.VISIBLE);
-			}
-
-			if (baseInfo == null || TextUtils.isEmpty(baseInfo.getStand())) {
-				stand.setVisibility(View.GONE);
-			} else {
-				stand.setText(baseInfo.getStand());
-				stand.setVisibility(View.VISIBLE);
-			}
-
-			if (baseInfo == null || TextUtils.isEmpty(baseInfo.getKultur())) {
-				kultur.setVisibility(View.GONE);
-			} else {
-				kultur.setText(baseInfo.getKultur());
-				kultur.setVisibility(View.VISIBLE);
-			}
-
-			rasse.setVisibility(View.VISIBLE);
-			ausbildung.setVisibility(View.VISIBLE);
-		} else {
-
+		if (baseInfo == null || TextUtils.isEmpty(baseInfo.getAussehen())) {
 			aussehen.setVisibility(View.GONE);
-			kultur.setVisibility(View.GONE);
-			stand.setVisibility(View.GONE);
-			title.setVisibility(View.GONE);
-			rasse.setVisibility(View.GONE);
-			ausbildung.setVisibility(View.GONE);
+		} else {
+			aussehen.setText(baseInfo.getAussehen());
+			aussehen.setVisibility(View.VISIBLE);
 		}
+
+		if (baseInfo == null || TextUtils.isEmpty(baseInfo.getTitle())) {
+			title.setVisibility(View.GONE);
+		} else {
+			title.setText(baseInfo.getTitle());
+			title.setVisibility(View.VISIBLE);
+		}
+
+		if (baseInfo == null || TextUtils.isEmpty(baseInfo.getStand())) {
+			stand.setVisibility(View.GONE);
+		} else {
+			stand.setText(baseInfo.getStand());
+			stand.setVisibility(View.VISIBLE);
+		}
+
+		if (baseInfo == null || TextUtils.isEmpty(baseInfo.getKultur())) {
+			kultur.setVisibility(View.GONE);
+		} else {
+			kultur.setText(baseInfo.getKultur());
+			kultur.setVisibility(View.VISIBLE);
+		}
+		rasse.setVisibility(View.VISIBLE);
+		ausbildung.setVisibility(View.VISIBLE);
 
 		if (baseInfo != null) {
 			((TextView) findViewById(R.id.gen_groesse)).setText(baseInfo.getGroesse() + " cm");

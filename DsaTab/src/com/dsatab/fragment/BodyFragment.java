@@ -180,12 +180,17 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 		mCallback = new BodyActionMode(this);
 	}
 
+	@Override
+	public void onResume() {
+		super.onResume();
+	}
+
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu,
-	 * com.actionbarsherlock.view.MenuInflater)
-	 */
+         * (non-Javadoc)
+         *
+         * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu,
+         * com.actionbarsherlock.view.MenuInflater)
+         */
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);

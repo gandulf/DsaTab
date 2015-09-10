@@ -2,6 +2,7 @@ package com.dsatab.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.text.TextUtils;
 
 import com.dsatab.DsaTabApplication;
@@ -142,6 +143,15 @@ public class Hero extends AbstractBeing {
 		this.connections = new ArrayList<Connection>();
 	}
 
+	public void setPortraitUri(Uri uri) {
+		if (fileInfo!=null) {
+			if (uri!=null)
+				fileInfo.setPortraitUri(uri.toString());
+			else
+				fileInfo.setPortraitUri(null);
+		}
+		super.setPortraitUri(uri);
+	}
 	/**
 	 * 
 	 */

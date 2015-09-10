@@ -1,22 +1,21 @@
 package com.dsatab.fragment;
 
 import android.app.Fragment;
-import android.content.DialogInterface;
+import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.text.TextUtils;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -26,18 +25,24 @@ import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.config.TabInfo;
 import com.dsatab.data.adapter.ListItemConfigAdapter;
+import com.dsatab.data.adapter.ListableItemAdapter;
 import com.dsatab.data.adapter.SpinnerSimpleAdapter;
-import com.dsatab.util.Util;
 import com.dsatab.view.ListSettings;
 import com.dsatab.view.ListSettings.ListItem;
 import com.dsatab.view.ListSettings.ListItemType;
-import com.gandulf.guilib.view.DynamicListViewEx;
-import com.nhaarman.listviewanimations.itemmanipulation.dragdrop.TouchViewDraggableManager;
+import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
+import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimator;
+import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
+import com.h6ah4i.android.widget.advrecyclerview.decoration.SimpleListDividerDecorator;
+import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
+import com.h6ah4i.android.widget.advrecyclerview.selectable.RecyclerViewSelectionManager;
+import com.h6ah4i.android.widget.advrecyclerview.touchguard.RecyclerViewTouchActionGuardManager;
+import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TabListableConfigFragment extends Fragment implements View.OnClickListener, OnItemClickListener,
+public class TabListableConfigFragment extends Fragment implements View.OnClickListener,
 		OnItemSelectedListener, OnCheckedChangeListener {
 
 	private TabInfo info;
@@ -47,12 +52,19 @@ public class TabListableConfigFragment extends Fragment implements View.OnClickL
 	private Spinner spinner;
 	private LinearLayout settingsLayout;
 
-	private CheckBox normal, favorites, unused, modifier;
+	private CheckBox modifier;
 
 	private ImageButton addListItem;
 
-	private DynamicListViewEx listItemList;
-	private ListItemConfigAdapter listItemAdapter;
+	private RecyclerView mRecyclerView;
+	private ListItemConfigAdapter mAdapter;
+
+	private RecyclerView.LayoutManager mLayoutManager;
+	private RecyclerView.Adapter mWrappedAdapter;
+	//private RecyclerViewSwipeManager mRecyclerViewSwipeManager;
+	private RecyclerViewDragDropManager mRecyclerViewDragDropManager;
+	private RecyclerViewTouchActionGuardManager mRecyclerViewTouchActionGuardManager;
+	// private RecyclerViewSelectionManager mRecyclerViewSelectionManager;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,40 +75,119 @@ public class TabListableConfigFragment extends Fragment implements View.OnClickL
 		spinner.setOnItemSelectedListener(this);
 		settingsLayout = (LinearLayout) root.findViewById(R.id.popup_tab_content);
 
-		listItemList = (DynamicListViewEx) root.findViewById(android.R.id.list);
+		mRecyclerView = (RecyclerView) root.findViewById(android.R.id.list);
 
 		addListItem = (ImageButton) root.findViewById(R.id.popup_edit_add_list_item);
 		addListItem.setOnClickListener(this);
 
 		spinner.setAdapter(new SpinnerSimpleAdapter<String>(getActivity(), BaseFragment.activities));
 
-		listItemAdapter = new ListItemConfigAdapter(getActivity(), DsaTabApplication.getInstance().getHero(),
-				new ArrayList<ListSettings.ListItem>());
-		ViewGroup checkboxes = (ViewGroup) inflater.inflate(R.layout._edit_tabinfo_list_checkboxes, container);
 
-		normal = (CheckBox) checkboxes.findViewById(R.id.popup_edit_show_normal);
-		favorites = (CheckBox) checkboxes.findViewById(R.id.popup_edit_show_favorites);
-		unused = (CheckBox) checkboxes.findViewById(R.id.popup_edit_show_unused);
-		modifier = (CheckBox) checkboxes.findViewById(R.id.popup_edit_include_modifiers);
 
-		listItemList.addHeaderView(checkboxes);
+		modifier = (CheckBox) root.findViewById(R.id.popup_edit_include_modifiers);
 
-		listItemList.setAdapter(listItemAdapter);
-		listItemList.setOnItemClickListener(this);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-			listItemList.enableDragAndDrop();
-			listItemList.setDraggableManager(new TouchViewDraggableManager(R.id.drag));
-		}
+
 
 		return root;
 	}
 
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+
+		// touch guard manager  (this class is required to suppress scrolling while swipe-dismiss animation is running)
+		mRecyclerViewTouchActionGuardManager = new RecyclerViewTouchActionGuardManager();
+		mRecyclerViewTouchActionGuardManager.setInterceptVerticalScrollingWhileAnimationRunning(true);
+		mRecyclerViewTouchActionGuardManager.setEnabled(true);
+
+		// drag & drop manager
+		mRecyclerViewDragDropManager = new RecyclerViewDragDropManager();
+		mRecyclerViewDragDropManager.setDraggingItemShadowDrawable((NinePatchDrawable) getResources().getDrawable(R.drawable.material_shadow_z3));
+
+		mLayoutManager = new LinearLayoutManager(getActivity());
+		mRecyclerView.setLayoutManager(mLayoutManager);
+
+		mAdapter = new ListItemConfigAdapter(getActivity(), DsaTabApplication.getInstance().getHero(),
+				new ArrayList<ListSettings.ListItem>());
+
+		mWrappedAdapter = mAdapter;
+		mWrappedAdapter = mRecyclerViewDragDropManager.createWrappedAdapter(mWrappedAdapter);     // wrap for dragging
+		//mWrappedAdapter = mRecyclerViewSwipeManager.createWrappedAdapter(mWrappedAdapter);      // wrap for swiping
+		// mWrappedAdapter = mRecyclerViewSelectionManager.createWrappedAdapter(mWrappedAdapter);  // wrap for selection
+
+		mRecyclerView.setAdapter(mWrappedAdapter);  // requires *wrapped* adapter
+		final GeneralItemAnimator animator = new SwipeDismissItemAnimator();
+		mRecyclerView.setItemAnimator(animator);
+
+		// additional decorations
+		//noinspection StatementWithEmptyBody
+		if (supportsViewElevation()) {
+			// Lollipop or later has native drop shadow feature. ItemShadowDecorator is not required.
+		} else {
+			mRecyclerView.addItemDecoration(new ItemShadowDecorator((NinePatchDrawable) getResources().getDrawable(R.drawable.material_shadow_z1)));
+		}
+
+		// mRecyclerView.addItemDecoration(new SimpleListDividerDecorator(getResources().getDrawable(R.drawable.abc_list_divider_mtrl_alpha), true));
+
+		// NOTE:
+		// The initialization order is very important! This order determines the priority of touch event handling.
+		//
+		// priority: TouchActionGuard> Selection > Swipe > DragAndDrop
+		mRecyclerViewTouchActionGuardManager.attachRecyclerView(mRecyclerView);
+		// mRecyclerViewSelectionManager.attachRecyclerView(mRecyclerView);
+		//mRecyclerViewSwipeManager.attachRecyclerView(recyclerView);
+		mRecyclerViewDragDropManager.attachRecyclerView(mRecyclerView);
+	}
+
+	@Override
+	public void onPause() {
+		mRecyclerViewDragDropManager.cancelDrag();
+		super.onPause();
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+
+		if (mRecyclerViewDragDropManager != null) {
+		mRecyclerViewDragDropManager.release();
+		mRecyclerViewDragDropManager = null;
+		}
+
+		//if (mRecyclerViewSwipeManager != null) {
+		//          mRecyclerViewSwipeManager.release();
+		//          mRecyclerViewSwipeManager = null;
+		//    }
+
+		if (mRecyclerViewTouchActionGuardManager != null) {
+			mRecyclerViewTouchActionGuardManager.release();
+			mRecyclerViewTouchActionGuardManager = null;
+		}
+
+		if (mRecyclerView != null) {
+			mRecyclerView.setItemAnimator(null);
+			mRecyclerView.setAdapter(null);
+			mRecyclerView = null;
+		}
+
+		if (mWrappedAdapter != null) {
+			WrapperAdapterUtils.releaseAll(mWrappedAdapter);
+			mWrappedAdapter = null;
+		}
+		mAdapter = null;
+		mLayoutManager = null;
+
+
+	}
+	private boolean supportsViewElevation() {
+		return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
+	}
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.widget.AdapterView.OnItemSelectedListener#onItemSelected(android .widget.AdapterView,
-	 * android.view.View, int, long)
-	 */
+         * (non-Javadoc)
+         *
+         * @see android.widget.AdapterView.OnItemSelectedListener#onItemSelected(android .widget.AdapterView,
+         * android.view.View, int, long)
+         */
 	@Override
 	public void onItemSelected(AdapterView<?> adapter, View view, int position, long id) {
 		if (info != null && adapter == spinner) {
@@ -116,15 +207,6 @@ public class TabListableConfigFragment extends Fragment implements View.OnClickL
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		if (info != null) {
 			switch (buttonView.getId()) {
-			case R.id.popup_edit_show_favorites:
-				listSettings.setShowFavorite(isChecked);
-				break;
-			case R.id.popup_edit_show_unused:
-				listSettings.setShowUnused(isChecked);
-				break;
-			case R.id.popup_edit_show_normal:
-				listSettings.setShowNormal(isChecked);
-				break;
 			case R.id.popup_edit_include_modifiers:
 				listSettings.setIncludeModifiers(isChecked);
 				break;
@@ -168,90 +250,29 @@ public class TabListableConfigFragment extends Fragment implements View.OnClickL
 
 			settingsLayout.setVisibility(View.VISIBLE);
 
-			normal.setChecked(listSettings.isShowNormal());
-			normal.setOnCheckedChangeListener(this);
-
-			favorites.setChecked(listSettings.isShowFavorite());
-			favorites.setOnCheckedChangeListener(this);
-
-			unused.setChecked(listSettings.isShowUnused());
-			unused.setOnCheckedChangeListener(this);
-
 			modifier.setChecked(listSettings.isIncludeModifiers());
 			modifier.setOnCheckedChangeListener(this);
 
 			if (info.getActivityClazz(index) == ListableFragment.class) {
-				listItemList.setVisibility(View.VISIBLE);
-				listItemAdapter.clear();
-				listItemAdapter.addAll(listSettings.getListItems());
+				mRecyclerView.setVisibility(View.VISIBLE);
+				mAdapter.clear();
+				mAdapter.addAll(listSettings.getListItems());
 			} else {
 				settingsLayout.setVisibility(View.GONE);
-				listItemList.setVisibility(View.GONE);
+				mRecyclerView.setVisibility(View.GONE);
 			}
 		} else {
 			settingsLayout.setVisibility(View.GONE);
-			listItemList.setVisibility(View.GONE);
+			mRecyclerView.setVisibility(View.GONE);
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget .AdapterView, android.view.View,
-	 * int, long)
-	 */
-	@Override
-	public void onItemClick(final AdapterView<?> parent, View view, int position, long id) {
-		switch (parent.getId()) {
-		// list of config items for list
-		case android.R.id.list:
-			final ListItem listItem = (ListItem) parent.getItemAtPosition(position);
-			editListItem(listItem);
-			break;
-		}
-	}
 
-	protected void editListItem(final ListItem listItem) {
-		if (listItem.getType() == ListItemType.Header) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-			builder.setTitle(R.string.title_insert_title);
-			final EditText editText = new EditText(builder.getContext());
-			editText.setText(listItem.getName());
-			builder.setView(editText);
-
-			DialogInterface.OnClickListener clickListener = new DialogInterface.OnClickListener() {
-
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					switch (which) {
-					case DialogInterface.BUTTON_POSITIVE:
-
-						if (TextUtils.isEmpty(editText.getText()))
-							listItem.setName(null);
-						else
-							listItem.setName(editText.getText().toString());
-
-						Util.hideKeyboard(editText);
-						listItemAdapter.notifyDataSetChanged();
-						break;
-					case DialogInterface.BUTTON_NEGATIVE:
-						Util.hideKeyboard(editText);
-						break;
-					}
-				}
-			};
-
-			builder.setPositiveButton(android.R.string.ok, clickListener);
-			builder.setNegativeButton(android.R.string.cancel, clickListener);
-			builder.show();
-		}
-	}
 
 	public void accept() {
-		if (listSettings != null && listItemAdapter != null) {
+		if (listSettings != null && mAdapter != null) {
 			listSettings.getListItems().clear();
-			listSettings.getListItems().addAll(listItemAdapter.getItems());
+			listSettings.getListItems().addAll(mAdapter.getItems());
 		}
 	}
 
@@ -284,10 +305,10 @@ public class TabListableConfigFragment extends Fragment implements View.OnClickL
 				@Override
 				public boolean onMenuItemClick(MenuItem item) {
 					ListItem newListItem = new ListItem((ListItemType) ListItemType.values()[item.getItemId()]);
-					listItemAdapter.add(newListItem);
+					mAdapter.add(newListItem);
 					listSettings.getListItems().add(newListItem);
 
-					editListItem(newListItem);
+					mAdapter.editListItem(newListItem);
 					return true;
 				}
 			});

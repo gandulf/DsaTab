@@ -1,6 +1,8 @@
 package com.dsatab.data.filter;
 
 import com.dsatab.data.Markable;
+import com.dsatab.data.adapter.OpenRecyclerAdapter;
+import com.dsatab.data.adapter.OpenRecyclerFilter;
 import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.listable.Listable;
 import com.dsatab.data.notes.Connection;
@@ -11,11 +13,11 @@ import com.gandulf.guilib.data.OpenFilter;
 
 import java.util.Locale;
 
-public class ListableListFilter<T extends Listable> extends OpenFilter<T> {
+public class ListableListFilter<T extends Listable> extends OpenRecyclerFilter<T> {
 
 	private ListSettings settings;
 
-	public ListableListFilter(OpenArrayAdapter<T> list) {
+	public ListableListFilter(OpenRecyclerAdapter<?,T> list) {
 		super(list);
 		settings = new ListSettings();
 	}

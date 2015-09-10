@@ -1,76 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.dsatab.view.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.dsatab.view.CheckableFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_vertical"
-    android:background="?attr/listItemBackground"
-    android:minHeight="?attr/listPreferredItemHeight"
-    android:orientation="horizontal"
-    android:paddingLeft="?attr/listPreferredItemPaddingLeft"
-    android:paddingRight="0dp">
+    android:layout_height="?attr/listPreferredItemHeight"
+    android:background="?attr/listItemBackground">
 
-    <com.nhaarman.listviewanimations.itemmanipulation.dragdrop.GripView
-        android:id="@+id/drag"
-        android:layout_width="16dp"
-        android:layout_height="32dp"
-        android:layout_gravity="center_vertical" />
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@android:id/icon1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleType="centerInside" 
-        android:layout_gravity="center_vertical">
-    </ImageView>
+        <View
+            android:id="@+id/drag"
+            android:layout_width="?attr/listPreferredItemPaddingLeft"
+            android:layout_height="match_parent"
+            android:background="#20000000"
+            android:minWidth="16dp" />
 
-    <TextView
-        android:id="@android:id/text1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_gravity="center_vertical"
-        android:minWidth="150dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textStyle="bold" />
+        <ImageView
+            android:id="@android:id/icon1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:scaleType="centerInside"/>
 
-    <TextView
-        android:id="@android:id/text2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textStyle="bold" />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="8dp">
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textStyle="normal" />
+            <TextView
+                android:id="@android:id/text1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textStyle="bold" />
 
-    <ImageView
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"
-        android:paddingBottom="?android:attr/dividerPadding"
-        android:paddingTop="?android:attr/dividerPadding"
-        android:scaleType="fitXY"
-        android:src="?android:attr/dividerVertical" >
-    </ImageView>
+            <TextView
+                android:id="@android:id/text2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textStyle="bold" />
 
-    <ImageButton
-        android:id="@android:id/icon2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:background="?attr/selectableBackground"
-        android:focusable="false"
-        android:padding="@dimen/default_gap"
-        android:scaleType="centerInside"
-        android:src="?attr/imgDelete"
-        android:visibility="visible" >
-    </ImageButton>
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textStyle="normal" />
 
-</com.dsatab.view.CheckableLinearLayout>
+        </FrameLayout>
+
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:paddingBottom="?android:attr/dividerPadding"
+            android:paddingTop="?android:attr/dividerPadding"
+            android:scaleType="fitXY"
+            android:src="?android:attr/dividerVertical"/>
+
+        <ImageButton
+            android:id="@android:id/icon2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="?attr/selectableBackground"
+            android:padding="@dimen/default_gap"
+            android:scaleType="centerInside"
+            android:src="?attr/imgDelete"
+            android:visibility="visible"/>
+    </LinearLayout>
+</com.dsatab.view.CheckableFrameLayout>

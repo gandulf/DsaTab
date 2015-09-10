@@ -274,6 +274,10 @@ public class HeroFileInfo implements JSONable, Serializable {
 		return portraitUri;
 	}
 
+	public void setPortraitUri(String portraitUri) {
+		this.portraitUri = portraitUri;
+	}
+
 	public String getKey() {
 		return key;
 	}

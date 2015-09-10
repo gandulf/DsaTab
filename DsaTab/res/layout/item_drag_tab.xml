@@ -1,30 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.dsatab.view.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.dsatab.view.CheckableFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="?attr/listPreferredItemHeight"
     android:background="?attr/listItemBackground"
-    android:minHeight="?attr/listPreferredItemHeight"
-    android:paddingRight="?attr/listPreferredItemPaddingRight"
-    android:paddingLeft="?attr/listPreferredItemPaddingLeft">
+    android:paddingRight="?attr/listPreferredItemPaddingRight">
 
-    
-    <com.nhaarman.listviewanimations.itemmanipulation.dragdrop.GripView
-        android:id="@+id/drag"
-        android:layout_width="16dp"
-        android:layout_height="32dp"
-        android:layout_gravity="center_vertical"
-     />
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/gen_tab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical" />
+        <View
+            android:id="@+id/drag"
+            android:layout_width="?attr/listPreferredItemPaddingLeft"
+            android:layout_height="match_parent"
+            android:layout_gravity="top|left"
+            android:background="#20000000"
+            android:minWidth="16dp" />
 
-    <TextView
-        android:id="@android:id/text1"
-        android:layout_weight="1" 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left|center_vertical"/>
-</com.dsatab.view.CheckableLinearLayout>
+        <ImageView
+            android:id="@+id/gen_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical" />
+
+        <TextView
+            android:id="@android:id/text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical" />
+
+    </LinearLayout>
+</com.dsatab.view.CheckableFrameLayout>

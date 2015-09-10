@@ -1,9 +1,10 @@
 package com.dsatab.data.adapter;
 
-import android.content.Context;
+import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.TextUtils.TruncateAt;
@@ -34,7 +35,6 @@ import android.widget.ToggleButton;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
-import com.dsatab.activity.DsaTabActivity;
 import com.dsatab.data.Art;
 import com.dsatab.data.ArtInfo;
 import com.dsatab.data.Attribute;
@@ -75,6 +75,7 @@ import com.dsatab.data.modifier.RulesModificator;
 import com.dsatab.data.modifier.WoundModificator;
 import com.dsatab.data.notes.Event;
 import com.dsatab.data.notes.NotesItem;
+import com.dsatab.fragment.dialog.DiceSliderFragment;
 import com.dsatab.fragment.dialog.TakeHitDialog;
 import com.dsatab.util.Debug;
 import com.dsatab.util.DsaUtil;
@@ -86,14 +87,16 @@ import com.dsatab.view.listener.EditListener;
 import com.dsatab.view.listener.OnActionListener;
 import com.dsatab.view.listener.ProbeListener;
 import com.dsatab.view.listener.TargetListener;
-import com.gandulf.guilib.data.OpenArrayAdapter;
 import com.gandulf.guilib.view.SeekBarEx;
+import com.h6ah4i.android.widget.advrecyclerview.selectable.SelectableItemAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableSwipeableSelectableItemViewHolder;
 
 import java.util.Collections;
 import java.util.List;
 
-public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements OnSeekBarChangeListener,
-		OnCheckedChangeListener, OnClickListener {
+public class ListableItemAdapter extends OpenRecyclerAdapter<RecyclerView.ViewHolder,Listable> implements
+		OnSeekBarChangeListener,
+		OnCheckedChangeListener, OnClickListener, SelectableItemAdapter<RecyclerView.ViewHolder> {
 
 	private Hero hero;
 
@@ -104,24 +107,22 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 	private EditListener editListener;
 	private TargetListener targetListener;
 
-	private LayoutInflater inflater;
-
 	private Bitmap indicatorStar, indicatorStarGray, indicatorHouse, indicatorHouseGray, indicatorFlash,
 			indicatorFlashGray;
 
-	private static final int ITEM_TYPE_VIEW = 0;
-	private static final int ITEM_TYPE_EDIT = 1;
-	private static final int ITEM_TYPE_SEEK = 2;
-	private static final int ITEM_TYPE_COMBAT_TALENT = 3;
-	private static final int ITEM_TYPE_SIMPLE_TALENT = 4;
-	private static final int ITEM_TYPE_MODIFIER = 5;
-	private static final int ITEM_TYPE_HEADER = 6;
-	private static final int ITEM_TYPE_NOTES = 7;
-	private static final int ITEM_TYPE_PURSE = 8;
-	private static final int ITEM_TYPE_WOUND = 9;
-	private static final int ITEM_TYPE_PROBE = 10;
+	private static final int ITEM_TYPE_VIEW = 1;
+	private static final int ITEM_TYPE_EDIT = 2;
+	private static final int ITEM_TYPE_SEEK = 3;
+	private static final int ITEM_TYPE_COMBAT_TALENT = 4;
+	private static final int ITEM_TYPE_SIMPLE_TALENT = 5;
+	private static final int ITEM_TYPE_MODIFIER = 6;
+	private static final int ITEM_TYPE_HEADER = 7;
+	private static final int ITEM_TYPE_NOTES = 8;
+	private static final int ITEM_TYPE_PURSE = 9;
+	private static final int ITEM_TYPE_WOUND = 10;
+	private static final int ITEM_TYPE_PROBE = 11;
 
-	private DsaTabActivity main;
+	private Fragment fragment;
 
 	private OnItemSelectedListener onPurseItemSelectedListener = new OnItemSelectedListener() {
 		/*
@@ -160,26 +161,34 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		}
 	};
 
-	public ListableItemAdapter(DsaTabActivity context, Hero hero, ListSettings settings) {
-		this(context, hero, (List<Listable>) Collections.EMPTY_LIST, settings);
+	public ListableItemAdapter(Fragment fragment, Hero hero, ListSettings settings) {
+		this(fragment, hero, (List<Listable>) Collections.EMPTY_LIST, settings);
 	}
 
-	public ListableItemAdapter(DsaTabActivity context, Hero hero, List<? extends Listable> items, ListSettings settings) {
-		super(context, 0, (List) items);
+	public ListableItemAdapter(Fragment fragment, Hero hero, List<Listable> items, ListSettings settings) {
+		super(items);
 		this.hero = hero;
-		this.main = context;
-		inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		this.fragment = fragment;
 
-		indicatorStar = BitmapFactory.decodeResource(context.getResources(), R.drawable.indicator_star);
-		indicatorStarGray = BitmapFactory.decodeResource(context.getResources(), R.drawable.indicator_star_gray);
-		indicatorHouse = BitmapFactory.decodeResource(context.getResources(), R.drawable.indicator_house);
-		indicatorHouseGray = BitmapFactory.decodeResource(context.getResources(), R.drawable.indicator_house_gray);
-		indicatorFlash = BitmapFactory.decodeResource(context.getResources(), R.drawable.indicator_flash);
-		indicatorFlashGray = BitmapFactory.decodeResource(context.getResources(), R.drawable.indicator_flash_gray);
+		indicatorStar = BitmapFactory.decodeResource(fragment.getResources(), R.drawable.indicator_star);
+		indicatorStarGray = BitmapFactory.decodeResource(fragment.getResources(), R.drawable.indicator_star_gray);
+		indicatorHouse = BitmapFactory.decodeResource(fragment.getResources(), R.drawable.indicator_house);
+		indicatorHouseGray = BitmapFactory.decodeResource(fragment.getResources(), R.drawable.indicator_house_gray);
+		indicatorFlash = BitmapFactory.decodeResource(fragment.getResources(), R.drawable.indicator_flash);
+		indicatorFlashGray = BitmapFactory.decodeResource(fragment.getResources(), R.drawable.indicator_flash_gray);
 
 		if (settings != null && !settings.isAllVisible())
 			filter(settings);
 	}
+
+
+	@Override
+	public void onItemSelected(RecyclerView.ViewHolder holder, boolean value) {
+		if (getEventListener() != null) {
+			getEventListener().onItemSelected(holder.getPosition(), value);
+		}
+	}
+
 
 	public void filter(ListSettings settings) {
 		boolean hasChanged = false;
@@ -191,16 +200,6 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				filter.filter((String) null);
 			}
 		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.widget.BaseAdapter#getViewTypeCount()
-	 */
-	@Override
-	public int getViewTypeCount() {
-		return 11;
 	}
 
 	/*
@@ -248,16 +247,11 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		} else if (item instanceof Probe) {
 			return ITEM_TYPE_PROBE;
 		} else {
-			return IGNORE_ITEM_VIEW_TYPE;
+			return 0;
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.widget.ArrayAdapter#getFilter()
-	 */
-	@Override
+
 	public ListableListFilter<Listable> getFilter() {
 		if (filter == null) {
 			filter = new ListableListFilter<Listable>(this);
@@ -298,221 +292,103 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+		final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-		if (convertView == null) {
-
-			switch (getItemViewType(position)) {
+		switch (viewType) {
 
 			case ITEM_TYPE_VIEW: {
-				convertView = (ItemListItem) inflater.inflate(R.layout.item_listitem_view, parent, false);
-
-				ViewHolder holder = new ViewHolder();
-				holder.text1 = (TextView) convertView.findViewById(android.R.id.text1);
-				holder.text2 = (TextView) convertView.findViewById(android.R.id.text2);
-				holder.text3 = (TextView) convertView.findViewById(R.id.text3);
-				holder.icon1 = (ImageView) convertView.findViewById(android.R.id.icon1);
-
-				holder.icon2 = (ImageView) convertView.findViewById(android.R.id.icon2);
-				holder.icon_chain_bottom = (ImageView) convertView.findViewById(R.id.icon_chain_bottom);
-				holder.icon_chain_top = (ImageView) convertView.findViewById(R.id.icon_chain_top);
-				convertView.setTag(holder);
-				break;
+				View convertView = (ItemListItem) inflater.inflate(R.layout.item_listitem_view, parent, false);
+				return new ViewHolder(convertView);
 			}
 			case ITEM_TYPE_PROBE:
 			case ITEM_TYPE_EDIT: {
-				convertView = (ItemListItem) inflater.inflate(R.layout.item_listitem_equippeditem, parent, false);
-				ViewHolder holder = new ViewHolder();
-				holder.text1 = (TextView) convertView.findViewById(android.R.id.text1);
-				holder.text2 = (TextView) convertView.findViewById(android.R.id.text2);
-				holder.text3 = (TextView) convertView.findViewById(R.id.text3);
-				holder.icon1 = (ImageView) convertView.findViewById(android.R.id.icon1);
-				holder.icon2 = (ImageView) convertView.findViewById(android.R.id.icon2);
-				holder.icon_chain_bottom = (ImageView) convertView.findViewById(R.id.icon_chain_bottom);
-				holder.icon_chain_top = (ImageView) convertView.findViewById(R.id.icon_chain_top);
-				convertView.setTag(holder);
-				break;
+				View convertView = (ItemListItem) inflater.inflate(R.layout.item_listitem_equippeditem, parent, false);
+				return new ViewHolder(convertView);
 			}
 			case ITEM_TYPE_SEEK: {
-				convertView = (ViewGroup) inflater.inflate(R.layout.item_listitem_seek, parent, false);
-				SeekViewHolder viewHolder = new SeekViewHolder();
-				viewHolder.seek = (SeekBarEx) convertView.findViewById(R.id.wheel);
-				viewHolder.text = (TextView) convertView.findViewById(R.id.wheel_label);
-				viewHolder.value = (Button) convertView.findViewById(R.id.wheel_value);
-				convertView.setTag(viewHolder);
-				break;
+				View convertView = (ViewGroup) inflater.inflate(R.layout.item_listitem_seek, parent, false);
+				return  new SeekViewHolder(convertView);
 			}
 			case ITEM_TYPE_COMBAT_TALENT:
 			case ITEM_TYPE_SIMPLE_TALENT: {
-				convertView = inflater.inflate(R.layout.item_listitem_talent, parent, false);
-
-				TalentViewHolder holder = new TalentViewHolder();
-				// name
-				holder.text1 = (TextView) convertView.findViewById(R.id.talent_list_item_text1);
-				// be
-				holder.text2 = (TextView) convertView.findViewById(R.id.talent_list_item_text2);
-				// probe
-				holder.text3 = (TextView) convertView.findViewById(R.id.talent_list_item_text3);
-				// value / at
-				holder.text4 = (Button) convertView.findViewById(R.id.talent_list_item_text4);
-				// pa
-				holder.text5 = (Button) convertView.findViewById(R.id.talent_list_item_text5);
-				holder.indicator = (ImageView) convertView.findViewById(R.id.talent_list_item_indicator);
-				convertView.setTag(holder);
-				break;
+				View convertView = inflater.inflate(R.layout.item_listitem_talent, parent, false);
+				return  new TalentViewHolder(convertView);
 			}
 			case ITEM_TYPE_MODIFIER: {
-				convertView = inflater.inflate(R.layout.item_listitem_modifier, parent, false);
-
-				ModifierViewHolder holder = new ModifierViewHolder();
-				holder.text1 = (TextView) convertView.findViewById(android.R.id.text1);
-				holder.text2 = (TextView) convertView.findViewById(android.R.id.text2);
-				holder.icon1 = (ImageView) convertView.findViewById(android.R.id.icon1);
-				holder.active = (CheckBox) convertView.findViewById(R.id.active);
-				holder.active.setOnCheckedChangeListener(this);
-				convertView.setTag(holder);
-				break;
+				View convertView = inflater.inflate(R.layout.item_listitem_modifier, parent, false);
+				return new ModifierViewHolder(convertView,this);
 			}
 			case ITEM_TYPE_HEADER: {
-				convertView = inflater.inflate(R.layout.item_listitem_header, parent, false);
-
-				HeaderViewHolder holder = new HeaderViewHolder();
-				holder.text1 = (TextView) convertView.findViewById(android.R.id.text1);
-				holder.button1 = (ImageButton) convertView.findViewById(android.R.id.button1);
-				holder.button2 = (ImageButton) convertView.findViewById(android.R.id.button2);
-				convertView.setTag(holder);
-				break;
+				View convertView = inflater.inflate(R.layout.item_listitem_header, parent, false);
+				return  new HeaderViewHolder(convertView);
 			}
 			case ITEM_TYPE_NOTES: {
-				convertView = inflater.inflate(R.layout.item_listitem_event, parent, false);
-
-				EventViewHolder holder = new EventViewHolder();
-				holder.text1 = (TextView) convertView.findViewById(android.R.id.text1);
-				holder.text2 = (TextView) convertView.findViewById(android.R.id.text2);
-				holder.text3 = (TextView) convertView.findViewById(R.id.text3);
-				holder.icon1 = (ImageView) convertView.findViewById(android.R.id.icon1);
-				holder.icon2 = (ImageView) convertView.findViewById(android.R.id.icon2);
-
-				convertView.setTag(holder);
-				break;
+				View convertView = inflater.inflate(R.layout.item_listitem_event, parent, false);
+				return  new EventViewHolder(convertView);
 			}
 			case ITEM_TYPE_PURSE: {
-				convertView = inflater.inflate(R.layout.item_listitem_purse, parent, false);
-				PurseViewHolder holder = new PurseViewHolder();
+				View convertView = inflater.inflate(R.layout.item_listitem_purse, parent, false);
+				return  new PurseViewHolder(convertView);
 
-				holder.currencySpinner = (Spinner) convertView.findViewById(R.id.sp_currency);
-				holder.header = (TextView) convertView.findViewById(R.id.tv_currency_header);
-
-				holder.picker = new NumberPicker[4];
-				holder.picker[0] = (NumberPicker) convertView.findViewById(R.id.popup_purse_dukat);
-				holder.picker[1] = (NumberPicker) convertView.findViewById(R.id.popup_purse_silver);
-				holder.picker[2] = (NumberPicker) convertView.findViewById(R.id.popup_purse_heller);
-				holder.picker[3] = (NumberPicker) convertView.findViewById(R.id.popup_purse_kreuzer);
-
-				holder.labels = new TextView[4];
-				holder.labels[0] = (TextView) convertView.findViewById(R.id.tv_currency1);
-				holder.labels[1] = (TextView) convertView.findViewById(R.id.tv_currency2);
-				holder.labels[2] = (TextView) convertView.findViewById(R.id.tv_currency3);
-				holder.labels[3] = (TextView) convertView.findViewById(R.id.tv_currency4);
-
-				convertView.setTag(holder);
-				break;
 			}
 			case ITEM_TYPE_WOUND: {
-				convertView = inflater.inflate(R.layout.item_listitem_wound, parent, false);
-				WoundViewHolder holder = new WoundViewHolder();
-
-				ViewGroup woundContainer = (ViewGroup) convertView.findViewById(R.id.wound_container);
-				int width = parent.getWidth();
-				width -= (parent.getPaddingLeft() + parent.getPaddingRight());
-				int buttonSize = getContext().getResources().getDimensionPixelSize(R.dimen.icon_button_size);
-				int gap = getContext().getResources().getDimensionPixelSize(R.dimen.default_gap);
-
-				int halfgap = gap / 2;
-				int buttonCount = (int) Math.floor(((float) width / (buttonSize + gap)));
-
-				// <ToggleButton
-				// android:id="@+id/wound1"
-				// android:layout_width="@dimen/icon_button_size"
-				// android:layout_height="@dimen/icon_button_size"
-				// android:layout_marginRight="@dimen/default_gap"
-				// android:textOn=""
-				// android:textOff=""
-				// android:background="@drawable/icon_wound_btn" />
-
-				holder.wounds = new ToggleButton[buttonCount];
-				for (int i = 0; i < buttonCount; i++) {
-					ToggleButton woundButton = new ToggleButton(getContext());
-					woundButton.setBackgroundResource(R.drawable.bg_wound_btn);
-					LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(buttonSize, buttonSize);
-					params.gravity = Gravity.CENTER;
-					params.rightMargin = halfgap;
-					params.leftMargin = halfgap;
-					params.topMargin = halfgap;
-					params.bottomMargin = halfgap;
-
-					woundButton.setLayoutParams(params);
-					woundButton.setTextOff("");
-					woundButton.setPadding(halfgap, halfgap, halfgap, halfgap);
-					woundButton.setLines(2);
-					woundButton.setEllipsize(TruncateAt.MIDDLE);
-					woundButton.setTextColor(Color.WHITE);
-					woundButton.setTextOn("");
-					woundButton.setTextSize(11.0f);
-
-					woundButton.setChecked(false);
-					woundButton.setOnClickListener(this);
-					holder.wounds[i] = woundButton;
-					woundContainer.addView(woundButton);
-				}
-
-				convertView.setTag(holder);
-				break;
+				View convertView = inflater.inflate(R.layout.item_listitem_wound, parent, false);
+				return new WoundViewHolder(convertView,parent,this);
 			}
-			}
+			default:
+				return null;
 		}
-
-		Listable item = getItem(position);
-
-		if (item instanceof EquippedItem) {
-			convertView = prepareView((EquippedItem) item, position, convertView, parent);
-		} else if (item instanceof Attribute) {
-			convertView = prepareView((Attribute) item, position, convertView, parent);
-		} else if (item instanceof Talent) {
-			convertView = prepareView((Talent) item, position, convertView, parent);
-		} else if (item instanceof Spell) {
-			convertView = prepareView((Spell) item, position, convertView, parent);
-		} else if (item instanceof Art) {
-			convertView = prepareView((Art) item, position, convertView, parent);
-		} else if (item instanceof Modificator) {
-			convertView = prepareView((Modificator) item, position, convertView, parent);
-		} else if (item instanceof HeaderListItem) {
-			convertView = prepareView((HeaderListItem) item, position, convertView, parent);
-		} else if (item instanceof FileListable) {
-			convertView = prepareView((FileListable) item, position, convertView, parent);
-		} else if (item instanceof NotesItem) {
-			convertView = prepareView((NotesItem) item, position, convertView, parent);
-		} else if (item instanceof PurseListable) {
-			convertView = prepareView((PurseListable) item, position, convertView, parent);
-		} else if (item instanceof WoundListItem) {
-			convertView = prepareView((WoundListItem) item, position, convertView, parent);
-		} else if (item instanceof CustomProbe) {
-			convertView = prepareView((CustomProbe) item, position, convertView, parent);
-		}
-
-		if (item instanceof Markable) {
-			Util.applyRowStyle((Markable) item, convertView, position);
-		} else {
-			Util.applyRowStyle(convertView, position);
-		}
-
-		return convertView;
 
 	}
 
-	private View prepareView(CustomProbe probe, int position, View convertView, ViewGroup parent) {
-		ViewHolder holder = (ViewHolder) convertView.getTag();
+	@Override
+	public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+		super.onBindViewHolder(holder,position);
 
+		Object item = getItem(position);
+
+		if (item instanceof EquippedItem) {
+			 prepareView((EquippedItem) item, position,(ViewHolder) holder);
+		} else if (item instanceof Attribute) {
+			Attribute attribute = (Attribute) item;
+			if (attribute.getType() == AttributeType.Ausweichen)
+				prepareAusweichenView(attribute, position,(ViewHolder) holder);
+			else
+			 	prepareView(attribute, position,(SeekViewHolder) holder);
+		} else if (item instanceof Talent) {
+			 prepareView((Talent) item, position,(TalentViewHolder) holder);
+		} else if (item instanceof Spell) {
+			 prepareView((Spell) item, position,(TalentViewHolder) holder);
+		} else if (item instanceof Art) {
+			 prepareView((Art) item, position, (TalentViewHolder)holder);
+		} else if (item instanceof Modificator) {
+			 prepareView((Modificator) item, position,(ModifierViewHolder) holder);
+		} else if (item instanceof HeaderListItem) {
+			 prepareView((HeaderListItem) item, position,(HeaderViewHolder) holder);
+		} else if (item instanceof FileListable) {
+			 prepareView((FileListable) item, position,(EventViewHolder) holder);
+		} else if (item instanceof NotesItem) {
+			 prepareView((NotesItem) item, position,(EventViewHolder) holder);
+		} else if (item instanceof PurseListable) {
+			 prepareView((PurseListable) item, position,(PurseViewHolder) holder);
+		} else if (item instanceof WoundListItem) {
+			 prepareView((WoundListItem) item, position,(WoundViewHolder) holder);
+		} else if (item instanceof CustomProbe) {
+			 prepareView((CustomProbe) item, position,(ViewHolder) holder);
+		}
+
+		if (item instanceof Markable) {
+			Util.applyRowStyle((Markable) item, holder.itemView, position);
+		} else {
+			Util.applyRowStyle(holder.itemView, position);
+		}
+
+	}
+
+
+
+	private void prepareView(CustomProbe probe, int position, ViewHolder holder) {
 		StyleableSpannableStringBuilder title = new StyleableSpannableStringBuilder();
 		title.append(probe.getName());
 		Util.appendValue(hero, title, probe, null, true);
@@ -543,12 +419,11 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 
 		holder.icon2.setVisibility(View.GONE);
 
-		Util.applyRowStyle(convertView, position);
-		return convertView;
+		Util.applyRowStyle(holder.itemView, position);
 	}
 
-	protected View prepareView(WoundListItem item, int position, View convertView, ViewGroup parent) {
-		WoundViewHolder holder = (WoundViewHolder) convertView.getTag();
+	protected void prepareView(WoundListItem item, int position, WoundViewHolder holder) {
+
 
 		for (int i = 0; i < holder.wounds.length; i++) {
 			holder.wounds[i].setOnCheckedChangeListener(null);
@@ -598,7 +473,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 			holder.wounds[i].setOnCheckedChangeListener(this);
 		}
 
-		return convertView;
+
 	}
 
 	@Override
@@ -619,7 +494,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 
 				final List<Position> positions = DsaTabApplication.getInstance().getConfiguration().getWoundPositions();
 
-				PopupMenu popupMenu = new PopupMenu(getContext(), v);
+				PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
 
 				for (int i = 0; i < positions.size(); i++) {
 					popupMenu.getMenu().add(0, i, i, positions.get(i).getName());
@@ -658,14 +533,14 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		}
 	}
 
-	protected View prepareView(PurseListable item, int position, View convertView, ViewGroup parent) {
-		PurseViewHolder holder = (PurseViewHolder) convertView.getTag();
+	protected void prepareView(PurseListable item, int position, PurseViewHolder holder) {
+
 
 		Currency currency = item.getCurrency();
 		if (currency == null) {
 			currency = hero.getHeroConfiguration().getActiveCurrency();
 
-			SpinnerSimpleAdapter<Currency> currencyAdapter = new SpinnerSimpleAdapter<Currency>(getContext(),
+			SpinnerSimpleAdapter<Currency> currencyAdapter = new SpinnerSimpleAdapter<Currency>(holder.currencySpinner.getContext(),
 					Currency.values());
 			holder.currencySpinner.setOnItemSelectedListener(null);
 			holder.currencySpinner.setAdapter(currencyAdapter);
@@ -706,19 +581,17 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 			holder.labels[i].setVisibility(View.GONE);
 		}
 
-		return convertView;
+
 	}
 
-	protected View prepareView(HeaderListItem item, int position, View convertView, ViewGroup parent) {
-		HeaderViewHolder holder = (HeaderViewHolder) convertView.getTag();
-
+	protected void prepareView(HeaderListItem item, int position, HeaderViewHolder holder) {
 		holder.text1.setText(item.getTitle());
 		holder.text1.setFocusable(true);
 
 		if (item.getType() != null) {
 			switch (item.getType()) {
 			case Document:
-				holder.button1.setImageResource(Util.getThemeResourceId(getContext(), R.attr.imgFilter));
+				holder.button1.setImageResource(Util.getThemeResourceId(holder.button1.getContext(), R.attr.imgFilter));
 				holder.button1.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -794,7 +667,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 
 					@Override
 					public void onClick(View v) {
-						TakeHitDialog.show(null, main.getFragmentManager(), hero, null, 0);
+						TakeHitDialog.show(fragment, hero, null, 0);
 					}
 				});
 				holder.button1.setVisibility(View.VISIBLE);
@@ -809,12 +682,9 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 			holder.button1.setVisibility(View.GONE);
 			holder.button2.setVisibility(View.GONE);
 		}
-		return convertView;
 	}
 
-	protected View prepareView(NotesItem e, int position, View convertView, ViewGroup parent) {
-		EventViewHolder holder = (EventViewHolder) convertView.getTag();
-
+	protected void prepareView(NotesItem e, int position, EventViewHolder holder) {
 		if (e.getCategory() != null) {
 
 			if (holder.icon1 != null) {
@@ -846,11 +716,10 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 
 		holder.text3.setText(e.getCategory().name());
 
-		return convertView;
+
 	}
 
-	protected View prepareView(Modificator item, int position, View convertView, ViewGroup parent) {
-		ModifierViewHolder holder = (ModifierViewHolder) convertView.getTag();
+	protected void prepareView(Modificator item, int position, ModifierViewHolder holder) {
 
 		if (item instanceof AbstractModificator) {
 			AbstractModificator modificator = (AbstractModificator) item;
@@ -886,12 +755,10 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 			holder.text2.setText(null);
 		}
 
-		return convertView;
 	}
 
-	protected View prepareAusweichenView(final Attribute attribute, int position, View convertView, ViewGroup parent) {
+	protected void prepareAusweichenView(final Attribute attribute, int position, ViewHolder holder) {
 
-		ViewHolder holder = (ViewHolder) convertView.getTag();
 		holder.icon1.setOnClickListener(getProbeListener());
 		holder.icon1.setOnLongClickListener(getEditListener());
 		holder.icon1.setImageResource(R.drawable.dsa_ausweichen);
@@ -902,7 +769,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		holder.icon2.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				main.checkProbe(hero, attribute, false);
+				DiceSliderFragment.show(fragment, hero, attribute, false, 0);
 			}
 		});
 
@@ -919,15 +786,10 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		holder.icon_chain_top.setVisibility(View.GONE);
 		holder.icon_chain_bottom.setVisibility(View.GONE);
 
-		return convertView;
+
 	}
 
-	protected View prepareView(Attribute attribute, int position, View convertView, ViewGroup parent) {
-		if (attribute.getType() == AttributeType.Ausweichen) {
-			return prepareAusweichenView(attribute, position, convertView, parent);
-		} else {
-			SeekViewHolder viewHolder = (SeekViewHolder) convertView.getTag();
-
+	protected void prepareView(Attribute attribute, int position, SeekViewHolder viewHolder) {
 			if (attribute.getValue() != null) {
 				viewHolder.seek.setMax(attribute.getMaximum());
 				viewHolder.seek.setMin(attribute.getMinimum());
@@ -945,12 +807,11 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 
 			Util.setValue(hero, viewHolder.value, attribute, null, false, probeListener, editListener);
 
-			return convertView;
-		}
+
+
 	}
 
-	protected View prepareView(Spell spell, int position, View convertView, ViewGroup parent) {
-		TalentViewHolder holder = (TalentViewHolder) convertView.getTag();
+	protected void prepareView(Spell spell, int position, TalentViewHolder holder) {
 
 		holder.text1.setText(spell.getName());
 
@@ -987,14 +848,10 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				holder.indicator.setVisibility(View.INVISIBLE);
 			}
 		}
-		Util.applyRowStyle(spell, convertView, position);
-
-		return convertView;
-
+		Util.applyRowStyle(spell, holder.itemView, position);
 	}
 
-	protected View prepareView(Art art, int position, View convertView, ViewGroup parent) {
-		TalentViewHolder holder = (TalentViewHolder) convertView.getTag();
+	protected void prepareView(Art art, int position, TalentViewHolder holder) {
 
 		Util.setVisibility(holder.text5, false, holder.text1);
 
@@ -1050,14 +907,10 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				holder.indicator.setVisibility(View.INVISIBLE);
 			}
 		}
-		Util.applyRowStyle(art, convertView, position);
-
-		return convertView;
+		Util.applyRowStyle(art, holder.itemView, position);
 	}
 
-	protected View prepareView(FileListable file, int position, View convertView, ViewGroup parent) {
-		EventViewHolder holder = (EventViewHolder) convertView.getTag();
-
+	protected void prepareView(FileListable file, int position, EventViewHolder holder) {
 		String fileName = file.getFile().getName();
 		long fileSize = file.getFile().length();
 
@@ -1067,11 +920,10 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		holder.icon1.setImageResource(file.getIcon());
 		holder.icon2.setVisibility(View.GONE);
 
-		return convertView;
 	}
 
-	protected View prepareView(Talent talent, int position, View convertView, ViewGroup parent) {
-		TalentViewHolder holder = (TalentViewHolder) convertView.getTag();
+	protected void prepareView(Talent talent, int position, TalentViewHolder holder) {
+
 
 		holder.text1.setText(talent.getName());
 
@@ -1177,13 +1029,10 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 			}
 		}
 
-		Util.applyRowStyle(talent, convertView, position);
-		return convertView;
+		Util.applyRowStyle(talent, holder.itemView, position);
 	}
 
-	protected View prepareView(EquippedItem equippedItem, int position, View convertView, ViewGroup parent) {
-
-		ViewHolder holder = (ViewHolder) convertView.getTag();
+	protected void prepareView(EquippedItem equippedItem, int position, ViewHolder holder) {
 
 		Item item = equippedItem.getItem();
 		ItemSpecification itemSpecification = equippedItem.getItemSpecification();
@@ -1353,7 +1202,7 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 				if (position > 0 && getItem(position - 1).equals(equippedItem.getSecondaryItem())) {
 					holder.icon_chain_bottom.setVisibility(View.VISIBLE);
 					holder.icon_chain_top.setVisibility(View.GONE);
-				} else if (position < getCount() && getItem(position + 1).equals(equippedItem.getSecondaryItem())) {
+				} else if (position < getItemCount() && getItem(position + 1).equals(equippedItem.getSecondaryItem())) {
 					holder.icon_chain_top.setVisibility(View.VISIBLE);
 					holder.icon_chain_bottom.setVisibility(View.GONE);
 				}
@@ -1365,7 +1214,13 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 
 		holder.text1.setText(title);
 
-		return convertView;
+
+	}
+
+
+	@Override
+	public long getItemId(int position) {
+		return getItem(position).hashCode();
 	}
 
 	@Override
@@ -1387,50 +1242,210 @@ public class ListableItemAdapter extends OpenArrayAdapter<Listable> implements O
 		}
 	}
 
-	private static class ViewHolder {
-
+	private static class ViewHolder extends AbstractDraggableSwipeableSelectableItemViewHolder {
 		TextView text1, text2, text3;
 		ImageView icon1, icon2, icon_chain_top, icon_chain_bottom;
 
+		public ViewHolder(View v) {
+			super(v);
+			text1 = (TextView) v.findViewById(android.R.id.text1);
+			text2 = (TextView) v.findViewById(android.R.id.text2);
+			text3 = (TextView) v.findViewById(R.id.text3);
+			icon1 = (ImageView) v.findViewById(android.R.id.icon1);
+			icon2 = (ImageView) v.findViewById(android.R.id.icon2);
+			icon_chain_bottom = (ImageView) v.findViewById(R.id.icon_chain_bottom);
+			icon_chain_top = (ImageView) v.findViewById(R.id.icon_chain_top);
+		}
+		@Override
+		public View getSwipeableContainerView() {
+			return itemView;
+		}
 	}
 
-	private static class SeekViewHolder {
+	private static class SeekViewHolder extends AbstractDraggableSwipeableSelectableItemViewHolder {
 		TextView text;
 		Button value;
 		SeekBarEx seek;
+
+		public SeekViewHolder(View v) {
+			super(v);
+			seek = (SeekBarEx) v.findViewById(R.id.wheel);
+			text = (TextView) v.findViewById(R.id.wheel_label);
+			value = (Button) v.findViewById(R.id.wheel_value);
+		}
+		@Override
+		public View getSwipeableContainerView() {
+			return itemView;
+		}
 	}
 
-	private static class TalentViewHolder {
+	private static class TalentViewHolder extends AbstractDraggableSwipeableSelectableItemViewHolder {
 		TextView text1, text2, text3;
 		Button text4, text5;
 		ImageView indicator;
+
+		public TalentViewHolder(View v) {
+			super(v);
+			// name
+			text1 = (TextView) v.findViewById(R.id.talent_list_item_text1);
+			// be
+			text2 = (TextView) v.findViewById(R.id.talent_list_item_text2);
+			// probe
+			text3 = (TextView) v.findViewById(R.id.talent_list_item_text3);
+			// value / at
+			text4 = (Button) v.findViewById(R.id.talent_list_item_text4);
+			// pa
+			text5 = (Button) v.findViewById(R.id.talent_list_item_text5);
+			indicator = (ImageView) v.findViewById(R.id.talent_list_item_indicator);
+		}
+		@Override
+		public View getSwipeableContainerView() {
+			return itemView;
+		}
 	}
 
-	private static class ModifierViewHolder {
+	private static class ModifierViewHolder extends AbstractDraggableSwipeableSelectableItemViewHolder {
 		ImageView icon1;
 		TextView text1, text2;
 		CheckBox active;
+
+		public ModifierViewHolder(View v,OnCheckedChangeListener changeListener) {
+			super(v);
+			text1 = (TextView) v.findViewById(android.R.id.text1);
+			text2 = (TextView) v.findViewById(android.R.id.text2);
+			icon1 = (ImageView) v.findViewById(android.R.id.icon1);
+			active = (CheckBox) v.findViewById(R.id.active);
+			active.setOnCheckedChangeListener(changeListener);
+		}
+		@Override
+		public View getSwipeableContainerView() {
+			return itemView;
+		}
 	}
 
-	private static class HeaderViewHolder {
+	private static class HeaderViewHolder extends AbstractDraggableSwipeableSelectableItemViewHolder {
 		TextView text1;
-		ImageButton button1, button2;;
+		ImageButton button1, button2;
+
+		public HeaderViewHolder(View v) {
+			super(v);
+			text1 = (TextView) v.findViewById(android.R.id.text1);
+			button1 = (ImageButton) v.findViewById(android.R.id.button1);
+			button2 = (ImageButton) v.findViewById(android.R.id.button2);
+		}
+		@Override
+		public View getSwipeableContainerView() {
+			return itemView;
+		}
 	}
 
-	private static class WoundViewHolder {
+	private static class WoundViewHolder extends AbstractDraggableSwipeableSelectableItemViewHolder {
 		ToggleButton[] wounds;
+
+		public WoundViewHolder(View v,ViewGroup parent,OnClickListener clickListener) {
+			super(v);
+
+			ViewGroup woundContainer = (ViewGroup) v.findViewById(R.id.wound_container);
+			int width = parent.getWidth();
+			width -= (parent.getPaddingLeft() + parent.getPaddingRight());
+			int buttonSize = parent.getContext().getResources().getDimensionPixelSize(R.dimen.icon_button_size);
+			int gap = parent.getContext().getResources().getDimensionPixelSize(R.dimen.default_gap);
+
+			int halfgap = gap / 2;
+			int buttonCount = (int) Math.floor(((float) width / (buttonSize + gap)));
+
+			// <ToggleButton
+			// android:id="@+id/wound1"
+			// android:layout_width="@dimen/icon_button_size"
+			// android:layout_height="@dimen/icon_button_size"
+			// android:layout_marginRight="@dimen/default_gap"
+			// android:textOn=""
+			// android:textOff=""
+			// android:background="@drawable/icon_wound_btn" />
+
+			wounds = new ToggleButton[buttonCount];
+			for (int i = 0; i < buttonCount; i++) {
+				ToggleButton woundButton = new ToggleButton(parent.getContext());
+				woundButton.setBackgroundResource(R.drawable.bg_wound_btn);
+				LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(buttonSize, buttonSize);
+				params.gravity = Gravity.CENTER;
+				params.rightMargin = halfgap;
+				params.leftMargin = halfgap;
+				params.topMargin = halfgap;
+				params.bottomMargin = halfgap;
+
+				woundButton.setLayoutParams(params);
+				woundButton.setTextOff("");
+				woundButton.setPadding(halfgap, halfgap, halfgap, halfgap);
+				woundButton.setLines(2);
+				woundButton.setEllipsize(TruncateAt.MIDDLE);
+				woundButton.setTextColor(Color.WHITE);
+				woundButton.setTextOn("");
+				woundButton.setTextSize(11.0f);
+
+				woundButton.setChecked(false);
+				woundButton.setOnClickListener(clickListener);
+				wounds[i] = woundButton;
+				woundContainer.addView(woundButton);
+			}
+		}
+		@Override
+		public View getSwipeableContainerView() {
+			return itemView;
+		}
 	}
 
-	private static class EventViewHolder {
+	private static class EventViewHolder extends AbstractDraggableSwipeableSelectableItemViewHolder {
 		TextView text1, text2, text3;
 		ImageView icon1, icon2;
+		public EventViewHolder(View v) {
+			super(v);
+			text1 = (TextView) v.findViewById(android.R.id.text1);
+			text2 = (TextView) v.findViewById(android.R.id.text2);
+			text3 = (TextView) v.findViewById(R.id.text3);
+			icon1 = (ImageView) v.findViewById(android.R.id.icon1);
+			icon2 = (ImageView) v.findViewById(android.R.id.icon2);
+		}
+		@Override
+		public View getSwipeableContainerView() {
+			return itemView;
+		}
 	}
 
-	private static class PurseViewHolder {
+	private static class PurseViewHolder extends AbstractDraggableSwipeableSelectableItemViewHolder {
 		private TextView header;
 		private Spinner currencySpinner;
 		private NumberPicker[] picker;
 		private TextView[] labels;
+		public PurseViewHolder(View v) {
+			super(v);
+			currencySpinner = (Spinner) v.findViewById(R.id.sp_currency);
+			header = (TextView) v.findViewById(R.id.tv_currency_header);
+
+			picker = new NumberPicker[4];
+			picker[0] = (NumberPicker) v.findViewById(R.id.popup_purse_dukat);
+			picker[1] = (NumberPicker) v.findViewById(R.id.popup_purse_silver);
+			picker[2] = (NumberPicker) v.findViewById(R.id.popup_purse_heller);
+			picker[3] = (NumberPicker) v.findViewById(R.id.popup_purse_kreuzer);
+
+			labels = new TextView[4];
+			labels[0] = (TextView) v.findViewById(R.id.tv_currency1);
+			labels[1] = (TextView) v.findViewById(R.id.tv_currency2);
+			labels[2] = (TextView) v.findViewById(R.id.tv_currency3);
+			labels[3] = (TextView) v.findViewById(R.id.tv_currency4);
+
+		}
+		@Override
+		public View getSwipeableContainerView() {
+			return itemView;
+		}
 	}
 
+	public Hero getHero() {
+		return hero;
+	}
+
+	public void setHero(Hero hero) {
+		this.hero = hero;
+	}
 }

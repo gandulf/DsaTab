@@ -189,10 +189,7 @@ public class ItemsActivity extends BaseActivity implements OnItemSelectedListene
 		itemListFragment.setOnItemSelectedListener(this);
 
 		if (Intent.ACTION_PICK.equals(getIntent().getAction())) {
-			setTitle(R.string.choose_item);
-			getSupportActionBar().setDisplayShowTitleEnabled(true);
-		} else {
-			getSupportActionBar().setDisplayShowTitleEnabled(false);
+			setToolbarTitle(R.string.choose_item);
 		}
 
 		getSupportActionBar().setDisplayShowHomeEnabled(true);

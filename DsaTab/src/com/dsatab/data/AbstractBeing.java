@@ -72,6 +72,7 @@ public abstract class AbstractBeing {
 		else
 			getHeroConfiguration().setProperty(getId() + KEY_PORTRAIT_URI, null);
 
+
 		for (HeroChangedListener l : listener) {
 			l.onPortraitChanged();
 		}

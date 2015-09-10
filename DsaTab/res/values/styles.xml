@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:custom="http://schemas.android.com/apk/res-auto">
 
+    <style name="AlertDialog.Light" parent="Base.Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+    </style>
+
+    <style name="AlertDialog.Dark" parent="Base.Theme.AppCompat.Dialog.Alert">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+    </style>
+
     <style name="Widget.Button" parent="@android:style/Widget.Button">
         <item name="android:background">@drawable/btn_touch_light</item>
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
@@ -9,6 +21,17 @@
         <item name="android:gravity">center</item>
         <item name="android:ellipsize">end</item>
         <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="FloatingActionButton">
+        <item name="fab_colorNormal">@color/accent</item>
+        <item name="fab_colorPressed">@color/accent_dark</item>
+        <item name="fab_progress_color">@color/accent_dark</item>
+    </style>
+
+    <style name="FloatingActionMenu">
+        <item name="menu_colorNormal">@color/accent</item>
+        <item name="menu_colorPressed">@color/accent_dark</item>
     </style>
 
     <style name="Widget.Button.Dark">

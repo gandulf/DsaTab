@@ -1,27 +1,22 @@
 package com.dsatab.fragment;
 
-import java.util.Arrays;
-import java.util.List;
-
 import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.graphics.Palette;
 import android.view.View;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.activity.BaseActivity;
 import com.dsatab.activity.DsaTabActivity;
-import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.config.TabInfo;
 import com.dsatab.data.AbstractBeing;
 import com.dsatab.data.Hero;
 import com.dsatab.data.Probe;
 import com.dsatab.data.Value;
 import com.dsatab.data.modifier.Modificator;
+import com.dsatab.fragment.dialog.DiceSliderFragment;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Hint;
 import com.dsatab.view.listener.EditListener;
@@ -29,6 +24,9 @@ import com.dsatab.view.listener.HeroChangedListener;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
 import com.dsatab.view.listener.ProbeListener;
 import com.dsatab.view.listener.TargetListener;
+
+import java.util.Arrays;
+import java.util.List;
 
 public abstract class BaseFragment extends Fragment implements HeroChangedListener, OnSharedPreferenceChangeListener {
 
@@ -190,17 +188,11 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 	}
 
 	public boolean checkProbe(Probe probe) {
-		if (getDsaActivity() != null)
-			return getDsaActivity().checkProbe(getBeing(), probe);
-		else
-			return false;
+		return DiceSliderFragment.show(this, getBeing(), probe, true, 0);
 	}
 
 	public boolean checkProbe(Probe probe, boolean autoRoll) {
-		if (getDsaActivity() != null)
-			return getDsaActivity().checkProbe(getBeing(), probe, autoRoll);
-		else
-			return false;
+		return DiceSliderFragment.show(this, getBeing(), probe, autoRoll, 0);
 	}
 
 	public abstract void onHeroLoaded(Hero hero);

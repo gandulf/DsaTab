@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.modifier.Modifier;
 import com.dsatab.util.Util;
@@ -24,27 +26,42 @@ import com.gandulf.guilib.view.SeekBarEx.SeekBarLabelRenderer;
 
 import java.util.Collection;
 
-public class ModifierAdapter extends OpenArrayAdapter<Modifier> implements OnSeekBarChangeListener {
+public class ModifierAdapter extends OpenRecyclerAdapter<ModifierAdapter.ModifierViewHolder, Modifier> implements OnSeekBarChangeListener {
 
 	private static final int TYPE_MANUAL = 0;
 	private static final int TYPE_STRING = 1;
 	private static final int TYPE_SPINNER = 2;
 
-	private LayoutInflater inflater;
-
 	public interface OnModifierChangedListener {
 		void onModifierChanged(Modifier modifier);
 	}
 
-	private OnModifierChangedListener onModifierChangedListener;
-
-	private SeekBarLabelRenderer labelRenderer = new SeekBarLabelRenderer() {
-
+	private static SeekBarLabelRenderer labelRenderer = new SeekBarLabelRenderer() {
 		@Override
 		public String render(int value) {
 			return Util.toProbe(value);
 		}
 	};
+
+	protected static class ModifierViewHolder extends RecyclerView.ViewHolder {
+		private TextView text1;
+		private TextView text2;
+		private CheckBox checkBox;
+		private SeekBarEx seekBar;
+		private Spinner spinner;
+
+		public ModifierViewHolder(View v) {
+			super(v);
+			text1 = (TextView) v.findViewById(android.R.id.text1);
+			text2 = (TextView) v.findViewById(android.R.id.text2);
+			checkBox = (CheckBox) v.findViewById(android.R.id.checkbox);
+			seekBar = (SeekBarEx) v.findViewById(R.id.wheel);
+			seekBar.setLabelRenderer(labelRenderer);
+			spinner = (Spinner) v.findViewById(R.id.spinner);
+		}
+	}
+
+	private OnModifierChangedListener onModifierChangedListener;
 
 	private View.OnClickListener modificerClickListener = new View.OnClickListener() {
 
@@ -65,17 +82,8 @@ public class ModifierAdapter extends OpenArrayAdapter<Modifier> implements OnSee
 		}
 	};
 
-	public ModifierAdapter(Context context, Collection<Modifier> objects) {
-		super(context, 0, objects);
-
-		inflater = LayoutInflater.from(context);
-
-		inflater = inflater.cloneInContext(context);
-	}
-
-	@Override
-	public int getViewTypeCount() {
-		return 3;
+	public ModifierAdapter(Collection<Modifier> objects) {
+		super(objects);
 	}
 
 	@Override
@@ -90,30 +98,25 @@ public class ModifierAdapter extends OpenArrayAdapter<Modifier> implements OnSee
 		}
 	}
 
+
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public ModifierViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+		final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+		final View v = inflater.inflate(R.layout.item_probe_modifier, parent, false);
+		return new ModifierViewHolder(v);
+	}
+
+	@Override
+	public void onBindViewHolder(final ModifierViewHolder holder, int position) {
+		super.onBindViewHolder(holder, position);
 
 		int type = getItemViewType(position);
-
-		if (convertView == null) {
-
-			convertView = (ViewGroup) inflater.inflate(R.layout.item_probe_modifier, parent, false);
-			ViewHolderString holder = new ViewHolderString();
-			holder.text1 = (TextView) convertView.findViewById(android.R.id.text1);
-			holder.text2 = (TextView) convertView.findViewById(android.R.id.text2);
-			holder.checkBox = (CheckBox) convertView.findViewById(android.R.id.checkbox);
-			holder.seekBar = (SeekBarEx) convertView.findViewById(R.id.wheel);
-			holder.seekBar.setLabelRenderer(labelRenderer);
-			holder.spinner = (Spinner) convertView.findViewById(R.id.spinner);
-			convertView.setTag(holder);
-
-		}
 
 		Modifier modifier = getItem(position);
 		switch (type) {
 		case TYPE_MANUAL: {
 
-			ViewHolderString holder = (ViewHolderString) convertView.getTag();
+
 			Util.setVisibility(holder.spinner, false);
 			Util.setVisibility(holder.seekBar, true);
 
@@ -153,7 +156,6 @@ public class ModifierAdapter extends OpenArrayAdapter<Modifier> implements OnSee
 			break;
 		}
 		case TYPE_STRING: {
-			ViewHolderString holder = (ViewHolderString) convertView.getTag();
 			Util.setVisibility(holder.spinner, false);
 			Util.setVisibility(holder.seekBar, false, holder.text1);
 
@@ -169,13 +171,12 @@ public class ModifierAdapter extends OpenArrayAdapter<Modifier> implements OnSee
 			break;
 		}
 		case TYPE_SPINNER: {
-			final ViewHolderString holder = (ViewHolderString) convertView.getTag();
 			Util.setVisibility(holder.spinner, true);
 			Util.setVisibility(holder.seekBar, false);
 
 			holder.text1.setText(modifier.getTitle());
 
-			SpinnerSimpleAdapter<String> adapter = new SpinnerSimpleAdapter<String>(getContext(),
+			SpinnerSimpleAdapter<String> adapter = new SpinnerSimpleAdapter<String>(holder.spinner.getContext(),
 					modifier.getSpinnerOptions());
 			holder.spinner.setAdapter(adapter);
 			holder.spinner.setTag(modifier);
@@ -198,13 +199,12 @@ public class ModifierAdapter extends OpenArrayAdapter<Modifier> implements OnSee
 							Util.setTextColor(holder.text2, spinnerModifier.getModifier());
 							onModifierChanged(spinnerModifier);
 
-							SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+							SharedPreferences preferences = DsaTabApplication.getPreferences();
 							Editor edit = preferences.edit();
 							edit.putInt(Modifier.PREF_PREFIX_SPINNER_INDEX + spinnerModifier.getTitle(), position);
 							edit.commit();
 						}
 					}
-
 				}
 
 				@Override
@@ -232,8 +232,6 @@ public class ModifierAdapter extends OpenArrayAdapter<Modifier> implements OnSee
 			break;
 		}
 		}
-
-		return convertView;
 	}
 
 	private void onModifierChanged(Modifier modifier) {
@@ -296,14 +294,6 @@ public class ModifierAdapter extends OpenArrayAdapter<Modifier> implements OnSee
 
 	public void setOnModifierChangedListener(OnModifierChangedListener onModifierChangedListener) {
 		this.onModifierChangedListener = onModifierChangedListener;
-	}
-
-	private static class ViewHolderString {
-		private TextView text1;
-		private TextView text2;
-		private CheckBox checkBox;
-		private SeekBarEx seekBar;
-		private Spinner spinner;
 	}
 
 }

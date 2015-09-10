@@ -17,7 +17,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="?android:attr/actionButtonStyle"
     android:id="@+id/actionbar_discard"
-    android:layout_width="0dp"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_weight="1">
 
@@ -32,5 +32,5 @@
         android:gravity="center_vertical"
         android:maxLines="1"
         android:ellipsize="middle"
-        android:text="@string/menu_discard" />
+        />
 </FrameLayout>

@@ -24,6 +24,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
@@ -45,6 +46,7 @@ import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropM
 import com.h6ah4i.android.widget.advrecyclerview.selectable.RecyclerViewSelectionManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.touchguard.RecyclerViewTouchActionGuardManager;
+import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +58,6 @@ public class TabEditActivity extends BaseActivity implements OnClickListener, On
 
 	private ImageView iconView;
 
-	private CheckBox diceslider;
 	private EditText editTitle;
 
 	private TabInfo currentInfo = null;
@@ -95,10 +96,7 @@ public class TabEditActivity extends BaseActivity implements OnClickListener, On
 		mRecyclerViewDragDropManager.setDraggingItemShadowDrawable(
 				(NinePatchDrawable) getResources().getDrawable(R.drawable.material_shadow_z3));
 
-		// swipe manager
 		mRecyclerViewSwipeManager = new RecyclerViewSwipeManager();
-
-		//selection manager
 		mRecyclerViewSelectionManager = new RecyclerViewSelectionManager();
 
 		mLayoutManager = new LinearLayoutManager(this);
@@ -124,7 +122,7 @@ public class TabEditActivity extends BaseActivity implements OnClickListener, On
 			recyclerView.addItemDecoration(new ItemShadowDecorator((NinePatchDrawable) getResources().getDrawable(R.drawable.material_shadow_z1)));
 		}
 
-		recyclerView.addItemDecoration(new SimpleListDividerDecorator(getResources().getDrawable(R.drawable.abc_list_divider_mtrl_alpha), true));
+		//recyclerView.addItemDecoration(new SimpleListDividerDecorator(getResources().getDrawable(R.drawable.abc_list_divider_mtrl_alpha), true));
 
 		// NOTE:
 		// The initialization order is very important! This order determines the priority of touch event handling.
@@ -136,13 +134,13 @@ public class TabEditActivity extends BaseActivity implements OnClickListener, On
 		mRecyclerViewDragDropManager.attachRecyclerView(recyclerView);
 
 
-
+		mRecyclerViewSelectionManager.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 		if (mAdapter.getItemCount() > 0) {
 			int index = getIntent().getExtras().getInt(DATA_INTENT_TAB_INDEX, 0);
 			if (index >= 0 && index < mAdapter.getItemCount()) {
-				mAdapter.setSelected(index);
+				mRecyclerViewSelectionManager.setSelected(index,true);
 			}else
-				mAdapter.setSelected(0);
+				mRecyclerViewSelectionManager.setSelected(0,true);
 		} else {
 			selectTabInfo(null);
 		}
@@ -150,8 +148,59 @@ public class TabEditActivity extends BaseActivity implements OnClickListener, On
 	}
 
 	@Override
-	public void onItemViewClicked(int position, View v) {
-		selectTabInfo(mAdapter.get(position));
+	protected void onPause() {
+		mRecyclerViewDragDropManager.cancelDrag();
+		super.onPause();
+	}
+
+
+	@Override
+	protected void onDestroy() {
+
+		if (mRecyclerViewDragDropManager != null) {
+			mRecyclerViewDragDropManager.release();
+			mRecyclerViewDragDropManager = null;
+		}
+
+		if (mRecyclerViewSwipeManager != null) {
+			mRecyclerViewSwipeManager.release();
+			mRecyclerViewSwipeManager = null;
+		}
+
+		if (mRecyclerViewSelectionManager != null) {
+			mRecyclerViewSelectionManager.release();
+			mRecyclerViewSelectionManager = null;
+		}
+
+		if (mRecyclerViewTouchActionGuardManager != null) {
+			mRecyclerViewTouchActionGuardManager.release();
+			mRecyclerViewTouchActionGuardManager = null;
+		}
+
+		if (recyclerView != null) {
+			recyclerView.setItemAnimator(null);
+			recyclerView.setAdapter(null);
+			recyclerView = null;
+		}
+
+		if (mWrappedAdapter != null) {
+			WrapperAdapterUtils.releaseAll(mWrappedAdapter);
+			mWrappedAdapter = null;
+		}
+		mAdapter = null;
+		mLayoutManager = null;
+
+		super.onDestroy();
+	}
+
+	@Override
+	public void onItemClicked(int position, View v) {
+		selectTabInfo(mAdapter.getItem(position));
+	}
+
+	@Override
+	public boolean onItemLongClicked(int position, View v) {
+		return false;
 	}
 
 	@Override
@@ -202,9 +251,6 @@ public class TabEditActivity extends BaseActivity implements OnClickListener, On
 		spec.setContent(R.id.tab3);
 		spec.setIndicator(getString(R.string.tab_secondary));
 		tabHost.addTab(spec);
-
-		diceslider = (CheckBox) findViewById(R.id.popup_edit_diceslider);
-		diceslider.setOnCheckedChangeListener(this);
 
 		editTitle = (EditText) findViewById(R.id.popup_edit_title);
 		editTitle.addTextChangedListener(new DefaultTextWatcher() {
@@ -295,9 +341,7 @@ public class TabEditActivity extends BaseActivity implements OnClickListener, On
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		if (currentInfo != null) {
 			switch (buttonView.getId()) {
-			case R.id.popup_edit_diceslider:
-				currentInfo.setDiceSlider(isChecked);
-				break;
+
 			}
 		}
 	}
@@ -324,8 +368,8 @@ public class TabEditActivity extends BaseActivity implements OnClickListener, On
 		case R.id.option_add:
 			TabInfo info = new TabInfo();
 			info.setIconUri(Util.getUriForResourceId(R.drawable.dsa_armor_fist));
-			mAdapter.insert(info);
-			mAdapter.setSelected(mAdapter.getItemCount() - 1);
+			mAdapter.add(info);
+			mRecyclerViewSelectionManager.setSelected(mAdapter.getItemCount() - 1,true);
 			break;
 		case R.id.option_delete:
 			// for (Integer pos : mAdapter.getSelectedPositions()) {
@@ -336,7 +380,7 @@ public class TabEditActivity extends BaseActivity implements OnClickListener, On
 			mAdapter.clear();
 			for (TabInfo tabInfo : DsaTabApplication.getInstance().getHero().getHeroConfiguration()
 					.getDefaultTabs(null)) {
-				mAdapter.insert(tabInfo);
+				mAdapter.add(tabInfo);
 			}
 			break;
 		case android.R.id.home:
@@ -349,8 +393,6 @@ public class TabEditActivity extends BaseActivity implements OnClickListener, On
 	protected void selectTabInfo(TabInfo info) {
 		currentInfo = info;
 		if (info != null) {
-			diceslider.setChecked(info.isDiceSlider());
-
 			iconView.setImageURI(info.getIconUri());
 
 			// TODO
@@ -364,7 +406,6 @@ public class TabEditActivity extends BaseActivity implements OnClickListener, On
 		}
 
 		editTitle.setEnabled(info != null);
-		diceslider.setEnabled(info != null);
 		iconView.setEnabled(info != null);
 
 		list1.setTabInfo(info, 0);

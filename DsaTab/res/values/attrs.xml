@@ -11,8 +11,11 @@
         <attr name="listItemBackground" format="reference"/>
         <attr name="slidingPaneShadowBackground" format="reference"/>        
         
-        <attr name="selectableBackground" format="reference" />        
-        
+        <attr name="selectableBackground" format="reference" />
+
+        <attr name="floatingActionButtonStyle" format="reference" />
+        <attr name="floatingActionMenuStyle" format="reference" />
+
         <attr name="imgChainTop" format="reference"/>
         <attr name="imgChainBottom" format="reference"/>
         

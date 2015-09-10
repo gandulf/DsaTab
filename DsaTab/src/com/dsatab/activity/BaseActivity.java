@@ -1,19 +1,14 @@
 package com.dsatab.activity;
 
-import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.WindowManager;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
@@ -23,6 +18,8 @@ import com.dsatab.util.Util;
 public class BaseActivity extends AppCompatActivity {
 
 	protected Toolbar toolbar;
+	protected CollapsingToolbarLayout toolbarCollapse;
+	protected AppBarLayout appBarLayout;
 
 	private boolean toolbarRefreshing = false;
 
@@ -71,6 +68,8 @@ public class BaseActivity extends AppCompatActivity {
 		super.setContentView(layoutResID);
 
 		toolbar = (Toolbar) findViewById(R.id.toolbar);
+		toolbarCollapse  = (CollapsingToolbarLayout) findViewById(R.id.toolbar_collapse);
+		appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
 		if (toolbar != null) {
 			setSupportActionBar(toolbar);
 		}
@@ -92,4 +91,20 @@ public class BaseActivity extends AppCompatActivity {
 		return toolbar;
 	}
 
+
+	protected  void setToolbarTitle(int title) {
+		if (toolbar!=null)
+			toolbar.setTitle(title);
+
+		if (toolbarCollapse!=null)
+			toolbarCollapse.setTitle(getText(title));
+	}
+	protected  void setToolbarTitle(CharSequence title) {
+		if (toolbar!=null)
+			toolbar.setTitle(title);
+
+		if (toolbarCollapse!=null)
+			toolbarCollapse.setTitle(title);
+
+	}
 }

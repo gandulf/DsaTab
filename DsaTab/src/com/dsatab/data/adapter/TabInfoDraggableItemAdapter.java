@@ -5,7 +5,6 @@ import java.util.List;
 import android.content.Context;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,16 +17,14 @@ import com.dsatab.data.adapter.TabInfoDraggableItemAdapter.TabViewHolder;
 import com.dsatab.util.Util;
 import com.dsatab.util.ViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
-import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.selectable.SelectableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableSwipeableSelectableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 
-public class TabInfoDraggableItemAdapter extends RecyclerView.Adapter<TabViewHolder> implements
+public class TabInfoDraggableItemAdapter extends OpenRecyclerAdapter<TabViewHolder,TabInfo> implements
 		DraggableItemAdapter<TabViewHolder>, SwipeableItemAdapter<TabViewHolder>, SelectableItemAdapter<TabViewHolder> {
 
 	public class TabViewHolder extends AbstractDraggableSwipeableSelectableItemViewHolder {
@@ -38,7 +35,7 @@ public class TabInfoDraggableItemAdapter extends RecyclerView.Adapter<TabViewHol
 
 		public TabViewHolder(View v) {
 			super(v);
-			mContainer = (ViewGroup) v;
+			mContainer = (ViewGroup) v.findViewById(R.id.container);
 			mDragHandle = v.findViewById(R.id.drag);
 			mTextView = (TextView) v.findViewById(android.R.id.text1);
 			mImageView = (ImageView) v.findViewById(R.id.gen_tab);
@@ -50,30 +47,10 @@ public class TabInfoDraggableItemAdapter extends RecyclerView.Adapter<TabViewHol
 		}
 	}
 
-	private List<TabInfo> data;
-
-	private EventListener mEventListener;
-	private View.OnClickListener mItemViewOnClickListener;
-
-	public interface EventListener {
-		void onItemRemoved(int position);
-
-		void onItemViewClicked(int position, View v);
-
-		void onItemSelected(int position, boolean value);
-	}
-
 	public TabInfoDraggableItemAdapter(Context context, List<TabInfo> tabInfos) {
+		super(tabInfos);
 		// DraggableItemAdapter requires stable ID, and also
 		// have to implement the getItemId() method appropriately.
-		data = tabInfos;
-
-		mItemViewOnClickListener = new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				onItemViewClick(v);
-			}
-		};
 
 		setHasStableIds(true);
 	}
@@ -84,79 +61,36 @@ public class TabInfoDraggableItemAdapter extends RecyclerView.Adapter<TabViewHol
 	}
 
 	@Override
-	public TabViewHolder onCreateViewHolder(ViewGroup parent, int arg1) {
+	public TabViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 		final View v = inflater.inflate(R.layout.item_drag_tab, parent, false);
 		return new TabViewHolder(v);
 	}
 
+
 	@Override
-	public int getItemCount() {
-		return data.size();
+	public long getItemId(int position) {
+		return getItem(position).getId().hashCode();
 	}
-
-	public List<TabInfo> getItems() {
-		return data;
-	}
-
-	public TabInfo get(int position) {
-		return data.get(position);
-	}
-
-	public void insert(TabInfo info) {
-		data.add(info);
-		notifyItemInserted(data.indexOf(info));
-	}
-
-	public void clear() {
-		data.clear();;
-		notifyItemRangeRemoved(0,data.size());
-	}
-
-
-	public void setSelected(int position) {
-//TODO
-	}
-
-
 
 	@Override
 	public void onMoveItem(int fromPosition, int toPosition) {
-
-		if (fromPosition == toPosition) {
-			return;
-		}
-
-		final TabInfo item = data.remove(fromPosition);
-		data.add(toPosition, item);
-
-		notifyItemMoved(fromPosition, toPosition);
+		moveItem(fromPosition, toPosition);
 	}
 
 	@Override
 	public void onItemSelected(TabViewHolder holder, boolean value) {
-		if (mEventListener != null) {
-			mEventListener.onItemSelected(holder.getPosition(), value);
-		}
-	}
-
-	private void onItemViewClick(View v) {
-		if (mEventListener != null) {
-			TabViewHolder holder =(TabViewHolder) RecyclerViewAdapterUtils.getViewHolder(v);
-			mEventListener.onItemViewClicked(holder.getPosition(), v);
+		if (getEventListener() != null) {
+			getEventListener().onItemSelected(holder.getPosition(), value);
 		}
 	}
 
 	@Override
 	public void onBindViewHolder(TabViewHolder holder, int position) {
+		super.onBindViewHolder(holder,position);
 		TabViewHolder tabHolder = (TabViewHolder) holder;
 
-
-		// set listeners
-		// (if the item is *not pinned*, click event comes to the itemView)
-		holder.itemView.setOnClickListener(mItemViewOnClickListener);
-
-		final TabInfo item = data.get(position);
+		final TabInfo item = getItem(position);
 
 		// set text
 		tabHolder.mTextView.setText(item.getTitle());
@@ -234,21 +168,8 @@ public class TabInfoDraggableItemAdapter extends RecyclerView.Adapter<TabViewHol
 	public void onPerformAfterSwipeReaction(TabViewHolder holder, int position, int result, int reaction) {
 
 		if (reaction == RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM) {
-			data.remove(position);
-			notifyItemRemoved(position);
-
-			if (mEventListener != null) {
-				mEventListener.onItemRemoved(position);
-			}
+			remove(position);
 		}
-	}
-
-	public EventListener getEventListener() {
-		return mEventListener;
-	}
-
-	public void setEventListener(EventListener eventListener) {
-		mEventListener = eventListener;
 	}
 
 }

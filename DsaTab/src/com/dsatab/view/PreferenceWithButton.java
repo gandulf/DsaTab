@@ -38,6 +38,7 @@ public class PreferenceWithButton extends Preference {
 	 * @see android.preference.Preference#onBindView(android.view.View)
 	 */
 	@Override
+	@SuppressWarnings("WrongConstant")
 	protected void onBindView(View view) {
 		super.onBindView(view);
 

@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
-import android.support.v7.graphics.Palette;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,8 +30,6 @@ public class TabDrawerAdapter extends OpenArrayAdapter<DrawerItem> {
 	private static final int TYPE_PROFILE = 3;
 
 	private LayoutInflater inflater;
-
-	private Palette palette;
 
 	public enum DrawerItemType {
 		Header, Tab, System, Profile
@@ -116,11 +113,6 @@ public class TabDrawerAdapter extends OpenArrayAdapter<DrawerItem> {
 		inflater = LayoutInflater.from(context);
 	}
 
-	public void applyPalette(Palette palette) {
-		this.palette = palette;
-		notifyDataSetChanged();
-	}
-
 	@Override
 	public int getItemViewType(int position) {
 		DrawerItem drawerItem = getItem(position);
@@ -202,10 +194,6 @@ public class TabDrawerAdapter extends OpenArrayAdapter<DrawerItem> {
 			Util.setImage(image, drawerInfo.image, drawerInfo.imageId);
 			Util.setImage(circleImage, drawerInfo.image, drawerInfo.imageId);
 
-			if (palette != null) {
-				textView.setTextColor(palette.getLightVibrantColor(Color.WHITE));
-				textView2.setTextColor(palette.getLightVibrantColor(Color.GRAY));
-			}
 			break;
 		}
 		case TYPE_SYSTEM:

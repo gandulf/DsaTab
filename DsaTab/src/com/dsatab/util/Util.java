@@ -48,6 +48,7 @@ import android.provider.MediaStore.Images.ImageColumns;
 import android.provider.MediaStore.Images.Media;
 import android.provider.MediaStore.MediaColumns;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.SpannedString;
@@ -376,6 +377,14 @@ public class Util {
 		return floats;
 	}
 
+	public static boolean notifyDatasetChanged(RecyclerView list) {
+		if (list!=null && list.getAdapter()!=null) {
+			list.getAdapter().notifyDataSetChanged();
+			return true;
+		} else {
+			return false;
+		}
+	}
 	public static boolean notifyDatasetChanged(AdapterView<?> list) {
 		Adapter adapter = list.getAdapter();
 		if (adapter instanceof BaseAdapter) {
@@ -686,6 +695,14 @@ public class Util {
 		}
 	}
 
+	public static void setImage(ImageView view, String imageUri, int defaultPlaceholder) {
+		if (imageUri!=null) {
+			setImage(view,Uri.parse(imageUri),defaultPlaceholder);
+		} else {
+			setImage(view,(Uri)null,defaultPlaceholder);
+		}
+
+	}
 	public static void setImage(ImageView view, Uri imageUri, int defaultPlaceholder) {
 		setImage(view, imageUri, defaultPlaceholder, null);
 	}

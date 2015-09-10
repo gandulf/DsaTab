@@ -1,13 +1,5 @@
 package com.dsatab.fragment;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -54,7 +46,15 @@ import com.dsatab.view.listener.HeroInventoryChangedListener;
 import com.gandulf.guilib.util.ListViewCompat;
 import com.gandulf.guilib.util.ResUtil;
 import com.gandulf.guilib.view.DynamicListViewEx;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.github.clans.fab.FloatingActionMenu;
+
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 public class ItemsFragment extends BaseListFragment implements OnItemClickListener, HeroInventoryChangedListener {
 
@@ -85,7 +85,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 	private DynamicListViewEx itemList;
 	private ItemAdapter itemListAdapter;
 
-	private FloatingActionsMenu fabMenu;
+	private FloatingActionMenu fabMenu;
 
 	private int mCurrentContainerId = INVALID_SET;
 	private String mScreenType = TYPE_LIST;
@@ -507,11 +507,11 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		switch (v.getId()) {
 		case R.id.fab_container_add:
 			ItemContainerEditFragment.insert(getActivity());
-			fabMenu.collapse();
+			fabMenu.close(true);
 			break;
 		case R.id.fab_items_add:
 			showItemPopup();
-			fabMenu.collapse();
+			fabMenu.close(true);
 			break;
 		case android.R.id.empty:
 			// do not remove tab in itemsfragment
@@ -697,7 +697,7 @@ public class ItemsFragment extends BaseListFragment implements OnItemClickListen
 		slidingPaneLayout.setCoveredFadeColor(0);
 		slidingPaneLayout.setSliderFadeColor(0);
 
-		fabMenu = (FloatingActionsMenu) root.findViewById(R.id.fab_menu);
+		fabMenu = (FloatingActionMenu) root.findViewById(R.id.fab_menu);
 
 		root.findViewById(R.id.fab_container_add).setOnClickListener(this);
 		root.findViewById(R.id.fab_items_add).setOnClickListener(this);

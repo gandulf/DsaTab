@@ -2,6 +2,7 @@ package com.dsatab.fragment;
 
 import android.annotation.TargetApi;
 import android.os.Build;
+import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.ActionMode.Callback;
@@ -127,6 +128,29 @@ public abstract class BaseListFragment extends BaseFragment implements OnItemLon
 
 	}
 
+	protected void refreshEmptyView(RecyclerView.Adapter adapter, String emptyText) {
+		View emptyView = findViewById(android.R.id.empty);
+		if (emptyView != null) {
+			if (adapter.getItemCount() ==0) {
+				emptyView.setVisibility(View.VISIBLE);
+				if (emptyText != null && emptyView instanceof TextView) {
+					((TextView) emptyView).setText(emptyText);
+				}
+
+				View list = getListView();
+				if (list != null) {
+					list.setVisibility(View.GONE);
+				}
+			} else {
+				emptyView.setVisibility(View.GONE);
+				View list = getListView();
+				if (list != null) {
+					list.setVisibility(View.VISIBLE);
+				}
+			}
+			emptyView.setOnClickListener(this);
+		}
+	}
 	protected void refreshEmptyView(Adapter adapter, String emptyText) {
 		View emptyView = findViewById(android.R.id.empty);
 		if (emptyView != null) {

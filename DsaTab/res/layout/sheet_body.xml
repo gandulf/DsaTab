@@ -2,8 +2,7 @@
     android:id="@+id/sheet_body"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_margin="@dimen/default_gap"
-    android:layout_weight="1" >
+    android:layout_margin="@dimen/default_gap">
 
     <ImageView
         android:id="@+id/body_background"

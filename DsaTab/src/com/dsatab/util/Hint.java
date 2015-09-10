@@ -2,16 +2,12 @@ package com.dsatab.util;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.res.XmlResourceParser;
-import android.graphics.Point;
+import android.view.View;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabPreferenceActivity;
-import com.github.amlcurran.showcaseview.ShowcaseView;
-import com.github.amlcurran.showcaseview.targets.PointTarget;
-import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -22,6 +18,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 public class Hint {
 
@@ -164,35 +162,26 @@ public class Hint {
 	 * 
 	 */
 	public boolean show(Activity activity) {
-		boolean shown = false;
 		if (this.viewId != null) {
 			int viewIdInt = activity.getResources().getIdentifier(this.viewId, "id",
 					DsaTabApplication.getInstance().getPackageName());
 			if (viewIdInt != 0) {
-				ViewTarget target = new ViewTarget(viewIdInt, activity);
-
+				View target = activity.findViewById(viewIdInt);
 				// check if view is onscreen
-				Point p = target.getPoint();
-				if (p.x >= 0 && p.y >= 0 && p.x < Util.getWidth(activity) && p.y < Util.getHeight(activity)) {
-					new ShowcaseView.Builder(activity).setTarget(target).setContentTitle(title)
-							.setContentText(description).build().show();
-					shown = true;
+				if (target!=null && target.getVisibility() == View.VISIBLE) {
+					new MaterialShowcaseView.Builder(activity)
+						.setTarget(target)
+						.setDismissText("GOT IT")
+						.setContentText(title+"\n"+description)
+						.setDelay(300) // optional but starting animations immediately in onCreate can make them choppy
+						.singleUse(id) // provide a unique ID used to ensure it is only shown once
+						.show();
+
+
+
+
 				}
 			}
-		} else if (this.x >= 0 && this.y >= 0) {
-			int x = (int) (Util.getWidth(activity) * (this.x / 100.0f));
-			int y = (int) (Util.getHeight(activity) * (this.y / 100.0f));
-			PointTarget pointTarget = new PointTarget(x, y);
-			new ShowcaseView.Builder(activity).setTarget(pointTarget).setContentTitle(title)
-					.setContentText(description).build().show();
-			shown = true;
-		}
-
-		if (shown) {
-			Editor edit = DsaTabApplication.getPreferences().edit();
-			edit.putBoolean(Hint.PREF_PREFIX_HINT_STORAGE + id, true);
-			edit.commit();
-			return true;
 		}
 		return false;
 	}

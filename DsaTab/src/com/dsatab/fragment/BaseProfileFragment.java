@@ -3,7 +3,6 @@ package com.dsatab.fragment;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.ActionBar.LayoutParams;
@@ -16,7 +15,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.PopupMenu;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
@@ -32,7 +30,6 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +38,6 @@ import com.dsatab.R;
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.data.AbstractBeing;
 import com.dsatab.data.Feature;
-import com.dsatab.data.Hero;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.db.DataManager;
 import com.dsatab.fragment.dialog.ImageChooserDialog;
@@ -50,21 +46,17 @@ import com.dsatab.util.ClickSpan;
 import com.dsatab.util.ClickSpan.OnSpanClickListener;
 import com.dsatab.util.StyleableSpannableStringBuilder;
 import com.dsatab.util.Util;
-import com.ecloud.pulltozoomview.PullToZoomScrollView;
 import com.gandulf.guilib.download.AbstractDownloader;
 import com.gandulf.guilib.download.DownloaderWrapper;
 
 import java.io.File;
 import java.util.Arrays;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public abstract class BaseProfileFragment extends BaseAttributesFragment implements OnClickListener,
         OnLongClickListener, PopupMenu.OnMenuItemClickListener {
 
     private static final String PREF_SHOW_FEATURE_COMMENTS = "SHOW_COMMENTS";
 
-    private static final String PREF_EXPAND_BASEINFO = "SHOW_BASEINFO";
     private static final String PREF_SHOW_BASEINFO = "SHOW_BASEINFO_OPEN";
 
     private static final int ACTION_PHOTO = 1;
@@ -74,7 +66,7 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
             tfDisadvantgesTitle;
 
     protected ViewGroup descriptions;
-    private ImageButton detailsSwitch, detailsHide;
+    private ImageButton detailsHide;
 
     private int descriptionsHeight;
 
@@ -84,10 +76,6 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
 
         descriptions = (ViewGroup) view.findViewById(R.id.gen_description);
         descriptions.setOnClickListener(this);
-
-        detailsSwitch = (ImageButton) view.findViewById(R.id.details_switch);
-        if (detailsSwitch!=null)
-            detailsSwitch.setOnClickListener(this);
 
         detailsHide = (ImageButton) view.findViewById(R.id.details_hide);
         if (detailsHide != null)
@@ -117,6 +105,8 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
         Editor edit = getPreferences().edit();
         edit.putBoolean(PREF_SHOW_BASEINFO + getClass().getSimpleName(), false);
         edit.apply();
+
+        View info = getActivity().findViewById(R.id.toolbar_info);
 
         if (animate && descriptions.getVisibility() != View.GONE) {
 
@@ -153,8 +143,15 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
                 descriptions.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
                 descriptions.setVisibility(View.GONE);
             }
+            if (info!=null) {
+                info.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
+            }
         } else {
             descriptions.setVisibility(View.GONE);
+        }
+
+        if (info!=null) {
+            info.setVisibility(View.VISIBLE);
         }
 
     }
@@ -164,6 +161,8 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
         Editor edit = getPreferences().edit();
         edit.putBoolean(PREF_SHOW_BASEINFO + getClass().getSimpleName(), true);
         edit.apply();
+
+        View info = getActivity().findViewById(R.id.toolbar_info);
 
         if (animate && descriptions.getVisibility() != View.VISIBLE) {
 
@@ -191,22 +190,16 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
             } else {
                 descriptions.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
             }
+
+            if (info!=null) {
+                info.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
+            }
         }
         descriptions.setVisibility(View.VISIBLE);
+        if (info!=null) {
+            info.setVisibility(View.GONE);
+        }
 
-    }
-
-    public void toggleDescriptionDetails(boolean animate) {
-        Editor edit = getPreferences().edit();
-        edit.putBoolean(PREF_EXPAND_BASEINFO + getClass().getSimpleName(),
-                !getPreferences().getBoolean(PREF_EXPAND_BASEINFO + getClass().getSimpleName(), true));
-        edit.apply();
-
-        updateBaseInfo(true);
-    }
-
-    public boolean isDescriptionDetailsExpanded() {
-        return getPreferences().getBoolean(PREF_EXPAND_BASEINFO + getClass().getSimpleName(), true);
     }
 
     protected void updateBaseInfo(boolean animate) {
@@ -218,26 +211,6 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
             openDescription(null, animate);
         } else {
             closeDescription(animate);
-        }
-
-        if (isDescriptionDetailsExpanded()) {
-            if (animate) {
-                ObjectAnimator animator = ObjectAnimator.ofFloat(detailsSwitch, "rotation", 180f, 0f);
-                animator.setTarget(detailsSwitch);
-                animator.setDuration(250);
-                animator.start();
-            } else {
-                detailsSwitch.setRotation(0f);
-            }
-        } else {
-            if (animate) {
-                ObjectAnimator animator = ObjectAnimator.ofFloat(detailsSwitch, "rotation", 0f, 180f);
-                animator.setTarget(detailsSwitch);
-                animator.setDuration(250);
-                animator.start();
-            } else {
-                detailsSwitch.setRotation(180f);
-            }
         }
     }
 
@@ -364,15 +337,55 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        View portrait = activity.findViewById(R.id.toolbar_portrait);
+        View info = activity.findViewById(R.id.toolbar_info);
+
+        if (portrait!=null)
+            portrait.setOnClickListener(this);
+
+        if (info!=null) {
+            info.setOnClickListener(this);
+
+            descriptions = (ViewGroup) activity.findViewById(R.id.gen_description);
+
+            if (descriptions!=null && descriptions.getVisibility()==View.GONE)
+                info.setVisibility(View.VISIBLE);
+            else
+                info.setVisibility(View.GONE);
+        }
+
+    }
+
+    @Override
+    public void onDetach() {
+        View portrait = getActivity().findViewById(R.id.toolbar_portrait);
+        View info = getActivity().findViewById(R.id.toolbar_info);
+
+        if (portrait!=null)
+            portrait.setOnClickListener(null);
+
+        if (info!=null) {
+            info.setOnClickListener(null);
+            info.setVisibility(View.GONE);
+        }
+
+        super.onDetach();
+    }
+
+    @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.gen_description:
-            case R.id.details_switch:
-                toggleDescriptionDetails(true);
-                break;
             case R.id.details_hide:
                 closeDescription(true);
+            case R.id.toolbar_info:
+                openDescription(v,true);
+                break;
+            case R.id.toolbar_portrait:
+                showPortaitMenu(v);
                 break;
         }
 
@@ -524,9 +537,6 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
     @Override
     public void onPortraitChanged() {
         getDsaActivity().updatePortrait(getBeing());
-        if (getBeing() instanceof Hero) {
-            getDsaActivity().setupDrawerProfile((Hero) getBeing());
-        }
     }
 
 }

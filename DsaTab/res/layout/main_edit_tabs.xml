@@ -76,13 +76,6 @@
                         android:hint="@string/label_titel"
                         android:inputType="textPersonName" />
 
-                    <CheckBox
-                        android:id="@+id/popup_edit_diceslider"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_columnSpan="2"
-                        android:text="@string/show_dice" >
-                    </CheckBox>
                 </GridLayout>
 
                 <TabHost

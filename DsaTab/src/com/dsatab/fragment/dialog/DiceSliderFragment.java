@@ -4,6 +4,8 @@ import android.animation.LayoutTransition;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -17,7 +19,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.graphics.Palette;
+import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,11 +27,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.dsatab.DsaTabApplication;
@@ -50,6 +50,7 @@ import com.dsatab.data.Probe.ProbeType;
 import com.dsatab.data.Spell;
 import com.dsatab.data.adapter.ModifierAdapter;
 import com.dsatab.data.adapter.ModifierAdapter.OnModifierChangedListener;
+import com.dsatab.data.adapter.OpenRecyclerAdapter;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.FeatureType;
 import com.dsatab.data.items.DistanceWeapon;
@@ -68,7 +69,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DiceSliderFragment extends android.app.DialogFragment implements View.OnClickListener,
+public class DiceSliderFragment extends DialogFragment implements View.OnClickListener,
 		OnModifierChangedListener {
 
 	public static final String TAG = "diceSliderFragment";
@@ -107,7 +108,7 @@ public class DiceSliderFragment extends android.app.DialogFragment implements Vi
 
 	private ProbeData probeData;
 
-	private ListView modifiersList;
+	private RecyclerView modifiersList;
 	private View listDivider;
 	private ModifierAdapter modifierAdapter;
 
@@ -121,12 +122,9 @@ public class DiceSliderFragment extends android.app.DialogFragment implements Vi
 	private int soundWin;
 	private int soundFail;
 
-	private Context themedContext;
-
-	public static void show(Activity activity, AbstractBeing being, Probe probe, boolean autoRoll, int requestCode) {
-		if (activity == null)
-			return;
-
+	public static boolean show(Fragment parent, AbstractBeing being, Probe probe, boolean autoRoll, int requestCode) {
+		if (parent ==null || being == null)
+			return false;
 		DiceSliderFragment dialog = new DiceSliderFragment();
 
 		Bundle args = new Bundle();
@@ -137,9 +135,10 @@ public class DiceSliderFragment extends android.app.DialogFragment implements Vi
 		dialog.probeData.probe = probe;
 		dialog.setArguments(args);
 
-		if (activity != null) {
-			dialog.show(activity.getFragmentManager(), TAG);
-		}
+		dialog.setTargetFragment(parent, requestCode);
+		dialog.show(parent.getFragmentManager(), TAG);
+
+		return true;
 	}
 
 	@Override
@@ -153,21 +152,38 @@ public class DiceSliderFragment extends android.app.DialogFragment implements Vi
 
 		builder.setTitle(probeData.probe.getName());
 
-		modifiersList = (ListView) root.findViewById(R.id.probe_modifier_container);
-		listDivider = root.findViewById(R.id.probe_modifier_container_divider);
+		modifiersList = (RecyclerView) root.findViewById(R.id.probe_modifier_container);
+		modifiersList.setLayoutManager(new org.solovyev.android.views.llm.LinearLayoutManager(builder.getContext()));
+		modifiersList.setHasFixedSize(false);
 
-		modifiersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		modifierAdapter = new ModifierAdapter(new ArrayList<Modifier>());
+		modifierAdapter.setOnModifierChangedListener(this);
+		modifierAdapter.setEventListener(new OpenRecyclerAdapter.EventListener() {
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Modifier modifier = (Modifier) modifiersList.getItemAtPosition(position);
+			public void onItemRemoved(int position) {
+
+			}
+
+			@Override
+			public void onItemClicked(int position, View v) {
+				Modifier modifier = (Modifier) modifierAdapter.getItem(position);
 				modifier.toggleActive();
 				onModifierChanged(modifier);
 			}
-		});
 
-		modifierAdapter = new ModifierAdapter(themedContext, new ArrayList<Modifier>());
-		modifierAdapter.setOnModifierChangedListener(this);
+			@Override
+			public boolean onItemLongClicked(int position, View v) {
+				return false;
+			}
+
+			@Override
+			public void onItemSelected(int position, boolean value) {
+
+			}
+		});
 		modifiersList.setAdapter(modifierAdapter);
+
+		listDivider = root.findViewById(R.id.probe_modifier_container_divider);
 
 		tfDiceTalentName = (TextView) root.findViewById(R.id.dice_talent);
 		tfDiceTalentName.setVisibility(View.GONE);
@@ -192,8 +208,6 @@ public class DiceSliderFragment extends android.app.DialogFragment implements Vi
 		linDiceResult = (LinearLayout) root.findViewById(R.id.dice_dice_result);
 		linDiceResult.setOnClickListener(this);
 
-		initLayoutTransitions(root);
-
 		resetPanelInformation();
 
 		builder.setView(root);
@@ -211,22 +225,6 @@ public class DiceSliderFragment extends android.app.DialogFragment implements Vi
 		}
 
 		return dialog;
-	}
-
-	public void applyPalette(Palette palette) {
-		//super.applyPalette(palette);
-		if (palette != null) {
-			getView().setBackgroundColor(palette.getLightMutedColor(Color.WHITE));
-		}
-	}
-
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-
-		// create ContextThemeWrapper from the original Activity Context with the custom theme
-		// themedContext = new ContextThemeWrapper(activity, R.style.DsaTabTheme_Dark);
-		themedContext = activity;
 	}
 
 	private void resetPanelInformation() {
@@ -251,20 +249,11 @@ public class DiceSliderFragment extends android.app.DialogFragment implements Vi
 	}
 
 	@Override
-	public void onDetach() {
-		super.onDetach();
+	public void onDestroyView() {
+		super.onDestroyView();
 
 		mHandler.removeMessages(HANDLE_DICE_20);
 		mHandler.removeMessages(HANDLE_DICE_6);
-
-		themedContext = null;
-	}
-
-	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-	private void initLayoutTransitions(ViewGroup root) {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && modifiersList.getLayoutTransition() != null) {
-			modifiersList.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
-		}
 	}
 
 	@Override
@@ -278,12 +267,12 @@ public class DiceSliderFragment extends android.app.DialogFragment implements Vi
 		preferences = DsaTabApplication.getPreferences();
 
 		sounds = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
-		soundNeutral = sounds.load(themedContext, R.raw.dice, 1);
-		soundWin = sounds.load(themedContext, R.raw.dice_win, 1);
-		soundFail = sounds.load(themedContext, R.raw.dice_fail, 1);
+		soundNeutral = sounds.load(getActivity(), R.raw.dice, 1);
+		soundWin = sounds.load(getActivity(), R.raw.dice_win, 1);
+		soundFail = sounds.load(getActivity(), R.raw.dice_fail, 1);
 
-		shakeDice20 = AnimationUtils.loadAnimation(themedContext, R.anim.shake);
-		shakeDice6 = AnimationUtils.loadAnimation(themedContext, R.anim.shake);
+		shakeDice20 = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
+		shakeDice6 = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
 	}
 
 
@@ -454,8 +443,8 @@ public class DiceSliderFragment extends android.app.DialogFragment implements Vi
 					linDiceResult.setBackgroundResource(R.drawable.probe_green_highlight);
 				} else {
 					tfDiceTalentName.setText(info.probe.getName() + " gelungen");
-					tfEffectValue.setTextColor(Util.getThemeColors(themedContext, android.R.attr.textColorPrimary));
-					tfDiceTalentName.setTextColor(Util.getThemeColors(themedContext, android.R.attr.textColorPrimary));
+					tfEffectValue.setTextColor(Util.getThemeColors(tfEffectValue.getContext(), android.R.attr.textColorPrimary));
+					tfDiceTalentName.setTextColor(Util.getThemeColors(tfDiceTalentName.getContext(), android.R.attr.textColorPrimary));
 					linDiceResult.setBackgroundResource(0);
 				}
 
@@ -750,7 +739,7 @@ public class DiceSliderFragment extends android.app.DialogFragment implements Vi
 					break;
 				}
 
-				tfEffectValue.setTextColor(Util.getThemeColors(themedContext, android.R.attr.textColorPrimary));
+				tfEffectValue.setTextColor(Util.getThemeColors(tfEffectValue.getContext(), android.R.attr.textColorPrimary));
 
 				if (probability != null) {
 					tfEffectValue.setText(probabilityFormat.format(probability));
@@ -776,7 +765,7 @@ public class DiceSliderFragment extends android.app.DialogFragment implements Vi
 	private void updateView(ProbeData info) {
 
 		tfDiceTalentName.setText(probeData.probe.getName());
-		tfDiceTalentName.setTextColor(Util.getThemeColors(themedContext, android.R.attr.textColorPrimary));
+		tfDiceTalentName.setTextColor(Util.getThemeColors(tfDiceTalentName.getContext(), android.R.attr.textColorPrimary));
 		if (dialog!=null) {
 			dialog.setTitle(tfDiceTalentName.getText());
 		}
@@ -1147,7 +1136,7 @@ public class DiceSliderFragment extends android.app.DialogFragment implements Vi
 	}
 
 	private TextView showDice20(int value, int referenceValue) {
-		TextView res = new TextView(themedContext);
+		TextView res = new TextView(linDiceResult.getContext());
 
 		int width = getResources().getDimensionPixelSize(R.dimen.dices_size);
 		int padding = getResources().getDimensionPixelSize(R.dimen.default_gap);
@@ -1176,7 +1165,7 @@ public class DiceSliderFragment extends android.app.DialogFragment implements Vi
 	private void addDice(View res, int width, int height) {
 		linDiceResult.addView(res, width, width);
 		if (animate && preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_ANIM_ROLL_DICE, true)) {
-			res.startAnimation(AnimationUtils.loadAnimation(themedContext, R.anim.flip_in));
+			res.startAnimation(AnimationUtils.loadAnimation(linDiceResult.getContext(), R.anim.flip_in));
 		}
 
 		if (linDiceResult.getChildCount() > 1 && linDiceResult.getWidth() > 0
@@ -1184,14 +1173,14 @@ public class DiceSliderFragment extends android.app.DialogFragment implements Vi
 			View dice = linDiceResult.getChildAt(0);
 
 			if (animate) {
-				dice.startAnimation(AnimationUtils.loadAnimation(themedContext, R.anim.dice_right));
+				dice.startAnimation(AnimationUtils.loadAnimation(linDiceResult.getContext(), R.anim.dice_right));
 			}
 			linDiceResult.removeViewAt(0);
 		}
 	}
 
 	private ImageView showDice6(int value) {
-		ImageView res = new ImageView(themedContext);
+		ImageView res = new ImageView(linDiceResult.getContext());
 
 		int width = getResources().getDimensionPixelSize(R.dimen.dices_size);
 		int padding = getResources().getDimensionPixelSize(R.dimen.default_gap);
