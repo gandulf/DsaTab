@@ -12,6 +12,7 @@ import android.graphics.Typeface;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.multidex.MultiDexApplication;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.ContextThemeWrapper;
 
@@ -31,6 +32,8 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.splunk.mint.Mint;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 import org.osmdroid.tileprovider.tilesource.ITileSource;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -101,6 +104,13 @@ public class DsaTabApplication extends MultiDexApplication implements OnSharedPr
 	private boolean firstRun;
 	private boolean newsShown = false;
 
+    public static RefWatcher getRefWatcher(Context context) {
+        DsaTabApplication application = (DsaTabApplication) context.getApplicationContext();
+        return application.refWatcher;
+    }
+
+    private RefWatcher refWatcher;
+
 	/**
 	 * Convenient access, saves having to call and cast getApplicationContext()
 	 */
@@ -117,10 +127,14 @@ public class DsaTabApplication extends MultiDexApplication implements OnSharedPr
 	}
 
 	public static File getDirectory(String name) {
-		File dirFile = getInstance().getExternalFilesDir(name);
+        File[] dirFiles = ContextCompat.getExternalFilesDirs(getInstance(), name);
+        File dirFile = null;
+        if (dirFiles !=null && dirFiles.length>0)
+            dirFile = dirFiles[0];
 
 		if (!dirFile.exists())
 			dirFile.mkdirs();
+
 		return dirFile;
 	}
 
@@ -158,7 +172,7 @@ public class DsaTabApplication extends MultiDexApplication implements OnSharedPr
 	}
 
 	public static File getDirectory() {
-		return getDirectory("");
+		return getDirectory(null);
 	}
 
 	public static String getExternalHeroPath() {
@@ -251,8 +265,9 @@ public class DsaTabApplication extends MultiDexApplication implements OnSharedPr
 	@Override
 	public void onCreate() {
 		super.onCreate();
+        refWatcher= LeakCanary.install(this);
 		// provide an instance for our static accessors
-		instance = this;
+        instance = this;
 
 		cleanUp();
 
@@ -362,10 +377,6 @@ public class DsaTabApplication extends MultiDexApplication implements OnSharedPr
 			edit.commit();
 		}
 
-	}
-
-	public Typeface getPoorRichardFont() {
-		return poorRichFont;
 	}
 
 	public Hero getHero() {

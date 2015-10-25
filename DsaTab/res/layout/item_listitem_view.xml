@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.dsatab.view.ItemListItem xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:guilib="http://schemas.android.com/apk/com.gandulf.guilib"
+<com.dsatab.view.ItemListItem
+    android:id="@+id/list_item_container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="?attr/listItemBackground"
     android:minHeight="?attr/listPreferredItemHeight"
+    android:paddingLeft="?attr/listPreferredItemPaddingLeft"
     android:paddingRight="?attr/listPreferredItemPaddingRight"
-    android:paddingLeft="?attr/listPreferredItemPaddingLeft">
+    >
 
-    <ImageView
-        android:id="@android:id/icon1"
+
+    <com.franlopez.flipcheckbox.FlipCheckBox
+        android:id="@android:id/checkbox"
         android:layout_width="@dimen/icon_button_size"
         android:layout_height="@dimen/icon_button_size"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/default_gap"
+        android:duplicateParentState="true"
         android:clickable="false"
-        android:focusable="false"
-        android:scaleType="centerInside"
-        android:visibility="visible" />
+        tools:src="@drawable/vd_sticking_plaster"/>
 
     <TextView
         android:id="@android:id/text1"
@@ -28,14 +31,15 @@
         android:layout_alignWithParentIfMissing="true"
         android:layout_marginTop="@dimen/default_gap"
         android:layout_toLeftOf="@android:id/icon2"
-        android:layout_toRightOf="@android:id/icon1"
+        android:layout_toRightOf="@android:id/checkbox"
         android:ellipsize="marquee"
+        android:fontFamily="sans-serif-condensed"
         android:marqueeRepeatLimit="marquee_forever"
         android:scrollHorizontally="true"
         android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:fontFamily="sans-serif-condensed"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:text="Item name"/>
 
     <TextView
         android:id="@android:id/text2"
@@ -47,7 +51,8 @@
         android:ellipsize="marquee"
         android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textStyle="normal" />
+        android:textStyle="normal"
+        tools:text="Item description"/>
 
     <TextView
         android:id="@+id/text3"
@@ -56,15 +61,16 @@
         android:layout_alignLeft="@android:id/text1"
         android:layout_alignRight="@android:id/text1"
         android:layout_below="@android:id/text2"
+        android:ellipsize="marquee"
+        android:fontFamily="sans-serif-light"
         android:gravity="bottom|right"
         android:singleLine="true"
-        android:ellipsize="marquee"
         android:textAllCaps="true"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:fontFamily="sans-serif-light"
         android:textSize="12sp"
-        android:textStyle="normal" />
-    
+        android:textStyle="normal"
+        tools:text="Item Hints"/>
+
     <ImageView
         android:id="@android:id/icon2"
         android:layout_width="@dimen/icon_button_size"
@@ -72,9 +78,12 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/default_gap"
-        android:clickable="false"
-        android:focusable="false"
+        android:background="@drawable/circle"
         android:scaleType="centerInside"
-        android:visibility="gone" />
+
+        android:tint="@color/circle_tint"
+        android:visibility="gone"
+        tools:src="@drawable/vd_round_shield"
+        tools:visibility="visible"/>
 
 </com.dsatab.view.ItemListItem>

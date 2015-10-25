@@ -2,12 +2,6 @@
 
     <group android:id="@+id/group_item_list" >
         <item
-            android:id="@+id/option_view"
-            android:icon="?attr/imgBarView"
-            android:showAsAction="withText|ifRoom"
-            app:showAsAction="withText|ifRoom"
-            android:title="@string/details"/>
-        <item
             android:id="@+id/option_move"
             android:icon="?attr/imgBarSet"
             android:showAsAction="withText|ifRoom"
@@ -45,7 +39,6 @@
         </item>
         <item
             android:id="@+id/option_delete"
-            android:icon="?attr/imgBarDelete"
             android:showAsAction="withText|ifRoom"
             app:showAsAction="withText|ifRoom"
             android:title="@string/label_delete"/>

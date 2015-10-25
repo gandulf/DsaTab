@@ -16,7 +16,7 @@ import android.widget.Spinner;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
-import com.dsatab.activity.FragmentEditActivity;
+import com.dsatab.activity.BaseEditActivity;
 import com.dsatab.data.CustomProbe;
 import com.dsatab.data.Probe.ProbeType;
 import com.dsatab.data.adapter.SpinnerSimpleAdapter;
@@ -32,16 +32,16 @@ import java.util.UUID;
 public class CustomProbeEditFragment extends BaseEditFragment implements OnClickListener, OnItemSelectedListener {
 
 	public static void insert(Activity activity, int requestCode) {
-		Intent intent = new Intent(activity, FragmentEditActivity.class);
+		Intent intent = new Intent(activity, BaseEditActivity.class);
 		intent.setAction(Intent.ACTION_INSERT);
-		intent.putExtra(FragmentEditActivity.EDIT_FRAGMENT_CLASS, CustomProbeEditFragment.class);
+		intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, CustomProbeEditFragment.class);
 		activity.startActivityForResult(intent, requestCode);
 	}
 
 	public static void edit(Activity activity, CustomProbe probe, int requestCode) {
-		Intent intent = new Intent(activity, FragmentEditActivity.class);
+		Intent intent = new Intent(activity, BaseEditActivity.class);
 		intent.setAction(Intent.ACTION_EDIT);
-		intent.putExtra(FragmentEditActivity.EDIT_FRAGMENT_CLASS, CustomProbeEditFragment.class);
+		intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, CustomProbeEditFragment.class);
 		intent.putExtra(INTENT_PROBE_CHOOSER_ID, probe.getId().toString());
 		activity.startActivityForResult(intent, requestCode);
 	}

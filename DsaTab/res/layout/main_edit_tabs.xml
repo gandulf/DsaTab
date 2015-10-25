@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
@@ -22,105 +22,26 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.SlidingPaneLayout
-        android:id="@+id/slidepanel"
+    <FrameLayout
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        >
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="250dp"
+        <fragment
+            android:id="@+id/fragment_tab_list"
+            class="com.dsatab.fragment.TabListFragment"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0"
-            android:id="@+id/popup_tab_list"
-            android:layout_marginTop="?attr/actionBarSize">
-
-
-        </android.support.v7.widget.RecyclerView>
-
-        <android.support.v7.widget.CardView
-            style="?attr/cardViewStyle"
-            android:layout_width="500dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:clickable="true" >
-
-            <LinearLayout
+            tools:layout="@layout/tab_list_content"/>
+    </FrameLayout>
+    <!--
+            <fragment
+                android:id="@+id/fragment_tab_edit"
+                class="com.dsatab.fragment.TabEditFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical" >
-
-                <GridLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:columnCount="2"
-                    android:orientation="horizontal"
-                    android:useDefaultMargins="true" >
-
-                    <ImageView
-                        android:id="@+id/popup_edit_icon"
-                        style="?attr/spinnerStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/icon_button_size"
-                        android:layout_column="0"
-                        android:minWidth="@dimen/icon_button_size"
-                        android:scaleType="fitCenter" />
-
-                    <com.thebnich.floatinghintedittext.FloatingHintEditText
-                        android:id="@+id/popup_edit_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:layout_gravity="fill_horizontal|bottom"
-                        android:hint="@string/label_titel"
-                        android:inputType="textPersonName" />
-
-                </GridLayout>
-
-                <TabHost
-                    android:id="@android:id/tabhost"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" >
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical" >
-
-                        <TabWidget
-                            android:id="@android:id/tabs"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" >
-                        </TabWidget>
-
-                        <FrameLayout
-                            android:id="@android:id/tabcontent"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1" >
-
-                            <fragment
-                                android:id="@+id/tab2"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                class="com.dsatab.fragment.TabListableConfigFragment"
-                                android:tag="list1"
-                                tools:layout="@layout/_edit_tabinfo_list" />
-
-                            <fragment
-                                android:id="@+id/tab3"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                class="com.dsatab.fragment.TabListableConfigFragment"
-                                android:tag="list2"
-                                tools:layout="@layout/_edit_tabinfo_list" />
-                        </FrameLayout>
-                    </LinearLayout>
-                </TabHost>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-    </android.support.v4.widget.SlidingPaneLayout>
+                tools:layout="@layout/tab_edit_content"/>
+    -->
 
 </android.support.design.widget.CoordinatorLayout>

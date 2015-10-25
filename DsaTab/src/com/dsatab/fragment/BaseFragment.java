@@ -1,10 +1,13 @@
 package com.dsatab.fragment;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 
 import com.dsatab.DsaTabApplication;
@@ -19,11 +22,13 @@ import com.dsatab.data.modifier.Modificator;
 import com.dsatab.fragment.dialog.DiceSliderFragment;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Hint;
+import com.dsatab.util.ViewUtils;
 import com.dsatab.view.listener.EditListener;
 import com.dsatab.view.listener.HeroChangedListener;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
 import com.dsatab.view.listener.ProbeListener;
 import com.dsatab.view.listener.TargetListener;
+import com.squareup.leakcanary.RefWatcher;
 
 import java.util.Arrays;
 import java.util.List;
@@ -90,6 +95,26 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 		Hint.showRandomHint(getClass().getSimpleName(), getActivity());
 	}
 
+    protected String getAction() {
+        if (getActivity() != null && getActivity().getIntent() != null) {
+            return getActivity().getIntent().getAction();
+        } else {
+            return null;
+        }
+    }
+
+    protected Bundle getExtra() {
+
+        Bundle extra = null;
+        if (getActivity() != null && getActivity().getIntent() != null) {
+            extra = getActivity().getIntent().getExtras();
+        } else {
+            extra = getArguments();
+        }
+
+        return extra;
+    }
+
 	protected void onAttachListener(Hero hero) {
 		if (hero != null) {
 
@@ -146,7 +171,14 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 		}
 	}
 
-	public View configureContainerView(View view) {
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RefWatcher refWatcher = DsaTabApplication.getRefWatcher(getActivity());
+        refWatcher.watch(this);
+    }
+
+    public View configureContainerView(View view) {
 		return view;
 	}
 
@@ -267,7 +299,32 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 
 	}
 
-	protected void removeTab() {
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        ViewUtils.menuIcons(getToolbarThemedContext(), menu);
+    }
+
+    protected Context getToolbarThemedContext() {
+        if (getBaseActivity()!=null && getBaseActivity().getToolbar()!=null)
+            return getBaseActivity().getToolbar().getContext();
+        else if (getActivity()!=null && getActivity().getActionBar()!=null)
+            return getActivity().getActionBar().getThemedContext();
+        else if (getActivity()!=null)
+            return getActivity();
+        else
+            return null;
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
+        ViewUtils.menuIcons(getToolbarThemedContext(), menu);
+    }
+
+    protected void removeTab() {
 		TabInfo tabInfo = null;
 		for (TabInfo ti : getHero().getHeroConfiguration().getTabs()) {
 			if (ti.getId().equals(getTabInfo().getId())) {

@@ -1,0 +1,29 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/option_mark"
+        android:showAsAction="withText|ifRoom"
+        android:title="@string/selection"
+        app:showAsAction="withText|ifRoom">
+        <menu>
+
+            <item
+                android:id="@+id/option_mark_favorite"
+                android:showAsAction="withText"
+                android:title="@string/mark_as_favorite"/>
+
+            <item
+                android:id="@+id/option_mark_unused"
+                android:showAsAction="withText"
+                android:title="@string/mark_as_unused"/>
+
+            <item
+                android:id="@+id/option_unmark"
+                android:showAsAction="withText"
+                android:title="@string/clear_selection"/>
+        </menu>
+    </item>
+
+
+</menu>

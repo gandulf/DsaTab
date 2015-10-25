@@ -1,11 +1,17 @@
-<changelog>    
+<changelog>
 
-   <release version="4.3.6" versioncode="92">
+<release version="4.4.0-beta" versioncode="95">
+    <change>Material Style durchgängig integriert</change>
+    <change>Material Icons</change>
+    <fix>Bugfixing</fix>
+</release>
+
+<release version="4.3.6" versioncode="92">
    	<change>Material Dialoge und Navigationsleiste</change>
    	<fix>Bugfixing</fix>
 </release>
 
-   <release version="4.3.5" versioncode="91">
+<release version="4.3.5" versioncode="91">
    	<fix>Bugfixing</fix>
 </release>
 

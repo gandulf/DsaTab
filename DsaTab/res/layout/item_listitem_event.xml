@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.dsatab.view.CheckableRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:guilib="http://schemas.android.com/apk/com.gandulf.guilib"
+<com.dsatab.view.CheckableRelativeLayout
+    android:id="@+id/list_item_container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="?attr/listItemBackground"
     android:minHeight="?attr/listPreferredItemHeight"
+    android:paddingLeft="?attr/listPreferredItemPaddingLeft"
     android:paddingRight="?attr/listPreferredItemPaddingRight"
-    android:paddingLeft="?attr/listPreferredItemPaddingLeft">
+    >
 
-    <ImageView
-        android:id="@android:id/icon1"
+    <com.franlopez.flipcheckbox.FlipCheckBox
+        android:id="@android:id/checkbox"
         android:layout_width="@dimen/icon_button_size"
         android:layout_height="@dimen/icon_button_size"
         android:layout_centerVertical="true"
-        android:layout_marginRight="4dip"        
-        android:scaleType="centerInside" />
+        android:layout_marginRight="4dip"
+        android:duplicateParentState="true"
+        android:clickable="false"
+        tools:src="@drawable/vd_tied_scroll"/>
 
     <TextView
         android:id="@android:id/text1"
@@ -24,10 +29,11 @@
         android:layout_alignParentTop="true"
         android:layout_alignWithParentIfMissing="true"
         android:layout_toLeftOf="@android:id/icon2"
-        android:layout_toRightOf="@android:id/icon1"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_toRightOf="@android:id/checkbox"
         android:fontFamily="sans-serif-condensed"
-        android:textStyle="bold" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold"
+        tools:text="Event title"/>
 
     <TextView
         android:id="@android:id/text2"
@@ -37,7 +43,8 @@
         android:layout_alignRight="@android:id/text1"
         android:layout_below="@android:id/text1"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textStyle="normal" />
+        android:textStyle="normal"
+        tools:text="Event description"/>
 
     <TextView
         android:id="@+id/text3"
@@ -48,13 +55,14 @@
         android:layout_alignRight="@android:id/text1"
         android:layout_alignWithParentIfMissing="true"
         android:layout_below="@android:id/text2"
+        android:fontFamily="sans-serif-light"
         android:gravity="bottom|right"
         android:textAllCaps="true"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:fontFamily="sans-serif-light"
         android:textSize="12sp"
-        android:textStyle="normal" />
-    
+        android:textStyle="normal"
+        tools:text="Event Hint"/>
+
     <ImageView
         android:id="@android:id/icon2"
         android:layout_width="wrap_content"
@@ -62,7 +70,9 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="8dip"
-        android:visibility="gone" >
-    </ImageView>
+        android:visibility="gone"
+        tools:src="@drawable/vd_nothing_to_say"
+        tools:visibility="visible"/>
+
 
 </com.dsatab.view.CheckableRelativeLayout>

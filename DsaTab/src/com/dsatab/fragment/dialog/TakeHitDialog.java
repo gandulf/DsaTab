@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -29,6 +28,7 @@ import com.dsatab.data.adapter.SpinnerSimpleAdapter;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.Position;
 import com.dsatab.util.Util;
+import com.wnafee.vector.compat.ResourcesCompat;
 
 import java.util.List;
 
@@ -79,8 +79,8 @@ public class TakeHitDialog extends DialogFragment implements DialogInterface.OnC
 		View popupcontent = inflater.inflate(R.layout.popup_take_hit, null, false);
 
         builder.setView(popupcontent);
-		builder.setIcon(R.drawable.dsa_wound_patch);
-		builder.setTitle("Treffer kassieren");
+		builder.setIcon(ResourcesCompat.getDrawable(builder.getContext(), R.drawable.vd_sticking_plaster));
+        builder.setTitle("Treffer kassieren");
 
 		targetZone = (Spinner) popupcontent.findViewById(R.id.popup_position);
 		targetZoneLabel = (TextView) popupcontent.findViewById(R.id.popup_position_label);
@@ -111,6 +111,12 @@ public class TakeHitDialog extends DialogFragment implements DialogInterface.OnC
 		woundConsideration.setChecked(DsaTabApplication.getPreferences().getBoolean(PREF_CONSIDER_WOUND, true));
 
 		damageType = (CompoundButton) popupcontent.findViewById(R.id.popup_damage_type);
+        damageType.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                buttonView.setText("Schadensart " + (isChecked ? "(TP)": "(AuP)"));
+            }
+        });
 		damageType.setChecked(DsaTabApplication.getPreferences().getBoolean(PREF_DAMAGE_TYPE, true));
 
 		builder.setPositiveButton(android.R.string.ok, this);

@@ -4,26 +4,24 @@
 	<color name="primary">#607D8B</color>
 	<color name="primary_dark">#455A64</color>
 	<color name="primary_light">#CFD8DC</color>
-	<color name="accent">#FFC107</color>
+
+    <color name="accent">#FFC107</color>
 	<color name="accent_dark">#D79907</color>
-	<color name="primary_text">#212121</color>
+
+    <color name="primary_text">#212121</color>
 	<color name="secondary_text">#727272</color>
-	<color name="icons">#FFFFFF</color>
-	<color name="divider">#B6B6B6</color>
 
+    <color name="icon_color_light">#888888</color>
+    <color name="icon_color_dark">#FFFFFF</color>
 
+    <color name="circle_color">#888888</color>
+    <color name="circle_tint">#ffffff</color>
 
+    <color name="drag">#20000000</color>
 
 	<color name="Darker">#40000000</color>
 	<color name="Brighter">#60FFFFFF</color>
-	
-	<color name="RowOdd">#09000000</color>
-	<color name="RowEven">#09FFFFFF</color>
-	<color name="RowFavoriteOdd">#442baf2b</color>
-	<color name="RowFavoriteEven">#4442bd41</color>	
-	<color name="RowUnusedOdd">#44e84e40</color>
-	<color name="RowUnusedEven">#44f36c60</color>
-	
+
 	<color name="ValueRed">#FFe51c23</color>
 	<color name="ValueGreen">#259b24</color>
 	<color name="ValueBlue">#33b5e5</color>
@@ -34,12 +32,13 @@
 	<color name="ValueGreenAlpha">#CC259b24</color>
 	<color name="ValueYellowAlpha">#CCffeb3b</color>
 
-	<color name="bg_item_normal_state">#fff0f0f0</color>
-    <color name="bg_item_normal_pressed_state">#ffe0e0e0</color>
-    <color name="bg_item_dragging_state">#ffffdddd</color>
-    <color name="bg_item_dragging_active_state">#ffff9999</color>
-    <color name="bg_item_swiping_state">#ffddddff</color>
-    <color name="bg_item_swiping_active_state">#ff9999ff</color>
+	<color name="bg_item_normal_state">#ffffff</color>
+    <color name="bg_item_normal_pressed_state">#d0d0d0</color>
+    <color name="bg_item_activated_state">#FFC107</color>
+
+    <color name="bg_item_normal_state_dark">#333333</color>
+    <color name="bg_item_normal_pressed_state_dark">#666666</color>
+    <color name="bg_item_activated_state_dark">#FFC107</color>
     
     <!-- fab color -->
     <color name="half_black">#808080</color>

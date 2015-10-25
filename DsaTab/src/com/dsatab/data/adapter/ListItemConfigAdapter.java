@@ -42,7 +42,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-public class ListItemConfigAdapter  extends OpenRecyclerAdapter<ListItemConfigAdapter.ViewHolder,ListItem> implements
+public class ListItemConfigAdapter  extends ListRecyclerAdapter<ListItemConfigAdapter.ViewHolder,ListItem> implements
 		DraggableItemAdapter<ListItemConfigAdapter.ViewHolder>, OnItemSelectedListener, OnClickListener {
 
 	public class ViewHolder extends AbstractDraggableItemViewHolder {
@@ -190,7 +190,7 @@ public class ListItemConfigAdapter  extends OpenRecyclerAdapter<ListItemConfigAd
 			holder.text2.setVisibility(View.GONE);
 		}
 		holder.text1.setText(listItem.getType().title());
-		holder.icon1.setImageResource(DsaUtil.getResourceId(listItem.getType()));
+		holder.icon1.setImageDrawable(ViewUtils.circleIcon(holder.icon1.getContext(),DsaUtil.getResourceId(listItem.getType())));
 		holder.icon2.setTag(listItem);
 
 		Util.applyRowStyle(holder.itemView, position);

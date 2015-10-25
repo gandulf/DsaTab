@@ -2,16 +2,12 @@
 <resources>
                 
     <declare-styleable name="DsaTabTheme">
-        
-        <attr name="cardViewStyle" format="reference"/>
-        
+
         <attr name="buttonStyleLeft" format="reference"/>
         <attr name="buttonStyleRight" format="reference"/>
         
         <attr name="listItemBackground" format="reference"/>
         <attr name="slidingPaneShadowBackground" format="reference"/>        
-        
-        <attr name="selectableBackground" format="reference" />
 
         <attr name="floatingActionButtonStyle" format="reference" />
         <attr name="floatingActionMenuStyle" format="reference" />
@@ -21,57 +17,7 @@
         
         <attr name="imgCharacter" format="reference"/>
         <attr name="imgEmpty" format="reference"/>
-                
-        <attr name="imgExpanderOpen" format="reference"/>
-        <attr name="imgExpanderClose" format="reference"/>
-        
-        <attr name="imgLove" format="reference"/>
-        <attr name="imgBarLove" format="reference"/>
-        
-        <attr name="imgFile" format="reference"/>
-        <attr name="imgBarFile" format="reference"/>
-        
-        <attr name="imgUp" format="reference"/>
-        <attr name="imgBarUp" format="reference"/>
-        
-        <attr name="imgAccept" format="reference"/>
-        <attr name="imgBarAccept" format="reference"/>
-        
-        <attr name="imgCancel" format="reference"/>
-        <attr name="imgBarCancel" format="reference"/>
-        
-        <attr name="imgStar" format="reference"/>
-        <attr name="imgBarStar" format="reference"/>
-        <attr name="imgStarEmpty" format="reference"/>
-        <attr name="imgBarStarEmpty" format="reference"/>
-        
-        <attr name="imgCamera" format="reference"/>
-        <attr name="imgBarCamera" format="reference"/>
-        
-        <attr name="imgUser" format="reference"/>
-        <attr name="imgBarUser" format="reference"/>
-        
-        <attr name="imgSplit" format="reference"/>
-        <attr name="imgBarSplit" format="reference"/>
-        
-        <attr name="imgDelete" format="reference"/>
-        <attr name="imgBarDelete" format="reference"/>
-        
-        <attr name="imgEdit" format="reference"/>
-        <attr name="imgBarEdit" format="reference"/>
-        
-        <attr name="imgView" format="reference"/>
-        <attr name="imgBarView" format="reference"/>
-        
-        <attr name="imgInfo" format="reference"/>
-        <attr name="imgBarInfo" format="reference"/>
-        
-        <attr name="imgSearch" format="reference"/>
-        <attr name="imgBarSearch" format="reference"/>
-        
-        <attr name="imgFilter" format="reference"/>
-        <attr name="imgBarFilter" format="reference"/>
-        
+
         <attr name="imgSet" format="reference"/>
         <attr name="imgSet1" format="reference"/>
         <attr name="imgSet2" format="reference"/>

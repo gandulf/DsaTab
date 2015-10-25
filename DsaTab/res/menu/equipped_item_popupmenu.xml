@@ -1,51 +1,52 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    
-    <item android:id="@+id/option_view"
-          android:icon="?attr/imgBarView"
-          android:showAsAction="withText|ifRoom"
-          app:showAsAction="withText|ifRoom"
-          android:title="@string/details" />
-    
-    <item android:id="@+id/option_edit"
-          android:icon="?attr/imgBarEdit"
-          android:showAsAction="withText|ifRoom"
-          app:showAsAction="withText|ifRoom"
-          android:title="@string/label_edit" />
-    
-    <item android:id="@+id/option_assign_secondary"
-          android:icon="?attr/imgBarSplit"
-          android:showAsAction="withText|ifRoom"
-          app:showAsAction="withText|ifRoom"
-          android:title="@string/menu_assign_secondary_weapon" />
-    
-    <item android:id="@+id/option_assign_hunting"
-          android:icon="?attr/imgBarStar"
-          android:showAsAction="withText|ifRoom"
-          app:showAsAction="withText|ifRoom"
-          android:title="@string/menu_assign_hunting_weapon" />
-    
-    <item android:id="@+id/option_unassign"
-          android:icon="?attr/imgBarCancel"
-          android:showAsAction="withText|ifRoom"
-          app:showAsAction="withText|ifRoom"
-          android:title="@string/menu_unassign_item" />
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/option_select_version"
-          android:icon="?attr/imgBarSplit"
-          android:showAsAction="withText|ifRoom"
-          app:showAsAction="withText|ifRoom"
-          android:title="@string/menu_select_version" />			
+    <item
+        android:id="@+id/option_view"
+        android:showAsAction="ifRoom"
+        android:title="@string/details"
+        app:showAsAction="ifRoom"/>
 
-    <item android:id="@+id/option_select_talent"
-          android:icon="?attr/imgBarSplit"
-          android:showAsAction="withText|ifRoom"
-          app:showAsAction="withText|ifRoom"
-          android:title="@string/menu_select_talent" />
-    		
-    <item android:id="@+id/option_delete"
-          android:icon="?attr/imgBarDelete"
-          android:showAsAction="withText|ifRoom"
-          app:showAsAction="withText|ifRoom"
-          android:title="@string/label_delete" />                    
-    
+    <item
+        android:id="@+id/option_edit"
+        android:showAsAction="ifRoom"
+        android:title="@string/label_edit"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/option_assign_secondary"
+        android:showAsAction="withText|ifRoom"
+        android:title="@string/menu_assign_secondary_weapon"
+        app:showAsAction="withText|ifRoom"/>
+
+    <item
+        android:id="@+id/option_assign_hunting"
+        android:showAsAction="withText|ifRoom"
+        android:title="@string/menu_assign_hunting_weapon"
+        app:showAsAction="withText|ifRoom"/>
+
+    <item
+        android:id="@+id/option_unassign"
+        android:showAsAction="withText|ifRoom"
+        android:title="@string/menu_unassign_item"
+        app:showAsAction="withText|ifRoom"/>
+
+    <item
+        android:id="@+id/option_select_version"
+        android:showAsAction="withText|ifRoom"
+        android:title="@string/menu_select_version"
+        app:showAsAction="withText|ifRoom"/>
+
+    <item
+        android:id="@+id/option_select_talent"
+        android:showAsAction="withText|ifRoom"
+        android:title="@string/menu_select_talent"
+        app:showAsAction="withText|ifRoom"/>
+
+    <item
+        android:id="@+id/option_delete"
+        android:showAsAction="ifRoom"
+        android:title="@string/label_delete"
+        app:showAsAction="ifRoom"/>
+
 </menu>

@@ -16,5 +16,13 @@
 	
 	<dimen name="workspace_cell_width">120dip</dimen>
     <dimen name="workspace_cell_height">180dip</dimen>
-        
+
+    <dimen name="card_margin">16dp</dimen>
+
+    <dimen name="icon_layout_size">48dp</dimen>
+    <dimen name="icon_size">24dp</dimen>
+    <dimen name="icon_padding">12dp</dimen>
+
+    <dimen name="toolbar_icon_size">24dp</dimen>
+
 </resources>

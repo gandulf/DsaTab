@@ -28,7 +28,7 @@ public class Rules {
 
 		protected void handleModifierExpression(com.dsatab.data.Probe probe, AttributeType type) {
 			modifierObject.setModifier(Util.parseInt(hero.getFeature(FeatureType.Ausdauernd).getValue()) / 3);
-		};
+		}
 	}
 
 	private static class RulesModificatorGefahreninstinkt extends RulesModificator {
@@ -42,7 +42,7 @@ public class Rules {
 
 		protected void handleModifierExpression(com.dsatab.data.Probe probe, AttributeType type) {
 			modifierObject.setModifier(hero.getTalent(TalentType.Gefahreninstinkt).getValue() / 2);
-		};
+		}
 	}
 
 	private static class RulesModificatorTalentSpezialisierungFernkampf extends RulesModificator {
@@ -67,7 +67,7 @@ public class Rules {
 					}
 				}
 			}
-		};
+		}
 
 	}
 
@@ -117,7 +117,7 @@ public class Rules {
 					}
 				}
 			}
-		};
+		}
 
 	}
 

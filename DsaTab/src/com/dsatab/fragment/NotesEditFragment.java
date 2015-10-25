@@ -14,7 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.dsatab.R;
-import com.dsatab.activity.FragmentEditActivity;
+import com.dsatab.activity.BaseEditActivity;
 import com.dsatab.data.adapter.EventCatgoryAdapter;
 import com.dsatab.data.enums.EventCategory;
 import com.dsatab.data.notes.Connection;
@@ -29,17 +29,17 @@ import java.util.List;
 public class NotesEditFragment extends BaseEditFragment implements OnItemSelectedListener {
 
 	public static void insert(Activity activity, int requestCode) {
-		Intent intent = new Intent(activity, FragmentEditActivity.class);
+		Intent intent = new Intent(activity, BaseEditActivity.class);
 		intent.setAction(Intent.ACTION_INSERT);
-		intent.putExtra(FragmentEditActivity.EDIT_FRAGMENT_CLASS, NotesEditFragment.class);
+		intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, NotesEditFragment.class);
 		activity.startActivityForResult(intent, requestCode);
 	}
 
 	public static void edit(Connection event, Activity activity, int requestCode) {
 
-		Intent intent = new Intent(activity, FragmentEditActivity.class);
+		Intent intent = new Intent(activity, BaseEditActivity.class);
 		intent.setAction(Intent.ACTION_EDIT);
-		intent.putExtra(FragmentEditActivity.EDIT_FRAGMENT_CLASS, NotesEditFragment.class);
+		intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, NotesEditFragment.class);
 		if (event != null) {
 			intent.putExtra(INTENT_NOTES_ITEM, event);
 			intent.putExtra(INTENT_NAME_EVENT_TEXT, event.getDescription());
@@ -51,9 +51,9 @@ public class NotesEditFragment extends BaseEditFragment implements OnItemSelecte
 	}
 
 	public static void edit(Event event, String audioPath, Activity activity, int requestCode) {
-		Intent intent = new Intent(activity, FragmentEditActivity.class);
+		Intent intent = new Intent(activity, BaseEditActivity.class);
 		intent.setAction(Intent.ACTION_EDIT);
-		intent.putExtra(FragmentEditActivity.EDIT_FRAGMENT_CLASS, NotesEditFragment.class);
+		intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, NotesEditFragment.class);
 		if (event != null) {
 			intent.putExtra(INTENT_NOTES_ITEM, event);
 			intent.putExtra(INTENT_NAME_EVENT_TEXT, event.getComment());

@@ -2,25 +2,26 @@ package com.dsatab.data.filter;
 
 import android.text.TextUtils;
 
+import com.dsatab.data.adapter.EquippedItemRecyclerAdapter;
+import com.dsatab.data.adapter.ListRecyclerAdapter;
+import com.dsatab.data.adapter.ListRecyclerFilter;
 import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemCard;
 import com.dsatab.data.items.ItemSpecification;
-import com.gandulf.guilib.data.OpenArrayAdapter;
-import com.gandulf.guilib.data.OpenFilter;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-public class ItemCardListFilter extends OpenFilter<ItemCard> {
+public class ItemCardListFilter<T extends ItemCard> extends ListRecyclerFilter<T> {
 
 	private List<ItemType> types;
 
 	private String category;
 
-	public ItemCardListFilter(OpenArrayAdapter<ItemCard> list) {
+	public ItemCardListFilter(ListRecyclerAdapter<EquippedItemRecyclerAdapter.ItemViewHolder,T> list) {
 		super(list);
 	}
 

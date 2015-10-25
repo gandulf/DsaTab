@@ -46,13 +46,20 @@
                         android:src="@drawable/profile_picture" />
 
                     <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/actionbar_scrim" />
+
+                    <net.steamcrafted.materialiconlib.MaterialIconView
                         android:id="@+id/toolbar_info"
+                        style="@style/Widget.IconView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/default_gap"
                         android:layout_gravity="bottom|right"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginRight="8dp"
-                        android:src="?attr/imgBarInfo" />
+                        app:materialIconColor="#ffffff"
+                        app:materialIcon="information_outline"
+                        />
                 </FrameLayout>
 
                 <android.support.v7.widget.Toolbar
@@ -66,8 +73,12 @@
 
             </android.support.design.widget.CollapsingToolbarLayout>
 
-        </android.support.design.widget.AppBarLayout>
+            <android.support.design.widget.TabLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
+        </android.support.design.widget.AppBarLayout>
+        
         <!-- Your Scrollable View -->
         <LinearLayout
             android:id="@+id/viewpager"

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.dsatab.view.CheckableRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                         xmlns:tools="http://schemas.android.com/tools"
+                                         android:id="@+id/list_item_container"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="?attr/listItemBackground"
@@ -7,14 +9,18 @@
     android:paddingRight="?attr/listPreferredItemPaddingRight"
     android:paddingLeft="?attr/listPreferredItemPaddingLeft">
 
-    <ImageView
-        android:id="@android:id/icon1"
+    <com.franlopez.flipcheckbox.FlipCheckBox
+        android:id="@android:id/checkbox"
         android:layout_width="@dimen/icon_button_size"
         android:layout_height="@dimen/icon_button_size"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="4dip"
-        android:src="@drawable/dsa_wound_patch" />
+        android:layout_marginRight="@dimen/default_gap"
+        android:duplicateParentState="true"
+        android:clickable="false"
+        tools:src="@drawable/vd_sticking_plaster"/>
+
+
 
     <TextView
         android:id="@android:id/text1"
@@ -23,7 +29,7 @@
         android:layout_alignWithParentIfMissing="true"
         android:paddingTop="@dimen/default_gap"
         android:layout_toLeftOf="@+id/active"
-        android:layout_toRightOf="@android:id/icon1"
+        android:layout_toRightOf="@android:id/checkbox"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:fontFamily="sans-serif-condensed"
         android:textStyle="bold" />
@@ -45,7 +51,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:focusable="false"
-        android:layout_marginLeft="4dip">
+        android:layout_marginLeft="@dimen/default_gap">
     </CheckBox>
 
 </com.dsatab.view.CheckableRelativeLayout>

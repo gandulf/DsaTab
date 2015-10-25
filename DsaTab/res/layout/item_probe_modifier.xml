@@ -1,56 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:minHeight="?attr/listPreferredItemHeightSmall"
-    android:paddingLeft="?attr/listPreferredItemPaddingLeft"
-    android:paddingRight="?attr/listPreferredItemPaddingRight" >
+<com.dsatab.view.CheckableRelativeLayout android:id="@+id/list_item_container"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/listItemBackground"
+                android:minHeight="?attr/listPreferredItemHeightSmall"
+                android:paddingLeft="?attr/listPreferredItemPaddingLeft"
+                android:paddingRight="?attr/listPreferredItemPaddingRight">
 
-    <TextView
-        android:id="@android:id/text1"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:ellipsize="end"
-        android:gravity="center_vertical"
-        android:text="@string/label_talentname"
-        android:fontFamily="sans-serif-condensed"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|right"
-        android:layout_marginLeft="@dimen/default_gap"
-        android:layout_marginRight="@dimen/default_gap"
-        android:layout_weight="1"
-        tools:listitem="@android:layout/simple_spinner_item" />
+        android:layout_centerVertical="true">
 
-    <com.gandulf.guilib.view.SeekBarEx
-        android:id="@+id/wheel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/default_gap"
-        android:layout_marginRight="@dimen/default_gap"
-        android:layout_weight="1" />
+        <TextView
+            android:id="@android:id/text1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center_vertical"
+            android:text="@string/label_talentname"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
 
-    <TextView
-        android:id="@android:id/text2"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical|right"                
-        android:gravity="right|center_vertical"
-        android:maxLines="1"
-        android:fontFamily="sans-serif-condensed"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-    
-    <CheckBox android:id="@android:id/checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical|right"
-        android:gravity="right|center_vertical"
-        android:checked="true" 
-        />
-</LinearLayout>
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginLeft="@dimen/default_gap"
+            android:layout_marginRight="@dimen/default_gap"
+            android:layout_weight="1" />
+
+        <com.gandulf.guilib.view.SeekBarEx
+            android:id="@+id/wheel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/default_gap"
+            android:layout_marginRight="@dimen/default_gap"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@android:id/text2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|right"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="right|center_vertical"
+            android:maxLines="1"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+        <CheckBox
+            android:id="@android:id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|right"
+            android:checked="true"
+            android:gravity="right|center_vertical"
+            />
+    </LinearLayout>
+</com.dsatab.view.CheckableRelativeLayout>

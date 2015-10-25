@@ -13,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.ListView;
 
-import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.adapter.EquippedItemAdapter;
 import com.dsatab.data.items.EquippedItem;

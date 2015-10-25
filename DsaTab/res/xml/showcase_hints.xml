@@ -5,21 +5,7 @@
             description="Um eine Probe zu würfeln, klicke einfach auf diese mit Kreisen markierten Werte.\n\n Zum Editieren, klicke lange auf den Wert (manche Werte sind nicht editierbar)."
             title="Probe würfeln"
             viewId="@id/attr_mu"/>
-        <hint
-            id="ANIMAL_FRAGMENT"
-            description="Es gibt nun einen neuen Tab mit dem die Werte seiner Begleittiere angezeigt werden können."
-            title="Tiere/Begleiter verwalten"
-            x="5.0"
-            y="5.0"/>
     </fragment>
-    <fragment name="ListableFragment">
-        <hint
-            id="LISTABLE_CONFIG"
-            description="Listen können nun dynamisch aus den unterschiedlichsten Bereichen zusammengestellt werden. Unter 'Tabs anpassen' kann definiert werden was alles in einer Liste angezeigt werden soll (Talente, Zauber, Attribute, ...)"
-            title="Dynamische Listen"
-            viewId="@android:id/list"/>               
-    </fragment>
-    
     <fragment name="DiceSliderFragment">
         <hint
             id="TAKE_HIT_SLIDER"
@@ -28,20 +14,10 @@
             viewId="@id/dice_take_hit"/>               
     </fragment>
     <fragment name="ItemsFragment">
-        <hint
-            id="ITEMS_CONTAINER_MENU"
-            description="Du kannst deine Behälter bearbeiten und neue hinzufügen, indem du lange auf die Liste klickst."
-            title="Behälter bearbeiten"
-            viewId="@id/container_list"/>
+
     </fragment>    
     
     <fragment name="TabEditActivity">
-        <hint
-            id="DRAG_TABS"
-            description="Mittels Drag&amp;Drop kann die Reihenfolge der Tabs angepasst werden."
-            title="Reihenfolge des Tabs"
-            viewId="@id/popup_tab_list"/>
-        
         <hint
             id="TAB_TABS"
             description="Über die Tabs 'Primär' und 'Sekundär' kannst du den Inhalt konfigurieren."

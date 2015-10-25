@@ -17,7 +17,7 @@ public interface Probe {
 		 * The probe consists of one dice which counts
 		 */
 		One
-	};
+	}
 
 	public ProbeType getProbeType();
 

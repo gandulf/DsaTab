@@ -2,6 +2,7 @@ package com.dsatab.data;
 
 import com.dsatab.data.enums.Position;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -79,7 +80,7 @@ public class ArmorAttribute extends EditableValue implements JSONable {
 
 				// still fire a value changed since the isManual value has
 				// changed
-				if (value == getValue()) {
+                if (ObjectUtils.equals(this.value, value)) {
 					hero.fireValueChangedEvent(this);
 				}
 			}

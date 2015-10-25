@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    >
+    android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -23,29 +22,20 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.SlidingPaneLayout
-        android:id="@+id/slidepanel"
+    <FrameLayout
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <fragment
-            android:id="@+id/fragment_item_chooser"
+            android:id="@+id/fragment_item_list"
             android:name="com.dsatab.fragment.item.ItemListFragment"
-            android:layout_width="300dp"
-            android:layout_height="match_parent"
             class="com.dsatab.fragment.item.ItemListFragment"
-            tools:layout="@layout/sheet_item_chooser" >
-        </fragment>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/details"
-            android:layout_width="500dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            style="?attr/cardViewStyle"
-            android:clickable="true" />
+            tools:layout="@layout/sheet_item_chooser"/>
+    </FrameLayout>
 
-    </android.support.v4.widget.SlidingPaneLayout>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -1,73 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.dsatab.view.CheckableFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:background="?attr/listItemBackground"
-    android:minHeight="?attr/listPreferredItemHeight"
-    android:paddingLeft="?attr/listPreferredItemPaddingLeft"    
-    android:paddingRight="0dp">
-    
+<com.dsatab.view.CheckableRelativeLayout android:id="@+id/list_item_container"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/listItemBackground"
+                android:minHeight="?attr/listPreferredItemHeight"
+                android:paddingLeft="?attr/listPreferredItemPaddingLeft"
+                android:paddingRight="0dp">
+
     <ImageView
         android:id="@+id/talent_list_item_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|right"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
         android:src="@drawable/indicator_house"
-        android:visibility="invisible" />
-    
-<LinearLayout 
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:minHeight="?attr/listPreferredItemHeight"
-    android:paddingLeft="0dp"
-    android:paddingRight="?attr/listPreferredItemPaddingRight"
-    android:weightSum="1.0">
+        android:visibility="invisible"/>
 
-    <TextView
-        android:id="@+id/talent_list_item_text1"
-        style="@style/TextLabel"
-        android:layout_width="0dip"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.3"        
-        android:gravity="center_vertical"
-        android:fontFamily="sans-serif-condensed"        
-        android:layout_gravity="center_vertical"/>
+        android:minHeight="?attr/listPreferredItemHeight"
+        android:paddingLeft="0dp"
+        android:paddingRight="?attr/listPreferredItemPaddingRight"
+        android:weightSum="1.0">
 
-    <TextView
-        android:id="@+id/talent_list_item_text2"
-        style="@style/TextLabel.Small"
-        android:layout_width="0dip"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.15"
-        android:gravity="center_vertical"       
-        android:layout_gravity="center_vertical"/>
+        <TextView
+            android:id="@+id/talent_list_item_text1"
+            style="@style/TextLabel"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.3"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center_vertical"/>
 
-    <TextView
-        android:id="@+id/talent_list_item_text3"
-        style="@style/TextLabel.Small"
-        android:layout_width="0dip"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.3"        
-        android:gravity="center_vertical"        
-        android:layout_gravity="center_vertical"/>
+        <TextView
+            android:id="@+id/talent_list_item_text2"
+            style="@style/TextLabel.Small"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.15"
+            android:gravity="center_vertical"/>
 
-    <Button
-        android:id="@+id/talent_list_item_text4"
-        android:layout_width="0dip"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|center_vertical"
-        android:focusable="false"
-        android:layout_weight="0.125" />
+        <TextView
+            android:id="@+id/talent_list_item_text3"
+            style="@style/TextLabel.Small"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.3"
+            android:gravity="center_vertical"/>
 
-    <Button
-        android:id="@+id/talent_list_item_text5"
-        android:layout_width="0dip"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|center_vertical"
-        android:layout_marginLeft="3dp"
-        android:focusable="false"
-        android:layout_weight="0.125" />
+        <Button
+            android:id="@+id/talent_list_item_text4"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_weight="0.125"
+            android:focusable="false"/>
 
-</LinearLayout>
+        <Button
+            android:id="@+id/talent_list_item_text5"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginLeft="3dp"
+            android:layout_weight="0.125"
+            android:focusable="false"/>
 
-</com.dsatab.view.CheckableFrameLayout>
+    </LinearLayout>
+
+</com.dsatab.view.CheckableRelativeLayout>

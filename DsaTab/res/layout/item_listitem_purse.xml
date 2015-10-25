@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/list_item_container"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="?attr/listItemBackground"
     android:minHeight="?attr/listPreferredItemHeight"
     android:paddingRight="?attr/listPreferredItemPaddingRight"
-    android:paddingLeft="?attr/listPreferredItemPaddingLeft" 
-    android:orientation="vertical">
+    android:paddingLeft="?attr/listPreferredItemPaddingLeft">
 
     <Spinner
         android:id="@+id/sp_currency"
@@ -21,10 +21,14 @@
         style="?android:attr/listSeparatorTextViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/sp_currency"
         android:ellipsize="end"        
-        android:visibility="gone" />
+        android:visibility="gone"
+        tools:text="Currency Name"
+        tools:visibility="visible"/>
 
     <TableLayout
+        android:layout_below="@+id/tv_currency_header"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"             
         android:shrinkColumns="0,1,2,3"
@@ -42,7 +46,8 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="center_horizontal"                
-                android:textStyle="bold" >
+                android:textStyle="bold"
+                tools:text="Dukaten">
             </TextView>
 
             <TextView
@@ -53,7 +58,8 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="center_horizontal"                
-                android:textStyle="bold" >
+                android:textStyle="bold"
+                tools:text="Silber">
             </TextView>
 
             <TextView
@@ -64,7 +70,8 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="center_horizontal"                
-                android:textStyle="bold" >
+                android:textStyle="bold"
+                tools:text="Heller">
             </TextView>
 
             <TextView
@@ -75,7 +82,8 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="center_horizontal"                
-                android:textStyle="bold" >
+                android:textStyle="bold"
+                tools:text="Kreuzer">
             </TextView>
         </TableRow>
 
@@ -84,30 +92,43 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" >
 
-            <NumberPicker
+            <Button
                 android:id="@+id/popup_purse_dukat"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:ellipsize="none"
+                android:gravity="center"
+                android:layout_weight="1"
+                tools:text="1"/>
 
-            <NumberPicker
+            <Button
                 android:id="@+id/popup_purse_silver"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:ellipsize="none"
+                android:gravity="center"
+                android:layout_weight="1"
+                tools:text="5"/>
 
-            <NumberPicker
+            <Button
                 android:id="@+id/popup_purse_heller"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:ellipsize="none"
+                android:gravity="center"
+                android:layout_weight="1"
+                tools:text="10"/>
 
-            <NumberPicker
+            <Button
                 android:id="@+id/popup_purse_kreuzer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:ellipsize="none"
+                android:gravity="center"
+                android:layout_weight="1"
+                tools:text="0"
+                />
         </TableRow>
     </TableLayout>
 
-</LinearLayout>
+</RelativeLayout>

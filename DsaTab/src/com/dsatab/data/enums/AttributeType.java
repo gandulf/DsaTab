@@ -29,23 +29,23 @@ public enum AttributeType {
 	private boolean probable = false;
 	private boolean editable = true;
 
-	private AttributeType() {
+	AttributeType() {
 		this(null, false, false);
 	}
 
-	private AttributeType(String code) {
+	AttributeType(String code) {
 		this(code, false);
 	}
 
-	private AttributeType(String code, boolean be) {
+	AttributeType(String code, boolean be) {
 		this(code, false, false);
 	}
 
-	private AttributeType(String code, boolean be, boolean probe) {
+	AttributeType(String code, boolean be, boolean probe) {
 		this(code, be, probe, true);
 	}
 
-	private AttributeType(String code, boolean be, boolean probe, boolean editable) {
+	AttributeType(String code, boolean be, boolean probe, boolean editable) {
 		this.code = code;
 		this.be = be;
 		this.probable = probe;
@@ -97,7 +97,7 @@ public enum AttributeType {
 		if (code == null)
 			return null;
 
-		AttributeType attributeType = null;
+		AttributeType attributeType;
 
 		try {
 			attributeType = AttributeType.valueOf(code);

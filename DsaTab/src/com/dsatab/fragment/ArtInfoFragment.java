@@ -14,7 +14,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.dsatab.R;
-import com.dsatab.activity.FragmentEditActivity;
+import com.dsatab.activity.BaseEditActivity;
 import com.dsatab.data.Art;
 import com.dsatab.data.ArtInfo;
 import com.dsatab.data.enums.ArtGroupType;
@@ -36,9 +36,9 @@ public class ArtInfoFragment extends BaseEditFragment {
 	private boolean editMode = false;
 
 	public static void edit(Activity activity, Art art, int requestCode) {
-		Intent intent = new Intent(activity, FragmentEditActivity.class);
+		Intent intent = new Intent(activity, BaseEditActivity.class);
 		intent.setAction(Intent.ACTION_EDIT);
-		intent.putExtra(FragmentEditActivity.EDIT_FRAGMENT_CLASS, ArtInfoFragment.class);
+		intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, ArtInfoFragment.class);
 		intent.putExtra(DATA_INTENT_ART_INFO, art.getInfo());
 		if (art.getValue() != null) {
 			intent.putExtra(DATA_INTENT_ART_VALUE, (int) art.getValue());
@@ -52,9 +52,9 @@ public class ArtInfoFragment extends BaseEditFragment {
 	}
 
 	public static void view(Activity activity, Art art, int requestCode) {
-		Intent intent = new Intent(activity, FragmentEditActivity.class);
+		Intent intent = new Intent(activity, BaseEditActivity.class);
 		intent.setAction(Intent.ACTION_VIEW);
-		intent.putExtra(FragmentEditActivity.EDIT_FRAGMENT_CLASS, ArtInfoFragment.class);
+		intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, ArtInfoFragment.class);
 		intent.putExtra(DATA_INTENT_ART_INFO, art.getInfo());
 		if (art.getValue() != null) {
 			intent.putExtra(DATA_INTENT_ART_VALUE, (int) art.getValue());
@@ -199,9 +199,9 @@ public class ArtInfoFragment extends BaseEditFragment {
 		setMode(edit);
 
 		if (edit)
-			getEditActivity().inflateDoneDiscard();
+			inflateSaveAndDiscard();
 		else
-			getEditActivity().inflateDone();
+			inflateDone();
 
 		getActivity().invalidateOptionsMenu();
 
@@ -214,6 +214,7 @@ public class ArtInfoFragment extends BaseEditFragment {
 			NumberPicker numberPicker = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_value);
 			if (numberPicker != null) {
 				numberPicker.setEnabled(edit);
+                numberPicker.setVisibility(edit ? View.VISIBLE : View.GONE);
 			}
 
 			edit(R.id.popup_liturgie_castduration, R.id.popup_liturgie_castduration_edit,

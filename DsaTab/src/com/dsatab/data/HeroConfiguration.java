@@ -1,7 +1,6 @@
 package com.dsatab.data;
 
 import android.annotation.SuppressLint;
-import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.text.TextUtils;
@@ -116,7 +115,7 @@ public class HeroConfiguration {
 
 		JSONArray array = null;
 
-		if (version < 84) {
+		if (version < 95) {
 			tabInfos = getDefaultTabs(tabInfos);
 		} else {
 			if (in.has(FIELD_TABS_PORTRAIT)) {
@@ -279,12 +278,6 @@ public class HeroConfiguration {
 		properties.put(key, value);
 	}
 
-	/**
-	 * 
-	 * @param orientation
-	 *            one of {@link ActivityInfo} SCREEN_ORIENTATION_
-	 * @return
-	 */
 	public List<TabInfo> getTabs() {
 		return tabInfos;
 	}
@@ -294,7 +287,10 @@ public class HeroConfiguration {
 	}
 
 	public TabInfo getTab(int index) {
-		return getTabs().get(index);
+        if (getTabs() != null && index>=0 && index < getTabs().size())
+		    return getTabs().get(index);
+        else
+            return null;
 	}
 
 	@SuppressLint("InlinedApi")
@@ -467,9 +463,7 @@ public class HeroConfiguration {
 	public List<ItemContainer<Item>> getItemContainers() {
 		if (itemContainers == null) {
 			itemContainers = new ArrayList<ItemContainer<Item>>();
-			itemContainers.add(new ItemContainer<Item>(3, "Rucksack", Util.getUriForResourceId(R.drawable.dsa_bag)));
-			itemContainers.add(new ItemContainer<Item>(4, "Gürtel", Util.getUriForResourceId(R.drawable.dsa_trousers)));
-			itemContainers.add(new ItemContainer<Item>(5, "Maultier", Util.getUriForResourceId(R.drawable.dsa_cat)));
+			itemContainers.add(new ItemContainer<Item>(3, "Rucksack", Util.getUriForResourceId(R.drawable.vd_backpack)));
 		}
 		return itemContainers;
 	}
@@ -491,25 +485,27 @@ public class HeroConfiguration {
 			TabInfo tabInfo = new TabInfo(CharacterFragment.class, ListableFragment.class,
 					getTabResourceId(CharacterFragment.class), true, false);
 			tabInfo.setTitle("Charakter");
-			listSettings = (ListSettings) tabInfo.getListSettings(1);
+			listSettings = tabInfo.getListSettings(1);
 			listSettings.addListItem(new ListItem(ListItemType.Talent));
 			tabInfos.add(tabInfo);
 
-			tabInfo = new TabInfo(ListableFragment.class, ListableFragment.class, R.drawable.dsa_spells);
+			tabInfo = new TabInfo(ListableFragment.class, ListableFragment.class, R.drawable.vd_bookmark);
 			tabInfo.setTitle("Zauber und Künste");
-			listSettings = (ListSettings) tabInfo.getListSettings(0);
+            tabInfo.setBackgroundId(R.drawable.backdrop_spells);
+			listSettings = tabInfo.getListSettings(0);
 			listSettings.addListItem(new ListItem(AttributeType.Astralenergie_Aktuell));
 			listSettings.addListItem(new ListItem(ListItemType.Spell));
-			listSettings = (ListSettings) tabInfo.getListSettings(1);
+			listSettings = tabInfo.getListSettings(1);
 			listSettings.addListItem(new ListItem(AttributeType.Karmaenergie_Aktuell));
 			listSettings.addListItem(new ListItem(ListItemType.Talent, TalentGroupType.Gaben.name()));
 			listSettings.addListItem(new ListItem(ListItemType.Header, ListItemType.Art));
 			listSettings.addListItem(new ListItem(ListItemType.Art));
 			tabInfos.add(tabInfo);
 
-			tabInfo = new TabInfo(ListableFragment.class, BodyFragment.class, R.drawable.dsa_fight);
+			tabInfo = new TabInfo(ListableFragment.class, BodyFragment.class, R.drawable.vd_all_for_one);
 			tabInfo.setTitle("Kampf");
-			listSettings = (ListSettings) tabInfo.getListSettings(0);
+            tabInfo.setBackgroundId(R.drawable.backdrop_combat);
+			listSettings = tabInfo.getListSettings(0);
 			listSettings.addListItem(new ListItem(AttributeType.Lebensenergie_Aktuell));
 			listSettings.addListItem(new ListItem(AttributeType.Ausdauer_Aktuell));
 			listSettings.addListItem(new ListItem(AttributeType.Initiative_Aktuell));
@@ -522,23 +518,27 @@ public class HeroConfiguration {
 
 			tabInfo = new TabInfo(ItemsFragment.class, getTabResourceId(ItemsFragment.class), false, true);
 			tabInfo.setTitle("Ausrüstung");
+            tabInfo.setBackgroundId(R.drawable.backdrop_combat);
 			tabInfos.add(tabInfo);
 
-			tabInfo = new TabInfo(ListableFragment.class, ListableFragment.class, R.drawable.dsa_notes, false, false);
+			tabInfo = new TabInfo(ListableFragment.class, ListableFragment.class, R.drawable.vd_tied_scroll, false, false);
 			tabInfo.setTitle("Notizen");
-			listSettings = (ListSettings) tabInfo.getListSettings(0);
+            tabInfo.setBackgroundId(R.drawable.backdrop_notes);
+			listSettings = tabInfo.getListSettings(0);
 			listSettings.addListItem(new ListItem(ListItemType.Notes));
 			listSettings.addListItem(new ListItem(ListItemType.Document));
-			listSettings = (ListSettings) tabInfo.getListSettings(1);
+			listSettings = tabInfo.getListSettings(1);
 			listSettings.addListItem(new ListItem(ListItemType.Purse));
 			tabInfos.add(tabInfo);
 
 			tabInfo = new TabInfo(AnimalFragment.class, getTabResourceId(AnimalFragment.class), true, false);
 			tabInfo.setTitle("Begleiter");
+            tabInfo.setBackgroundId(R.drawable.backdrop_dsa);
 			tabInfos.add(tabInfo);
 
 			tabInfo = new TabInfo(MapFragment.class, getTabResourceId(MapFragment.class), false, false);
 			tabInfo.setTitle("Karten");
+            tabInfo.setBackgroundId(R.drawable.backdrop_notes);
 			tabInfos.add(tabInfo);
 		} else {
 
@@ -547,22 +547,25 @@ public class HeroConfiguration {
 			tabInfo.setTitle("Charakter");
 			tabInfos.add(tabInfo);
 
-			tabInfo = new TabInfo(ListableFragment.class, R.drawable.dsa_talents);
+			tabInfo = new TabInfo(ListableFragment.class, R.drawable.vd_biceps);
 			tabInfo.setTitle("Talente");
-			ListSettings listSettings = (ListSettings) tabInfo.getListSettings(0);
+            tabInfo.setBackgroundId(R.drawable.backdrop_talents);
+			ListSettings listSettings = tabInfo.getListSettings(0);
 			listSettings.addListItem(new ListItem(ListItemType.Talent));
 			tabInfos.add(tabInfo);
 
-			tabInfo = new TabInfo(ListableFragment.class, R.drawable.dsa_spells);
+			tabInfo = new TabInfo(ListableFragment.class, R.drawable.vd_bookmark);
 			tabInfo.setTitle("Zauber");
-			listSettings = (ListSettings) tabInfo.getListSettings(0);
+            tabInfo.setBackgroundId(R.drawable.backdrop_spells);
+			listSettings = tabInfo.getListSettings(0);
 			listSettings.addListItem(new ListItem(AttributeType.Astralenergie_Aktuell));
 			listSettings.addListItem(new ListItem(ListItemType.Spell));
 			tabInfos.add(tabInfo);
 
-			tabInfo = new TabInfo(ListableFragment.class, R.drawable.dsa_arts);
+			tabInfo = new TabInfo(ListableFragment.class, R.drawable.vd_beams_aura);
 			tabInfo.setTitle("Künste");
-			listSettings = (ListSettings) tabInfo.getListSettings(0);
+            tabInfo.setBackgroundId(R.drawable.backdrop_spells);
+			listSettings = tabInfo.getListSettings(0);
 			listSettings.addListItem(new ListItem(AttributeType.Karmaenergie_Aktuell));
 			listSettings.addListItem(new ListItem(ListItemType.Talent, TalentGroupType.Gaben.name()));
 			listSettings.addListItem(new ListItem(ListItemType.Header, ListItemType.Art));
@@ -573,9 +576,10 @@ public class HeroConfiguration {
 			tabInfo.setTitle("Wunden");
 			tabInfos.add(tabInfo);
 
-			tabInfo = new TabInfo(ListableFragment.class, R.drawable.dsa_fight);
+			tabInfo = new TabInfo(ListableFragment.class, R.drawable.vd_all_for_one);
 			tabInfo.setTitle("Kampf");
-			listSettings = (ListSettings) tabInfo.getListSettings(0);
+            tabInfo.setBackgroundId(R.drawable.backdrop_combat);
+			listSettings = tabInfo.getListSettings(0);
 			listSettings.addListItem(new ListItem(AttributeType.Lebensenergie_Aktuell));
 			listSettings.addListItem(new ListItem(AttributeType.Ausdauer_Aktuell));
 			listSettings.addListItem(new ListItem(AttributeType.Initiative_Aktuell));
@@ -588,11 +592,13 @@ public class HeroConfiguration {
 
 			tabInfo = new TabInfo(ItemsFragment.class, getTabResourceId(ItemsFragment.class), false, true);
 			tabInfo.setTitle("Ausrüstung");
+            tabInfo.setBackgroundId(R.drawable.backdrop_combat);
 			tabInfos.add(tabInfo);
 
-			tabInfo = new TabInfo(ListableFragment.class, R.drawable.dsa_notes, false, false);
+			tabInfo = new TabInfo(ListableFragment.class, R.drawable.vd_tied_scroll, false, false);
 			tabInfo.setTitle("Notizen");
-			listSettings = (ListSettings) tabInfo.getListSettings(0);
+            tabInfo.setBackgroundId(R.drawable.backdrop_notes);
+			listSettings = tabInfo.getListSettings(0);
 			listSettings.addListItem(new ListItem(ListItemType.Notes));
 			listSettings.addListItem(new ListItem(ListItemType.Document));
 			listSettings.addListItem(new ListItem(ListItemType.Purse));
@@ -600,10 +606,12 @@ public class HeroConfiguration {
 
 			tabInfo = new TabInfo(AnimalFragment.class, getTabResourceId(AnimalFragment.class), true, false);
 			tabInfo.setTitle("Begleiter");
+            tabInfo.setBackgroundId(R.drawable.backdrop_dsa);
 			tabInfos.add(tabInfo);
 
 			tabInfo = new TabInfo(MapFragment.class, getTabResourceId(MapFragment.class), false, false);
 			tabInfo.setTitle("Karten");
+            tabInfo.setBackgroundId(R.drawable.backdrop_notes);
 			tabInfos.add(tabInfo);
 		}
 

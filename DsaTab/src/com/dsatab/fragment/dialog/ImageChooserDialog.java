@@ -4,37 +4,42 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
+import android.graphics.drawable.NinePatchDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
-import android.widget.Toast;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.AbstractBeing;
+import com.dsatab.data.adapter.BaseRecyclerAdapter;
+import com.dsatab.data.adapter.ListRecyclerAdapter;
 import com.dsatab.util.Util;
 import com.gandulf.guilib.util.FileFileFilter;
+import com.gandulf.guilib.util.ResUtil;
+import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimator;
+import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImageChooserDialog extends DialogFragment implements AdapterView.OnItemClickListener {
+public class ImageChooserDialog extends DialogFragment implements ListRecyclerAdapter.EventListener {
 
 	public static final String TAG = "ImageChooserDialog";
 
 	private OnImageSelectedListener imageSelectedListener;
 
-	private GridView list;
+	private RecyclerView list;
 	private PortraitAdapter adapter;
 
 	private ScaleType scaleType = ScaleType.CENTER_CROP;
@@ -45,8 +50,8 @@ public class ImageChooserDialog extends DialogFragment implements AdapterView.On
 
 	private List<Uri> imageUris = new ArrayList<Uri>();
 
-	public static interface OnImageSelectedListener {
-		public void onImageSelected(Uri imageUri);
+	public interface OnImageSelectedListener {
+		void onImageSelected(Uri imageUri);
 	}
 
 	public static boolean hasFiles(File dir) {
@@ -72,11 +77,8 @@ public class ImageChooserDialog extends DialogFragment implements AdapterView.On
 
 		if (dialog.imageUris.isEmpty()) {
 			String path = dir.getAbsolutePath();
-			Toast.makeText(
-					parent.getActivity(),
-					"Keine Bilder gefunden. Kopiere deine eigenen auf deine SD-Karte unter \"" + path
-							+ "\" oder lade die Standardportraits in den Einstellungen herunter.", Toast.LENGTH_LONG)
-					.show();
+            Snackbar.make(dialog.getView(), "Keine Bilder gefunden. Kopiere deine eigenen auf deine SD-Karte unter \"" + path
+                    + "\" oder lade die Standardportraits in den Einstellungen herunter.", Snackbar.LENGTH_LONG).show();
 			return;
 		} else {
 			dialog.imageSelectedListener = imageSelectedListener;
@@ -103,7 +105,9 @@ public class ImageChooserDialog extends DialogFragment implements AdapterView.On
 		List<Integer> itemIcons = DsaTabApplication.getInstance().getConfiguration().getDsaIcons();
 		dialog.setImageIds(itemIcons);
 		dialog.setGridColumnWidth(DsaTabApplication.getInstance().getResources()
-				.getDimensionPixelSize(R.dimen.icon_button_size));
+                .getDimensionPixelSize(R.dimen.icon_button_size));
+        dialog.setGridColumnHeight(DsaTabApplication.getInstance().getResources()
+                .getDimensionPixelSize(R.dimen.icon_button_size));
 		dialog.setScaleType(ScaleType.FIT_CENTER);
 		dialog.setImageSelectedListener(imageSelectedListener);
 
@@ -127,7 +131,7 @@ public class ImageChooserDialog extends DialogFragment implements AdapterView.On
 		};
 
 		pickPortrait(parent, DsaTabApplication.getDirectory(DsaTabApplication.DIR_PORTRAITS), imageSelectedListener,
-				requestCode);
+                requestCode);
 	}
 
 	public void setImageIds(List<Integer> imageIds) {
@@ -139,29 +143,39 @@ public class ImageChooserDialog extends DialogFragment implements AdapterView.On
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		// builder.setListTitleStyle(true);
 
         LayoutInflater inflater = LayoutInflater.from(builder.getContext());
 
 		View popupcontent = inflater.inflate(R.layout.popup_portrait_chooser,null,false);
         builder.setView(popupcontent);
 
-		list = (GridView) popupcontent.findViewById(R.id.popup_portrait_chooser_list);
-		adapter = new PortraitAdapter(builder.getContext());
+		list = (RecyclerView) popupcontent.findViewById(R.id.popup_portrait_chooser_list);
+		adapter = new PortraitAdapter(imageUris);
 		adapter.setMinHeight(columnHeight);
+
 		adapter.setScaleType(scaleType);
 		list.setAdapter(adapter);
-		list.setOnItemClickListener(this);
-		if (columnWidth != 0)
-			list.setColumnWidth(columnWidth);
+
+        int width = Util.getWidth(getActivity());
+        int padding = getResources().getDimensionPixelSize(R.dimen.default_gap);
+        int columnCount = width / (columnWidth +padding+padding);
+
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),Math.max(1,columnCount));
+        list.setLayoutManager(layoutManager);
+        list.setItemAnimator(new SwipeDismissItemAnimator());
+
+        // additional decorations
+        //noinspection StatementWithEmptyBody
+        if (supportsViewElevation()) {
+            // Lollipop or later has native drop shadow feature. ItemShadowDecorator is not required.
+        } else {
+            list.addItemDecoration(new ItemShadowDecorator((NinePatchDrawable) getResources().getDrawable(R.drawable.material_shadow_z1)));
+        }
+
+		adapter.setEventListener(this);
 
 		builder.setTitle("Wähle ein Bild...");
-
-		for (Uri uri : imageUris) {
-			adapter.add(uri);
-		}
 
 		AlertDialog dialog = builder.create();
 		dialog.setCanceledOnTouchOutside(true);
@@ -169,16 +183,32 @@ public class ImageChooserDialog extends DialogFragment implements AdapterView.On
 
 	}
 
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		imageUri = adapter.getItem(position);
-		if (imageUri != null && imageSelectedListener != null) {
-			imageSelectedListener.onImageSelected(imageUri);
-		}
-		dismiss();
-	}
+    @Override
+    public void onItemClicked(BaseRecyclerAdapter adapter, int position, View v) {
+        imageUri = this.adapter.getItem(position);
+        if (imageUri != null && imageSelectedListener != null) {
+            imageSelectedListener.onImageSelected(imageUri);
+        }
+        dismiss();
+    }
 
-	public Uri getImageUri() {
+
+    @Override
+    public boolean onItemLongClicked(BaseRecyclerAdapter adapter, int position, View v) {
+        return false;
+    }
+
+    @Override
+    public void onItemSelected(BaseRecyclerAdapter adapter, int position, boolean value) {
+
+    }
+
+    @Override
+    public void onItemRemoved(BaseRecyclerAdapter adapter, int position) {
+
+    }
+
+    public Uri getImageUri() {
 		return imageUri;
 	}
 
@@ -199,31 +229,38 @@ public class ImageChooserDialog extends DialogFragment implements AdapterView.On
 
 	public void setGridColumnWidth(int width) {
 		this.columnWidth = width;
-		if (list != null) {
-			list.setColumnWidth(width);
-		}
+
 	}
 
 	public void setGridColumnHeight(int height) {
 		this.columnHeight = height;
 	}
 
-	static class PortraitAdapter extends ArrayAdapter<Uri> {
+    protected final boolean supportsViewElevation() {
+        return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
+    }
+	static class PortraitAdapter extends ListRecyclerAdapter<PortraitAdapter.PortraitViewHolder, Uri> {
 
 		private ScaleType scaleType;
 
 		private int minHeight;
+        private int minWidth;
 
-		public PortraitAdapter(Context context) {
-			super(context, 0);
+        protected  class PortraitViewHolder extends RecyclerView.ViewHolder {
+            ImageView imageView = null;
+
+            public PortraitViewHolder(View v) {
+                super(v);
+                imageView = (ImageView) v;
+            }
+        }
+
+		public PortraitAdapter() {
+            super(new ArrayList<Uri>());
 		}
 
-		public PortraitAdapter(Context context, List<Uri> objects) {
-			super(context, 0, objects);
-		}
-
-		public PortraitAdapter(Context context, Uri[] objects) {
-			super(context, 0, objects);
+		public PortraitAdapter(List<Uri> objects) {
+			super(objects);
 		}
 
 		public ScaleType getScaleType() {
@@ -242,23 +279,36 @@ public class ImageChooserDialog extends DialogFragment implements AdapterView.On
 			this.minHeight = minHeight;
 		}
 
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+        public int getMinWidth() {
+            return minWidth;
+        }
 
-			ImageView tv = null;
-			if (convertView instanceof ImageView) {
-				tv = (ImageView) convertView;
-			} else {
-				tv = new ImageView(getContext());
-				tv.setScaleType(scaleType);
-				tv.setMinimumHeight(minHeight);
-			}
+        public void setMinWidth(int minWidth) {
+            this.minWidth = minWidth;
+        }
 
-			Uri file = getItem(position);
-			tv.setImageURI(file);
+        @Override
+        public PortraitViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            ImageView iv = new ImageView(parent.getContext());
+            iv.setScaleType(scaleType);
+            iv.setMinimumHeight(minHeight);
+            iv.setMinimumWidth(minWidth);
 
-			return tv;
-		}
+            int padding = parent.getResources().getDimensionPixelSize(R.dimen.default_gap);
+            iv.setPadding(padding,padding,padding,padding);
+            return new PortraitViewHolder(iv);
+        }
+
+
+        @Override
+        public void onBindViewHolder(PortraitViewHolder holder, int position) {
+            super.onBindViewHolder(holder, position);
+
+            Uri file = getItem(position);
+            holder.imageView.setImageDrawable(ResUtil.getDrawableByUri(holder.imageView.getContext(), file));
+        }
+
+
 	}
 
 }

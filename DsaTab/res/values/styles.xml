@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:custom="http://schemas.android.com/apk/res-auto">
 
+    <style name="FlipCheckBoxStyle.Dsa" parent="FlipCheckBoxStyle">
+        <item name="frontClickableBackgroundDrawable">@drawable/circle</item>
+    </style>
+
     <style name="AlertDialog.Light" parent="Base.Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
@@ -32,6 +36,27 @@
     <style name="FloatingActionMenu">
         <item name="menu_colorNormal">@color/accent</item>
         <item name="menu_colorPressed">@color/accent_dark</item>
+    </style>
+
+    <style name="Widget.CardContent" parent="android:Widget">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">24dp</item>
+        <item name="android:paddingBottom">24dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+
+    <style name="Widget.IconView" parent="android:Widget">
+        <item name="materialIconColor">#888888</item>
+        <item name="materialIconSize">@dimen/icon_size</item>
+        <item name="android:padding">@dimen/icon_padding</item>
+        <item name="android:scaleType">center</item>
+    </style>
+
+    <style name="Widget.IconButton" parent="Widget.IconView">
+        <item name="android:focusable">true</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
     </style>
 
     <style name="Widget.Button.Dark">

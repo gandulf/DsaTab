@@ -12,7 +12,6 @@ import android.widget.NumberPicker;
 import android.widget.NumberPicker.OnValueChangeListener;
 import android.widget.TextView;
 
-import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.CombatMeleeAttribute;
 import com.dsatab.data.CombatMeleeTalent;
@@ -109,8 +108,11 @@ public class InlineEditFightDialog extends DialogFragment implements android.con
 		}
 
 		numberPicker.setWrapSelectorWheel(false);
+        numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 		editAt.setWrapSelectorWheel(false);
+        editAt.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 		editPa.setWrapSelectorWheel(false);
+        editPa.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
 		if (singleValued) {
 

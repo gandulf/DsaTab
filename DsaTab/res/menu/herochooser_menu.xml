@@ -2,13 +2,12 @@
 
     <item
         android:id="@+id/option_refresh"
-        android:icon="@drawable/ic_refresh_white_36dp"
         android:showAsAction="withText|ifRoom"
         app:showAsAction="always"
         android:title="@string/refresh"/>
     <item
         android:id="@+id/option_connect"
-        android:icon="@drawable/ic_cloud_circle_white_36dp"
+
         android:showAsAction="withText|ifRoom"
         app:showAsAction="withText|ifRoom"
         android:title="Verbinden">
@@ -26,7 +25,6 @@
     </item>
     <item
         android:id="@+id/option_load_example_heroes"
-        android:icon="@drawable/ic_person_white_36dp"
         android:showAsAction="withText|ifRoom"
         app:showAsAction="withText|ifRoom"
         android:title="Beispiel Helden laden"

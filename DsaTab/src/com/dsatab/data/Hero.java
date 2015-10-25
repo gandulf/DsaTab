@@ -139,7 +139,7 @@ public class Hero extends AbstractBeing {
 		for (int i = 0; i < equippedItems.length; i++) {
 			this.equippedItems[i] = new LinkedList<EquippedItem>();
 		}
-		this.purse = new Purse();
+		this.purse = new Purse(this);
 		this.connections = new ArrayList<Connection>();
 	}
 

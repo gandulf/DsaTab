@@ -5,13 +5,12 @@ import android.preference.Preference;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 
 import com.dsatab.R;
 
 public class PreferenceWithButton extends Preference {
 
-	private Button mButton;
+	private View mView;
 
 	private OnClickListener buttonClickListener;
 
@@ -42,17 +41,17 @@ public class PreferenceWithButton extends Preference {
 	protected void onBindView(View view) {
 		super.onBindView(view);
 
-		mButton = (Button) view.findViewById(R.id.pref_btn);
-		if (mButton != null) {
-			mButton.setOnClickListener(buttonClickListener);
-			mButton.setFocusable(false);
-			mButton.setTag(this);
-			mButton.setVisibility(widgetVisibility);
+		mView = view.findViewById(R.id.pref_btn);
+		if (mView != null) {
+			mView.setOnClickListener(buttonClickListener);
+			mView.setFocusable(false);
+			mView.setTag(this);
+			mView.setVisibility(widgetVisibility);
 		}
 	}
 
-	public Button getButton() {
-		return mButton;
+	public View getButton() {
+		return mView;
 	}
 
 	public OnClickListener getButtonClickListener() {
@@ -69,8 +68,8 @@ public class PreferenceWithButton extends Preference {
 
 	public void setWidgetVisibility(int widgetVisibility) {
 		this.widgetVisibility = widgetVisibility;
-		if (mButton != null) {
-			mButton.setVisibility(widgetVisibility);
+		if (mView != null) {
+			mView.setVisibility(widgetVisibility);
 		}
 	}
 

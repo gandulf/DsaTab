@@ -3,6 +3,8 @@ package com.dsatab.data;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 
+import org.apache.commons.lang3.ObjectUtils;
+
 public class CombatMeleeAttribute extends BaseProbe implements Value {
 
 	public static final String PARADE = "Parade";
@@ -123,7 +125,7 @@ public class CombatMeleeAttribute extends BaseProbe implements Value {
 
 	@Override
 	public void setValue(Integer value) {
-		if (this.value != value) {
+        if (ObjectUtils.notEqual(this.value, value)) {
 			this.value = value;
 			being.fireValueChangedEvent(this);
 		}

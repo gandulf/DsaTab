@@ -1261,11 +1261,11 @@ public enum FeatureType {
 	private String xmlName;
 	private FeatureGroupType type;
 
-	private FeatureType(String xmlName) {
+	FeatureType(String xmlName) {
 		this.xmlName = xmlName;
 	}
 
-	private FeatureType(String xmlName, FeatureGroupType type) {
+	FeatureType(String xmlName, FeatureGroupType type) {
 		this.xmlName = xmlName;
 		this.type = type;
 	}

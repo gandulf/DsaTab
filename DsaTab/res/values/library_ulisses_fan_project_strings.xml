@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+	<string name="define_ulisses_fan_project"></string>
+	<!-- Author section -->
+	<string name="library_ulisses_fan_project_author">Ulisses Spiele Medien &amp; Spiel Distribution GmbH</string>
+	<string name="library_ulisses_fan_project_authorWebsite">http://www.ulisses-spiele.de/</string>
+	<!-- Library section -->
+	<string name="library_ulisses_fan_project_libraryName">Ulisses Fanprojekt Lizenz</string>
+	<string name="library_ulisses_fan_project_libraryDescription">Lizenzvereinbarung der Ulisses Spiele Medien &amp; Spiel Distribution GmbH.</string>
+	<string name="library_ulisses_fan_project_libraryWebsite">http://www.ulisses-spiele.de/</string>
+	<string name="library_ulisses_fan_project_libraryVersion"></string>
+	<!-- OpenSource section -->
+	<string name="library_ulisses_fan_project_isOpenSource">false</string>
+	<string name="library_ulisses_fan_project_repositoryLink"></string>
+	<!-- ClassPath for autoDetect section -->
+	<string name="library_ulisses_fan_project_classPath">ulisses-spiele-de</string>
+	<!-- License section -->
+	<string name="library_ulisses_fan_project_licenseId"></string>
+	<!-- Custom variables section -->
+</resources>

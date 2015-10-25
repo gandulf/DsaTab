@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
-import com.dsatab.activity.FragmentEditActivity;
+import com.dsatab.activity.BaseEditActivity;
 import com.dsatab.data.items.ItemContainer;
 import com.dsatab.fragment.dialog.ImageChooserDialog;
 import com.dsatab.util.Util;
@@ -21,16 +21,16 @@ import com.dsatab.util.Util;
 public class ItemContainerEditFragment extends BaseEditFragment implements OnClickListener {
 
 	public static void insert(Activity activity) {
-		Intent intent = new Intent(activity, FragmentEditActivity.class);
+		Intent intent = new Intent(activity, BaseEditActivity.class);
 		intent.setAction(Intent.ACTION_INSERT);
-		intent.putExtra(FragmentEditActivity.EDIT_FRAGMENT_CLASS, ItemContainerEditFragment.class);
+		intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, ItemContainerEditFragment.class);
 		activity.startActivity(intent);
 	}
 
 	public static void edit(Activity activity, ItemContainer itemContainer) {
-		Intent intent = new Intent(activity, FragmentEditActivity.class);
+		Intent intent = new Intent(activity, BaseEditActivity.class);
 		intent.setAction(Intent.ACTION_EDIT);
-		intent.putExtra(FragmentEditActivity.EDIT_FRAGMENT_CLASS, ItemContainerEditFragment.class);
+		intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, ItemContainerEditFragment.class);
 		intent.putExtra(INTENT_ITEM_CHOOSER_ID, itemContainer.getId());
 		activity.startActivity(intent);
 	}

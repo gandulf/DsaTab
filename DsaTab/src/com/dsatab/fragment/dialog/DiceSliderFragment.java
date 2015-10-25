@@ -1,12 +1,9 @@
 package com.dsatab.fragment.dialog;
 
-import android.animation.LayoutTransition;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -14,7 +11,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.SoundPool;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -27,7 +23,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -50,7 +45,6 @@ import com.dsatab.data.Probe.ProbeType;
 import com.dsatab.data.Spell;
 import com.dsatab.data.adapter.ModifierAdapter;
 import com.dsatab.data.adapter.ModifierAdapter.OnModifierChangedListener;
-import com.dsatab.data.adapter.OpenRecyclerAdapter;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.FeatureType;
 import com.dsatab.data.items.DistanceWeapon;
@@ -63,6 +57,8 @@ import com.dsatab.util.Hint;
 import com.dsatab.util.StyleableSpannableStringBuilder;
 import com.dsatab.util.Util;
 
+import org.apache.commons.lang3.ObjectUtils;
+
 import java.lang.ref.WeakReference;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -74,7 +70,7 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 
 	public static final String TAG = "diceSliderFragment";
 
-	private final int SCHNELLSCHUSS_INDEX = 13;
+	private static final int SCHNELLSCHUSS_INDEX = 13;
 	private static final String EVADE_GEZIELT = "Gezieltes Ausweichen DK-Mod. x2";
 
 	private static final int DICE_DELAY = 1000;
@@ -83,6 +79,8 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 	private static final int HANDLE_DICE_6 = 2;
 
 	private Dialog dialog;
+
+    private View dimView;
 
 	private TextView tfDiceTalentName;
 
@@ -93,7 +91,7 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 	private boolean animate = true;
 	private LinearLayout linDiceResult;
 
-	private ImageButton executeButton, takeHitButton;
+	private ImageView executeButton, takeHitButton;
 
 	private Animation shakeDice20;
 	private Animation shakeDice6;
@@ -158,29 +156,6 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 
 		modifierAdapter = new ModifierAdapter(new ArrayList<Modifier>());
 		modifierAdapter.setOnModifierChangedListener(this);
-		modifierAdapter.setEventListener(new OpenRecyclerAdapter.EventListener() {
-			@Override
-			public void onItemRemoved(int position) {
-
-			}
-
-			@Override
-			public void onItemClicked(int position, View v) {
-				Modifier modifier = (Modifier) modifierAdapter.getItem(position);
-				modifier.toggleActive();
-				onModifierChanged(modifier);
-			}
-
-			@Override
-			public boolean onItemLongClicked(int position, View v) {
-				return false;
-			}
-
-			@Override
-			public void onItemSelected(int position, boolean value) {
-
-			}
-		});
 		modifiersList.setAdapter(modifierAdapter);
 
 		listDivider = root.findViewById(R.id.probe_modifier_container_divider);
@@ -197,11 +172,11 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 		tfDice6 = (ImageView) root.findViewById(R.id.dice_w6);
 		tfDice6.setOnClickListener(this);
 
-		executeButton = (ImageButton) root.findViewById(R.id.dice_execute);
+		executeButton = (ImageView) root.findViewById(R.id.dice_execute);
 		executeButton.setOnClickListener(this);
 		executeButton.setVisibility(View.GONE);
 
-		takeHitButton = (ImageButton) root.findViewById(R.id.dice_take_hit);
+		takeHitButton = (ImageView) root.findViewById(R.id.dice_take_hit);
 		takeHitButton.setOnClickListener(this);
 		takeHitButton.setVisibility(View.GONE);
 
@@ -224,7 +199,11 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 			checkProbe();
 		}
 
-		return dialog;
+        // remove background dim
+        //dialog.getWindow().setDimAmount(0);
+
+
+        return dialog;
 	}
 
 	private void resetPanelInformation() {
@@ -240,7 +219,7 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 
 		executeButton.setVisibility(View.GONE);
 		takeHitButton.setVisibility(View.GONE);
-		linDiceResult.setBackgroundResource(0);
+        dimBackground(android.R.color.transparent);
 
 		if (modifierAdapter != null) {
 			modifierAdapter.clear();
@@ -248,8 +227,44 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 		}
 	}
 
-	@Override
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    protected void dimBackground(int colorId) {
+
+        ViewGroup content =(ViewGroup) getActivity().findViewById(android.R.id.content);
+        if (content!=null && colorId != android.R.color.transparent && colorId !=0) {
+            if (dimView == null) {
+                dimView = new View(getActivity());
+                dimView.setVisibility(View.GONE);
+                content.addView(dimView);
+            }
+            dimView.setBackgroundColor(getResources().getColor(colorId));
+            if (dimView.getVisibility() == View.GONE) {
+                dimView.setVisibility(View.VISIBLE);
+                dimView.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
+            }
+            content.invalidate();
+        } else if (dimView!=null) {
+            dimView.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        if (dimView!=null && dimView.getParent()!=null) {
+            ((ViewGroup) dimView.getParent()).removeView(dimView);
+            dimView = null;
+        }
+    }
+
+    @Override
 	public void onDestroyView() {
+
 		super.onDestroyView();
 
 		mHandler.removeMessages(HANDLE_DICE_20);
@@ -348,8 +363,6 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 		edit.putBoolean(Modifier.PREF_PREFIX_ACTIVE + mod.getTitle(), mod.isActive());
 		edit.commit();
 
-		Util.notifyDatasetChanged(modifiersList);
-
 		updateProgressView(probeData, mod);
 		if (isAutoRoll()) {
 			probeData.sound = false;
@@ -403,9 +416,7 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 				// bestätigter patzer
 				if (info.failureTwenty && effect < 0) {
 					tfDiceTalentName.setText(info.probe.getName() + " total verpatzt!");
-
-					linDiceResult.setBackgroundResource(R.drawable.probe_red_highlight);
-
+                    dimBackground(R.color.ValueRedAlpha);
 					if (combatTalent instanceof CombatDistanceTalent) {
 						tfDiceTalentName.append(" | ");
 						tfDiceTalentName.append(getFailureDistance());
@@ -417,7 +428,7 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 					}
 
 				} else { // unbestätigter patzer
-					linDiceResult.setBackgroundResource(0);
+                    dimBackground(android.R.color.transparent);
 					tfDiceTalentName.setText(info.probe.getName() + " misslungen");
 				}
 				tfDiceTalentName.setTextColor(colorRed);
@@ -440,12 +451,12 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 					tfDiceTalentName.setText(info.probe.getName() + " glücklich gemeistert!");
 					tfEffectValue.setTextColor(colorGreen);
 					tfDiceTalentName.setTextColor(colorGreen);
-					linDiceResult.setBackgroundResource(R.drawable.probe_green_highlight);
-				} else {
-					tfDiceTalentName.setText(info.probe.getName() + " gelungen");
+                    dimBackground(R.color.ValueGreenAlpha);
+                } else {
+                    tfDiceTalentName.setText(info.probe.getName() + " gelungen");
 					tfEffectValue.setTextColor(Util.getThemeColors(tfEffectValue.getContext(), android.R.attr.textColorPrimary));
-					tfDiceTalentName.setTextColor(Util.getThemeColors(tfDiceTalentName.getContext(), android.R.attr.textColorPrimary));
-					linDiceResult.setBackgroundResource(0);
+                    tfDiceTalentName.setTextColor(Util.getThemeColors(tfDiceTalentName.getContext(), android.R.attr.textColorPrimary));
+                    dimBackground(android.R.color.transparent);
 				}
 
 				StringBuilder sb = new StringBuilder();
@@ -759,7 +770,7 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 
 		return (probe instanceof CombatDistanceTalent || probe instanceof CombatMeleeAttribute || (probe.getProbeInfo()
 				.getAttributeValues().isEmpty()
-				&& info.value[0] == info.value[1] && info.value[1] == info.value[2]));
+				&& ObjectUtils.notEqual(info.value[0], info.value[1]) && ObjectUtils.notEqual(info.value[1], info.value[2])));
 	}
 
 	private void updateView(ProbeData info) {
@@ -1138,11 +1149,11 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 	private TextView showDice20(int value, int referenceValue) {
 		TextView res = new TextView(linDiceResult.getContext());
 
-		int width = getResources().getDimensionPixelSize(R.dimen.dices_size);
+		int size = getResources().getDimensionPixelSize(R.dimen.dices_size);
 		int padding = getResources().getDimensionPixelSize(R.dimen.default_gap);
 
-		res.setWidth(width);
-		res.setHeight(width);
+		res.setWidth(size);
+		res.setHeight(size);
 
 		if (referenceValue < 0 || value <= referenceValue)
 			res.setBackgroundResource(R.drawable.w20_empty);
@@ -1155,15 +1166,15 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 		res.setTypeface(Typeface.DEFAULT_BOLD);
 		res.setGravity(Gravity.CENTER);
 		res.setPadding(padding, 0, padding, 0);
-		res.setTextSize(TypedValue.COMPLEX_UNIT_PX, (width - res.getPaddingTop() - res.getPaddingBottom()) / 3);
+		res.setTextSize(TypedValue.COMPLEX_UNIT_PX, (size - res.getPaddingTop() - res.getPaddingBottom()) / 3);
 
-		addDice(res, width, width);
+		addDice(res, size, size);
 
 		return res;
 	}
 
 	private void addDice(View res, int width, int height) {
-		linDiceResult.addView(res, width, width);
+		linDiceResult.addView(res, width, height);
 		if (animate && preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_ANIM_ROLL_DICE, true)) {
 			res.startAnimation(AnimationUtils.loadAnimation(linDiceResult.getContext(), R.anim.flip_in));
 		}
@@ -1182,13 +1193,13 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 	private ImageView showDice6(int value) {
 		ImageView res = new ImageView(linDiceResult.getContext());
 
-		int width = getResources().getDimensionPixelSize(R.dimen.dices_size);
+		int size = getResources().getDimensionPixelSize(R.dimen.dices_size);
 		int padding = getResources().getDimensionPixelSize(R.dimen.default_gap);
 
 		res.setImageResource(Util.getDrawableByName("w6_" + value));
 		res.setPadding(padding, 0, padding, 0);
 
-		addDice(res, width, width);
+		addDice(res, size, size);
 
 		return res;
 	}

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/popup_edit_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -15,6 +16,41 @@
         android:layout_height="wrap_content"
         android:text="@string/label_auto_calculate_be" >
     </CheckBox>
+
+    <LinearLayout
+        android:id="@+id/popup_edit_value_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/popup_edit_value_minus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?attr/buttonStyleSmall"
+            android:text="-"/>
+        <EditText
+            android:id="@+id/popup_edit_value"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:inputType="number|numberSigned"
+            android:digits="0123456789-"
+            android:gravity="center_horizontal"
+
+            android:imeActionId="1"
+            android:imeActionLabel="@string/label_ok"
+            android:imeOptions="actionGo"
+
+            tools:text="20" />
+
+        <Button
+            android:id="@+id/popup_edit_value_plus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?attr/buttonStyleSmall"
+            android:text="+"/>
+    </LinearLayout>
 
     <NumberPicker
         android:id="@+id/popup_edit_text"

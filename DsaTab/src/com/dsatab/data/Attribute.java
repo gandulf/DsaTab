@@ -5,7 +5,6 @@ import com.dsatab.data.enums.FeatureType;
 import com.dsatab.data.listable.Listable;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 import com.dsatab.util.Util;
-import com.gandulf.guilib.util.MathUtil;
 
 public class Attribute extends BaseProbe implements Value, Cloneable, Listable {
 
@@ -44,7 +43,13 @@ public class Attribute extends BaseProbe implements Value, Cloneable, Listable {
 	}
 
 	public float getRatio() {
-		return MathUtil.getRatio(getValue(), getReferenceValue());
+
+        if (getValue() != null && getReferenceValue() != null && getReferenceValue() != 0) {
+            return ((float) getValue()) / getReferenceValue();
+        } else {
+            return 1.0f;
+        }
+
 	}
 
 	public void setType(AttributeType type) {

@@ -14,7 +14,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.dsatab.R;
-import com.dsatab.activity.FragmentEditActivity;
+import com.dsatab.activity.BaseEditActivity;
 import com.dsatab.data.Hero;
 import com.dsatab.data.Spell;
 import com.dsatab.data.SpellInfo;
@@ -39,9 +39,9 @@ public class SpellInfoFragment extends BaseEditFragment {
 	private boolean editMode = false;
 
 	public static void edit(Activity activity, Spell spell, int requestCode) {
-		Intent intent = new Intent(activity, FragmentEditActivity.class);
+		Intent intent = new Intent(activity, BaseEditActivity.class);
 		intent.setAction(Intent.ACTION_EDIT);
-		intent.putExtra(FragmentEditActivity.EDIT_FRAGMENT_CLASS, SpellInfoFragment.class);
+		intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, SpellInfoFragment.class);
 		intent.putExtra(DATA_INTENT_SPELL_INFO, spell.getInfo());
 		intent.putExtra(DATA_INTENT_SPELL_TITLE, spell.getTitle());
 		intent.putExtra(DATA_INTENT_SPELL_COMMENT, spell.getComments());
@@ -56,9 +56,9 @@ public class SpellInfoFragment extends BaseEditFragment {
 	}
 
 	public static void view(Activity activity, Spell spell, int requestCode) {
-		Intent intent = new Intent(activity, FragmentEditActivity.class);
+		Intent intent = new Intent(activity, BaseEditActivity.class);
 		intent.setAction(Intent.ACTION_VIEW);
-		intent.putExtra(FragmentEditActivity.EDIT_FRAGMENT_CLASS, SpellInfoFragment.class);
+		intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, SpellInfoFragment.class);
 		intent.putExtra(DATA_INTENT_SPELL_INFO, spell.getInfo());
 		intent.putExtra(DATA_INTENT_SPELL_TITLE, spell.getTitle());
 		intent.putExtra(DATA_INTENT_SPELL_COMMENT, spell.getComments());
@@ -222,9 +222,9 @@ public class SpellInfoFragment extends BaseEditFragment {
 		setMode(edit);
 
 		if (edit)
-			getEditActivity().inflateDoneDiscard();
+			inflateSaveAndDiscard();
 		else
-			getEditActivity().inflateDone();
+			inflateDone();
 
 		getActivity().invalidateOptionsMenu();
 
@@ -236,6 +236,7 @@ public class SpellInfoFragment extends BaseEditFragment {
 
 			NumberPicker numberPicker = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_value);
 			if (numberPicker != null) {
+                numberPicker.setVisibility(edit ? View.VISIBLE: View.GONE);
 				numberPicker.setEnabled(edit);
 			}
 

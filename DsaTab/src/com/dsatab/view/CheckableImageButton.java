@@ -1,13 +1,13 @@
 package com.dsatab.view;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatImageButton;
 import android.util.AttributeSet;
-import android.widget.ImageButton;
 
 import com.gandulf.guilib.listener.CheckableListenable;
 import com.gandulf.guilib.listener.OnCheckedChangeListener;
 
-public class CheckableImageButton extends ImageButton implements CheckableListenable {
+public class CheckableImageButton extends AppCompatImageButton implements CheckableListenable {
 	boolean mChecked = false;
 
 	private static final int[] CHECKED_STATE_SET = { android.R.attr.state_checked };

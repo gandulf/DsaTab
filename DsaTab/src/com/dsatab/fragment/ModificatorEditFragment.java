@@ -12,14 +12,14 @@ import android.widget.EditText;
 
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabActivity;
-import com.dsatab.activity.FragmentEditActivity;
+import com.dsatab.activity.BaseEditActivity;
 import com.dsatab.data.modifier.CustomModificator;
 
 public class ModificatorEditFragment extends BaseEditFragment {
 
 	public static void edit(Activity context, CustomModificator modificator, int requestCode) {
-		Intent intent = new Intent(context, FragmentEditActivity.class);
-		intent.putExtra(FragmentEditActivity.EDIT_FRAGMENT_CLASS, ModificatorEditFragment.class);
+		Intent intent = new Intent(context, BaseEditActivity.class);
+		intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, ModificatorEditFragment.class);
 
 		intent.putExtra(ModificatorEditFragment.INTENT_ID, modificator.getId());
 		intent.putExtra(ModificatorEditFragment.INTENT_NAME, modificator.getModificatorName());
@@ -30,9 +30,9 @@ public class ModificatorEditFragment extends BaseEditFragment {
 	}
 
 	public static void insert(Activity activity, int actionAddModificator) {
-		Intent intent = new Intent(activity, FragmentEditActivity.class);
+		Intent intent = new Intent(activity, BaseEditActivity.class);
 		intent.setAction(Intent.ACTION_INSERT);
-		intent.putExtra(FragmentEditActivity.EDIT_FRAGMENT_CLASS, ModificatorEditFragment.class);
+		intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, ModificatorEditFragment.class);
 		activity.startActivityForResult(intent, DsaTabActivity.ACTION_ADD_MODIFICATOR);
 
 	}

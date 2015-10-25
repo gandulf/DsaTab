@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+       xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
         android:id="@android:id/icon"
@@ -9,12 +10,14 @@
         android:scaleType="fitCenter"
         android:adjustViewBounds="true" />
 
-    <TextView
+    <com.dsatab.view.AutoResizeTextView
         android:id="@android:id/text1"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center"        
-        android:rotation="45" />
+        android:gravity="center"
+        android:textSize="50sp"
+        android:rotation="45"
+        tools:text="Knochenkeule, groß" />
 
 </merge>

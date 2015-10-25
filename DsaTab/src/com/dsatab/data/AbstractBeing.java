@@ -234,9 +234,7 @@ public abstract class AbstractBeing {
 
 	public Talent getTalent(String talentName) {
 		Debug.trace("getTalent " + talentName);
-		TalentType type = null;
-
-		type = TalentType.byXmlName(talentName);
+		TalentType type = TalentType.byXmlName(talentName);
 		return talentByType.get(type);
 
 	}

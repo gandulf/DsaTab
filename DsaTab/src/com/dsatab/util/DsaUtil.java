@@ -170,29 +170,29 @@ public class DsaUtil {
 	public static int getResourceId(ListItemType itemType) {
 		switch (itemType) {
 		case Art:
-			return R.drawable.dsa_arts;
+			return R.drawable.vd_beams_aura;
 		case Attribute:
-			return R.drawable.dsa_character;
+			return R.drawable.vd_biceps;
 		case Document:
-			return R.drawable.dsa_notes;
+			return R.drawable.vd_tied_scroll;
 		case EquippedItem:
-			return R.drawable.dsa_sword;
+			return R.drawable.vd_crossed_swords;
 		case Modificator:
-			return R.drawable.dsa_modifier;
+			return R.drawable.vd_orb_direction;
 		case Notes:
-			return R.drawable.dsa_notes;
+			return R.drawable.vd_tied_scroll;
 		case Purse:
-			return R.drawable.dsa_coins;
+			return R.drawable.vd_cash;
 		case Spell:
-			return R.drawable.dsa_spells;
+			return R.drawable.vd_bookmark;
 		case Talent:
-			return R.drawable.dsa_talents;
+			return R.drawable.vd_anatomy;
 		case Wound:
-			return R.drawable.dsa_wound_patch;
+			return R.drawable.vd_broken_heart;
 		case Probe:
-			return R.drawable.dsa_dice;
+			return R.drawable.vd_dice_six_faces_two;
 		case Header:
-			return R.drawable.dsa_speech;
+			return R.drawable.vd_nothing_to_say;
 		default:
 			return 0;
 		}
@@ -202,36 +202,36 @@ public class DsaUtil {
 	public static int getResourceId(ItemType itemType) {
 		switch (itemType) {
 		case Waffen:
-			return R.drawable.dsa_sword;
+			return R.drawable.vd_sword_hilt;
 		case Fernwaffen:
-			return R.drawable.dsa_bow;
+			return R.drawable.vd_heavy_arrow;
 		case Rüstung:
-			return R.drawable.dsa_armor_leather;
+			return R.drawable.vd_leather_vest;
 		case Schilde:
-			return R.drawable.dsa_shield;
+			return R.drawable.vd_checked_shield;
 		case Sonstiges:
-			return R.drawable.dsa_special;
+			return R.drawable.vd_diamond_ring;
 		default:
-			return R.drawable.dsa_cubes;
+			return R.drawable.vd_cubes;
 		}
 	}
 
 	public static int getResourceId(DistanceWeapon spec) {
 		switch (spec.getTalentType()) {
 		case Wurfmesser:
-			return R.drawable.dsa_dagger_throw;
+			return R.drawable.vd_thrown_daggers;
 		case Armbrust:
-			return R.drawable.dsa_crossbow;
+			return R.drawable.vd_crossbow;
 		case Wurfbeile:
-			return R.drawable.dsa_axe_throw;
+			return R.drawable.vd_axe_swing;
 		case Wurfspeere:
-			return R.drawable.dsa_spear;
+			return R.drawable.vd_spears;
 		case Diskus:
-			return R.drawable.dsa_diskus;
+			return R.drawable.vd_spiked_collar;
 		case Schleuder:
-			return R.drawable.dsa_sling;
+			return R.drawable.vd_slingshot;
 		default:
-			return R.drawable.dsa_bow;
+			return R.drawable.vd_heavy_arrow;
 
 		}
 	}
@@ -240,12 +240,12 @@ public class DsaUtil {
 		if (spec.getType() != null) {
 			switch (spec.getType()) {
 			case Sonstiges:
-				return R.drawable.dsa_special;
+				return R.drawable.vd_diamond_ring;
 			default:
-				return R.drawable.dsa_cubes;
+				return R.drawable.vd_cubes;
 			}
 		} else {
-			return R.drawable.dsa_cubes;
+			return R.drawable.vd_cubes;
 		}
 	}
 
@@ -254,37 +254,37 @@ public class DsaUtil {
 		switch (weapon.getTalentType()) {
 		case Anderthalbhänder:
 		case Zweihandschwertersäbel:
-			return R.drawable.dsa_2sword;
+			return R.drawable.vd_croc_sword;
 		case Hiebwaffen:
-			return R.drawable.dsa_hieb;
+			return R.drawable.vd_battered_axe;
 		case Stäbe:
-			return R.drawable.dsa_staff;
+			return R.drawable.vd_crystal_wand;
 		case Fechtwaffen:
-			return R.drawable.dsa_fecht;
+			return R.drawable.vd_energy_arrow;
 		case Dolche:
-			return R.drawable.dsa_dagger;
+			return R.drawable.vd_plain_dagger;
 		case Speere:
-			return R.drawable.dsa_spear;
+			return R.drawable.vd_stone_spear;
 		case Infanteriewaffen:
-			return R.drawable.dsa_2hieb2;
+			return R.drawable.vd_halberd;
 		case Zweihandhiebwaffen:
 			if (weapon.getItem().getName().contains("hammer")) {
-				return R.drawable.dsa_hammer;
+				return R.drawable.vd_gavel;
 			} else {
-				return R.drawable.dsa_2hieb;
+				return R.drawable.vd_halberd;
 			}
 		case Zweihandflegel:
-			return R.drawable.dsa_2hieb;
+			return R.drawable.vd_halberd;
 		case Kettenstäbe:
 		case Kettenwaffen:
-			return R.drawable.dsa_kettenwaffe;
+			return R.drawable.vd_nunchaku;
 		case Raufen:
 		case Ringen:
-			return R.drawable.dsa_fist;
+			return R.drawable.vd_palm;
 		case Peitsche:
-			return R.drawable.dsa_whip;
+			return R.drawable.vd_whip;
 		default:
-			return R.drawable.dsa_sword;
+			return R.drawable.vd_sword_hilt;
 		}
 	}
 
@@ -300,14 +300,14 @@ public class DsaUtil {
 		else if (spec instanceof Armor)
 			return getResourceId((Armor) spec);
 		else
-			return R.drawable.dsa_cubes;
+			return R.drawable.vd_cubes;
 	}
 
 	public static int getResourceId(Shield spec) {
 		if (spec.isParadeWeapon() && !spec.isShield())
-			return R.drawable.dsa_dagger;
+			return R.drawable.vd_sai;
 		else
-			return R.drawable.dsa_shield;
+			return R.drawable.vd_checked_shield;
 	}
 
 	public static int getResourceId(Probe probe) {
@@ -321,43 +321,43 @@ public class DsaUtil {
 				if (equippedItem != null && equippedItem.getItemSpecification() != null) {
 					return getResourceId(equippedItem.getItemSpecification());
 				} else {
-					return R.drawable.dsa_attack;
+					return R.drawable.vd_all_for_one;
 				}
 			} else {
-				return R.drawable.dsa_shield_round;
+				return R.drawable.vd_round_shield;
 			}
 		} else if (probe instanceof CombatMeleeAttribute) {
 			CombatMeleeAttribute combatProbe = (CombatMeleeAttribute) probe;
 			if (combatProbe.isAttack())
-				return R.drawable.dsa_attack;
+				return R.drawable.vd_all_for_one;
 			else
-				return R.drawable.dsa_shield_round;
+				return R.drawable.vd_round_shield;
 		} else if (probe instanceof CustomProbe) {
-			return R.drawable.dsa_dice;
+			return R.drawable.vd_dice_six_faces_two;
 		} else if (probe instanceof CombatDistanceTalent) {
-			return R.drawable.dsa_bow;
+			return R.drawable.vd_heavy_arrow;
 		} else if (probe instanceof CombatShieldTalent) {
-			return R.drawable.dsa_shield_round;
+			return R.drawable.vd_round_shield;
 		} else if (probe instanceof CombatMeleeAttribute) {
-			return R.drawable.dsa_attack;
+			return R.drawable.vd_all_for_one;
 		} else if (probe instanceof Spell) {
-			return R.drawable.dsa_spells;
+			return R.drawable.vd_bookmark;
 		} else if (probe instanceof Art) {
-			return R.drawable.dsa_arts;
+			return R.drawable.vd_beams_aura;
 		} else if (probe instanceof Talent) {
-			return R.drawable.dsa_talents;
+			return R.drawable.vd_biceps;
 		} else if (probe instanceof Attribute) {
 			Attribute attribute = (Attribute) probe;
 
 			switch (attribute.getType()) {
 			case Ausweichen:
-				return R.drawable.dsa_ausweichen;
+				return R.drawable.vd_boots;
 			default:
-				return R.drawable.dsa_character;
+				return R.drawable.vd_anatomy;
 			}
-		}
-
-		return R.drawable.ic_menu_play_clip;
+		} else {
+            return R.drawable.vd_dice_six_faces_two;
+        }
 	}
 
 	public static int getResourceId(Armor armor) {
@@ -365,25 +365,25 @@ public class DsaUtil {
 
 		if (Armor.CATEGORY_HELM.equalsIgnoreCase(item.getCategory())) {
 			if (armor.getRs(Position.Kopf) > 5)
-				return R.drawable.dsa_helm_full2;
+				return R.drawable.vd_visored_helm;
 			else if (armor.getRs(Position.Kopf) > 0)
-				return R.drawable.dsa_helm_full;
+				return R.drawable.vd_crested_helmet;
 			else
-				return R.drawable.dsa_helm_half;
+				return R.drawable.vd_horned_helm;
 		} else if (Armor.CATEGORY_TORSO.equalsIgnoreCase(item.getCategory())
 				|| Armor.CATEGORY_FULL.equalsIgnoreCase(item.getCategory())) {
 			if (armor.getMaxRs() >= 5)
-				return R.drawable.dsa_armor_plate;
+				return R.drawable.vd_breastplate;
 			else if (armor.getMaxRs() > 2)
-				return R.drawable.dsa_armor_mail;
+				return R.drawable.vd_chain_mail;
 			else
-				return R.drawable.dsa_armor_cloth;
+				return R.drawable.vd_robe;
 		} else if (Armor.CATEGORY_ARME.equalsIgnoreCase(item.getCategory())) {
-			return R.drawable.dsa_trousers;
+			return R.drawable.vd_trousers;
 		} else if (Armor.CATEGORY_BEINE.equalsIgnoreCase(item.getCategory())) {
-			return R.drawable.dsa_armor_fist;
+			return R.drawable.vd_mailed_fist;
 		} else {
-			return R.drawable.dsa_armor_leather;
+			return R.drawable.vd_leather_vest;
 		}
 	}
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:clickable="true"
@@ -115,21 +116,28 @@
 
         <ImageButton
             android:id="@+id/dice_execute"
-            android:layout_width="@dimen/icon_button_size"
-            android:layout_height="@dimen/icon_button_size"
+            style="@style/Widget.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/default_gap"
-            android:gravity="center"
-            android:src="@drawable/ic_menu_play_clip"/>
+            android:background="@drawable/circle"
+            android:tint="@color/circle_tint"
+            android:src="@drawable/vd_dice_six_faces_two"
+            />
 
         <ImageButton
             android:id="@+id/dice_take_hit"
-            android:layout_width="@dimen/icon_button_size"
-            android:layout_height="@dimen/icon_button_size"
+            style="@style/Widget.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/default_gap"
-            android:gravity="center"
-            android:src="@drawable/dsa_wound_patch"/>
+            android:background="@drawable/circle"
+            android:tint="@color/circle_tint"
+            android:src="@drawable/vd_sticking_plaster"
+            />
+
     </LinearLayout>
 
 </LinearLayout>

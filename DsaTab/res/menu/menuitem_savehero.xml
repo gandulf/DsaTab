@@ -3,7 +3,6 @@
     <item
         android:id="@+id/option_save_hero"
         android:title="@string/option_save_hero"
-        android:icon="@drawable/ic_menu_save"
         android:showAsAction="never"
         app:showAsAction="never"/>
 

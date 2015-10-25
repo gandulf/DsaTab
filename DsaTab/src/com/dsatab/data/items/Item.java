@@ -14,7 +14,6 @@ import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -22,7 +21,7 @@ import java.util.List;
 import java.util.UUID;
 
 @DatabaseTable(tableName = "item")
-public class Item implements Serializable, Comparable<Item>, Cloneable, ItemCard {
+public class Item implements Comparable<Item>, Cloneable, ItemCard {
 
 	private static final long serialVersionUID = 7011220901677479470L;
 

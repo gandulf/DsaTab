@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+	<string name="define_game_icons_net"></string>
+	<!-- Author section -->
+	<string name="library_game_icons_net_author">Lorc, Delapouite &amp; contributors</string>
+	<string name="library_game_icons_net_authorWebsite">http://game-icons.net</string>
+	<!-- Library section -->
+	<string name="library_game_icons_net_libraryName">Game-icons.net</string>
+	<string name="library_game_icons_net_libraryDescription">An ever growing collection of game icons  Dozen new symbols are added weekly and organized in intuitive categories to offer both a comfy browsing and let room for serendipity.</string>
+	<string name="library_game_icons_net_libraryWebsite">http://game-icons.net</string>
+	<string name="library_game_icons_net_libraryVersion"></string>
+	<!-- OpenSource section -->
+	<string name="library_game_icons_net_isOpenSource">true</string>
+	<string name="library_game_icons_net_repositoryLink">http://game-icons.net</string>
+	<!-- ClassPath for autoDetect section -->
+	<string name="library_game_icons_net_classPath">game-icons-net</string>
+	<!-- License section -->
+	<string name="library_game_icons_net_licenseId">cc30</string>
+	<!-- Custom variables section -->
+</resources>

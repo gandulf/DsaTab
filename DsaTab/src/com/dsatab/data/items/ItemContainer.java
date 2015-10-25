@@ -2,6 +2,7 @@ package com.dsatab.data.items;
 
 import android.net.Uri;
 
+import com.dsatab.R;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 
@@ -29,7 +30,7 @@ public class ItemContainer<T extends ItemCard> extends ArrayList<T> {
 	private transient Float weightCache;
 
 	public ItemContainer() {
-		iconUri = Util.getUriForResourceId(com.dsatab.R.drawable.dsa_bag);
+		iconUri = Util.getUriForResourceId(R.drawable.vd_swap_bag);
 	}
 
 	public ItemContainer(int id, String name, Uri iconUri) {

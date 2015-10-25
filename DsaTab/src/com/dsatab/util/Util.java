@@ -1,35 +1,5 @@
 package com.dsatab.util;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.StringTokenizer;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.ContentResolver;
@@ -48,7 +18,6 @@ import android.provider.MediaStore.Images.ImageColumns;
 import android.provider.MediaStore.Images.Media;
 import android.provider.MediaStore.MediaColumns;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.SpannedString;
@@ -57,9 +26,6 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -89,6 +55,36 @@ import com.dsatab.view.listener.EditListener;
 import com.dsatab.view.listener.ProbeListener;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.StringTokenizer;
 
 public class Util {
 
@@ -188,7 +184,17 @@ public class Util {
 		public int compare(File object1, File object2) {
 			return object1.getName().compareToIgnoreCase(object2.getName());
 		}
-	};
+	}
+
+    public static void showKeyboard(View view) {
+        if (view == null)
+            return;
+        InputMethodManager imm = (InputMethodManager) DsaTabApplication.getInstance().getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.showSoftInput(view, 0);
+        }
+    }
 
 	public static void hideKeyboard(View view) {
 		if (view == null)
@@ -377,26 +383,6 @@ public class Util {
 		return floats;
 	}
 
-	public static boolean notifyDatasetChanged(RecyclerView list) {
-		if (list!=null && list.getAdapter()!=null) {
-			list.getAdapter().notifyDataSetChanged();
-			return true;
-		} else {
-			return false;
-		}
-	}
-	public static boolean notifyDatasetChanged(AdapterView<?> list) {
-		Adapter adapter = list.getAdapter();
-		if (adapter instanceof BaseAdapter) {
-			BaseAdapter baseAdapter = (BaseAdapter) adapter;
-			baseAdapter.notifyDataSetChanged();
-			return true;
-		} else {
-			return false;
-		}
-
-	}
-
 	public static String toString(float[] floats) {
 		StringBuilder sb = new StringBuilder();
 		for (float f : floats) {
@@ -472,22 +458,17 @@ public class Util {
 	}
 
 	public static void applyRowStyle(Markable markable, View row, int position) {
-		LevelListDrawable levelListDrawable;
-
 		if (row.getBackground() instanceof LevelListDrawable) {
-			levelListDrawable = (LevelListDrawable) row.getBackground();
-		} else {
-			row.setBackgroundResource(Util.getThemeResourceId(row.getContext(), R.attr.listItemBackground));
-			levelListDrawable = (LevelListDrawable) row.getBackground();
-		}
+            LevelListDrawable levelListDrawable = (LevelListDrawable) row.getBackground();
 
-		int level = position % 2;
-		if (markable.isFavorite())
-			level += 2;
-		else if (markable.isUnused())
-			level += 4;
+            int level = position % 2;
+            if (markable.isFavorite())
+                level += 2;
+            else if (markable.isUnused())
+                level += 4;
 
-		levelListDrawable.setLevel(level);
+            levelListDrawable.setLevel(level);
+        }
 
 	}
 
@@ -505,16 +486,10 @@ public class Util {
 		if (row == null)
 			return;
 
-		LevelListDrawable levelListDrawable;
-
-		if (row.getBackground() instanceof LevelListDrawable) {
-			levelListDrawable = (LevelListDrawable) row.getBackground();
-		} else {
-			row.setBackgroundResource(Util.getThemeResourceId(row.getContext(), R.attr.listItemBackground));
-			levelListDrawable = (LevelListDrawable) row.getBackground();
-		}
-
-		levelListDrawable.setLevel(position % 2);
+        if (row.getBackground() instanceof LevelListDrawable) {
+            LevelListDrawable levelListDrawable = (LevelListDrawable) row.getBackground();
+            levelListDrawable.setLevel(position % 2);
+        }
 	}
 
 	public static void setVisibility(View view, boolean visible) {
@@ -1142,10 +1117,6 @@ public class Util {
 		return data.getData();
 	}
 
-	/**
-	 * @param imageTextOverlay
-	 * @return
-	 */
 	public static boolean parseBoolean(String value) {
 		if (value == null)
 			return false;

@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -16,7 +17,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
@@ -24,8 +24,8 @@ import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.data.Hero;
 import com.dsatab.map.MapTileProviderLocal;
 import com.dsatab.util.Util;
-import com.gandulf.guilib.download.AbstractDownloader;
-import com.gandulf.guilib.download.DownloaderWrapper;
+import com.dsatab.util.ViewUtils;
+import com.gandulf.guilib.download.DownloaderGinger;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 
@@ -60,7 +60,7 @@ public class MapFragment extends BaseFragment {
 	private static final int DEFAULT_OSM_ZOOM = 2;
 
 	public enum TouchMode {
-		None, Drag, Zoom;
+		None, Drag, Zoom
 	}
 
 	private ProgressBar progress;
@@ -99,6 +99,8 @@ public class MapFragment extends BaseFragment {
 		super.hideActionBarItems();
 
 		removeMapNavigation();
+
+
 	}
 
 	@Override
@@ -297,11 +299,8 @@ public class MapFragment extends BaseFragment {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
-
-					AbstractDownloader downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDirectory()
-							.getAbsolutePath(), getActivity());
-					downloader.addPath(DsaTabPreferenceActivity.PATH_OSM_MAP_PACK);
-					downloader.downloadZip();
+                    DownloaderGinger downloader = DownloaderGinger.getInstance(DsaTabApplication.getDirectory(), getActivity());
+					downloader.download(DsaTabPreferenceActivity.PATH_OSM_MAP_PACK);
 				}
 			});
 			builder.setNegativeButton(R.string.label_cancel, new DialogInterface.OnClickListener() {
@@ -355,7 +354,6 @@ public class MapFragment extends BaseFragment {
 
 		progress.setVisibility(View.GONE);
 		progressText.setVisibility(View.GONE);
-
 		if (bitmap != null) {
 			this.bitmap = bitmap;
 
@@ -418,10 +416,10 @@ public class MapFragment extends BaseFragment {
 			if (mapFragment != null && mapFragment.getActivity() != null) {
 
 				if (result != null) {
-					Toast.makeText(mapFragment.getActivity(), "Karte geladen.", Toast.LENGTH_SHORT).show();
+                    ViewUtils.snackbar(mapFragment.getActivity(), "Karte geladen.", Snackbar.LENGTH_SHORT);
 					mapFragment.mapLoaded(new BitmapDrawable(mapFragment.getResources(), result));
 				} else {
-					Toast.makeText(mapFragment.getActivity(), "Konnte Karte nicht laden.", Toast.LENGTH_SHORT).show();
+                    ViewUtils.snackbar(mapFragment.getActivity(), "Konnte Karte nicht laden.", Snackbar.LENGTH_SHORT);
 					mapFragment.mapLoaded(null);
 				}
 
@@ -482,7 +480,7 @@ public class MapFragment extends BaseFragment {
 		Editor edit = getPreferences().edit();
 		edit.putString(PREF_KEY_LAST_MAP, activeMap);
         // TODO store settings
-		//edit.putString(PREF_KEY_LAST_MAP_COORDINATES, Util.toString(mAttacher.getSuppViewMatrix()));
+		//list.putString(PREF_KEY_LAST_MAP_COORDINATES, Util.toString(mAttacher.getSuppViewMatrix()));
 		if (osmMapView != null) {
 			edit.putInt(PREF_KEY_OSM_ZOOM, osmMapView.getZoomLevel());
 			IGeoPoint center = osmMapView.getMapCenter();

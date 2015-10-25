@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -17,16 +18,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
-import com.dsatab.activity.DsaTabActivity;
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.activity.ItemsActivity;
 import com.dsatab.data.ArmorAttribute;
@@ -41,6 +39,7 @@ import com.dsatab.data.items.ItemContainer;
 import com.dsatab.fragment.dialog.InlineEditDialog;
 import com.dsatab.fragment.dialog.TakeHitDialog;
 import com.dsatab.util.Util;
+import com.dsatab.util.ViewUtils;
 import com.dsatab.view.BodyLayout;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
 
@@ -83,6 +82,9 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 					mode.setSubtitle(bodyFragment.selectedArmorAttribute.getName());
 				}
 			}
+
+            ViewUtils.menuIcons(bodyFragment.getToolbarThemedContext(),menu);
+
 			return true;
 		}
 
@@ -113,8 +115,7 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 							bodyFragment.selectedArmorAttribute.getPosition());
 
 					if (equippedItems.isEmpty()) {
-						Toast.makeText(bodyFragment.getActivity(), "Keine Einträge gefunden", Toast.LENGTH_SHORT)
-								.show();
+						ViewUtils.snackbar(bodyFragment.getActivity(), "Keine Einträge gefunden", Snackbar.LENGTH_SHORT);
 					} else if (equippedItems.size() == 1) {
 						ItemsActivity.view(bodyFragment.getActivity(), bodyFragment.getHero(), equippedItems.get(0));
 					} else {
@@ -133,11 +134,8 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 						});
 
 						AlertDialog dialog = builder.create();
-
                         dialog.setCanceledOnTouchOutside(true);
-
-
-
+                        dialog.show();
 					}
 				}
 				mode.finish();
@@ -161,7 +159,8 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 			if (bodyFragment != null && bodyFragment.getActivity() != null)
 				bodyFragment.setSelectedArmorAttribute(null);
 
-			bodyFragment.mMode = null;
+            if (bodyFragment != null)
+			    bodyFragment.mMode = null;
 
 		}
 
@@ -248,6 +247,10 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 		if (DsaTabPreferenceActivity.KEY_STYLE_BG_WOUNDS_PATH.equals(key)) {
 			updateBackground();
 		}
+
+        if (DsaTabPreferenceActivity.KEY_ARMOR_TYPE.equals(key)) {
+            updateView();
+        }
 	}
 
 	/*
@@ -337,10 +340,6 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 	 */
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == DsaTabActivity.ACTION_PREFERENCES) {
-			updateView();
-		}
-
 		if (resultCode == Activity.RESULT_OK) {
 
 			if (requestCode == DsaTabPreferenceActivity.ACTION_PICK_BG_WOUNDS_PATH) {
@@ -351,7 +350,7 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 					edit.putString(DsaTabPreferenceActivity.KEY_STYLE_BG_WOUNDS_PATH, uri.toString());
 					edit.commit();
 
-					Toast.makeText(getActivity(), "Hintergrundbild wurde verändert.", Toast.LENGTH_SHORT).show();
+					ViewUtils.snackbar(getActivity(), "Hintergrundbild wurde verändert.", Snackbar.LENGTH_SHORT);
 					updateBackground();
 				}
 			}

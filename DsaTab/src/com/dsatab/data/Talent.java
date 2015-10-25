@@ -4,6 +4,8 @@ import com.dsatab.data.enums.TalentType;
 import com.dsatab.data.listable.Listable;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 
+import org.apache.commons.lang3.ObjectUtils;
+
 import java.util.Comparator;
 import java.util.EnumSet;
 
@@ -125,11 +127,11 @@ public class Talent extends MarkableElement implements Value, Listable {
 
 	@Override
 	public void setValue(Integer value) {
-		Integer oldValue = getValue();
-		this.value = value;
-
-		if (oldValue != this.value && being != null)
-			being.fireValueChangedEvent(this);
+		if (ObjectUtils.notEqual(getValue(),value)) {
+            this.value = value;
+            if (being != null)
+                being.fireValueChangedEvent(this);
+        }
 	}
 
 	@Override

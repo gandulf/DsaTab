@@ -11,15 +11,14 @@ import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.dsatab.DsaTabApplication;
-import com.dsatab.R;
 import com.dsatab.util.Util;
+import com.dsatab.util.ViewUtils;
 import com.gandulf.guilib.util.DirectoryFileFilter;
+
+import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -66,17 +65,18 @@ public class DirectoryChooserDialog extends DialogFragment implements DialogInte
 			if (item.equals(currentDir)) {
 				textview.setText(item.getPath());
 				textview.setCompoundDrawablesWithIntrinsicBounds(
-						getContext().getResources().getDrawable(Util.getThemeResourceId(getContext(), R.attr.imgFile)),
+                        ViewUtils.icon(getContext(), MaterialDrawableBuilder.IconValue.FILE)
+                        ,
 						null, null, null);
 			} else if (item.equals(currentDir.getParentFile())) {
 				textview.setText("..");
 				textview.setCompoundDrawablesWithIntrinsicBounds(
-						getContext().getResources().getDrawable(Util.getThemeResourceId(getContext(), R.attr.imgUp)),
+                        ViewUtils.icon(getContext(), MaterialDrawableBuilder.IconValue.CHEVRON_UP),
 						null, null, null);
 			} else {
 				textview.setText(item.getName());
 				textview.setCompoundDrawablesWithIntrinsicBounds(
-						getContext().getResources().getDrawable(Util.getThemeResourceId(getContext(), R.attr.imgFile)),
+                        ViewUtils.icon(getContext(), MaterialDrawableBuilder.IconValue.FILE),
 						null, null, null);
 			}
 

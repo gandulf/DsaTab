@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.PopupMenu;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
@@ -29,9 +30,8 @@ import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
@@ -46,14 +46,14 @@ import com.dsatab.util.ClickSpan;
 import com.dsatab.util.ClickSpan.OnSpanClickListener;
 import com.dsatab.util.StyleableSpannableStringBuilder;
 import com.dsatab.util.Util;
-import com.gandulf.guilib.download.AbstractDownloader;
-import com.gandulf.guilib.download.DownloaderWrapper;
+import com.dsatab.util.ViewUtils;
+import com.gandulf.guilib.download.DownloaderGinger;
 
 import java.io.File;
 import java.util.Arrays;
 
 public abstract class BaseProfileFragment extends BaseAttributesFragment implements OnClickListener,
-        OnLongClickListener, PopupMenu.OnMenuItemClickListener {
+        OnLongClickListener {
 
     private static final String PREF_SHOW_FEATURE_COMMENTS = "SHOW_COMMENTS";
 
@@ -66,7 +66,7 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
             tfDisadvantgesTitle;
 
     protected ViewGroup descriptions;
-    private ImageButton detailsHide;
+    private ImageView detailsHide;
 
     private int descriptionsHeight;
 
@@ -77,7 +77,7 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
         descriptions = (ViewGroup) view.findViewById(R.id.gen_description);
         descriptions.setOnClickListener(this);
 
-        detailsHide = (ImageButton) view.findViewById(R.id.details_hide);
+        detailsHide = (ImageView) view.findViewById(R.id.details_hide);
         if (detailsHide != null)
             detailsHide.setOnClickListener(this);
 
@@ -105,8 +105,6 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
         Editor edit = getPreferences().edit();
         edit.putBoolean(PREF_SHOW_BASEINFO + getClass().getSimpleName(), false);
         edit.apply();
-
-        View info = getActivity().findViewById(R.id.toolbar_info);
 
         if (animate && descriptions.getVisibility() != View.GONE) {
 
@@ -143,16 +141,10 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
                 descriptions.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
                 descriptions.setVisibility(View.GONE);
             }
-            if (info!=null) {
-                info.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
-            }
         } else {
             descriptions.setVisibility(View.GONE);
         }
 
-        if (info!=null) {
-            info.setVisibility(View.VISIBLE);
-        }
 
     }
 
@@ -161,8 +153,6 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
         Editor edit = getPreferences().edit();
         edit.putBoolean(PREF_SHOW_BASEINFO + getClass().getSimpleName(), true);
         edit.apply();
-
-        View info = getActivity().findViewById(R.id.toolbar_info);
 
         if (animate && descriptions.getVisibility() != View.VISIBLE) {
 
@@ -190,16 +180,8 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
             } else {
                 descriptions.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
             }
-
-            if (info!=null) {
-                info.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
-            }
         }
         descriptions.setVisibility(View.VISIBLE);
-        if (info!=null) {
-            info.setVisibility(View.GONE);
-        }
-
     }
 
     protected void updateBaseInfo(boolean animate) {
@@ -233,9 +215,9 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
                         getBeing().setPortraitUri(uri);
                         getDsaActivity().updatePortrait(getBeing());
                     } else {
-                        Toast.makeText(getActivity(),
+                        ViewUtils.snackbar(getActivity(),
                                 "Konnte Bild nicht öffnen. Verwende die Standard Galerie um eine Bild auszuwählen.",
-                                Toast.LENGTH_LONG).show();
+                                Snackbar.LENGTH_LONG);
                     }
 
                 }
@@ -293,9 +275,8 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
         return false;
     }
 
-    //TODO add func
     protected void showPortaitMenu(View v) {
-        PopupMenu popupMenu = new PopupMenu(getActivity(), v);
+        PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
         Menu menu = popupMenu.getMenu();
         popupMenu.getMenuInflater().inflate(R.menu.portrait_popupmenu, menu);
 
@@ -305,75 +286,69 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
         if (menu.findItem(R.id.option_pick_avatar) != null)
             menu.findItem(R.id.option_pick_avatar).setVisible(portraits);
 
-        popupMenu.setOnMenuItemClickListener(this);
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (getDsaActivity() != null) {
+                    switch (item.getItemId()) {
+                        case R.id.option_take_photo:
+                            Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            startActivityForResult(camera, ACTION_PHOTO);
+                            break;
+                        case R.id.option_pick_image:
+                            Util.pickImage(BaseProfileFragment.this, ACTION_GALERY);
+                            break;
+                        case R.id.option_pick_avatar:
+                            ImageChooserDialog.pickPortrait(BaseProfileFragment.this, getBeing(), 0);
+                            break;
+                        case R.id.option_download_avatars:
+                            DownloaderGinger downloader = DownloaderGinger.getInstance(DsaTabApplication.getDirectory(),
+                                    getActivity());
+                            downloader.download(DsaTabPreferenceActivity.PATH_WESNOTH_PORTRAITS);
+                            ViewUtils.snackbar(getActivity(), R.string.message_download_started_in_background, Snackbar.LENGTH_SHORT)                                    ;
+                            break;
+                    }
+                }
+                return false;
+            }
+        });
         popupMenu.show();
     }
 
+
     @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        if (getDsaActivity() != null) {
-            switch (item.getItemId()) {
-                case R.id.option_take_photo:
-                    Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(camera, ACTION_PHOTO);
-                    break;
-                case R.id.option_pick_image:
-                    Util.pickImage(BaseProfileFragment.this, ACTION_GALERY);
-                    break;
-                case R.id.option_pick_avatar:
-                    ImageChooserDialog.pickPortrait(BaseProfileFragment.this, getBeing(), 0);
-                    break;
-                case R.id.option_download_avatars:
-                    AbstractDownloader downloader = DownloaderWrapper.getInstance(DsaTabApplication.getDirectory(),
-                            getActivity());
-                    downloader.addPath(DsaTabPreferenceActivity.PATH_WESNOTH_PORTRAITS);
-                    downloader.downloadZip();
-                    Toast.makeText(getActivity(), R.string.message_download_started_in_background, Toast.LENGTH_SHORT)
-                            .show();
-                    break;
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        if (getActivity() != null) {
+            View portrait = getActivity().findViewById(R.id.toolbar_portrait);
+            View info = getActivity().findViewById(R.id.toolbar_info);
+
+            if (portrait != null) {
+                portrait.setOnClickListener(this);
+            }
+            if (info != null) {
+                info.setOnClickListener(this);
             }
         }
-        return false;
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (getActivity() != null) {
+            View portrait = getActivity().findViewById(R.id.toolbar_portrait);
+            View info = getActivity().findViewById(R.id.toolbar_info);
 
-        View portrait = activity.findViewById(R.id.toolbar_portrait);
-        View info = activity.findViewById(R.id.toolbar_info);
+            if (portrait != null)
+                portrait.setOnClickListener(null);
 
-        if (portrait!=null)
-            portrait.setOnClickListener(this);
-
-        if (info!=null) {
-            info.setOnClickListener(this);
-
-            descriptions = (ViewGroup) activity.findViewById(R.id.gen_description);
-
-            if (descriptions!=null && descriptions.getVisibility()==View.GONE)
-                info.setVisibility(View.VISIBLE);
-            else
-                info.setVisibility(View.GONE);
+            if (info != null) {
+                info.setOnClickListener(null);
+            }
         }
-
     }
 
-    @Override
-    public void onDetach() {
-        View portrait = getActivity().findViewById(R.id.toolbar_portrait);
-        View info = getActivity().findViewById(R.id.toolbar_info);
-
-        if (portrait!=null)
-            portrait.setOnClickListener(null);
-
-        if (info!=null) {
-            info.setOnClickListener(null);
-            info.setVisibility(View.GONE);
-        }
-
-        super.onDetach();
-    }
 
     @Override
     public void onClick(View v) {
@@ -381,8 +356,9 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
         switch (v.getId()) {
             case R.id.details_hide:
                 closeDescription(true);
+                break;
             case R.id.toolbar_info:
-                openDescription(v,true);
+                openDescription(v, true);
                 break;
             case R.id.toolbar_portrait:
                 showPortaitMenu(v);

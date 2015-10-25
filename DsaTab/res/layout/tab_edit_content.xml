@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:orientation="horizontal"
+        android:useDefaultMargins="true">
+
+        <ImageView
+            android:id="@+id/popup_edit_icon"
+            style="?attr/spinnerStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/icon_button_size"
+            android:layout_column="0"
+            android:minWidth="@dimen/icon_button_size"
+            android:scaleType="fitCenter"/>
+
+        <com.thebnich.floatinghintedittext.FloatingHintEditText
+            android:id="@+id/popup_edit_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_gravity="fill_horizontal|bottom"
+            android:hint="@string/label_titel"
+            android:inputType="textPersonName"/>
+
+    </GridLayout>
+
+    <Spinner
+        android:id="@+id/popup_tab_type"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="center_vertical">
+    </Spinner>
+
+    <CheckBox
+        android:id="@+id/popup_edit_include_modifiers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/consider_modificators"/>
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="?android:attr/dividerHorizontal"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab"
+            style="?attr/floatingActionButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/fab_add"/>
+    </FrameLayout>
+
+
+</LinearLayout>

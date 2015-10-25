@@ -3,7 +3,6 @@
     <group android:id="@+id/group_documents" >
         <item
             android:id="@+id/option_documents_choose"
-            android:icon="?attr/imgBarFilter"
             android:showAsAction="withText|always"
             app:showAsAction="withText|always"
             android:title="@string/choose_folder"/>

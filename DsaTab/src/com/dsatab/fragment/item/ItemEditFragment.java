@@ -6,9 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -21,14 +18,16 @@ import android.widget.Spinner;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
+import com.dsatab.activity.BaseItemActivity;
 import com.dsatab.data.Hero;
 import com.dsatab.data.adapter.SpinnerSimpleAdapter;
 import com.dsatab.data.enums.ItemType;
+import com.dsatab.data.items.EquippedItem;
 import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemSpecification;
 import com.dsatab.data.items.MiscSpecification;
 import com.dsatab.db.DataManager;
-import com.dsatab.fragment.BaseFragment;
+import com.dsatab.fragment.BaseEditFragment;
 import com.dsatab.fragment.dialog.ImageChooserDialog;
 import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Util;
@@ -36,301 +35,320 @@ import com.dsatab.view.CardView;
 import com.dsatab.view.ItemListItem;
 import com.gandulf.guilib.util.DefaultTextWatcher;
 
-public class ItemEditFragment extends BaseFragment implements OnClickListener, OnCheckedChangeListener {
+import java.util.UUID;
 
-	private static final int ACTION_PHOTO = 1;
+public class ItemEditFragment extends BaseEditFragment implements OnClickListener, OnCheckedChangeListener {
 
-	public static final String INTENT_EXTRA_ITEM_ID = "itemId";
-	public static final String INTENT_EXTRA_EQUIPPED_ITEM_ID = "equippedItemId";
-	public static final String INTENT_EXTRA_HERO_KEY = "heroKey";
+    private static final int ACTION_PHOTO = 1;
 
-	private CardView imageView;
-	private ItemListItem itemView;
+    public static final String INTENT_EXTRA_ITEM_ID = "itemId";
+    public static final String INTENT_EXTRA_EQUIPPED_ITEM_ID = "equippedItemId";
+    public static final String INTENT_EXTRA_HERO_KEY = "heroKey";
 
-	private EditText nameView, titleView, priceView, weightView;
-	private ImageView iconView;
-	private CheckBox imageTextOverlayView;
-	private Spinner categorySpn;
-	private SpinnerSimpleAdapter<String> categoryAdapter;
+    private CardView imageView;
+    private ItemListItem itemView;
 
-	private Item origItem = null, cloneItem = null;
-	private ItemSpecification itemSpecification;
+    private EditText nameView, titleView, priceView, weightView;
+    private ImageView iconView;
+    private CheckBox imageTextOverlayView;
+    private Spinner categorySpn;
+    private SpinnerSimpleAdapter<String> categoryAdapter;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.dsatab.fragment.BaseFragment#onCreate(android.os.Bundle)
-	 */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setHasOptionsMenu(true);
-		setRetainInstance(true);
-	}
+    private Item origItem = null, cloneItem = null;
+    private ItemSpecification itemSpecification;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
-	 */
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View root = inflater.inflate(R.layout.sheet_edit_item, container, false);
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.dsatab.fragment.BaseFragment#onCreate(android.os.Bundle)
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+        setRetainInstance(true);
+    }
 
-		nameView = (EditText) root.findViewById(R.id.popup_edit_name);
-		nameView.addTextChangedListener(new DefaultTextWatcher() {
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-			@Override
-			public void afterTextChanged(Editable s) {
-				if (cloneItem != null) {
-					cloneItem.setName(s.toString());
-					itemView.setItem(cloneItem, itemSpecification);
-					imageView.setItem(cloneItem);
-				}
-			}
-		});
+        Bundle extra = getExtra();
 
-		titleView = (EditText) root.findViewById(R.id.popup_edit_title);
-		titleView.addTextChangedListener(new DefaultTextWatcher() {
+        Item item = null;
+        ItemSpecification itemSpecification = null;
 
-			@Override
-			public void afterTextChanged(Editable s) {
-				if (cloneItem != null) {
-					cloneItem.setTitle(s.toString());
-					itemView.setItem(cloneItem, itemSpecification);
-					imageView.setItem(cloneItem);
-				}
-			}
-		});
+        Hero hero = DsaTabApplication.getInstance().getHero();
 
-		priceView = (EditText) root.findViewById(R.id.popup_edit_price);
-		weightView = (EditText) root.findViewById(R.id.popup_edit_weight);
-		iconView = (ImageView) root.findViewById(R.id.popup_edit_icon);
-		iconView.setOnClickListener(this);
+        if (extra != null) {
+            UUID itemId = (UUID) extra.getSerializable(BaseItemActivity.INTENT_EXTRA_ITEM_ID);
 
-		imageView = (CardView) root.findViewById(R.id.popup_edit_image);
-		imageView.setOnClickListener(this);
-		imageView.setHighQuality(true);
+            UUID equippedItemId = (UUID) extra.getSerializable(BaseItemActivity.INTENT_EXTRA_EQUIPPED_ITEM_ID);
+            if (equippedItemId != null && hero != null) {
+                EquippedItem equippedItem = hero.getEquippedItem(equippedItemId);
+                if (equippedItem != null) {
+                    item = equippedItem.getItem();
+                    itemSpecification = equippedItem.getItemSpecification();
+                }
+            }
 
-		itemView = (ItemListItem) root.findViewById(R.id.inc_gal_item_view);
-		itemView.setBackgroundResource(0);
+            if (item == null && itemId != null) {
+                if (hero != null) {
+                    item = hero.getItem(itemId);
+                }
+                if (item == null) {
+                    item = DataManager.getItemById(itemId);
+                }
+                if (item != null) {
+                    itemSpecification = item.getSpecifications().get(0);
+                }
+            }
+        }
 
-		categorySpn = (Spinner) root.findViewById(R.id.popup_edit_category);
-		categoryAdapter = new SpinnerSimpleAdapter<String>(getActivity(), DataManager.getItemCategories());
-		categorySpn.setAdapter(categoryAdapter);
+        setItem(item, itemSpecification);
+    }
 
-		imageTextOverlayView = (CheckBox) root.findViewById(R.id.popup_edit_overlay);
-		imageTextOverlayView.setOnCheckedChangeListener(this);
+    /*
+         * (non-Javadoc)
+         *
+         * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+         */
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.sheet_item_edit, container, false);
 
-		return root;
-	}
+        nameView = (EditText) root.findViewById(R.id.popup_edit_name);
+        nameView.addTextChangedListener(new DefaultTextWatcher() {
 
-	@Override
-	public void onResume() {
-		super.onResume();
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (cloneItem != null) {
+                    cloneItem.setName(s.toString());
+                    if (itemView != null)
+                        itemView.setItem(cloneItem, itemSpecification);
+                    imageView.setItem(cloneItem);
+                }
+            }
+        });
 
-		showCard();
-	}
+        titleView = (EditText) root.findViewById(R.id.popup_edit_title);
+        titleView.addTextChangedListener(new DefaultTextWatcher() {
 
-	public void setItem(Item item, ItemSpecification itemSpecification) {
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (cloneItem != null) {
+                    cloneItem.setTitle(s.toString());
+                    if (itemView != null)
+                        itemView.setItem(cloneItem, itemSpecification);
+                    imageView.setItem(cloneItem);
+                }
+            }
+        });
 
-		if (item == null) {
-			origItem = new Item();
-			cloneItem = origItem;
-			this.itemSpecification = new MiscSpecification(origItem, ItemType.Sonstiges);
-			origItem.addSpecification(this.itemSpecification);
-		} else {
+        priceView = (EditText) root.findViewById(R.id.popup_edit_price);
+        weightView = (EditText) root.findViewById(R.id.popup_edit_weight);
+        iconView = (ImageView) root.findViewById(R.id.popup_edit_icon);
+        iconView.setOnClickListener(this);
 
-			this.itemSpecification = itemSpecification;
-			this.origItem = item;
-			this.cloneItem = item.clone();
+        imageView = (CardView) root.findViewById(R.id.popup_edit_image);
+        imageView.setOnClickListener(this);
+        imageView.setHighQuality(true);
 
-			for (ItemSpecification specification : cloneItem.getSpecifications()) {
-				if (specification.equals(itemSpecification)) {
-					this.itemSpecification = specification;
-					break;
-				}
-			}
-		}
+        itemView = (ItemListItem) root.findViewById(R.id.inc_gal_item_view);
+        if (itemView != null)
+            itemView.setBackgroundResource(0);
 
-		showCard();
-	}
+        categorySpn = (Spinner) root.findViewById(R.id.popup_edit_category);
+        categoryAdapter = new SpinnerSimpleAdapter<String>(getActivity(), DataManager.getItemCategories());
+        categorySpn.setAdapter(categoryAdapter);
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Fragment#onActivityResult(int, int, android.content.Intent)
-	 */
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        imageTextOverlayView = (CheckBox) root.findViewById(R.id.popup_edit_overlay);
+        imageTextOverlayView.setOnCheckedChangeListener(this);
 
-		switch (requestCode) {
-		case ACTION_PHOTO:
-			if (resultCode == Activity.RESULT_OK) {
-				cloneItem.setImageUri(Util.retrieveBitmapUri(getActivity(), data));
-				imageView.setItem(cloneItem);
-			}
-		}
-		super.onActivityResult(requestCode, resultCode, data);
-	}
+        return root;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.dsatab.fragment.BaseFragment#onHeroLoaded(com.dsatab.data.Hero)
-	 */
-	@Override
-	public void onHeroLoaded(Hero hero) {
+    public void setItem(Item item, ItemSpecification itemSpecification) {
 
-	}
+        if (item == null) {
+            origItem = new Item();
+            cloneItem = origItem;
+            this.itemSpecification = new MiscSpecification(origItem, ItemType.Sonstiges);
+            origItem.addSpecification(this.itemSpecification);
+        } else {
 
-	private void showCard() {
-		if (cloneItem != null && imageView != null) {
-			imageView.setItem(cloneItem);
-			itemView.setItem(cloneItem, itemSpecification);
+            this.itemSpecification = itemSpecification;
+            this.origItem = item;
+            this.cloneItem = item.clone();
 
-			if (cloneItem.getIconUri() != null) {
-				iconView.setImageURI(cloneItem.getIconUri());
-			} else if (itemSpecification != null) {
-				iconView.setImageResource(DsaUtil.getResourceId(itemSpecification));
-			}
-			nameView.setText(cloneItem.getName());
-			if (cloneItem.hasTitle())
-				titleView.setText(cloneItem.getTitle());
-			else
-				titleView.setText(null);
+            for (ItemSpecification specification : cloneItem.getSpecifications()) {
+                if (specification.equals(itemSpecification)) {
+                    this.itemSpecification = specification;
+                    break;
+                }
+            }
+        }
 
-			if (cloneItem.getPrice() > 0) {
-				priceView.setText(Util.toString(cloneItem.getPrice()));
-			}
-			if (cloneItem.getWeight() > 0.0f) {
-				weightView.setText(Util.toString(cloneItem.getWeight()));
-			}
-			categorySpn.setSelection(categoryAdapter.getPosition(cloneItem.getCategory()));
-			imageTextOverlayView.setChecked(cloneItem.isImageTextOverlay());
-		}
-	}
+        showCard();
+    }
 
-	public Item getItem() {
-		return origItem;
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see android.app.Fragment#onActivityResult(int, int, android.content.Intent)
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-	public ItemSpecification getItemSpecification() {
-		return itemSpecification;
-	}
+        switch (requestCode) {
+            case ACTION_PHOTO:
+                if (resultCode == Activity.RESULT_OK) {
+                    cloneItem.setImageUri(Util.retrieveBitmapUri(getActivity(), data));
+                    imageView.setItem(cloneItem);
+                }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu,
-	 * com.actionbarsherlock.view.MenuInflater)
-	 */
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		super.onCreateOptionsMenu(menu, inflater);
+    private void showCard() {
+        if (cloneItem != null) {
 
-		inflater.inflate(R.menu.menuitem_ok, menu);
-		inflater.inflate(R.menu.menuitem_cancel, menu);
-	}
+            if (imageView != null) {
+                imageView.setItem(cloneItem);
+            }
+            if (itemView != null) {
+                itemView.setItem(cloneItem, itemSpecification);
+            }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.option_ok:
-			accept();
-			return true;
-		case R.id.option_cancel:
-			cancel();
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-	}
+            if (iconView != null) {
+                if (cloneItem.getIconUri() != null) {
+                    iconView.setImageURI(cloneItem.getIconUri());
+                } else if (itemSpecification != null) {
+                    iconView.setImageResource(DsaUtil.getResourceId(itemSpecification));
+                }
+            }
+            if (nameView != null) {
+                nameView.setText(cloneItem.getName());
+            }
 
-	public Item accept() {
-		origItem.setName(nameView.getText().toString());
-		origItem.setTitle(titleView.getText().toString());
-		origItem.setPrice(Util.parseInt(priceView.getText().toString(), 0));
-		origItem.setWeight(Util.parseFloat(weightView.getText().toString(), 0.0f));
-		origItem.setIconUri(cloneItem.getIconUri());
-		origItem.setImageUri(cloneItem.getImageUri());
-		origItem.setCategory((String) categorySpn.getSelectedItem());
-		origItem.setImageTextOverlay(cloneItem.isImageTextOverlay());
+            if (titleView != null) {
+                if (cloneItem.hasTitle())
+                    titleView.setText(cloneItem.getTitle());
+                else
+                    titleView.setText(null);
+            }
 
-		DataManager.createOrUpdateItem(origItem);
 
-		if (getActivity().getIntent().hasExtra(ItemEditFragment.INTENT_EXTRA_HERO_KEY)) {
-			if (DsaTabApplication.getInstance().getHero().getItem(origItem.getId()) == null) {
-				DsaTabApplication.getInstance().getHero().addItem(origItem);
-			} else {
-				DsaTabApplication.getInstance().getHero().fireItemChangedEvent(origItem);
-			}
-		}
+            if (priceView != null && cloneItem.getPrice() > 0) {
+                priceView.setText(Util.toString(cloneItem.getPrice()));
+            }
+            if (weightView != null && cloneItem.getWeight() > 0.0f) {
+                weightView.setText(Util.toString(cloneItem.getWeight()));
+            }
+            if (categorySpn != null) {
+                categorySpn.setSelection(categoryAdapter.getPosition(cloneItem.getCategory()));
+            }
+            if (imageTextOverlayView != null) {
+                imageTextOverlayView.setChecked(cloneItem.isImageTextOverlay());
+            }
+        }
+    }
 
-		return origItem;
-	}
+    public Item getItem() {
+        return origItem;
+    }
 
-	public Item cancel() {
-		cloneItem = origItem;
-		return origItem;
-	}
+    public ItemSpecification getItemSpecification() {
+        return itemSpecification;
+    }
 
-	private void pickIcon() {
+    public Bundle accept() {
+        Bundle bundle = new Bundle();
 
-		ImageChooserDialog.pickIcons(this, new ImageChooserDialog.OnImageSelectedListener() {
+        origItem.setName(nameView.getText().toString());
+        origItem.setTitle(titleView.getText().toString());
+        origItem.setPrice(Util.parseInt(priceView.getText().toString(), 0));
+        origItem.setWeight(Util.parseFloat(weightView.getText().toString(), 0.0f));
+        origItem.setIconUri(cloneItem.getIconUri());
+        origItem.setImageUri(cloneItem.getImageUri());
+        origItem.setCategory((String) categorySpn.getSelectedItem());
+        origItem.setImageTextOverlay(cloneItem.isImageTextOverlay());
 
-			@Override
-			public void onImageSelected(Uri imageUri) {
-				if (imageUri != null && cloneItem != null) {
-					cloneItem.setIconUri(imageUri);
+        DataManager.createOrUpdateItem(origItem);
 
-					itemView.setItem(cloneItem, itemSpecification);
+        if (getActivity().getIntent().hasExtra(ItemEditFragment.INTENT_EXTRA_HERO_KEY)) {
+            if (DsaTabApplication.getInstance().getHero().getItem(origItem.getId()) == null) {
+                DsaTabApplication.getInstance().getHero().addItem(origItem);
+            } else {
+                DsaTabApplication.getInstance().getHero().fireItemChangedEvent(origItem);
+            }
+        }
 
-					if (cloneItem.getIconUri() != null)
-						iconView.setImageURI(cloneItem.getIconUri());
-					else
-						iconView.setImageResource(DsaUtil.getResourceId(itemSpecification));
-				}
-			}
-		}, 0);
+        return bundle;
+    }
 
-	}
+    public void cancel() {
+        cloneItem = origItem;
+        return;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.widget.CompoundButton.OnCheckedChangeListener#onCheckedChanged (android.widget.CompoundButton,
-	 * boolean)
-	 */
-	@Override
-	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		switch (buttonView.getId()) {
-		case R.id.popup_edit_overlay:
-			if (cloneItem != null) {
-				cloneItem.setImageTextOverlay(isChecked);
-				imageView.setItem(cloneItem);
-			}
-			break;
-		}
+    private void pickIcon() {
 
-	}
+        ImageChooserDialog.pickIcons(this, new ImageChooserDialog.OnImageSelectedListener() {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.view.View.OnClickListener#onClick(android.view.View)
-	 */
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.popup_edit_image:
-			Util.pickImage(this, ACTION_PHOTO);
-			break;
-		case R.id.popup_edit_icon:
-			pickIcon();
-			break;
-		}
+            @Override
+            public void onImageSelected(Uri imageUri) {
+                if (imageUri != null && cloneItem != null) {
+                    cloneItem.setIconUri(imageUri);
 
-	}
+                    if (itemView != null)
+                        itemView.setItem(cloneItem, itemSpecification);
+
+                    if (cloneItem.getIconUri() != null)
+                        iconView.setImageURI(cloneItem.getIconUri());
+                    else
+                        iconView.setImageResource(DsaUtil.getResourceId(itemSpecification));
+                }
+            }
+        }, 0);
+
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see android.widget.CompoundButton.OnCheckedChangeListener#onCheckedChanged (android.widget.CompoundButton,
+     * boolean)
+     */
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        switch (buttonView.getId()) {
+            case R.id.popup_edit_overlay:
+                if (cloneItem != null) {
+                    cloneItem.setImageTextOverlay(isChecked);
+                    imageView.setItem(cloneItem);
+                }
+                break;
+        }
+
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see android.view.View.OnClickListener#onClick(android.view.View)
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.popup_edit_image:
+                Util.pickImage(this, ACTION_PHOTO);
+                break;
+            case R.id.popup_edit_icon:
+                pickIcon();
+                break;
+        }
+
+    }
 
 }

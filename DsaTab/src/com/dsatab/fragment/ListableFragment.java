@@ -4,15 +4,13 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.NinePatchDrawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.ActionMode;
@@ -26,7 +24,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.AbsListView;
-import android.widget.Toast;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
@@ -39,6 +36,7 @@ import com.dsatab.data.Attribute;
 import com.dsatab.data.CombatTalent;
 import com.dsatab.data.CustomProbe;
 import com.dsatab.data.Hero;
+import com.dsatab.data.Markable;
 import com.dsatab.data.MetaTalent;
 import com.dsatab.data.Probe;
 import com.dsatab.data.Purse.Currency;
@@ -47,6 +45,7 @@ import com.dsatab.data.SpellInfo;
 import com.dsatab.data.Talent;
 import com.dsatab.data.TalentGroup;
 import com.dsatab.data.Value;
+import com.dsatab.data.adapter.BaseRecyclerAdapter;
 import com.dsatab.data.adapter.ListableItemAdapter;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.EventCategory;
@@ -77,6 +76,7 @@ import com.dsatab.fragment.dialog.DirectoryChooserDialog.OnDirectoryChooserListe
 import com.dsatab.fragment.dialog.EquippedItemChooserDialog;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
+import com.dsatab.util.ViewUtils;
 import com.dsatab.view.ListSettings;
 import com.dsatab.view.ListSettings.ListItem;
 import com.dsatab.view.ListSettings.ListItemType;
@@ -86,18 +86,14 @@ import com.dsatab.view.listener.OnClickActionListenerDelegate;
 import com.gandulf.guilib.util.FileFileFilter;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
-import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimator;
-import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
 import com.h6ah4i.android.widget.advrecyclerview.selectable.RecyclerViewSelectionManager;
-import com.h6ah4i.android.widget.advrecyclerview.touchguard.RecyclerViewTouchActionGuardManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.wnafee.vector.compat.ResourcesCompat;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -112,45 +108,9 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
 
     private ListableItemAdapter mAdapter;
 
-    private RecyclerView.LayoutManager mLayoutManager;
-    private RecyclerView.Adapter mWrappedAdapter;
-    //private RecyclerViewSwipeManager mRecyclerViewSwipeManager = new RecyclerViewSwipeManager();
-    //private RecyclerViewDragDropManager mRecyclerViewDragDropManager = new RecyclerViewDragDropManager();
-    private RecyclerViewTouchActionGuardManager mRecyclerViewTouchActionGuardManager = new RecyclerViewTouchActionGuardManager();
-
     private FloatingActionMenu fabMenu;
 
-    protected static abstract class BaseListableActionMode implements ActionMode.Callback {
-        protected WeakReference<RecyclerViewSelectionManager> manager;
-        protected WeakReference<RecyclerView> listView;
-        protected WeakReference<ListableFragment> listFragment;
-
-        public BaseListableActionMode(ListableFragment fragment, RecyclerView listView, RecyclerViewSelectionManager manager) {
-            this.listFragment = new WeakReference<ListableFragment>(fragment);
-            this.listView = new WeakReference<RecyclerView>(listView);
-            this.manager = new WeakReference<RecyclerViewSelectionManager>(manager);
-        }
-
-        protected RecyclerViewSelectionManager getManager() {
-            return manager.get();
-        }
-
-        @Override
-        public void onDestroyActionMode(ActionMode mode) {
-            RecyclerView list = listView.get();
-            ListableFragment fragment = listFragment.get();
-            if (list == null || fragment == null)
-                return;
-
-            fragment.mMode = null;
-
-            getManager().clearSelections();
-
-            Util.notifyDatasetChanged(list);
-        }
-    }
-
-    protected static final class ModifierActionMode extends BaseListableActionMode {
+    protected static final class ModifierActionMode extends BaseListableActionMode<ListableFragment> {
 
         public ModifierActionMode(ListableFragment fragment, RecyclerView listView, RecyclerViewSelectionManager manager) {
             super(fragment, listView, manager);
@@ -210,12 +170,13 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
             }
 
             if (hasModifiers && !hasItems) {
-                mode.getMenuInflater().inflate(R.menu.modifikator_popupmenu, menu);
+                mode.getMenuInflater().inflate(R.menu.menuitem_edit, menu);
+                mode.getMenuInflater().inflate(R.menu.menuitem_delete, menu);
             } else if (hasItems && !hasModifiers) {
                 mode.getMenuInflater().inflate(R.menu.equipped_item_popupmenu, menu);
             }
 
-            return true;
+            return super.onCreateActionMode(mode,menu);
         }
 
         @Override
@@ -232,29 +193,17 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                 Object obj = adapter.getItem(index);
 
                 if (obj instanceof CustomModificator) {
-                    if (edit != null && !edit.isEnabled()) {
-                        edit.setEnabled(true);
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    return ViewUtils.menuIconState(edit,true);
                 } else {
-                    if (edit != null && edit.isEnabled()) {
-                        edit.setEnabled(false);
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    return ViewUtils.menuIconState(edit,false);
                 }
-
-
             }
 
             return false;
         }
     }
 
-    protected static final class CustomProbeActionMode extends BaseListableActionMode {
+    protected static final class CustomProbeActionMode extends BaseListableActionMode<ListableFragment> {
 
         public CustomProbeActionMode(ListableFragment fragment, RecyclerView listView, RecyclerViewSelectionManager manager) {
             super(fragment, listView, manager);
@@ -325,7 +274,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                 mode.getMenuInflater().inflate(R.menu.menuitem_delete, menu);
             }
 
-            return true;
+            return super.onCreateActionMode(mode,menu);
         }
 
         @Override
@@ -342,29 +291,17 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                 Object obj = adapter.getItem(index);
 
                 if (obj instanceof CustomProbe) {
-                    if (edit != null && !edit.isEnabled()) {
-                        edit.setEnabled(true);
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    return ViewUtils.menuIconState(edit,true);
                 } else {
-                    if (edit != null && edit.isEnabled()) {
-                        edit.setEnabled(false);
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    return ViewUtils.menuIconState(edit,false);
                 }
-
-
             }
 
             return false;
         }
     }
 
-    protected static final class EquippedItemActionMode extends BaseListableActionMode {
+    protected static final class EquippedItemActionMode extends BaseListableActionMode<ListableFragment> {
 
         public EquippedItemActionMode(ListableFragment fragment, RecyclerView listView, RecyclerViewSelectionManager manager) {
             super(fragment, listView, manager);
@@ -377,7 +314,6 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
             if (list == null || fragment == null)
                 return false;
 
-            boolean notifyChanged = false;
             boolean refill = false;
 
             ListableItemAdapter adapter = WrapperAdapterUtils.findWrappedAdapter(list.getAdapter(), ListableItemAdapter.class);
@@ -525,12 +461,11 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                         }
                         case R.id.option_assign_hunting: {
                             getHero().setHuntingWeapon(equippedItem);
-                            notifyChanged = true;
+                            adapter.notifyItemChanged(index);
                             break;
                         }
                         case R.id.option_delete: {
                             getHero().removeEquippedItem(equippedItem);
-                            notifyChanged = true;
                             break;
                         }
                     }
@@ -541,18 +476,18 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                             EditListener.showEditPopup(fragment, talent);
                             mode.finish();
                             return true;
-                        case R.id.option_mark_favorite_talent:
+                        case R.id.option_mark_favorite:
                             talent.setFavorite(true);
-                            notifyChanged = true;
+                            adapter.notifyItemChanged(index);
                             break;
-                        case R.id.option_mark_unused_talent:
+                        case R.id.option_mark_unused:
                             talent.setUnused(true);
-                            notifyChanged = true;
+                            adapter.notifyItemChanged(index);
                             break;
-                        case R.id.option_unmark_talent:
+                        case R.id.option_unmark:
                             talent.setFavorite(false);
                             talent.setUnused(false);
-                            notifyChanged = true;
+                            adapter.notifyItemChanged(index);
                             break;
                         default:
                             return false;
@@ -562,8 +497,6 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                 }
                 if (refill) {
                     fragment.fillListItems(getHero());
-                } else if (notifyChanged) {
-                    Util.notifyDatasetChanged(list);
                 }
             }
             mode.finish();
@@ -573,7 +506,8 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             mode.getMenuInflater().inflate(R.menu.equipped_item_popupmenu, menu);
-            return true;
+
+            return super.onCreateActionMode(mode,menu);
         }
 
 
@@ -601,7 +535,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                                 List<EquippedItem> items = getHero().getEquippedItems(Weapon.class,
                                         Shield.class);
                                 items.remove(equippedItem);
-                                menu.findItem(R.id.option_assign_secondary).setEnabled(!items.isEmpty());
+                                ViewUtils.menuIconState(menu.findItem(R.id.option_assign_secondary), !items.isEmpty());
                             }
                         }
                     }
@@ -626,20 +560,18 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                             hasMultipleTalentTypes = true;
                         }
                     }
-                    menu.findItem(R.id.option_select_talent).setVisible(hasMultipleTalentTypes);
+                    MenuItem talentMenu = menu.findItem(R.id.option_select_talent);
+                    talentMenu.setVisible(hasMultipleTalentTypes);
                 }
-
-
             }
 
-            menu.findItem(R.id.option_view).setEnabled(selected == 1);
-            if (menu.findItem(R.id.option_assign_secondary).isEnabled())
-                menu.findItem(R.id.option_assign_secondary).setEnabled(selected == 1);
-            menu.findItem(R.id.option_assign_hunting).setEnabled(selected == 1);
-            menu.findItem(R.id.option_select_version).setEnabled(selected == 1);
-            menu.findItem(R.id.option_select_talent).setEnabled(selected == 1);
+            boolean changed = ViewUtils.menuIconState(menu.findItem(R.id.option_view),selected ==1);
+            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_assign_secondary),selected ==1);
+            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_assign_hunting),selected ==1);
+            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_select_version),selected ==1);
+            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_select_talent),selected ==1);
 
-            return true;
+            return changed;
         }
 
         protected Hero getHero() {
@@ -647,7 +579,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
         }
     }
 
-    protected static final class ArtActionMode extends BaseListableActionMode {
+    protected static final class ArtActionMode extends BaseListableActionMode<ListableFragment> {
 
         public ArtActionMode(ListableFragment fragment, RecyclerView listView, RecyclerViewSelectionManager manager) {
             super(fragment, listView, manager);
@@ -655,8 +587,6 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            boolean notifyChanged = false;
-
             RecyclerView list = listView.get();
             ListableFragment fragment = listFragment.get();
             if (list == null || fragment == null)
@@ -670,32 +600,31 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                     Art art = (Art) obj;
 
                     switch (item.getItemId()) {
-                        case R.id.option_mark_favorite_art:
+                        case R.id.option_mark_favorite:
                             art.setFavorite(true);
-                            notifyChanged = true;
+                            adapter.notifyItemChanged(index);
                             break;
-                        case R.id.option_mark_unused_art:
+                        case R.id.option_mark_unused:
                             art.setUnused(true);
-                            notifyChanged = true;
+                            adapter.notifyItemChanged(index);
                             break;
-                        case R.id.option_unmark_art:
+                        case R.id.option_unmark:
                             art.setFavorite(false);
                             art.setUnused(false);
-                            notifyChanged = true;
+                            adapter.notifyItemChanged(index);
                             break;
-                        case R.id.option_view_art:
+                        case R.id.option_view:
                             ArtInfoFragment.view(fragment.getActivity(), art, DsaTabActivity.ACTION_VIEW_ART);
+                            mode.finish();
+                            return true;
+                        case R.id.option_edit:
+                            ArtInfoFragment.edit(fragment.getActivity(), art, DsaTabActivity.ACTION_VIEW_ART);
                             mode.finish();
                             return true;
                         default:
                             return false;
 
                     }
-
-
-                }
-                if (notifyChanged) {
-                    Util.notifyDatasetChanged(list);
                 }
             }
             mode.finish();
@@ -704,9 +633,11 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
 
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            mode.getMenuInflater().inflate(R.menu.art_popupmenu, menu);
+            mode.getMenuInflater().inflate(R.menu.menuitem_view, menu);
+            mode.getMenuInflater().inflate(R.menu.menuitem_edit, menu);
+            mode.getMenuInflater().inflate(R.menu.menuitem_mark, menu);
             mode.setTitle("Künste");
-            return true;
+            return super.onCreateActionMode(mode,menu);
         }
 
 
@@ -730,48 +661,21 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                 Object obj = adapter.getItem(index);
                 if (obj instanceof Art) {
                     Art art = (Art) obj;
-
                     marked |= art.isFavorite() || art.isUnused();
                 }
-
-
             }
-
             mode.setSubtitle(selected + " ausgewählt");
 
             boolean changed = false;
 
-            if (selected != 1) {
-
-                if (menu.findItem(R.id.option_view_art).isEnabled()) {
-                    menu.findItem(R.id.option_view_art).setEnabled(false);
-                    changed = true;
-                }
-            } else {
-
-                if (!menu.findItem(R.id.option_view_art).isEnabled()) {
-                    menu.findItem(R.id.option_view_art).setEnabled(true);
-                    changed = true;
-                }
-            }
-
-            if (marked) {
-                if (!menu.findItem(R.id.option_unmark_art).isEnabled()) {
-                    menu.findItem(R.id.option_unmark_art).setEnabled(true);
-                    changed = true;
-                }
-            } else {
-                if (menu.findItem(R.id.option_unmark_art).isEnabled()) {
-                    menu.findItem(R.id.option_unmark_art).setEnabled(false);
-                    changed = true;
-                }
-            }
+            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_view),selected ==1);
+            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_unmark),marked);
 
             return changed;
         }
     }
 
-    protected static final class SpellActionMode extends BaseListableActionMode {
+    protected static final class SpellActionMode extends BaseListableActionMode<ListableFragment> {
 
         public SpellActionMode(ListableFragment fragment, RecyclerView listView, RecyclerViewSelectionManager manager) {
             super(fragment, listView, manager);
@@ -779,8 +683,6 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            boolean notifyChanged = false;
-
             RecyclerView list = listView.get();
             ListableFragment fragment = listFragment.get();
             if (list == null || fragment == null)
@@ -794,31 +696,30 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                     Spell spell = (Spell) obj;
 
                     switch (item.getItemId()) {
-                        case R.id.option_view_spell:
+                        case R.id.option_view:
                             SpellInfoFragment.view(fragment.getActivity(), spell, DsaTabActivity.ACTION_VIEW_SPELL);
                             mode.finish();
                             return true;
-                        case R.id.option_mark_favorite_spell:
+                        case R.id.option_edit:
+                            SpellInfoFragment.edit(fragment.getActivity(), spell, DsaTabActivity.ACTION_VIEW_SPELL);
+                            mode.finish();
+                            return true;
+                        case R.id.option_mark_favorite:
                             spell.setFavorite(true);
-                            notifyChanged = true;
+                            adapter.notifyItemChanged(index);
                             break;
-                        case R.id.option_mark_unused_spell:
+                        case R.id.option_mark_unused:
                             spell.setUnused(true);
-                            notifyChanged = true;
+                            adapter.notifyItemChanged(index);
                             break;
-                        case R.id.option_unmark_spell:
+                        case R.id.option_unmark:
                             spell.setFavorite(false);
                             spell.setUnused(false);
-                            notifyChanged = true;
+                            adapter.notifyItemChanged(index);
                             break;
                         default:
                             return false;
                     }
-
-
-                }
-                if (notifyChanged) {
-                    Util.notifyDatasetChanged(list);
                 }
             }
 
@@ -828,14 +729,17 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
 
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            mode.getMenuInflater().inflate(R.menu.spell_popupmenu, menu);
+            mode.getMenuInflater().inflate(R.menu.menuitem_view, menu);
+            mode.getMenuInflater().inflate(R.menu.menuitem_edit, menu);
+            mode.getMenuInflater().inflate(R.menu.menuitem_mark, menu);
             mode.setTitle("Zauber");
-            return true;
+            return super.onCreateActionMode(mode,menu);
         }
 
 
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+
             RecyclerView list = listView.get();
             ListableFragment fragment = listFragment.get();
             if (list == null || fragment == null)
@@ -851,43 +755,19 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                     Spell spell = (Spell) obj;
                     marked |= spell.isFavorite() || spell.isUnused();
                 }
-
-
             }
 
             mode.setSubtitle(selected + " ausgewählt");
 
             boolean changed = false;
-
-            if (selected != 1) {
-                if (menu.findItem(R.id.option_view_spell).isEnabled()) {
-                    menu.findItem(R.id.option_view_spell).setEnabled(false);
-                    changed = true;
-                }
-            } else {
-                if (!menu.findItem(R.id.option_view_spell).isEnabled()) {
-                    menu.findItem(R.id.option_view_spell).setEnabled(true);
-                    changed = true;
-                }
-            }
-
-            if (marked) {
-                if (!menu.findItem(R.id.option_unmark_spell).isEnabled()) {
-                    menu.findItem(R.id.option_unmark_spell).setEnabled(true);
-                    changed = true;
-                }
-            } else {
-                if (menu.findItem(R.id.option_unmark_spell).isEnabled()) {
-                    menu.findItem(R.id.option_unmark_spell).setEnabled(false);
-                    changed = true;
-                }
-            }
+            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_view),selected==1);
+            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_unmark),marked);
 
             return changed;
         }
     }
 
-    protected static final class TalentActionMode extends BaseListableActionMode {
+    protected static final class TalentActionMode extends BaseListableActionMode<ListableFragment> {
 
         public TalentActionMode(ListableFragment fragment, RecyclerView listView, RecyclerViewSelectionManager manager) {
             super(fragment, listView, manager);
@@ -895,7 +775,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            boolean notifyChanged = false;
+
             RecyclerView list = listView.get();
             ListableFragment fragment = listFragment.get();
             if (list == null || fragment == null)
@@ -907,22 +787,22 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                 if (obj instanceof Talent) {
                     Talent talent = (Talent) obj;
                     switch (item.getItemId()) {
-                        case R.id.option_edit_talent:
+                        case R.id.option_edit:
                             EditListener.showEditPopup(fragment, talent);
                             mode.finish();
                             return true;
-                        case R.id.option_mark_favorite_talent:
+                        case R.id.option_mark_favorite:
                             talent.setFavorite(true);
-                            notifyChanged = true;
+                            adapter.notifyItemChanged(index);
                             break;
-                        case R.id.option_mark_unused_talent:
+                        case R.id.option_mark_unused:
                             talent.setUnused(true);
-                            notifyChanged = true;
+                            adapter.notifyItemChanged(index);
                             break;
-                        case R.id.option_unmark_talent:
+                        case R.id.option_unmark:
                             talent.setFavorite(false);
                             talent.setUnused(false);
-                            notifyChanged = true;
+                            adapter.notifyItemChanged(index);
                             break;
                         default:
                             return false;
@@ -932,20 +812,17 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                 }
             }
 
-
-            if (notifyChanged) {
-                Util.notifyDatasetChanged(list);
-            }
-
             mode.finish();
             return true;
         }
 
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            mode.getMenuInflater().inflate(R.menu.talent_popupmenu, menu);
+            mode.getMenuInflater().inflate(R.menu.menuitem_edit, menu);
+            mode.getMenuInflater().inflate(R.menu.menuitem_mark, menu);
             mode.setTitle("Talente");
-            return true;
+
+            return super.onCreateActionMode(mode,menu);
         }
 
 
@@ -957,6 +834,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
 
             int selected = 0;
             boolean metaTalent = false;
+            boolean marked = false;
             ListableItemAdapter adapter = WrapperAdapterUtils.findWrappedAdapter(list.getAdapter(), ListableItemAdapter.class);
             for (int index : getManager().getSelectedPositions()) {
 
@@ -966,33 +844,24 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                     if (obj instanceof MetaTalent) {
                         metaTalent = true;
                     }
+
+                    if (obj instanceof Markable) {
+                        Markable mark = (Markable) obj;
+                        marked |= mark.isFavorite() || mark.isUnused();
+                    }
                 }
-
-
             }
 
             mode.setSubtitle(selected + " ausgewählt");
 
-            if (metaTalent || selected != 1) {
-                if (menu.findItem(R.id.option_edit_talent).isEnabled()) {
-                    menu.findItem(R.id.option_edit_talent).setEnabled(false);
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                if (!menu.findItem(R.id.option_edit_talent).isEnabled()) {
-                    menu.findItem(R.id.option_edit_talent).setEnabled(true);
-                    return true;
-                } else {
-                    return false;
-                }
-            }
+            boolean changed = ViewUtils.menuIconState(menu.findItem(R.id.option_unmark),marked);
+            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_edit),!metaTalent && selected == 1);
 
+            return changed;
         }
     }
 
-    protected static final class NoteActionMode extends BaseListableActionMode {
+    protected static final class NoteActionMode extends BaseListableActionMode<ListableFragment> {
 
         public NoteActionMode(ListableFragment fragment, RecyclerView listView, RecyclerViewSelectionManager manager) {
             super(fragment, listView, manager);
@@ -1000,8 +869,6 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            boolean notifyNotesChanged = false;
-
             RecyclerView list = listView.get();
             ListableFragment fragment = listFragment.get();
             if (list == null || fragment == null)
@@ -1015,12 +882,11 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                     if (item.getItemId() == R.id.option_delete) {
                         if (event.isDeletable()) {
                             fragment.getHero().removeEvent(event);
-                            notifyNotesChanged = true;
+                            adapter.remove(event);
                         }
                     } else if (item.getItemId() == R.id.option_edit) {
                         NotesEditFragment.edit(event, null, fragment.getActivity(),
                                 DsaTabActivity.ACTION_EDIT_NOTES);
-
                         mode.finish();
                         break;
                     }
@@ -1028,31 +894,26 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                     Connection connection = (Connection) obj;
                     if (item.getItemId() == R.id.option_delete) {
                         fragment.getHero().removeConnection(connection);
-                        notifyNotesChanged = true;
+                        adapter.remove(connection);
                     } else if (item.getItemId() == R.id.option_edit) {
                         NotesEditFragment.edit(connection, fragment.getActivity(),
                                 DsaTabActivity.ACTION_EDIT_NOTES);
-
                         mode.finish();
                         break;
                     }
 
                 }
             }
-            if (notifyNotesChanged) {
-                Util.notifyDatasetChanged(list);
-            }
-
-
             mode.finish();
             return true;
         }
 
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            mode.getMenuInflater().inflate(R.menu.note_list_popupmenu, menu);
+            mode.getMenuInflater().inflate(R.menu.menuitem_edit, menu);
+            mode.getMenuInflater().inflate(R.menu.menuitem_delete, menu);
             mode.setTitle("Notizen");
-            return true;
+            return super.onCreateActionMode(mode,menu);
         }
 
 
@@ -1080,20 +941,10 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                     Event event = (Event) obj;
                     allDeletable &= event.isDeletable();
                 }
-
-
             }
-
-            if (allDeletable != view.isEnabled()) {
-                view.setEnabled(allDeletable);
-                return true;
-            }
-
             mode.setSubtitle(selected + " ausgewählt");
 
-            Util.notifyDatasetChanged(list);
-
-            return false;
+            return ViewUtils.menuIconState(view,allDeletable);
         }
     }
 
@@ -1179,8 +1030,8 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                         art.setProbePattern(artInfo.getProbe());
                         art.fireValueChangedEvent();
 
-                        Toast.makeText(getActivity(), "Kunstinformationen wurden gespeichert", Toast.LENGTH_SHORT)
-                                .show();
+                        ViewUtils.snackbar(getActivity(), "Kunstinformationen wurden gespeichert", Snackbar.LENGTH_SHORT)
+                                ;
                     }
                 }
             }
@@ -1208,8 +1059,8 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                         spell.setProbePattern(spellInfo.getProbe());
                         spell.fireValueChangedEvent();
 
-                        Toast.makeText(getActivity(), "Zauberinformationen wurden gespeichert", Toast.LENGTH_SHORT)
-                                .show();
+                        ViewUtils.snackbar(getActivity(), "Zauberinformationen wurden gespeichert", Snackbar.LENGTH_SHORT)
+                                ;
 
                     }
                 }
@@ -1242,12 +1093,6 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com. actionbarsherlock.view.Menu,
-     * MenuInflater)
-     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -1258,19 +1103,11 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                 inflater.inflate(R.menu.menuitem_set, menu);
             }
 
-            if (listSettings.hasListItem(ListItemType.Modificator) && menu.findItem(R.id.option_modifier_add) == null) {
-                inflater.inflate(R.menu.modifikator_menu, menu);
-            }
-
-            if (listSettings.hasListItem(ListItemType.Probe) && menu.findItem(R.id.option_probe_add) == null) {
-                inflater.inflate(R.menu.probe_menu, menu);
-            }
-
             if (listSettings.hasListItem(ListItemType.Document) && menu.findItem(R.id.option_documents_choose) == null) {
                 inflater.inflate(R.menu.documents_menu, menu);
             }
 
-            if (listSettings.hasListItem(ListItemType.Notes) && menu.findItem(R.id.option_note_add) == null) {
+            if (listSettings.hasListItem(ListItemType.Notes) && menu.findItem(R.id.option_note_filter) == null) {
                 inflater.inflate(R.menu.note_list_menu, menu);
 
                 if (menu.findItem(R.id.option_note_filter) != null) {
@@ -1299,10 +1136,6 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
             if (menu.findItem(R.id.option_set) != null) {
                 menu.findItem(R.id.option_set).setVisible(
                         !isDrawerOpened() && getListSettings().hasListItem(ListItemType.EquippedItem));
-            }
-            if (menu.findItem(R.id.option_modifier_add) != null) {
-                menu.findItem(R.id.option_modifier_add).setVisible(
-                        !isDrawerOpened() && getListSettings().hasListItem(ListItemType.Modificator));
             }
             if (menu.findItem(R.id.option_documents_choose) != null) {
                 menu.findItem(R.id.option_documents_choose).setVisible(
@@ -1361,8 +1194,8 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                             }
                             fillListItems(getHero());
                         } else {
-                            Toast.makeText(getActivity(), "Verzeichnis existiert nicht. Wähle bitte ein anderes aus.",
-                                    Toast.LENGTH_LONG).show();
+                            ViewUtils.snackbar(getActivity(), "Verzeichnis existiert nicht. Wähle bitte ein anderes aus.",
+                                    Snackbar.LENGTH_LONG);
                         }
                     }
                 };
@@ -1409,16 +1242,8 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
             return true;
         }
 
-        if (item.getItemId() == R.id.option_modifier_add) {
-            return onAction(ACTION_MODIFICATOR_ADD);
-        } else if (item.getItemId() == R.id.option_documents_choose) {
+        if (item.getItemId() == R.id.option_documents_choose) {
             return onAction(ACTION_DOCUMENTS_CHOOSE);
-        } else if (item.getItemId() == R.id.option_probe_add) {
-            return onAction(ACTION_CUSTOM_PROBE_ADD);
-        } else if (item.getItemId() == R.id.option_note_add) {
-            return onAction(ACTION_NOTES_ADD);
-        } else if (item.getItemId() == R.id.option_note_record) {
-            return onAction(ACTION_NOTES_RECORD);
         } else {
             return super.onOptionsItemSelected(item);
         }
@@ -1433,9 +1258,6 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
-
-
     }
 
     /*
@@ -1454,20 +1276,13 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
         return root;
     }
 
-    protected void initRecycler() {
+
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view,savedInstanceState);
+
         recyclerView.setHasFixedSize(false);
-
-        // touch guard manager  (this class is required to suppress scrolling while swipe-dismiss animation is running)
-        mRecyclerViewTouchActionGuardManager = new RecyclerViewTouchActionGuardManager();
-        mRecyclerViewTouchActionGuardManager.setInterceptVerticalScrollingWhileAnimationRunning(true);
-        mRecyclerViewTouchActionGuardManager.setEnabled(true);
-
-        // drag & drop manager
-        //mRecyclerViewDragDropManager = new RecyclerViewDragDropManager();
-        //mRecyclerViewDragDropManager.setDraggingItemShadowDrawable((NinePatchDrawable) getResources().getDrawable(R.drawable.material_shadow_z3));
-
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(mLayoutManager);
 
         mAdapter = new ListableItemAdapter(this, null, getListSettings());
         mAdapter.setProbeListener(getProbeListener());
@@ -1476,41 +1291,9 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
         mAdapter.setActionListener(this);
         mAdapter.setEventListener(this);
 
-        mWrappedAdapter = mAdapter;
-        //mWrappedAdapter = mRecyclerViewDragDropManager.createWrappedAdapter(mWrappedAdapter);     // wrap for dragging
-        //mWrappedAdapter = mRecyclerViewSwipeManager.createWrappedAdapter(mWrappedAdapter);      // wrap for swiping
-        mWrappedAdapter = mRecyclerViewSelectionManager.createWrappedAdapter(mWrappedAdapter);  // wrap for selection
-
-        recyclerView.setAdapter(mWrappedAdapter);  // requires *wrapped* adapter
-        final GeneralItemAnimator animator = new SwipeDismissItemAnimator();
-        recyclerView.setItemAnimator(animator);
-
-        // additional decorations
-        //noinspection StatementWithEmptyBody
-        if (supportsViewElevation()) {
-            // Lollipop or later has native drop shadow feature. ItemShadowDecorator is not required.
-        } else {
-            recyclerView.addItemDecoration(new ItemShadowDecorator((NinePatchDrawable) getResources().getDrawable(R.drawable.material_shadow_z1)));
-        }
-
-        //recyclerView.addItemDecoration(new SimpleListDividerDecorator(getResources().getDrawable(R.drawable.abc_list_divider_mtrl_alpha), true));
-
-        // NOTE:
-        // The initialization order is very important! This order determines the priority of touch event handling.
-        //
-        // priority: TouchActionGuard> Selection > Swipe > DragAndDrop
-        mRecyclerViewTouchActionGuardManager.attachRecyclerView(recyclerView);
-        mRecyclerViewSelectionManager.attachRecyclerView(recyclerView);
-        //mRecyclerViewSwipeManager.attachRecyclerView(recyclerView);
-        //mRecyclerViewDragDropManager.attachRecyclerView(recyclerView);
+        initRecyclerView(recyclerView, mAdapter, false, false, true);
 
         mRecyclerViewSelectionManager.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view,savedInstanceState);
-        initRecycler();
 
         mTalentCallback = new TalentActionMode(this, recyclerView, mRecyclerViewSelectionManager);
         mSpellCallback = new SpellActionMode(this, recyclerView, mRecyclerViewSelectionManager);
@@ -1521,9 +1304,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
         mCallback = new NoteActionMode(this, recyclerView, mRecyclerViewSelectionManager);
     }
 
-    private boolean supportsViewElevation() {
-        return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
-    }
+
 
     @Override
     public void onPause() {
@@ -1535,36 +1316,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
-        //if (mRecyclerViewDragDropManager != null) {
-        //mRecyclerViewDragDropManager.release();
-        //mRecyclerViewDragDropManager = null;
-        //}
-
-        //if (mRecyclerViewSwipeManager != null) {
-        //          mRecyclerViewSwipeManager.release();
-        //          mRecyclerViewSwipeManager = null;
-        //    }
-
-        if (mRecyclerViewTouchActionGuardManager != null) {
-            mRecyclerViewTouchActionGuardManager.release();
-            mRecyclerViewTouchActionGuardManager = null;
-        }
-
-        if (recyclerView != null) {
-            recyclerView.setItemAnimator(null);
-            recyclerView.setAdapter(null);
-            recyclerView = null;
-        }
-
-        if (mWrappedAdapter != null) {
-            WrapperAdapterUtils.releaseAll(mWrappedAdapter);
-            mWrappedAdapter = null;
-        }
         mAdapter = null;
-        mLayoutManager = null;
-
-
     }
 
     /*
@@ -1768,7 +1520,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                         FloatingActionButton modAdd = new FloatingActionButton(getActivity());
                         modAdd.setColorPressed(getResources().getColor(R.color.white_pressed));
                         modAdd.setColorNormal(getResources().getColor(R.color.white));
-                        modAdd.setImageResource(R.drawable.dsa_modifier_add);
+                        modAdd.setImageDrawable(ResourcesCompat.getDrawable(modAdd.getContext(),R.drawable.vd_orb_direction));
                         modAdd.setOnClickListener(new OnClickActionListenerDelegate(ACTION_MODIFICATOR_ADD, this));
                         fabMenu.addMenuButton(modAdd);
                         fabItems++;
@@ -1808,9 +1560,9 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                             } else {
                                 documents = Collections.emptyList();
                                 String path = pdfsDir.getAbsolutePath();
-                                Toast.makeText(getActivity(),
-                                        Util.getText(R.string.message_documents_empty, path).toString(), Toast.LENGTH_SHORT)
-                                        .show();
+                                ViewUtils.snackbar(getActivity(),
+                                        Util.getText(R.string.message_documents_empty, path).toString(), Snackbar.LENGTH_SHORT)
+                                        ;
                             }
                             for (File file : documents) {
                                 mAdapter.add(new FileListable(file));
@@ -1840,7 +1592,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                         FloatingActionButton notesRecord = new FloatingActionButton(getActivity());
                         notesRecord.setColorPressed(getResources().getColor(R.color.white_pressed));
                         notesRecord.setColorNormal(getResources().getColor(R.color.white));
-                        notesRecord.setImageResource(R.drawable.dsa_speech_add);
+                        notesRecord.setImageDrawable(ResourcesCompat.getDrawable(notesRecord.getContext(), R.drawable.vd_nothing_to_say));
                         notesRecord.setOnClickListener(new OnClickActionListenerDelegate(ACTION_NOTES_RECORD, this));
                         fabMenu.addMenuButton(notesRecord);
                         fabItems++;
@@ -1848,7 +1600,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                         FloatingActionButton notesAdd = new FloatingActionButton(getActivity());
                         notesAdd.setColorPressed(getResources().getColor(R.color.white_pressed));
                         notesAdd.setColorNormal(getResources().getColor(R.color.white));
-                        notesAdd.setImageResource(R.drawable.dsa_notes_add);
+                        notesAdd.setImageDrawable(ResourcesCompat.getDrawable(notesAdd.getContext(), R.drawable.vd_tied_scroll));
                         notesAdd.setOnClickListener(new OnClickActionListenerDelegate(ACTION_NOTES_ADD, this));
                         fabMenu.addMenuButton(notesAdd);
                         fabItems++;
@@ -1881,7 +1633,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                         FloatingActionButton probeAdd = new FloatingActionButton(getActivity());
                         probeAdd.setColorPressed(getResources().getColor(R.color.white_pressed));
                         probeAdd.setColorNormal(getResources().getColor(R.color.white));
-                        probeAdd.setImageResource(R.drawable.dsa_dice_add);
+                        probeAdd.setImageDrawable(ResourcesCompat.getDrawable(probeAdd.getContext(), R.drawable.vd_dice_six_faces_two));
                         probeAdd.setOnClickListener(new OnClickActionListenerDelegate(ACTION_CUSTOM_PROBE_ADD, this));
                         fabMenu.addMenuButton(probeAdd);
                         fabItems++;
@@ -2005,7 +1757,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
     }
 
     @Override
-    public void onItemClicked(int position, View v) {
+    public void onItemClicked(BaseRecyclerAdapter adapter, int position, View v) {
         if (mMode == null) {
             Object object = mAdapter.getItem(position);
 
@@ -2032,9 +1784,9 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                     try {
                         startActivity(intent);
                     } catch (ActivityNotFoundException e) {
-                        Toast.makeText(getActivity(),
-                                "Keine App zum Betrachten von " + file.getName() + " gefunden", Toast.LENGTH_SHORT)
-                                .show();
+                        ViewUtils.snackbar(getActivity(),
+                                "Keine App zum Betrachten von " + file.getName() + " gefunden", Snackbar.LENGTH_SHORT)
+                                ;
                     }
                 }
             } else if (object instanceof Event) {
@@ -2071,7 +1823,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
             RecyclerView.ViewHolder holder = RecyclerViewAdapterUtils.getViewHolder(v);
             mRecyclerViewSelectionManager.setSelected(holder, false);
         } else {
-            super.onItemClicked(position,v);
+            super.onItemClicked(adapter, position,v);
         }
     }
 

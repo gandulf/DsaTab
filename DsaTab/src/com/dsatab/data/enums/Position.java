@@ -19,21 +19,21 @@ public enum Position {
 
 	protected int multiplier;
 
-	private Position(String name, String nameShort, int mul) {
+	Position(String name, String nameShort, int mul) {
 		this.name = name;
 		this.nameShort = nameShort;
 		this.multiplier = mul;
 	}
 
-	private Position(String name, int mul) {
+	Position(String name, int mul) {
 		this(name, name, mul);
 	}
 
-	private Position(String name, String nameShort) {
+	Position(String name, String nameShort) {
 		this(name, nameShort, 0);
 	}
 
-	private Position(String name) {
+	Position(String name) {
 		this(name, name, 0);
 	}
 

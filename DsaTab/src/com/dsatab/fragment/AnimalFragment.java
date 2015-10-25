@@ -24,6 +24,7 @@ import com.dsatab.data.modifier.Modificator;
 import com.dsatab.util.DsaUtil;
 import com.dsatab.util.StyleableSpannableStringBuilder;
 import com.dsatab.util.Util;
+import com.dsatab.util.ViewUtils;
 import com.dsatab.view.ItemListItem;
 import com.dsatab.view.listener.HeroChangedListener;
 
@@ -63,7 +64,7 @@ public class AnimalFragment extends BaseProfileFragment {
 		}
 
 		if (animalNames.size() > 1) {
-			final ArrayAdapter<String> adapter = new ArrayAdapter<String>(actionBar.getThemedContext(),
+			final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getToolbarThemedContext(),
 					android.R.layout.simple_spinner_item, animalNames);
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -350,14 +351,14 @@ public class AnimalFragment extends BaseProfileFragment {
 
 				if (animalAttack.getAttack() != null) {
 					listItem.icon1.setVisibility(View.VISIBLE);
-					listItem.icon1.setImageResource(R.drawable.dsa_claws);
+                    listItem.icon1.setFrontDrawable(ViewUtils.circleIcon(listItem.icon1.getContext(), R.drawable.vd_barbed_nails));
 					listItem.icon1.setTag(animalAttack.getAttack());
 					listItem.icon1.setOnClickListener(getProbeListener());
 				}
 
 				if (animalAttack.getDefense() != null) {
 					listItem.icon2.setVisibility(View.VISIBLE);
-					listItem.icon2.setImageResource(R.drawable.dsa_shield_round);
+					listItem.icon2.setImageDrawable(ViewUtils.circleIcon(listItem.icon2.getContext(), R.drawable.vd_round_shield));
 					listItem.icon2.setTag(animalAttack.getDefense());
 					listItem.icon2.setOnClickListener(getProbeListener());
 				}

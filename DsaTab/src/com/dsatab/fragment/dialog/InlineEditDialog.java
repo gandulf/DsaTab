@@ -6,14 +6,17 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 
-import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.ArmorAttribute;
 import com.dsatab.data.Attribute;
@@ -25,12 +28,20 @@ import com.dsatab.util.Debug;
 import com.dsatab.util.NumberPickerUtils;
 import com.dsatab.util.Util;
 
-public class InlineEditDialog extends DialogFragment implements android.content.DialogInterface.OnClickListener,
+public class InlineEditDialog extends DialogFragment implements android.content.DialogInterface.OnClickListener,View.OnClickListener,
 		OnCheckedChangeListener {
 
 	public static final String TAG = "InlineEditDialog";
 
+    private enum InputMode {
+        Slider,EditText
+    }
+
 	private Value value;
+    private InputMode mode = InputMode.EditText;
+
+    private EditText editValue;
+    private Button btnPlus,btnMinus;
 
 	private NumberPicker numberPicker;
 	private NumberPickerUtils numberPickerUtils;
@@ -48,6 +59,8 @@ public class InlineEditDialog extends DialogFragment implements android.content.
 		dialog.setTargetFragment(parent, requestCode);
 		dialog.show(parent.getFragmentManager(), TAG);
 	}
+
+
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -69,9 +82,14 @@ public class InlineEditDialog extends DialogFragment implements android.content.
         LayoutInflater inflater = LayoutInflater.from(builder.getContext());
 		View popupcontent = inflater.inflate(R.layout.popup_edit,null,false);
         builder.setView(popupcontent);
+
+
 		numberPicker = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_text);
 		numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 		numberPickerUtils = new NumberPickerUtils(numberPicker);
+
+        editValue = (EditText) popupcontent.findViewById(R.id.popup_edit_value);
+        editValue.setText("");
 
 		combatStyleBtn = (CompoundButton) popupcontent.findViewById(R.id.popup_edit_combat_style);
 		combatStyleBtn.setOnCheckedChangeListener(this);
@@ -87,9 +105,11 @@ public class InlineEditDialog extends DialogFragment implements android.content.
 
 			if (currentValue != null) {
 				numberPickerUtils.setValue(currentValue);
+                editValue.append(String.valueOf(currentValue));
 			} else {
 				Debug.error("Setting value was null:" + value);
 				numberPickerUtils.setValue(0);
+                editValue.append("0");
 			}
 			numberPicker.setEnabled(true);
 			numberPicker.setWrapSelectorWheel(false);
@@ -110,10 +130,30 @@ public class InlineEditDialog extends DialogFragment implements android.content.
 
 		}
 
+
+        btnMinus = (Button) popupcontent.findViewById(R.id.popup_edit_value_minus);
+        btnMinus.setOnClickListener(this);
+        btnPlus = (Button) popupcontent.findViewById(R.id.popup_edit_value_plus);
+        btnPlus.setOnClickListener(this);
+        editValue.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                accept();
+                return true;
+            }
+        });
+
+        numberPicker.setVisibility(mode == InputMode.Slider ? View.VISIBLE : View.GONE);
+        popupcontent.findViewById(R.id.popup_edit_value_container).setVisibility(mode == InputMode.EditText ? View.VISIBLE : View.GONE);
+
+        editValue.setSelection(0,editValue.getText().length());
+
 		// Now we can build the dialog.
 		AlertDialog dialog = builder.create();
 		dialog.setCanceledOnTouchOutside(true);
 
+        if (mode == InputMode.EditText)
+            Util.showKeyboard(editValue);
 		return dialog;
 	}
 
@@ -125,7 +165,12 @@ public class InlineEditDialog extends DialogFragment implements android.content.
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		if (buttonView == combatStyleBtn) {
 
-			if (value instanceof Attribute) {
+            if (isChecked)
+                combatStyleBtn.setText(getText(R.string.combat_style)+" ("+getText(R.string.offensive)+")");
+            else
+                combatStyleBtn.setText(getText(R.string.combat_style)+" ("+getText(R.string.defensive)+")");
+
+            if (value instanceof Attribute) {
 				Attribute attr = (Attribute) value;
 				if (isChecked)
 					attr.getHero().setCombatStyle(CombatStyle.Offensive);
@@ -134,9 +179,7 @@ public class InlineEditDialog extends DialogFragment implements android.content.
 			}
 		} else if (buttonView == beCalculation) {
 			numberPicker.setEnabled(!isChecked);
-
 		}
-
 	}
 
 	private void accept() {
@@ -156,8 +199,20 @@ public class InlineEditDialog extends DialogFragment implements android.content.
 		}
 
 		try {
+            int currentValue = 0;
+            switch (mode) {
+                case Slider:
+                    currentValue = numberPickerUtils.getValue();
+                    break;
+                case EditText:
+                    currentValue = Util.parseInt(editValue.getText().toString(),0);
+                    break;
+            }
 
-			int currentValue = numberPickerUtils.getValue();
+            if (currentValue < value.getMinimum())
+                currentValue = value.getMinimum();
+            else if (currentValue > value.getMaximum())
+                currentValue = value.getMaximum();
 
 			if (value instanceof ArmorAttribute) {
 				ArmorAttribute armorAttribute = (ArmorAttribute) value;
@@ -176,7 +231,30 @@ public class InlineEditDialog extends DialogFragment implements android.content.
 		dismiss();
 	}
 
-	@Override
+    @Override
+    public void onClick(View v) {
+        int currentValue = Util.parseInt(editValue.getText().toString(),0);
+        switch (v.getId()) {
+            case R.id.popup_edit_value_minus:
+                if (currentValue > value.getMinimum()) {
+                    currentValue--;
+                    editValue.setText("");
+                    editValue.append(String.valueOf(currentValue));
+                    editValue.setSelection(0,editValue.getText().length());
+                }
+                break;
+            case R.id.popup_edit_value_plus:
+                if (currentValue < value.getMaximum()) {
+                    currentValue++;
+                    editValue.setText("");
+                    editValue.append(String.valueOf(currentValue));
+                    editValue.setSelection(0,editValue.getText().length());
+                }
+                break;
+        }
+    }
+
+    @Override
 	public void onClick(DialogInterface paramDialogInterface, int paramInt) {
 		switch (paramInt) {
 		case DialogInterface.BUTTON_POSITIVE:

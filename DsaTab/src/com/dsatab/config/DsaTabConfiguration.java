@@ -38,14 +38,14 @@ public class DsaTabConfiguration {
 
 	private List<Integer> itemIcons;
 
-	private static List<String> IGNORE_ICONS = Arrays.asList("dsa_set");
+	private static List<String> IGNORE_ICONS = Arrays.asList("dsa_set","dsa_set1","dsa_set2","dsa_set3");
 
 	public enum WoundType {
 		Standard("Standard"), Trefferzonen("Trefferzonen");
 
 		private String title;
 
-		private WoundType(String t) {
+		WoundType(String t) {
 			title = t;
 		}
 
@@ -59,7 +59,7 @@ public class DsaTabConfiguration {
 
 		private String title;
 
-		private ArmorType(String t) {
+		ArmorType(String t) {
 			title = t;
 		}
 
@@ -71,21 +71,21 @@ public class DsaTabConfiguration {
 	public DsaTabConfiguration(Context context) {
 		this.context = context;
 
-		tabResourceIds.put(CharacterFragment.class, R.drawable.dsa_character);
-		tabResourceIds.put(BodyFragment.class, R.drawable.dsa_heart);
-		tabResourceIds.put(ListableFragment.class, R.drawable.dsa_fight);
-		tabResourceIds.put(ItemsFragment.class, R.drawable.dsa_items);
-		tabResourceIds.put(ItemListFragment.class, R.drawable.dsa_items);
-		tabResourceIds.put(NotesEditFragment.class, R.drawable.dsa_notes);
-		tabResourceIds.put(MapFragment.class, R.drawable.dsa_map);
-		tabResourceIds.put(AnimalFragment.class, R.drawable.dsa_cat);
+		tabResourceIds.put(CharacterFragment.class, R.drawable.vd_anatomy);
+		tabResourceIds.put(BodyFragment.class, R.drawable.vd_broken_heart);
+		tabResourceIds.put(ListableFragment.class, R.drawable.vd_all_for_one);
+		tabResourceIds.put(ItemsFragment.class, R.drawable.vd_battle_gear);
+		tabResourceIds.put(ItemListFragment.class, R.drawable.vd_battle_gear);
+		tabResourceIds.put(NotesEditFragment.class, R.drawable.vd_tied_scroll);
+		tabResourceIds.put(MapFragment.class, R.drawable.vd_treasure_map);
+		tabResourceIds.put(AnimalFragment.class, R.drawable.vd_horse_head);
 
 		itemIcons = new ArrayList<Integer>();
 		Field[] allFields = R.drawable.class.getDeclaredFields();
 		for (Field field : allFields) {
 			if (Modifier.isPublic(field.getModifiers()) && Modifier.isStatic(field.getModifiers())) {
 				String fieldName = field.getName();
-				if (fieldName.startsWith("dsa_") && !fieldName.endsWith("_add") && !fieldName.endsWith("_light")
+				if ((fieldName.startsWith("vd_") ||fieldName.startsWith("dsa_")) && !fieldName.endsWith("_add") && !fieldName.endsWith("_light")
 						&& !fieldName.endsWith("_dark") && !IGNORE_ICONS.contains(fieldName)) {
 					try {
 						itemIcons.add(field.getInt(null));

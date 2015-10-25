@@ -40,7 +40,7 @@ public class Modifier {
 		return title + " " + Util.toProbe(modifier) + " | " + description;
 	}
 
-	public static final int sum(Collection<Modifier> mods) {
+	public static int sum(Collection<Modifier> mods) {
 		int sum = 0;
 		for (Modifier m : mods) {
 			if (m.isActive()) {

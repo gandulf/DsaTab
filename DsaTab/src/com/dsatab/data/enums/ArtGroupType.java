@@ -24,7 +24,7 @@ public enum ArtGroupType {
 			TalentType.Ritualkenntnis), Szepter(Art.SZEPTER_RITUAL_PREFIX, null), RituelleStrafe(
 			Art.RITUELLE_STRAFE_PREFIX, null), Kristallpendel(Art.KISTALLPENDEL_PREFIX, null), Tapasuul(
 			Art.TAPASUUL_PREFIX, null);
-	;
+
 	// public static final String RITUELLE_STRAFE_PREFIX = "Rituelle Strafe: ";
 	// public static final String KISTALLPENDEL_PREFIX = "Kristallpendel: ";
 	// public static final String TAPASUUL_PREFIX = "Tapasuul: ";;
@@ -41,12 +41,12 @@ public enum ArtGroupType {
 
 	private TalentType talentType;
 
-	private ArtGroupType(String prefix) {
+	ArtGroupType(String prefix) {
 		this.prefix = prefix;
 		this.talentType = null;
 	}
 
-	private ArtGroupType(String prefix, TalentType talentType) {
+	ArtGroupType(String prefix, TalentType talentType) {
 		this.prefix = prefix;
 		this.talentType = talentType;
 	}

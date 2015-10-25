@@ -112,8 +112,6 @@ public class Art extends MarkableElement implements Value, Listable, Serializabl
 			// we acutally found a grade (I)
 			if (Util.gradeToInt(grade) >= 0) {
 				name = name.substring(0, name.lastIndexOf("(")).trim();
-			} else {
-				grade = null;
 			}
 		}
 

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="aboutLibraries_description_showIcon">true</string>
+    <string name="aboutLibraries_description_showVersion">true</string>
+    <string name="aboutLibraries_description_text">DsaTab ist eine Android App, mit der man seine Helden direkt auf seinem Handy/Tablet zum Rollenspielabend mitnehmen kann und sich so einige Zettel und Rechnereien erspart.</string>
 
+    <!-- -->
     <plurals name="items">
         <item quantity="one">Gegenstand</item>
         <item quantity="other">Gegenstände</item>
@@ -108,6 +112,7 @@
     <string name="label_delete">Löschen</string>
     <string name="settings">Einstellungen</string>
     <string name="menu_done">Fertig</string>
+    <string name="menu_save">Speichern</string>
     <string name="menu_discard">Verwerfen</string>
     <string name="menu_view_item">Betrachten</string>
     <string name="menu_download_item">Herunterladen</string>

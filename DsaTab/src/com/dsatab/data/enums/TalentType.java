@@ -220,7 +220,7 @@ public enum TalentType {
 
 	private String xmlName;
 
-	private TalentType(String name, TalentGroupType type, Integer be) {
+	TalentType(String name, TalentGroupType type, Integer be) {
 		this.be = be;
 		this.xmlName = name;
 		this.groupType = type;

@@ -7,6 +7,66 @@ import java.util.Map;
 
 public class Purse {
 
+    public static class PurseValue implements Value {
+
+        private PurseUnit unit;
+        private Purse purse;
+
+        public PurseValue(Purse purse,PurseUnit unit) {
+            this.unit = unit;
+            this.purse = purse;
+        }
+
+        public PurseUnit getUnit() {
+            return unit;
+        }
+
+        public Purse getPurse() {
+            return purse;
+        }
+
+        @Override
+        public int getMinimum() {
+            return 0;
+        }
+
+        @Override
+        public int getMaximum() {
+            return 999;
+        }
+
+        @Override
+        public String getName() {
+            return unit.xmlName();
+        }
+
+        @Override
+        public Integer getReferenceValue() {
+            return null;
+        }
+
+        @Override
+        public Integer getValue() {
+            return purse.getCoins(unit);
+        }
+
+        @Override
+        public void reset() {
+            setValue(0);
+        }
+
+        @Override
+        public void setValue(Integer value) {
+            int oldValue = purse.getCoins(unit);
+            int newValue = value == null ? 0 : value;
+
+            if (oldValue!=newValue) {
+                purse.setCoins(unit, newValue);
+                purse.being.fireValueChangedEvent(this);
+            }
+        }
+    }
+
 	public enum Currency {
 		AlAnfa("Al'Anfa", PurseUnit.Doublone, PurseUnit.Oreal, PurseUnit.KleinerOreal, PurseUnit.Dirham), Vallusa(
 				PurseUnit.Witten, PurseUnit.Stüber, PurseUnit.Flindrich), Trahelien(PurseUnit.Suvar, PurseUnit.Hedsch,
@@ -21,21 +81,21 @@ public class Purse {
 
 		private List<PurseUnit> purseUnits;
 
-		private Currency(PurseUnit... purseUnits) {
+		Currency(PurseUnit... purseUnits) {
 			this(null, purseUnits);
 		}
 
-		public String xmlName() {
-			return name;
-		}
-
-		private Currency(String name, PurseUnit... purseUnits) {
+		Currency(String name, PurseUnit... purseUnits) {
 			if (name == null)
 				name = name();
 
 			this.name = name;
 			this.purseUnits = Arrays.asList(purseUnits);
 		}
+
+        public String xmlName() {
+            return name;
+        }
 
 		public List<PurseUnit> units() {
 			return purseUnits;
@@ -57,11 +117,11 @@ public class Purse {
 
 		private String name;
 
-		private PurseUnit() {
+		PurseUnit() {
 			this(null);
 		}
 
-		private PurseUnit(String name) {
+		PurseUnit(String name) {
 			if (name == null)
 				name = name();
 
@@ -91,8 +151,11 @@ public class Purse {
 
 	private Map<PurseUnit, Integer> coins;
 
-	public Purse() {
-		coins = new HashMap<PurseUnit, Integer>(4);
+    private AbstractBeing being;
+
+	public Purse(AbstractBeing being) {
+        this.being = being;
+        coins = new HashMap<PurseUnit, Integer>(4);
 	}
 
 	public void setCoins(PurseUnit w, int value) {

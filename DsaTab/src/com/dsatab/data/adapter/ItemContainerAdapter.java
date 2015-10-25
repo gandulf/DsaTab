@@ -1,6 +1,6 @@
 package com.dsatab.data.adapter;
 
-import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -11,33 +11,22 @@ import com.dsatab.R;
 import com.dsatab.data.Hero;
 import com.dsatab.data.items.ItemContainer;
 import com.dsatab.util.Util;
-import com.gandulf.guilib.data.OpenArrayAdapter;
+import com.dsatab.util.ViewUtils;
+import com.franlopez.flipcheckbox.FlipCheckBox;
+import com.h6ah4i.android.widget.advrecyclerview.selectable.ElevatingSelectableViewHolder;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
-public class ItemContainerAdapter extends OpenArrayAdapter<ItemContainer<?>> {
+public class ItemContainerAdapter extends ListRecyclerAdapter<ItemContainerAdapter.ContainerViewHolder, ItemContainer<?>> {
 
-	/**
-	 * @param context
-	 * @param textViewResourceId
-	 * @param objects
-	 */
-	public ItemContainerAdapter(Context context, int resourceId) {
-		super(context, resourceId, 0);
+
+	public ItemContainerAdapter() {
+		super(new ArrayList<ItemContainer<?>>());
 	}
 
-	/**
-	 * @param context
-	 * @param textViewResourceId
-	 * @param objects
-	 */
-	public ItemContainerAdapter(Context context, int resourceId, Collection<ItemContainer<?>> container) {
-		super(context, resourceId, 0, container);
-	}
-
-	@Override
-	public boolean hasStableIds() {
-		return true;
+	public ItemContainerAdapter(Collection<ItemContainer<?>> container) {
+		super(container);
 	}
 
 	@Override
@@ -50,74 +39,33 @@ public class ItemContainerAdapter extends OpenArrayAdapter<ItemContainer<?>> {
 	}
 
 	@Override
-	public View getDropDownView(int position, View convertView, ViewGroup parent) {
-		ViewHolder holder;
-		if (convertView == null) {
-			convertView = mInflater.inflate(mDropDownResource, parent, false);
-
-			holder = new ViewHolder();
-			holder.text1 = (TextView) convertView.findViewById(android.R.id.text1);
-			holder.text2 = (TextView) convertView.findViewById(android.R.id.text2);
-			holder.text3 = (TextView) convertView.findViewById(R.id.text3);
-			holder.icon1 = (ImageView) convertView.findViewById(android.R.id.icon1);
-			holder.icon2 = (ImageView) convertView.findViewById(android.R.id.icon2);
-
-			convertView.setTag(holder);
-		} else {
-			holder = (ViewHolder) convertView.getTag();
-		}
-
-		prepareView(holder, position);
-
-		return convertView;
+	public ContainerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+		LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+		return new ContainerViewHolder(inflate(inflater,parent,R.layout.item_listitem_view,false));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.widget.ArrayAdapter#getView(int, android.view.View, android.view.ViewGroup)
-	 */
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-
-		ViewHolder holder;
-		if (convertView == null) {
-			convertView = mInflater.inflate(mResource, parent, false);
-
-			holder = new ViewHolder();
-			holder.text1 = (TextView) convertView.findViewById(android.R.id.text1);
-			holder.text2 = (TextView) convertView.findViewById(android.R.id.text2);
-			holder.text3 = (TextView) convertView.findViewById(R.id.text3);
-			holder.icon1 = (ImageView) convertView.findViewById(android.R.id.icon1);
-			holder.icon2 = (ImageView) convertView.findViewById(android.R.id.icon2);
-
-			convertView.setTag(holder);
-		} else {
-			holder = (ViewHolder) convertView.getTag();
-		}
+	public void onBindViewHolder(ContainerViewHolder holder, int position) {
+		super.onBindViewHolder(holder, position);
 
 		prepareView(holder, position);
 
-		Util.applyRowStyle(convertView, position);
-
-		return convertView;
-
+		Util.applyRowStyle(holder.itemView, position);
 	}
 
-	protected void prepareView(ViewHolder holder, int position) {
+	protected void prepareView(ContainerViewHolder holder, int position) {
 		ItemContainer<?> itemContainer = getItem(position);
 
 		holder.text1.setText(itemContainer.getName());
-		holder.icon1.setImageURI(itemContainer.getIconUri());
-		holder.icon1.setBackgroundResource(0);
+		holder.icon1.setFrontDrawable(ViewUtils.circleIcon(holder.icon1.getContext(), itemContainer.getIconUri()));
 
 		holder.text2.setText(itemContainer.size() + " "
-				+ getContext().getResources().getQuantityString(R.plurals.items, itemContainer.size()));
+				+ holder.text3.getContext().getResources().getQuantityString(R.plurals.items, itemContainer.size()));
 
 		if (itemContainer.getId() >= Hero.FIRST_INVENTORY_SCREEN) {
 			if (itemContainer.getCapacity() != 0 || itemContainer.getWeight() != 0.0f) {
 				holder.text3.setVisibility(View.VISIBLE);
-				holder.text3.setText(getContext().getResources().getString(R.string.capacity_value,
+				holder.text3.setText(holder.text3.getContext().getResources().getString(R.string.capacity_value,
 						itemContainer.getWeight(), itemContainer.getCapacity()));
 			} else {
 				holder.text3.setVisibility(View.GONE);
@@ -128,9 +76,20 @@ public class ItemContainerAdapter extends OpenArrayAdapter<ItemContainer<?>> {
 
 	}
 
-	private static class ViewHolder {
+	public static class ContainerViewHolder extends ElevatingSelectableViewHolder{
 		TextView text1, text2, text3;
-		ImageView icon1, icon2;
+        FlipCheckBox icon1;
+		ImageView icon2;
+
+		public ContainerViewHolder(View v) {
+			super(v);
+			text1 = (TextView) v.findViewById(android.R.id.text1);
+			text2 = (TextView) v.findViewById(android.R.id.text2);
+			text3 = (TextView) v.findViewById(R.id.text3);
+			icon1 = (FlipCheckBox) v.findViewById(android.R.id.checkbox);
+			icon2 = (ImageView) v.findViewById(android.R.id.icon2);
+
+		}
 	}
 
 }

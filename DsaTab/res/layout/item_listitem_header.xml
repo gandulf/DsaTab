@@ -1,47 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.dsatab.view.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    android:id="@+id/list_item_container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:minHeight="?attr/listPreferredItemHeightSmall"
     android:paddingLeft="0dp"
-    android:paddingRight="0dp" 
-    android:orientation="horizontal"
-    android:showDividers="middle"
-    android:divider="?android:attr/dividerVertical"
-    android:dividerPadding="?android:attr/dividerPadding"    
-    >
+    android:paddingRight="0dp">
 
     <TextView
         android:id="@android:id/text1"
         style="?android:attr/listSeparatorTextViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|left"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@android:id/button1"
         android:layout_weight="1"
-        android:fontFamily="sans-serif-light"
         android:ellipsize="end"
-        android:focusable="true" />
+        android:focusable="true"
+        android:fontFamily="sans-serif-light"
+        tools:text="Header Text"/>
 
-    
+
     <ImageButton
-        android:id="@android:id/button1"        
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"
-        android:background="?attr/selectableBackground"
+        android:id="@android:id/button1"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="@dimen/icon_button_size"
+        android:layout_height="@dimen/icon_button_size"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:padding="@dimen/default_gap"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        tools:src="@drawable/dsa_wound_patch"
+        tools:visibility="visible"/>
 
-    
-    <ImageButton
-        android:id="@android:id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"
-        android:background="?attr/selectableBackground"
-        android:padding="@dimen/default_gap"
-        android:visibility="gone"/>
-
-
-
-</com.dsatab.view.CheckableLinearLayout>
+</RelativeLayout>

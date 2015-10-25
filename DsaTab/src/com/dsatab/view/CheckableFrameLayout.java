@@ -7,11 +7,16 @@ import android.widget.FrameLayout;
 
 import com.gandulf.guilib.listener.CheckableListenable;
 import com.gandulf.guilib.listener.OnCheckedChangeListener;
+import com.h6ah4i.android.widget.advrecyclerview.selectable.CheckableState;
 
-public class CheckableFrameLayout extends FrameLayout implements CheckableListenable {
+public class CheckableFrameLayout extends FrameLayout implements CheckableListenable, CheckableState {
+
 	boolean mChecked = false;
+    boolean mCheckable = false;
 
 	private static final int[] CHECKED_STATE_SET = { android.R.attr.state_checked };
+
+    private static final int[] CHECKABLE_STATE_SET = { android.R.attr.state_checkable };
 
 	private float xFraction;
 
@@ -30,6 +35,17 @@ public class CheckableFrameLayout extends FrameLayout implements CheckableListen
 	public CheckableFrameLayout(Context context) {
 		super(context);
 	}
+
+    public boolean isCheckable() {
+        return mCheckable;
+    }
+
+    public void setCheckable(boolean checkable) {
+        if (mCheckable != checkable) {
+            mCheckable = checkable;
+            refreshDrawableState();
+        }
+    }
 
 	@Override
 	public boolean isChecked() {
@@ -55,8 +71,11 @@ public class CheckableFrameLayout extends FrameLayout implements CheckableListen
 
 	@Override
 	protected int[] onCreateDrawableState(int extraSpace) {
-		final int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
-		if (isChecked()) {
+		final int[] drawableState = super.onCreateDrawableState(extraSpace + 2);
+		if (isCheckable()) {
+            mergeDrawableStates(drawableState, CHECKABLE_STATE_SET);
+        }
+        if (isChecked()) {
 			mergeDrawableStates(drawableState, CHECKED_STATE_SET);
 		}
 		return drawableState;

@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -277,8 +276,6 @@ public class CharacterFragment extends BaseProfileFragment {
 		TextView rasse = ((TextView) findViewById(R.id.gen_rasse));
 		TextView ausbildung = ((TextView) findViewById(R.id.gen_ausbildung));
 
-
-
 		if (baseInfo == null || TextUtils.isEmpty(baseInfo.getAussehen())) {
 			aussehen.setVisibility(View.GONE);
 		} else {
@@ -324,10 +321,6 @@ public class CharacterFragment extends BaseProfileFragment {
 			ausbildung.setText(null);
 			((TextView) findViewById(R.id.gen_alter)).setText(null);
 			((TextView) findViewById(R.id.gen_haar_augen)).setText(null);
-		}
-
-		if (animate) {
-			descriptions.startLayoutAnimation();
 		}
 	}
 }

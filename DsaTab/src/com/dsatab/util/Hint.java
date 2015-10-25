@@ -25,6 +25,8 @@ public class Hint {
 
 	private static long hintShown = System.currentTimeMillis();
 
+    private static final boolean HINTS_ENABLED = false;
+
 	public static final String PREF_PREFIX_HINT_STORAGE = "dsatab_hint_";
 	public static final String VIEW_ID_PREFIX = "@id/";
 
@@ -163,25 +165,26 @@ public class Hint {
 	 */
 	public boolean show(Activity activity) {
 		if (this.viewId != null) {
-			int viewIdInt = activity.getResources().getIdentifier(this.viewId, "id",
-					DsaTabApplication.getInstance().getPackageName());
-			if (viewIdInt != 0) {
-				View target = activity.findViewById(viewIdInt);
-				// check if view is onscreen
-				if (target!=null && target.getVisibility() == View.VISIBLE) {
-					new MaterialShowcaseView.Builder(activity)
-						.setTarget(target)
-						.setDismissText("GOT IT")
-						.setContentText(title+"\n"+description)
-						.setDelay(300) // optional but starting animations immediately in onCreate can make them choppy
-						.singleUse(id) // provide a unique ID used to ensure it is only shown once
-						.show();
+            if (HINTS_ENABLED) {
+                int viewIdInt = activity.getResources().getIdentifier(this.viewId, "id",
+                        DsaTabApplication.getInstance().getPackageName());
+
+                if (viewIdInt != 0) {
+                    View target = activity.findViewById(viewIdInt);
+                    // check if view is onscreen
+                    if (target != null && target.getVisibility() == View.VISIBLE) {
+                        new MaterialShowcaseView.Builder(activity)
+                                .setTarget(target)
+                                .setDismissText("GOT IT")
+                                .setContentText(title + "\n" + description)
+                                .setDelay(300) // optional but starting animations immediately in onCreate can make them choppy
+                                .singleUse(id) // provide a unique ID used to ensure it is only shown once
+                                .show();
 
 
-
-
-				}
-			}
+                    }
+                }
+            }
 		}
 		return false;
 	}

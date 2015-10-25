@@ -1,18 +1,29 @@
 package com.dsatab.view;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
 import com.gandulf.guilib.listener.CheckableListenable;
 import com.gandulf.guilib.listener.OnCheckedChangeListener;
+import com.h6ah4i.android.widget.advrecyclerview.selectable.CheckableState;
 
-public class CheckableRelativeLayout extends RelativeLayout implements CheckableListenable {
-	boolean mChecked = false;
+public class CheckableRelativeLayout extends RelativeLayout implements CheckableListenable,CheckableState {
+
+    private boolean mChecked = false;
+    private boolean mCheckable = false;
 
 	private static final int[] CHECKED_STATE_SET = { android.R.attr.state_checked };
 
+    private static final int[] CHECKABLE_STATE_SET = { android.R.attr.state_checkable };
+
 	private OnCheckedChangeListener mOnCheckedChangeListener;
+
+    public CheckableRelativeLayout(Context context) {
+        super(context);
+    }
 
 	public CheckableRelativeLayout(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -22,9 +33,21 @@ public class CheckableRelativeLayout extends RelativeLayout implements Checkable
 		super(context, attrs, defStyle);
 	}
 
-	public CheckableRelativeLayout(Context context) {
-		super(context);
-	}
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public CheckableRelativeLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+    }
+
+    public boolean isCheckable() {
+        return mCheckable;
+    }
+
+    public void setCheckable(boolean checkable) {
+        if (mCheckable != checkable) {
+            mCheckable = checkable;
+            refreshDrawableState();
+        }
+    }
 
 	@Override
 	public boolean isChecked() {
@@ -50,7 +73,10 @@ public class CheckableRelativeLayout extends RelativeLayout implements Checkable
 
 	@Override
 	protected int[] onCreateDrawableState(int extraSpace) {
-		final int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
+		final int[] drawableState = super.onCreateDrawableState(extraSpace + 2);
+        if (isCheckable()) {
+            mergeDrawableStates(drawableState, CHECKABLE_STATE_SET);
+        }
 		if (isChecked()) {
 			mergeDrawableStates(drawableState, CHECKED_STATE_SET);
 		}

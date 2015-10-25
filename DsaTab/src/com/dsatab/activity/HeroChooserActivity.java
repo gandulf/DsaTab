@@ -15,9 +15,6 @@ public class HeroChooserActivity extends BaseActivity implements OnHeroSelectedL
 
 	private HeroChooserFragment fragment;
 
-	public HeroChooserActivity() {
-	}
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setTheme(DsaTabApplication.getInstance().getCustomTheme());
@@ -72,6 +69,6 @@ public class HeroChooserActivity extends BaseActivity implements OnHeroSelectedL
 	public void onHeroSelected(HeroFileInfo heroFileInfo) {
 		getIntent().putExtra(HeroChooserFragment.INTENT_NAME_HERO_FILE_INFO, heroFileInfo);
 		setResult(RESULT_OK, getIntent());
-		finish();
+		supportFinishAfterTransition();
 	}
 }

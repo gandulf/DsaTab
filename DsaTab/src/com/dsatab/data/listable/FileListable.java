@@ -25,7 +25,7 @@ public class FileListable implements Listable {
 
 	public int getIcon() {
 		if (file.getName().endsWith(FileListable.PDF_SUFFIX)) {
-			return R.drawable.dsa_notes;
+			return R.drawable.vd_tied_scroll;
 		} else {
 			return 0;
 		}

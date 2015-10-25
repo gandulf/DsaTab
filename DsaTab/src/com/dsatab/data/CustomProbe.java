@@ -35,7 +35,7 @@ public class CustomProbe extends BaseProbe implements JSONable, Listable {
 	public CustomProbe(AbstractBeing being) {
 		super(being);
 		this.id = UUID.randomUUID();
-		this.iconUri = Util.getUriForResourceId(R.drawable.dsa_dice);
+		this.iconUri = Util.getUriForResourceId(R.drawable.vd_dice_six_faces_two);
 	}
 
 	public CustomProbe(AbstractBeing being, String name, ProbeType probeType, ModificatorType modificatorType,

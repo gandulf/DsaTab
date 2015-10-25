@@ -2,7 +2,7 @@ package com.dsatab.cloud;
 
 import android.app.Activity;
 import android.os.AsyncTask;
-import android.widget.Toast;
+import android.support.design.widget.Snackbar;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
@@ -11,6 +11,7 @@ import com.dsatab.data.Hero;
 import com.dsatab.data.HeroFileInfo.FileType;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
+import com.dsatab.util.ViewUtils;
 import com.dsatab.xml.HeldenXmlParser;
 import com.dsatab.xml.Xml;
 
@@ -22,93 +23,90 @@ import java.io.OutputStream;
 
 public class HeroSaveTask extends AsyncTask<Void, Void, Boolean> {
 
-	private Exception exception;
+    private Exception exception;
 
-	private Activity context;
-	private Hero hero;
+    private Activity context;
+    private Hero hero;
 
-	public HeroSaveTask(Activity context, Hero hero) {
-		this.context = context;
-		this.hero = hero;
-	}
+    public HeroSaveTask(Activity context, Hero hero) {
+        this.context = context;
+        this.hero = hero;
+    }
 
-	@Override
-	protected Boolean doInBackground(Void... paramVarArgs) {
+    @Override
+    protected Boolean doInBackground(Void... paramVarArgs) {
 
-		try {
-			HeroExchange exchange = DsaTabApplication.getInstance().getExchange();
+        try {
+            HeroExchange exchange = DsaTabApplication.getInstance().getExchange();
 
-			InputStream fis = exchange.getInputStream(hero.getFileInfo(), FileType.Hero);
-			if (fis == null) {
-				Debug.warning("Unable to read hero from input stream: " + hero.getFileInfo());
-				return false;
-			}
+            InputStream fis = exchange.getInputStream(hero.getFileInfo(), FileType.Hero);
+            if (fis == null) {
+                Debug.warning("Unable to read hero from input stream: " + hero.getFileInfo());
+                return false;
+            }
 
-			Document dom = null;
-			try {
-				dom = HeldenXmlParser.readDocument(fis);
-			} finally {
-				Util.close(fis);
-			}
+            Document dom = null;
+            try {
+                dom = HeldenXmlParser.readDocument(fis);
+            } finally {
+                Util.close(fis);
+            }
 
-			Element heroElement = dom.getRootElement().getChild(Xml.KEY_HELD);
-			HeldenXmlParser.onPreHeroSaved(hero, heroElement);
+            Element heroElement = dom.getRootElement().getChild(Xml.KEY_HELD);
+            HeldenXmlParser.onPreHeroSaved(hero, heroElement);
 
-			OutputStream out = exchange.getOutputStream(hero.getFileInfo(), FileType.Hero);
-			if (out == null) {
-				Debug.warning("Unable to write hero to output stream: " + hero.getFileInfo());
-				return false;
-			}
+            OutputStream out = exchange.getOutputStream(hero.getFileInfo(), FileType.Hero);
+            if (out == null) {
+                Debug.warning("Unable to write hero to output stream: " + hero.getFileInfo());
+                return false;
+            }
 
-			try {
-				HeldenXmlParser.writeHero(hero, dom, out);
-				hero.onPostHeroSaved();
-			} finally {
-				Util.close(out);
-			}
+            try {
+                HeldenXmlParser.writeHero(hero, dom, out);
+                hero.onPostHeroSaved();
+            } finally {
+                Util.close(out);
+            }
 
-			OutputStream outConfig = exchange.getOutputStream(hero.getFileInfo(), FileType.Config);
-			if (outConfig == null) {
-				Debug.warning("Unable to write config file for hero: " + hero.getFileInfo());
-				return false;
-			}
+            OutputStream outConfig = exchange.getOutputStream(hero.getFileInfo(), FileType.Config);
+            if (outConfig == null) {
+                Debug.warning("Unable to write config file for hero: " + hero.getFileInfo());
+                return false;
+            }
 
-			try {
-				outConfig.write(hero.getHeroConfiguration().toJSONObject().toString().getBytes());
-			} finally {
-				Util.close(outConfig);
-			}
+            try {
+                outConfig.write(hero.getHeroConfiguration().toJSONObject().toString().getBytes());
+            } finally {
+                Util.close(outConfig);
+            }
 
-			exchange.upload(hero.getFileInfo());
+            exchange.upload(hero.getFileInfo());
 
-			return true;
-		} catch (Exception e) {
-			Debug.error(e);
-			exception = e;
-			return false;
-		}
-	}
+            return true;
+        } catch (Exception e) {
+            Debug.error(e);
+            exception = e;
+            return false;
+        }
+    }
 
-	@Override
-	protected void onPostExecute(Boolean result) {
+    @Override
+    protected void onPostExecute(Boolean result) {
 
-		if (result != null && result) {
-			if (!DsaTabApplication.getPreferences().getBoolean(DsaTabPreferenceActivity.KEY_AUTO_SAVE, true)) {
-				if (context != null && context.getWindow() != null)
-					Toast.makeText(context, context.getString(R.string.hero_saved, hero.getName()), Toast.LENGTH_SHORT)
-							.show();
-			}
-		} else {
-			if (context != null && context.getWindow() != null)
-				Toast.makeText(context, R.string.message_save_hero_failed, Toast.LENGTH_LONG).show();
+        if (result != null && result) {
+            if (!DsaTabApplication.getPreferences().getBoolean(DsaTabPreferenceActivity.KEY_AUTO_SAVE, true)) {
+                ViewUtils.snackbar(context, R.string.hero_saved, Snackbar.LENGTH_SHORT, hero.getName());
+            }
+        } else {
 
-		}
+            ViewUtils.snackbar(context, R.string.message_save_hero_failed, Snackbar.LENGTH_LONG);
+        }
 
-		super.onPostExecute(result);
-	}
+        super.onPostExecute(result);
+    }
 
-	public Exception getException() {
-		return exception;
-	}
+    public Exception getException() {
+        return exception;
+    }
 
 }

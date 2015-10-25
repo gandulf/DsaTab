@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.dsatab.view.CheckableFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="?attr/listPreferredItemHeight"
-    android:background="?attr/listItemBackground">
+<com.dsatab.view.CheckableRelativeLayout android:id="@+id/list_item_container"
+             xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="fill_parent"
+             android:layout_height="?attr/listPreferredItemHeight"
+             android:background="?attr/listItemBackground">
 
     <LinearLayout
         android:id="@+id/container"
@@ -13,21 +16,25 @@
             android:id="@+id/drag"
             android:layout_width="?attr/listPreferredItemPaddingLeft"
             android:layout_height="match_parent"
-            android:background="#20000000"
-            android:minWidth="16dp" />
+            android:background="@color/drag"
+            android:minWidth="16dp"/>
 
         <ImageView
             android:id="@android:id/icon1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_button_size"
+            android:layout_height="@dimen/icon_button_size"
+            android:layout_marginLeft="@dimen/default_gap"
             android:layout_gravity="center_vertical"
-            android:scaleType="centerInside"/>
+            android:scaleType="centerInside"
+            android:background="@drawable/circle"
+            android:tint="@color/circle_tint"
+            tools:src="@drawable/vd_biceps"/>
 
         <FrameLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:padding="8dp">
+            android:padding="@dimen/default_gap">
 
             <TextView
                 android:id="@android:id/text1"
@@ -35,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@android:id/text2"
@@ -43,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
             <Spinner
                 android:id="@+id/spinner"
@@ -51,10 +58,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textStyle="normal" />
+                android:textStyle="normal"/>
 
         </FrameLayout>
-
 
         <ImageView
             android:layout_width="1dp"
@@ -65,15 +71,15 @@
             android:scaleType="fitXY"
             android:src="?android:attr/dividerVertical"/>
 
-        <ImageButton
+
+        <net.steamcrafted.materialiconlib.MaterialIconView
             android:id="@android:id/icon2"
+            style="@style/Widget.IconButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:background="?attr/selectableBackground"
-            android:padding="@dimen/default_gap"
-            android:scaleType="centerInside"
-            android:src="?attr/imgDelete"
-            android:visibility="visible"/>
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:materialIcon="delete"/>
+
     </LinearLayout>
-</com.dsatab.view.CheckableFrameLayout>
+</com.dsatab.view.CheckableRelativeLayout>

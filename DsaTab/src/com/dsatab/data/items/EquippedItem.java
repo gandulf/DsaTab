@@ -1,9 +1,8 @@
 package com.dsatab.data.items;
 
-import android.content.Context;
+import android.app.Activity;
 import android.net.Uri;
 import android.support.design.widget.Snackbar;
-import android.widget.Toast;
 
 import com.dsatab.data.CombatDistanceTalent;
 import com.dsatab.data.CombatMeleeTalent;
@@ -16,6 +15,7 @@ import com.dsatab.data.enums.TalentType;
 import com.dsatab.data.enums.UsageType;
 import com.dsatab.data.listable.Listable;
 import com.dsatab.util.Util;
+import com.dsatab.util.ViewUtils;
 import com.gandulf.guilib.util.Debug;
 
 import java.io.Serializable;
@@ -99,19 +99,14 @@ public class EquippedItem implements ItemCard, Listable, Serializable {
 		return itemSpecification;
 	}
 
-	protected void refreshTalent(Context context) {
+	protected void refreshTalent(Activity context) {
 		if (itemSpecification instanceof Weapon) {
 			Weapon weapon = (Weapon) itemSpecification;
 			// if the current talent does not fit search for a new one
 			if (!(talent instanceof CombatMeleeTalent) || !weapon.getTalentTypes().contains(getTalent().getType())) {
 				CombatTalent combatTalent = Util.getBest(hero.getAvailableCombatTalents(weapon));
 				if (combatTalent == null) {
-					if (context != null) {
-						Toast.makeText(context, "Es wurde kein verwendbares Talent gefunden.", Toast.LENGTH_LONG)
-								.show();
-					} else {
-						Debug.warning("Es wurde kein verwendbares Talent gefunden: " + toString());
-					}
+                    ViewUtils.snackbar(context, "Es wurde kein verwendbares Talent gefunden.", Snackbar.LENGTH_LONG);
 					return;
 				} else {
 					setTalent(combatTalent);
@@ -227,7 +222,7 @@ public class EquippedItem implements ItemCard, Listable, Serializable {
 		setItemSpecification(null, itemSpecification);
 	}
 
-	public void setItemSpecification(Context context, ItemSpecification itemSpecification) {
+	public void setItemSpecification(Activity context, ItemSpecification itemSpecification) {
 		this.itemSpecification = itemSpecification;
 		refreshTalent(context);
 		hero.fireItemChangedEvent(this);

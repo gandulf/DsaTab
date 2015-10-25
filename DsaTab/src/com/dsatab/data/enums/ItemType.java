@@ -30,7 +30,7 @@ public enum ItemType {
 
 	private final boolean equipable;
 
-	private ItemType(char c, boolean equipable) {
+	ItemType(char c, boolean equipable) {
 		this.character = c;
 		this.equipable = equipable;
 	}

@@ -19,6 +19,7 @@ import com.dsatab.exception.DsaTabRuntimeException;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.opencsv.CSVReader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,8 +27,6 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
-
-import au.com.bytecode.opencsv.CSVReader;
 
 public class XmlParser {
 

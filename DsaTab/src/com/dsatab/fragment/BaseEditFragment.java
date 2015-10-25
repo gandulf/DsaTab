@@ -1,49 +1,58 @@
 package com.dsatab.fragment;
 
 import android.os.Bundle;
+import android.view.View;
 
-import com.dsatab.activity.FragmentEditActivity;
+import com.dsatab.activity.BaseEditActivity;
 import com.dsatab.data.Hero;
 
-public abstract class BaseEditFragment extends BaseFragment {
+public abstract class BaseEditFragment extends BaseFragment implements EditFragment {
 
-	public BaseEditFragment() {
-	}
 
 	@Override
 	public void onHeroLoaded(Hero hero) {
 
 	}
 
-	protected String getAction() {
+    public void inflateSaveAndDiscard() {
 
-		if (getActivity() != null && getActivity().getIntent() != null) {
-			return getActivity().getIntent().getAction();
-		} else {
-			return null;
-		}
+        if (getEditActivity()!=null) {
+            getEditActivity().inflateSaveAndDiscard();
+        } else {
+            getBaseActivity().inflateSaveAndDiscard(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    accept();
+                }
+            }, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cancel();
+                }
+            });
+        }
+    }
 
-	}
+    public void inflateDone() {
 
-	protected Bundle getExtra() {
-
-		Bundle extra = null;
-		if (getActivity() != null && getActivity().getIntent() != null) {
-			extra = getActivity().getIntent().getExtras();
-		} else {
-			extra = getArguments();
-		}
-
-		return extra;
-	}
-
+        if (getEditActivity()!=null) {
+            getEditActivity().inflateDone();
+        } else {
+            getBaseActivity().inflateDone(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cancel();
+                }
+            });
+        }
+    }
 	public abstract Bundle accept();
 
 	public abstract void cancel();
 
-	public FragmentEditActivity getEditActivity() {
-		if (getActivity() instanceof FragmentEditActivity) {
-			return (FragmentEditActivity) getActivity();
+	public BaseEditActivity getEditActivity() {
+		if (getActivity() instanceof BaseEditActivity) {
+			return (BaseEditActivity) getActivity();
 		} else {
 			return null;
 		}

@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.dsatab.view.CheckableFrameLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/list_item_container"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/portrait_height_small">
+    android:elevation="4dp"
+    android:layout_margin="@dimen/default_gap"
+    android:layout_height="wrap_content"
+    android:background="?attr/listItemBackground">
 
     <ImageView
         android:id="@android:id/icon"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:focusable="false"
         android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
         android:src="@drawable/profile_picture" >
     </ImageView>
 
@@ -19,8 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:focusable="false"
-        
         android:src="@drawable/banner_scrim" >
     </ImageView>
     <LinearLayout
@@ -34,11 +37,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/ValueGreenAlpha"
-            android:duplicateParentState="false"
-            android:focusable="false"
             android:padding="@dimen/default_gap"
             android:singleLine="true"
-            android:textColor="@android:color/primary_text_dark" >
+            android:textColor="@android:color/white"
+            tools:text="Phone">
         </TextView>
 
         <TextView
@@ -47,11 +49,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/ValueRedAlpha"
-            android:duplicateParentState="false"
-            android:focusable="false"
             android:padding="@dimen/default_gap"
             android:singleLine="true"
-            android:textColor="@android:color/primary_text_dark" >
+            android:textColor="@android:color/white"
+            tools:text="Tag">
         </TextView>
     </LinearLayout>
 
@@ -60,9 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:duplicateParentState="false"
         android:ellipsize="marquee"
-        android:focusable="false"
         android:gravity="center_vertical|left"
         android:layout_gravity="bottom"
         android:marqueeRepeatLimit="marquee_forever"
@@ -70,7 +69,8 @@
         android:fontFamily="sans-serif-condensed"
         android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@android:color/primary_text_dark" >
+        android:textColor="@android:color/white"
+        tools:text="Hero Name">
     </TextView>
 
     <TextView
@@ -80,11 +80,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top|right"
         android:background="@color/ValueRedAlpha"
-        android:duplicateParentState="false"
-        android:focusable="false"
         android:padding="@dimen/default_gap"
         android:singleLine="true"
-        android:textColor="@android:color/primary_text_dark" >
+        android:textColor="@android:color/white"
+        tools:text="5.4.4">
     </TextView>
 
 </com.dsatab.view.CheckableFrameLayout>

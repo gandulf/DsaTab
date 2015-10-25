@@ -37,49 +37,19 @@
         <item name="colorAccent">@color/accent_material_light</item>
         -->
         <item name="android:dividerPadding">8dp</item>
-        <item name="android:buttonStyle">@style/Widget.Button</item>
-        <item name="android:imageButtonStyle">@style/Widget.Button</item>
-        <item name="android:buttonStyleSmall">@style/Widget.Button.Small</item>
+        <item name="buttonStyle">?buttonStyleSmall</item>
+        <item name="buttonStyleLeft">?buttonStyleSmall</item>
+        <item name="buttonStyleRight">?buttonStyleSmall</item>
         <item name="android:soundEffectsEnabled">false</item>
+
+        <item name="android:colorButtonNormal">@color/primary_light</item>
+        <item name="colorButtonNormal">@color/primary_light</item>
         
         <item name="imgChainTop">@drawable/chain_top_light</item>
         <item name="imgChainBottom">@drawable/chain_bottom_light</item>
         <item name="imgCharacter">@drawable/character_light</item>
         <item name="imgEmpty">@drawable/empty_light</item>
-        <item name="imgExpanderOpen">@drawable/expander_open_holo_light</item>
-        <item name="imgExpanderClose">@drawable/expander_close_holo_light</item>
-        <item name="imgFile">@drawable/ic_action_file_light</item>
-        <item name="imgBarFile">@drawable/ic_action_file_dark</item>
-        <item name="imgUp">@drawable/ic_action_up_light</item>
-        <item name="imgBarUp">@drawable/ic_action_up_dark</item>
-        <item name="imgLove">@drawable/ic_action_love_light</item>
-        <item name="imgBarLove">@drawable/ic_action_love_dark</item>
-        <item name="imgAccept">@drawable/ic_action_done_light</item>
-        <item name="imgBarAccept">@drawable/ic_action_done_dark</item>
-        <item name="imgCancel">@drawable/ic_action_cancel_light</item>
-        <item name="imgBarCancel">@drawable/ic_action_cancel_dark</item>
-        <item name="imgDelete">@drawable/ic_action_delete_light</item>
-        <item name="imgBarDelete">@drawable/ic_action_delete_dark</item>
-        <item name="imgStar">@drawable/ic_action_star_light</item>
-        <item name="imgBarStar">@drawable/ic_action_star_dark</item>
-        <item name="imgStarEmpty">@drawable/ic_action_star_empty_light</item>
-        <item name="imgBarStarEmpty">@drawable/ic_action_star_empty_dark</item>
-        <item name="imgInfo">@drawable/dsa_info_light</item>
-        <item name="imgBarInfo">@drawable/dsa_info_dark</item>
-        <item name="imgCamera">@drawable/ic_action_camera_light</item>
-        <item name="imgBarCamera">@drawable/ic_action_camera_dark</item>
-        <item name="imgUser">@drawable/ic_action_user_light</item>
-        <item name="imgBarUser">@drawable/ic_action_user_dark</item>
-        <item name="imgSplit">@drawable/ic_action_split_light</item>
-        <item name="imgBarSplit">@drawable/ic_action_split_dark</item>
-        <item name="imgEdit">@drawable/ic_action_edit_light</item>
-        <item name="imgBarEdit">@drawable/ic_action_edit_dark</item>
-        <item name="imgView">@drawable/ic_menu_view</item>
-        <item name="imgBarView">@drawable/ic_menu_view</item>
-        <item name="imgSearch">@drawable/ic_search_black_36dp</item>
-        <item name="imgBarSearch">@drawable/ic_search_white_36dp</item>
-        <item name="imgFilter">@drawable/ic_menu_find_holo_light</item>
-        <item name="imgBarFilter">@drawable/ic_menu_find_holo_dark</item>
+
         <item name="imgSet">@drawable/dsa_set</item>
         <item name="imgSet1">@drawable/dsa_set1</item>
         <item name="imgSet2">@drawable/dsa_set2</item>
@@ -88,13 +58,11 @@
         <item name="imgBarSet1">@drawable/dsa_set1</item>
         <item name="imgBarSet2">@drawable/dsa_set2</item>
         <item name="imgBarSet3">@drawable/dsa_set3</item>
-        
-        <item name="cardViewStyle">@style/CardView.Light</item>
-        <item name="buttonStyleLeft">@style/Widget.Button.Left</item>
-        <item name="buttonStyleRight">@style/Widget.Button.Right</item>        
-        <item name="listItemBackground">@drawable/list_background_holo_light</item>
+
+
+
+        <item name="listItemBackground">@drawable/list_background</item>
         <item name="slidingPaneShadowBackground">@drawable/slider_shadow</item>
-        <item name="selectableBackground">@drawable/abc_list_selector_holo_light</item>
  
         <item name="floatingHintEditTextStyle">@style/FloatingHintEditText</item>
         <item name="floatingHintTextViewStyle">@style/FloatingHintTextView</item>
@@ -102,6 +70,7 @@
         <item name="floatingActionButtonStyle">@style/FloatingActionButton</item>
         <item name="floatingActionMenuStyle">@style/FloatingActionMenu</item>
 
+        <item name="flipCheckBoxStyle">@style/FlipCheckBoxStyle.Dsa</item>
     </style>
 
 </resources>

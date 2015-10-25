@@ -6,6 +6,8 @@ import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.Position;
 import com.dsatab.data.enums.TalentType;
 
+import org.apache.commons.lang3.ObjectUtils;
+
 public class CombatDistanceTalent extends BaseCombatTalent implements Value {
 
 	private Integer referenceValue;
@@ -77,7 +79,8 @@ public class CombatDistanceTalent extends BaseCombatTalent implements Value {
 
 	@Override
 	public void setValue(Integer value) {
-		if (this.value != value) {
+
+		if (ObjectUtils.notEqual(this.value, value)) {
 			this.value = value;
 
 			being.fireValueChangedEvent(this);

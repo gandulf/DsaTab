@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:guilib="http://schemas.android.com/apk/com.gandulf.guilib"
+              android:id="@+id/list_item_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
     android:background="?attr/listItemBackground"
     android:minHeight="?attr/listPreferredItemHeight"
     android:paddingRight="?attr/listPreferredItemPaddingRight"
-    android:paddingLeft="?attr/listPreferredItemPaddingLeft"
-    android:weightSum="1.0" >
+    android:paddingLeft="?attr/listPreferredItemPaddingLeft">
 
     <TextView
         android:id="@+id/wheel_label"
@@ -16,19 +16,25 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/icon_button_size"
         android:layout_marginRight="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
         android:gravity="center" />
 
     <Button
         android:id="@+id/wheel_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_toRightOf="@+id/wheel_label"
+        android:layout_centerVertical="true"
         android:layout_marginRight="4dp" />
 
     <com.gandulf.guilib.view.SeekBarEx
         android:id="@+id/wheel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/wheel_value"
+        android:layout_alignParentRight="true"
         android:layout_gravity="center_vertical" />
 
-</LinearLayout>
+</RelativeLayout>

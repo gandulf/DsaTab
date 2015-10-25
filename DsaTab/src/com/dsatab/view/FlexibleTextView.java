@@ -2,10 +2,10 @@ package com.dsatab.view;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
-public class FlexibleTextView extends TextView {
+public class FlexibleTextView extends AppCompatTextView {
 
 	private Rect textBounds;
 

@@ -9,6 +9,7 @@ import com.dsatab.data.Attribute;
 import com.dsatab.data.CustomProbe;
 import com.dsatab.data.JSONable;
 import com.dsatab.data.Markable;
+import com.dsatab.data.Purse;
 import com.dsatab.data.Spell;
 import com.dsatab.data.Talent;
 import com.dsatab.data.Value;
@@ -307,7 +308,7 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
 				"Gegenstände"), Modificator("Modifikatoren"), Document("Dokumente"), Notes("Notizen"), Purse(
 				"Geldbörse"), Wound("Wunden"), Probe("Proben");
 
-		private ListItemType(String title) {
+		ListItemType(String title) {
 			this.title = title;
 		}
 
@@ -432,7 +433,7 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
 			return ListItemType.Modificator;
 		} else if (o instanceof FileListable) {
 			return ListItemType.Document;
-		} else if (o instanceof PurseListable) {
+		} else if (o instanceof PurseListable || o instanceof Purse.PurseValue) {
 			return ListItemType.Purse;
 		} else if (o instanceof WoundAttribute) {
 			return ListItemType.Wound;
@@ -465,7 +466,9 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
 			} else {
 				return null;
 			}
-		} else if (o instanceof CustomProbe) {
+        } else if (o instanceof Purse.PurseValue) {
+            return ((Purse.PurseValue) o).getUnit().currency().name();
+        } else if (o instanceof CustomProbe) {
 			return ((CustomProbe) o).getName();
 		} else {
 			return null;

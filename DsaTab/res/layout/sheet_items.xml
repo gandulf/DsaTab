@@ -1,72 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.dsatab.view.CheckableFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+                                      xmlns:app="http://schemas.android.com/apk/res-auto"
+                                      xmlns:tools="http://schemas.android.com/tools"
+                                      android:layout_width="fill_parent"
+                                      android:layout_height="fill_parent">
 
-    <android.support.v4.widget.SlidingPaneLayout
-        android:id="@+id/sheet_items"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="top"
+        android:background="@color/primary"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/colorAccent"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:tabMode="fixed"/>
 
-        <LinearLayout
-            android:layout_width="240dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0"            
-            android:orientation="vertical" >
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize">
 
-            <TextView
-                style="?android:attr/listSeparatorTextViewStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/containers" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
-            <com.gandulf.guilib.view.DynamicListViewEx
-                android:id="@+id/container_list"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:animateLayoutChanges="true" />
-        </LinearLayout>
-
-        <android.support.v7.widget.CardView            
-            style="?attr/cardViewStyle"
-            android:layout_width="500dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" >
-
-            <com.gandulf.guilib.view.DynamicListViewEx
-                android:id="@android:id/list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone" />
-
-            <GridView
-                android:id="@+id/workspace"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:cacheColorHint="#00000000"
-                android:clipChildren="true"
-                android:columnWidth="@dimen/workspace_cell_width"
-                android:drawSelectorOnTop="true"
-                android:listSelector="?attr/listItemBackground"
-                android:numColumns="auto_fit"
-                android:stretchMode="none" />
-
-            <TextView
-                android:id="@android:id/empty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:drawablePadding="10dp"
-                android:drawableTop="?attr/imgEmpty"
-                android:gravity="center"
-                android:text="@string/message_items_empty"
-                android:visibility="gone" >
-            </TextView>
-        </android.support.v7.widget.CardView>
-    </android.support.v4.widget.SlidingPaneLayout>
+        <TextView
+            android:id="@android:id/empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawablePadding="10dp"
+            android:drawableTop="?attr/imgEmpty"
+            android:gravity="center"
+            android:text="@string/message_items_empty"
+            android:visibility="gone">
+        </TextView>
+    </FrameLayout>
 
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/fab_menu"
@@ -75,23 +47,23 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp" >
+        android:layout_marginRight="16dp">
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_items_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/dsa_items_add"
+            android:src="@drawable/vd_battle_gear"
             app:fab_colorNormal="@color/white"
-            app:fab_colorPressed="@color/white_pressed" />
+            app:fab_colorPressed="@color/white_pressed"/>
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_container_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/dsa_bag_add"
+            android:src="@drawable/vd_swap_bag"
             app:fab_colorNormal="@color/white"
-            app:fab_colorPressed="@color/white_pressed" />
+            app:fab_colorPressed="@color/white_pressed"/>
     </com.github.clans.fab.FloatingActionMenu>
 
 </com.dsatab.view.CheckableFrameLayout>

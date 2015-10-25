@@ -85,7 +85,7 @@ public class MapTileAbsoluteFilesystemProvider extends MapTileFileStorageProvide
 	@Override
 	protected Runnable getTileLoader() {
 		return new TileLoader();
-	};
+	}
 
 	@Override
 	public int getMinimumZoomLevel() {

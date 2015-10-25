@@ -1,42 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.dsatab.view.ItemListItem xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?attr/listItemBackground"
-    android:minHeight="?attr/listPreferredItemHeight"
-    android:paddingRight="?attr/listPreferredItemPaddingRight"
-    android:paddingLeft="?attr/listPreferredItemPaddingLeft">
+<com.dsatab.view.ItemListItem android:id="@+id/list_item_container"
+                              xmlns:android="http://schemas.android.com/apk/res/android"
+                              xmlns:tools="http://schemas.android.com/tools"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:background="?attr/listItemBackground"
+                              android:minHeight="?attr/listPreferredItemHeight"
+                              android:paddingLeft="?attr/listPreferredItemPaddingLeft"
+                              android:paddingRight="?attr/listPreferredItemPaddingRight">
 
     <ImageView
         android:id="@+id/icon_chain_top"
-        android:src="?attr/imgChainTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"        
-        android:layout_marginRight="100dip"               
-        android:visibility="gone" />
-    
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="100dip"
+        android:src="?attr/imgChainTop"
+        android:visibility="gone"/>
+
     <ImageView
         android:id="@+id/icon_chain_bottom"
-        android:src="?attr/imgChainBottom"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"        
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="100dip"
-        android:visibility="gone" />
-    
-    <ImageButton
-        android:id="@android:id/icon1"
+        android:src="?attr/imgChainBottom"
+        android:visibility="gone"
+        />
+
+    <com.franlopez.flipcheckbox.FlipCheckBox
+        android:id="@android:id/checkbox"
         android:layout_width="@dimen/icon_button_size"
         android:layout_height="@dimen/icon_button_size"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="4dip"
-        android:padding="@dimen/default_gap"
-        android:scaleType="centerInside"
-        android:visibility="visible" />
+        android:visibility="visible"
+        tools:src="@drawable/vd_all_for_one"/>
 
     <TextView
         android:id="@android:id/text1"
@@ -44,15 +46,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignWithParentIfMissing="true"
+        android:layout_marginTop="@dimen/default_gap"
         android:layout_toLeftOf="@android:id/icon2"
-        android:layout_toRightOf="@android:id/icon1"
+        android:layout_toRightOf="@android:id/checkbox"
         android:ellipsize="marquee"
-        android:singleLine="true"
+        android:fontFamily="sans-serif-condensed"
         android:marqueeRepeatLimit="marquee_forever"
-        android:scrollHorizontally="true"        
+        android:scrollHorizontally="true"
+        android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:fontFamily="sans-serif-condensed"        
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:text="Main Text"/>
 
     <TextView
         android:id="@android:id/text2"
@@ -62,8 +66,9 @@
         android:layout_alignRight="@android:id/text1"
         android:layout_below="@android:id/text1"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textStyle="normal" />
-    
+        android:textStyle="normal"
+        tools:text="Secondary Text"/>
+
     <TextView
         android:id="@+id/text3"
         android:layout_width="wrap_content"
@@ -71,22 +76,28 @@
         android:layout_alignLeft="@android:id/text1"
         android:layout_alignRight="@android:id/text1"
         android:layout_below="@android:id/text2"
-        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_marginBottom="@dimen/default_gap"
         android:fontFamily="sans-serif-light"
-        android:textSize="12sp"
-        android:textAllCaps="true"
         android:gravity="right"
-        android:textStyle="normal" />
+        android:textAllCaps="true"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        tools:text="Hint Text"/>
 
     <ImageButton
         android:id="@android:id/icon2"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="@dimen/icon_button_size"
         android:layout_height="@dimen/icon_button_size"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="4dip"
-        android:padding="@dimen/default_gap"
+        android:background="@drawable/circle"
+        android:tint="@color/circle_tint"
         android:scaleType="centerInside"
-        android:visibility="gone" />
+        android:visibility="gone"
+        tools:src="@drawable/vd_all_for_one"
+        tools:visibility="visible"/>
 
 </com.dsatab.view.ItemListItem>
