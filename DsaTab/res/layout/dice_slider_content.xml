@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:clickable="true"
@@ -88,7 +89,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/container_shadow_top_dark"
         android:gravity="center_horizontal"
         android:paddingTop="8dp">
 
@@ -123,7 +123,7 @@
             android:layout_margin="@dimen/default_gap"
             android:background="@drawable/circle"
             android:tint="@color/circle_tint"
-            android:src="@drawable/vd_dice_six_faces_two"
+            tools:src="@drawable/vd_dice_six_faces_two"
             />
 
         <ImageButton
@@ -135,7 +135,7 @@
             android:layout_margin="@dimen/default_gap"
             android:background="@drawable/circle"
             android:tint="@color/circle_tint"
-            android:src="@drawable/vd_sticking_plaster"
+            tools:src="@drawable/vd_sticking_plaster"
             />
 
     </LinearLayout>

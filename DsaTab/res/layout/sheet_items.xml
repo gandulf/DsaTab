@@ -53,7 +53,7 @@
             android:id="@+id/fab_items_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/vd_battle_gear"
+            tools:src="@drawable/vd_battle_gear"
             app:fab_colorNormal="@color/white"
             app:fab_colorPressed="@color/white_pressed"/>
 
@@ -61,7 +61,7 @@
             android:id="@+id/fab_container_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/vd_swap_bag"
+            tools:src="@drawable/vd_swap_bag"
             app:fab_colorNormal="@color/white"
             app:fab_colorPressed="@color/white_pressed"/>
     </com.github.clans.fab.FloatingActionMenu>

@@ -351,7 +351,7 @@ public class DsaUtil {
 
 			switch (attribute.getType()) {
 			case Ausweichen:
-				return R.drawable.vd_boots;
+				return R.drawable.vd_foot_trip;
 			default:
 				return R.drawable.vd_anatomy;
 			}

@@ -1,6 +1,6 @@
 package com.dsatab.fragment;
 
-import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
@@ -28,16 +28,16 @@ import java.util.List;
 
 public class NotesEditFragment extends BaseEditFragment implements OnItemSelectedListener {
 
-	public static void insert(Activity activity, int requestCode) {
-		Intent intent = new Intent(activity, BaseEditActivity.class);
+	public static void insert(Fragment fragment, int requestCode) {
+		Intent intent = new Intent(fragment.getActivity(), BaseEditActivity.class);
 		intent.setAction(Intent.ACTION_INSERT);
 		intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, NotesEditFragment.class);
-		activity.startActivityForResult(intent, requestCode);
+		fragment.startActivityForResult(intent, requestCode);
 	}
 
-	public static void edit(Connection event, Activity activity, int requestCode) {
+	public static void edit(Connection event, Fragment fragment, int requestCode) {
 
-		Intent intent = new Intent(activity, BaseEditActivity.class);
+		Intent intent = new Intent(fragment.getActivity(), BaseEditActivity.class);
 		intent.setAction(Intent.ACTION_EDIT);
 		intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, NotesEditFragment.class);
 		if (event != null) {
@@ -47,11 +47,11 @@ public class NotesEditFragment extends BaseEditFragment implements OnItemSelecte
 			intent.putExtra(INTENT_NAME_EVENT_SOZIALSTATUS, event.getSozialStatus());
 			intent.putExtra(INTENT_NAME_EVENT_CATEGORY, event.getCategory());
 		}
-		activity.startActivityForResult(intent, requestCode);
+		fragment.startActivityForResult(intent, requestCode);
 	}
 
-	public static void edit(Event event, String audioPath, Activity activity, int requestCode) {
-		Intent intent = new Intent(activity, BaseEditActivity.class);
+	public static void edit(Event event, String audioPath, Fragment fragment, int requestCode) {
+		Intent intent = new Intent(fragment.getActivity(), BaseEditActivity.class);
 		intent.setAction(Intent.ACTION_EDIT);
 		intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, NotesEditFragment.class);
 		if (event != null) {
@@ -63,7 +63,7 @@ public class NotesEditFragment extends BaseEditFragment implements OnItemSelecte
 		if (audioPath != null) {
 			intent.putExtra(INTENT_NAME_AUDIO_PATH, audioPath);
 		}
-		activity.startActivityForResult(intent, requestCode);
+		fragment.startActivityForResult(intent, requestCode);
 	}
 
 	public static final String INTENT_NOTES_ITEM = "notesItem";

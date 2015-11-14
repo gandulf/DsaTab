@@ -73,8 +73,7 @@ public class TabListFragment extends BaseRecyclerFragment implements View.OnClic
     protected void initRecycler() {
         recyclerView = (RecyclerView) findViewById(android.R.id.list);
 
-        // touch guard manager  (this class is required to suppress scrolling while swipe-dismiss animation is running)
-        initRecyclerView(recyclerView,mAdapter,true,true,true);
+        initRecyclerView(recyclerView,mAdapter,new org.solovyev.android.views.llm.LinearLayoutManager(getActivity()),true,true,true);
     }
 
     public TabListListener getTabListListener() {
@@ -100,6 +99,7 @@ public class TabListFragment extends BaseRecyclerFragment implements View.OnClic
         if (tabListListener != null) {
             tabListListener.onTabInfoClicked(mAdapter.getItem(position));
         }
+        mRecyclerViewSelectionManager.setSelected(position,true);
     }
 
     @Override
@@ -117,7 +117,7 @@ public class TabListFragment extends BaseRecyclerFragment implements View.OnClic
         recyclerView.scrollToPosition(index);
 
         if (tabListListener != null) {
-            tabListListener.onTabInfoClicked(mAdapter.getItem(index));
+            tabListListener.onTabInfoSelected(mAdapter.getItem(index));
         }
     }
 

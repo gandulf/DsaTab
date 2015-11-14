@@ -135,11 +135,16 @@ public class TabEditActivity extends BaseActivity implements TabListFragment.Tab
 
     @Override
     public void onTabInfoClicked(TabInfo tabInfo) {
+        int index =0;
+        if (listFragment!=null) {
+            index = listFragment.getTabInfos().indexOf(tabInfo);
+        }
+
         if (editFragment !=null) {
             editFragment.setTabInfo(tabInfo, 0);
             invalidateOptionsMenu();
         } else {
-            edit(this, tabInfo, listFragment.getTabInfos().indexOf(tabInfo), ACTION_EDIT);
+            edit(this, tabInfo, index, ACTION_EDIT);
         }
     }
 

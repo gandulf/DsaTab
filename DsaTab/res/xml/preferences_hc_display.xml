@@ -26,10 +26,4 @@
             android:summary="Definiere die Ausrichtung deiner Oberfläche:"
             android:title="Bildschirmausrichtung" />
 
-    <CheckBoxPreference
-        android:defaultValue="false"
-        android:key="usePalette"
-        android:summary="DsaTab farblich an das Profilbild anpassen"
-        android:title="Dynamische Farbanpassung" />
-                
 </PreferenceScreen>

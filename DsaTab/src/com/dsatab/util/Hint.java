@@ -3,7 +3,6 @@ package com.dsatab.util;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.XmlResourceParser;
-import android.view.View;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
@@ -18,8 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
-import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 public class Hint {
 
@@ -166,6 +163,7 @@ public class Hint {
 	public boolean show(Activity activity) {
 		if (this.viewId != null) {
             if (HINTS_ENABLED) {
+                /*
                 int viewIdInt = activity.getResources().getIdentifier(this.viewId, "id",
                         DsaTabApplication.getInstance().getPackageName());
 
@@ -184,6 +182,7 @@ public class Hint {
 
                     }
                 }
+                */
             }
 		}
 		return false;

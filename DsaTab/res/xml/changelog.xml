@@ -1,6 +1,7 @@
 <changelog>
 
-<release version="4.4.0-beta" versioncode="95">
+<release version="4.4.0-beta2" versioncode="99">
+    <change>Intro Dialog</change>
     <change>Material Style durchgängig integriert</change>
     <change>Material Icons</change>
     <fix>Bugfixing</fix>

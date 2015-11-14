@@ -26,7 +26,7 @@
             android:layout_height="@dimen/icon_button_size"
             android:layout_marginLeft="@dimen/default_gap"
             android:scaleType="centerInside"
-            android:background="@drawable/circle"
+            android:background="@drawable/fcb_circle_front"
             android:tint="@color/circle_tint"
             android:layout_gravity="center_vertical"
             tools:src="@drawable/vd_anatomy" />

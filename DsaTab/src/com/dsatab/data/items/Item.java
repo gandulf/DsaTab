@@ -309,7 +309,7 @@ public class Item implements Comparable<Item>, Cloneable, ItemCard {
 			if (imageFile != null) {
 				result = Uri.fromFile(imageFile);
 			} else {
-				result = Uri.parse("http://dl.dropboxusercontent.com/u/15750588/dsatab/cards_small/" + imagePath);
+				result = Uri.parse("https://dl.dropboxusercontent.com/u/15750588/dsatab/cards_small/" + imagePath);
 			}
 		}
 		return result;

@@ -282,15 +282,38 @@ public class HeroConfiguration {
 		return tabInfos;
 	}
 
+    public List<TabInfo> getActiveTabs() {
+        List<TabInfo> activeTabs = new ArrayList<>();
+
+        ListItem spells = new ListItem(ListItemType.Spell);
+        ListItem ae = new ListItem(AttributeType.Astralenergie_Aktuell);
+
+        ListItem arts = new ListItem(ListItemType.Art);
+        ListItem ke = new ListItem(AttributeType.Karmaenergie_Aktuell);
+        ListItem gaben = new ListItem(TalentGroupType.Gaben);
+
+        if (hero !=null) {
+            for (TabInfo tabInfo : tabInfos) {
+                // skip animal tab if animals is empty
+                if (tabInfo.hasOnlyActivityClazz(AnimalFragment.class) && hero.getAnimals().isEmpty()) {
+                    continue;
+                } else if (tabInfo.hasOnlyActivityClazz(ListableFragment.class)) {
+                    if (hero.getSpells().isEmpty() && tabInfo.hasOnlyListItem(spells, ae)) {
+                        continue;
+                    } else if (hero.getArts().isEmpty() && hero.getTalentGroup(TalentGroupType.Gaben).getTalents().isEmpty() && tabInfo.hasOnlyListItem(arts, ke, gaben)) {
+                        continue;
+                    }
+                }
+                activeTabs.add(tabInfo);
+            }
+        } else {
+            activeTabs.addAll(tabInfos);
+        }
+        return activeTabs;
+    }
+
 	public void setTabs(List<TabInfo> tabs) {
 		tabInfos = tabs;
-	}
-
-	public TabInfo getTab(int index) {
-        if (getTabs() != null && index>=0 && index < getTabs().size())
-		    return getTabs().get(index);
-        else
-            return null;
 	}
 
 	@SuppressLint("InlinedApi")
@@ -497,7 +520,7 @@ public class HeroConfiguration {
 			listSettings.addListItem(new ListItem(ListItemType.Spell));
 			listSettings = tabInfo.getListSettings(1);
 			listSettings.addListItem(new ListItem(AttributeType.Karmaenergie_Aktuell));
-			listSettings.addListItem(new ListItem(ListItemType.Talent, TalentGroupType.Gaben.name()));
+			listSettings.addListItem(new ListItem(TalentGroupType.Gaben));
 			listSettings.addListItem(new ListItem(ListItemType.Header, ListItemType.Art));
 			listSettings.addListItem(new ListItem(ListItemType.Art));
 			tabInfos.add(tabInfo);
@@ -567,7 +590,7 @@ public class HeroConfiguration {
             tabInfo.setBackgroundId(R.drawable.backdrop_spells);
 			listSettings = tabInfo.getListSettings(0);
 			listSettings.addListItem(new ListItem(AttributeType.Karmaenergie_Aktuell));
-			listSettings.addListItem(new ListItem(ListItemType.Talent, TalentGroupType.Gaben.name()));
+			listSettings.addListItem(new ListItem(TalentGroupType.Gaben));
 			listSettings.addListItem(new ListItem(ListItemType.Header, ListItemType.Art));
 			listSettings.addListItem(new ListItem(ListItemType.Art));
 			tabInfos.add(tabInfo);

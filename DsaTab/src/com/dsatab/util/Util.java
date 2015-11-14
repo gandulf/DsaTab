@@ -145,13 +145,13 @@ public class Util {
 		fragment.startActivityForResult(Intent.createChooser(photoPickerIntent, "Bild auswählen"), action);
 	}
 
-	public static File handleImagePick(Activity activity, String prefKey, Intent data) {
+	public static File handleImagePick(Context context, String prefKey, Intent data) {
 
 		Uri selectedImage = data.getData();
 		if (selectedImage != null) {
 			String[] filePathColumn = { MediaColumns.DATA, ImageColumns.BUCKET_ID };
 
-			Cursor cursor = activity.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+			Cursor cursor = context.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
 
 			if (cursor.moveToFirst()) {
 

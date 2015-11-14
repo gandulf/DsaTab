@@ -1,6 +1,6 @@
 package com.dsatab.fragment;
 
-import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -38,8 +38,8 @@ public class SpellInfoFragment extends BaseEditFragment {
 
 	private boolean editMode = false;
 
-	public static void edit(Activity activity, Spell spell, int requestCode) {
-		Intent intent = new Intent(activity, BaseEditActivity.class);
+	public static void edit(Fragment fragment, Spell spell, int requestCode) {
+		Intent intent = new Intent(fragment.getActivity(), BaseEditActivity.class);
 		intent.setAction(Intent.ACTION_EDIT);
 		intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, SpellInfoFragment.class);
 		intent.putExtra(DATA_INTENT_SPELL_INFO, spell.getInfo());
@@ -52,11 +52,11 @@ public class SpellInfoFragment extends BaseEditFragment {
 		intent.putExtra(DATA_INTENT_SPELL_VALUE_MIN, spell.getMinimum());
 		intent.putExtra(DATA_INTENT_SPELL_VALUE_MAX, spell.getMaximum());
 
-		activity.startActivityForResult(intent, requestCode);
+		fragment.startActivityForResult(intent, requestCode);
 	}
 
-	public static void view(Activity activity, Spell spell, int requestCode) {
-		Intent intent = new Intent(activity, BaseEditActivity.class);
+	public static void view(Fragment fragment, Spell spell, int requestCode) {
+		Intent intent = new Intent(fragment.getActivity(), BaseEditActivity.class);
 		intent.setAction(Intent.ACTION_VIEW);
 		intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, SpellInfoFragment.class);
 		intent.putExtra(DATA_INTENT_SPELL_INFO, spell.getInfo());
@@ -69,7 +69,7 @@ public class SpellInfoFragment extends BaseEditFragment {
 		intent.putExtra(DATA_INTENT_SPELL_VALUE_MIN, spell.getMinimum());
 		intent.putExtra(DATA_INTENT_SPELL_VALUE_MAX, spell.getMaximum());
 
-		activity.startActivityForResult(intent, requestCode);
+		fragment.startActivityForResult(intent, requestCode);
 	}
 
 	protected void setSpellValue(Integer value, int min, int max) {

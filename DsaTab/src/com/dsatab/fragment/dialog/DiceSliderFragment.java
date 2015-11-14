@@ -56,6 +56,7 @@ import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Hint;
 import com.dsatab.util.StyleableSpannableStringBuilder;
 import com.dsatab.util.Util;
+import com.wnafee.vector.compat.ResourcesCompat;
 
 import org.apache.commons.lang3.ObjectUtils;
 
@@ -175,12 +176,14 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 		executeButton = (ImageView) root.findViewById(R.id.dice_execute);
 		executeButton.setOnClickListener(this);
 		executeButton.setVisibility(View.GONE);
+        executeButton.setImageDrawable(ResourcesCompat.getDrawable(getActivity(), R.drawable.vd_dice_six_faces_two));
 
 		takeHitButton = (ImageView) root.findViewById(R.id.dice_take_hit);
 		takeHitButton.setOnClickListener(this);
 		takeHitButton.setVisibility(View.GONE);
+        takeHitButton.setImageDrawable(ResourcesCompat.getDrawable(getActivity(), R.drawable.vd_sticking_plaster));
 
-		linDiceResult = (LinearLayout) root.findViewById(R.id.dice_dice_result);
+        linDiceResult = (LinearLayout) root.findViewById(R.id.dice_dice_result);
 		linDiceResult.setOnClickListener(this);
 
 		resetPanelInformation();
@@ -782,7 +785,7 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 		}
 
 		if (!isAutoRoll()) {
-			executeButton.setImageResource(DsaUtil.getResourceId(probeData.probe));
+			executeButton.setImageDrawable(ResourcesCompat.getDrawable(getActivity(),DsaUtil.getResourceId(probeData.probe)));
 		}
 
 		modifierAdapter.clear();

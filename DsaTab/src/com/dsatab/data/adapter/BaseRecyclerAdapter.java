@@ -153,19 +153,17 @@ public abstract class BaseRecyclerAdapter<VH extends RecyclerView.ViewHolder, T>
 
         View check = holder.itemView.findViewById(android.R.id.checkbox);
         if (check instanceof Checkable) {
-            if (check instanceof CheckableListenable){
-                ((CheckableListenable) check).setOnCheckedChangeListener(null);
-            }
 
             if (holder instanceof SelectableItemViewHolder) {
-                ((Checkable) check).setChecked(((SelectableItemViewHolder) holder).isActivated());
+                if (check instanceof CheckableListenable) {
+                    ((CheckableListenable) check).setCheckedImmediate(((SelectableItemViewHolder) holder).isActivated());
+                } else {
+                    ((Checkable) check).setChecked(((SelectableItemViewHolder) holder).isActivated());
+                }
             }
 
             if (check instanceof CheckBox) {
                 check.setOnClickListener(mCheckboxOnClickListener);
-            }
-            if (check instanceof CheckableListenable){
-                ((CheckableListenable) check).setOnCheckedChangeListener(mCheckedChangeListener);
             }
 
         }

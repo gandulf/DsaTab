@@ -32,14 +32,18 @@
             android:id="@+id/fragment_tab_list"
             class="com.dsatab.fragment.TabListFragment"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             tools:layout="@layout/tab_list_content"/>
 
         <android.support.v7.widget.CardView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/card_margin"
+            android:layout_marginTop="@dimen/card_margin"
+            android:layout_marginRight="@dimen/card_margin"
+            android:layout_marginBottom="@dimen/card_margin"
+            android:layout_marginLeft="0dp"
             android:layout_weight="2">
 
             <fragment

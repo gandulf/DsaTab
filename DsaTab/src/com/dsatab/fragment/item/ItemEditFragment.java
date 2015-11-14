@@ -34,6 +34,8 @@ import com.dsatab.util.Util;
 import com.dsatab.view.CardView;
 import com.dsatab.view.ItemListItem;
 import com.gandulf.guilib.util.DefaultTextWatcher;
+import com.gandulf.guilib.util.ResUtil;
+import com.wnafee.vector.compat.ResourcesCompat;
 
 import java.util.UUID;
 
@@ -222,9 +224,9 @@ public class ItemEditFragment extends BaseEditFragment implements OnClickListene
 
             if (iconView != null) {
                 if (cloneItem.getIconUri() != null) {
-                    iconView.setImageURI(cloneItem.getIconUri());
+                    iconView.setImageDrawable(ResUtil.getDrawableByUri(iconView.getContext(),cloneItem.getIconUri()));
                 } else if (itemSpecification != null) {
-                    iconView.setImageResource(DsaUtil.getResourceId(itemSpecification));
+                    iconView.setImageDrawable(ResourcesCompat.getDrawable(iconView.getContext(),DsaUtil.getResourceId(itemSpecification)));
                 }
             }
             if (nameView != null) {
@@ -305,9 +307,9 @@ public class ItemEditFragment extends BaseEditFragment implements OnClickListene
                         itemView.setItem(cloneItem, itemSpecification);
 
                     if (cloneItem.getIconUri() != null)
-                        iconView.setImageURI(cloneItem.getIconUri());
+                        iconView.setImageDrawable(ResUtil.getDrawableByUri(iconView.getContext(), cloneItem.getIconUri()));
                     else
-                        iconView.setImageResource(DsaUtil.getResourceId(itemSpecification));
+                        iconView.setImageDrawable(ResourcesCompat.getDrawable(iconView.getContext(), DsaUtil.getResourceId(itemSpecification)));
                 }
             }
         }, 0);

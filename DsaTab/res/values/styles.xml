@@ -17,16 +17,6 @@
         <item name="colorAccent">@color/accent</item>
     </style>
 
-    <style name="Widget.Button" parent="@android:style/Widget.Button">
-        <item name="android:background">@drawable/btn_touch_light</item>
-        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
-        <item name="android:minWidth">48dp</item>
-        <item name="android:minHeight">48dp</item>
-        <item name="android:gravity">center</item>
-        <item name="android:ellipsize">end</item>
-        <item name="android:layout_gravity">center_vertical</item>
-    </style>
-
     <style name="FloatingActionButton">
         <item name="fab_colorNormal">@color/accent</item>
         <item name="fab_colorPressed">@color/accent_dark</item>
@@ -57,40 +47,6 @@
     <style name="Widget.IconButton" parent="Widget.IconView">
         <item name="android:focusable">true</item>
         <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
-    </style>
-
-    <style name="Widget.Button.Dark">
-        <item name="android:background">@drawable/btn_touch_dark</item>
-    </style>
-
-    <style name="Widget.Button.Left">
-        <item name="android:background">@drawable/btn_touch_light_left</item>
-        <item name="android:layout_marginRight">0dp</item>
-    </style>
-
-    <style name="Widget.Button.Left.Dark">
-        <item name="android:background">@drawable/btn_touch_dark_left</item>
-        <item name="android:layout_marginRight">0dp</item>
-    </style>
-
-    <style name="Widget.Button.Right">
-        <item name="android:background">@drawable/btn_touch_light_right</item>
-        <item name="android:layout_marginLeft">0dp</item>
-    </style>
-
-    <style name="Widget.Button.Right.Dark">
-        <item name="android:background">@drawable/btn_touch_dark_right</item>
-        <item name="android:layout_marginLeft">0dp</item>
-    </style>
-
-    <style name="Widget.Button.Small">
-        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
-        <item name="android:minWidth">30dp</item>
-        <item name="android:minHeight">20dp</item>
-    </style>
-
-    <style name="Widget.Button.Small.Dark">
-        <item name="android:background">@drawable/btn_touch_small_dark</item>
     </style>
 
     <style name="TextValue" parent="@android:style/Widget.TextView">

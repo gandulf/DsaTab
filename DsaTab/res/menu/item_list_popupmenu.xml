@@ -3,7 +3,6 @@
     <group android:id="@+id/group_item_list" >
         <item
             android:id="@+id/option_move"
-            android:icon="?attr/imgBarSet"
             android:showAsAction="withText|ifRoom"
             app:showAsAction="withText|ifRoom"
             android:title="@string/move">
@@ -12,7 +11,6 @@
         </item>
         <item
             android:id="@+id/option_equipped"
-            android:icon="?attr/imgBarSet"
             android:showAsAction="withText|ifRoom"
             app:showAsAction="withText|ifRoom"
             android:title="@string/equip">

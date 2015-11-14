@@ -43,6 +43,14 @@ public class CheckableImageButton extends AppCompatImageButton implements Checka
 		}
 	}
 
+    @Override
+    public void setCheckedImmediate(boolean checked) {
+        if (mChecked != checked) {
+            mChecked = checked;
+            refreshDrawableState();
+        }
+    }
+
 	@Override
 	public void toggle() {
 		setChecked(!mChecked);

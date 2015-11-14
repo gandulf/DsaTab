@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -29,6 +31,7 @@ import com.dsatab.view.ItemListItem;
 import com.dsatab.view.listener.HeroChangedListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class AnimalFragment extends BaseProfileFragment {
@@ -41,18 +44,6 @@ public class AnimalFragment extends BaseProfileFragment {
 	private View charAttributesList;
 
 	private int animalIndex = 0;
-
-	@Override
-	public void hideActionBarItems() {
-		super.hideActionBarItems();
-		removeAnimalNavigation();
-	}
-
-	@Override
-	public void showActionBarItems() {
-		super.showActionBarItems();
-		initAnimalNavigation();
-	}
 
 	private void initAnimalNavigation() {
 		ActionBar actionBar = getActionBarActivity().getSupportActionBar();
@@ -86,16 +77,29 @@ public class AnimalFragment extends BaseProfileFragment {
 	}
 
 	private void removeAnimalNavigation() {
-		ActionBar actionBar = getActionBarActivity().getSupportActionBar();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-		actionBar.setListNavigationCallbacks(null, null);
+        if (getActionBarActivity()!=null) {
+            ActionBar actionBar = getActionBarActivity().getSupportActionBar();
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+
+            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getToolbarThemedContext(),
+                    android.R.layout.simple_spinner_item, Collections.EMPTY_LIST);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            actionBar.setListNavigationCallbacks(adapter, null);
+        }
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
-	 */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    /*
+         * (non-Javadoc)
+         *
+         * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+         */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View root = configureContainerView(inflater.inflate(R.layout.sheet_animal, container, false));
@@ -164,12 +168,16 @@ public class AnimalFragment extends BaseProfileFragment {
 		} else {
 			onAnimalLoaded(null);
 		}
-
-		initAnimalNavigation();
-
 	}
 
-	@Override
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        initAnimalNavigation();
+    }
+
+    @Override
 	public void onPause() {
 		super.onPause();
 
@@ -180,6 +188,14 @@ public class AnimalFragment extends BaseProfileFragment {
 		removeAnimalNavigation();
 	}
 
+
+    @Override
+    public void setMenuVisibility(boolean menuVisible) {
+        super.setMenuVisibility(menuVisible);
+        if (!menuVisible) {
+            removeAnimalNavigation();
+        }
+    }
 	@Override
 	public void onModifierAdded(Modificator value) {
 		updateValues();

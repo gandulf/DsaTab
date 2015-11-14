@@ -38,6 +38,7 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="4dip"
         android:visibility="visible"
+        android:tint="@color/circle_tint"
         tools:src="@drawable/vd_all_for_one"/>
 
     <TextView

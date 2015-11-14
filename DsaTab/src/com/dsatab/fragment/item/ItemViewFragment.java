@@ -1,5 +1,7 @@
 package com.dsatab.fragment.item;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,6 +26,8 @@ import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Util;
 import com.dsatab.view.CardView;
 import com.dsatab.view.ItemListItem;
+import com.gandulf.guilib.util.ResUtil;
+import com.wnafee.vector.compat.ResourcesCompat;
 
 import java.util.UUID;
 
@@ -89,6 +93,26 @@ public class ItemViewFragment extends BaseEditFragment {
         }
 
         setItem(item, itemSpecification);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ItemsActivity.ACTION_EDIT && resultCode == Activity.RESULT_OK) {
+
+            if (getItem()!=null) {
+                Item newItem;
+                if (getActivity().getIntent().hasExtra(ItemEditFragment.INTENT_EXTRA_HERO_KEY)) {
+                    newItem = DsaTabApplication.getInstance().getHero().getItem(getItem().getId());
+                } else {
+                    newItem = DataManager.getItemById(getItem().getId());
+                }
+
+                if (newItem != null) {
+                    setItem(newItem, null);
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -181,9 +205,9 @@ public class ItemViewFragment extends BaseEditFragment {
 
             if (iconView != null) {
                 if (item.getIconUri() != null) {
-                    iconView.setImageURI(item.getIconUri());
+                    iconView.setImageDrawable(ResUtil.getDrawableByUri(iconView.getContext(),item.getIconUri()));
                 } else if (itemSpecification != null) {
-                    iconView.setImageResource(DsaUtil.getResourceId(itemSpecification));
+                    iconView.setImageDrawable(ResourcesCompat.getDrawable(iconView.getContext(),DsaUtil.getResourceId(itemSpecification)));
                 }
             }
 
@@ -240,9 +264,9 @@ public class ItemViewFragment extends BaseEditFragment {
                     UUID equippedItemId = (UUID) extra.getSerializable(ItemsActivity.INTENT_EXTRA_EQUIPPED_ITEM_ID);
 
                     String heroKey = extra.getString(ItemsActivity.INTENT_EXTRA_HERO_KEY);
-                    ItemsActivity.edit(getActivity(), heroKey, itemId, equippedItemId, ItemsActivity.ACTION_EDIT);
+                    ItemsActivity.edit(this, heroKey, itemId, equippedItemId, ItemsActivity.ACTION_EDIT);
                 } else {
-                    ItemsActivity.edit(getActivity(), (String) null, this.item, ItemsActivity.ACTION_EDIT);
+                    ItemsActivity.edit(this, (String) null, this.item, ItemsActivity.ACTION_EDIT);
                 }
                 return true;
             }

@@ -39,6 +39,14 @@ public class CheckableLinearLayout extends LinearLayout implements CheckableList
 		}
 	}
 
+    @Override
+    public void setCheckedImmediate(boolean checked) {
+        if (mChecked != checked) {
+            mChecked = checked;
+            refreshDrawableState();
+        }
+    }
+
 	@Override
 	public void toggle() {
 		setChecked(!mChecked);

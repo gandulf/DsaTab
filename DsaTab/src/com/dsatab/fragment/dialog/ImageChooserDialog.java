@@ -24,6 +24,7 @@ import com.dsatab.data.AbstractBeing;
 import com.dsatab.data.adapter.BaseRecyclerAdapter;
 import com.dsatab.data.adapter.ListRecyclerAdapter;
 import com.dsatab.util.Util;
+import com.dsatab.view.AutofitRecyclerView;
 import com.gandulf.guilib.util.FileFileFilter;
 import com.gandulf.guilib.util.ResUtil;
 import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimator;
@@ -39,10 +40,10 @@ public class ImageChooserDialog extends DialogFragment implements ListRecyclerAd
 
 	private OnImageSelectedListener imageSelectedListener;
 
-	private RecyclerView list;
+	private AutofitRecyclerView list;
 	private PortraitAdapter adapter;
 
-	private ScaleType scaleType = ScaleType.CENTER_CROP;
+	private ScaleType scaleType = ScaleType.FIT_CENTER;
 	private int columnWidth;
 	private int columnHeight;
 
@@ -83,10 +84,10 @@ public class ImageChooserDialog extends DialogFragment implements ListRecyclerAd
 		} else {
 			dialog.imageSelectedListener = imageSelectedListener;
 
+            dialog.setGridColumnWidth(DsaTabApplication.getInstance().getResources()
+                    .getDimensionPixelSize(R.dimen.portrait_width));
 			dialog.setGridColumnHeight(DsaTabApplication.getInstance().getResources()
-					.getDimensionPixelSize(R.dimen.portrait_height_small));
-			dialog.setGridColumnWidth(DsaTabApplication.getInstance().getResources()
-					.getDimensionPixelSize(R.dimen.portrait_width_small));
+                    .getDimensionPixelSize(R.dimen.portrait_height));
 
 			dialog.setArguments(args);
 			dialog.setTargetFragment(parent, requestCode);
@@ -150,18 +151,16 @@ public class ImageChooserDialog extends DialogFragment implements ListRecyclerAd
 		View popupcontent = inflater.inflate(R.layout.popup_portrait_chooser,null,false);
         builder.setView(popupcontent);
 
-		list = (RecyclerView) popupcontent.findViewById(R.id.popup_portrait_chooser_list);
+		list = (AutofitRecyclerView) popupcontent.findViewById(R.id.popup_portrait_chooser_list);
 		adapter = new PortraitAdapter(imageUris);
 		adapter.setMinHeight(columnHeight);
+        adapter.setMinWidth(columnWidth);
+        adapter.setScaleType(scaleType);
 
-		adapter.setScaleType(scaleType);
+        list.setColumnWidth(columnWidth);
 		list.setAdapter(adapter);
 
-        int width = Util.getWidth(getActivity());
-        int padding = getResources().getDimensionPixelSize(R.dimen.default_gap);
-        int columnCount = width / (columnWidth +padding+padding);
-
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),Math.max(1,columnCount));
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),3);
         list.setLayoutManager(layoutManager);
         list.setItemAnimator(new SwipeDismissItemAnimator());
 
@@ -291,8 +290,7 @@ public class ImageChooserDialog extends DialogFragment implements ListRecyclerAd
         public PortraitViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             ImageView iv = new ImageView(parent.getContext());
             iv.setScaleType(scaleType);
-            iv.setMinimumHeight(minHeight);
-            iv.setMinimumWidth(minWidth);
+            iv.setAdjustViewBounds(true);
 
             int padding = parent.getResources().getDimensionPixelSize(R.dimen.default_gap);
             iv.setPadding(padding,padding,padding,padding);

@@ -11,6 +11,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -41,6 +43,7 @@ import java.io.FilenameFilter;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -74,7 +77,6 @@ public class MapFragment extends BaseFragment {
 
 	private String activeMap = null;
 
-	private File mapDir;
 	private List<String> mapFiles;
 	private List<String> mapNames;
 	private boolean osmMapLoaded = false;
@@ -92,22 +94,8 @@ public class MapFragment extends BaseFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getMapFiles();
-	}
 
-	@Override
-	public void hideActionBarItems() {
-		super.hideActionBarItems();
-
-		removeMapNavigation();
-
-
-	}
-
-	@Override
-	public void showActionBarItems() {
-		super.showActionBarItems();
-
-		initMapNavigation();
+        setHasOptionsMenu(true);
 	}
 
 	private void initMapNavigation() {
@@ -141,6 +129,13 @@ public class MapFragment extends BaseFragment {
 		}
 	}
 
+    protected boolean isOsmMapLoaded() {
+        if (mapFiles == null) {
+            initMaps();
+        }
+        return osmMapLoaded;
+    }
+
 	public List<String> getMapFiles() {
 		if (mapFiles == null) {
 			initMaps();
@@ -159,7 +154,7 @@ public class MapFragment extends BaseFragment {
 		mapFiles = new ArrayList<String>();
 		mapNames = new ArrayList<String>();
 
-		mapDir = DsaTabApplication.getDirectory(DsaTabApplication.DIR_MAPS);
+		File mapDir = DsaTabApplication.getDirectory(DsaTabApplication.DIR_MAPS);
 		File osmMapDir = DsaTabApplication.getDirectory(DsaTabApplication.DIR_OSM_MAPS);
 
 		if (!mapDir.exists())
@@ -167,15 +162,15 @@ public class MapFragment extends BaseFragment {
 
 		File[] files = mapDir.listFiles(new FilenameFilter() {
 
-			@Override
-			public boolean accept(File dir, String filename) {
+            @Override
+            public boolean accept(File dir, String filename) {
 
-				filename = filename.toLowerCase(Locale.GERMAN);
+                filename = filename.toLowerCase(Locale.GERMAN);
 
-				return filename.endsWith(".jpg") || filename.endsWith(".gif") || filename.endsWith(".png")
-						|| filename.endsWith(".jpeg") || filename.endsWith(".bmp");
-			}
-		});
+                return filename.endsWith(".jpg") || filename.endsWith(".gif") || filename.endsWith(".png")
+                        || filename.endsWith(".jpeg") || filename.endsWith(".bmp");
+            }
+        });
 		if (files != null) {
 			Arrays.sort(files, new Util.FileNameComparator());
 			for (File file : files) {
@@ -197,16 +192,37 @@ public class MapFragment extends BaseFragment {
 	}
 
 	private void removeMapNavigation() {
-		ActionBar actionBar = getActionBarActivity().getSupportActionBar();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-		actionBar.setListNavigationCallbacks(null, null);
+        if (getActionBarActivity()!=null) {
+            ActionBar actionBar = getActionBarActivity().getSupportActionBar();
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+
+            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getToolbarThemedContext(),
+                    android.R.layout.simple_spinner_item, Collections.EMPTY_LIST);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            actionBar.setListNavigationCallbacks(adapter, null);
+        }
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
-	 */
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        initMapNavigation();
+    }
+
+    @Override
+    public void setMenuVisibility(boolean menuVisible) {
+        super.setMenuVisibility(menuVisible);
+        if (!menuVisible) {
+            removeMapNavigation();
+        }
+    }
+
+    /*
+             * (non-Javadoc)
+             *
+             * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+             */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		ViewGroup root = (ViewGroup) inflater.inflate(R.layout.sheet_map, container, false);
@@ -273,7 +289,8 @@ public class MapFragment extends BaseFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 
-		if (mapFiles.isEmpty()) {
+		if (getMapFiles().isEmpty()) {
+            File mapDir = DsaTabApplication.getDirectory(DsaTabApplication.DIR_MAPS);
 			String path = mapDir.getAbsolutePath();
 			emptyView.setVisibility(View.VISIBLE);
 			imageMapView.setVisibility(View.GONE);
@@ -288,7 +305,7 @@ public class MapFragment extends BaseFragment {
 
 		mAttacher = new PhotoViewAttacher(imageMapView);
 
-		if (!osmMapLoaded && getPreferences().getBoolean(PREF_KEY_OSM_ASK, true)) {
+		if (!isOsmMapLoaded() && getPreferences().getBoolean(PREF_KEY_OSM_ASK, true)) {
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle("Neue Aventurien Karte");
@@ -296,13 +313,13 @@ public class MapFragment extends BaseFragment {
 			builder.setCancelable(true);
 			builder.setPositiveButton("Herunterladen", new DialogInterface.OnClickListener() {
 
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					dialog.dismiss();
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
                     DownloaderGinger downloader = DownloaderGinger.getInstance(DsaTabApplication.getDirectory(), getActivity());
-					downloader.download(DsaTabPreferenceActivity.PATH_OSM_MAP_PACK);
-				}
-			});
+                    downloader.download(DsaTabPreferenceActivity.PATH_OSM_MAP_PACK);
+                }
+            });
 			builder.setNegativeButton(R.string.label_cancel, new DialogInterface.OnClickListener() {
 
 				@Override
@@ -494,19 +511,6 @@ public class MapFragment extends BaseFragment {
 		removeMapNavigation();
 
 		super.onPause();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Fragment#onResume()
-	 */
-	@Override
-	public void onResume() {
-		super.onResume();
-
-		initMapNavigation();
-
 	}
 
 }

@@ -313,7 +313,7 @@ public abstract class ListRecyclerAdapter<VH extends RecyclerView.ViewHolder, T>
             mObjects.set(positionOne, mObjects.get(positionTwo));
             mObjects.set(positionTwo, temp);
 
-            notifyItemMoved(positionOne,positionTwo);
+            notifyItemMoved(positionOne, positionTwo);
             notifyItemMoved(positionTwo,positionOne);
         }
 
@@ -349,6 +349,16 @@ public abstract class ListRecyclerAdapter<VH extends RecyclerView.ViewHolder, T>
      */
     public int indexOf(T item) {
         return mObjects.indexOf(item);
+    }
+
+    public int lastIndexOf(Class<? extends T> listableClazz) {
+        for (int i = mObjects.size() -1; i>=0;i--) {
+            T listable = mObjects.get(i);
+            if (listable!=null && listableClazz.isAssignableFrom(listable.getClass())) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     /**

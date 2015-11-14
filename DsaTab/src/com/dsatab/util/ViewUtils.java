@@ -1,6 +1,7 @@
 package com.dsatab.util;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -82,6 +83,19 @@ public class ViewUtils {
         }
     }
 
+    public static void snackbar(Fragment fragment, int textId, int duration, Object... arguments) {
+        snackbar(fragment, fragment.getResources().getString(textId, arguments), duration);
+    }
+
+    public static void snackbar(Fragment actitivity, CharSequence text, int duration) {
+        if (actitivity != null) {
+            View contentView = actitivity.getView().findViewById(android.R.id.content);
+            Snackbar.make(contentView !=null ? contentView: actitivity.getView(), text, duration).show();
+        } else {
+            com.gandulf.guilib.util.Debug.warning(text.toString());
+        }
+    }
+
     /**
      *
      * @param menuItem
@@ -106,6 +120,9 @@ public class ViewUtils {
     }
 
     public static void menuIcons(Context context, Menu menu) {
+
+        ViewUtils.menuIcon(context, menu, R.id.option_move, MaterialDrawableBuilder.IconValue.SWAP_HORIZONTAL);
+        ViewUtils.menuIcon(context, menu, R.id.option_equipped, MaterialDrawableBuilder.IconValue.HANGER);
 
         ViewUtils.menuIcon(context, menu, R.id.option_add, MaterialDrawableBuilder.IconValue.PLUS_CIRCLE);
 

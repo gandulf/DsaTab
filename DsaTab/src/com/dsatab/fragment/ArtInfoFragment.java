@@ -1,6 +1,6 @@
 package com.dsatab.fragment;
 
-import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -35,8 +35,8 @@ public class ArtInfoFragment extends BaseEditFragment {
 
 	private boolean editMode = false;
 
-	public static void edit(Activity activity, Art art, int requestCode) {
-		Intent intent = new Intent(activity, BaseEditActivity.class);
+	public static void edit(Fragment fragment, Art art, int requestCode) {
+		Intent intent = new Intent(fragment.getActivity(), BaseEditActivity.class);
 		intent.setAction(Intent.ACTION_EDIT);
 		intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, ArtInfoFragment.class);
 		intent.putExtra(DATA_INTENT_ART_INFO, art.getInfo());
@@ -48,11 +48,11 @@ public class ArtInfoFragment extends BaseEditFragment {
 		intent.putExtra(DATA_INTENT_ART_TITLE, art.getTitle());
 		intent.putExtra(DATA_INTENT_ART_GROUP_TYPE, art.getGroupType());
 
-		activity.startActivityForResult(intent, requestCode);
+		fragment.startActivityForResult(intent, requestCode);
 	}
 
-	public static void view(Activity activity, Art art, int requestCode) {
-		Intent intent = new Intent(activity, BaseEditActivity.class);
+	public static void view(Fragment fragment, Art art, int requestCode) {
+		Intent intent = new Intent(fragment.getActivity(), BaseEditActivity.class);
 		intent.setAction(Intent.ACTION_VIEW);
 		intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, ArtInfoFragment.class);
 		intent.putExtra(DATA_INTENT_ART_INFO, art.getInfo());
@@ -64,7 +64,7 @@ public class ArtInfoFragment extends BaseEditFragment {
 		intent.putExtra(DATA_INTENT_ART_TITLE, art.getTitle());
 		intent.putExtra(DATA_INTENT_ART_GROUP_TYPE, art.getGroupType());
 
-		activity.startActivityForResult(intent, requestCode);
+		fragment.startActivityForResult(intent, requestCode);
 	}
 
 	protected void setArtValue(Integer value, Integer min, Integer max) {

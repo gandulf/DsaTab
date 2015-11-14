@@ -1,6 +1,7 @@
 package com.dsatab.activity;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.view.MenuItem;
@@ -61,13 +62,13 @@ public abstract class BaseItemActivity extends BaseActivity {
 		}
 	}
 
-	public static void pick(Activity context, Collection<ItemType> itemTypes, int requestCode) {
-		Intent intent = new Intent(context, ItemsActivity.class);
+	public static void pick(Fragment fragment, Collection<ItemType> itemTypes, int requestCode) {
+		Intent intent = new Intent(fragment.getActivity(), ItemsActivity.class);
 		intent.setAction(Intent.ACTION_PICK);
 		if (itemTypes != null) {
 			intent.putExtra(INTENT_EXTRA_ITEM_TYPES, new ArrayList<ItemType>(itemTypes));
 		}
-		context.startActivityForResult(intent, requestCode);
+		fragment.startActivityForResult(intent, requestCode);
 	}
 
 	public static void insert(Activity context, String heroKey, int requestCode) {
@@ -83,12 +84,12 @@ public abstract class BaseItemActivity extends BaseActivity {
 
 	}
 
-	public static void edit(Activity context, String heroKey, ItemCard itemCard, int requestCode) {
+	public static void edit(Fragment fragment, String heroKey, ItemCard itemCard, int requestCode) {
 		if (itemCard != null) {
 			Item item = itemCard.getItem();
-            Intent intent = new Intent(context, BaseEditActivity.class);
+            Intent intent = new Intent(fragment.getActivity(), BaseEditActivity.class);
             intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, ItemEditFragment.class);
-            intent.putExtra(BaseEditActivity.EDIT_TITLE,context.getString(R.string.label_edit));
+            intent.putExtra(BaseEditActivity.EDIT_TITLE,fragment.getString(R.string.label_edit));
 			intent.setAction(Intent.ACTION_EDIT);
 			if (itemCard instanceof EquippedItem) {
 				intent.putExtra(ItemEditFragment.INTENT_EXTRA_EQUIPPED_ITEM_ID, ((EquippedItem) itemCard).getId());
@@ -98,22 +99,23 @@ public abstract class BaseItemActivity extends BaseActivity {
 			if (heroKey != null) {
 				intent.putExtra(ItemEditFragment.INTENT_EXTRA_HERO_KEY, heroKey);
 			}
-			context.startActivityForResult(intent, requestCode);
+			fragment.startActivityForResult(intent, requestCode);
 		}
 	}
 
-	public static void edit(Activity context, Hero hero, ItemCard itemCard, int requestCode) {
+	public static void edit(Fragment context, Hero hero, ItemCard itemCard, int requestCode) {
 		if (hero != null)
 			edit(context, hero.getFileInfo().getKey(), itemCard, requestCode);
 		else
 			edit(context, (String) null, itemCard, requestCode);
 	}
 
-	public static void edit(Activity context, String heroKey, UUID itemID, UUID equippedItemId, int requestCode) {
-        Intent intent = new Intent(context, BaseEditActivity.class);
+	public static void edit(Fragment fragment, String heroKey, UUID itemID, UUID equippedItemId, int requestCode) {
+        Intent intent = new Intent(fragment.getActivity(), BaseEditActivity.class);
         intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, ItemEditFragment.class);
-        intent.putExtra(BaseEditActivity.EDIT_TITLE,context.getString(R.string.label_edit));
+        intent.putExtra(BaseEditActivity.EDIT_TITLE,fragment.getString(R.string.label_edit));
 		intent.setAction(Intent.ACTION_EDIT);
+        intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 		if (equippedItemId != null) {
 			intent.putExtra(ItemEditFragment.INTENT_EXTRA_EQUIPPED_ITEM_ID, equippedItemId);
 		}
@@ -123,7 +125,7 @@ public abstract class BaseItemActivity extends BaseActivity {
 		if (heroKey != null) {
 			intent.putExtra(ItemEditFragment.INTENT_EXTRA_HERO_KEY, heroKey);
 		}
-		context.startActivityForResult(intent, requestCode);
+		fragment.startActivityForResult(intent, requestCode);
 	}
 
 	/*

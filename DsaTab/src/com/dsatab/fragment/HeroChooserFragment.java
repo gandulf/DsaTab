@@ -46,6 +46,7 @@ import com.dsatab.data.adapter.ListRecyclerAdapter;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.dsatab.util.ViewUtils;
+import com.dsatab.view.AutofitRecyclerView;
 import com.h6ah4i.android.widget.advrecyclerview.selectable.ElevatingSelectableViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.selectable.RecyclerViewSelectionManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
@@ -243,6 +244,11 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
         adapter = new HeroAdapter(new ArrayList<HeroFileInfo>());
         adapter.setEventListener(this);
 
+        if (recyclerView instanceof AutofitRecyclerView) {
+            AutofitRecyclerView autofitRecyclerView = (AutofitRecyclerView) recyclerView;
+            autofitRecyclerView.setColumnWidth(getResources().getDimensionPixelSize(R.dimen.portrait_width));
+        }
+
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
         initRecyclerView(recyclerView, adapter, layoutManager, false, false, true);
@@ -405,7 +411,7 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
     }
 
     private void updateViews() {
-        if (adapter == null && adapter.getItemCount() == 0) {
+        if (adapter == null || adapter.getItemCount() == 0) {
             recyclerView.setVisibility(View.INVISIBLE);
 
             empty.setVisibility(View.VISIBLE);
@@ -523,19 +529,25 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
                 holder.iv.setImageResource(R.drawable.profile_picture);
             }
 
-            switch (rnd.nextInt(4)) {
-                case 0:
-                case 3:
-                    holder.iv.getLayoutParams().height = holder.iv.getResources().getDimensionPixelSize(R.dimen.portrait_height_small);
-                    break;
-                case 1:
-                    holder.iv.getLayoutParams().height = (int) (holder.iv.getResources().getDimensionPixelSize(R.dimen.portrait_height_small) * 1.5);
-                    break;
-                case 2:
-                    holder.iv.getLayoutParams().height = (int) (holder.iv.getResources().getDimensionPixelSize(R.dimen.portrait_height_small) * 2);
-                    break;
+            int defaultHeight = holder.iv.getResources().getDimensionPixelSize(R.dimen.portrait_height);
+            int profileHeight = defaultHeight;
+            if (holder.iv.getDrawable() != null) {
+                profileHeight = holder.iv.getDrawable().getIntrinsicHeight();
             }
 
+            if (profileHeight > defaultHeight) {
+                switch (heroInfo.hashCode() % 4) {
+                    case 0:
+                    case 1:
+                        holder.iv.getLayoutParams().height = holder.iv.getResources().getDimensionPixelSize(R.dimen.portrait_height);
+                        break;
+                    case 2:
+                        holder.iv.getLayoutParams().height = (int) (holder.iv.getResources().getDimensionPixelSize(R.dimen.portrait_height) * 1.5);
+                        break;
+                }
+            } else {
+                holder.iv.getLayoutParams().height = profileHeight;
+            }
 
             if (TextUtils.isEmpty(heroInfo.getVersion())) {
                 holder.version.setVisibility(View.GONE);

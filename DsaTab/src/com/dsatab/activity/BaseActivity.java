@@ -32,6 +32,7 @@ public class BaseActivity extends AppCompatActivity {
     private View.OnClickListener saveListener;
 
     private FloatingActionButton fab;
+
     /*
      * (non-Javadoc)
      *
@@ -59,7 +60,7 @@ public class BaseActivity extends AppCompatActivity {
         return result;
     }
 
-    protected  FloatingActionButton getFab() {
+    protected FloatingActionButton getFab() {
         return fab;
     }
 
@@ -99,7 +100,15 @@ public class BaseActivity extends AppCompatActivity {
 
     public void setToolbarRefreshing(boolean toolbarRefreshing) {
         this.toolbarRefreshing = toolbarRefreshing;
-
+        if (toolbarRefreshing) {
+            View loading = findViewById(R.id.loading);
+            if (loading!=null)
+                loading.setVisibility(View.VISIBLE);
+        } else {
+            View loading = findViewById(R.id.loading);
+            if (loading!=null)
+                loading.setVisibility(View.GONE);
+        }
         supportInvalidateOptionsMenu();
     }
 

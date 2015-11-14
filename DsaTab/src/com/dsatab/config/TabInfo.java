@@ -233,6 +233,29 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
         }
         return false;
     }
+    protected  boolean hasListSettings() {
+        if (listSettings != null) {
+            for (ListSettings settings : listSettings) {
+                if (settings != null)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasOnlyListItem(ListSettings.ListItem... types) {
+        if (listSettings != null) {
+            boolean hasOnly = hasListSettings();
+            for (ListSettings settings : listSettings) {
+                if (settings!=null) {
+                    hasOnly &= settings.hasOnlyListItem(types);
+                }
+            }
+            return hasOnly;
+        } else {
+            return false;
+        }
+    }
 
     public boolean hasOnlyActivityClazz(Class<? extends BaseFragment> activityClazz) {
         boolean found = false;

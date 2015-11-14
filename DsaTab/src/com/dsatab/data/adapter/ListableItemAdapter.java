@@ -88,6 +88,7 @@ import com.dsatab.view.listener.OnActionListener;
 import com.dsatab.view.listener.ProbeListener;
 import com.dsatab.view.listener.TargetListener;
 import com.franlopez.flipcheckbox.FlipCheckBox;
+import com.gandulf.guilib.util.ResUtil;
 import com.gandulf.guilib.view.SeekBarEx;
 import com.wnafee.vector.compat.ResourcesCompat;
 
@@ -1054,7 +1055,7 @@ public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHo
             holder.icon1.setOnClickListener(null);
 
             if (equippedItem.getUsageType() == UsageType.Paradewaffe)
-                holder.icon2.setImageURI(item.getIconUri());
+                holder.icon2.setImageDrawable(ResUtil.getDrawableByUri(holder.icon2.getContext(),item.getIconUri()));
             else
                 holder.icon2.setImageDrawable(ViewUtils.circleIcon(holder.icon2.getContext(), R.drawable.vd_round_shield));
 

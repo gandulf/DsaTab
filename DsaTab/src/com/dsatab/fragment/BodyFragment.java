@@ -38,6 +38,7 @@ import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemContainer;
 import com.dsatab.fragment.dialog.InlineEditDialog;
 import com.dsatab.fragment.dialog.TakeHitDialog;
+import com.dsatab.fragment.preference.BasePreferenceFragment;
 import com.dsatab.util.Util;
 import com.dsatab.util.ViewUtils;
 import com.dsatab.view.BodyLayout;
@@ -284,7 +285,7 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 	public boolean onLongClick(View v) {
 		switch (v.getId()) {
 		case R.id.body_background:
-			Util.pickImage(this, DsaTabPreferenceActivity.ACTION_PICK_BG_WOUNDS_PATH);
+			Util.pickImage(this, BasePreferenceFragment.ACTION_PICK_BG_WOUNDS_PATH);
 			return true;
 		}
 		return false;
@@ -342,7 +343,7 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == Activity.RESULT_OK) {
 
-			if (requestCode == DsaTabPreferenceActivity.ACTION_PICK_BG_WOUNDS_PATH) {
+			if (requestCode == BasePreferenceFragment.ACTION_PICK_BG_WOUNDS_PATH) {
 				Uri uri = Util.retrieveBitmapUri(getActivity(), data);
 				if (uri != null) {
 					SharedPreferences preferences = DsaTabApplication.getPreferences();

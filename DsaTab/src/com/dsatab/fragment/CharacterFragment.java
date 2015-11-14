@@ -239,7 +239,6 @@ public class CharacterFragment extends BaseProfileFragment {
 		fillSpecialFeatures(hero);
 
 		// --
-		getDsaActivity().updatePortrait(hero);
 
 		TableLayout attribute2 = (TableLayout) findViewById(R.id.gen_attributes2);
 		Util.applyRowStyle(attribute2);

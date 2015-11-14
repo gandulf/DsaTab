@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.dsatab"
-          xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          android:installLocation="auto"
-          android:versionCode="96"
-          android:versionName="4.4">
+<manifest
+    package="com.dsatab"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:installLocation="auto"
+    android:versionCode="99"
+    android:versionName="4.4">
 
     <uses-sdk
-        android:minSdkVersion="14"
+        android:minSdkVersion="15"
         android:targetSdkVersion="23"/>
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -35,7 +36,7 @@
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:hardwareAccelerated="true"
-        android:icon="@drawable/icon"
+        android:icon="@mipmap/ic_launcher"
         android:label="DsaTab"
         android:largeHeap="true"
         android:supportsRtl="false"
@@ -49,6 +50,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".activity.DsaTabIntro"
+            android:label="Intro"/>
+
         <activity
             android:name="com.dsatab.activity.DsaTabPreferenceActivity"
             android:label="Einstellungen"/>
@@ -61,7 +67,8 @@
             android:label="Inventar"/>
         <activity
             android:name=".activity.BaseEditActivity"
-            android:label="Eintrag bearbeiten"/>
+            android:label="Eintrag bearbeiten"
+            />
         <activity
             android:name="com.dsatab.activity.HeroChooserActivity"
             android:label="Held auswählen"/>

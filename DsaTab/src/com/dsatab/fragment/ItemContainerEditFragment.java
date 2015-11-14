@@ -1,6 +1,6 @@
 package com.dsatab.fragment;
 
-import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,19 +20,19 @@ import com.dsatab.util.Util;
 
 public class ItemContainerEditFragment extends BaseEditFragment implements OnClickListener {
 
-	public static void insert(Activity activity) {
-		Intent intent = new Intent(activity, BaseEditActivity.class);
+	public static void insert(Fragment fragment) {
+		Intent intent = new Intent(fragment.getActivity(), BaseEditActivity.class);
 		intent.setAction(Intent.ACTION_INSERT);
 		intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, ItemContainerEditFragment.class);
-		activity.startActivity(intent);
+		fragment.startActivity(intent);
 	}
 
-	public static void edit(Activity activity, ItemContainer itemContainer) {
-		Intent intent = new Intent(activity, BaseEditActivity.class);
+	public static void edit(Fragment fragment, ItemContainer itemContainer) {
+		Intent intent = new Intent(fragment.getActivity(), BaseEditActivity.class);
 		intent.setAction(Intent.ACTION_EDIT);
 		intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, ItemContainerEditFragment.class);
 		intent.putExtra(INTENT_ITEM_CHOOSER_ID, itemContainer.getId());
-		activity.startActivity(intent);
+		fragment.startActivity(intent);
 	}
 
 	public static final String INTENT_ITEM_CHOOSER_ID = "com.dsatab.data.intent.itemContainerId";

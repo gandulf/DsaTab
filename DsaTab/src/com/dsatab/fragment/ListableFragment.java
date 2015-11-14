@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -133,7 +134,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
 
                     switch (item.getItemId()) {
                         case R.id.option_edit:
-                            ModificatorEditFragment.edit(fragment.getActivity(), modificator,
+                            ModificatorEditFragment.edit(fragment, modificator,
                                     DsaTabActivity.ACTION_EDIT_MODIFICATOR);
                             mode.finish();
                             return true;
@@ -227,7 +228,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
 
                     switch (item.getItemId()) {
                         case R.id.option_edit:
-                            CustomProbeEditFragment.edit(fragment.getActivity(), modificator,
+                            CustomProbeEditFragment.edit(fragment, modificator,
                                     DsaTabActivity.ACTION_EDIT_CUSTOM_PROBES);
                             mode.finish();
                             return true;
@@ -326,8 +327,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
 
                     switch (item.getItemId()) {
                         case R.id.option_edit:
-                            ItemsActivity.edit(fragment.getActivity(), getHero(), equippedItem,
-                                    ItemsActivity.ACTION_EDIT);
+                            ItemsActivity.edit(fragment, getHero(), equippedItem, ItemsActivity.ACTION_EDIT);
                             break;
                         case R.id.option_view:
                             ItemsActivity.view(fragment.getActivity(), getHero(), equippedItem);
@@ -614,11 +614,11 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                             adapter.notifyItemChanged(index);
                             break;
                         case R.id.option_view:
-                            ArtInfoFragment.view(fragment.getActivity(), art, DsaTabActivity.ACTION_VIEW_ART);
+                            ArtInfoFragment.view(fragment, art, DsaTabActivity.ACTION_VIEW_ART);
                             mode.finish();
                             return true;
                         case R.id.option_edit:
-                            ArtInfoFragment.edit(fragment.getActivity(), art, DsaTabActivity.ACTION_VIEW_ART);
+                            ArtInfoFragment.edit(fragment, art, DsaTabActivity.ACTION_VIEW_ART);
                             mode.finish();
                             return true;
                         default:
@@ -697,11 +697,11 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
 
                     switch (item.getItemId()) {
                         case R.id.option_view:
-                            SpellInfoFragment.view(fragment.getActivity(), spell, DsaTabActivity.ACTION_VIEW_SPELL);
+                            SpellInfoFragment.view(fragment, spell, DsaTabActivity.ACTION_VIEW_SPELL);
                             mode.finish();
                             return true;
                         case R.id.option_edit:
-                            SpellInfoFragment.edit(fragment.getActivity(), spell, DsaTabActivity.ACTION_VIEW_SPELL);
+                            SpellInfoFragment.edit(fragment, spell, DsaTabActivity.ACTION_VIEW_SPELL);
                             mode.finish();
                             return true;
                         case R.id.option_mark_favorite:
@@ -885,7 +885,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                             adapter.remove(event);
                         }
                     } else if (item.getItemId() == R.id.option_edit) {
-                        NotesEditFragment.edit(event, null, fragment.getActivity(),
+                        NotesEditFragment.edit(event, null, fragment,
                                 DsaTabActivity.ACTION_EDIT_NOTES);
                         mode.finish();
                         break;
@@ -896,7 +896,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                         fragment.getHero().removeConnection(connection);
                         adapter.remove(connection);
                     } else if (item.getItemId() == R.id.option_edit) {
-                        NotesEditFragment.edit(connection, fragment.getActivity(),
+                        NotesEditFragment.edit(connection, fragment,
                                 DsaTabActivity.ACTION_EDIT_NOTES);
                         mode.finish();
                         break;
@@ -1115,8 +1115,9 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                     EventCategory[] eventCategory = EventCategory.values();
 
                     for (int i = 0; i < eventCategory.length; i++) {
+                        Drawable icon = ResourcesCompat.getDrawable(getActivity(),eventCategory[i].getDrawableId());
                         MenuItem item = filterSet.add(MENU_FILTER_GROUP, i, Menu.NONE, eventCategory[i].name())
-                                .setIcon(eventCategory[i].getDrawableId());
+                                .setIcon(icon);
                         item.setCheckable(true);
                         item.setChecked(getListSettings().getEventCategories()
                                 .contains(eventCategory[item.getItemId()]));
@@ -1164,15 +1165,15 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                 return true;
             }
             case ACTION_NOTES_ADD: {
-                NotesEditFragment.insert(getActivity(), DsaTabActivity.ACTION_EDIT_NOTES);
+                NotesEditFragment.insert(this, DsaTabActivity.ACTION_EDIT_NOTES);
                 return true;
             }
             case ACTION_CUSTOM_PROBE_ADD: {
-                CustomProbeEditFragment.insert(getActivity(), DsaTabActivity.ACTION_EDIT_CUSTOM_PROBES);
+                CustomProbeEditFragment.insert(this, DsaTabActivity.ACTION_EDIT_CUSTOM_PROBES);
                 return true;
             }
             case ACTION_MODIFICATOR_ADD: {
-                ModificatorEditFragment.insert(getActivity(), DsaTabActivity.ACTION_ADD_MODIFICATOR);
+                ModificatorEditFragment.insert(this, DsaTabActivity.ACTION_ADD_MODIFICATOR);
                 return true;
             }
             case ACTION_DOCUMENTS_CHOOSE: {
@@ -1337,11 +1338,15 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
     }
 
     @Override
-    public void onModifierAdded(Modificator value) {
+    public void onModifierAdded(Modificator item) {
         if (getListSettings().hasListItem(ListItemType.Modificator)) {
-            mAdapter.add(value);
+
+            int index = mAdapter.lastIndexOf(item.getClass());
+            if (index>=0)
+                mAdapter.insert(item,index);
+            else
+                mAdapter.add(item);
         }
-        // fightItemAdapter.sort(AbstractModificator.NAME_COMPARATOR);
     }
 
     /*
@@ -1507,6 +1512,8 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                                 mAdapter.add(item);
                             }
                         }
+
+
                         break;
                     case Modificator:
                         if (TextUtils.isEmpty(listItem.getName())) {
@@ -1515,7 +1522,6 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                         } else {
                             mAdapter.add(hero.getUserModificators(listItem.getName()));
                         }
-                        // mAdapter.add(new FooterListItem(ListItemType.Modificator));
 
                         FloatingActionButton modAdd = new FloatingActionButton(getActivity());
                         modAdd.setColorPressed(getResources().getColor(R.color.white_pressed));
@@ -1688,7 +1694,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                             .currentTimeMillis() + ".3gp");
                     currentAudio.renameTo(nowAudio);
 
-                    NotesEditFragment.edit(null, nowAudio.getAbsolutePath(), getActivity(),
+                    NotesEditFragment.edit(null, nowAudio.getAbsolutePath(), ListableFragment.this,
                             DsaTabActivity.ACTION_EDIT_NOTES);
                 }
             });
@@ -1867,8 +1873,11 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
      */
     @Override
     public void onItemChanged(EquippedItem item) {
-        if (item.getSet() == getHero().getActiveSet())
-            mAdapter.notifyDataSetChanged();
+        if (getListSettings().hasListItem(ListItemType.EquippedItem)) {
+            if (item.getSet() == getHero().getActiveSet()) {
+                mAdapter.notifyDataSetChanged();
+            }
+        }
     }
 
     /*
@@ -1878,8 +1887,15 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
      */
     @Override
     public void onItemEquipped(EquippedItem item) {
-        if (item.getSet() == getHero().getActiveSet()) {
-            mAdapter.add(item);
+        if (getListSettings().hasListItem(ListItemType.EquippedItem)) {
+            if (item.getSet() == getHero().getActiveSet()) {
+
+                int index = mAdapter.lastIndexOf(item.getClass());
+                if (index >= 0)
+                    mAdapter.insert(item, index);
+                else
+                    mAdapter.add(item);
+            }
         }
     }
 
@@ -1890,10 +1906,11 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
      */
     @Override
     public void onItemUnequipped(EquippedItem item) {
-        if (item.getSet() == getHero().getActiveSet()) {
-            mAdapter.remove(item);
+        if (getListSettings().hasListItem(ListItemType.EquippedItem)) {
+            if (item.getSet() == getHero().getActiveSet()) {
+                mAdapter.remove(item);
+            }
         }
-
     }
 
     /*

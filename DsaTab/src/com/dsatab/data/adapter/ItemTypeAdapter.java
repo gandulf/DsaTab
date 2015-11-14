@@ -1,6 +1,7 @@
 package com.dsatab.data.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import com.dsatab.R;
 import com.dsatab.data.enums.ItemType;
 import com.dsatab.util.DsaUtil;
+import com.wnafee.vector.compat.ResourcesCompat;
 
 import java.util.List;
 
@@ -30,7 +32,8 @@ public class ItemTypeAdapter extends SpinnerSimpleAdapter<ItemType> {
 			TextView textView = (TextView) view;
 			ItemType e = getItem(position);
 
-			textView.setCompoundDrawablesWithIntrinsicBounds(DsaUtil.getResourceId(e), 0, 0, 0);
+            Drawable icon = ResourcesCompat.getDrawable(getContext(), DsaUtil.getResourceId(e));
+            textView.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null);
 			textView.setCompoundDrawablePadding(getContext().getResources().getDimensionPixelSize(R.dimen.default_gap));
 			textView.setText(e.name());
 			textView.setGravity(Gravity.CENTER_VERTICAL);
@@ -47,7 +50,8 @@ public class ItemTypeAdapter extends SpinnerSimpleAdapter<ItemType> {
 			TextView textView = (TextView) view;
 			ItemType e = getItem(position);
 
-			textView.setCompoundDrawablesWithIntrinsicBounds(DsaUtil.getResourceId(e), 0, 0, 0);
+            Drawable icon = ResourcesCompat.getDrawable(getContext(), DsaUtil.getResourceId(e));
+            textView.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null);
 			textView.setCompoundDrawablePadding(getContext().getResources().getDimensionPixelSize(R.dimen.default_gap));
 			textView.setText(e.name());
 			textView.setGravity(Gravity.CENTER_VERTICAL);

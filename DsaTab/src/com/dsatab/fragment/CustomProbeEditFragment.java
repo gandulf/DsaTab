@@ -1,7 +1,8 @@
 package com.dsatab.fragment;
 
-import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import com.dsatab.data.adapter.SpinnerSimpleAdapter;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 import com.dsatab.fragment.dialog.ImageChooserDialog;
 import com.dsatab.util.Util;
+import com.gandulf.guilib.util.ResUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,19 +33,19 @@ import java.util.UUID;
 
 public class CustomProbeEditFragment extends BaseEditFragment implements OnClickListener, OnItemSelectedListener {
 
-	public static void insert(Activity activity, int requestCode) {
-		Intent intent = new Intent(activity, BaseEditActivity.class);
+	public static void insert(Fragment fragment, int requestCode) {
+		Intent intent = new Intent(fragment.getActivity(), BaseEditActivity.class);
 		intent.setAction(Intent.ACTION_INSERT);
 		intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, CustomProbeEditFragment.class);
-		activity.startActivityForResult(intent, requestCode);
+		fragment.startActivityForResult(intent, requestCode);
 	}
 
-	public static void edit(Activity activity, CustomProbe probe, int requestCode) {
-		Intent intent = new Intent(activity, BaseEditActivity.class);
+	public static void edit(Fragment fragment, CustomProbe probe, int requestCode) {
+		Intent intent = new Intent(fragment.getActivity(), BaseEditActivity.class);
 		intent.setAction(Intent.ACTION_EDIT);
 		intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, CustomProbeEditFragment.class);
 		intent.putExtra(INTENT_PROBE_CHOOSER_ID, probe.getId().toString());
-		activity.startActivityForResult(intent, requestCode);
+		fragment.startActivityForResult(intent, requestCode);
 	}
 
 	public static final String INTENT_PROBE_CHOOSER_ID = "com.dsatab.data.intent.customProbeId";
@@ -100,7 +102,8 @@ public class CustomProbeEditFragment extends BaseEditFragment implements OnClick
 
 		if (savedInstanceState != null && savedInstanceState.containsKey(ICON_URI)) {
 			iconUri = Uri.parse(savedInstanceState.getString(ICON_URI));
-			iconView.setImageURI(iconUri);
+            Drawable icon = ResUtil.getDrawableByUri(iconView.getContext(),iconUri);
+			iconView.setImageDrawable(icon);
 		}
 
 		return root;
@@ -195,7 +198,8 @@ public class CustomProbeEditFragment extends BaseEditFragment implements OnClick
 		editProbeType.setOnItemSelectedListener(this);
 
 		if (iconView != null) {
-			iconView.setImageURI(iconUri);
+            Drawable icon = ResUtil.getDrawableByUri(iconView.getContext(),iconUri);
+			iconView.setImageDrawable(icon);
 		}
 
 	}
@@ -268,7 +272,6 @@ public class CustomProbeEditFragment extends BaseEditFragment implements OnClick
 		customProbe.setValue(Util.parseInteger(editValue.getText().toString()));
 		customProbe.setProbeType((ProbeType) editProbeType.getSelectedItem());
 		customProbe.setModificatorType((ModificatorType) editModType.getSelectedItem());
-
 		customProbe.setIconUri(iconUri);
 
 		if (Intent.ACTION_INSERT.equals(getActivity().getIntent().getAction())) {
@@ -285,7 +288,9 @@ public class CustomProbeEditFragment extends BaseEditFragment implements OnClick
 
 			@Override
 			public void onImageSelected(Uri imageUri) {
-				iconView.setImageURI(imageUri);
+                iconUri = imageUri;
+                Drawable icon = ResUtil.getDrawableByUri(iconView.getContext(),iconUri);
+				iconView.setImageDrawable(icon);
 			}
 		}, 0);
 

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="portrait_height">220dp</dimen>
+    <dimen name="portrait_width">150dp</dimen>
+
+</resources>

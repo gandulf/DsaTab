@@ -42,9 +42,11 @@ import com.dsatab.util.Util;
 import com.dsatab.util.ViewUtils;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
 import com.gandulf.guilib.util.ResUtil;
+import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.h6ah4i.android.widget.advrecyclerview.selectable.RecyclerViewSelectionManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
+import com.wnafee.vector.compat.ResourcesCompat;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 
@@ -119,7 +121,7 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
                                 fragment.getHero().removeItem(selectedItem);
                                 break;
                             case R.id.option_edit:
-                                ItemsActivity.edit(fragment.getActivity(), fragment.getHero(), selectedItem, ACTION_EDIT);
+                                ItemsActivity.edit(fragment, fragment.getHero(), selectedItem, ACTION_EDIT);
                                 mode.finish();
                                 return true;
                             case R.id.option_equipped:
@@ -211,8 +213,10 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
 
             mode.setSubtitle(selected + " ausgewählt");
 
-            changed |= ViewUtils.menuIconState(equipped,isEquippable);
-            changed |= ViewUtils.menuIconState(move,isMoveable);
+            changed |= ViewUtils.menuIconState(equipped, isEquippable);
+            changed |= ViewUtils.menuIconState(move, isMoveable);
+            if (move != null)
+                move.setVisible(isMoveable);
 
             return changed;
         }
@@ -224,7 +228,7 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
 
         protected WeakReference<TabLayout> listView;
 
-        public ItemsContainerActionMode(ItemsFragment fragment, TabLayout listView,List<ItemContainer> containers) {
+        public ItemsContainerActionMode(ItemsFragment fragment, TabLayout listView, List<ItemContainer> containers) {
             super(fragment, null, null);
             this.containersRef = new WeakReference<List<ItemContainer>>(containers);
             this.listView = new WeakReference<TabLayout>(listView);
@@ -241,21 +245,21 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
             ItemContainer itemContainer = containers.get(list.getSelectedTabPosition());
 
 
-                switch (item.getItemId()) {
-                    case R.id.option_delete:
-                        fragment.getHero().removeItemContainer(itemContainer);
-                        break;
-                    case R.id.option_edit: {
-                        ItemContainerEditFragment.edit(fragment.getActivity(), itemContainer);
-                        mode.finish();
-                        return true;
-                    }
-                    case R.id.option_add: {
-                        ItemContainerEditFragment.insert(fragment.getActivity());
-                        mode.finish();
-                        return true;
-                    }
+            switch (item.getItemId()) {
+                case R.id.option_delete:
+                    fragment.getHero().removeItemContainer(itemContainer);
+                    break;
+                case R.id.option_edit: {
+                    ItemContainerEditFragment.edit(fragment, itemContainer);
+                    mode.finish();
+                    return true;
                 }
+                case R.id.option_add: {
+                    ItemContainerEditFragment.insert(fragment);
+                    mode.finish();
+                    return true;
+                }
+            }
 
             mode.finish();
             return true;
@@ -291,8 +295,8 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
             MenuItem deleteItem = menu.findItem(R.id.option_delete);
 
             boolean changed = false;
-            changed = ViewUtils.menuIconState(editItem,changable);
-            changed |=ViewUtils.menuIconState(deleteItem,changable);
+            changed = ViewUtils.menuIconState(editItem, changable);
+            changed |= ViewUtils.menuIconState(deleteItem, changable);
 
             return changed;
         }
@@ -345,18 +349,19 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
         tab.setIcon(drawable);
         tab.setTag(container);
     }
+
     private void addContainerTab(ItemContainer container) {
         SharedPreferences pref = getActivity().getPreferences(Context.MODE_PRIVATE);
         int containerID = pref.getInt(PREF_KEY_LAST_OPEN_SCREEN, ItemContainer.SET1);
 
         TabLayout.Tab tab = tabLayout.newTab();
-        configureContainerTab(tab,container);
+        configureContainerTab(tab, container);
 
-        tabLayout.addTab(tab,containerID == container.getId());
+        tabLayout.addTab(tab, containerID == container.getId());
     }
 
     private void showItemPopup() {
-        ItemsActivity.pick(getActivity(), itemsAdapter.getFilter().getTypes(), ACTION_ADD);
+        ItemsActivity.pick(this, itemsAdapter.getFilter().getTypes(), ACTION_ADD);
     }
 
     public static boolean isSetIndex(int index) {
@@ -390,7 +395,7 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab_container_add:
-                ItemContainerEditFragment.insert(getActivity());
+                ItemContainerEditFragment.insert(this);
                 fabMenu.close(true);
                 break;
             case R.id.fab_items_add:
@@ -423,8 +428,8 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
             if (filterSet != null) {
                 ItemType[] itemType = ItemType.values();
                 for (int i = 0; i < itemType.length; i++) {
-                    MenuItem item = filterSet.add(MENU_FILTER_GROUP, i, Menu.NONE, itemType[i].name()).setIcon(
-                            DsaUtil.getResourceId(itemType[i]));
+                    Drawable icon = ResourcesCompat.getDrawable(getActivity(),DsaUtil.getResourceId(itemType[i]));
+                    MenuItem item = filterSet.add(MENU_FILTER_GROUP, i, Menu.NONE, itemType[i].name()).setIcon(icon);
                     item.setCheckable(true);
                     item.setChecked(categoriesSelected.contains(itemType[item.getItemId()]));
                 }
@@ -514,15 +519,20 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
 
         fabMenu = (FloatingActionMenu) root.findViewById(R.id.fab_menu);
 
-        root.findViewById(R.id.fab_container_add).setOnClickListener(this);
-        root.findViewById(R.id.fab_items_add).setOnClickListener(this);
+        FloatingActionButton fabContainer = (FloatingActionButton) root.findViewById(R.id.fab_container_add);
+        fabContainer.setOnClickListener(this);
+        fabContainer.setImageDrawable(ResourcesCompat.getDrawable(getActivity(), R.drawable.vd_swap_bag));
+
+        FloatingActionButton fabBag = (FloatingActionButton) root.findViewById(R.id.fab_items_add);
+        fabBag.setOnClickListener(this);
+        fabBag.setImageDrawable(ResourcesCompat.getDrawable(getActivity(), R.drawable.vd_battle_gear));
 
         return root;
     }
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        ItemContainer container =(ItemContainer) tab.getTag();
+        ItemContainer container = (ItemContainer) tab.getTag();
         showScreen(container.getId());
     }
 
@@ -533,7 +543,7 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
 
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
-        ItemContainer container =(ItemContainer) tab.getTag();
+        ItemContainer container = (ItemContainer) tab.getTag();
         showScreen(container.getId());
 
         if (mMode == null) {
@@ -550,7 +560,7 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        tabLayout =(TabLayout) findViewById(R.id.tabs);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
 
         itemsAdapter = new EquippedItemRecyclerAdapter(getHero());
         itemsAdapter.setEventListener(this);
@@ -560,7 +570,7 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
 
         // -- container
 
-        mContainerCallback = new ItemsContainerActionMode(this, tabLayout,containers);
+        mContainerCallback = new ItemsContainerActionMode(this, tabLayout, containers);
         mItemGridCallback = new ItemsActionMode(this, recyclerView, mRecyclerViewSelectionManager);
 
         updateScreenType();
@@ -568,19 +578,19 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == ACTION_ADD) {
-            if (resultCode == Activity.RESULT_OK) {
-                UUID itemId = (UUID) data.getSerializableExtra(ItemsActivity.INTENT_EXTRA_ITEM_ID);
+        if (requestCode == ACTION_ADD && resultCode == Activity.RESULT_OK) {
 
-                if (itemId != null) {
-                    Item item = DataManager.getItemById(itemId).duplicate();
-                    if (isSetIndex(mCurrentContainerId)) {
-                        getHero().addEquippedItem(getDsaActivity(), item, null, null, mCurrentContainerId);
-                    } else {
-                        item.setContainerId(mCurrentContainerId);
-                        getHero().addItem(item);
-                    }
+            UUID itemId = (UUID) data.getSerializableExtra(ItemsActivity.INTENT_EXTRA_ITEM_ID);
+
+            if (itemId != null) {
+                Item item = DataManager.getItemById(itemId).duplicate();
+                if (isSetIndex(mCurrentContainerId)) {
+                    getHero().addEquippedItem(getDsaActivity(), item, null, null, mCurrentContainerId);
+                } else {
+                    item.setContainerId(mCurrentContainerId);
+                    getHero().addItem(item);
                 }
+
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -761,6 +771,12 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
             // itemsAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
 
             refreshEmptyView(itemsAdapter);
+        } else if (mCurrentContainerId >= Hero.FIRST_INVENTORY_SCREEN) {
+            // if we are in a bag check if item is present
+            int index = itemsAdapter.indexOf(item.getItem());
+            if (index >= 0) {
+                itemsAdapter.notifyItemChanged(index);
+            }
         }
 
         for (ItemContainer container : containers) {

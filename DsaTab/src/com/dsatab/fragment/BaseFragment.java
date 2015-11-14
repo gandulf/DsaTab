@@ -243,14 +243,6 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 			return null;
 	}
 
-	public void hideActionBarItems() {
-
-	}
-
-	public void showActionBarItems() {
-
-	}
-
 	protected View findViewById(int id) {
 		if (getView() != null)
 			return getView().findViewById(id);
@@ -378,4 +370,9 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 		return getDsaActivity() != null && getDsaActivity().isDrawerOpened();
 	}
 
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName()+ ":"+getTabInfo();
+    }
 }
