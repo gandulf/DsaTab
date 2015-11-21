@@ -38,7 +38,6 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="4dip"
         android:visibility="visible"
-        android:tint="@color/circle_tint"
         tools:src="@drawable/vd_all_for_one"/>
 
     <TextView
@@ -88,15 +87,12 @@
 
     <ImageButton
         android:id="@android:id/icon2"
-        style="?android:attr/borderlessButtonStyle"
+        style="?attr/circleButtonStyle"
         android:layout_width="@dimen/icon_button_size"
         android:layout_height="@dimen/icon_button_size"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="4dip"
-        android:background="@drawable/circle"
-        android:tint="@color/circle_tint"
-        android:scaleType="centerInside"
         android:visibility="gone"
         tools:src="@drawable/vd_all_for_one"
         tools:visibility="visible"/>

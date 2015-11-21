@@ -2,6 +2,7 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
                                             xmlns:app="http://schemas.android.com/apk/res-auto"
                                             xmlns:guilib="http://schemas.android.com/apk/com.gandulf.guilib"
+                                            xmlns:tools="http://schemas.android.com/tools"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent">
 
@@ -12,9 +13,11 @@
 
         <android.support.v7.widget.CardView
             android:id="@+id/gen_description"
+            style="?attr/cardViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/card_margin">
+            android:layout_margin="@dimen/card_margin"
+            tools:visibility="gone">
 
             <GridLayout
                 style="@style/Widget.CardContent"
@@ -157,6 +160,7 @@
         <android.support.v7.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            style="?attr/cardViewStyle"
             android:layout_margin="@dimen/card_margin"
             >
 
@@ -191,7 +195,8 @@
                             android:text="@string/label_mu">
                         </com.dsatab.view.FlexibleTextView>
 
-                        <Button android:id="@+id/attr_mu">
+                        <Button android:id="@+id/attr_mu"
+                            tools:text="10">
                         </Button>
                     </TableRow>
 
@@ -210,7 +215,8 @@
                             android:text="@string/label_kl">
                         </com.dsatab.view.FlexibleTextView>
 
-                        <Button android:id="@+id/attr_kl">
+                        <Button android:id="@+id/attr_kl"
+                                tools:text="11">
                         </Button>
                     </TableRow>
 
@@ -229,7 +235,8 @@
                             android:text="@string/label_in">
                         </com.dsatab.view.FlexibleTextView>
 
-                        <Button android:id="@+id/attr_in">
+                        <Button android:id="@+id/attr_in"
+                                tools:text="9">
                         </Button>
                     </TableRow>
 
@@ -248,7 +255,8 @@
                             android:text="@string/label_ch">
                         </com.dsatab.view.FlexibleTextView>
 
-                        <Button android:id="@+id/attr_ch">
+                        <Button android:id="@+id/attr_ch"
+                                tools:text="14">
                         </Button>
                     </TableRow>
 
@@ -267,7 +275,8 @@
                             android:text="@string/label_ff">
                         </com.dsatab.view.FlexibleTextView>
 
-                        <Button android:id="@+id/attr_ff">
+                        <Button android:id="@+id/attr_ff"
+                                tools:text="14">
                         </Button>
                     </TableRow>
 
@@ -286,7 +295,8 @@
                             android:text="@string/label_ge">
                         </com.dsatab.view.FlexibleTextView>
 
-                        <Button android:id="@+id/attr_ge">
+                        <Button android:id="@+id/attr_ge"
+                                tools:text="10">
                         </Button>
                     </TableRow>
 
@@ -305,7 +315,8 @@
                             android:text="@string/label_ko">
                         </com.dsatab.view.FlexibleTextView>
 
-                        <Button android:id="@+id/attr_ko">
+                        <Button android:id="@+id/attr_ko"
+                                tools:text="10">
                         </Button>
                     </TableRow>
 
@@ -324,7 +335,7 @@
                             android:text="@string/label_kk">
                         </com.dsatab.view.FlexibleTextView>
 
-                        <Button android:id="@+id/attr_kk"/>
+                        <Button android:id="@+id/attr_kk" tools:text="10"/>
                     </TableRow>
                 </TableLayout>
 

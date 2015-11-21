@@ -162,7 +162,7 @@ Igniplano Flächenbrand;EG 104;MU/IN/KO;F;;Elementar (Feuer), Schaden, Umwelt;;;;
 Igniqueris Feuerkragen;OiC 70;KL/CH/KK;C;;Elementar (Feuer), Einfluss;;;;;;
 Ignisphaero Feuerball;"	LCD124";"	MU/IN/KO";"	D";"	Mag 3| Ach, Geo 1";"	Telekinese, Elementar (Feuer), Schaden";;;;;;
 Ignorantia Ungesehn;"	LCD125";"	IN/CH/GE";"	D";"	Mag, Srl 3";"	Einfluss, Illusion";;;;;;
-Ignufugo Feuerbann;EG 103, 104;MU/KO/FF;C;;Elementar (Feuer), Umwelt;;;;;;
+Ignifugo Feuerbann;EG 103, 104;MU/KO/FF;C;;Elementar (Feuer), Umwelt;;;;;;
 Illusion auflösen;"	LCD126";"	KL/IN/CH";"	B";"	Mag 5|Srl 4| Hex, Sch 3";"	Antimagie, Illusion";;;;;;
 Immortalis Lebenszeit;"	LCD127";"	MU/CH/KO";"	F";"	Ach, Mag 1";"	Form, Temporal";;;;;;
 Imperavi Handlungszwang;"	LCD128";"	KL/CH/CH +MR";"	E";"	Mag 4| Dru 2(Mag)";"	Herrschaft";;;;;;

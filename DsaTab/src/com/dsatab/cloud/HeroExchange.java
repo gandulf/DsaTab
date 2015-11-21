@@ -1,7 +1,6 @@
 package com.dsatab.cloud;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import com.bingzer.android.driven.Credential;
@@ -10,17 +9,20 @@ import com.bingzer.android.driven.LocalFile;
 import com.bingzer.android.driven.RemoteFile;
 import com.bingzer.android.driven.Result;
 import com.bingzer.android.driven.StorageProvider;
+import com.bingzer.android.driven.contracts.Delegate;
 import com.bingzer.android.driven.contracts.Task;
 import com.bingzer.android.driven.dropbox.Dropbox;
 import com.bingzer.android.driven.gdrive.GoogleDrive;
 import com.bingzer.android.driven.local.ExternalDrive;
 import com.dsatab.DsaTabApplication;
-import com.dsatab.activity.DsaTabPreferenceActivity;
+import com.dsatab.data.HeroConfiguration;
 import com.dsatab.data.HeroFileInfo;
 import com.dsatab.data.HeroFileInfo.FileType;
 import com.dsatab.util.Debug;
+import com.dsatab.util.Util;
 
-import org.w3c.dom.Document;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,8 +31,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+
+import static com.bingzer.android.driven.utils.AsyncUtils.doAsync;
 
 public class HeroExchange {
 
@@ -44,15 +49,15 @@ public class HeroExchange {
     private StorageProvider dropBox = new Dropbox();
     private StorageProvider drive = new GoogleDrive();
     private StorageProvider external = new ExternalDrive();
+    private HeldenAustauschProvider heldenAustausch = new HeldenAustauschProvider();
 
     public static StorageType[] storageTypes = new StorageType[]{StorageType.Drive, StorageType.Dropbox,
             StorageType.HeldenAustausch};
 
     public interface OnHeroExchangeListener {
-        public void onHeroInfoLoaded(List<HeroFileInfo> info);
+        void onHeroInfoLoaded(List<HeroFileInfo> info);
 
-        public void onError(String errorMessage, Throwable exception);
-
+        void onError(String errorMessage, Throwable exception);
     }
 
     public HeroExchange(Context context) {
@@ -72,6 +77,11 @@ public class HeroExchange {
             drive.authenticateAsync(context, task);
         }
 
+        heldenAustausch.syncAuthentication(context);
+        if (heldenAustausch.hasSavedCredential(context)) {
+            heldenAustausch.authenticateAsync(context, task);
+        }
+
         if (!TextUtils.isEmpty(DsaTabApplication.getExternalHeroPath())) {
             Credential credential = new Credential(context, DsaTabApplication.getExternalHeroPath());
             external.authenticateAsync(credential, task);
@@ -80,7 +90,6 @@ public class HeroExchange {
     }
 
     private StorageProvider getProvider(HeroFileInfo fileInfo) {
-
         return getProvider(fileInfo.getStorageType());
     }
 
@@ -98,7 +107,8 @@ public class HeroExchange {
                     provider = external;
                     break;
                 case HeldenAustausch:
-                    provider = null;
+                    provider = heldenAustausch;
+                    break;
             }
         }
 
@@ -116,19 +126,8 @@ public class HeroExchange {
         return provider;
     }
 
-    public boolean isConnected(StorageType type) {
-        switch (type) {
-            case HeldenAustausch:
-                return isConfigured();
-            default:
-                return getProvider(type).isAuthenticated();
-        }
-    }
-
-    private boolean isConfigured() {
-        final SharedPreferences preferences = DsaTabApplication.getPreferences();
-        String token = preferences.getString(DsaTabPreferenceActivity.KEY_EXCHANGE_TOKEN, "");
-        return !TextUtils.isEmpty(token);
+    public boolean isConnected(Context context, StorageType type) {
+        return getProvider(type).hasSavedCredential(context);
     }
 
     private RemoteFile getBasePath(StorageProvider provider) {
@@ -142,19 +141,11 @@ public class HeroExchange {
 
     public boolean delete(HeroFileInfo fileInfo) {
         boolean result = false;
-        if (fileInfo.getStorageType() != null) {
-            switch (fileInfo.getStorageType()) {
-                case HeldenAustausch:
-                    break;
-                default:
-                    getProvider(fileInfo).delete(fileInfo.getPath(FileType.Hero));
-                    getProvider(fileInfo).delete(fileInfo.getPath(FileType.Config));
-            }
-        } else {
-            getProvider(fileInfo).delete(fileInfo.getPath(FileType.Hero));
-            getProvider(fileInfo).delete(fileInfo.getPath(FileType.Config));
+        StorageProvider storage = getProvider(fileInfo);
+        if (storage!=null) {
+            storage.delete(fileInfo.getPath(FileType.Hero));
+            storage.delete(fileInfo.getPath(FileType.Config));
         }
-
         return result;
     }
 
@@ -198,17 +189,30 @@ public class HeroExchange {
             if (!TextUtils.isEmpty(heroInfo.getRemoteConfigId())) {
                 LocalFile localConfig = heroInfo.getLocalFile(FileType.Config);
                 RemoteFile remoteConfig = storage.id(heroInfo.getRemoteConfigId());
-                remoteConfig.download(localConfig);
-            }
-        } else {
-            if (isConfigured()) {
-                final SharedPreferences preferences = DsaTabApplication.getPreferences();
-                ImportHeroTask importFileTask = new ImportHeroTask(context, heroInfo, preferences.getString(
-                        DsaTabPreferenceActivity.KEY_EXCHANGE_TOKEN, ""));
-                importFileTask.setOnHeroExchangeListener(listener);
-                importFileTask.execute();
-            } else {
-                Debug.warning("Heldenaustausch: Not configured skipping download");
+                if (remoteConfig.download(localConfig)) {
+                    File localConfigFile = localConfig.getFile();
+                    try {
+                        if (localConfigFile != null && localConfigFile.exists()) {
+                            String data = Util.slurp(new FileInputStream(localConfigFile), 1024);
+                            if (!TextUtils.isEmpty(data)) {
+                                JSONObject jsonObject = new JSONObject(new String(data));
+                                if (HeroConfiguration.updateStorageInfo(jsonObject,heroInfo.getStorageType(),heroInfo.getRemoteHeroId(),heroInfo.getRemoteConfigId())) {
+                                    FileOutputStream fos = new FileOutputStream(localConfigFile);
+                                    try {
+                                        fos.write(jsonObject.toString().getBytes());
+                                    } finally {
+                                        Util.close(fos);
+                                    }
+                                    storage.update(remoteConfig,localConfig);
+                                }
+                            }
+                        }
+                    } catch (JSONException e) {
+                        Debug.error(e);
+                    } catch (IOException e) {
+                        Debug.error(e);
+                    }
+                }
             }
         }
     }
@@ -241,6 +245,65 @@ public class HeroExchange {
         return getHeroes(storageTypes);
     }
 
+    private static class ConnectionTask implements Task<Result<DrivenException>> {
+
+        private List<StorageType> types;
+        private int calls;
+
+        private boolean allSuccess = true;
+        private DrivenException exception;
+
+        private Task<Result<DrivenException>> delegate;
+
+        public ConnectionTask(List<StorageType> types, Task<Result<DrivenException>> task) {
+            this.types = types;
+            this.delegate = task;
+        }
+        @Override
+        public void onCompleted(Result<DrivenException> result) {
+
+            allSuccess &=result.isSuccess();
+            if (result.getException()!=null) {
+                exception = result.getException();
+            }
+            calls++;
+
+            if (calls >= types.size()) {
+                Result<DrivenException> allResult = new Result<>(allSuccess,exception);
+                delegate.onCompleted(allResult);
+            }
+        }
+    }
+
+    public void connect(Context context, Task<Result<DrivenException>> task) {
+
+        ConnectionTask allTasks = new ConnectionTask(Arrays.asList(storageTypes), task);
+
+        for (StorageType type: storageTypes) {
+            StorageProvider provider = getProvider(type);
+            if (provider!=null && provider.hasSavedCredential(context)) {
+
+                if (!provider.isAuthenticated()) {
+                    provider.authenticateAsync(context, allTasks);
+                } else {
+                    doAsync(allTasks, new Delegate<Result<DrivenException>>() {
+                        @Override
+                        public Result<DrivenException> invoke() {
+                            return new Result<>(true,null);
+                        }
+                    });
+                }
+            } else {
+                doAsync(allTasks, new Delegate<Result<DrivenException>>() {
+                    @Override
+                    public Result<DrivenException> invoke() {
+                        return new Result<>(true,null);
+                    }
+                });
+            }
+        }
+    }
+
     public List<HeroFileInfo> getHeroes(StorageType... storageTypes) throws Exception {
         List<HeroFileInfo> heroes = new ArrayList<HeroFileInfo>();
         for (StorageType type : storageTypes) {
@@ -264,59 +327,31 @@ public class HeroExchange {
     protected List<HeroFileInfo> getHeroesByType(StorageType storageType) throws Exception {
         List<HeroFileInfo> heroes = new ArrayList<HeroFileInfo>();
 
-        switch (storageType) {
-            case HeldenAustausch:
+        StorageProvider storage = getProvider(storageType);
+        if (storage.isAuthenticated()) {
+            List<RemoteFile> files = storage.list(getBasePath(storage));
 
-                String token = DsaTabApplication.getPreferences()
-                        .getString(DsaTabPreferenceActivity.KEY_EXCHANGE_TOKEN, "");
+            if (files != null) {
+                for (RemoteFile file : files) {
+                    if (file.getName().toLowerCase(Locale.GERMAN).endsWith(HeroFileInfo.HERO_FILE_EXTENSION)) {
 
-                if (!TextUtils.isEmpty(token)) {
-                    // HeldenListe anfordern
-                    String stringHeldenliste = Helper.postRequest(token, "action", "listhelden");
+                        String configName = file.getName().replace(HeroFileInfo.HERO_FILE_EXTENSION,
+                                HeroFileInfo.CONFIG_FILE_EXTENSION);
+                        RemoteFile remoteConfig = storage.get(getBasePath(storage), configName);
 
-                    Document d = Helper.string2Doc(stringHeldenliste);
-
-                    // Anzahl der Helden bestimmen
-                    int anzahl = Helper.getDaten(d, "/helden/held").getLength();
-                    // Die Namen der Helden anzeigen
-
-                    for (int i = 1; i <= anzahl; i++) {
-                        String name = Helper.getDatenAsString(d, "/helden/held[" + i + "]/name");
-                        String heldenid = Helper.getDatenAsString(d, "/helden/held[" + i + "]/heldenid");
-                        String heldenKey = Helper.getDatenAsString(d, "/helden/held[" + i + "]/heldenkey");
-                        String lastChange = Helper.getDatenAsString(d, "/helden/held[" + i + "]/heldlastchange");
-
-                        HeroFileInfo fileInfo = new HeroFileInfo(name, heldenid, heldenKey);
-                        heroes.add(fileInfo);
+                        HeroFileInfo info = new HeroFileInfo(file, remoteConfig, storageType, this);
+                        download(info, null);
+                        info.prepare(this);
+                        heroes.add(info);
                     }
                 }
-                break;
-            default:
-                StorageProvider storage = getProvider(storageType);
-                if (storage.isAuthenticated()) {
-                    List<RemoteFile> files = storage.list(getBasePath(storage));
-
-                    if (files != null) {
-                        for (RemoteFile file : files) {
-                            if (file.getName().toLowerCase(Locale.GERMAN).endsWith(HeroFileInfo.HERO_FILE_EXTENSION)) {
-
-                                String configName = file.getName().replace(HeroFileInfo.HERO_FILE_EXTENSION,
-                                        HeroFileInfo.CONFIG_FILE_EXTENSION);
-                                RemoteFile remoteConfig = storage.get(getBasePath(storage), configName);
-
-                                HeroFileInfo info = new HeroFileInfo(file, remoteConfig, storageType, this);
-                                download(info, null);
-                                info.prepare(this);
-                                heroes.add(info);
-                            }
-                        }
-                    } else {
-                        Debug.warning("Unable to read directory " + getBasePath(storage).getName()
-                                + ". Make sure the directory exists and contains your heroes");
-                    }
-                }
-                break;
+            } else {
+                Debug.warning("Unable to read directory " + getBasePath(storage).getName()
+                        + ". Make sure the directory exists and contains your heroes");
+            }
         }
+
+
         return heroes;
     }
 

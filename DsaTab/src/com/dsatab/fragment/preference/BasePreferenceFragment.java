@@ -16,23 +16,11 @@ import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
 
-import com.bingzer.android.driven.DrivenException;
-import com.bingzer.android.driven.Result;
-import com.bingzer.android.driven.StorageProvider;
-import com.bingzer.android.driven.contracts.Task;
-import com.bingzer.android.driven.dropbox.Dropbox;
-import com.bingzer.android.driven.dropbox.app.DropboxActivity;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
-import com.dsatab.activity.AppCompatPreferenceActivity;
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.config.DsaTabConfiguration;
 import com.dsatab.fragment.dialog.DirectoryChooserDialog;
@@ -55,7 +43,6 @@ import static com.dsatab.fragment.preference.BasePreferenceFragment.DsaTabSettin
 import static com.dsatab.fragment.preference.BasePreferenceFragment.DsaTabSettings.KEY_DOWNLOAD_MAPS;
 import static com.dsatab.fragment.preference.BasePreferenceFragment.DsaTabSettings.KEY_DOWNLOAD_OSMMAPS;
 import static com.dsatab.fragment.preference.BasePreferenceFragment.DsaTabSettings.KEY_DOWNLOAD_WESNOTH_PORTRAITS;
-import static com.dsatab.fragment.preference.BasePreferenceFragment.DsaTabSettings.KEY_DROPBOX;
 import static com.dsatab.fragment.preference.BasePreferenceFragment.DsaTabSettings.KEY_PROBE_SHAKE_ROLL_DICE;
 import static com.dsatab.fragment.preference.BasePreferenceFragment.DsaTabSettings.KEY_SETUP_SDCARD_HERO_PATH;
 import static com.dsatab.fragment.preference.BasePreferenceFragment.DsaTabSettings.KEY_SETUP_SDCARD_PATH;
@@ -75,13 +62,11 @@ public abstract class BasePreferenceFragment extends PreferenceFragment implemen
 
     public interface DsaTabSettings {
          String KEY_PROBE_PROBABILITY = "probeProbability";
-         String KEY_NOTES_VISIBILITY = "showNotes";
          String KEY_PROBE_SHAKE_ROLL_DICE = "shakeRollDice";
          String KEY_PROBE_ANIM_ROLL_DICE = "animRollDice";
          String KEY_PROBE_SOUND_ROLL_DICE = "soundRollDice";
          String KEY_PROBE_AUTO_ROLL_DICE = "autoRollDice";
          String KEY_PROBE_SOUND_RESULT_DICE = "soundResultDice";
-         String KEY_PROBE_SHOW_MODIFIKATORS = "probeShowModificators";
 
          String KEY_HOUSE_RULES = "houseRules";
          String KEY_HOUSE_RULES_2_OF_3_DICE = "houseRules.2of3Dice";
@@ -99,7 +84,6 @@ public abstract class BasePreferenceFragment extends PreferenceFragment implemen
 
          String KEY_SETUP_SDCARD_HERO_PATH = "sdcardHeroPath";
 
-         String KEY_DOWNLOAD_SCREEN = "downloadMediaScreen";
          String KEY_DOWNLOAD_ALL = "downloadAll";
          String KEY_DOWNLOAD_MAPS = "downloadMaps";
          String KEY_DOWNLOAD_BACKGROUNDS = "downloadBackgrounds";
@@ -115,7 +99,6 @@ public abstract class BasePreferenceFragment extends PreferenceFragment implemen
          String KEY_STYLE_BG_WOUNDS_PATH = "theme.wound.bg.path";
          String KEY_STYLE_BG_WOUNDS_DELETE = "theme.wound.bg.delete";
 
-         String KEY_EXCHANGE = "heldenAustauschScreen";
          String KEY_EXCHANGE_TOKEN = "exchange_token";
 
          String KEY_SCREEN_ORIENTATION = "screen_orientation";
@@ -123,17 +106,7 @@ public abstract class BasePreferenceFragment extends PreferenceFragment implemen
          String KEY_TIP_TODAY = "tipToday";
          String KEY_TIP_TODAY_RESET = "tipTodayReset";
 
-         String KEY_HEADER_LE = "header_le";
-         String KEY_HEADER_AU = "header_au";
-         String KEY_HEADER_KE = "header_ke";
-         String KEY_HEADER_AE = "header_ae";
-         String KEY_HEADER_BE = "header_be";
-         String KEY_HEADER_MR = "header_mr";
-         String KEY_HEADER_GS = "header_gs";
-         String KEY_HEADER_WS = "header_ws";
-
          String KEY_AUTO_SAVE = "hero_auto_save";
-         String KEY_DROPBOX = "dropbox";
 
          String SCREEN_ORIENTATION_AUTO = "auto";
          String SCREEN_ORIENTATION_LANDSCAPE = "landscape";
@@ -176,15 +149,13 @@ public abstract class BasePreferenceFragment extends PreferenceFragment implemen
 			}
 			return false;
 		} else {
-			return handlePreferenceClick(this, preference, preference.getKey(),
-					PreferenceManager.getDefaultSharedPreferences(getActivity()));
+			return handlePreferenceClick(this, preference, preference.getKey(), getPreferenceManager().getSharedPreferences());
 		}
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getActivity().setTheme(DsaTabApplication.getInstance().getCustomPreferencesTheme());
 
 		addPreferencesFromResource(getPreferenceResourceId());
 
@@ -192,27 +163,6 @@ public abstract class BasePreferenceFragment extends PreferenceFragment implemen
 
 		for (int i = 0; i < getPreferenceScreen().getPreferenceCount(); i++)
 			initSummary(getPreferenceScreen().getPreference(i));
-	}
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View layout = inflater.inflate(R.layout.main_preferences, container, false);
-		if (layout != null) {
-			ListView list = (ListView) layout.findViewById(android.R.id.list);
-			list.setPadding(0, 0, 0, 0);
-
-			AppCompatPreferenceActivity activity = (AppCompatPreferenceActivity) getActivity();
-			Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
-			activity.setSupportActionBar(toolbar);
-
-			ActionBar bar = activity.getSupportActionBar();
-			bar.setHomeButtonEnabled(true);
-			bar.setDisplayHomeAsUpEnabled(true);
-			bar.setDisplayShowTitleEnabled(true);
-			bar.setHomeAsUpIndicator(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
-			bar.setTitle(getPreferenceScreen().getTitle());
-		}
-		return layout;
 	}
 
 	private void initSummary(Preference pref) {
@@ -258,8 +208,12 @@ public abstract class BasePreferenceFragment extends PreferenceFragment implemen
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		handlePreferenceChange(findPreference(key), sharedPreferences, key);
 		final Preference preference = findPreference(key);
-		if (preference instanceof ListPreference)
-			preference.setSummary(((ListPreference) preference).getEntry());
+		if (preference instanceof ListPreference) {
+            preference.setSummary(((ListPreference) preference).getEntry());
+        } else if (preference instanceof  CheckBoxPreference) {
+            CheckBoxPreference checkPreference = (CheckBoxPreference) preference;
+            checkPreference.setChecked(sharedPreferences.getBoolean(key,false));
+        }
 	}
 
     @Override
@@ -270,28 +224,23 @@ public abstract class BasePreferenceFragment extends PreferenceFragment implemen
                 File bg = Util.handleImagePick(getActivity(), KEY_STYLE_BG_PATH, data);
 
                 if (bg != null) {
-                    SharedPreferences preferences = DsaTabApplication.getPreferences();
+                    SharedPreferences preferences = getPreferenceManager().getSharedPreferences();
                     SharedPreferences.Editor edit = preferences.edit();
                     edit.putString(KEY_STYLE_BG_PATH, bg.getAbsolutePath());
-                    edit.commit();
+                    edit.apply();
 
                     ViewUtils.snackbar(this, R.string.message_background_image_changed, Snackbar.LENGTH_SHORT);
                 }
             } else if (requestCode == ACTION_PICK_BG_WOUNDS_PATH) {
                 File bg = Util.handleImagePick(getActivity(), KEY_STYLE_BG_WOUNDS_PATH, data);
                 if (bg != null) {
-                    SharedPreferences preferences = DsaTabApplication.getPreferences();
+                    SharedPreferences preferences = getPreferenceManager().getSharedPreferences();
                     SharedPreferences.Editor edit = preferences.edit();
                     edit.putString(KEY_STYLE_BG_WOUNDS_PATH, bg.getAbsolutePath());
-                    edit.commit();
+                    edit.apply();
 
                     ViewUtils.snackbar(this, R.string.message_background_image_changed, Snackbar.LENGTH_SHORT);
                 }
-            } else if (requestCode == REQUEST_LINK_TO_DBX) {
-                SharedPreferences preferences = DsaTabApplication.getPreferences();
-                SharedPreferences.Editor edit = preferences.edit();
-                edit.putBoolean(KEY_DROPBOX, Boolean.TRUE);
-                edit.commit();
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -372,13 +321,13 @@ public abstract class BasePreferenceFragment extends PreferenceFragment implemen
         } else if (KEY_STYLE_BG_WOUNDS_DELETE.equals(key)) {
             SharedPreferences.Editor edit = preferences.edit();
             edit.remove(KEY_STYLE_BG_WOUNDS_PATH);
-            edit.commit();
+            edit.apply();
             ViewUtils.snackbar(fragment, R.string.message_background_image_reset, Snackbar.LENGTH_SHORT);
             return true;
         } else if (KEY_STYLE_BG_DELETE.equals(key)) {
             SharedPreferences.Editor edit = preferences.edit();
             edit.remove(KEY_STYLE_BG_PATH);
-            edit.commit();
+            edit.apply();
             ViewUtils.snackbar(fragment, R.string.message_background_image_reset, Snackbar.LENGTH_SHORT);
             return true;
         } else if (KEY_SETUP_SDCARD_PATH.equals(key)) {
@@ -395,7 +344,7 @@ public abstract class BasePreferenceFragment extends PreferenceFragment implemen
                     if (directory.exists() && directory.canWrite()) {
                         SharedPreferences.Editor edit = preferences.edit();
                         edit.putString(KEY_SETUP_SDCARD_PATH, dir);
-                        edit.commit();
+                        edit.apply();
                     } else {
                         ViewUtils.snackbar(fragment, R.string.message_no_write_access_in_directory_choose_another,
                                 Snackbar.LENGTH_LONG);
@@ -420,7 +369,7 @@ public abstract class BasePreferenceFragment extends PreferenceFragment implemen
                     if (directory.exists() && directory.canWrite()) {
                         SharedPreferences.Editor edit = preferences.edit();
                         edit.putString(KEY_SETUP_SDCARD_HERO_PATH, dir);
-                        edit.commit();
+                        edit.apply();
                     } else {
                         ViewUtils.snackbar(fragment, R.string.message_no_write_access_in_directory_choose_another,
                                 Snackbar.LENGTH_LONG);
@@ -440,30 +389,6 @@ public abstract class BasePreferenceFragment extends PreferenceFragment implemen
             edit.commit();
             ViewUtils.snackbar(fragment, R.string.message_tips_reset, Snackbar.LENGTH_SHORT);
             return true;
-        } else if (KEY_DROPBOX.equals(key)) {
-            StorageProvider dropbox = new Dropbox();
-            dropbox.authenticate(context);
-            CheckBoxPreference cb = (CheckBoxPreference) preference;
-
-            if (!dropbox.isAuthenticated()) {
-                DropboxActivity
-                        .launch(context, DsaTabApplication.DROPBOX_API_KEY, DsaTabApplication.DROPBOX_API_SECRET);
-            } else {
-                dropbox.clearSavedCredential(context);
-            }
-            if (cb.isChecked() && !dropbox.isAuthenticated()) {
-                SharedPreferences.Editor edit = preferences.edit();
-                edit.putBoolean(key, false);
-                edit.commit();
-                cb.setChecked(false);
-
-                DropboxActivity
-                        .launch(context, DsaTabApplication.DROPBOX_API_KEY, DsaTabApplication.DROPBOX_API_SECRET);
-            }
-            if (!cb.isChecked() && dropbox.isAuthenticated()) {
-                dropbox.clearSavedCredential(context);
-            }
-
         }
 
         return false;
@@ -490,24 +415,6 @@ public abstract class BasePreferenceFragment extends PreferenceFragment implemen
                         + ": "
                         + sharedPreferences.getString(KEY_SETUP_SDCARD_HERO_PATH,
                         DsaTabApplication.getExternalHeroPath()));
-            } else if (KEY_DROPBOX.equals(key)) {
-                CheckBoxPreference cb = (CheckBoxPreference) preference;
-                Dropbox dropbox = new Dropbox();
-                Task<Result<DrivenException>> task = new Task<Result<DrivenException>>() {
-                    @Override
-                    public void onCompleted(Result<DrivenException> result) {
-
-                    }
-                };
-                if (dropbox.hasSavedCredential(DsaTabApplication.getInstance())) {
-                    dropbox.authenticateAsync(DsaTabApplication.getInstance(), task);
-                }
-                if (sharedPreferences.getBoolean(KEY_DROPBOX, false) != dropbox.isAuthenticated()) {
-                    SharedPreferences.Editor edit = sharedPreferences.edit();
-                    edit.putBoolean(KEY_DROPBOX, dropbox.isAuthenticated());
-                    edit.commit();
-                }
-                cb.setChecked(sharedPreferences.getBoolean(key, dropbox.isAuthenticated()));
             }
         }
     }

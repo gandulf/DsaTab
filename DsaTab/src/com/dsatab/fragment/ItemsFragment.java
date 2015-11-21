@@ -419,7 +419,6 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
      */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menuitem_filter, menu);
         inflater.inflate(R.menu.item_list_menu, menu);
 
@@ -435,6 +434,8 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
                 }
             }
         }
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     /*

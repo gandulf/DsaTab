@@ -11,6 +11,7 @@ import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class DirectoryChooserDialog extends DialogFragment implements DialogInterface.OnClickListener {
+public class DirectoryChooserDialog extends DialogFragment implements AdapterView.OnItemClickListener {
 
 	public static final String TAG = "DirectoryChooserDialogHelper";
 
@@ -131,7 +132,7 @@ public class DirectoryChooserDialog extends DialogFragment implements DialogInte
 		refreshAdapter();
 
 		builder.setTitle("Verzeichnis auswählen");
-		builder.setAdapter(adapter,this);
+		builder.setAdapter(adapter,null);
 
 		builder.setNegativeButton(android.R.string.cancel, null);
 		builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -144,17 +145,19 @@ public class DirectoryChooserDialog extends DialogFragment implements DialogInte
 		});
 
 		AlertDialog dialog = builder.create();
+        dialog.getListView().setOnItemClickListener(this);
 		return dialog;
 	}
 
-	@Override
-	public void onClick(DialogInterface dialogInterface, int pos) {
-		if (pos < 0 || pos >= adapter.getCount())
-			return;
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (position < 0 || position >= adapter.getCount())
+            return;
 
-		currentDir = adapter.getItem(pos);
+        currentDir = adapter.getItem(position);
+        refreshAdapter();
+    }
 
-		refreshAdapter();
-	}
+
 
 }

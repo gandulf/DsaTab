@@ -137,12 +137,13 @@ public class TabListFragment extends BaseRecyclerFragment implements View.OnClic
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
         inflater.inflate(R.menu.menuitem_reset, menu);
 
         if (menu.findItem(R.id.option_reset) != null) {
             menu.findItem(R.id.option_reset).setIcon(ViewUtils.toolbarIcon(getToolbarThemedContext(), MaterialDrawableBuilder.IconValue.BACKUP_RESTORE));
         }
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override

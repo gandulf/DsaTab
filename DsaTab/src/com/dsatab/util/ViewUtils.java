@@ -32,14 +32,20 @@ public class ViewUtils {
 
     public static Drawable circleIcon(Context context, Uri drawableUri) {
         Drawable drawable = ResUtil.getDrawableByUri(context, drawableUri);
-        drawable = drawable.mutate();
-        android.support.v4.graphics.drawable.DrawableCompat.setTint(drawable, context.getResources().getColor(R.color.white));
+        if (drawable!=null) {
+            drawable = drawable.mutate();
+            int circleTint = Util.getThemeColors(context, R.attr.circleTint);
+            android.support.v4.graphics.drawable.DrawableCompat.setTint(drawable,circleTint);
+        }
         return drawable;
     }
     public static Drawable circleIcon(Context context, int drawableId) {
         Drawable drawable = ResourcesCompat.getDrawable(context, drawableId);
-        drawable = drawable.mutate();
-        android.support.v4.graphics.drawable.DrawableCompat.setTint(drawable, context.getResources().getColor(R.color.white));
+        if (drawable!=null) {
+            drawable = drawable.mutate();
+            int circleTint = Util.getThemeColors(context, R.attr.circleTint);
+            android.support.v4.graphics.drawable.DrawableCompat.setTint(drawable, circleTint);
+        }
         return drawable;
     }
 
@@ -120,6 +126,8 @@ public class ViewUtils {
     }
 
     public static void menuIcons(Context context, Menu menu) {
+        ViewUtils.menuIcon(context, menu, R.id.option_about, MaterialDrawableBuilder.IconValue.INFORMATION_OUTLINE);
+        ViewUtils.menuIcon(context, menu, R.id.option_donate, MaterialDrawableBuilder.IconValue.GIFT);
 
         ViewUtils.menuIcon(context, menu, R.id.option_move, MaterialDrawableBuilder.IconValue.SWAP_HORIZONTAL);
         ViewUtils.menuIcon(context, menu, R.id.option_equipped, MaterialDrawableBuilder.IconValue.HANGER);
@@ -175,6 +183,8 @@ public class ViewUtils {
 
         ViewUtils.menuIcon(context, menu, R.id.option_take_hit, MaterialDrawableBuilder.IconValue.HEART_BROKEN);
         ViewUtils.menuIcon(context, menu, R.id.option_list_items, MaterialDrawableBuilder.IconValue.TSHIRT_CREW);
+
+        ViewUtils.menuIcon(context, menu, R.id.option_settings, MaterialDrawableBuilder.IconValue.SETTINGS);
 
     }
 }

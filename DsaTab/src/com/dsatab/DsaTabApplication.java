@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Bitmap;
-import android.graphics.Typeface;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.multidex.MultiDexApplication;
@@ -46,10 +44,12 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-public class DsaTabApplication extends MultiDexApplication implements OnSharedPreferenceChangeListener {
+import pl.tajchert.nammu.Nammu;
 
-	public static final int HS_VERSION_INT = 5410;
-	public static final String HS_VERSION = "5.4.1";
+public class DsaTabApplication extends MultiDexApplication {
+
+	public static final int HS_VERSION_INT = 5510;
+	public static final String HS_VERSION = "5.5.1";
 
 	public static final String TILESOURCE_AVENTURIEN = "AVENTURIEN";
 
@@ -81,15 +81,13 @@ public class DsaTabApplication extends MultiDexApplication implements OnSharedPr
 	public static final String THEME_DARK_PLAIN = "dark_plain";
 	public static final String THEME_DEFAULT = THEME_LIGHT_PLAIN;
 
-	public static final String DIR_HEROES = "heroes";
-
 	// instance
 	private static DsaTabApplication instance = null;
 
 	/**
 	 * Cache for corrected path
 	 */
-	private static String basePath, heroPath;
+    private static File baseFile;
 
 	public Hero hero = null;
 
@@ -98,8 +96,6 @@ public class DsaTabApplication extends MultiDexApplication implements OnSharedPr
 	private DatabaseHelper databaseHelper = null;
 
 	private HeroExchange exchange;
-
-	private Typeface poorRichFont;
 
 	private boolean firstRun;
 	private boolean newsShown = false;
@@ -127,10 +123,12 @@ public class DsaTabApplication extends MultiDexApplication implements OnSharedPr
 	}
 
 	public static File getDirectory(String name) {
-        File[] dirFiles = ContextCompat.getExternalFilesDirs(getInstance(), name);
-        File dirFile = null;
-        if (dirFiles !=null && dirFiles.length>0)
-            dirFile = dirFiles[0];
+        File dirFile;
+        if (name != null) {
+            dirFile = new File(getDsaTabDirectory(), name);
+        } else {
+            dirFile = getDsaTabDirectory();
+        }
 
 		if (!dirFile.exists())
 			dirFile.mkdirs();
@@ -138,23 +136,11 @@ public class DsaTabApplication extends MultiDexApplication implements OnSharedPr
 		return dirFile;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.content.SharedPreferences.OnSharedPreferenceChangeListener#
-	 * onSharedPreferenceChanged(android.content.SharedPreferences, java.lang.String)
-	 */
-	@Override
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-		if (key.equals(DsaTabPreferenceActivity.KEY_SETUP_SDCARD_HERO_PATH)) {
-			heroPath = null;
-		}
-	}
 
-	@Deprecated
-	private static String getDsaTabPath() {
-		if (basePath == null) {
-			basePath = getPreferences().getString(DsaTabPreferenceActivity.KEY_SETUP_SDCARD_PATH, DEFAULT_SD_CARD);
+
+	private static File getDsaTabDirectory() {
+		if (baseFile == null) {
+			String basePath = getPreferences().getString(DsaTabPreferenceActivity.KEY_SETUP_SDCARD_PATH, DEFAULT_SD_CARD);
 
 			if (!basePath.endsWith("/"))
 				basePath += "/";
@@ -162,13 +148,14 @@ public class DsaTabApplication extends MultiDexApplication implements OnSharedPr
 			if (!basePath.startsWith("/"))
 				basePath = SD_CARD_PATH_PREFIX + basePath;
 
+            baseFile = new File(basePath);
 		}
 
-		return basePath;
+		return baseFile;
 	}
 
-	public static File getInternalHeroDirectory() {
-		return getDirectory(DIR_HEROES);
+	public static File getHeroDirectory() {
+		return new File(getExternalHeroPath());
 	}
 
 	public static File getDirectory() {
@@ -176,17 +163,15 @@ public class DsaTabApplication extends MultiDexApplication implements OnSharedPr
 	}
 
 	public static String getExternalHeroPath() {
-		if (heroPath == null) {
-			heroPath = getPreferences().getString(DsaTabPreferenceActivity.KEY_SETUP_SDCARD_HERO_PATH, DEFAULT_SD_CARD);
 
-			if (!heroPath.endsWith("/"))
-				heroPath += "/";
+		String	heroPath = getPreferences().getString(DsaTabPreferenceActivity.KEY_SETUP_SDCARD_HERO_PATH, DEFAULT_SD_CARD);
 
-			if (!heroPath.startsWith("/")) {
-				heroPath = SD_CARD_PATH_PREFIX + heroPath;
-			}
+        if (!heroPath.endsWith("/"))
+            heroPath += "/";
 
-		}
+        if (!heroPath.startsWith("/")) {
+            heroPath = SD_CARD_PATH_PREFIX + heroPath;
+        }
 
 		return heroPath;
 	}
@@ -275,14 +260,10 @@ public class DsaTabApplication extends MultiDexApplication implements OnSharedPr
 
 		configuration = new DsaTabConfiguration(this);
 
-		poorRichFont = Typeface.createFromAsset(this.getAssets(), "fonts/poorich.ttf");
-
 		if (!BuildConfig.DEBUG)
 			Mint.initAndStartSession(this, BUGSENSE_API_KEY);
 
 		migrateDirectories();
-
-		getPreferences().registerOnSharedPreferenceChangeListener(this);
 
 		firstRun = getPreferences().getBoolean("dsaTabFirstRun", true);
 
@@ -326,34 +307,26 @@ public class DsaTabApplication extends MultiDexApplication implements OnSharedPr
 		ImageLoader.getInstance().init(config);
 
 		exchange = new HeroExchange(getBaseContext());
-	}
+
+
+        Nammu.init(getApplicationContext());
+    }
 
 	private void migrateDirectories() {
-		File oldDir = new File(getDsaTabPath());
-
-		if (oldDir.isDirectory()) {
-
-			File[] files = oldDir.listFiles();
-
-			if (files != null) {
-				for (File f : files) {
-
-					if (f.isDirectory()) {
-						File newfile = getInstance().getExternalFilesDir(f.getName());
-						f.renameTo(newfile);
-					} else {
-						File newfile = new File(getDirectory(), f.getName());
-						f.renameTo(newfile);
-					}
-				}
-			}
-
-			files = oldDir.listFiles();
-			if (files == null || files.length == 0) {
-				oldDir.delete();
-			}
-		}
-
+        File[] oldDirs = ContextCompat.getExternalFilesDirs(getApplicationContext(), null);
+        if (oldDirs!=null) {
+            for (File oldDir : oldDirs) {
+                if (oldDir !=null && oldDir.isDirectory()) {
+                    File[] files = oldDir.listFiles();
+                    if (files != null) {
+                        for (File f : files) {
+                            File newFile = new File(getDsaTabDirectory(), f.getName());
+                            f.renameTo(newFile);
+                        }
+                    }
+                }
+            }
+        }
 	}
 
 	public boolean isFirstRun() {

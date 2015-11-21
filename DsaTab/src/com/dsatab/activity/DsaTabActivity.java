@@ -1,5 +1,6 @@
 package com.dsatab.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.LoaderManager;
@@ -64,6 +65,8 @@ import java.util.Collections;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import pl.tajchert.nammu.Nammu;
+import pl.tajchert.nammu.PermissionCallback;
 
 public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceChangeListener, NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
 
@@ -112,6 +115,8 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
     private TabFragmentPagerAdapter tabPagerAdapter;
 
     private long backPressed;
+
+
 
     private static class HeroLoaderCallback implements LoaderManager.LoaderCallbacks<Hero> {
 
@@ -397,15 +402,34 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
             return;
         }
 
-
         initViewPager();
         initDrawer();
-        boolean heroLoaded = initHero();
-        if (!heroLoaded) {
-            showHeroChooser();
-        }
+
         if (DsaTabApplication.getPreferences().getBoolean(DsaTabIntro.KEY_APP_INTRO,true)) {
+            // we already ask inside intro need to ask again
+            boolean heroLoaded = initHero();
+            if (!heroLoaded) {
+                showHeroChooser();
+            }
+
             startActivity(new Intent(this, DsaTabIntro.class));
+
+        } else {
+
+            Nammu.askForPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
+                @Override
+                public void permissionGranted() {
+                    boolean heroLoaded = initHero();
+                    if (!heroLoaded) {
+                        showHeroChooser();
+                    }
+                }
+
+                @Override
+                public void permissionRefused() {
+                    ViewUtils.snackbar(DsaTabActivity.this,"Ohne Schreibrechte kann DsaTab leider keine Heldendaten speichern.");
+                }
+            });
         }
     }
 
@@ -446,7 +470,7 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
     private void setupDrawerItems(Hero hero) {
         List<TabInfo> tabs;
         if (hero != null && hero.getHeroConfiguration() != null)
-            tabs = hero.getHeroConfiguration().getActiveTabs();
+            tabs = hero.getHeroConfiguration().getActiveTabs(hero);
         else
             tabs = Collections.emptyList();
 
@@ -504,7 +528,7 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
     private void setupViewPager(Hero hero) {
         List<TabInfo> tabs;
         if (hero != null && hero.getHeroConfiguration() != null)
-            tabs = hero.getHeroConfiguration().getActiveTabs();
+            tabs = hero.getHeroConfiguration().getActiveTabs(hero);
         else
             tabs = Collections.emptyList();
 
@@ -556,12 +580,12 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
 
     private TabInfo refreshTabInfo(int defaultTabIndex) {
 
-        if (getHeroConfiguration() == null) {
+        if (getHero() == null || getHeroConfiguration() == null) {
             tabInfo = null;
             return null;
         }
 
-        List<TabInfo> tabs = getHeroConfiguration().getActiveTabs();
+        List<TabInfo> tabs = getHeroConfiguration().getActiveTabs(getHero());
 
         if (tabs.isEmpty()) {
             tabInfo = null;
@@ -699,14 +723,13 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
     }
 
     protected void onHeroLoaded(Hero hero) {
-
-        if (hero == null) {
-            Snackbar.make(mDrawerLayout, R.string.message_load_hero_failed, Snackbar.LENGTH_LONG).show();
-            return;
-        }
         setupDrawerItems(hero);
         setupViewPager(hero);
         updatePortrait(hero);
+
+        if (hero == null) {
+            Snackbar.make(mDrawerLayout, R.string.message_load_hero_failed, Snackbar.LENGTH_LONG).show();
+        }
     }
 
     private void unregisterShakeDice() {
@@ -731,8 +754,7 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
         // update drawer profile
         if (being instanceof Hero) {
             Hero hero = (Hero) being;
-
-            if (hero != null && hero.getFileInfo() != null && mDrawerHeaderItem!=null) {
+            if (hero.getFileInfo() != null && mDrawerHeaderItem!=null) {
                 // -- header
 
                 HeroFileInfo heroInfo = hero.getFileInfo();
@@ -753,25 +775,32 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
     protected void updateBackdrop(TabInfo tabInfo) {
         ImageView portraitView = (ImageView) findViewById(R.id.toolbar_portrait);
 
-        int backdropImage = tabInfo!=null ? tabInfo.getBackdropImage(): 0;
-        if (backdropImage != 0) {
-            portraitView.setImageResource(backdropImage);
-        } else {
-            Util.setImage(portraitView, getHero() != null ? getHero().getPortraitUri() : null, R.drawable.backdrop_dsa);
-        }
-
-        View description = findViewById(R.id.gen_description);
-        View info = findViewById(R.id.toolbar_info);
-        if (info != null) {
-            if (description == null) {
-                info.setVisibility(View.GONE);
+        if (tabInfo!=null) {
+            if (mDrawerHeaderItem!=null)
+                mDrawerHeaderItem.setVisibility(View.VISIBLE);
+            int backdropImage = tabInfo.getBackdropImage();
+            if (backdropImage != 0) {
+                portraitView.setImageResource(backdropImage);
             } else {
-                if (description.getVisibility() == View.VISIBLE) {
-                    info.setVisibility(View.VISIBLE);
-                } else {
+                Util.setImage(portraitView, getHero() != null ? getHero().getPortraitUri() : null, R.drawable.backdrop_dsa);
+            }
+
+            View description = findViewById(R.id.gen_description);
+            View info = findViewById(R.id.toolbar_info);
+            if (info != null) {
+                if (description == null) {
                     info.setVisibility(View.GONE);
+                } else {
+                    if (description.getVisibility() == View.VISIBLE) {
+                        info.setVisibility(View.VISIBLE);
+                    } else {
+                        info.setVisibility(View.GONE);
+                    }
                 }
             }
+        } else {
+            if (mDrawerHeaderItem!=null)
+                mDrawerHeaderItem.setVisibility(View.GONE);
         }
 
     }
@@ -823,7 +852,7 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
         if (getHeroConfiguration() != null && getHeroConfiguration().getTabs() != null) {
             Editor edit = preferences.edit();
 
-            int tabIndex = getHeroConfiguration().getActiveTabs().indexOf(tabInfo);
+            int tabIndex = getHeroConfiguration().getActiveTabs(getHero()).indexOf(tabInfo);
             edit.putInt(TAB_INDEX, tabIndex);
             edit.commit();
         }

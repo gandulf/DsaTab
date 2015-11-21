@@ -10,17 +10,20 @@
 
         android:showAsAction="withText|ifRoom"
         app:showAsAction="withText|ifRoom"
-        android:title="Verbinden">
+        android:title="Cloud Connect">
         <menu>
             <item
                 android:id="@+id/option_connect_dropbox"
-                android:title="Dropbox"/>
+                android:title="Dropbox"
+                android:checkable="true" />
             <item
                 android:id="@+id/option_connect_drive"
-                android:title="Google Drive"/>
+                android:title="Google Drive"
+                android:checkable="true" />
             <item
                 android:id="@+id/option_connect_heldenaustausch"
-                android:title="Heldenaustausch"/>
+                android:title="Heldenaustausch"
+                android:checkable="true" />
         </menu>
     </item>
     <item
@@ -29,5 +32,11 @@
         app:showAsAction="withText|ifRoom"
         android:title="Beispiel Helden laden"
         android:visible="false"/>
+
+    <item
+        android:id="@+id/option_settings"
+        android:showAsAction="withText|ifRoom"
+        app:showAsAction="withText|ifRoom"
+        android:title="Einstellungen" />
 
 </menu>

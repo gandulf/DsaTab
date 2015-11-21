@@ -5,7 +5,8 @@
 
         <attr name="buttonStyleLeft" format="reference"/>
         <attr name="buttonStyleRight" format="reference"/>
-        
+        <attr name="cardViewStyle" format ="reference" />
+
         <attr name="listItemBackground" format="reference"/>
         <attr name="slidingPaneShadowBackground" format="reference"/>        
 
@@ -27,6 +28,11 @@
         <attr name="imgBarSet1" format="reference"/>
         <attr name="imgBarSet2" format="reference"/>
         <attr name="imgBarSet3" format="reference"/>
+
+        <attr name="circleTint" format="reference|color" />
+        <attr name="circleColor" format="reference|color" />
+        <attr name="circleButtonStyle" format="reference" />
+        <attr name="circleViewStyle" format="reference" />
                 
     </declare-styleable>
         

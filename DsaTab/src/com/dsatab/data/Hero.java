@@ -158,6 +158,10 @@ public class Hero extends AbstractBeing {
 	public void setHeroConfiguration(HeroConfiguration configuration) {
 		this.configuration = configuration;
 
+        configuration.setStorageType(fileInfo.getStorageType());
+        configuration.setStorageHeroId(fileInfo.getRemoteHeroId());
+        configuration.setStorageConfigId(fileInfo.getRemoteConfigId());
+
 		// refill modificators
 		// clear modificators no make sure the user defined ones are loaded into modificators map too
 		this.modificators = null;
@@ -1711,6 +1715,11 @@ public class Hero extends AbstractBeing {
 		getHeroConfiguration().setCombatStyle(style);
 	}
 
+
+    public boolean hasSpells() {
+        return spellsByName!=null && !spellsByName.isEmpty();
+    }
+
 	public Map<String, Spell> getSpells() {
 		return spellsByName;
 	}
@@ -1984,6 +1993,10 @@ public class Hero extends AbstractBeing {
 	public void addAnimal(Animal animal) {
 		this.animals.add(animal);
 	}
+
+    public boolean hasAnimals() {
+        return animals!=null && !animals.isEmpty();
+    }
 
 	public List<Animal> getAnimals() {
 		return animals;

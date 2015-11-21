@@ -1,6 +1,10 @@
 <changelog>
 
-<release version="4.4.0-beta2" versioncode="99">
+    <release version="4.4.3" versioncode="103">
+        <fix>Dark Theme verbessert</fix>
+    </release>
+
+    <release version="4.4.0" versioncode="100">
     <change>Intro Dialog</change>
     <change>Material Style durchgängig integriert</change>
     <change>Material Icons</change>

@@ -21,13 +21,11 @@
 
         <ImageView
             android:id="@android:id/icon1"
+            style="?attr/circleViewStyle"
             android:layout_width="@dimen/icon_button_size"
             android:layout_height="@dimen/icon_button_size"
             android:layout_marginLeft="@dimen/default_gap"
             android:layout_gravity="center_vertical"
-            android:scaleType="centerInside"
-            android:background="@drawable/fcb_circle_front"
-            android:tint="@color/circle_tint"
             tools:src="@drawable/vd_biceps"/>
 
         <FrameLayout

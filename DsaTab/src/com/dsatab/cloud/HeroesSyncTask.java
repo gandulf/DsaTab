@@ -59,27 +59,14 @@ public class HeroesSyncTask extends AsyncTaskLoader<List<HeroFileInfo>> {
 
 		try {
 			List<HeroFileInfo> heroes = new ArrayList<HeroFileInfo>();
-
 			for (StorageType type : HeroExchange.storageTypes) {
 				try {
-					heroes.addAll(exchange.getHeroes(type));
+                    HeroFileInfo.merge(heroes, exchange.getHeroes(type));
 				} catch (Exception e) {
 					exception.add(e);
 				}
 			}
-
-			List<HeroFileInfo> fileInfos = new ArrayList<HeroFileInfo>();
-			for (HeroFileInfo fileInfo : heroes) {
-				int index = fileInfos.indexOf(fileInfo);
-				if (index >= 0) {
-					HeroFileInfo info = fileInfos.get(index);
-					info.merge(fileInfo);
-				} else {
-					fileInfos.add(fileInfo);
-				}
-			}
-
-			return fileInfos;
+			return heroes;
 		} catch (Exception e) {
 			exception.add(e);
 			return Collections.emptyList();

@@ -6,7 +6,6 @@ import android.app.LoaderManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
-import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,12 +27,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bingzer.android.driven.Credential;
+import com.bingzer.android.driven.DrivenException;
+import com.bingzer.android.driven.Result;
+import com.bingzer.android.driven.StorageProvider;
+import com.bingzer.android.driven.contracts.Task;
+import com.bingzer.android.driven.dropbox.Dropbox;
 import com.bingzer.android.driven.dropbox.app.DropboxActivity;
+import com.bingzer.android.driven.gdrive.GoogleDrive;
 import com.bingzer.android.driven.gdrive.app.GoogleDriveActivity;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.cloud.AuthorizationException;
+import com.dsatab.cloud.HeldenAustauschProvider;
 import com.dsatab.cloud.HeroExchange;
 import com.dsatab.cloud.HeroExchange.OnHeroExchangeListener;
 import com.dsatab.cloud.HeroExchange.StorageType;
@@ -79,10 +86,9 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
 
     private View loadingView;
     private TextView empty;
-    private AlertDialog heldenAustauschDialog;
 
     public interface OnHeroSelectedListener {
-        public void onHeroSelected(HeroFileInfo heroFileInfo);
+        void onHeroSelected(HeroFileInfo heroFileInfo);
     }
 
     private OnHeroSelectedListener onHeroSelectedListener;
@@ -151,7 +157,6 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
 
 
             adapter.notifyDataSetChanged();
-
 
             mode.finish();
             return true;
@@ -286,26 +291,8 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
 
         exchange = DsaTabApplication.getInstance().getExchange();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-        final EditText editText = new EditText(builder.getContext());
-        editText.setHint("Helden-Austausch Token");
-        editText.setText(DsaTabApplication.getPreferences().getString(DsaTabPreferenceActivity.KEY_EXCHANGE_TOKEN, ""));
-        builder.setTitle("Berechtigungstoken der Heldenaustauschseite");
-        builder.setView(editText);
-        builder.setNegativeButton(android.R.string.cancel, null);
-        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Editor editor = DsaTabApplication.getPreferences().edit();
-                editor.putString(DsaTabPreferenceActivity.KEY_EXCHANGE_TOKEN, editText.getText().toString());
-                editor.commit();
-            }
-        });
-        heldenAustauschDialog = builder.create();
-
         getLoaderManager().initLoader(LOCAL_LOADER, null, this);
+
     }
 
     private void loadExampleHeroes() {
@@ -313,7 +300,7 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
         FileOutputStream fos = null;
         InputStream fis = null;
         try {
-            File out = new File(DsaTabApplication.getInternalHeroDirectory(), DUMMY_FILE);
+            File out = new File(DsaTabApplication.getHeroDirectory(), DUMMY_FILE);
             fos = new FileOutputStream(out);
             fis = new BufferedInputStream(getResources().getAssets().open(DUMMY_FILE));
             byte[] buffer = new byte[8 * 1024];
@@ -338,7 +325,7 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
     public Loader<List<HeroFileInfo>> onCreateLoader(int id, Bundle args) {
         if (id == LOCAL_LOADER) {
             return new HeroesLoaderTask(getActivity());
-        } else {
+        } else { // Remote Loader
             return new HeroesSyncTask(getActivity(), exchange);
         }
     }
@@ -354,7 +341,7 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
     @Override
     public void onLoadFinished(Loader<List<HeroFileInfo>> loader, List<HeroFileInfo> heroes) {
         // if the loader finishes after activity is gone already just skip it
-        if (getActionBarActivity() == null)
+        if (getActivity() == null)
             return;
 
         getBaseActivity().setToolbarRefreshing(false);
@@ -382,18 +369,16 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
                     Debug.error(e);
                 }
             }
-
-            List<HeroFileInfo> fileInfos = adapter.getItems();
             for (HeroFileInfo fileInfo : heroes) {
-                int index = fileInfos.indexOf(fileInfo);
+                int index = adapter.indexOf(fileInfo);
                 if (index >= 0) {
-                    HeroFileInfo info = fileInfos.get(index);
+                    HeroFileInfo info = adapter.getItem(index);
                     info.merge(fileInfo);
+                    adapter.notifyItemChanged(index);
                 } else {
                     adapter.add(fileInfo);
                 }
             }
-            adapter.notifyDataSetChanged();
         } else if (loader instanceof HeroesLoaderTask) {
             HeroesLoaderTask heroLoader = (HeroesLoaderTask) loader;
 
@@ -422,9 +407,15 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
         }
     }
 
-    protected void refresh(int loader) {
+    protected void refresh(final int loader) {
         getBaseActivity().setToolbarRefreshing(true);
-        getActivity().getLoaderManager().restartLoader(loader, null, this);
+
+        exchange.connect(getActivity(), new Task<Result<DrivenException>>() {
+            @Override
+            public void onCompleted(Result<DrivenException> result) {
+                getActivity().getLoaderManager().restartLoader(loader, null, HeroChooserFragment.this);
+            }
+        });
     }
 
     /*
@@ -443,19 +434,22 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
 
         menuItem = menu.findItem(R.id.option_connect_dropbox);
         if (menuItem != null) {
-            menuItem.setVisible(!exchange.isConnected(StorageType.Dropbox));
+            menuItem.setChecked(exchange.isConnected(getActivity(), StorageType.Dropbox));
         }
-
         menuItem = menu.findItem(R.id.option_connect_drive);
         if (menuItem != null) {
-            menuItem.setVisible(!exchange.isConnected(StorageType.Drive));
+            menuItem.setChecked(exchange.isConnected(getActivity(), StorageType.Drive));
+        }
+        menuItem = menu.findItem(R.id.option_connect_heldenaustausch);
+        if (menuItem != null) {
+            menuItem.setChecked(exchange.isConnected(getActivity(), StorageType.HeldenAustausch));
         }
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.herochooser_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -468,18 +462,105 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
                 loadExampleHeroes();
                 break;
             case R.id.option_connect_dropbox:
-                if (!exchange.isConnected(StorageType.Dropbox)) {
-                    DropboxActivity.launch(getActivity(), CONNECT_EXCHANGE_RESULT, DsaTabApplication.DROPBOX_API_KEY,
+                if (!exchange.isConnected(getActivity(), StorageType.Dropbox)) {
+                    Intent intent = DropboxActivity.createLoginIntent(getActivity(), DsaTabApplication.DROPBOX_API_KEY,
                             DsaTabApplication.DROPBOX_API_SECRET);
+                    startActivityForResult(intent, CONNECT_EXCHANGE_RESULT);
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Dropbox");
+                    builder.setMessage("Dropbox Synchronisation aufheben?");
+                    builder.setPositiveButton("Aufheben", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            StorageProvider dropbox = new Dropbox();
+
+                            dropbox.clearSavedCredentialAsync(getActivity(), new Task<Result<DrivenException>>() {
+                                @Override
+                                public void onCompleted(Result<DrivenException> result) {
+                                    if (!result.isSuccess()) {
+                                        if (result.getException() != null)
+                                            ViewUtils.snackbar(getActivity(), "Konnte Dropbox nicht deaktivieren: " + result.getException().getLocalizedMessage());
+                                        else
+                                            ViewUtils.snackbar(getActivity(), "Konnte Dropbox nicht deaktivieren.");
+                                    }
+                                }
+                            });
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    builder.show();
                 }
                 return true;
             case R.id.option_connect_drive:
-                if (!exchange.isConnected(StorageType.Drive)) {
-                    GoogleDriveActivity.launch(getActivity(), CONNECT_EXCHANGE_RESULT);
+                if (!exchange.isConnected(getActivity(), StorageType.Drive)) {
+                    Intent intent = GoogleDriveActivity.createLoginIntent(getActivity());
+                    startActivityForResult(intent, CONNECT_EXCHANGE_RESULT);
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Google Drive");
+                    builder.setMessage("Drive Synchronisation aufheben?");
+                    builder.setPositiveButton("Aufheben", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            StorageProvider drive = new GoogleDrive();
+
+                            drive.clearSavedCredentialAsync(getActivity(), new Task<Result<DrivenException>>() {
+                                @Override
+                                public void onCompleted(Result<DrivenException> result) {
+                                    if (!result.isSuccess()) {
+                                        if (result.getException() != null)
+                                            ViewUtils.snackbar(getActivity(), "Konnte Drive nicht deaktivieren: " + result.getException().getLocalizedMessage());
+                                        else
+                                            ViewUtils.snackbar(getActivity(), "Konnte Drive nicht deaktivieren.");
+                                    }
+                                }
+                            });
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.setNegativeButton(android.R.string.cancel, null);
+
+                    builder.show();
                 }
                 return true;
             case R.id.option_connect_heldenaustausch:
-                heldenAustauschDialog.show();
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                final EditText editText = new EditText(builder.getContext());
+                editText.setHint("Helden-Austausch Token");
+                editText.setText(DsaTabApplication.getPreferences().getString(DsaTabPreferenceActivity.KEY_EXCHANGE_TOKEN, ""));
+                builder.setTitle("Berechtigungstoken der Heldenaustauschseite");
+                builder.setView(editText);
+                builder.setNegativeButton(android.R.string.cancel, null);
+                builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String token = editText.getText().toString();
+                        HeldenAustauschProvider provider = new HeldenAustauschProvider();
+                        if (TextUtils.isEmpty(token)) {
+                            provider.clearSavedCredential(getActivity());
+                        } else {
+                            Credential credential = new Credential(getActivity());
+                            credential.setAccountName(editText.getText().toString());
+                            provider.authenticate(credential);
+                        }
+                    }
+                });
+                builder.show();
+
+                return true;
+            case R.id.option_settings:
+                Intent intent = new Intent (getActivity(),DsaTabPreferenceActivity.class);
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -585,6 +666,7 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
                         holder.tag1.setText("Austausch");
                         holder.tag1.setBackgroundColor(holder.tag1.getContext().getResources().getColor(R.color.ValueYellowAlpha));
                         holder.tag1.setVisibility(View.VISIBLE);
+                        break;
                     default:
                         holder.tag1.setVisibility(View.GONE);
                         break;
@@ -624,7 +706,6 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
 
     @Override
     public void onItemClicked(BaseRecyclerAdapter adapter, int position, View v) {
-
         if (mMode != null) {
             if (!mRecyclerViewSelectionManager.getSelectedPositions().isEmpty()) {
                 mMode.invalidate();
@@ -633,30 +714,9 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
             }
         } else {
             mRecyclerViewSelectionManager.setSelected(position, false);
-
             HeroFileInfo hero = this.adapter.getItem(position);
-            if (hero.getStorageType() == StorageType.HeldenAustausch) {
-                OnHeroExchangeListener listener = new OnHeroExchangeListener() {
-                    @Override
-                    public void onHeroInfoLoaded(List<HeroFileInfo> infos) {
-                        if (infos != null && !infos.isEmpty()) {
-                            if (onHeroSelectedListener != null) {
-                                onHeroSelectedListener.onHeroSelected(infos.get(0));
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onError(String errorMessage, Throwable exception) {
-                        ViewUtils.snackbar(getActivity(), errorMessage, Snackbar.LENGTH_LONG);
-                    }
-                };
-
-                exchange.download(hero, listener);
-            } else {
-                if (onHeroSelectedListener != null) {
-                    onHeroSelectedListener.onHeroSelected(hero);
-                }
+            if (onHeroSelectedListener != null) {
+                onHeroSelectedListener.onHeroSelected(hero);
             }
         }
     }

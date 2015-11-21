@@ -20,7 +20,11 @@ import com.github.clans.fab.FloatingActionButton;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 
+import pl.tajchert.nammu.Nammu;
+
 public class BaseActivity extends AppCompatActivity {
+
+    public static final int REQUEST_CODE_STORAGE = 1;
 
     protected Toolbar toolbar;
     protected CollapsingToolbarLayout toolbarCollapse;
@@ -100,16 +104,27 @@ public class BaseActivity extends AppCompatActivity {
 
     public void setToolbarRefreshing(boolean toolbarRefreshing) {
         this.toolbarRefreshing = toolbarRefreshing;
-        if (toolbarRefreshing) {
-            View loading = findViewById(R.id.loading);
-            if (loading!=null)
+        View loading = findViewById(R.id.loading);
+        if (loading != null) {
+
+            if (toolbarRefreshing) {
                 loading.setVisibility(View.VISIBLE);
-        } else {
-            View loading = findViewById(R.id.loading);
-            if (loading!=null)
+                loading.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onToolbarRefreshingClicked();
+                    }
+                });
+            } else {
                 loading.setVisibility(View.GONE);
+                loading.setOnClickListener(null);
+            }
         }
         supportInvalidateOptionsMenu();
+    }
+
+    public void onToolbarRefreshingClicked() {
+        setToolbarRefreshing(false);
     }
 
     @Override
@@ -197,5 +212,12 @@ public class BaseActivity extends AppCompatActivity {
         getToolbar().setNavigationOnClickListener(listener);
     }
 
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        Nammu.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 
 }

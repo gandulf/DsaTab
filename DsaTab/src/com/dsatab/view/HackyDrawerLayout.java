@@ -27,6 +27,8 @@ public class HackyDrawerLayout extends DrawerLayout {
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         try {
             return super.onInterceptTouchEvent(ev);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return false;
         } catch (IllegalArgumentException e) {
             return false;
         }

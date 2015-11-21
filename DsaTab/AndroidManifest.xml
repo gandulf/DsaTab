@@ -3,13 +3,7 @@
     package="com.dsatab"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:installLocation="auto"
-    android:versionCode="99"
-    android:versionName="4.4">
-
-    <uses-sdk
-        android:minSdkVersion="15"
-        android:targetSdkVersion="23"/>
+    android:installLocation="auto">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
@@ -42,7 +36,7 @@
         android:supportsRtl="false"
         android:theme="@style/DsaTabTheme.Light">
         <activity
-            android:name="com.dsatab.activity.DsaTabActivity"
+            android:name=".activity.DsaTabActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustUnspecified">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -56,28 +50,28 @@
             android:label="Intro"/>
 
         <activity
-            android:name="com.dsatab.activity.DsaTabPreferenceActivity"
+            android:name=".activity.DsaTabPreferenceActivity"
             android:label="Einstellungen"/>
 
         <activity
-            android:name="com.dsatab.activity.AboutActivity"
+            android:name=".activity.AboutActivity"
             android:label="Credits, Copyright"/>
         <activity
-            android:name="com.dsatab.activity.ItemsActivity"
+            android:name=".activity.ItemsActivity"
             android:label="Inventar"/>
         <activity
             android:name=".activity.BaseEditActivity"
             android:label="Eintrag bearbeiten"
             />
         <activity
-            android:name="com.dsatab.activity.HeroChooserActivity"
+            android:name=".activity.HeroChooserActivity"
             android:label="Held auswählen"/>
         <activity
-            android:name="com.dsatab.activity.TabEditActivity"
+            android:name=".activity.TabEditActivity"
             android:label="Tab bearbeiten"
             android:windowSoftInputMode="stateHidden"/>
         <activity
-            android:name="com.dsatab.activity.SearchableActivity"
+            android:name=".activity.SearchableActivity"
             android:label="Suche"
             android:launchMode="singleTop">
             <intent-filter>

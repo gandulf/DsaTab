@@ -23,45 +23,33 @@
                 android:summaryOn="Flurry sammelt anonyme Statistiken über die Verwendungsart von DsaTab"
                 android:summaryOff="Das Sammeln von Statistiken ist derzeit leider deaktiviert"
                 android:key="usage_stats" / -->
-                                
-	    <PreferenceCategory android:title="Heldenaustausch Einstellungen"
-                android:summary="Ermöglich es, Helden aus dem Heldenaustausch zu importieren.">
-                        
-            <!-- 
-                <ListPreference
-                	android:icon="@drawable/ic_menu_allfriends"
-                    android:title="Heldenaustausch Provider"
-                    android:summary="Wähle die Webseite aus, die für den Heldenaustausch verwendet werden soll."
-                    android:key="exchange_provider"
-                    android:defaultValue="http://helden.draschenfels.de/"
-                    android:entries="@array/heldenAustauschProvider"
-                    android:entryValues="@array/heldenAustauschProviderValues"/>
-                <EditTextPreference
-                	android:icon="@drawable/ic_menu_friendslist"
-                	android:title="Benutzername"
-                	android:summary="Benutzername der Heldenaustauschseite"
-                	android:key="exchange_username" />                
-                <EditTextPreference
-                	android:icon="@drawable/ic_menu_account_list"
-                	android:title="Password"
-                	android:summary="Password der Heldenaustauschseite"
-                	android:key="exchange_password" />
-            -->
-                <EditTextPreference                	
-                	android:title="Token"
-                	android:summary="Berechtigungstoken der Heldenaustauschseite:"
-                	android:key="exchange_token"
-                	android:defaultValue="4f7d52da382bbf83ecc9611241e4bf27d3754fa357113a7bbec8340711b7ea48" />
-        
-                
-                <CheckBoxPreference
-                	android:title="@string/pref_dropbox_title"                	
-                	android:summaryOn="@string/pref_dropbox_description_on"
-                	android:summaryOff="@string/pref_dropbox_description_off"
-                	android:defaultValue="false"
-                	android:key="dropbox" />
-        </PreferenceCategory>   
-        
+    <!--
+<PreferenceCategory android:title="Heldenaustausch Einstellungen"
+        android:summary="Ermöglich es, Helden aus dem Heldenaustausch zu importieren.">
+
+
+        <ListPreference
+            android:icon="@drawable/ic_menu_allfriends"
+            android:title="Heldenaustausch Provider"
+            android:summary="Wähle die Webseite aus, die für den Heldenaustausch verwendet werden soll."
+            android:key="exchange_provider"
+            android:defaultValue="http://helden.draschenfels.de/"
+            android:entries="@array/heldenAustauschProvider"
+            android:entryValues="@array/heldenAustauschProviderValues"/>
+        <EditTextPreference
+            android:icon="@drawable/ic_menu_friendslist"
+            android:title="Benutzername"
+            android:summary="Benutzername der Heldenaustauschseite"
+            android:key="exchange_username" />
+        <EditTextPreference
+            android:icon="@drawable/ic_menu_account_list"
+            android:title="Password"
+            android:summary="Password der Heldenaustauschseite"
+            android:key="exchange_password" />
+
+
+</PreferenceCategory>
+-->
 	    <PreferenceCategory android:title="Portraits, Bilder, etc herunterladen"
                 android:summary="Ladet zusätzliche Charakter Portraits, etc. aus dem Internet herunter.">
                 

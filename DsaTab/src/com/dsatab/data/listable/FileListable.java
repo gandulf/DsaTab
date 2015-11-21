@@ -27,7 +27,7 @@ public class FileListable implements Listable {
 		if (file.getName().endsWith(FileListable.PDF_SUFFIX)) {
 			return R.drawable.vd_tied_scroll;
 		} else {
-			return 0;
+            return R.drawable.vd_cubes;
 		}
 	}
 

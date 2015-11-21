@@ -7,6 +7,7 @@ import android.text.TextUtils;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
+import com.dsatab.cloud.HeroExchange;
 import com.dsatab.config.TabInfo;
 import com.dsatab.data.Hero.CombatStyle;
 import com.dsatab.data.Purse.Currency;
@@ -39,6 +40,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -62,6 +64,10 @@ public class HeroConfiguration {
 
 	private static final String FIELD_ACTIVE_CURRENCY = "acticeCurrency";
 
+    private static final String FIELD_STORAGE_TYPE = "storageType";
+    private static final String FIELD_STORAGE_HERO_ID = "storageHeroId";
+    private static final String FIELD_STORAGE_CONFIG_ID = "storageConfigId";
+
 	private List<TabInfo> tabInfos;
 
 	private List<CustomModificator> modificators;
@@ -80,16 +86,15 @@ public class HeroConfiguration {
 	private boolean leModifierActive;
 	private boolean auModifierActive;
 
-	private Hero hero;
-
 	private Map<String, String> properties;
 
+
+    private HeroExchange.StorageType storageType;
+    private String storageHeroId,storageConfigId;
 	/**
 	 * 
 	 */
 	public HeroConfiguration(Hero hero) {
-		this.hero = hero;
-
 		modificators = new ArrayList<CustomModificator>();
 		wounds = new ArrayList<WoundAttribute>();
 		armorAttributes = new ArrayList[Hero.INVENTORY_SET_COUNT];
@@ -108,10 +113,31 @@ public class HeroConfiguration {
 		tabInfos = getDefaultTabs(null);
 	}
 
-	public HeroConfiguration(Hero hero, JSONObject in) throws JSONException {
-		this.hero = hero;
+    public static boolean updateStorageInfo(JSONObject json, HeroExchange.StorageType storageType, String heroId, String configId) throws JSONException {
+        boolean changes = false;
 
+        changes |= !Objects.equals(json.opt(FIELD_STORAGE_HERO_ID),heroId);
+        changes |= !Objects.equals(json.opt(FIELD_STORAGE_CONFIG_ID),configId);
+
+
+        json.putOpt(FIELD_STORAGE_HERO_ID, heroId);
+        json.putOpt(FIELD_STORAGE_CONFIG_ID, configId);
+        if (storageType!=null) {
+            json.put(FIELD_STORAGE_TYPE, storageType.name());
+            changes |= !Objects.equals(json.opt(FIELD_STORAGE_TYPE),storageType.name());
+        }
+
+        return changes;
+    }
+
+	public HeroConfiguration(Hero hero, JSONObject in) throws JSONException {
 		int version = in.optInt(FIELD_VERSION);
+
+        if (in.has(FIELD_STORAGE_TYPE)) {
+            storageType = HeroExchange.StorageType.valueOf(in.optString(FIELD_STORAGE_TYPE));
+        }
+        storageHeroId = in.optString(FIELD_STORAGE_HERO_ID,null);
+        storageConfigId = in.optString(FIELD_STORAGE_CONFIG_ID,null);
 
 		JSONArray array = null;
 
@@ -135,139 +161,142 @@ public class HeroConfiguration {
 			}
 		}
 
-		if (in.has(FIELD_MODIFICATORS)) {
-			array = in.getJSONArray(FIELD_MODIFICATORS);
-			modificators = new ArrayList<CustomModificator>(array.length());
-			for (int i = 0; i < array.length(); i++) {
-				JSONObject tab = array.getJSONObject(i);
-				CustomModificator info = new CustomModificator(this.hero, tab);
-				modificators.add(info);
-			}
-		} else {
-			modificators = new ArrayList<CustomModificator>();
-		}
-		if (in.has(FIELD_WOUNDS)) {
-			array = in.getJSONArray(FIELD_WOUNDS);
-			wounds = new ArrayList<WoundAttribute>(array.length());
-			for (int i = 0; i < array.length(); i++) {
-				JSONObject tab = array.getJSONObject(i);
-				try {
-					WoundAttribute info = new WoundAttribute(this.hero, tab);
-					wounds.add(info);
-				} catch (Exception e) {
-					Debug.warning("Unknown WoundAttribute, skipping it: " + tab);
-				}
-			}
-		} else {
-			wounds = new ArrayList<WoundAttribute>();
-		}
+        if (in.has(FIELD_COMBAT_STYLE)) {
+            combatStyle = CombatStyle.valueOf(in.getString(FIELD_COMBAT_STYLE));
+        } else
+            combatStyle = CombatStyle.Offensive;
+        if (in.has(FIELD_BE_CALCULATION)) {
+            beCalculation = in.getBoolean(FIELD_BE_CALCULATION);
+        }
 
-		if (in.has(FIELD_ARMOR_ATTRIBUTES)) {
-			array = in.getJSONArray(FIELD_ARMOR_ATTRIBUTES);
-			armorAttributes = new ArrayList[array.length()];
-			for (int s = 0; s < array.length(); s++) {
-				JSONArray inArray = array.getJSONArray(s);
+        if (in.has(FIELD_LE_MODIFIER)) {
+            leModifierActive = in.getBoolean(FIELD_LE_MODIFIER);
+        }
 
-				armorAttributes[s] = new ArrayList<ArmorAttribute>(inArray.length());
+        if (in.has(FIELD_AU_MODIFIER)) {
+            auModifierActive = in.getBoolean(FIELD_AU_MODIFIER);
+        }
 
-				for (int i = 0; i < inArray.length(); i++) {
-					JSONObject tab = inArray.getJSONObject(i);
-					try {
-						ArmorAttribute info = new ArmorAttribute(this.hero, tab);
-						armorAttributes[s].add(info);
-					} catch (Exception e) {
-						Debug.warning("Unknown ArmorAttribute, skipping it: " + tab);
-					}
-				}
-			}
-		} else {
-			armorAttributes = new ArrayList[Hero.INVENTORY_SET_COUNT];
-		}
+        properties = new HashMap<String, String>();
+        if (in.has(FIELD_PROPERTIES)) {
 
-		if (in.has(FIELD_ATTRIBUTES)) {
-			array = in.getJSONArray(FIELD_ATTRIBUTES);
-			attributes = new HashSet<CustomAttribute>(array.length());
-			for (int i = 0; i < array.length(); i++) {
-				JSONObject tab = array.getJSONObject(i);
-				try {
-					CustomAttribute info = new CustomAttribute(this.hero, tab);
-					attributes.add(info);
-				} catch (Exception e) {
-					Debug.warning("Unknown Attribute, skipping it: " + tab);
-				}
-			}
-		} else {
-			attributes = new HashSet<CustomAttribute>();
-		}
+            JSONObject map = in.getJSONObject(FIELD_PROPERTIES);
+            Iterator<String> keys = map.keys();
 
-		if (in.has(FIELD_META_TALENTS)) {
-			array = in.getJSONArray(FIELD_META_TALENTS);
-			metaTalents = new HashSet<MetaTalent>(array.length());
+            while (keys.hasNext()) {
+                String key = keys.next();
+                properties.put(key, map.optString(key));
+            }
+        }
 
-			for (int i = 0; i < array.length(); i++) {
-				JSONObject tab = array.getJSONObject(i);
-				try {
-					MetaTalent info = new MetaTalent(this.hero, tab);
-					metaTalents.add(info);
-				} catch (Exception e) {
-					Debug.error(e);
-				}
-			}
-		} else {
-			metaTalents = new HashSet<MetaTalent>();
-		}
+        if (in.has(FIELD_EVENTS)) {
+            array = in.getJSONArray(FIELD_EVENTS);
+            events = new ArrayList<Event>(array.length());
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject tab = array.getJSONObject(i);
+                Event info = new Event(tab);
+                events.add(info);
+            }
+        } else {
+            events = new ArrayList<Event>();
+        }
 
-		if (in.has(FIELD_EVENTS)) {
-			array = in.getJSONArray(FIELD_EVENTS);
-			events = new ArrayList<Event>(array.length());
-			for (int i = 0; i < array.length(); i++) {
-				JSONObject tab = array.getJSONObject(i);
-				Event info = new Event(tab);
-				events.add(info);
-			}
-		} else {
-			events = new ArrayList<Event>();
-		}
+        if (hero !=null) {
 
-		if (in.has(FIELD_COMBAT_STYLE)) {
-			combatStyle = CombatStyle.valueOf(in.getString(FIELD_COMBAT_STYLE));
-		} else
-			combatStyle = CombatStyle.Offensive;
-		if (in.has(FIELD_BE_CALCULATION)) {
-			beCalculation = in.getBoolean(FIELD_BE_CALCULATION);
-		}
+            if (in.has(FIELD_MODIFICATORS)) {
+                array = in.getJSONArray(FIELD_MODIFICATORS);
+                modificators = new ArrayList<CustomModificator>(array.length());
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject tab = array.getJSONObject(i);
+                    CustomModificator info = new CustomModificator(hero, tab);
+                    modificators.add(info);
+                }
+            } else {
+                modificators = new ArrayList<CustomModificator>();
+            }
+            if (in.has(FIELD_WOUNDS)) {
+                array = in.getJSONArray(FIELD_WOUNDS);
+                wounds = new ArrayList<WoundAttribute>(array.length());
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject tab = array.getJSONObject(i);
+                    try {
+                        WoundAttribute info = new WoundAttribute(hero, tab);
+                        wounds.add(info);
+                    } catch (Exception e) {
+                        Debug.warning("Unknown WoundAttribute, skipping it: " + tab);
+                    }
+                }
+            } else {
+                wounds = new ArrayList<WoundAttribute>();
+            }
 
-		if (in.has(FIELD_LE_MODIFIER)) {
-			leModifierActive = in.getBoolean(FIELD_LE_MODIFIER);
-		}
+            if (in.has(FIELD_ARMOR_ATTRIBUTES)) {
+                array = in.getJSONArray(FIELD_ARMOR_ATTRIBUTES);
+                armorAttributes = new ArrayList[array.length()];
+                for (int s = 0; s < array.length(); s++) {
+                    JSONArray inArray = array.getJSONArray(s);
 
-		if (in.has(FIELD_AU_MODIFIER)) {
-			auModifierActive = in.getBoolean(FIELD_AU_MODIFIER);
-		}
+                    armorAttributes[s] = new ArrayList<ArmorAttribute>(inArray.length());
 
-		properties = new HashMap<String, String>();
-		if (in.has(FIELD_PROPERTIES)) {
+                    for (int i = 0; i < inArray.length(); i++) {
+                        JSONObject tab = inArray.getJSONObject(i);
+                        try {
+                            ArmorAttribute info = new ArmorAttribute(hero, tab);
+                            armorAttributes[s].add(info);
+                        } catch (Exception e) {
+                            Debug.warning("Unknown ArmorAttribute, skipping it: " + tab);
+                        }
+                    }
+                }
+            } else {
+                armorAttributes = new ArrayList[Hero.INVENTORY_SET_COUNT];
+            }
 
-			JSONObject map = in.getJSONObject(FIELD_PROPERTIES);
-			Iterator<String> keys = map.keys();
+            if (in.has(FIELD_ATTRIBUTES)) {
+                array = in.getJSONArray(FIELD_ATTRIBUTES);
+                attributes = new HashSet<CustomAttribute>(array.length());
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject tab = array.getJSONObject(i);
+                    try {
+                        CustomAttribute info = new CustomAttribute(hero, tab);
+                        attributes.add(info);
+                    } catch (Exception e) {
+                        Debug.warning("Unknown Attribute, skipping it: " + tab);
+                    }
+                }
+            } else {
+                attributes = new HashSet<CustomAttribute>();
+            }
 
-			while (keys.hasNext()) {
-				String key = keys.next();
-				properties.put(key, map.optString(key));
-			}
-		}
+            if (in.has(FIELD_META_TALENTS)) {
+                array = in.getJSONArray(FIELD_META_TALENTS);
+                metaTalents = new HashSet<MetaTalent>(array.length());
 
-		if (in.has(FIELD_CUSTOM_PROBES)) {
-			array = in.getJSONArray(FIELD_CUSTOM_PROBES);
-			customProbes = new ArrayList<CustomProbe>(array.length());
-			for (int i = 0; i < array.length(); i++) {
-				JSONObject tab = array.getJSONObject(i);
-				CustomProbe info = new CustomProbe(this.hero, tab);
-				customProbes.add(info);
-			}
-		} else {
-			customProbes = new ArrayList<CustomProbe>();
-		}
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject tab = array.getJSONObject(i);
+                    try {
+                        MetaTalent info = new MetaTalent(hero, tab);
+                        metaTalents.add(info);
+                    } catch (Exception e) {
+                        Debug.error(e);
+                    }
+                }
+            } else {
+                metaTalents = new HashSet<MetaTalent>();
+            }
+
+            if (in.has(FIELD_CUSTOM_PROBES)) {
+                array = in.getJSONArray(FIELD_CUSTOM_PROBES);
+                customProbes = new ArrayList<CustomProbe>(array.length());
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject tab = array.getJSONObject(i);
+                    CustomProbe info = new CustomProbe(hero, tab);
+                    customProbes.add(info);
+                }
+            } else {
+                customProbes = new ArrayList<CustomProbe>();
+            }
+        }
 	}
 
 	public String getProperty(String key) {
@@ -282,7 +311,7 @@ public class HeroConfiguration {
 		return tabInfos;
 	}
 
-    public List<TabInfo> getActiveTabs() {
+    public List<TabInfo> getActiveTabs(Hero hero) {
         List<TabInfo> activeTabs = new ArrayList<>();
 
         ListItem spells = new ListItem(ListItemType.Spell);
@@ -294,13 +323,16 @@ public class HeroConfiguration {
 
         if (hero !=null) {
             for (TabInfo tabInfo : tabInfos) {
+                if (tabInfo == null)
+                    continue;
+
                 // skip animal tab if animals is empty
-                if (tabInfo.hasOnlyActivityClazz(AnimalFragment.class) && hero.getAnimals().isEmpty()) {
+                if (!hero.hasAnimals() && tabInfo.hasOnlyActivityClazz(AnimalFragment.class)) {
                     continue;
                 } else if (tabInfo.hasOnlyActivityClazz(ListableFragment.class)) {
-                    if (hero.getSpells().isEmpty() && tabInfo.hasOnlyListItem(spells, ae)) {
+                    if (!hero.hasSpells() && tabInfo.hasOnlyListItem(spells, ae)) {
                         continue;
-                    } else if (hero.getArts().isEmpty() && hero.getTalentGroup(TalentGroupType.Gaben).getTalents().isEmpty() && tabInfo.hasOnlyListItem(arts, ke, gaben)) {
+                    } else if (!hero.hasArts() && !hero.hasTalents(TalentGroupType.Gaben) && tabInfo.hasOnlyListItem(arts, ke, gaben)) {
                         continue;
                     }
                 }
@@ -419,7 +451,35 @@ public class HeroConfiguration {
 			armorAttributes[index].remove(modificator);
 	}
 
-	public List<Event> getEvents() {
+    public static String getFieldTabsPortrait() {
+        return FIELD_TABS_PORTRAIT;
+    }
+
+    public String getStorageHeroId() {
+        return storageHeroId;
+    }
+
+    public void setStorageHeroId(String storageHeroId) {
+        this.storageHeroId = storageHeroId;
+    }
+
+    public String getStorageConfigId() {
+        return storageConfigId;
+    }
+
+    public void setStorageConfigId(String storageConfigId) {
+        this.storageConfigId = storageConfigId;
+    }
+
+    public HeroExchange.StorageType getStorageType() {
+        return storageType;
+    }
+
+    public void setStorageType(HeroExchange.StorageType storageType) {
+        this.storageType = storageType;
+    }
+
+    public List<Event> getEvents() {
 		return events;
 	}
 
@@ -666,17 +726,19 @@ public class HeroConfiguration {
 
 		Util.putArray(out, tabInfos, FIELD_TABS_PORTRAIT);
 		Util.putArray(out, modificators, FIELD_MODIFICATORS);
-		Util.putArray(out, wounds, FIELD_WOUNDS);
+        Util.putArray(out, wounds, FIELD_WOUNDS);
 		Util.putArray(out, attributes, FIELD_ATTRIBUTES);
 		Util.putArray(out, metaTalents, FIELD_META_TALENTS);
 		Util.putArray(out, events, FIELD_EVENTS);
 		Util.putArray(out, customProbes, FIELD_CUSTOM_PROBES);
 
-		out.put(FIELD_COMBAT_STYLE, combatStyle.name());
+        out.put(FIELD_COMBAT_STYLE, combatStyle.name());
 		out.put(FIELD_BE_CALCULATION, beCalculation);
 		out.put(FIELD_LE_MODIFIER, leModifierActive);
 		out.put(FIELD_AU_MODIFIER, auModifierActive);
 		out.put(FIELD_PROPERTIES, new JSONObject(properties));
+
+        updateStorageInfo(out,storageType,storageHeroId,storageConfigId);
 		return out;
 	}
 

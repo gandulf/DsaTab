@@ -217,6 +217,10 @@ public abstract class AbstractBeing {
 		return artsByName.get(name);
 	}
 
+    public boolean hasArts() {
+        return artsByName !=null && !artsByName.isEmpty();
+    }
+
 	public Map<String, Art> getArts() {
 		return artsByName;
 	}
@@ -242,6 +246,10 @@ public abstract class AbstractBeing {
 	public Map<TalentGroupType, TalentGroup> getTalentGroups() {
 		return talentGroups;
 	}
+
+    public boolean hasTalents(TalentGroupType groupType) {
+        return talentGroups!=null && talentGroups.get(groupType) !=null && !talentGroups.get(groupType).getTalents().isEmpty();
+    }
 
 	public TalentGroup getTalentGroup(TalentGroupType groupType) {
 		return talentGroups.get(groupType);

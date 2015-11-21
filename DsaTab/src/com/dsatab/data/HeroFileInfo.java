@@ -1,15 +1,6 @@
 package com.dsatab.data;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
+import android.text.TextUtils;
 
 import com.bingzer.android.driven.LocalFile;
 import com.bingzer.android.driven.RemoteFile;
@@ -20,6 +11,20 @@ import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.dsatab.xml.HeldenXmlParser;
 import com.dsatab.xml.Xml;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
+import java.util.List;
 
 public class HeroFileInfo implements JSONable, Serializable {
 
@@ -72,7 +77,7 @@ public class HeroFileInfo implements JSONable, Serializable {
 		if (json.has(JSON_FILE))
 			file = new File(json.optString(JSON_FILE));
 		else
-			file = new File(DsaTabApplication.getInternalHeroDirectory(), getId() + HeroFileInfo.HERO_FILE_EXTENSION);
+			file = new File(DsaTabApplication.getHeroDirectory(), getId() + HeroFileInfo.HERO_FILE_EXTENSION);
 
 		if (json.has(JSON_FILE_CONFIG))
 			fileConfig = new File(json.optString(JSON_FILE_CONFIG));
@@ -111,28 +116,31 @@ public class HeroFileInfo implements JSONable, Serializable {
 			remoteConfigId = configFile.getId();
 		}
 
-		file = new File(DsaTabApplication.getInternalHeroDirectory(), heroFile.getName());
+		file = new File(DsaTabApplication.getHeroDirectory(), heroFile.getName());
 		if (configFile != null) {
-			fileConfig = new File(DsaTabApplication.getInternalHeroDirectory(), configFile.getName());
+			fileConfig = new File(DsaTabApplication.getHeroDirectory(), configFile.getName());
 		} else {
-			fileConfig = new File(DsaTabApplication.getInternalHeroDirectory(), heroFile.getName().replace(
+			fileConfig = new File(DsaTabApplication.getHeroDirectory(), heroFile.getName().replace(
 					HERO_FILE_EXTENSION, CONFIG_FILE_EXTENSION));
 		}
 
 		prepare(exchange);
 	}
 
-	public HeroFileInfo(String name, String id, String key) {
-		super();
-		this.name = name;
-		this.id = id;
-		this.key = key;
-		this.storageType = StorageType.HeldenAustausch;
-
-		file = new File(DsaTabApplication.getInternalHeroDirectory(), getId() + HeroFileInfo.HERO_FILE_EXTENSION);
-		fileConfig = new File(DsaTabApplication.getInternalHeroDirectory(), getId()
-				+ HeroFileInfo.CONFIG_FILE_EXTENSION);
-	}
+    public static void merge(List<HeroFileInfo> heroes, HeroFileInfo heroFileInfo) {
+        int index = heroes.indexOf(heroFileInfo);
+        if (index >= 0) {
+            HeroFileInfo info = heroes.get(index);
+            info.merge(heroFileInfo);
+        } else {
+            heroes.add(heroFileInfo);
+        }
+    }
+    public static void merge(List<HeroFileInfo> heroes, List<HeroFileInfo> heroesAdd) {
+        for (HeroFileInfo heroFileInfo: heroesAdd) {
+            merge(heroes,heroFileInfo);
+        }
+    }
 
 	public String getRemoteHeroId() {
 		return remoteHeroId;
@@ -218,8 +226,30 @@ public class HeroFileInfo implements JSONable, Serializable {
 
 	public boolean prepare(HeroExchange exchange) {
 		boolean valid = false;
-		InputStream fis = null;
+        if (fileConfig !=null && fileConfig.exists()) {
+            try {
+                HeroConfiguration configuration = null;
+                FileInputStream configIn = new FileInputStream(fileConfig);
 
+                String data = Util.slurp(configIn, 1024);
+                if (!TextUtils.isEmpty(data)) {
+                    JSONObject jsonObject = new JSONObject(new String(data));
+                    configuration = new HeroConfiguration(null, jsonObject);
+                    if (configuration.getStorageType()!=null)
+                        storageType = configuration.getStorageType();
+                    if (!TextUtils.isEmpty(configuration.getStorageHeroId()))
+                        remoteHeroId = configuration.getStorageHeroId();
+                    if (!TextUtils.isEmpty(configuration.getStorageConfigId()))
+                        remoteConfigId = configuration.getStorageConfigId();
+                }
+            } catch (FileNotFoundException e) {
+                Debug.error(e);
+            } catch (JSONException e) {
+                Debug.error(e);
+            }
+        }
+
+		InputStream fis = null;
 		try {
 			fis = exchange.getInputStream(this, FileType.Hero);
 			if (fis != null) {
@@ -339,31 +369,23 @@ public class HeroFileInfo implements JSONable, Serializable {
 		return jsonObject;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (o == null)
-			return false;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-		if (o == this)
-			return true;
+        HeroFileInfo that = (HeroFileInfo) o;
 
-		if (!(o instanceof HeroFileInfo))
-			return false;
+        return !(key != null ? !key.equals(that.key) : that.key != null);
 
-		HeroFileInfo info = (HeroFileInfo) o;
+    }
 
-		return info.getKey() != null && info.getKey().equals(getKey());
-	}
+    @Override
+    public int hashCode() {
+        return key != null ? key.hashCode() : super.hashCode();
+    }
 
-	@Override
-	public int hashCode() {
-		if (getKey() != null)
-			return getKey().hashCode();
-		else
-			return super.hashCode();
-	}
-
-	@Override
+    @Override
 	public String toString() {
 		return "HeroFileInfo [name=" + name + ", key=" + key + ", id=" + id + ", version=" + version + ", storageType="
 				+ storageType + ", file=" + file + ", fileConfig=" + fileConfig + ", portraitUri=" + portraitUri + "]";

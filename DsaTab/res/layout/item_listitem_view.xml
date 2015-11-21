@@ -75,13 +75,10 @@
         android:id="@android:id/icon2"
         android:layout_width="@dimen/icon_button_size"
         android:layout_height="@dimen/icon_button_size"
+        style="?attr/circleViewStyle"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/default_gap"
-        android:background="@drawable/circle"
-        android:scaleType="centerInside"
-
-        android:tint="@color/circle_tint"
         android:visibility="gone"
         tools:src="@drawable/vd_round_shield"
         tools:visibility="visible"/>

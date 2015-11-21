@@ -35,42 +35,4 @@
         android:summaryOn="Es wird je nach Ergebnis der Probe ein anderer Sound abgespielt."
         android:title="Würfelgeräusch abhängig vom Ergebnis" />
 
-    <PreferenceCategory
-        android:key="displayHeaderScreen"
-        android:summary="Hier kannst du einstellen was alles in der Kopfzeile angezeigt werden soll."
-        android:title="Kopfzeile konfigurieren" >
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="header_le"
-            android:title="Lebensenergie anzeigen" />
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="header_au"
-            android:title="Ausdauer anzeigen" />
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="header_ae"
-            android:title="Astralenergie anzeigen" />
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="header_ke"
-            android:title="Karmaenergie anzeigen" />
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="header_be"
-            android:title="Behinderung anzeigen" />
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="header_mr"
-            android:title="Magieresistenz anzeigen" />
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="header_gs"
-            android:title="Geschwindigkeit anzeigen" />
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="header_ws"
-            android:title="Wundschwellen anzeigen" />
-    </PreferenceCategory>
-
 </PreferenceScreen>

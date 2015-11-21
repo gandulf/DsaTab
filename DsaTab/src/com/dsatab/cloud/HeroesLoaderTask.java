@@ -1,17 +1,17 @@
 package com.dsatab.cloud;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.data.HeroFileInfo;
 import com.gandulf.guilib.util.FileFileFilter;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 
 public class HeroesLoaderTask extends AsyncTaskLoader<List<HeroFileInfo>> {
 
@@ -57,7 +57,7 @@ public class HeroesLoaderTask extends AsyncTaskLoader<List<HeroFileInfo>> {
 	public List<HeroFileInfo> loadInBackground() {
 		exception.clear();
 		try {
-			File heroesDir = DsaTabApplication.getInternalHeroDirectory();
+			File heroesDir = DsaTabApplication.getHeroDirectory();
 
 			File[] files = heroesDir.listFiles(new FileFileFilter());
 
@@ -66,17 +66,11 @@ public class HeroesLoaderTask extends AsyncTaskLoader<List<HeroFileInfo>> {
 				if (file.getName().toLowerCase(Locale.GERMAN).endsWith(HeroFileInfo.HERO_FILE_EXTENSION)) {
 					HeroFileInfo heroFileInfo = new HeroFileInfo(file, null, DsaTabApplication.getInstance()
 							.getExchange());
-
-					int index = fileInfos.indexOf(heroFileInfo);
-					if (index >= 0) {
-						HeroFileInfo info = fileInfos.get(index);
-						info.merge(heroFileInfo);
-					} else {
-						fileInfos.add(heroFileInfo);
-					}
+                    HeroFileInfo.merge(fileInfos,heroFileInfo);
 				}
 			}
-			return fileInfos;
+            this.fileInfos = fileInfos;
+			return this.fileInfos;
 		} catch (Exception e) {
 			exception.add(e);
 			return Collections.emptyList();

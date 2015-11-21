@@ -1,5 +1,6 @@
 package com.dsatab.fragment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
@@ -101,6 +102,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+
+import pl.tajchert.nammu.Nammu;
+import pl.tajchert.nammu.PermissionCallback;
 
 public class ListableFragment extends BaseRecyclerFragment implements HeroInventoryChangedListener,
         com.dsatab.view.listener.OnActionListener {
@@ -1095,8 +1099,6 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-
         ListSettings listSettings = getListSettings();
         if (listSettings != null) {
             if (listSettings.hasListItem(ListItemType.EquippedItem) && menu.findItem(R.id.option_set) == null) {
@@ -1115,9 +1117,12 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                     EventCategory[] eventCategory = EventCategory.values();
 
                     for (int i = 0; i < eventCategory.length; i++) {
-                        Drawable icon = ResourcesCompat.getDrawable(getActivity(),eventCategory[i].getDrawableId());
-                        MenuItem item = filterSet.add(MENU_FILTER_GROUP, i, Menu.NONE, eventCategory[i].name())
-                                .setIcon(icon);
+                        MenuItem item = filterSet.add(MENU_FILTER_GROUP, i, Menu.NONE, eventCategory[i].name());
+
+                        if (getActivity()!=null) {
+                            Drawable icon = ResourcesCompat.getDrawable(getActivity(), eventCategory[i].getDrawableId());
+                            item.setIcon(icon);
+                        }
                         item.setCheckable(true);
                         item.setChecked(getListSettings().getEventCategories()
                                 .contains(eventCategory[item.getItemId()]));
@@ -1126,7 +1131,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
 
             }
         }
-
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -1161,7 +1166,17 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
 
         switch (actionId) {
             case ACTION_NOTES_RECORD: {
-                recordEvent();
+                Nammu.askForPermission(getActivity(), Manifest.permission.RECORD_AUDIO, new PermissionCallback() {
+                    @Override
+                    public void permissionGranted() {
+                        recordEvent();
+                    }
+
+                    @Override
+                    public void permissionRefused() {
+                        ViewUtils.snackbar(getActivity(), "Ohne Audio Rechte kann keine Aufnahme gestartet werden.");
+                    }
+                });
                 return true;
             }
             case ACTION_NOTES_ADD: {

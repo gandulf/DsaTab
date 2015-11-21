@@ -23,21 +23,5 @@
         android:icon="@drawable/vd_spiked_collar"
         android:summary="Systemeinstellungen DsaTab betreffend."
         android:title="Setup" />
-    <header
-        android:icon="@drawable/vd_cubes"
-        android:summary="Hinweise zu verwendeten Inhalten, Copyright Informationen"
-        android:title="Credits, Copyright" >
-        <intent
-            android:targetPackage="com.dsatab"
-            android:targetClass="com.dsatab.activity.AboutActivity" />
-    </header>
-    <header
-        android:icon="@drawable/vd_broken_heart"
-        android:summary="Bringt dich direkt zur Spendenseite."
-        android:title="Spenden" >
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:data="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=gandulf%2ek%40gmx%2enet&amp;lc=DE&amp;item_name=Gandulf&amp;item_number=DsaTab&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted" />
-    </header>
 
 </preference-headers>

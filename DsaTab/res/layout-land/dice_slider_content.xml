@@ -97,25 +97,21 @@
 
         <ImageButton
             android:id="@+id/dice_execute"
-            style="@style/Widget.IconButton"
+            style="?attr/circleButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/default_gap"
-            android:background="@drawable/circle"
-            android:tint="@color/circle_tint"
             tools:src="@drawable/vd_dice_six_faces_two"
             />
 
         <ImageButton
             android:id="@+id/dice_take_hit"
-            style="@style/Widget.IconButton"
+            style="?attr/circleButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/default_gap"
-            android:background="@drawable/circle"
-            android:tint="@color/circle_tint"
             tools:src="@drawable/vd_sticking_plaster"
             />
 

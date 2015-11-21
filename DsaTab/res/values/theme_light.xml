@@ -36,6 +36,13 @@
         <item name="colorPrimary">@color/primary_material_light</item>
         <item name="colorAccent">@color/accent_material_light</item>
         -->
+
+
+        <item name="circleTint">@color/circle_tint</item>
+        <item name="circleColor">@color/circle_color</item>
+        <item name="circleViewStyle">@style/CircleViewStyle</item>
+        <item name="circleButtonStyle">@style/CircleButtonStyle</item>
+
         <item name="android:dividerPadding">8dp</item>
         <item name="buttonStyle">?buttonStyleSmall</item>
         <item name="buttonStyleLeft">?buttonStyleSmall</item>
@@ -59,8 +66,6 @@
         <item name="imgBarSet2">@drawable/dsa_set2</item>
         <item name="imgBarSet3">@drawable/dsa_set3</item>
 
-
-
         <item name="listItemBackground">@drawable/list_background</item>
         <item name="slidingPaneShadowBackground">@drawable/slider_shadow</item>
  
@@ -73,6 +78,8 @@
         <item name="flipCheckBoxStyle">@style/FlipCheckBoxStyle.Dsa</item>
         <item name="flipFrontImageStyle">@style/FlipFrontImageStyle</item>
         <item name="flipRearImageStyle">@style/FlipRearImageStyle</item>
+
+        <item name="cardViewStyle">@style/CardView.Light</item>
     </style>
 
 </resources>

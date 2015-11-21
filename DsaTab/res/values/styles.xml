@@ -3,6 +3,12 @@
 
     <style name="FlipCheckBoxStyle.Dsa" parent="FlipCheckBoxStyle">
         <item name="frontClickableBackgroundDrawable">@drawable/circle</item>
+        <item name="android:tint">?attr/circleTint</item>
+    </style>
+
+    <style name="FlipCheckBoxStyle.Dsa.Dark" parent="FlipCheckBoxStyle.Dark">
+        <item name="frontClickableBackgroundDrawable">@drawable/circle_dark</item>
+        <item name="android:tint">?attr/circleTint</item>
     </style>
 
     <style name="AlertDialog.Light" parent="Base.Theme.AppCompat.Light.Dialog.Alert">
@@ -35,7 +41,6 @@
         <item name="android:paddingBottom">24dp</item>
         <item name="android:orientation">vertical</item>
     </style>
-
 
     <style name="Widget.IconView" parent="android:Widget">
         <item name="materialIconColor">#888888</item>
@@ -87,6 +92,38 @@
         <item name="android:layout_marginBottom">0dp</item>
         <item name="android:paddingBottom">0dp</item>
         <item name="android:textColor">?android:attr/textColorHint</item>
+    </style>
+
+    <style name="CircleButtonStyle" parent="Widget.IconButton">
+        <item name="android:background">@drawable/circle</item>
+        <item name="android:tint">?attr/circleTint</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+
+    <style name="CircleButtonStyle.Dark" parent="CircleButtonStyle">
+        <item name="android:background">@drawable/circle_dark</item>
+        <item name="android:tint">?attr/circleTint</item>
+    </style>
+
+    <style name="CircleViewStyle" parent="Widget.IconView">
+        <item name="android:background">@drawable/circle</item>
+        <item name="android:tint">?attr/circleTint</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+
+    <style name="CircleViewStyle.Dark" parent="CircleViewStyle">
+        <item name="android:background">@drawable/circle_dark</item>
+        <item name="android:tint">?attr/circleTint</item>
+    </style>
+
+    <style name="NavigationView.Dark" parent="Widget.Design.NavigationView">
+        <item name="android:itemTextAppearance">@drawable/color_item_text_color_dark</item>
+        <item name="itemTextAppearance">@drawable/color_item_text_color_dark</item>
+    </style>
+
+    <style name="NavigationView" parent="Widget.Design.NavigationView">
+        <item name="android:itemTextAppearance">@drawable/color_item_text_color</item>
+        <item name="itemTextAppearance">@drawable/color_item_text_color</item>
     </style>
 
 </resources>
