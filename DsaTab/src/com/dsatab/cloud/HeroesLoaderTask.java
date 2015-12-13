@@ -60,15 +60,16 @@ public class HeroesLoaderTask extends AsyncTaskLoader<List<HeroFileInfo>> {
 			File heroesDir = DsaTabApplication.getHeroDirectory();
 
 			File[] files = heroesDir.listFiles(new FileFileFilter());
-
 			List<HeroFileInfo> fileInfos = new ArrayList<HeroFileInfo>();
-			for (File file : files) {
-				if (file.getName().toLowerCase(Locale.GERMAN).endsWith(HeroFileInfo.HERO_FILE_EXTENSION)) {
-					HeroFileInfo heroFileInfo = new HeroFileInfo(file, null, DsaTabApplication.getInstance()
-							.getExchange());
-                    HeroFileInfo.merge(fileInfos,heroFileInfo);
-				}
-			}
+            if (files!=null) {
+                for (File file : files) {
+                    if (file.getName().toLowerCase(Locale.GERMAN).endsWith(HeroFileInfo.HERO_FILE_EXTENSION)) {
+                        HeroFileInfo heroFileInfo = new HeroFileInfo(file, null, DsaTabApplication.getInstance()
+                                .getExchange());
+                        HeroFileInfo.merge(fileInfos, heroFileInfo);
+                    }
+                }
+            }
             this.fileInfos = fileInfos;
 			return this.fileInfos;
 		} catch (Exception e) {

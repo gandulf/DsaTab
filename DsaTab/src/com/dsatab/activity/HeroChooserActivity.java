@@ -5,11 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.HeroFileInfo;
 import com.dsatab.fragment.HeroChooserFragment;
 import com.dsatab.fragment.HeroChooserFragment.OnHeroSelectedListener;
+import com.dsatab.fragment.dialog.ChangeLogDialog;
 
 public class HeroChooserActivity extends BaseActivity implements OnHeroSelectedListener {
 
@@ -17,11 +17,7 @@ public class HeroChooserActivity extends BaseActivity implements OnHeroSelectedL
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setTheme(DsaTabApplication.getInstance().getCustomTheme());
-		applyPreferencesToTheme();
-
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.main_blank);
 
 		getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -42,7 +38,7 @@ public class HeroChooserActivity extends BaseActivity implements OnHeroSelectedL
 			ft.commit();
 		}
 
-		DsaTabApplication.getInstance().showNewsInfoPopup(this);
+        ChangeLogDialog.show(this);
 	}
 
 	@Override

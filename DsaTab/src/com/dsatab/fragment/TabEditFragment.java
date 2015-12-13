@@ -25,6 +25,7 @@ import com.dsatab.data.Hero;
 import com.dsatab.data.adapter.ListItemConfigAdapter;
 import com.dsatab.data.adapter.SpinnerSimpleAdapter;
 import com.dsatab.fragment.dialog.ImageChooserDialog;
+import com.dsatab.util.Util;
 import com.dsatab.view.ListSettings;
 import com.dsatab.view.ListSettings.ListItem;
 import com.dsatab.view.ListSettings.ListItemType;
@@ -59,9 +60,13 @@ public class TabEditFragment extends BaseRecyclerFragment implements
         if (extra != null) {
             TabInfo tabInfo = extra.getParcelable(TabEditActivity.DATA_INTENT_TABINFO);
             if (tabInfo!=null) {
-                setTabInfo(tabInfo, 0);
+                setTabInfo(tabInfo, getTabInfoIndex());
             }
         }
+    }
+
+    public int getTabInfoIndex() {
+        return Util.parseInt(getTag(),0);
     }
 
     @Override
@@ -104,6 +109,12 @@ public class TabEditFragment extends BaseRecyclerFragment implements
 
         mAdapter = new ListItemConfigAdapter(getActivity(), DsaTabApplication.getInstance().getHero(),
                 new ArrayList<ListSettings.ListItem>());
+
+        View details = view.findViewById(R.id.popup_edit_details);
+        if (getTabInfoIndex()>0)
+            details.setVisibility(View.GONE);
+        else
+            details.setVisibility(View.VISIBLE);
 
         initRecyclerView(recyclerView,mAdapter,true,true,false);
 	}

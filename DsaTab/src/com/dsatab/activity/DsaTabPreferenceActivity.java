@@ -19,7 +19,7 @@ public class DsaTabPreferenceActivity extends AppCompatPreferenceActivity implem
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(DsaTabApplication.getInstance().getCustomPreferencesTheme());
+        setTheme(DsaTabPreferenceActivity.getCustomTheme());
         super.onCreate(savedInstanceState);
 
         View rootView = getWindow().getDecorView().getRootView();
@@ -34,6 +34,18 @@ public class DsaTabPreferenceActivity extends AppCompatPreferenceActivity implem
             newContainer.addView(v, newContainer.getChildCount());
         }
         contentView.addView(newContent);
+    }
+
+    public static int getCustomTheme() {
+        String theme = DsaTabApplication.getPreferences().getString(DsaTabPreferenceActivity.KEY_THEME, DsaTabApplication.THEME_DEFAULT);
+
+        if (DsaTabApplication.THEME_LIGHT_PLAIN.equals(theme)) {
+            return R.style.DsaTabTheme_Light;
+        } else if (DsaTabApplication.THEME_DARK_PLAIN.equals(theme)) {
+            return R.style.DsaTabTheme_Dark;
+        } else {
+            return R.style.DsaTabTheme_Light;
+        }
     }
 
     @Override

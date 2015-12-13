@@ -39,7 +39,6 @@ public class XmlParser {
 		} catch (IOException e) {
 			throw new DsaTabRuntimeException("Could not parse items from items.csv", e);
 		}
-
 	}
 
 	public static void fillArts() {

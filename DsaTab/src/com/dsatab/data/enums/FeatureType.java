@@ -1252,7 +1252,7 @@ public enum FeatureType {
 			"Verkrallen", FeatureGroupType.SpecialFeature), Wache("Wache", FeatureGroupType.SpecialFeature), Wacht(
 			"Wacht", FeatureGroupType.SpecialFeature), WeichesGangwerk("Weiches Gangwerk",
 			FeatureGroupType.SpecialFeature), Zusammenarbeit("Zusammenarbeit", FeatureGroupType.SpecialFeature), Zählen(
-			"Zählen", FeatureGroupType.SpecialFeature);
+			"Zählen", FeatureGroupType.SpecialFeature), FlüstererDer1000Namen("Flüsterer der 1000 Namen",FeatureGroupType.SpecialFeature);
 
 	public enum FeatureGroupType {
 		Advantage, Disadvantage, SpecialFeature

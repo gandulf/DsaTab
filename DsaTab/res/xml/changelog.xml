@@ -1,7 +1,12 @@
 <changelog>
-
-    <release version="4.4.3" versioncode="103">
+    <release version="4.4.5" versioncode="106">
+        <fix>Crash beim Starten von DsaTab auf Grund ungültiger TabInfos</fix>
+        <fix>Crash beim Synchronisieren mit Cloud</fix>
+    </release>
+    <release version="4.4.3" versioncode="104">
         <fix>Dark Theme verbessert</fix>
+        <change>Heldenauswahl</change>
+        <change>MultiTabs im Tablet Modus sind wieder zurück.</change>
     </release>
 
     <release version="4.4.0" versioncode="100">

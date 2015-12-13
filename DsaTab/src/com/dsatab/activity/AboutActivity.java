@@ -30,7 +30,7 @@ public class AboutActivity extends BaseActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
         LibsFragment fragment = new LibsBuilder()
-                .withActivityTheme(DsaTabApplication.getInstance().getCustomTheme())
+                .withActivityTheme(DsaTabPreferenceActivity.getCustomTheme())
                 .withLibraries("game_icons_net", "ulisses_fan_project")
                 .withAboutSpecial1("Source Code")
                 .withAboutSpecial1Description("https://github.com/gandulf/DsaTab")
@@ -82,7 +82,7 @@ public class AboutActivity extends BaseActivity {
                             startActivity(i);
                             return true;
                         } else if (specialButton == Libs.SpecialButton.SPECIAL2) {
-                            ChangeLogDialog.show(AboutActivity.this, true, 0);
+                            ChangeLogDialog.show(AboutActivity.this, true);
                             return true;
                         } else if (specialButton == Libs.SpecialButton.SPECIAL3) {
                             String url = "http://www.helden-software.de/";

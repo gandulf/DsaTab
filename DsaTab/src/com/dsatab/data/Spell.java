@@ -6,9 +6,9 @@ import android.text.style.RelativeSizeSpan;
 import com.dsatab.data.listable.Listable;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 import com.dsatab.db.DataManager;
-import com.dsatab.exception.SpellUnknownException;
-import com.dsatab.util.Debug;
 import com.dsatab.util.StyleableSpannableStringBuilder;
+import com.splunk.mint.Mint;
+import com.splunk.mint.MintLogLevel;
 
 import org.apache.commons.lang3.ObjectUtils;
 
@@ -92,8 +92,7 @@ public class Spell extends MarkableElement implements Value, Listable, Serializa
 
 		this.info = DataManager.getSpellByName(name);
 		if (info == null) {
-			Debug.error(new SpellUnknownException(name));
-
+            Mint.logEvent("Spell unknown", MintLogLevel.Warning,"Name",name);
 			info = new SpellInfo();
 			info.setName(name);
 		}

@@ -1,5 +1,6 @@
 package com.dsatab.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -22,9 +23,11 @@ import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 
 import pl.tajchert.nammu.Nammu;
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     public static final int REQUEST_CODE_STORAGE = 1;
+
+    private static final String INTENT ="intent";
 
     protected Toolbar toolbar;
     protected CollapsingToolbarLayout toolbarCollapse;
@@ -37,11 +40,39 @@ public class BaseActivity extends AppCompatActivity {
 
     private FloatingActionButton fab;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        setTheme(DsaTabPreferenceActivity.getCustomTheme());
+        applyPreferencesToTheme();
+        super.onCreate(savedInstanceState);
+
+        DsaTabApplication.getPreferences().registerOnSharedPreferenceChangeListener(this);
+
+        if (getIntent() == null && savedInstanceState!=null) {
+            Intent intent = savedInstanceState.getParcelable(INTENT);
+            setIntent(intent);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        DsaTabApplication.getPreferences().unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (DsaTabPreferenceActivity.KEY_STYLE_BG_PATH.equals(key)) {
+            applyPreferencesToTheme();
+        }
+    }
+
     /*
-     * (non-Javadoc)
-     *
-     * @see android.app.FragmentActivity#onPostCreate(android.os.Bundle)
-     */
+             * (non-Javadoc)
+             *
+             * @see android.app.FragmentActivity#onPostCreate(android.os.Bundle)
+             */
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -62,6 +93,18 @@ public class BaseActivity extends AppCompatActivity {
         ViewUtils.menuIcons(toolbar.getContext(), menu);
 
         return result;
+    }
+
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (getIntent() !=null) {
+            outState.putParcelable(INTENT,getIntent());
+        }
+
     }
 
     protected FloatingActionButton getFab() {
@@ -139,7 +182,7 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void applyPreferencesToTheme() {
+    private void applyPreferencesToTheme() {
 
         SharedPreferences pref = DsaTabApplication.getPreferences();
         String bgPath = pref.getString(DsaTabPreferenceActivity.KEY_STYLE_BG_PATH, null);

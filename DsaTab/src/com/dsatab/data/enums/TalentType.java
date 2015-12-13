@@ -44,7 +44,9 @@ public enum TalentType {
 			null), LesenSchreibenAltesAlaani("Lesen/Schreiben Altes Alaani", TalentGroupType.Schriften, null), LesenSchreibenAltesAmulashtra(
 			"Lesen/Schreiben Altes Amulashtra", TalentGroupType.Schriften, null), LesenSchreibenAmulashtra(
 			"Lesen/Schreiben Amulashtra", TalentGroupType.Schriften, null), LesenSchreibenAngram(
-			"Lesen/Schreiben Angram", TalentGroupType.Schriften, null), LesenSchreibenArkanil(
+			"Lesen/Schreiben Angram", TalentGroupType.Schriften, null),
+            LesenSchreibenAsdharia("Lesen/Schreiben Asdharia", TalentGroupType.Schriften, null),
+            LesenSchreibenArkanil(
 			"Lesen/Schreiben Arkanil", TalentGroupType.Schriften, null), LesenSchreibenChrmk("Lesen/Schreiben Chrmk",
 			TalentGroupType.Schriften, null), LesenSchreibenChuchas("Lesen/Schreiben Chuchas",
 			TalentGroupType.Schriften, null), LesenSchreibenDrakhardZinken("Lesen/Schreiben Drakhard-Zinken",
@@ -55,7 +57,8 @@ public enum TalentType {
 			"Lesen/Schreiben Gjalskisch", TalentGroupType.Schriften, null), LesenSchreibenHjaldingscheRunen(
 			"Lesen/Schreiben Hjaldingsche Runen", TalentGroupType.Schriften, null), LesenSchreibenAltImperialeZeichen(
 			"Lesen/Schreiben (Alt-)Imperiale Zeichen", TalentGroupType.Schriften, null), LesenSchreibenIsdiraAsdharia(
-			"Lesen/Schreiben Isdira/Asdharia", TalentGroupType.Schriften, null), LesenSchreibenAltesKemi(
+			"Lesen/Schreiben Isdira/Asdharia", TalentGroupType.Schriften, null),LesenSchreibenIsdira(
+            "Lesen/Schreiben Isdira", TalentGroupType.Schriften, null), LesenSchreibenAltesKemi(
 			"Lesen/Schreiben Altes Kemi", TalentGroupType.Schriften, null), LesenSchreibenKuslikerZeichen(
 			"Lesen/Schreiben Kusliker Zeichen", TalentGroupType.Schriften, null), LesenSchreibenNanduria(
 			"Lesen/Schreiben Nanduria", TalentGroupType.Schriften, null), LesenSchreibenRogolan(

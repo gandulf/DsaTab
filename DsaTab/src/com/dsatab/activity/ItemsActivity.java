@@ -27,8 +27,6 @@ public class ItemsActivity extends BaseItemActivity implements OnItemSelectedLis
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(DsaTabApplication.getInstance().getCustomTheme());
-        applyPreferencesToTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_items);
 

@@ -100,8 +100,8 @@ public class Debug {
 	/**
 	 * Prints to the error stream of LogCat with information from the engine
 	 * 
-	 * @param message
-	 *            The message to be passed on
+	 * @param t
+	 *            The throwable to be passed on
 	 */
 	public static void warning(Throwable t) {
 		if (debugMode) {
@@ -112,8 +112,8 @@ public class Debug {
 	/**
 	 * Prints to the error stream of LogCat with information
 	 * 
-	 * @param message
-	 *            The message to be passed on
+	 * @param t
+	 *            The throwable to be passed on
 	 */
 	public static void error(Throwable t) {
 		if (t instanceof Exception && !BuildConfig.DEBUG) {

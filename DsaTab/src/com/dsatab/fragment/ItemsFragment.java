@@ -345,7 +345,9 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
     private void configureContainerTab(TabLayout.Tab tab, ItemContainer container) {
         tab.setText(container.getName());
         Drawable drawable = ResUtil.getDrawableByUri(tabLayout.getContext(), container.getIconUri());
-        android.support.v4.graphics.drawable.DrawableCompat.setTint(drawable, tabLayout.getResources().getColor(R.color.white));
+        if (drawable!=null) {
+            android.support.v4.graphics.drawable.DrawableCompat.setTint(drawable, tabLayout.getResources().getColor(R.color.white));
+        }
         tab.setIcon(drawable);
         tab.setTag(container);
     }
@@ -427,7 +429,10 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
             if (filterSet != null) {
                 ItemType[] itemType = ItemType.values();
                 for (int i = 0; i < itemType.length; i++) {
-                    Drawable icon = ResourcesCompat.getDrawable(getActivity(),DsaUtil.getResourceId(itemType[i]));
+                    Drawable icon = null;
+                    if (getActivity()!=null) {
+                        icon = ResourcesCompat.getDrawable(getActivity(), DsaUtil.getResourceId(itemType[i]));
+                    }
                     MenuItem item = filterSet.add(MENU_FILTER_GROUP, i, Menu.NONE, itemType[i].name()).setIcon(icon);
                     item.setCheckable(true);
                     item.setChecked(categoriesSelected.contains(itemType[item.getItemId()]));

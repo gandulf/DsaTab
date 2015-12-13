@@ -33,6 +33,7 @@ import com.gandulf.guilib.download.DownloaderGinger;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -395,13 +396,26 @@ public abstract class BasePreferenceFragment extends PreferenceFragment implemen
 
     }
 
+    public String getCustomThemeName() {
+        String theme = DsaTabApplication.getPreferences().getString(DsaTabPreferenceActivity.KEY_THEME, DsaTabApplication.THEME_DEFAULT);
+
+        List<String> themeValues = Arrays.asList(getResources().getStringArray(R.array.themesValues));
+        int index = themeValues.indexOf(theme);
+
+        String[] themes = getResources().getStringArray(R.array.themes);
+        if (index >= 0 && index < themes.length)
+            return themes[index];
+        else
+            return themes[0];
+    }
+
     public void handlePreferenceChange(Preference preference, SharedPreferences sharedPreferences, String key) {
 
         if (preference != null) {
             if (KEY_THEME.equals(key)) {
 
                 String theme = DsaTabApplication.getInstance().getString(R.string.current_theme,
-                        DsaTabApplication.getInstance().getCustomThemeName());
+                        getCustomThemeName());
                 preference.setSummary(theme);
             } else if (KEY_STYLE_BG_PATH.equals(key)) {
                 ((PreferenceWithButton) preference)

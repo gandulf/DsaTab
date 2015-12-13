@@ -98,8 +98,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 22
 
-        versionName "4.4.3"
-        versionCode 103
+        versionName "4.4.5"
+        versionCode 106
     }
 
     sourceSets {

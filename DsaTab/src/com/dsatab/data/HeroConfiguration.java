@@ -30,6 +30,7 @@ import com.dsatab.view.ListSettings;
 import com.dsatab.view.ListSettings.ListItem;
 import com.dsatab.view.ListSettings.ListItemType;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,7 +41,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -116,15 +116,15 @@ public class HeroConfiguration {
     public static boolean updateStorageInfo(JSONObject json, HeroExchange.StorageType storageType, String heroId, String configId) throws JSONException {
         boolean changes = false;
 
-        changes |= !Objects.equals(json.opt(FIELD_STORAGE_HERO_ID),heroId);
-        changes |= !Objects.equals(json.opt(FIELD_STORAGE_CONFIG_ID),configId);
+        changes |= ObjectUtils.notEqual(json.opt(FIELD_STORAGE_HERO_ID),heroId);
+        changes |= ObjectUtils.notEqual(json.opt(FIELD_STORAGE_CONFIG_ID),configId);
 
 
         json.putOpt(FIELD_STORAGE_HERO_ID, heroId);
         json.putOpt(FIELD_STORAGE_CONFIG_ID, configId);
         if (storageType!=null) {
             json.put(FIELD_STORAGE_TYPE, storageType.name());
-            changes |= !Objects.equals(json.opt(FIELD_STORAGE_TYPE),storageType.name());
+            changes |= ObjectUtils.notEqual(json.opt(FIELD_STORAGE_TYPE),storageType.name());
         }
 
         return changes;

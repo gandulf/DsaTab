@@ -43,6 +43,8 @@ import java.io.IOException;
 public class ChangeLogDialog extends DialogFragment {
 	static final private String TAG = "ChangeLogDialog";
 
+    private static  boolean newsShown = false;
+
 	public static final String KEY_FORCE_SHOW = "forceShow";
 
 	public static final String KEY_NEWS_VERSION = "newsversion";
@@ -55,9 +57,15 @@ public class ChangeLogDialog extends DialogFragment {
 
 	private String html;
 
-	public static void show(Activity activity, boolean forceShow, int requestCode) {
+    public static void show(Activity activity) {
+        show(activity,false);
+    }
+	public static void show(Activity activity, boolean forceShow) {
 		if (activity == null)
 			return;
+
+        if (!forceShow && newsShown)
+            return;
 
 		ChangeLogDialog dialog = new ChangeLogDialog();
 
@@ -76,6 +84,7 @@ public class ChangeLogDialog extends DialogFragment {
 		if (hasContent && activity != null) {
 			dialog.show(activity.getFragmentManager(), TAG);
 		}
+        newsShown = true;
 	}
 
 	public ChangeLogDialog() {

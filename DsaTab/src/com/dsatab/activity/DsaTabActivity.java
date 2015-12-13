@@ -32,6 +32,7 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,14 +48,15 @@ import com.dsatab.data.HeroLoaderTask;
 import com.dsatab.fragment.AnimalFragment;
 import com.dsatab.fragment.BaseFragment;
 import com.dsatab.fragment.CharacterFragment;
+import com.dsatab.fragment.EmptyFragment;
 import com.dsatab.fragment.HeroChooserFragment;
 import com.dsatab.fragment.MapFragment;
+import com.dsatab.fragment.dialog.ChangeLogDialog;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.dsatab.util.ViewUtils;
 import com.dsatab.view.listener.ShakeListener;
 import com.gandulf.guilib.util.ResUtil;
-import com.gandulf.guilib.view.adapter.MultiFragmentPagerAdapter;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 
@@ -68,7 +70,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import pl.tajchert.nammu.Nammu;
 import pl.tajchert.nammu.PermissionCallback;
 
-public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceChangeListener, NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
+public class DsaTabActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
 
     private static final String TAB_INDEX = "TAB_INDEX";
 
@@ -105,6 +107,7 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
 
     private ShakeListener mShaker;
 
+    private int oldTabInfoPosition = -1;
     private TabInfo tabInfo;
 
     private DrawerLayout mDrawerLayout;
@@ -115,7 +118,6 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
     private TabFragmentPagerAdapter tabPagerAdapter;
 
     private long backPressed;
-
 
 
     private static class HeroLoaderCallback implements LoaderManager.LoaderCallbacks<Hero> {
@@ -154,7 +156,8 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
             if (hero != null) {
                 context.checkHsVersion(hero);
             }
-            context.onHeroLoaded(hero);
+            if (!context.isDestroyed() && !context.isFinishing())
+                context.onHeroLoaded(hero);
         }
 
         @Override
@@ -197,13 +200,25 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
     }
 
     @Override
     public void onPageSelected(int position) {
         tabInfo = tabPagerAdapter.getTabInfo(position);
+        if (oldTabInfoPosition >= 0) {
+            if (tabPagerAdapter.isOddPosition(position)) {
+                if (oldTabInfoPosition < position)
+                    viewPager.setCurrentItem(position + 1, true);
+                else
+                    viewPager.setCurrentItem(position - 1, true);
+                return;
+            }
+        }
         updatePage(tabInfo);
         updateBackdrop(tabInfo);
+
+        oldTabInfoPosition = position;
     }
 
     private void updatePage(TabInfo tabInfo) {
@@ -212,7 +227,7 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
         if (tabInfo != null) {
             if (tabInfo.hasActivityClazz(MapFragment.class) || tabInfo.hasActivityClazz(AnimalFragment.class))
                 setToolbarTitle("");
-            else if (tabInfo.hasActivityClazz(CharacterFragment.class) && getHero()!=null) {
+            else if (tabInfo.hasActivityClazz(CharacterFragment.class) && getHero() != null) {
                 setToolbarTitle(getHero().getName());
             } else {
                 setToolbarTitle(tabInfo.getTitle());
@@ -352,14 +367,10 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(DsaTabApplication.getInstance().getCustomTheme());
-        applyPreferencesToTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_view);
 
         preferences = DsaTabApplication.getPreferences();
-
-        DsaTabApplication.getPreferences().registerOnSharedPreferenceChangeListener(this);
 
         // start tracing to "/sdcard/calc.trace"
         // android.os.Debug.startMethodTracing("dsatab");
@@ -405,7 +416,7 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
         initViewPager();
         initDrawer();
 
-        if (DsaTabApplication.getPreferences().getBoolean(DsaTabIntro.KEY_APP_INTRO,true)) {
+        if (DsaTabApplication.getPreferences().getBoolean(DsaTabIntro.KEY_APP_INTRO, true)) {
             // we already ask inside intro need to ask again
             boolean heroLoaded = initHero();
             if (!heroLoaded) {
@@ -427,14 +438,14 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
 
                 @Override
                 public void permissionRefused() {
-                    ViewUtils.snackbar(DsaTabActivity.this,"Ohne Schreibrechte kann DsaTab leider keine Heldendaten speichern.");
+                    ViewUtils.snackbar(DsaTabActivity.this, "Ohne Schreibrechte kann DsaTab leider keine Heldendaten speichern.");
                 }
             });
         }
     }
 
     private void initViewPager() {
-        viewPager =(ViewPager) findViewById(R.id.viewpager);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.addOnPageChangeListener(this);
         //viewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.card_margin));
         //viewPager.setPageMarginDrawable(new ColorDrawable(getResources().getColor(android.R.color.darker_gray)));
@@ -442,6 +453,8 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
 
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
+        mDrawerLayout.closeDrawers();
+
         switch (menuItem.getItemId()) {
             case DRAWER_ID_HEROES:
                 showHeroChooser();
@@ -458,12 +471,17 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
                 if (menuItem.getIntent() != null) {
                     startActivity(menuItem.getIntent());
                 } else {
-                    TabInfo tabInfo = tabPagerAdapter.getTabInfo(menuItem.getOrder());
-                    showTab(tabInfo,false);
+                    final TabInfo tabInfo = tabPagerAdapter.getTabInfoByIndex(menuItem.getOrder());
+                    mDrawerLayout.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            showTab(tabInfo, false);
+                        }
+                    }, 500);
                 }
                 break;
         }
-        mDrawerLayout.closeDrawers();
+
         return true;
     }
 
@@ -493,7 +511,7 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
         menu.setGroupCheckable(TAB_GROUP, true, true);
 
         SubMenu subMenu = null;
-        if (menu.findItem(DRAWER_ID_SYSTEM)!= null) {
+        if (menu.findItem(DRAWER_ID_SYSTEM) != null) {
             subMenu = menu.findItem(DRAWER_ID_SYSTEM).getSubMenu();
         }
         if (subMenu == null) {
@@ -507,7 +525,7 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
         if (subMenu.findItem(DRAWER_ID_TABS) == null && hero != null) {
             menuItem = subMenu.add(SYSTEM_GROUP, DRAWER_ID_TABS, 2, "Tabs anpassen");
             menuItem.setIcon(ViewUtils.toolbarIcon(mDrawer.getContext(), MaterialDrawableBuilder.IconValue.TAB));
-        }else {
+        } else {
             if (hero == null) {
                 subMenu.removeItem(DRAWER_ID_TABS);
             }
@@ -532,7 +550,7 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
         else
             tabs = Collections.emptyList();
 
-        tabPagerAdapter = new TabFragmentPagerAdapter(getFragmentManager(),tabs);
+        tabPagerAdapter = new TabFragmentPagerAdapter(getFragmentManager(), tabs);
         viewPager.setAdapter(tabPagerAdapter);
 
         int defaultTabIndex = preferences.getInt(TAB_INDEX, 0);
@@ -552,16 +570,12 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
         mDrawerLayout.setStatusBarBackgroundColor(Util.getThemeColors(this, R.attr.colorPrimaryDark));
         mDrawer.setNavigationItemSelectedListener(this);
 
-        if (mDrawerHeaderItem !=null) {
+        if (mDrawerHeaderItem != null) {
             mDrawer.removeHeaderView(mDrawerHeaderItem);
         }
-        mDrawerHeaderItem =  mDrawer.inflateHeaderView(R.layout.drawer_header);
+        mDrawerHeaderItem = mDrawer.inflateHeaderView(R.layout.drawer_header);
 
-        if (DsaTabApplication.getInstance().isFirstRun()) {
-            mDrawerLayout.openDrawer(Gravity.LEFT);
-        } else {
-            mDrawerLayout.closeDrawers();
-        }
+        mDrawerLayout.closeDrawers();
     }
 
 
@@ -686,7 +700,7 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
 
     protected boolean showTab(TabInfo newTabInfo, boolean forceRefresh) {
         if (newTabInfo != null && tabPagerAdapter != null && (forceRefresh || isUpdateRequired(newTabInfo))) {
-            int index = tabPagerAdapter.indexOf(newTabInfo);
+            int index = tabPagerAdapter.positionOf(newTabInfo);
             // if we area already on the right page fore a onPageSelected if force is set
             if (forceRefresh && viewPager.getCurrentItem() == index) {
                 onPageSelected(index);
@@ -723,12 +737,19 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
     }
 
     protected void onHeroLoaded(Hero hero) {
+        if (isDestroyed() || isDestroyed())
+            return ;
+
         setupDrawerItems(hero);
         setupViewPager(hero);
         updatePortrait(hero);
 
         if (hero == null) {
             Snackbar.make(mDrawerLayout, R.string.message_load_hero_failed, Snackbar.LENGTH_LONG).show();
+        } else {
+            if (DsaTabApplication.getInstance().isFirstRun() && mDrawerLayout != null) {
+                mDrawerLayout.openDrawer(Gravity.LEFT);
+            }
         }
     }
 
@@ -754,7 +775,7 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
         // update drawer profile
         if (being instanceof Hero) {
             Hero hero = (Hero) being;
-            if (hero.getFileInfo() != null && mDrawerHeaderItem!=null) {
+            if (hero.getFileInfo() != null && mDrawerHeaderItem != null) {
                 // -- header
 
                 HeroFileInfo heroInfo = hero.getFileInfo();
@@ -775,31 +796,29 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
     protected void updateBackdrop(TabInfo tabInfo) {
         ImageView portraitView = (ImageView) findViewById(R.id.toolbar_portrait);
 
-        if (tabInfo!=null) {
-            if (mDrawerHeaderItem!=null)
+        if (tabInfo != null) {
+            if (mDrawerHeaderItem != null)
                 mDrawerHeaderItem.setVisibility(View.VISIBLE);
             int backdropImage = tabInfo.getBackdropImage();
+
             if (backdropImage != 0) {
                 portraitView.setImageResource(backdropImage);
             } else {
                 Util.setImage(portraitView, getHero() != null ? getHero().getPortraitUri() : null, R.drawable.backdrop_dsa);
             }
 
+            boolean hasDescription = tabInfo.hasActivityClazz(CharacterFragment.class) || tabInfo.hasActivityClazz(AnimalFragment.class);
             View description = findViewById(R.id.gen_description);
             View info = findViewById(R.id.toolbar_info);
             if (info != null) {
-                if (description == null) {
+                if (!hasDescription || description == null) {
                     info.setVisibility(View.GONE);
                 } else {
-                    if (description.getVisibility() == View.VISIBLE) {
-                        info.setVisibility(View.VISIBLE);
-                    } else {
-                        info.setVisibility(View.GONE);
-                    }
+                    info.setVisibility(View.VISIBLE);
                 }
             }
         } else {
-            if (mDrawerHeaderItem!=null)
+            if (mDrawerHeaderItem != null)
                 mDrawerHeaderItem.setVisibility(View.GONE);
         }
 
@@ -842,6 +861,7 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
     protected void onDestroy() {
         unregisterShakeDice();
 
+        getLoaderManager().destroyLoader(LOADER_HERO);
         DsaTabApplication.getPreferences().unregisterOnSharedPreferenceChangeListener(this);
 
         if (getHero() != null && preferences.getBoolean(DsaTabPreferenceActivity.KEY_AUTO_SAVE, true)) {
@@ -891,7 +911,7 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
             Debug.warning(e);
         }
 
-        DsaTabApplication.getInstance().showNewsInfoPopup(this);
+        ChangeLogDialog.show(this);
 
         super.onResume();
     }
@@ -1044,12 +1064,9 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
      */
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        super.onSharedPreferenceChanged(sharedPreferences,key);
+
         // Debug.verbose(key + " changed");
-
-        if (DsaTabPreferenceActivity.KEY_STYLE_BG_PATH.equals(key)) {
-            applyPreferencesToTheme();
-        }
-
         if (DsaTabPreferenceActivity.KEY_SCREEN_ORIENTATION.equals(key)) {
             String orientation = sharedPreferences.getString(DsaTabPreferenceActivity.KEY_SCREEN_ORIENTATION,
                     DsaTabPreferenceActivity.DEFAULT_SCREEN_ORIENTATION);
@@ -1087,7 +1104,6 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
                         key);
             }
         }
-
     }
 
     protected void showHeroChooser() {
@@ -1095,74 +1111,144 @@ public class DsaTabActivity extends BaseActivity implements OnSharedPreferenceCh
         startActivityForResult(intent, ACTION_CHOOSE_HERO);
     }
 
-    class TabsFragmentPagerAdapter extends MultiFragmentPagerAdapter {
-
-        List<TabInfo> tabInfos;
-
-        public TabsFragmentPagerAdapter(Context context, android.app.FragmentManager fm, List<TabInfo> tabs) {
-            super(context, fm);
-            tabInfos = tabs;
-        }
-
-        @Override
-        public Fragment getItem(int position, int tab) {
-            TabInfo info = tabInfos.get(position);
-            return BaseFragment.newInstance(info.getActivityClazz(tab),info,tab);
-        }
-
-        @Override
-        public boolean isValidForItem(Fragment fragment, int position, int tab) {
-            TabInfo info = tabInfos.get(position);
-            Class<?extends BaseFragment> clazz = info.getActivityClazz(tab);
-            return fragment!=null && clazz.isAssignableFrom(fragment.getClass());
-        }
-
-        public TabInfo getTabInfo(int position) {
-            return tabInfos.get(position);
-        }
-
-        public int indexOf(TabInfo tabInfo) {
-            return tabInfos.indexOf(tabInfo);
-        }
-
-        @Override
-        public int getCount() {
-            return tabInfos.size();
-        }
-
-        @Override
-        public int getCount(int position) {
-            return tabInfos.get(position).getTabCount();
-        }
-    }
-
     class TabFragmentPagerAdapter extends com.gandulf.guilib.view.adapter.FragmentPagerAdapter {
 
-        List<TabInfo> tabInfos;
+        private List<TabInfoPage> tabInfoPages;
+        private List<TabInfo> tabInfos;
+
+        private class TabInfoPage {
+            private TabInfo tabInfo;
+            private int index;
+
+            public TabInfoPage(TabInfo info, int index) {
+                this.tabInfo = info;
+                this.index = index;
+            }
+
+            public float getPageWidth() {
+                if (tabInfo != null)
+                    return 1.0f / tabInfo.getTabCount();
+                else
+                    return 1.0f;
+            }
+
+            public Class<? extends BaseFragment> getActivityClazz() {
+                if (tabInfo != null)
+                    return tabInfo.getActivityClazz(index);
+                else
+                    return EmptyFragment.class;
+            }
+
+            public long getId() {
+                if (tabInfo != null) {
+                    int hash = tabInfo.getId().hashCode();
+                    String itemId = hash + "" + index;
+                    return Long.parseLong(itemId);
+                } else {
+                    return AdapterView.INVALID_ROW_ID;
+                }
+            }
+        }
 
         public TabFragmentPagerAdapter(android.app.FragmentManager fm, List<TabInfo> tabs) {
             super(fm);
-            tabInfos = tabs;
+
+            tabInfoPages = new ArrayList<>();
+            if (tabs != null)
+                tabInfos = new ArrayList<>(tabs);
+            else {
+                tabInfos = new ArrayList<>();
+
+            }
+            for (TabInfo info : tabInfos) {
+                for (int i = 0; i < info.getTabCount(); i++) {
+                    tabInfoPages.add(new TabInfoPage(info, i));
+                }
+            }
+        }
+
+        @Override
+        public float getPageWidth(int position) {
+            TabInfoPage page = getTabInfoPage(position);
+            if (page != null)
+                return page.getPageWidth();
+            else
+                return 1.0f;
         }
 
         @Override
         public Fragment getItem(int position) {
-            TabInfo info = tabInfos.get(position);
-            return BaseFragment.newInstance(info.getActivityClazz(0), info, 0);
+            TabInfoPage infoPage = getTabInfoPage(position);
+            if (infoPage != null && infoPage.tabInfo != null) {
+                return BaseFragment.newInstance(infoPage.getActivityClazz(), infoPage.tabInfo, infoPage.index);
+            } else {
+                return BaseFragment.newInstance(EmptyFragment.class, null, 0);
+            }
         }
+
+        @Override
+        public long getItemId(int position) {
+            TabInfoPage infoPage = getTabInfoPage(position);
+            if (infoPage != null) {
+                return infoPage.getId();
+            } else {
+                return AdapterView.INVALID_ROW_ID;
+            }
+        }
+
+        public TabInfo getTabInfoByIndex(int index) {
+            if (index >= 0 && index < tabInfos.size())
+                return tabInfos.get(index);
+            else
+                return null;
+        }
+
+        public TabInfoPage getTabInfoPage(int position) {
+            if (position >= 0 && position < tabInfoPages.size())
+                return tabInfoPages.get(position);
+            else
+                return null;
+        }
+
         public TabInfo getTabInfo(int position) {
-            return tabInfos.get(position);
+            TabInfoPage page = getTabInfoPage(position);
+            if (page != null)
+                return page.tabInfo;
+            else
+                return null;
+        }
+
+        public boolean isOddPosition(int position) {
+            TabInfoPage page = tabInfoPages.get(position);
+            if (page != null)
+                return page.index != 0;
+            else
+                return false;
+        }
+
+        public int positionOf(TabInfo tabInfo) {
+            if (tabInfo == null)
+                return -1;
+
+            for (int i = 0; i < tabInfoPages.size(); i++) {
+                TabInfoPage page = tabInfoPages.get(i);
+                if (page.tabInfo != null && page.tabInfo.equals(tabInfo)) {
+                    return i;
+                }
+            }
+            return -1;
         }
 
         public int indexOf(TabInfo tabInfo) {
+            if (tabInfo == null)
+                return -1;
+
             return tabInfos.indexOf(tabInfo);
         }
 
         @Override
         public int getCount() {
-            return tabInfos.size();
+            return tabInfoPages.size();
         }
-
     }
-
 }

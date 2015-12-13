@@ -1,6 +1,5 @@
 package com.dsatab;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -12,14 +11,12 @@ import android.preference.PreferenceManager;
 import android.support.multidex.MultiDexApplication;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import android.view.ContextThemeWrapper;
 
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.cloud.HeroExchange;
 import com.dsatab.config.DsaTabConfiguration;
 import com.dsatab.data.Hero;
 import com.dsatab.db.DatabaseHelper;
-import com.dsatab.fragment.dialog.ChangeLogDialog;
 import com.dsatab.map.BitmapTileSource;
 import com.dsatab.util.Debug;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
@@ -98,7 +95,6 @@ public class DsaTabApplication extends MultiDexApplication {
 	private HeroExchange exchange;
 
 	private boolean firstRun;
-	private boolean newsShown = false;
 
     public static RefWatcher getRefWatcher(Context context) {
         DsaTabApplication application = (DsaTabApplication) context.getApplicationContext();
@@ -113,13 +109,6 @@ public class DsaTabApplication extends MultiDexApplication {
 	public static DsaTabApplication getInstance() {
 		checkInstance();
 		return instance;
-	}
-
-	public ContextThemeWrapper getContextWrapper(Context context) {
-		if (isDarkTheme())
-			return new ContextThemeWrapper(context, R.style.DsaTabTheme_Dark);
-		else
-			return new ContextThemeWrapper(context, R.style.DsaTabTheme_Light);
 	}
 
 	public static File getDirectory(String name) {
@@ -193,59 +182,7 @@ public class DsaTabApplication extends MultiDexApplication {
 			throw new IllegalStateException("Application not created yet!");
 	}
 
-	public boolean isDarkTheme() {
-		return R.style.DsaTabTheme_Dark == getCustomTheme();
-	}
 
-	public int getCustomTheme() {
-		String theme = getPreferences().getString(DsaTabPreferenceActivity.KEY_THEME, THEME_DEFAULT);
-
-		if (THEME_LIGHT_PLAIN.equals(theme)) {
-			return R.style.DsaTabTheme_Light;
-		} else if (THEME_DARK_PLAIN.equals(theme)) {
-			return R.style.DsaTabTheme_Dark;
-		} else {
-			return R.style.DsaTabTheme_Light;
-		}
-
-	}
-
-	public int getCustomPreferencesTheme() {
-		String theme = getPreferences().getString(DsaTabPreferenceActivity.KEY_THEME, THEME_DEFAULT);
-
-		if (THEME_LIGHT_PLAIN.equals(theme)) {
-			return R.style.DsaTabTheme_Light;
-		} else if (THEME_DARK_PLAIN.equals(theme)) {
-			return R.style.DsaTabTheme_Dark;
-		} else {
-			return R.style.DsaTabTheme_Light;
-		}
-	}
-
-	public String getCustomThemeValue() {
-		String theme = getPreferences().getString(DsaTabPreferenceActivity.KEY_THEME, THEME_DEFAULT);
-
-		List<String> themeValues = Arrays.asList(getResources().getStringArray(R.array.themesValues));
-		int index = themeValues.indexOf(theme);
-		if (index >= 0 && index < themeValues.size()) {
-			return themeValues.get(index);
-		} else
-			return themeValues.get(0);
-
-	}
-
-	public String getCustomThemeName() {
-		String theme = getPreferences().getString(DsaTabPreferenceActivity.KEY_THEME, THEME_DEFAULT);
-
-		List<String> themeValues = Arrays.asList(getResources().getStringArray(R.array.themesValues));
-		int index = themeValues.indexOf(theme);
-
-		String[] themes = getResources().getStringArray(R.array.themes);
-		if (index >= 0 && index < themes.length)
-			return themes[index];
-		else
-			return themes[0];
-	}
 
 	@Override
 	public void onCreate() {
@@ -256,7 +193,7 @@ public class DsaTabApplication extends MultiDexApplication {
 
 		cleanUp();
 
-		setTheme(getCustomTheme());
+		setTheme(DsaTabPreferenceActivity.getCustomTheme());
 
 		configuration = new DsaTabConfiguration(this);
 
@@ -307,7 +244,6 @@ public class DsaTabApplication extends MultiDexApplication {
 		ImageLoader.getInstance().init(config);
 
 		exchange = new HeroExchange(getBaseContext());
-
 
         Nammu.init(getApplicationContext());
     }
@@ -371,14 +307,6 @@ public class DsaTabApplication extends MultiDexApplication {
 			OpenHelperManager.releaseHelper();
 			databaseHelper = null;
 		}
-	}
-
-	public void showNewsInfoPopup(Activity activity) {
-		if (newsShown)
-			return;
-
-		ChangeLogDialog.show(activity, false, 0);
-		newsShown = true;
 	}
 
 	public DatabaseHelper getDBHelper() {

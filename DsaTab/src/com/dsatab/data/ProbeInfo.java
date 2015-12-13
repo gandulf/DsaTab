@@ -5,9 +5,12 @@ import android.text.TextUtils;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
+import com.splunk.mint.Mint;
+import com.splunk.mint.MintLogLevel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
@@ -85,8 +88,12 @@ public class ProbeInfo implements Cloneable, Serializable {
 						try {
 							erschwernis = Util.parseInteger(v);
 						} catch (NumberFormatException e) {
-							Debug.error("Couldn't parse Erschwernis '" + v + "' of probePattern '" + s + "'", e);
-							erschwernis = 0;
+                            erschwernis = 0;
+
+                            HashMap<String,Object> customData = new HashMap<>(2);
+                            customData.put("Erschwernis"   ,v);
+                            customData.put("ProbePattern",s);
+                            Mint.logEvent("ProbeInfo - Unparseable Erschwernis", MintLogLevel.Info, customData);
 						}
 					} else {
 						AttributeType type = AttributeType.byCode(v);
@@ -96,8 +103,12 @@ public class ProbeInfo implements Cloneable, Serializable {
 							try {
 								attributeValues.add(Util.parseInteger(v));
 							} catch (NumberFormatException e) {
-								Debug.error("Couldn't parse AttributeValue '" + v + "' of probePattern '" + s + "'", e);
-								attributeValues.add(0);
+                                attributeValues.add(0);
+
+                                HashMap<String,Object> customData = new HashMap<>(2);
+                                customData.put("AttributeValue",v);
+                                customData.put("ProbePattern",s);
+                                Mint.logEvent("ProbeInfo - Unparseable AttributeValue", MintLogLevel.Info, customData);
 							}
 						}
 					}

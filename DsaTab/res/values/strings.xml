@@ -130,7 +130,7 @@
 "Oder lade dir unter <b>Einstellungen > Portaits, Bilder, etc herunterladen</b> das offiziele Kartenpaket herunter."</string>
     <string name="message_heroes_empty">"Es wurden keine Helden-Dateien gefunden."\n\n
 "Stell sicher, dass sich auf der SD-Karte unter \""<b>%1$s</b>"\"\n die als XML-Datei exportierten Helden der Helden-Software befinden.\n\n
-Dsatab kann deine Helden nun auch automatisch in der Cloud speichern.\nVerbinde Dsatab mit deinem Dropbox oder Google Drive Konto um die Helden sowohl auf deinem PC als auch Smartphoneim Unterverzeicnis \"dsatab\" synchron zu halten."</string>
+Dsatab kann deine Helden nun auch automatisch in der Cloud speichern.\nVerbinde Dsatab mit deinem Dropbox oder Google Drive Konto um die Helden sowohl auf deinem PC als auch Smartphone im Unterverzeichnis \"dsatab\" synchron zu halten."</string>
     <string name="search_hint">Suchen</string>
     <string name="search_wiki_hint">Suche bei Wiki Aventurica</string>
     <string name="title_credits">Credits</string>

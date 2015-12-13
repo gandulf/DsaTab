@@ -8,6 +8,10 @@ import android.support.design.widget.Snackbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.TabHost;
+import android.widget.TabWidget;
+import android.widget.TextView;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
@@ -24,10 +28,11 @@ public class TabEditActivity extends BaseActivity implements TabListFragment.Tab
     public static final int ACTION_ADD = 1015;
 
     public static final String DATA_INTENT_TAB_INDEX = "tab.index";
-    public static final String DATA_INTENT_TABINFO ="tab.info";
+    public static final String DATA_INTENT_TABINFO = "tab.info";
 
     private TabListFragment listFragment;
-    private TabEditFragment editFragment;
+    private TabEditFragment editFragment1;
+    private TabEditFragment editFragment2;
 
     public static void list(Activity activity, TabInfo tabInfo, int tabIndex, int requestCode) {
         Intent intent = new Intent(activity, TabEditActivity.class);
@@ -40,7 +45,7 @@ public class TabEditActivity extends BaseActivity implements TabListFragment.Tab
     public static void insert(Activity context, int tabIndex, int requestCode) {
         Intent intent = new Intent(context, BaseEditActivity.class);
         intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, TabEditFragment.class);
-        intent.putExtra(BaseEditActivity.EDIT_TITLE,context.getString(R.string.label_create));
+        intent.putExtra(BaseEditActivity.EDIT_TITLE, context.getString(R.string.label_create));
         intent.putExtra(TabEditActivity.DATA_INTENT_TAB_INDEX, tabIndex);
         intent.setAction(Intent.ACTION_INSERT);
         context.startActivityForResult(intent, requestCode);
@@ -50,7 +55,7 @@ public class TabEditActivity extends BaseActivity implements TabListFragment.Tab
         if (tabInfo != null) {
             Intent intent = new Intent(context, BaseEditActivity.class);
             intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, TabEditFragment.class);
-            intent.putExtra(BaseEditActivity.EDIT_TITLE,context.getString(R.string.label_edit));
+            intent.putExtra(BaseEditActivity.EDIT_TITLE, context.getString(R.string.label_edit));
             intent.putExtra(TabEditActivity.DATA_INTENT_TABINFO, tabInfo);
             intent.putExtra(TabEditActivity.DATA_INTENT_TAB_INDEX, tabIndex);
             intent.setAction(Intent.ACTION_EDIT);
@@ -63,8 +68,6 @@ public class TabEditActivity extends BaseActivity implements TabListFragment.Tab
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setTheme(DsaTabApplication.getInstance().getCustomTheme());
-        applyPreferencesToTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_edit_tabs);
 
@@ -89,14 +92,60 @@ public class TabEditActivity extends BaseActivity implements TabListFragment.Tab
             return;
         }
 
-        editFragment = (TabEditFragment) getFragmentManager().findFragmentById(R.id.fragment_tab_edit);
+        editFragment1 = (TabEditFragment) getFragmentManager().findFragmentById(R.id.fragment_tab_edit1);
+        editFragment2 = (TabEditFragment) getFragmentManager().findFragmentById(R.id.fragment_tab_edit2);
         listFragment = (TabListFragment) getFragmentManager().findFragmentById(R.id.fragment_tab_list);
         listFragment.setTabListListener(this);
-        int tabIndex=0;
-        if (getIntent()!=null) {
+        int tabIndex = 0;
+        if (getIntent() != null) {
             tabIndex = getIntent().getIntExtra(TabEditActivity.DATA_INTENT_TAB_INDEX, 0);
         }
         listFragment.selectTabInfo(tabIndex);
+
+
+        setUpTabInfos();
+    }
+
+    private void setUpTabInfos() {
+        TabHost tabHost = (TabHost) findViewById(android.R.id.tabhost);
+        if (tabHost != null) {
+            tabHost.setup();
+
+            final TabWidget tabWidget = tabHost.getTabWidget();
+            final FrameLayout tabContent = tabHost.getTabContentView();
+
+            // Get the original tab textviews and remove them from the viewgroup.
+            TextView[] originalTextViews = new TextView[tabWidget.getTabCount()];
+            for (int index = 0; index < tabWidget.getTabCount(); index++) {
+                originalTextViews[index] = (TextView) tabWidget.getChildTabViewAt(index);
+            }
+            tabWidget.removeAllViews();
+
+            // Ensure that all tab content childs are not visible at startup.
+            for (int index = 0; index < tabContent.getChildCount(); index++) {
+                tabContent.getChildAt(index).setVisibility(View.GONE);
+            }
+
+            // Create the tabspec based on the textview childs in the xml file.
+            // Or create simple tabspec instances in any other way...
+            for (int index = 0; index < originalTextViews.length; index++) {
+                final TextView tabWidgetTextView = originalTextViews[index];
+                final View tabContentView = tabContent.getChildAt(index);
+                TabHost.TabSpec tabSpec = tabHost.newTabSpec((String) tabWidgetTextView.getTag());
+                tabSpec.setContent(new TabHost.TabContentFactory() {
+                    @Override
+                    public View createTabContent(String tag) {
+                        return tabContentView;
+                    }
+                });
+                if (tabWidgetTextView.getBackground() == null) {
+                    tabSpec.setIndicator(tabWidgetTextView.getText());
+                } else {
+                    tabSpec.setIndicator(tabWidgetTextView.getText(), tabWidgetTextView.getBackground());
+                }
+                tabHost.addTab(tabSpec);
+            }
+        }
     }
 
     @Override
@@ -135,13 +184,16 @@ public class TabEditActivity extends BaseActivity implements TabListFragment.Tab
 
     @Override
     public void onTabInfoClicked(TabInfo tabInfo) {
-        int index =0;
-        if (listFragment!=null) {
+        int index = 0;
+        if (listFragment != null) {
             index = listFragment.getTabInfos().indexOf(tabInfo);
         }
 
-        if (editFragment !=null) {
-            editFragment.setTabInfo(tabInfo, 0);
+        if (editFragment1 != null) {
+            editFragment1.setTabInfo(tabInfo, 0);
+            if (editFragment2 != null) {
+                editFragment2.setTabInfo(tabInfo, 1);
+            }
             invalidateOptionsMenu();
         } else {
             edit(this, tabInfo, index, ACTION_EDIT);
@@ -150,8 +202,11 @@ public class TabEditActivity extends BaseActivity implements TabListFragment.Tab
 
     @Override
     public void onTabInfoSelected(TabInfo info) {
-        if (editFragment !=null) {
-            editFragment.setTabInfo(info, 0);
+        if (editFragment1 != null) {
+            editFragment1.setTabInfo(info, 0);
+            if (editFragment2 != null) {
+                editFragment2.setTabInfo(info, 1);
+            }
             invalidateOptionsMenu();
         }
     }
@@ -168,12 +223,20 @@ public class TabEditActivity extends BaseActivity implements TabListFragment.Tab
     }
 
     protected boolean accept() {
-        if (editFragment != null) {
-            Bundle data = editFragment.accept();
+        if (editFragment1 != null) {
+            Bundle data = editFragment1.accept();
             TabInfo info = data.getParcelable(TabEditActivity.DATA_INTENT_TABINFO);
-            if (info!=null) {
+            if (editFragment2 != null) {
+                Bundle data2 = editFragment2.accept();
+                TabInfo info2 = data2.getParcelable(TabEditActivity.DATA_INTENT_TABINFO);
+                info.setActivityClazz(editFragment2.getTabInfoIndex(),info2.getActivityClazz(editFragment2.getTabInfoIndex()));
+                info.setListSettings(editFragment2.getTabInfoIndex(), info2.getListSettings(editFragment2.getTabInfoIndex()));
+
+            }
+
+            if (info != null) {
                 int position = listFragment.getTabInfos().indexOf(info);
-                if (position>=0) {
+                if (position >= 0) {
                     listFragment.getTabInfos().set(position, info);
                 } else {
                     listFragment.addTabInfo(info);

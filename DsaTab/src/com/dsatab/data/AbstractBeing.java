@@ -85,7 +85,6 @@ public abstract class AbstractBeing {
 	public Uri getPortraitUri() {
 		if (portraitUri == null) {
 			if (!TextUtils.isEmpty(getHeroConfiguration().getProperty(getId() + KEY_PORTRAIT_URI))) {
-
 				portraitUri = Uri.parse(getHeroConfiguration().getProperty(getId() + KEY_PORTRAIT_URI));
 			}
 		}

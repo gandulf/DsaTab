@@ -411,6 +411,10 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
         }
     }
 
+    public void setListSettings(int index, ListSettings settings) {
+        listSettings[index] = settings;
+    }
+
     public ListSettings getListSettings(int pos) {
         if (listSettings[pos] == null) {
             updateListSettings();

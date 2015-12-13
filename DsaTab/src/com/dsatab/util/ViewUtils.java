@@ -66,7 +66,7 @@ public class ViewUtils {
 
     public static void menuIcon(Context context, Menu menu, int menuItemId, MaterialDrawableBuilder.IconValue iconValue) {
         MenuItem item = menu.findItem(menuItemId);
-        if (item != null && item.getIcon() == null) {
+        if (item != null && item.getIcon() == null && context !=null) {
             item.setIcon(ViewUtils.toolbarIcon(context, iconValue));
         }
     }
@@ -126,65 +126,66 @@ public class ViewUtils {
     }
 
     public static void menuIcons(Context context, Menu menu) {
-        ViewUtils.menuIcon(context, menu, R.id.option_about, MaterialDrawableBuilder.IconValue.INFORMATION_OUTLINE);
-        ViewUtils.menuIcon(context, menu, R.id.option_donate, MaterialDrawableBuilder.IconValue.GIFT);
+        if (context!=null) {
+            ViewUtils.menuIcon(context, menu, R.id.option_about, MaterialDrawableBuilder.IconValue.INFORMATION_OUTLINE);
+            ViewUtils.menuIcon(context, menu, R.id.option_donate, MaterialDrawableBuilder.IconValue.GIFT);
 
-        ViewUtils.menuIcon(context, menu, R.id.option_move, MaterialDrawableBuilder.IconValue.SWAP_HORIZONTAL);
-        ViewUtils.menuIcon(context, menu, R.id.option_equipped, MaterialDrawableBuilder.IconValue.HANGER);
+            ViewUtils.menuIcon(context, menu, R.id.option_move, MaterialDrawableBuilder.IconValue.SWAP_HORIZONTAL);
+            ViewUtils.menuIcon(context, menu, R.id.option_equipped, MaterialDrawableBuilder.IconValue.HANGER);
 
-        ViewUtils.menuIcon(context, menu, R.id.option_add, MaterialDrawableBuilder.IconValue.PLUS_CIRCLE);
+            ViewUtils.menuIcon(context, menu, R.id.option_add, MaterialDrawableBuilder.IconValue.PLUS_CIRCLE);
 
-        ViewUtils.menuIcon(context, menu, R.id.option_mark, MaterialDrawableBuilder.IconValue.STAR);
+            ViewUtils.menuIcon(context, menu, R.id.option_mark, MaterialDrawableBuilder.IconValue.STAR);
 
-        ViewUtils.menuIcon(context, menu, R.id.option_assign_hunting, MaterialDrawableBuilder.IconValue.STAR);
+            ViewUtils.menuIcon(context, menu, R.id.option_assign_hunting, MaterialDrawableBuilder.IconValue.STAR);
 
-        ViewUtils.menuIcon(context, menu, R.id.option_mark_favorite, MaterialDrawableBuilder.IconValue.STAR);
-        ViewUtils.menuIcon(context, menu, R.id.option_unmark, MaterialDrawableBuilder.IconValue.CLOSE_CIRCLE_OUTLINE);
-        ViewUtils.menuIcon(context, menu, R.id.option_mark_unused, MaterialDrawableBuilder.IconValue.STAR_OUTLINE);
+            ViewUtils.menuIcon(context, menu, R.id.option_mark_favorite, MaterialDrawableBuilder.IconValue.STAR);
+            ViewUtils.menuIcon(context, menu, R.id.option_unmark, MaterialDrawableBuilder.IconValue.CLOSE_CIRCLE_OUTLINE);
+            ViewUtils.menuIcon(context, menu, R.id.option_mark_unused, MaterialDrawableBuilder.IconValue.STAR_OUTLINE);
 
-        ViewUtils.menuIcon(context, menu, R.id.option_edit, MaterialDrawableBuilder.IconValue.PENCIL);
-
-
-        ViewUtils.menuIcon(context, menu, R.id.option_unassign, MaterialDrawableBuilder.IconValue.CLOSE_CIRCLE_OUTLINE);
-
-        ViewUtils.menuIcon(context, menu, R.id.option_delete, MaterialDrawableBuilder.IconValue.DELETE);
-
-        ViewUtils.menuIcon(context, menu, R.id.option_cancel, MaterialDrawableBuilder.IconValue.CLOSE);
-        ViewUtils.menuIcon(context, menu, R.id.option_ok, MaterialDrawableBuilder.IconValue.CHECK);
-
-        ViewUtils.menuIcon(context, menu, R.id.option_refresh, MaterialDrawableBuilder.IconValue.REFRESH);
-        ViewUtils.menuIcon(context, menu, R.id.option_view, MaterialDrawableBuilder.IconValue.EYE);
-        ViewUtils.menuIcon(context, menu, R.id.option_pick_image, MaterialDrawableBuilder.IconValue.EYE);
-
-        ViewUtils.menuIcon(context, menu, R.id.option_assign_secondary, MaterialDrawableBuilder.IconValue.SHARE_VARIANT);
-        ViewUtils.menuIcon(context, menu, R.id.option_select_version, MaterialDrawableBuilder.IconValue.SHARE_VARIANT);
-        ViewUtils.menuIcon(context, menu, R.id.option_select_talent, MaterialDrawableBuilder.IconValue.SHARE_VARIANT);
-
-        ViewUtils.menuIcon(context, menu, R.id.option_take_photo, MaterialDrawableBuilder.IconValue.CAMERA);
+            ViewUtils.menuIcon(context, menu, R.id.option_edit, MaterialDrawableBuilder.IconValue.PENCIL);
 
 
-        ViewUtils.menuIcon(context, menu, R.id.option_documents_choose, MaterialDrawableBuilder.IconValue.FILE_DOCUMENT);
+            ViewUtils.menuIcon(context, menu, R.id.option_unassign, MaterialDrawableBuilder.IconValue.CLOSE_CIRCLE_OUTLINE);
 
-        ViewUtils.menuIcon(context, menu, R.id.option_connect, MaterialDrawableBuilder.IconValue.CLOUD);
+            ViewUtils.menuIcon(context, menu, R.id.option_delete, MaterialDrawableBuilder.IconValue.DELETE);
 
-        ViewUtils.menuIcon(context, menu, R.id.option_load_example_heroes, MaterialDrawableBuilder.IconValue.ACCOUNT_STAR_VARIANT);
-        ViewUtils.menuIcon(context, menu, R.id.option_pick_avatar, MaterialDrawableBuilder.IconValue.ACCOUNT_BOX);
-        ViewUtils.menuIcon(context, menu, R.id.option_download_avatars, MaterialDrawableBuilder.IconValue.ACCOUNT_NETWORK);
+            ViewUtils.menuIcon(context, menu, R.id.option_cancel, MaterialDrawableBuilder.IconValue.CLOSE);
+            ViewUtils.menuIcon(context, menu, R.id.option_ok, MaterialDrawableBuilder.IconValue.CHECK);
 
-        ViewUtils.menuIcon(context, menu, R.id.option_filter, MaterialDrawableBuilder.IconValue.FILTER);
-        ViewUtils.menuIcon(context, menu, R.id.option_note_filter, MaterialDrawableBuilder.IconValue.FILTER);
+            ViewUtils.menuIcon(context, menu, R.id.option_refresh, MaterialDrawableBuilder.IconValue.REFRESH);
+            ViewUtils.menuIcon(context, menu, R.id.option_view, MaterialDrawableBuilder.IconValue.EYE);
+            ViewUtils.menuIcon(context, menu, R.id.option_pick_image, MaterialDrawableBuilder.IconValue.EYE);
 
-        ViewUtils.menuIcon(context, menu, R.id.option_save_hero, MaterialDrawableBuilder.IconValue.CONTENT_SAVE);
+            ViewUtils.menuIcon(context, menu, R.id.option_assign_secondary, MaterialDrawableBuilder.IconValue.SHARE_VARIANT);
+            ViewUtils.menuIcon(context, menu, R.id.option_select_version, MaterialDrawableBuilder.IconValue.SHARE_VARIANT);
+            ViewUtils.menuIcon(context, menu, R.id.option_select_talent, MaterialDrawableBuilder.IconValue.SHARE_VARIANT);
 
-        ViewUtils.menuIcon(context, menu, R.id.option_search, MaterialDrawableBuilder.IconValue.MAGNIFY);
+            ViewUtils.menuIcon(context, menu, R.id.option_take_photo, MaterialDrawableBuilder.IconValue.CAMERA);
 
-        ViewUtils.menuIcon(context, menu, R.id.option_itemgrid_type_list, MaterialDrawableBuilder.IconValue.VIEW_LIST);
-        ViewUtils.menuIcon(context, menu, R.id.option_itemgrid_type_grid, MaterialDrawableBuilder.IconValue.VIEW_GRID);
 
-        ViewUtils.menuIcon(context, menu, R.id.option_take_hit, MaterialDrawableBuilder.IconValue.HEART_BROKEN);
-        ViewUtils.menuIcon(context, menu, R.id.option_list_items, MaterialDrawableBuilder.IconValue.TSHIRT_CREW);
+            ViewUtils.menuIcon(context, menu, R.id.option_documents_choose, MaterialDrawableBuilder.IconValue.FILE_DOCUMENT);
 
-        ViewUtils.menuIcon(context, menu, R.id.option_settings, MaterialDrawableBuilder.IconValue.SETTINGS);
+            ViewUtils.menuIcon(context, menu, R.id.option_connect, MaterialDrawableBuilder.IconValue.CLOUD);
 
+            ViewUtils.menuIcon(context, menu, R.id.option_load_example_heroes, MaterialDrawableBuilder.IconValue.ACCOUNT_STAR_VARIANT);
+            ViewUtils.menuIcon(context, menu, R.id.option_pick_avatar, MaterialDrawableBuilder.IconValue.ACCOUNT_BOX);
+            ViewUtils.menuIcon(context, menu, R.id.option_download_avatars, MaterialDrawableBuilder.IconValue.ACCOUNT_NETWORK);
+
+            ViewUtils.menuIcon(context, menu, R.id.option_filter, MaterialDrawableBuilder.IconValue.FILTER);
+            ViewUtils.menuIcon(context, menu, R.id.option_note_filter, MaterialDrawableBuilder.IconValue.FILTER);
+
+            ViewUtils.menuIcon(context, menu, R.id.option_save_hero, MaterialDrawableBuilder.IconValue.CONTENT_SAVE);
+
+            ViewUtils.menuIcon(context, menu, R.id.option_search, MaterialDrawableBuilder.IconValue.MAGNIFY);
+
+            ViewUtils.menuIcon(context, menu, R.id.option_itemgrid_type_list, MaterialDrawableBuilder.IconValue.VIEW_LIST);
+            ViewUtils.menuIcon(context, menu, R.id.option_itemgrid_type_grid, MaterialDrawableBuilder.IconValue.VIEW_GRID);
+
+            ViewUtils.menuIcon(context, menu, R.id.option_take_hit, MaterialDrawableBuilder.IconValue.HEART_BROKEN);
+            ViewUtils.menuIcon(context, menu, R.id.option_list_items, MaterialDrawableBuilder.IconValue.TSHIRT_CREW);
+
+            ViewUtils.menuIcon(context, menu, R.id.option_settings, MaterialDrawableBuilder.IconValue.SETTINGS);
+        }
     }
 }

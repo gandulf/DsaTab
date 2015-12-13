@@ -85,7 +85,11 @@ public class ArtInfoFragment extends BaseEditFragment {
 	protected void setArtInfo(CharSequence title, ArtGroupType artGroupType, ArtInfo info) {
 
 		set(R.id.popup_liturgie_title, title);
-		set(R.id.popup_liturgie_type, artGroupType.getName());
+        if (artGroupType!=null) {
+            set(R.id.popup_liturgie_type, artGroupType.getName());
+        } else {
+            set(R.id.popup_liturgie_type, null);
+        }
 		if (info != null) {
 			set(R.id.popup_liturgie_costs, info.getCosts());
 			set(R.id.popup_liturgie_effect, info.getEffect());

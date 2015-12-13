@@ -104,6 +104,7 @@ Geodenritual: Trank des ungehinderten Weges;;;;;;;;WdZ 131;;Magisch (Ritual);0;
 Geschützmeister;;;;;;;;WdH 279 / WnM 146;;Kampf;0;FF 12, Belagerungswaffen 10, Mechanik 7
 Gezielter Stich;;;;;;;;WdH 279 / WdS 62, 74 / WnM 146;;Kampf;0;SF Finte
 Golembauer;;;;;;;;WdH 286 / WdZ 197 / VTuT 102;;Magisch;0;MU 15, Magiekunde 11, STEIN WANDLE 11 | STAUB WANDLE 11
+Golgaris Zwielicht;;;;;;;;LL 170;;Klerikal;0;
 Göttliche Anrufung I;;;;;;;;OiC 44;;Klerikal;0;V Sacredos | (SF Spähtweihe, Liturgiekenntnis 0)
 Göttliche Anrufung II;;;;;;;;OiC 44;;Klerikal;0;V Sacredos | (SF Spähtweihe, Liturgiekenntnis 0)
 Göttliche Anrufung III;;;;;;;;OiC 44;;Klerikal;0;V Sacredos | (SF Spähtweihe, Liturgiekenntnis 0)
@@ -385,7 +386,7 @@ Liturgie: Blitzschlag;;;;;;;;MyG 186;;Klerikal (Liturgie);0;
 Liturgie: Bootssegen;;;;;;;;WdG 263;;Klerikal (Liturgie);0;
 Liturgie: Borons süße Gnade;;;;;;;;WdG 267;;Klerikal (Liturgie);0;
 Liturgie: Borons süße Gnade (V);;;;;;;;WdG 267;;Klerikal (Liturgie);0;
-Liturgie: Buchprüfung;;;;;;;;WdG 274 / MyG 185;;Klerikal (Liturgie);0;
+Liturgie: Buchprüfung;III;P;B;A/Ze;Geweihter kann interessante Stellen in einem Buch aufspüren, passendes Wissenstalent min. 7, evtl. höher;augenblicklich;Phex, Hesinde, Nandus;WdG 274 / MyG 185;;Klerikal (Liturgie);0;
 Liturgie: Cereborns Handreichung;;;;;;;;WdG 269;;Klerikal (Liturgie);0;
 Liturgie: Chitinhaut;;;;;;;;MyG 182;;Klerikal (Liturgie);0;
 Liturgie: Daradors Bann der Schatten;;;;;;;;WdG 259;;Klerikal (Liturgie);0;
@@ -914,6 +915,7 @@ Permanentzauberer;;;;;;;;WnM 157;;Magisch;0;CH 15, SF Spontanzauberei (Wirkungsd
 Pfadgespür;;;;; mind. 2 Jahre Lernzeit innerhalb eines Limbischen Pfads;;;Rakshazar 22;;Kampf;0;Gabe Magiegespür oder sonstige magische Wahrnehmung
 Reaktivierungsgespür (Arkanoglyphen);;;;;;;;WdA 139;;Magisch;0;SF Zauberzeichen
 Reaktivierungsgespür (Runenkunde);;;;;;;;;;Magisch;0;
+Rangild und Rissas Hochzeit;;;;;;;;;;Allgemein;0;
 Regeneration I;;;;;;;;WdZ 10 / WnM 157;;Magisch;0;IN 12
 Regeneration II;;;;;;;;WdZ 10 / WnM 157;;Magisch;0;IN 15, SF Regeneration I
 Reiterkampf;;;;;;;;WdH 280 / WdS 101 / WnM 149;;Kampf;0;Reiten 7
@@ -1431,7 +1433,7 @@ Blutsbund;I;P+P ;;;;;;;;;;
 Bootssegen;III;PP;B;A;Der Segen wappnet Boot und Mannschaft gegen Frevler Efferds (MU +2 bei Anrufung Efferds);permanent;Efferd, Swafnir;WdG 263;;;;
 Borons süße Gnade;IV;P;B;Ze;Person vergisst best. Zeitraum, Ereignis oder Wissensber. oder erinnert sich an Vergessenes (ZfP* -LkP*+10);permanent;Boron, Kamaluq;WdG 267;;;;
 Brazoragh Ghorkai;III;P(S) ;;;;;;;;;;
-Buchprüfung;III;P;B;A/Ze;Geweihter kann interessante Stellen in einem Buch aufspüren, passendes Wissenstalent min. 7, evtl. höher;augenblicklich;Phex, Hesinde, Nandus;WdG 274;;;;
+Buchprüfung;III;P;B;A/Ze;Geweihter kann interessante Stellen in einem Buch aufspüren, passendes Wissenstalent min. 7, evtl. höher;augenblicklich;Phex, Hesinde, Nandus;WdG 274 / MyG 185;;Klerikal (Liturgie);0;
 Canyzeths Weisheit;IV;P;F;A;Ruft heilige Tafel der Hesinde herbei, KL+1, Leittalente+3, Überreden (Lügen) -1;LkP* Std.;Hesinde;WdG 269;;;;
 Daradors Bann der Schatten;IV;Z;B;A;Alle Schatten werden aufgehoben, Schwächung mag. Lichtmanipulation (ZfP* -LkP*+10);LkP* Std.;Praios;WdG 259;;;;
 Daradors prüfender Blick;III;G;S;G;Geweihte erkennt sämtliche für sie nun farbig schimmernden Illusionen;min. 1 SR;He., H'S., Pr., Ph., Nan., Ta.;WdG 270;;;;
@@ -1524,7 +1526,8 @@ Heilungssegen;I;P;B;G;Regeneriert 3+LkP*/2 LeP, keine Heilung von Wunden, auch b
 Heimführung der Herde;III;PPP ;;;;;;;;;;
 Herr über Feuer und Glut;IV;Z;S;S(15);Brand kann gelenkt werden, Zauber mit Merkmal Elementar (Feuer) wahlweise um LkP*+10 erschwert;LkP* SR;Ingerimm, Angr., Gravesh;WdG 278;;;;
 Herz des Tieres;IV;PP;;;;;;;;;;
-Hesindes Fingerzeig;III;P;;;;;;;;;;
+Hesindes Fingerzeig;III;P;B;A/Ze;Geweihter kann interessante Stellen in einem Buch aufspüren, passendes Wissenstalent min. 7, evtl. höher;augenblicklich;Phex, Hesinde, Nandus;WdG 274;;;;
+Hesindes Fingerzeig (Buchprüfung);III;P;B;A/Ze;Geweihter kann interessante Stellen in einem Buch aufspüren, passendes Wissenstalent min. 7, evtl. höher;augenblicklich;Phex, Hesinde, Nandus;WdG 274 / MyG 185;;Klerikal (Liturgie);0;
 Hilfe in der Not;II;G;;;;;;;;;;
 Hilferuf ;II;P;;;;;;;;;;
 Hoftag der Sprachen;IV;G+PP;;;;;;;;;;

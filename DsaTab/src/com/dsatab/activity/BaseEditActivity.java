@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.fragment.EditFragment;
 import com.gandulf.guilib.util.Debug;
@@ -25,8 +24,6 @@ public class BaseEditActivity extends BaseActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(DsaTabApplication.getInstance().getCustomTheme());
-        applyPreferencesToTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_blank);
 
@@ -37,7 +34,7 @@ public class BaseEditActivity extends BaseActivity {
         try {
 
             if (getIntent() == null || !getIntent().hasExtra(EDIT_FRAGMENT_CLASS)) {
-                throw new IllegalArgumentException("Called FragmentEditActivity without EDIT_FRAGMENT_CLASS in intent: "
+                throw new IllegalArgumentException("Called BaseEditActivity without EDIT_FRAGMENT_CLASS in intent: "
                         + getIntent());
             }
 
@@ -131,5 +128,6 @@ public class BaseEditActivity extends BaseActivity {
             return false;
         }
     }
+
 
 }

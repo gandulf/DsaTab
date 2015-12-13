@@ -103,7 +103,7 @@ public class MapFragment extends BaseFragment {
 		mapFiles = null;
 		mapNames = null;
 
-		if (!getMapNames().isEmpty()) {
+		if (!getMapNames().isEmpty() && getActionBarActivity()!=null) {
 			ActionBar actionBar = getActionBarActivity().getSupportActionBar();
 
 			final ArrayAdapter<String> adapter = new ArrayAdapter<String>(actionBar.getThemedContext(),

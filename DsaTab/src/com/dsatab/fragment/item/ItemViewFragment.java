@@ -101,7 +101,7 @@ public class ItemViewFragment extends BaseEditFragment {
 
             if (getItem()!=null) {
                 Item newItem;
-                if (getActivity().getIntent().hasExtra(ItemEditFragment.INTENT_EXTRA_HERO_KEY)) {
+                if (getExtra()!=null && getExtra().containsKey(ItemEditFragment.INTENT_EXTRA_HERO_KEY)) {
                     newItem = DsaTabApplication.getInstance().getHero().getItem(getItem().getId());
                 } else {
                     newItem = DataManager.getItemById(getItem().getId());

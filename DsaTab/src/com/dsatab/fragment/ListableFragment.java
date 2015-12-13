@@ -1286,17 +1286,14 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
         View root = configureContainerView(inflater.inflate(R.layout.sheet_list, container, false));
 
         recyclerView = (RecyclerView) root.findViewById(android.R.id.list);
-
         fabMenu = (FloatingActionMenu) root.findViewById(R.id.fab_menu);
 
         return root;
     }
 
-
-
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view,savedInstanceState);
+        super.onViewCreated(view, savedInstanceState);
 
         recyclerView.setHasFixedSize(false);
 
@@ -1319,15 +1316,6 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
         mCustomProbeCallback = new CustomProbeActionMode(this, recyclerView, mRecyclerViewSelectionManager);
         mCallback = new NoteActionMode(this, recyclerView, mRecyclerViewSelectionManager);
     }
-
-
-
-    @Override
-    public void onPause() {
-        //mRecyclerViewDragDropManager.cancelDrag();
-        super.onPause();
-    }
-
 
     @Override
     public void onDestroyView() {

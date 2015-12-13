@@ -61,6 +61,7 @@ import com.dsatab.exception.TalentTypeUnknownException;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.splunk.mint.Mint;
+import com.splunk.mint.MintLogLevel;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -77,6 +78,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -217,10 +219,12 @@ public class HeldenXmlParser {
 
 		for (Element element : list) {
 			FeatureType featureType = null;
+            String name=null;
 			try {
-				featureType = FeatureType.byXmlName(element.getAttributeValue(Xml.KEY_NAME).trim());
+                name = element.getAttributeValue(Xml.KEY_NAME).trim();
+				featureType = FeatureType.byXmlName(name);
 			} catch (FeatureTypeUnknownException e) {
-				Debug.error(e);
+                Mint.logEvent("Unknown FeatureType", MintLogLevel.Warning, "Name", name);
 				continue;
 			}
 			if (featureType != null) {
@@ -265,9 +269,9 @@ public class HeldenXmlParser {
 
 				FeatureType featureType = null;
 				try {
-					featureType = FeatureType.byXmlName(element.getAttributeValue(Xml.KEY_NAME));
+					featureType = FeatureType.byXmlName(name);
 				} catch (FeatureTypeUnknownException e) {
-					Debug.error(e);
+                    Mint.logEvent("Unknown FeatureType", MintLogLevel.Warning, "Name", name);
 					continue;
 				}
 				Feature specialFeature = new Feature(featureType);
@@ -716,7 +720,6 @@ public class HeldenXmlParser {
 				String key = kommentar.getAttributeValue(Xml.KEY_KEY);
 
 				try {
-
 					Art art = hero.getArt(key);
 					if (art != null && !TextUtils.isEmpty(kommentar.getAttributeValue(Xml.KEY_KOMMENTAR))) {
 						art.getInfo().setMerkmale(kommentar.getAttributeValue(Xml.KEY_KOMMENTAR));
@@ -730,6 +733,8 @@ public class HeldenXmlParser {
 					Debug.warning(e);
 					// heldensofteare comments add values to key which makes it hard so find, so we just ignore them for
 					// now
+
+                    Mint.logEvent("Unknown FeatureType in comment",MintLogLevel.Debug,"Name",key);
 				}
 			}
 
@@ -840,8 +845,11 @@ public class HeldenXmlParser {
 			Item item = hero.getItem(itemName, itemSlot);
 
 			if (item == null) {
-				Debug.error(new InconsistentDataException("Unable to find an item with the name '" + itemName
-						+ "' in slot '" + itemSlot + "':" + element.toString()));
+                HashMap<String,Object> customData =  new HashMap<>(2);
+                customData.put("Name",itemName);
+                customData.put("Slot",itemSlot);
+                customData.put("Element",element.toString());
+                Mint.logEvent("Unable to find an item",MintLogLevel.Warning,customData);
 				continue;
 			}
 
@@ -1328,10 +1336,6 @@ public class HeldenXmlParser {
 		}
 	}
 
-	/**
-	 * @param attr
-	 * @param item
-	 */
 	private static void writeCombatMeleeAttribute(Hero hero, CombatMeleeAttribute attr, Element element) {
 		if (attr.hasValue()) {
 			Integer newValue = attr.getValue();
@@ -1746,10 +1750,7 @@ public class HeldenXmlParser {
 
 	}
 
-	/**
-	 * @param art
-	 * @param sf
-	 */
+
 	private static void writeArt(Art art, Element element) {
 		writeMarkable(art, element);
 	}
@@ -1768,10 +1769,7 @@ public class HeldenXmlParser {
 		}
 	}
 
-	/**
-	 * @param newItem
-	 * @param element
-	 */
+
 	private static void writeEquippedItem(Hero hero, EquippedItem equippedItem, Element element) {
 		if (equippedItem.getHand() != null)
 			element.setAttribute(Xml.KEY_HAND, equippedItem.getHand().name());
@@ -1856,10 +1854,6 @@ public class HeldenXmlParser {
 
 	}
 
-	/**
-	 * @param bhKampf
-	 * @param bk
-	 */
 	private static void writeBeidhändigerKampf(EquippedItem item1, EquippedItem item2, Element element) {
 		element.setAttribute(Xml.KEY_SET, Util.toString(item1.getSet()));
 
@@ -1870,10 +1864,6 @@ public class HeldenXmlParser {
 
 	}
 
-	/**
-	 * @param newItem
-	 * @param element
-	 */
 	private static void writeAnimal(Hero hero, Animal animal, Element element) {
 		element.setAttribute(Xml.KEY_NAME, animal.getName());
 		element.setAttribute(Xml.KEY_ANZAHL, Integer.toString(animal.getCount()));
@@ -1906,10 +1896,6 @@ public class HeldenXmlParser {
 
 	}
 
-	/**
-	 * @param newItem
-	 * @param element
-	 */
 	private static void writeItem(Item item, Element element) {
 		element.setAttribute(Xml.KEY_NAME, item.getName());
 		element.setAttribute(Xml.KEY_ANZAHL, Integer.toString(item.getCount()));
@@ -1933,10 +1919,7 @@ public class HeldenXmlParser {
 
 	}
 
-	/**
-	 * @param itemInfo
-	 * @param element
-	 */
+
 	private static void writeItemInfo(ItemCard itemInfo, Element element) {
 		if (itemInfo.getContainerId() != Hero.FIRST_INVENTORY_SCREEN) {
 			element.setAttribute(Xml.KEY_SCREEN, Util.toString(itemInfo.getContainerId()));
@@ -1945,10 +1928,7 @@ public class HeldenXmlParser {
 		}
 	}
 
-	/**
-	 * @param changeEvent
-	 * @param element
-	 */
+
 	private static void writeChangeEvent(ChangeEvent changeEvent, Element element) {
 		element.setAttribute(Xml.KEY_TIME, Xml.toString(changeEvent.getTime().getTime()));
 		element.setAttribute(Xml.KEY_ABENTEUERPUNKTE_UPPER, Xml.toString(changeEvent.getExperiencePoints(), "0"));
@@ -1965,20 +1945,13 @@ public class HeldenXmlParser {
 
 	}
 
-	/**
-	 * @param connection
-	 * @param element
-	 */
 	private static void writeConnection(Connection connection, Element element) {
 		element.setAttribute(Xml.KEY_DESCRIPTION, connection.getDescription());
 		element.setAttribute(Xml.KEY_SO, Xml.toString(connection.getSozialStatus()));
 		element.setAttribute(Xml.KEY_NAME, connection.getName());
 	}
 
-	/**
-	 * @param huntingWeapons
-	 * @param element
-	 */
+
 	private static void writeHuntingWeapon(HuntingWeapon huntingWeapon, Element element) {
 		element.setAttribute(Xml.KEY_SET, Xml.toString(huntingWeapon.getSet()));
 		element.setAttribute(Xml.KEY_NUMMER, Xml.toString(huntingWeapon.getNumber()));
