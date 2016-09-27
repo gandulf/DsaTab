@@ -109,8 +109,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 23
 
-        versionName "4.4.7"
-        versionCode 108
+        versionName "4.5"
+        versionCode 109
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         generatedDensities = []
