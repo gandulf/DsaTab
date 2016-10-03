@@ -13,6 +13,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Loader to fetch Heroes from local file system
+ */
 public class HeroesLoaderTask extends AsyncTaskLoader<List<HeroFileInfo>> {
 
 	private List<Exception> exception;

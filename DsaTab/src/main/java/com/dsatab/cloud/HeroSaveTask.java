@@ -80,7 +80,7 @@ public class HeroSaveTask extends AsyncTask<Void, Void, Boolean> {
                 Util.close(outConfig);
             }
 
-            heroExchange.upload(hero.getFileInfo());
+            heroExchange.upload(hero.getFileInfo(),null);
 
             return true;
         } catch (Exception e) {

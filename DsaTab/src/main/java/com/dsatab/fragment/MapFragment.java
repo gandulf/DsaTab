@@ -31,7 +31,6 @@ import com.gandulf.guilib.download.DownloaderGinger;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 
-import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.tileprovider.tilesource.ITileSource;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -245,7 +244,7 @@ public class MapFragment extends BaseFragment {
 			MapTileProviderLocal tileProvider = new MapTileProviderLocal(osmMapDir.getAbsolutePath(), getActivity(),
 					tileSource);
 
-			osmMapView = new MapView(getActivity(), 256, new DefaultResourceProxyImpl(getActivity()), tileProvider);
+			osmMapView = new MapView(getActivity(), tileProvider);
 
 			osmMapView.setUseDataConnection(false);
 			osmMapView.setBuiltInZoomControls(true);

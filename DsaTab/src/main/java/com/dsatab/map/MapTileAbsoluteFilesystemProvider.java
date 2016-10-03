@@ -15,12 +15,17 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 
 import java.io.File;
 
+import static org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants.DEFAULT_MAXIMUM_CACHED_FILE_AGE;
+import static org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants.NUMBER_OF_TILE_FILESYSTEM_THREADS;
+import static org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants.TILE_FILESYSTEM_MAXIMUM_QUEUE_SIZE;
+
 public class MapTileAbsoluteFilesystemProvider extends MapTileFileStorageProviderBase {
 
 	// ===========================================================
 	// Constants
 	// ===========================================================
-	public static final int MAXIMUM_ZOOMLEVEL = 8;
+	public static final int MAXIMUM_ZOOMLEVEL = 12;
+    public static final int MINIMUM_ZOOMLEVEL = 0;
 
 	// ===========================================================
 	// Fields
@@ -118,10 +123,8 @@ public class MapTileAbsoluteFilesystemProvider extends MapTileFileStorageProvide
 			final MapTile tile = pState.getMapTile();
 
 			// if there's no sdcard then don't do anything
-			if (!getSdCardAvailable()) {
-				if (DEBUGMODE) {
-					Debug.verbose("No sdcard - do nothing for tile: " + tile);
-				}
+			if (!isSdCardAvailable()) {
+				Debug.verbose("No sdcard - do nothing for tile: " + tile);
 				return null;
 			}
 

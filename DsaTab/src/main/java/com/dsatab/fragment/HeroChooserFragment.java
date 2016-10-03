@@ -1,5 +1,6 @@
 package com.dsatab.fragment;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.LoaderManager;
@@ -23,26 +24,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bingzer.android.driven.Credential;
-import com.bingzer.android.driven.DrivenException;
-import com.bingzer.android.driven.Result;
-import com.bingzer.android.driven.StorageProvider;
-import com.bingzer.android.driven.contracts.Task;
-import com.bingzer.android.driven.dropbox.Dropbox;
-import com.bingzer.android.driven.dropbox.app.DropboxActivity;
-import com.bingzer.android.driven.gdrive.GoogleDrive;
-import com.bingzer.android.driven.gdrive.app.GoogleDriveActivity;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.cloud.AuthorizationException;
-import com.dsatab.cloud.HeldenAustauschProvider;
 import com.dsatab.cloud.HeroExchange;
-import com.dsatab.cloud.HeroExchange.StorageType;
 import com.dsatab.cloud.HeroesLoaderTask;
 import com.dsatab.cloud.HeroesSyncTask;
 import com.dsatab.data.Hero;
@@ -67,6 +56,12 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.tajchert.nammu.Nammu;
+import pl.tajchert.nammu.PermissionCallback;
+
+import static com.dsatab.cloud.HeroExchange.StorageType.Drive;
+import static com.dsatab.cloud.HeroExchange.StorageType.Dropbox;
+
 public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderManager.LoaderCallbacks<List<HeroFileInfo>>, ListRecyclerAdapter.EventListener {
 
     public static final String TAG = "HeroChooser";
@@ -80,8 +75,6 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
     protected static final int REMOTE_LOADER = 2;
 
     protected HeroAdapter adapter;
-
-    private HeroExchange exchange;
 
     private View loadingView;
     private TextView empty;
@@ -107,7 +100,7 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
             if (list == null || fragment == null)
                 return false;
 
-            HeroAdapter adapter = WrapperAdapterUtils.findWrappedAdapter(list.getAdapter(), HeroAdapter.class);
+            final HeroAdapter adapter = WrapperAdapterUtils.findWrappedAdapter(list.getAdapter(), HeroAdapter.class);
             for (int index : getManager().getSelectedPositions()) {
                 final HeroFileInfo heroInfo = adapter.getItem(index);
 
@@ -115,19 +108,31 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
                     case R.id.option_delete:
                         if (heroInfo.isDeletable()) {
                             Debug.verbose("Deleting " + heroInfo.getName());
-                            fragment.exchange.delete(heroInfo);
-                            adapter.remove(heroInfo);
+                            HeroExchange.getInstance().delete(heroInfo, new HeroExchange.CloudResult<Boolean>() {
+                                @Override
+                                public void onSuccess(Boolean result) {
+                                    if (result) {
+                                        adapter.remove(heroInfo);
+                                    } else {
+                                        //TODO show user message
+                                    }
+                                }
+                            });
+
                         }
                         break;
                     case R.id.option_download:
-                        if (heroInfo.isOnline()) {
-                            HeroExchange exchange = new HeroExchange(fragment.getActivity());
-                            exchange.download(heroInfo);
+                        try {
+                            if (heroInfo.isOnline()) {
+                                HeroExchange.getInstance().download(heroInfo,null);
+                            }
+                        } catch (Exception e) {
+                            Debug.error(e);
                         }
                         break;
                     case R.id.option_upload:
                         try {
-                            fragment.exchange.upload(heroInfo);
+                            HeroExchange.getInstance().upload(heroInfo,null);
                         } catch (Exception e) {
                             Debug.error(e);
                         }
@@ -167,10 +172,10 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
 
                 online |= heroInfo.isOnline();
                 deletable |= heroInfo.isDeletable();
-                uploadable |= heroInfo.getStorageType() == StorageType.FileSystem;
+                uploadable |= heroInfo.getStorageType() != null;
             }
 
-            mode.setSubtitle(fragment.getString(R.string.count_selected, selected));
+            mode.setSubtitle(fragment.getString(R.string.count_selected, String.valueOf(selected)));
 
             boolean changed = false;
 
@@ -198,6 +203,7 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
         if (mMode != null) {
             mMode.finish();
         }
+        HeroExchange.getInstance().storePersistent();
         super.onPause();
     }
 
@@ -268,7 +274,7 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        exchange = DsaTabApplication.getInstance().getExchange();
+        HeroExchange.getInstance().prepare(getActivity());
     }
 
     @Override
@@ -306,9 +312,9 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
     @Override
     public Loader<List<HeroFileInfo>> onCreateLoader(int id, Bundle args) {
         if (id == LOCAL_LOADER) {
-            return new HeroesLoaderTask(getActivity(),exchange);
+            return new HeroesLoaderTask(getActivity(), HeroExchange.getInstance());
         } else { // Remote Loader
-            return new HeroesSyncTask(getActivity(), exchange);
+            return new HeroesSyncTask(getActivity(), HeroExchange.getInstance());
         }
     }
 
@@ -392,14 +398,7 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
     protected void refresh(final int loader) {
         getBaseActivity().setToolbarRefreshing(true);
 
-        exchange.connect(getActivity(), new Task<Result<DrivenException>>() {
-            @Override
-            public void onCompleted(Result<DrivenException> result) {
-                if (getActivity()!=null) {
-                    getActivity().getLoaderManager().restartLoader(loader, null, HeroChooserFragment.this);
-                }
-            }
-        });
+        getActivity().getLoaderManager().restartLoader(loader, null, HeroChooserFragment.this);
     }
 
     /*
@@ -416,17 +415,23 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
             menuItem.setVisible(adapter != null && adapter.getItemCount() == 0);
         }
 
-        menuItem = menu.findItem(R.id.option_connect_dropbox);
-        if (menuItem != null && getActivity()!=null) {
-            menuItem.setChecked(exchange.isConnected(getActivity(), StorageType.Dropbox));
+        final MenuItem dropBoxMenuItem = menu.findItem(R.id.option_connect_dropbox);
+        if (dropBoxMenuItem != null && getActivity() != null) {
+            HeroExchange.getInstance().isConnected(Dropbox, new HeroExchange.CloudResult<Boolean>() {
+                @Override
+                public void onSuccess(Boolean result) {
+                    dropBoxMenuItem.setChecked(result);
+                }
+            });
         }
-        menuItem = menu.findItem(R.id.option_connect_drive);
-        if (menuItem != null && getActivity()!=null) {
-            menuItem.setChecked(exchange.isConnected(getActivity(), StorageType.Drive));
-        }
-        menuItem = menu.findItem(R.id.option_connect_heldenaustausch);
-        if (menuItem != null && getActivity()!=null) {
-            menuItem.setChecked(exchange.isConnected(getActivity(), StorageType.HeldenAustausch));
+        final MenuItem driveMenuItem = menu.findItem(R.id.option_connect_drive);
+        if (driveMenuItem != null && getActivity() != null) {
+            HeroExchange.getInstance().isConnected(Drive, new HeroExchange.CloudResult<Boolean>() {
+                @Override
+                public void onSuccess(Boolean result) {
+                    driveMenuItem.setChecked(result);
+                }
+            });
         }
     }
 
@@ -436,113 +441,100 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    protected  void refresh() {
+        Nammu.askForPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
+            @Override
+            public void permissionGranted() {
+                refresh(REMOTE_LOADER);
+            }
+
+            @Override
+            public void permissionRefused() {
+                ViewUtils.snackbar(getActivity(),"Keine Berechtigung um Helden auf SD-Karte zu speichern.");
+            }
+        });
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (getActivity()!=null) {
+        if (getActivity() != null) {
             switch (item.getItemId()) {
                 case R.id.option_refresh:
-                    refresh(REMOTE_LOADER);
+                    refresh();
                     return true;
                 case R.id.option_load_example_heroes:
                     loadExampleHeroes();
                     break;
                 case R.id.option_connect_dropbox:
-
-                    if (!exchange.isConnected(getActivity(), StorageType.Dropbox)) {
-                        Intent intent = DropboxActivity.createLoginIntent(getActivity(), DsaTabApplication.DROPBOX_API_KEY,
-                                DsaTabApplication.DROPBOX_API_SECRET);
-                        startActivityForResult(intent, CONNECT_EXCHANGE_RESULT);
-                    } else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setTitle("Dropbox");
-                        builder.setMessage("Dropbox Synchronisation aufheben?");
-                        builder.setPositiveButton("Aufheben", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                StorageProvider dropbox = new Dropbox();
-
-                                dropbox.clearSavedCredentialAsync(getActivity(), new Task<Result<DrivenException>>() {
-                                    @Override
-                                    public void onCompleted(Result<DrivenException> result) {
-                                        if (!result.isSuccess()) {
-                                            if (result.getException() != null)
-                                                ViewUtils.snackbar(getActivity(), "Konnte Dropbox nicht deaktivieren: " + result.getException().getLocalizedMessage());
-                                            else
-                                                ViewUtils.snackbar(getActivity(), "Konnte Dropbox nicht deaktivieren.");
-                                        }
-                                    }
-                                });
-                                dialog.dismiss();
-                            }
-                        });
-                        builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-                        builder.show();
-                    }
-
-                    return true;
-
-                case R.id.option_connect_drive:
-                    if (!exchange.isConnected(getActivity(), StorageType.Drive)) {
-                        Intent intent = GoogleDriveActivity.createLoginIntent(getActivity());
-                        startActivityForResult(intent, CONNECT_EXCHANGE_RESULT);
-                    } else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setTitle("Google Drive");
-                        builder.setMessage("Drive Synchronisation aufheben?");
-                        builder.setPositiveButton("Aufheben", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                StorageProvider drive = new GoogleDrive();
-
-                                drive.clearSavedCredentialAsync(getActivity(), new Task<Result<DrivenException>>() {
-                                    @Override
-                                    public void onCompleted(Result<DrivenException> result) {
-                                        if (!result.isSuccess()) {
-                                            if (result.getException() != null)
-                                                ViewUtils.snackbar(getActivity(), "Konnte Drive nicht deaktivieren: " + result.getException().getLocalizedMessage());
-                                            else
-                                                ViewUtils.snackbar(getActivity(), "Konnte Drive nicht deaktivieren.");
-                                        }
-                                    }
-                                });
-                                dialog.dismiss();
-                            }
-                        });
-                        builder.setNegativeButton(android.R.string.cancel, null);
-
-                        builder.show();
-                    }
-                    return true;
-                case R.id.option_connect_heldenaustausch:
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-                    final EditText editText = new EditText(builder.getContext());
-                    editText.setHint("Helden-Austausch Token");
-                    editText.setText(DsaTabApplication.getPreferences().getString(DsaTabPreferenceActivity.KEY_EXCHANGE_TOKEN, ""));
-                    builder.setTitle("Berechtigungstoken der Heldenaustauschseite");
-                    builder.setView(editText);
-                    builder.setNegativeButton(android.R.string.cancel, null);
-                    builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    HeroExchange.getInstance().isConnected(Dropbox, new HeroExchange.CloudResult<Boolean>() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            String token = editText.getText().toString();
-                            HeldenAustauschProvider provider = new HeldenAustauschProvider();
-                            if (TextUtils.isEmpty(token)) {
-                                provider.clearSavedCredential(getActivity());
+                        public void onSuccess(Boolean result) {
+                            if (result) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                builder.setTitle("Dropbox");
+                                builder.setMessage("Dropbox Synchronisation aufheben?");
+                                builder.setPositiveButton("Aufheben", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        HeroExchange.getInstance().disconnect(Dropbox);
+                                        dialog.dismiss();
+                                    }
+                                });
+                                builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+                                builder.show();
                             } else {
-                                Credential credential = new Credential(getActivity());
-                                credential.setAccountName(editText.getText().toString());
-                                provider.authenticate(credential);
+                                HeroExchange.getInstance().connect(Dropbox, new HeroExchange.CloudResult<Boolean>() {
+                                    @Override
+                                    public void onSuccess(Boolean result) {
+                                        if (result) {
+                                            refresh();
+                                        }
+                                    }
+                                });
                             }
                         }
                     });
-                    builder.show();
+                    return true;
 
+                case R.id.option_connect_drive:
+                    HeroExchange.getInstance().isConnected(Drive, new HeroExchange.CloudResult<Boolean>() {
+                        @Override
+                        public void onSuccess(Boolean result) {
+                            if (result) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                builder.setTitle("Google Drive");
+                                builder.setMessage("Drive Synchronisation aufheben?");
+                                builder.setPositiveButton("Aufheben", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        HeroExchange.getInstance().disconnect(Drive);
+                                        dialog.dismiss();
+                                    }
+                                });
+                                builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+                                builder.show();
+                            } else {
+                                HeroExchange.getInstance().connect(Drive, new HeroExchange.CloudResult<Boolean>() {
+                                    @Override
+                                    public void onSuccess(Boolean result) {
+                                        if (result) {
+                                            refresh();
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
                     return true;
                 case R.id.option_settings:
                     Intent intent = new Intent(getActivity(), DsaTabPreferenceActivity.class);
@@ -598,7 +590,7 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
 
             int profileHeight = holder.iv.getResources().getDimensionPixelSize(R.dimen.portrait_height);
             if (holder.iv.getDrawable() != null) {
-                profileHeight = Math.max(holder.iv.getDrawable().getIntrinsicHeight(),profileHeight);
+                profileHeight = Math.max(holder.iv.getDrawable().getIntrinsicHeight(), profileHeight);
             }
 
             switch (heroInfo.hashCode() % 4) {
@@ -643,11 +635,6 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
                     case FileSystem:
                         holder.tag1.setText("Storage");
                         holder.tag1.setBackgroundColor(holder.tag1.getContext().getResources().getColor(R.color.ValueRedAlpha));
-                        holder.tag1.setVisibility(View.VISIBLE);
-                        break;
-                    case HeldenAustausch:
-                        holder.tag1.setText("Austausch");
-                        holder.tag1.setBackgroundColor(holder.tag1.getContext().getResources().getColor(R.color.ValueYellowAlpha));
                         holder.tag1.setVisibility(View.VISIBLE);
                         break;
                     default:

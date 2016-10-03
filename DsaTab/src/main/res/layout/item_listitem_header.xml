@@ -17,7 +17,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@android:id/button1"
-        android:layout_weight="1"
         android:ellipsize="end"
         android:focusable="true"
         android:fontFamily="sans-serif-light"

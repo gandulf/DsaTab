@@ -1,8 +1,5 @@
 package com.dsatab.data;
 
-import android.annotation.SuppressLint;
-import android.content.res.Configuration;
-import android.os.Build;
 import android.text.TextUtils;
 
 import com.dsatab.DsaTabApplication;
@@ -348,15 +345,8 @@ public class HeroConfiguration {
 		tabInfos = tabs;
 	}
 
-	@SuppressLint("InlinedApi")
 	private boolean isDualPanel() {
-		Configuration configuration = DsaTabApplication.getInstance().getResources().getConfiguration();
-		int size = Configuration.SCREENLAYOUT_SIZE_MASK & configuration.screenLayout;
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
-			return size == Configuration.SCREENLAYOUT_SIZE_XLARGE;
-		} else {
-			return size == Configuration.SCREENLAYOUT_SIZE_LARGE;
-		}
+		return DsaTabApplication.getInstance().getResources().getBoolean(R.bool.dual_panes);
 	}
 
 	private int getTabResourceId(Class<? extends BaseFragment> clazz) {

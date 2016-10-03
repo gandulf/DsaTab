@@ -10,7 +10,6 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
 
     <uses-feature
         android:name="android.hardware.microphone"
@@ -26,6 +25,8 @@
         android:required="true"/>
 
     <application
+        tools:replace="android:label,android:supportsRtl"
+
         android:name="DsaTabApplication"
         android:allowBackup="true"
         android:fullBackupContent="true"
@@ -83,33 +84,6 @@
                 android:resource="@xml/searchable"/>
         </activity>
 
-        <!-- Driven External Storage -->
-        <activity
-            android:name="com.bingzer.android.driven.local.app.ExternalDriveActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
-
-        <!-- Driven Drive -->
-        <activity
-            android:name="com.bingzer.android.driven.gdrive.app.GoogleDriveActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
-        <!-- Dropbox BEGIN -->
-        <activity
-            android:name="com.bingzer.android.driven.dropbox.app.DropboxActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
-        <activity
-            android:name="com.dropbox.client2.android.AuthActivity"
-            android:launchMode="singleTask">
-            <intent-filter>
-                <data android:scheme="db-fivprcmrt2bjm2c"/>
-
-                <action android:name="android.intent.action.VIEW"/>
-
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
-        <!-- Dropbox END -->
-
         <receiver
             android:name="com.gandulf.guilib.download.DownloadBroadcastReceiver"
             android:exported="false">
@@ -128,9 +102,6 @@
             android:value="com.dsatab.activity.SearchableActivity"
             android:voiceSearchMode="showVoiceSearchButton|launchRecognizer"/>
 
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
     </application>
 
 </manifest>

@@ -20,10 +20,6 @@
                 android:id="@+id/option_connect_drive"
                 android:title="Google Drive"
                 android:checkable="true" />
-            <item
-                android:id="@+id/option_connect_heldenaustausch"
-                android:title="Heldenaustausch"
-                android:checkable="true" />
         </menu>
     </item>
     <item

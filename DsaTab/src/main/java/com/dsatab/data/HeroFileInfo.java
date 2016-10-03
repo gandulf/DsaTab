@@ -2,8 +2,7 @@ package com.dsatab.data;
 
 import android.text.TextUtils;
 
-import com.bingzer.android.driven.LocalFile;
-import com.bingzer.android.driven.RemoteFile;
+import com.cloudrail.si.types.CloudMetaData;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.cloud.HeroExchange;
 import com.dsatab.cloud.HeroExchange.StorageType;
@@ -105,15 +104,15 @@ public class HeroFileInfo implements JSONable, Serializable {
 		prepare(exchange);
 	}
 
-	public HeroFileInfo(RemoteFile heroFile, RemoteFile configFile, StorageType storageType, HeroExchange exchange)
+	public HeroFileInfo(CloudMetaData heroFile, CloudMetaData configFile, StorageType storageType, HeroExchange exchange)
 			throws IllegalArgumentException {
 
 		this.storageType = storageType;
 
-		remoteHeroId = heroFile.getId();
+		remoteHeroId = heroFile.getPath();
 
 		if (configFile != null) {
-			remoteConfigId = configFile.getId();
+			remoteConfigId = configFile.getPath();
 		}
 
 		file = new File(DsaTabApplication.getHeroDirectory(), heroFile.getName());
@@ -196,23 +195,6 @@ public class HeroFileInfo implements JSONable, Serializable {
 		}
 	}
 
-	public LocalFile getLocalFile(FileType fileType) {
-		switch (fileType) {
-		case Hero:
-			if (file != null)
-				return new LocalFile(file);
-			else
-				return null;
-		case Config:
-			if (fileConfig != null)
-				return new LocalFile(fileConfig);
-			else
-				return null;
-		default:
-			return null;
-		}
-	}
-
 	public File getFile(FileType fileType) {
 		switch (fileType) {
 		case Hero:
@@ -235,12 +217,21 @@ public class HeroFileInfo implements JSONable, Serializable {
                 if (!TextUtils.isEmpty(data)) {
                     JSONObject jsonObject = new JSONObject(new String(data));
                     configuration = new HeroConfiguration(null, jsonObject);
-                    if (configuration.getStorageType()!=null)
+                    if (configuration.getStorageType()!=null) {
                         storageType = configuration.getStorageType();
-                    if (!TextUtils.isEmpty(configuration.getStorageHeroId()))
-                        remoteHeroId = configuration.getStorageHeroId();
-                    if (!TextUtils.isEmpty(configuration.getStorageConfigId()))
-                        remoteConfigId = configuration.getStorageConfigId();
+                    }
+                    if (storageType!=null) {
+                        if (!TextUtils.isEmpty(configuration.getStorageHeroId())) {
+                            remoteHeroId = configuration.getStorageHeroId();
+                        } else {
+                            remoteHeroId = HeroExchange.BASE_DIRECTORY + "/" + file.getName();
+                        }
+                        if (!TextUtils.isEmpty(configuration.getStorageConfigId())) {
+                            remoteConfigId = configuration.getStorageConfigId();
+                        } else {
+                            remoteConfigId = HeroExchange.BASE_DIRECTORY + "/" + fileConfig.getName();
+                        }
+                    }
                 }
             } catch (FileNotFoundException e) {
                 Debug.error(e);
@@ -349,7 +340,7 @@ public class HeroFileInfo implements JSONable, Serializable {
 	}
 
 	public boolean isOnline() {
-		return id != null;
+		return getStorageType()!=null && getStorageType() != StorageType.FileSystem;
 	}
 
 	public boolean isInternal() {

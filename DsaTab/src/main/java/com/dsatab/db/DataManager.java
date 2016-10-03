@@ -226,7 +226,7 @@ public class DataManager {
                 query = where.prepare();
             }
 
-            Cursor cursor = getCursor(query);
+            Cursor cursor = getCursor(query,itemDao.getTableName());
             cursor.setNotificationUri(DsaTabApplication.getInstance().getContentResolver(), ITEMS_URI);
             return cursor;
         } catch (SQLException e) {
@@ -237,11 +237,11 @@ public class DataManager {
 
     }
 
-    private static Cursor getCursor(PreparedQuery<?> query) {
+    private static Cursor getCursor(PreparedQuery<?> query,String tableName) {
         Cursor cursor = null;
         try {
             DatabaseConnection databaseConnection = DsaTabApplication.getInstance().getDBHelper().getConnectionSource()
-                    .getReadOnlyConnection();
+                    .getReadOnlyConnection(tableName);
 
             AndroidCompiledStatement compiledStatement = (AndroidCompiledStatement) query.compile(databaseConnection,
                     StatementType.SELECT);

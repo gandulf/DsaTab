@@ -8,26 +8,26 @@ import android.graphics.drawable.Drawable;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.util.Debug;
 
-import org.osmdroid.ResourceProxy.string;
 import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.tileprovider.tilesource.BitmapTileSourceBase;
 
 import java.io.InputStream;
 
+import static org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants.TILE_PATH_EXTENSION;
+
 public class BitmapTileSource extends BitmapTileSourceBase {
 
 	/**
 	 * @param aName
-	 * @param aResourceId
 	 * @param aZoomMinLevel
 	 * @param aZoomMaxLevel
 	 * @param aTileSizePixels
 	 * @param aImageFilenameEnding
 	 */
 
-	public BitmapTileSource(String aName, string aResourceId, int aZoomMinLevel, int aZoomMaxLevel,
+	public BitmapTileSource(String aName, int aZoomMinLevel, int aZoomMaxLevel,
 			int aTileSizePixels, String aImageFilenameEnding) {
-		super(aName, aResourceId, aZoomMinLevel, aZoomMaxLevel, aTileSizePixels, aImageFilenameEnding);
+		super(aName, aZoomMinLevel, aZoomMaxLevel, aTileSizePixels, aImageFilenameEnding);
 
 	}
 

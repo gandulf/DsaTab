@@ -28,7 +28,6 @@ import com.dsatab.view.listener.HeroChangedListener;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
 import com.dsatab.view.listener.ProbeListener;
 import com.dsatab.view.listener.TargetListener;
-import com.squareup.leakcanary.RefWatcher;
 
 import java.util.Arrays;
 import java.util.List;
@@ -174,8 +173,6 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
     @Override
     public void onDestroy() {
         super.onDestroy();
-        RefWatcher refWatcher = DsaTabApplication.getRefWatcher(getActivity());
-        refWatcher.watch(this);
     }
 
     public View configureContainerView(View view) {

@@ -16,7 +16,7 @@ import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.mikepenz.aboutlibraries.LibsConfiguration;
 import com.mikepenz.aboutlibraries.entity.Library;
-import com.mikepenz.aboutlibraries.ui.LibsFragment;
+import com.mikepenz.aboutlibraries.ui.LibsSupportFragment;
 
 public class AboutActivity extends BaseActivity {
 
@@ -29,7 +29,7 @@ public class AboutActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        LibsFragment fragment = new LibsBuilder()
+        LibsSupportFragment fragment = new LibsBuilder()
                 .withActivityTheme(DsaTabPreferenceActivity.getCustomTheme())
                 .withLibraries("game_icons_net", "ulisses_fan_project")
                 .withAboutSpecial1("Source Code")
@@ -114,7 +114,7 @@ public class AboutActivity extends BaseActivity {
                         return false;
                     }
                 })
-                .fragment();
+                .supportFragment();
 
         android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.content, fragment);

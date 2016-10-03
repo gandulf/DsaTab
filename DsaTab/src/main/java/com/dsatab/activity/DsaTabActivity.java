@@ -37,6 +37,7 @@ import android.widget.TextView;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
+import com.dsatab.cloud.HeroExchange;
 import com.dsatab.cloud.HeroSaveTask;
 import com.dsatab.config.TabInfo;
 import com.dsatab.data.AbstractBeing;
@@ -129,7 +130,7 @@ public class DsaTabActivity extends BaseActivity implements NavigationView.OnNav
             if (id == LOADER_HERO) {
                 DsaTabActivity context = contextRef.get();
                 if (context!=null) {
-                    return new HeroLoaderTask(context, (HeroFileInfo) args.getSerializable(KEY_HERO_PATH), DsaTabApplication.getInstance().getExchange());
+                    return new HeroLoaderTask(context, (HeroFileInfo) args.getSerializable(KEY_HERO_PATH), HeroExchange.getInstance());
                 } else {
                     return null;
                 }
@@ -181,7 +182,7 @@ public class DsaTabActivity extends BaseActivity implements NavigationView.OnNav
     public final void loadHero(HeroFileInfo heroPath) {
 
         if (getHero() != null && preferences.getBoolean(DsaTabPreferenceActivity.KEY_AUTO_SAVE, true)) {
-            HeroSaveTask heroSaveTask = new HeroSaveTask(this, getHero(),DsaTabApplication.getInstance().getExchange());
+            HeroSaveTask heroSaveTask = new HeroSaveTask(this, getHero(),HeroExchange.getInstance());
             heroSaveTask.execute();
         }
         setToolbarRefreshing(true);
@@ -377,6 +378,7 @@ public class DsaTabActivity extends BaseActivity implements NavigationView.OnNav
 
         // start tracing to "/sdcard/calc.trace"
         // android.os.Debug.startMethodTracing("dsatab");
+        HeroExchange.getInstance().prepare(this);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -827,7 +829,7 @@ public class DsaTabActivity extends BaseActivity implements NavigationView.OnNav
         DsaTabApplication.getPreferences().unregisterOnSharedPreferenceChangeListener(this);
 
         if (getHero() != null && preferences.getBoolean(DsaTabPreferenceActivity.KEY_AUTO_SAVE, true)) {
-            HeroSaveTask heroSaveTask = new HeroSaveTask(this, getHero(),DsaTabApplication.getInstance().getExchange());
+            HeroSaveTask heroSaveTask = new HeroSaveTask(this, getHero(),HeroExchange.getInstance());
             heroSaveTask.execute();
         }
 
@@ -968,7 +970,7 @@ public class DsaTabActivity extends BaseActivity implements NavigationView.OnNav
                 return true;
             case R.id.option_save_hero:
                 if (getHero() != null) {
-                    HeroSaveTask heroSaveTask = new HeroSaveTask(this, getHero(),DsaTabApplication.getInstance().getExchange());
+                    HeroSaveTask heroSaveTask = new HeroSaveTask(this, getHero(), HeroExchange.getInstance());
                     heroSaveTask.execute();
                 }
                 return true;

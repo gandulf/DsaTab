@@ -3,13 +3,15 @@ package com.dsatab.cloud;
 import android.app.Activity;
 import android.content.AsyncTaskLoader;
 
-import com.dsatab.cloud.HeroExchange.StorageType;
 import com.dsatab.data.HeroFileInfo;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Loader to fetch heroes from Cloud Storages
+ */
 public class HeroesSyncTask extends AsyncTaskLoader<List<HeroFileInfo>> {
 
 	private List<Exception> exception;
@@ -58,15 +60,13 @@ public class HeroesSyncTask extends AsyncTaskLoader<List<HeroFileInfo>> {
 		exception.clear();
 
 		try {
-			List<HeroFileInfo> heroes = new ArrayList<HeroFileInfo>();
-			for (StorageType type : HeroExchange.storageTypes) {
-				try {
-                    HeroFileInfo.merge(heroes, exchange.getHeroes(type));
-				} catch (Exception e) {
-					exception.add(e);
-				}
-			}
-			return heroes;
+			fileInfos = new ArrayList<HeroFileInfo>();
+            try {
+                HeroFileInfo.merge(fileInfos, exchange.getHeroes());
+            } catch (Exception e) {
+                exception.add(e);
+            }
+			return fileInfos;
 		} catch (Exception e) {
 			exception.add(e);
 			return Collections.emptyList();

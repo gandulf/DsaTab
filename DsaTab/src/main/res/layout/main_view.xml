@@ -69,7 +69,7 @@
                     app:layout_collapseMode="pin"
                     app:layout_scrollFlags="scroll|enterAlways"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
             </android.support.design.widget.CollapsingToolbarLayout>
 

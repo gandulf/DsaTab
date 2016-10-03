@@ -1243,19 +1243,19 @@ public class Hero extends AbstractBeing {
 										outValue[0] += 3;
 									if (outModifiers != null)
 										outModifiers.add(new Modifier(3, DsaTabApplication.getInstance().getString(
-												R.string.modifier_shield_hauptwaffe_paradewert, defenseValue, "+3")));
+												R.string.modifier_shield_hauptwaffe_paradewert, String.valueOf(defenseValue), "+3")));
 								} else if (defenseValue >= 18) {
 									if (outValue != null)
 										outValue[0] += 2;
 									if (outModifiers != null)
 										outModifiers.add(new Modifier(2, DsaTabApplication.getInstance().getString(
-												R.string.modifier_shield_hauptwaffe_paradewert, defenseValue, "+2")));
+												R.string.modifier_shield_hauptwaffe_paradewert, String.valueOf(defenseValue), "+2")));
 								} else if (defenseValue >= 15) {
 									if (outValue != null)
 										outValue[0] += 1;
 									if (outModifiers != null)
 										outModifiers.add(new Modifier(1, DsaTabApplication.getInstance().getString(
-												R.string.modifier_shield_hauptwaffe_paradewert, defenseValue, "+1")));
+												R.string.modifier_shield_hauptwaffe_paradewert, String.valueOf(defenseValue), "+1")));
 								}
 							}
 							break;

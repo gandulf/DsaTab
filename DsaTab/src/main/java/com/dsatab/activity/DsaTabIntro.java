@@ -1,5 +1,6 @@
 package com.dsatab.activity;
 
+import android.Manifest;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -30,10 +31,12 @@ public class DsaTabIntro extends AppIntro {
             addSlide(AppIntroFragment.newInstance("Xml-Export", "Exportiere dort dann deinen Helden im Xml-Format", R.drawable.ai_xmlexport , getResources().getColor(R.color.primary_light)));
 
             addSlide(AppIntroFragment.newInstance("Daten Austausch I", "Nun musst du die Xml-Datei auf dein Smartphone kopieren", R.drawable.ai_filetransfer , getResources().getColor(R.color.ValueViolett)));
+            askForPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 4);
 
             addSlide(AppIntroFragment.newInstance("Daten Austausch USB", "Du kannst die Datei entweder direkt mittels USB-Kabel nach \""+DsaTabApplication.getExternalHeroPath()+"\" kopieren, oder ...", R.drawable.ai_usb , getResources().getColor(R.color.ValueGreen)));
 
             addSlide(AppIntroFragment.newInstance("Daten Austausch Cloud", "Lege ein Verzeichnis \"dsatab\" in deinem Dropbox oder Drive Stammverzeichnis an und kopiere die Datei hinein.", R.drawable.ai_cloudsync , getResources().getColor(R.color.ValueBlue)));
+            askForPermissions(new String[]{Manifest.permission.INTERNET}, 6);
 
             addSlide(AppIntroFragment.newInstance("Daten Austausch Cloud", "Danach musst du noch DsaTab mit deinem Account synchonisieren.", R.drawable.ai_cloudsync , getResources().getColor(R.color.ValueBlue)));
 

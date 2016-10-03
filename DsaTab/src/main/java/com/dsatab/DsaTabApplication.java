@@ -1,6 +1,5 @@
 package com.dsatab;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
@@ -12,8 +11,8 @@ import android.support.multidex.MultiDexApplication;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
+import com.cloudrail.si.CloudRail;
 import com.dsatab.activity.DsaTabPreferenceActivity;
-import com.dsatab.cloud.HeroExchange;
 import com.dsatab.config.DsaTabConfiguration;
 import com.dsatab.data.Hero;
 import com.dsatab.db.DatabaseHelper;
@@ -27,8 +26,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.splunk.mint.Mint;
-import com.squareup.leakcanary.LeakCanary;
-import com.squareup.leakcanary.RefWatcher;
 
 import org.osmdroid.tileprovider.tilesource.ITileSource;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -92,16 +89,7 @@ public class DsaTabApplication extends MultiDexApplication {
 
 	private DatabaseHelper databaseHelper = null;
 
-	private HeroExchange exchange;
-
 	private boolean firstRun;
-
-    public static RefWatcher getRefWatcher(Context context) {
-        DsaTabApplication application = (DsaTabApplication) context.getApplicationContext();
-        return application.refWatcher;
-    }
-
-    private RefWatcher refWatcher;
 
 	/**
 	 * Convenient access, saves having to call and cast getApplicationContext()
@@ -187,13 +175,15 @@ public class DsaTabApplication extends MultiDexApplication {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-        refWatcher= LeakCanary.install(this);
+
 		// provide an instance for our static accessors
         instance = this;
 
 		cleanUp();
 
 		setTheme(DsaTabPreferenceActivity.getCustomTheme());
+
+        CloudRail.setAppKey("57de8fdcc28022207da5f79f");
 
 		configuration = new DsaTabConfiguration(this);
 
@@ -208,7 +198,7 @@ public class DsaTabApplication extends MultiDexApplication {
 		edit.putBoolean("dsaTabFirstRun", false);
 
 		TileSourceFactory.getTileSources().clear();
-		final ITileSource tileSource = new BitmapTileSource(TILESOURCE_AVENTURIEN, null, 2, 5, 256, ".jpg");
+		final ITileSource tileSource = new BitmapTileSource(TILESOURCE_AVENTURIEN, 2, 5, 256, ".jpg");
 		TileSourceFactory.addTileSource(tileSource);
 
 		File token = new File(getDirectory(), "token.txt");
@@ -243,9 +233,8 @@ public class DsaTabApplication extends MultiDexApplication {
 		// Initialize ImageLoader with configuration.
 		ImageLoader.getInstance().init(config);
 
-		exchange = new HeroExchange(getBaseContext());
-
         Nammu.init(getApplicationContext());
+
     }
 
 	private void migrateDirectories() {
@@ -267,10 +256,6 @@ public class DsaTabApplication extends MultiDexApplication {
 
 	public boolean isFirstRun() {
 		return firstRun;
-	}
-
-	public HeroExchange getExchange() {
-		return exchange;
 	}
 
 	private void cleanUp() {
