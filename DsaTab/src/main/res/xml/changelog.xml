@@ -1,5 +1,10 @@
 
 <changelog>
+    <release version="4.5" versioncode="110">
+        <fix>Cloud Synchronisation komplett überarbeitet</fix>
+        <fix>Fehlende Ritualkenntnise,Zauber,Talente hinzugefügt</fix>
+    </release>
+
     <release version="4.4.7" versioncode="108">
         <fix>Behinderung bei Talenten wird berücksichtigt</fix>
         <fix>Fehlende Ritualkenntnise hinzugefügt</fix>

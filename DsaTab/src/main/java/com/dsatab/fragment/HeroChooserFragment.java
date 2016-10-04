@@ -87,7 +87,7 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
 
     private static final class HeroesActionMode extends BaseListableActionMode<HeroChooserFragment> {
 
-        public HeroesActionMode(HeroChooserFragment fragment, RecyclerView listView, RecyclerViewSelectionManager manager) {
+        HeroesActionMode(HeroChooserFragment fragment, RecyclerView listView, RecyclerViewSelectionManager manager) {
             super(fragment, listView, manager);
         }
 
@@ -95,7 +95,7 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 
-            RecyclerView list = listView.get();
+            final RecyclerView list = listView.get();
             final HeroChooserFragment fragment = listFragment.get();
             if (list == null || fragment == null)
                 return false;
@@ -114,7 +114,7 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
                                     if (result) {
                                         adapter.remove(heroInfo);
                                     } else {
-                                        //TODO show user message
+                                        ViewUtils.snackbar(fragment.getActivity(),heroInfo.getName()+" konnte nicht gelöscht werden.");
                                     }
                                 }
                             });
@@ -124,7 +124,16 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
                     case R.id.option_download:
                         try {
                             if (heroInfo.isOnline()) {
-                                HeroExchange.getInstance().download(heroInfo,null);
+                                HeroExchange.getInstance().download(heroInfo, new HeroExchange.CloudResult<Boolean>() {
+                                    @Override
+                                    public void onSuccess(Boolean result) {
+                                        if (result) {
+                                            ViewUtils.snackbar(fragment.getActivity(),heroInfo.getName() +" hochgeladen.");
+                                        } else {
+                                            ViewUtils.snackbar(fragment.getActivity(),heroInfo.getName() +" konnte nocht hochgeladen werden.");
+                                        }
+                                    }
+                                });
                             }
                         } catch (Exception e) {
                             Debug.error(e);
@@ -132,7 +141,16 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
                         break;
                     case R.id.option_upload:
                         try {
-                            HeroExchange.getInstance().upload(heroInfo,null);
+                            HeroExchange.getInstance().upload(heroInfo, new HeroExchange.CloudResult<Boolean>() {
+                                @Override
+                                public void onSuccess(Boolean result) {
+                                    if (result) {
+                                        ViewUtils.snackbar(fragment.getActivity(),heroInfo.getName() +" heruntergeladen.");
+                                    } else {
+                                        ViewUtils.snackbar(fragment.getActivity(),heroInfo.getName() +" konnte nocht heruntergeladen werden.");
+                                    }
+                                }
+                            });
                         } catch (Exception e) {
                             Debug.error(e);
                         }
@@ -172,7 +190,6 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
 
                 online |= heroInfo.isOnline();
                 deletable |= heroInfo.isDeletable();
-                uploadable |= heroInfo.getStorageType() != null;
             }
 
             mode.setSubtitle(fragment.getString(R.string.count_selected, String.valueOf(selected)));
@@ -182,17 +199,17 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
             MenuItem download = menu.findItem(R.id.option_download);
             if (download != null && online != download.isVisible()) {
                 download.setVisible(online);
-                changed &= true;
+                changed = true;
             }
 
             MenuItem upload = menu.findItem(R.id.option_upload);
-            if (upload != null && uploadable != upload.isVisible()) {
-                upload.setVisible(uploadable);
-                changed &= true;
+            if (upload != null && online != upload.isVisible()) {
+                upload.setVisible(online);
+                changed |= true;
             }
 
             MenuItem delete = menu.findItem(R.id.option_delete);
-            changed &= ViewUtils.menuIconState(delete, deletable);
+            changed |= ViewUtils.menuIconState(delete, deletable);
 
             return changed;
         }
@@ -275,12 +292,20 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
         setHasOptionsMenu(true);
 
         HeroExchange.getInstance().prepare(getActivity());
+
+
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        getActivity().getLoaderManager().initLoader(LOCAL_LOADER, null, HeroChooserFragment.this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        refresh(LOCAL_LOADER);
     }
 
     protected void loadExampleHeroes() {

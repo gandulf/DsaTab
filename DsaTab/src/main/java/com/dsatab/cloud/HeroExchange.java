@@ -72,7 +72,7 @@ public class HeroExchange {
     }
 
     public interface CloudTask<T> {
-        T execute(CloudStorage storage);
+        T execute(CloudStorage storage) throws Exception;
     }
 
     private Activity context;
@@ -255,14 +255,26 @@ public class HeroExchange {
             AsyncTask.execute(new Runnable() {
                 @Override
                 public void run() {
-                    final T result = action.execute(storage);
+                    T result;
+                    try {
+                        result = action.execute(storage);
+                    } catch (final Exception e) {
+                        result = null;
+                        Debug.error(e);
+                        context.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ViewUtils.snackbar(context, "Fehler: " + e.getLocalizedMessage());
+                            }
+                        });
+                    }
+
+                    final T finalResult = result;
                     if (cloudResult != null) {
                         context.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-
-                                cloudResult.onSuccess(result);
-
+                                cloudResult.onSuccess(finalResult);
                             }
                         });
                     }
@@ -270,12 +282,25 @@ public class HeroExchange {
                 }
             });
         } else {
-            final T result = action.execute(storage);
+            T result;
+            try {
+                result = action.execute(storage);
+            } catch (final Exception e) {
+                Debug.error(e);
+                result = null;
+                context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ViewUtils.snackbar(context, "Fehler: " + e.getLocalizedMessage());
+                    }
+                });
+            }
+            final T finalResult = result;
             if (cloudResult != null) {
                 AsyncTask.execute(new Runnable() {
                     @Override
                     public void run() {
-                        cloudResult.onSuccess(result);
+                        cloudResult.onSuccess(finalResult);
                     }
                 });
             }
@@ -285,24 +310,19 @@ public class HeroExchange {
     public void upload(final HeroFileInfo heroInfo, CloudResult<Boolean> result) throws IOException {
         execute(getProvider(heroInfo), new CloudTask<Boolean>() {
             @Override
-            public Boolean execute(CloudStorage storage) {
-                try {
-                    upload(heroInfo,(CloudMetaData) null);
-                } catch (IOException e) {
-                    Debug.error(e);
-                    return Boolean.FALSE;
-                }
-                return Boolean.TRUE;
+            public Boolean execute(CloudStorage storage) throws IOException {
+                return upload(heroInfo, (CloudMetaData) null);
             }
-        },result);
+        }, result);
     }
 
-    private void upload(HeroFileInfo heroInfo,CloudMetaData cloudMetaData) throws IOException {
+    private boolean upload(HeroFileInfo heroInfo, CloudMetaData cloudMetaData) throws IOException {
+        boolean result = false;
         CloudStorage storage = getProvider(heroInfo);
         if (storage != null) {
             File local = heroInfo.getFile(FileType.Hero);
             if (local != null && local.exists()) {
-                Debug.verbose("Uploading hero file to"+heroInfo.getRemoteHeroId());
+                Debug.verbose("Uploading hero file to" + heroInfo.getRemoteHeroId());
                 storage.upload(heroInfo.getRemoteHeroId(), new FileInputStream(local), local.length(), true);
 
                 // keep lastmodified of cloud data in sync with local files
@@ -310,6 +330,7 @@ public class HeroExchange {
                     cloudMetaData = storage.getMetadata(heroInfo.getRemoteHeroId());
 
                 local.setLastModified(cloudMetaData.getModifiedAt());
+                result = true;
             }
 
             File localConfig = heroInfo.getFile(FileType.Config);
@@ -317,10 +338,12 @@ public class HeroExchange {
                 if (heroInfo.getRemoteConfigId() == null) {
                     heroInfo.setRemoteConfigId(heroInfo.getRemoteHeroId().replace(HERO_FILE_EXTENSION, CONFIG_FILE_EXTENSION));
                 }
-                Debug.verbose("Uploading heroconfig file to"+heroInfo.getRemoteConfigId());
+                Debug.verbose("Uploading heroconfig file to" + heroInfo.getRemoteConfigId());
                 storage.upload(heroInfo.getRemoteConfigId(), new FileInputStream(localConfig), localConfig.length(), true);
+                result = true;
             }
         }
+        return result;
     }
 
     private void pipe(InputStream in, File file) throws IOException {
@@ -349,7 +372,7 @@ public class HeroExchange {
                 File local = heroInfo.getFile(FileType.Hero);
                 if (local != null && local.exists()) {
                     Long localModified = local.lastModified();
-                    ViewUtils.snackbar(context,heroInfo.getName()+": Status überprüfen");
+                    ViewUtils.snackbar(context, heroInfo.getName() + ": Status überprüfen");
 
                     if (cloudMetaData == null) {
                         cloudMetaData = storage.getMetadata(heroInfo.getRemoteHeroId());
@@ -358,21 +381,21 @@ public class HeroExchange {
                     if (localModified.equals(cloudModified)) {
                         Debug.verbose("No changes - " + heroInfo);
                         return;
-                    } else if (cloudModified!=null && localModified > cloudModified) {
-                        ViewUtils.snackbar(context,heroInfo.getName()+": Uploading...");
+                    } else if (cloudModified != null && localModified > cloudModified) {
+                        ViewUtils.snackbar(context, heroInfo.getName() + ": Uploading...");
                         Debug.verbose("Upload - " + heroInfo);
-                        upload(heroInfo,cloudMetaData);
-                    } else if (cloudModified!=null && localModified < cloudModified){
-                        ViewUtils.snackbar(context,heroInfo.getName()+": Downloading...");
+                        upload(heroInfo, cloudMetaData);
+                    } else if (cloudModified != null && localModified < cloudModified) {
+                        ViewUtils.snackbar(context, heroInfo.getName() + ": Downloading...");
                         Debug.verbose("Download - " + heroInfo);
-                        download(heroInfo,cloudMetaData);
-                    }else {
+                        download(heroInfo, cloudMetaData);
+                    } else {
                         Debug.verbose("Skipping no cloud modified date - " + cloudMetaData);
                     }
                 } else {
-                    ViewUtils.snackbar(context,heroInfo.getName()+": Downloading...");
+                    ViewUtils.snackbar(context, heroInfo.getName() + ": Downloading...");
                     Debug.verbose("Download New - " + heroInfo);
-                    download(heroInfo,cloudMetaData);
+                    download(heroInfo, cloudMetaData);
                 }
             }
         }
@@ -381,24 +404,15 @@ public class HeroExchange {
     public void download(final HeroFileInfo heroInfo, CloudResult<Boolean> result) throws IOException {
         execute(getProvider(heroInfo), new CloudTask<Boolean>() {
             @Override
-            public Boolean execute(CloudStorage storage) {
-                try {
-                    download(heroInfo,(CloudMetaData) null);
-                } catch (IOException e) {
-                    Debug.error(e);
-                    return Boolean.FALSE;
-                } catch (JSONException e) {
-                    Debug.error(e);
-                    return Boolean.FALSE;
-                }
-                return Boolean.TRUE;
+            public Boolean execute(CloudStorage storage) throws IOException, JSONException {
+                return download(heroInfo, (CloudMetaData) null);
             }
-        },result);
+        }, result);
     }
 
-    private void download(HeroFileInfo heroInfo,CloudMetaData cloudMetaData) throws IOException, JSONException {
+    private boolean download(HeroFileInfo heroInfo, CloudMetaData cloudMetaData) throws IOException, JSONException {
         CloudStorage storage = getProvider(heroInfo);
-
+        boolean result = false;
         if (storage != null) {
             if (!TextUtils.isEmpty(heroInfo.getRemoteHeroId())) {
                 File local = heroInfo.getFile(FileType.Hero);
@@ -406,10 +420,11 @@ public class HeroExchange {
                     InputStream data = storage.download(heroInfo.getRemoteHeroId());
                     pipe(data, local);
                     // keep lastmodified of cloud data in sync with local files
-                    if (cloudMetaData==null) {
+                    if (cloudMetaData == null) {
                         cloudMetaData = storage.getMetadata(heroInfo.getRemoteHeroId());
                     }
                     local.setLastModified(cloudMetaData.getModifiedAt());
+                    result = true;
                 }
             }
 
@@ -419,7 +434,7 @@ public class HeroExchange {
                     InputStream dataConfig = storage.download(heroInfo.getRemoteConfigId());
 
                     pipe(dataConfig, localConfig);
-
+                    result = true;
                     if (localConfig.exists()) {
                         String data = Util.slurp(new FileInputStream(localConfig), 1024);
                         if (!TextUtils.isEmpty(data)) {
@@ -438,7 +453,7 @@ public class HeroExchange {
                 }
             }
         }
-
+        return result;
     }
 
     public InputStream getInputStream(HeroFileInfo fileInfo, FileType fileType) throws IOException {

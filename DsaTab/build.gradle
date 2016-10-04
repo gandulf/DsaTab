@@ -101,7 +101,7 @@ android {
         targetSdkVersion 24
 
         versionName "4.5"
-        versionCode 109
+        versionCode 110
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //generatedDensities = []
