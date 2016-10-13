@@ -2,8 +2,6 @@ package com.dsatab.fragment.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -14,11 +12,14 @@ import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -56,7 +57,6 @@ import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Hint;
 import com.dsatab.util.StyleableSpannableStringBuilder;
 import com.dsatab.util.Util;
-import com.wnafee.vector.compat.ResourcesCompat;
 
 import org.apache.commons.lang3.ObjectUtils;
 
@@ -80,6 +80,8 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 	private static final int HANDLE_DICE_6 = 2;
 
 	private Dialog dialog;
+
+    private ViewGroup root;
 
     private View dimView;
 
@@ -140,19 +142,16 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 		return true;
 	}
 
-	@Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) {
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(probeData.probe.getName());
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-		LayoutInflater localInflater =  LayoutInflater.from(builder.getContext());
-
-		ViewGroup root = (ViewGroup) localInflater.inflate(R.layout.dice_slider_content, null, false);
-
-		builder.setTitle(probeData.probe.getName());
+		root = (ViewGroup) View.inflate(builder.getContext(), R.layout.dice_slider_content, null);
 
 		modifiersList = (RecyclerView) root.findViewById(R.id.probe_modifier_container);
-		modifiersList.setLayoutManager(new org.solovyev.android.views.llm.LinearLayoutManager(builder.getContext()));
+		modifiersList.setLayoutManager(new LinearLayoutManager(builder.getContext()));
 		modifiersList.setHasFixedSize(false);
 
 		modifierAdapter = new ModifierAdapter(new ArrayList<Modifier>());
@@ -176,36 +175,30 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 		executeButton = (ImageView) root.findViewById(R.id.dice_execute);
 		executeButton.setOnClickListener(this);
 		executeButton.setVisibility(View.GONE);
-        executeButton.setImageDrawable(ResourcesCompat.getDrawable(getActivity(), R.drawable.vd_dice_six_faces_two));
+        executeButton.setImageResource(R.drawable.vd_dice_six_faces_two);
 
 		takeHitButton = (ImageView) root.findViewById(R.id.dice_take_hit);
 		takeHitButton.setOnClickListener(this);
 		takeHitButton.setVisibility(View.GONE);
-        takeHitButton.setImageDrawable(ResourcesCompat.getDrawable(getActivity(), R.drawable.vd_sticking_plaster));
+        takeHitButton.setImageResource(R.drawable.vd_sticking_plaster);
 
         linDiceResult = (LinearLayout) root.findViewById(R.id.dice_dice_result);
 		linDiceResult.setOnClickListener(this);
 
 		resetPanelInformation();
 
-		builder.setView(root);
-		builder.setPositiveButton(R.string.label_ok, new Dialog.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialogInterface, int i) {
-				dialogInterface.dismiss();
-			}
-		});
-		dialog = builder.create();
-
+        builder.setView(root);
+        builder.setPositiveButton(R.string.label_ok, new Dialog.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        dialog = builder.create();
 
 		if (probeData!=null) {
 			checkProbe();
 		}
-
-        // remove background dim
-        //dialog.getWindow().setDimAmount(0);
-
-
         return dialog;
 	}
 
@@ -780,7 +773,7 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 		}
 
 		if (!isAutoRoll()) {
-			executeButton.setImageDrawable(ResourcesCompat.getDrawable(getActivity(),DsaUtil.getResourceId(probeData.probe)));
+			executeButton.setImageResource(DsaUtil.getResourceId(probeData.probe));
 		}
 
 		modifierAdapter.clear();
@@ -1173,6 +1166,11 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 
 	private void addDice(View res, int width, int height) {
 		linDiceResult.addView(res, width, height);
+        linDiceResult.requestLayout();
+        linDiceResult.invalidate();
+        root.requestLayout();
+        root.invalidate();
+
 		if (animate && preferences.getBoolean(DsaTabPreferenceActivity.KEY_PROBE_ANIM_ROLL_DICE, true)) {
 			res.startAnimation(AnimationUtils.loadAnimation(linDiceResult.getContext(), R.anim.flip_in));
 		}
