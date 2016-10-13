@@ -1,7 +1,7 @@
 package com.dsatab.activity;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -38,7 +38,7 @@ public class BaseEditActivity extends BaseActivity {
                         + getIntent());
             }
 
-            fragment = getFragmentManager().findFragmentById(R.id.content);
+            fragment = getSupportFragmentManager().findFragmentById(R.id.content);
 
             Class<? extends Fragment> fragmentClass = (Class<? extends Fragment>) getIntent()
                     .getExtras().getSerializable(EDIT_FRAGMENT_CLASS);
@@ -46,7 +46,7 @@ public class BaseEditActivity extends BaseActivity {
             if (fragment != null && fragmentClass.isAssignableFrom(fragment.getClass())) {
                 // all ok keep current fragment
             } else {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 if (fragment != null) {
                     ft.remove(fragment);
                 }

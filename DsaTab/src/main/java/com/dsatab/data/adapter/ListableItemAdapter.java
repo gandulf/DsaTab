@@ -1,9 +1,9 @@
 package com.dsatab.data.adapter;
 
-import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -88,9 +88,8 @@ import com.dsatab.view.listener.OnActionListener;
 import com.dsatab.view.listener.ProbeListener;
 import com.dsatab.view.listener.TargetListener;
 import com.franlopez.flipcheckbox.FlipCheckBox;
-import com.gandulf.guilib.util.ResUtil;
+import com.dsatab.util.ResUtil;
 import com.gandulf.guilib.view.SeekBarEx;
-import com.wnafee.vector.compat.ResourcesCompat;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 
@@ -634,7 +633,7 @@ public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHo
 
                     break;
                 case Wound:
-                    holder.button1.setImageDrawable(ResourcesCompat.getDrawable(holder.button1.getContext(), R.drawable.vd_sticking_plaster));
+                    holder.button1.setImageResource(R.drawable.vd_sticking_plaster);
                     holder.button1.setOnClickListener(new View.OnClickListener() {
 
                         @Override
@@ -664,7 +663,7 @@ public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHo
                 if (e instanceof Event) {
                     if (((Event) e).getAudioPath() != null) {
                         holder.icon2.setVisibility(View.VISIBLE);
-                        holder.icon2.setImageDrawable(ResourcesCompat.getDrawable(holder.icon2.getContext(), R.drawable.vd_nothing_to_say));
+                        holder.icon2.setImageResource(R.drawable.vd_nothing_to_say);
                     } else {
                         holder.icon2.setVisibility(View.GONE);
                     }
@@ -877,7 +876,7 @@ public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHo
         holder.text1.setText(fileName);
         holder.text2.setText(null);
         holder.text3.setText(Util.readableFileSize(fileSize));
-        holder.icon1.setFrontDrawable(ResourcesCompat.getDrawable(holder.icon1.getContext(), file.getIcon()));
+        holder.icon1.setFrontResource(file.getIcon());
         holder.icon2.setVisibility(View.GONE);
 
     }

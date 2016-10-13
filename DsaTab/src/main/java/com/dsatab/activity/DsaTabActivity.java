@@ -2,7 +2,6 @@ package com.dsatab.activity;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.LoaderManager;
 import android.app.SearchManager;
 import android.content.Context;
@@ -19,6 +18,8 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
@@ -53,15 +54,14 @@ import com.dsatab.fragment.HeroChooserFragment;
 import com.dsatab.fragment.MapFragment;
 import com.dsatab.fragment.dialog.ChangeLogDialog;
 import com.dsatab.util.Debug;
+import com.dsatab.util.ResUtil;
 import com.dsatab.util.Util;
 import com.dsatab.util.ViewUtils;
 import com.dsatab.view.listener.ShakeListener;
-import com.gandulf.guilib.util.ResUtil;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 
-import org.json.JSONObject;
-
+import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -83,7 +83,7 @@ public class DsaTabActivity extends BaseActivity implements NavigationView.OnNav
 
     protected static final String INTENT_TAB_INFO = "tabInfo";
 
-    public static final String PREF_LAST_HERO = "LAST_HERO_JSON";
+    public static final String PREF_LAST_HERO = "LAST_HERO_PATH";
 
     private static final String KEY_HERO_PATH = "HERO_PATH";
 
@@ -274,12 +274,17 @@ public class DsaTabActivity extends BaseActivity implements NavigationView.OnNav
             onHeroLoaded(DsaTabApplication.getInstance().getHero());
             return true;
         } else {
-            String heroFileInfoJson = preferences.getString(PREF_LAST_HERO, null);
-            if (heroFileInfoJson != null) {
+            String filePath = preferences.getString(PREF_LAST_HERO, null);
+            if (filePath != null) {
                 try {
-                    HeroFileInfo fileInfo = new HeroFileInfo(new JSONObject(heroFileInfoJson));
-                    loadHero(fileInfo);
-                    return true;
+                    File heroFile = new File(filePath);
+                    if (heroFile.exists()) {
+                        HeroFileInfo fileInfo = new HeroFileInfo(heroFile, HeroExchange.getInstance());
+                        loadHero(fileInfo);
+                        return true;
+                    } else {
+                        return false;
+                    }
                 } catch (Exception e) {
                     Debug.error(e);
                     return false;
@@ -360,7 +365,7 @@ public class DsaTabActivity extends BaseActivity implements NavigationView.OnNav
 
     protected Fragment getCurrentFragment(int index) {
         if (tabInfo != null) {
-            return getFragmentManager().findFragmentByTag(tabInfo.getId().toString() + index);
+            return getSupportFragmentManager().findFragmentByTag(tabInfo.getId().toString() + index);
         } else {
             return null;
         }
@@ -550,7 +555,7 @@ public class DsaTabActivity extends BaseActivity implements NavigationView.OnNav
         else
             tabs = Collections.emptyList();
 
-        tabPagerAdapter = new TabFragmentPagerAdapter(getFragmentManager(), tabs);
+        tabPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), tabs);
         viewPager.setAdapter(tabPagerAdapter);
 
         int defaultTabIndex = preferences.getInt(TAB_INDEX, 0);
@@ -690,7 +695,7 @@ public class DsaTabActivity extends BaseActivity implements NavigationView.OnNav
         if (drawerOpen) {
             mDrawerLayout.closeDrawers();
         } else {
-            if (backPressed + 2000 > System.currentTimeMillis() || getFragmentManager().getBackStackEntryCount() > 0) {
+            if (backPressed + 2000 > System.currentTimeMillis() || getSupportFragmentManager().getBackStackEntryCount() > 0) {
                 super.onBackPressed();
             } else {
                 Snackbar.make(mDrawerLayout, "Erneut klicken um DsaTab zu schließen", Snackbar.LENGTH_SHORT).show();
@@ -1000,7 +1005,7 @@ public class DsaTabActivity extends BaseActivity implements NavigationView.OnNav
     /*
      * (non-Javadoc)
      *
-     * @see android.app.FragmentActivity#onSaveInstanceState(android.os .Bundle)
+     * @see android.support.v4.app.FragmentActivity#onSaveInstanceState(android.os .Bundle)
      */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -1075,7 +1080,7 @@ public class DsaTabActivity extends BaseActivity implements NavigationView.OnNav
         startActivityForResult(intent, ACTION_CHOOSE_HERO);
     }
 
-    class TabFragmentPagerAdapter extends com.gandulf.guilib.view.adapter.FragmentPagerAdapter {
+    class TabFragmentPagerAdapter extends FragmentPagerAdapter {
 
         private List<TabInfoPage> tabInfoPages;
         private List<TabInfo> tabInfos;
@@ -1114,7 +1119,7 @@ public class DsaTabActivity extends BaseActivity implements NavigationView.OnNav
             }
         }
 
-        public TabFragmentPagerAdapter(android.app.FragmentManager fm, List<TabInfo> tabs) {
+        public TabFragmentPagerAdapter(android.support.v4.app.FragmentManager fm, List<TabInfo> tabs) {
             super(fm);
 
             tabInfoPages = new ArrayList<>();

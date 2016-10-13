@@ -47,7 +47,7 @@ import com.dsatab.util.ClickSpan.OnSpanClickListener;
 import com.dsatab.util.StyleableSpannableStringBuilder;
 import com.dsatab.util.Util;
 import com.dsatab.util.ViewUtils;
-import com.gandulf.guilib.download.DownloaderGinger;
+import com.gandulf.guilib.download.Downloader;
 
 import java.io.File;
 import java.util.Arrays;
@@ -302,7 +302,7 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
                             ImageChooserDialog.pickPortrait(BaseProfileFragment.this, getBeing(), 0);
                             break;
                         case R.id.option_download_avatars:
-                            DownloaderGinger downloader = DownloaderGinger.getInstance(DsaTabApplication.getDirectory(),
+                            Downloader downloader = Downloader.getInstance(DsaTabApplication.getDirectory(),
                                     getActivity());
                             downloader.download(DsaTabPreferenceActivity.PATH_WESNOTH_PORTRAITS);
                             ViewUtils.snackbar(getActivity(), R.string.message_download_started_in_background, Snackbar.LENGTH_SHORT)                                    ;

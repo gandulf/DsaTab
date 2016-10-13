@@ -12,7 +12,7 @@ public class SearchableActivity extends BaseActivity {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.app.FragmentActivity#onCreate(android.os.Bundle)
+	 * @see android.support.v4.app.FragmentActivity#onCreate(android.os.Bundle)
 	 */
 	@Override
 	protected void onCreate(Bundle bundle) {

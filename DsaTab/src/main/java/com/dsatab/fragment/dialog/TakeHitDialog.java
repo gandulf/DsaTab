@@ -1,13 +1,13 @@
 package com.dsatab.fragment.dialog;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,11 +28,10 @@ import com.dsatab.data.adapter.SpinnerSimpleAdapter;
 import com.dsatab.data.enums.AttributeType;
 import com.dsatab.data.enums.Position;
 import com.dsatab.util.Util;
-import com.wnafee.vector.compat.ResourcesCompat;
 
 import java.util.List;
 
-public class TakeHitDialog extends DialogFragment implements DialogInterface.OnClickListener, OnItemSelectedListener {
+public class TakeHitDialog extends AppCompatDialogFragment implements DialogInterface.OnClickListener, OnItemSelectedListener {
 
 	public static final String TAG = "TakeHitDialog";
 
@@ -51,7 +50,7 @@ public class TakeHitDialog extends DialogFragment implements DialogInterface.OnC
 	private Position position;
 
 	public static void show(Fragment parent, FragmentManager fragmentManager, AbstractBeing being, Position position,
-			int requestCode) {
+                            int requestCode) {
 		TakeHitDialog dialog = new TakeHitDialog();
 
 		Bundle args = new Bundle();
@@ -79,7 +78,7 @@ public class TakeHitDialog extends DialogFragment implements DialogInterface.OnC
 		View popupcontent = inflater.inflate(R.layout.popup_take_hit, null, false);
 
         builder.setView(popupcontent);
-		builder.setIcon(ResourcesCompat.getDrawable(builder.getContext(), R.drawable.vd_sticking_plaster));
+		builder.setIcon(R.drawable.vd_sticking_plaster);
         builder.setTitle("Treffer kassieren");
 
 		targetZone = (Spinner) popupcontent.findViewById(R.id.popup_position);

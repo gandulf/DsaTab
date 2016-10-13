@@ -3,37 +3,49 @@ package com.dsatab.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.preference.PreferenceFragmentCompat;
+import android.support.v7.preference.PreferenceScreen;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.fragment.preference.BasePreferenceFragment;
 import com.dsatab.util.ViewUtils;
 
-import java.util.List;
-
-public class DsaTabPreferenceActivity extends AppCompatPreferenceActivity implements BasePreferenceFragment.DsaTabSettings, Toolbar.OnMenuItemClickListener {
+public class DsaTabPreferenceActivity extends BaseActivity implements BasePreferenceFragment.DsaTabSettings, PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(DsaTabPreferenceActivity.getCustomTheme());
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.main_blank);
 
-        View rootView = getWindow().getDecorView().getRootView();
-        ViewGroup contentView = (ViewGroup) rootView.findViewById(android.R.id.content);
-
-        ViewGroup newContent = (ViewGroup) getLayoutInflater().inflate(R.layout.main_blank, contentView, false);
-
-        ViewGroup newContainer = (ViewGroup) newContent.findViewById(R.id.content);
-        for (int i = contentView.getChildCount() - 1; i >= 0; i--) {
-            View v = contentView.getChildAt(i);
-            contentView.removeView(v);
-            newContainer.addView(v, newContainer.getChildCount());
+        if (savedInstanceState == null) {
+            BasePreferenceFragment fragment = new BasePreferenceFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content, fragment);
+            ft.commit();
         }
-        contentView.addView(newContent);
+    }
+
+    @Override
+    public boolean onPreferenceStartScreen(PreferenceFragmentCompat preferenceFragmentCompat, PreferenceScreen preferenceScreen) {
+        BasePreferenceFragment fragment = new BasePreferenceFragment();
+        Bundle args = new Bundle();
+        args.putString(PreferenceFragmentCompat.ARG_PREFERENCE_ROOT, preferenceScreen.getKey());
+        fragment.setArguments(args);
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.replace(R.id.content, fragment, preferenceScreen.getKey());
+        ft.addToBackStack(preferenceScreen.getKey());
+        ft.commit();
+
+        return true;
     }
 
     public static int getCustomTheme() {
@@ -49,6 +61,16 @@ public class DsaTabPreferenceActivity extends AppCompatPreferenceActivity implem
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+
+        inflater.inflate(R.menu.menu_preferences, menu);
+        ViewUtils.menuIcons(toolbar.getContext(), menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
@@ -56,38 +78,35 @@ public class DsaTabPreferenceActivity extends AppCompatPreferenceActivity implem
         if (toolbar != null) {
             toolbar.inflateMenu(R.menu.menu_preferences);
             ViewUtils.menuIcons(toolbar.getContext(), toolbar.getMenu());
-            int titleResId = 0;
-            if (getIntent() != null) {
-                titleResId = getIntent().getIntExtra(EXTRA_SHOW_FRAGMENT_TITLE, 0);
-            }
-            if (titleResId > 0)
-                toolbar.setTitle(titleResId);
-            else
-                toolbar.setTitle("Einstellungen");
 
-            toolbar.setOnMenuItemClickListener(this);
             toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_material);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    setResult(RESULT_OK);
-                    finish();
+                    goBack();
                 }
             });
         }
     }
 
-    /**
-     * Populate the activity with the top-level headers.
-     */
-    @Override
-    public void onBuildHeaders(List<Header> target) {
-        loadHeadersFromResource(com.dsatab.R.xml.preferences_headers, target);
+    protected boolean goBack() {
+        BasePreferenceFragment fragment = (BasePreferenceFragment) getSupportFragmentManager().findFragmentById(R.id.content);
+        if (fragment!=null && fragment.getArguments()!=null) {
+            if (fragment.getArguments().get(PreferenceFragmentCompat.ARG_PREFERENCE_ROOT)!=null) {
+                getSupportFragmentManager().popBackStack();
+                return true;
+            }
+        }
+        setResult(RESULT_OK);
+        finish();
+        return true;
     }
 
     @Override
-    public boolean onMenuItemClick(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                return goBack();
             case R.id.option_about:
                 Intent aboutIntent = new Intent(this, AboutActivity.class);
                 startActivity(aboutIntent);
@@ -99,25 +118,8 @@ public class DsaTabPreferenceActivity extends AppCompatPreferenceActivity implem
                 startActivity(donateIntent);
                 return true;
             default:
-                return false;
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                setResult(RESULT_OK);
-                finish();
-                return true;
-            default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    @Override
-    protected boolean isValidFragment(String fragmentName) {
-        return fragmentName.startsWith(DsaTabApplication.getInstance().getPackageName());
     }
 
 }

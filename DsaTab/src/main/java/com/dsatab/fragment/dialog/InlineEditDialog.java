@@ -1,11 +1,11 @@
 package com.dsatab.fragment.dialog;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +28,7 @@ import com.dsatab.util.Debug;
 import com.dsatab.util.NumberPickerUtils;
 import com.dsatab.util.Util;
 
-public class InlineEditDialog extends DialogFragment implements android.content.DialogInterface.OnClickListener,View.OnClickListener,
+public class InlineEditDialog extends AppCompatDialogFragment implements android.content.DialogInterface.OnClickListener,View.OnClickListener,
 		OnCheckedChangeListener {
 
 	public static final String TAG = "InlineEditDialog";

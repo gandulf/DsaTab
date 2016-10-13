@@ -4,8 +4,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
-import com.gandulf.guilib.listener.CheckableListenable;
-import com.gandulf.guilib.listener.OnCheckedChangeListener;
+import com.franlopez.flipcheckbox.CheckableListenable;
+import com.franlopez.flipcheckbox.OnCheckedChangeListener;
 
 public class CheckableLinearLayout extends LinearLayout implements CheckableListenable {
 	boolean mChecked = false;

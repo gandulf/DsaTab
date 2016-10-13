@@ -1,6 +1,7 @@
 package com.dsatab.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -62,7 +63,7 @@ public class TabListFragment extends BaseRecyclerFragment implements View.OnClic
     /*
          * (non-Javadoc)
          *
-         * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+         * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
          */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,7 +74,7 @@ public class TabListFragment extends BaseRecyclerFragment implements View.OnClic
     protected void initRecycler() {
         recyclerView = (RecyclerView) findViewById(android.R.id.list);
 
-        initRecyclerView(recyclerView,mAdapter,new org.solovyev.android.views.llm.LinearLayoutManager(getActivity()),true,true,true);
+        initRecyclerView(recyclerView,mAdapter,new LinearLayoutManager(getActivity()),true,true,true);
     }
 
     public TabListListener getTabListListener() {

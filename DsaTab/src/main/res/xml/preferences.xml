@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:title="Settings">
+
+    <PreferenceScreen
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:key="rules"
+        android:summary="Einstellungen die Regeln von DSA betreffend."
+        android:title="Regeln">
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="shakeRollDice"
+            android:summary="Durch das Schütteln des Handies wird ein Würfel (W20) geworfen"
+            android:title="Schüttelwurf"/>
+
+        <ListPreference
+            android:defaultValue="ZonenRuestung"
+            android:key="armorType"
+            android:summary="Wähle nach welcher Art der Rüstungsschutz berechnet wird:"
+            android:title="Rüstungsschutzart"/>
+        <ListPreference
+            android:defaultValue="Trefferzonen"
+            android:key="woundType"
+            android:summary="Wähle nach welcher Art die Wunden berechnet werden:"
+            android:title="Wundensystem"/>
+
+        <PreferenceCategory
+            android:summary="Spezielle Hausregeln konfigurieren die vom offiziellen Regelwerk abweichen"
+            android:title="Hausregeln">
+
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="houseRules.2of3Dice"
+                android:summary="Bei Proben auf einen Würfel wird auf die besten 2 aus 3 Würfen gewürfelt."
+                android:title="2 von 3 Würfen"/>
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="houseRules.easierWounds"
+                android:summary="Wundschwelle liegt bei KO/3 statt den üblichen KO/2."
+                android:title="Leichtere Wunden"/>
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="houseRules.moreWoundZones"
+                android:summary="Es werden erweiterte Wundenzonen verwendet."
+                android:title="Alternative Wundenzonen"/>
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="houseRules.moreTargetZones"
+                android:summary="Es werden erweiterte Trefferzonen verwendet."
+                android:title="Alternative Trefferzonen"/>
+
+        </PreferenceCategory>
+
+    </PreferenceScreen>
+
+
+    <PreferenceScreen
+        android:icon="@android:drawable/ic_menu_camera"
+        android:key="display"
+        android:summary="Einstellungen die Darstellung von DsaTab betreffend."
+        android:title="Darstellung">
+
+        <ListPreference
+            android:defaultValue="light_plain"
+            android:entries="@array/themes"
+            android:entryValues="@array/themesValues"
+            android:key="theme"
+            android:summary="Bestimme das Aussehen von DsaTab (Erfordert Neustart):"
+            android:title="Theme"/>
+
+        <com.dsatab.view.PreferenceWithButton
+            android:key="theme.bg.path"
+            android:summary="Hier kannst du das Standard Hintergrundbild überschreiben"
+            android:title="Hintergrundbild auswählen"/>
+        <com.dsatab.view.PreferenceWithButton
+            android:key="theme.wound.bg.path"
+            android:summary="Hier kannst du das Standard Wunden-Hintergrundbild überschreiben"
+            android:title="Wunden Hintergrundbild auswählen"/>
+
+        <ListPreference
+            android:defaultValue="auto"
+            android:entries="@array/screenOrientation"
+            android:entryValues="@array/screenOrientationValues"
+            android:key="screen_orientation"
+            android:summary="Definiere die Ausrichtung deiner Oberfläche:"
+            android:title="Bildschirmausrichtung"/>
+
+    </PreferenceScreen>
+
+
+    <PreferenceScreen
+        android:icon="@android:drawable/ic_menu_rotate"
+        android:key="diceSlider"
+        android:summary="Darstellung und Verhalten der Würfelleite konfigurieren"
+        android:title="Würfelleiste">
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="autoRollDice"
+            android:summaryOff="Es können noch Modifikatoren angepasst werden befür manuell gewürfelt wird."
+            android:summaryOn="Beim Öffnen der Würfelleiste wird automatisch gewürfelt."
+            android:title="Sofort würfeln"/>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="probeProbability"
+            android:summary="Die Wahrscheinlichkeit mit der eine Probe gelingt wird angezeigt"
+            android:title="Wahrscheinlichkeit anzeigen"/>
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="animRollDice"
+            android:summaryOff="Das Würfelergebnis wird sofort ohne Verzögerung angezeigt."
+            android:summaryOn="Es wird bei jeden Wurf eine kurze Animation angezeigt"
+            android:title="Wurfanimation anzeigen"/>
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="soundRollDice"
+            android:summaryOff="Es wird kein Geräusch abgespielt."
+            android:summaryOn="Jeder Probewurf wird musikalisch untermalt"
+            android:title="Würfelgeräusch abspielen"/>
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:dependency="soundRollDice"
+            android:key="soundResultDice"
+            android:summaryOff="Es wird ein neutraler Würfelsound abgespielt."
+            android:summaryOn="Es wird je nach Ergebnis der Probe ein anderer Sound abgespielt."
+            android:title="Würfelgeräusch abhängig vom Ergebnis"/>
+
+    </PreferenceScreen>
+
+    <PreferenceScreen
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:key="setup"
+        android:summary="Systemeinstellungen DsaTab betreffend."
+        android:title="Setup">
+
+        <Preference
+            android:name="@string/pref_sdcardHeroPath_title"
+            android:defaultValue="dsatab/"
+            android:key="sdcardHeroPath"
+            android:summary="@string/pref_sdcardHeroPath_description"
+            android:title="@string/pref_sdcardHeroPath_title"/>
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="hero_auto_save"
+            android:summaryOff="Klicke auf 'Held speichern' um Änderungen zu übernehmen."
+            android:summaryOn="Änderungen an deinen Helden werden automatisch gespeichert."
+            android:title="Automatisches Speichern"/>
+
+        <PreferenceCategory
+            android:summary="Ladet zusätzliche Charakter Portraits, etc. aus dem Internet herunter."
+            android:title="Portraits, Bilder, etc herunterladen">
+
+            <Preference
+                android:key="downloadAll"
+                android:summary="Portraits, Gegenstände (ca. 19 MB)"
+                android:title="Alles herunterladen"/>
+            <!--
+                    Preference
+                    android:title="Portraits herunterladen"
+                    android:summary="Aus dem unveröffentlichen Band 'Von Rand und Namen' - Copyright FanPro (400 kB)"
+                    android:key="downloadRangPortraits" /
+            -->
+            <Preference
+                android:key="downloadWesnothPortraits"
+                android:summary="Aus dem Spiel &apos;Battle for Wesnoth&apos; - Copyright www.wesnoth.org (800 kB)"
+                android:title="Portraits herunterladen"/>
+            <Preference
+                android:key="downloadMaps"
+                android:summary="Gesammeltes Kartenwerk - Copyright Ulisses (ca. 26 MB)"
+                android:title="Karten herunterladen"/>
+            <Preference
+                android:key="downloadOSMMaps"
+                android:summary="Aventurien Karte als GoogleMaps Variante - Copyright Ulisses (ca. 10 MB)"
+                android:title="Aventurien Karte herunterladen"/>
+            <Preference
+                android:key="downloadItems"
+                android:summary="Bilder aus &apos;Lanze, Helm und Federvieh&apos; (ca. 18 MB)"
+                android:title="Gegenstände herunterladen"/>
+            <Preference
+                android:key="downloadBackgrounds"
+                android:summary="Bilder aus DSA Fanpaket (ca. 10 MB)"
+                android:title="Hintergründe herunterladen"/>
+
+        </PreferenceCategory>
+    </PreferenceScreen>
+
+</PreferenceScreen>

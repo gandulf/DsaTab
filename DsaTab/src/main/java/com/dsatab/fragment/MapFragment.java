@@ -27,7 +27,7 @@ import com.dsatab.data.Hero;
 import com.dsatab.map.MapTileProviderLocal;
 import com.dsatab.util.Util;
 import com.dsatab.util.ViewUtils;
-import com.gandulf.guilib.download.DownloaderGinger;
+import com.gandulf.guilib.download.Downloader;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 
@@ -220,7 +220,7 @@ public class MapFragment extends BaseFragment {
     /*
              * (non-Javadoc)
              *
-             * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+             * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
              */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -283,7 +283,7 @@ public class MapFragment extends BaseFragment {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.app.Fragment#onActivityCreated(android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
 	 */
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -315,7 +315,7 @@ public class MapFragment extends BaseFragment {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
-                    DownloaderGinger downloader = DownloaderGinger.getInstance(DsaTabApplication.getDirectory(), getActivity());
+                    Downloader downloader = Downloader.getInstance(DsaTabApplication.getDirectory(), getActivity());
                     downloader.download(DsaTabPreferenceActivity.PATH_OSM_MAP_PACK);
                 }
             });

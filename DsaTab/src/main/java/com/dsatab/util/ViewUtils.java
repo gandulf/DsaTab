@@ -1,19 +1,19 @@
 package com.dsatab.util;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.design.widget.Snackbar;
+import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.dsatab.R;
-import com.gandulf.guilib.util.ResUtil;
-import com.wnafee.vector.compat.ResourcesCompat;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 
@@ -40,11 +40,10 @@ public class ViewUtils {
         return drawable;
     }
     public static Drawable circleIcon(Context context, int drawableId) {
-        Drawable drawable = ResourcesCompat.getDrawable(context, drawableId);
+        VectorDrawableCompat drawable = VectorDrawableCompat.create(context.getResources(), drawableId,context.getTheme());
         if (drawable!=null) {
-            drawable = drawable.mutate();
             int circleTint = Util.getThemeColors(context, R.attr.circleTint);
-            android.support.v4.graphics.drawable.DrawableCompat.setTint(drawable, circleTint);
+            DrawableCompat.setTint(drawable,circleTint);
         }
         return drawable;
     }

@@ -1,6 +1,6 @@
 package com.dsatab.fragment;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
@@ -93,7 +93,7 @@ public class NotesEditFragment extends BaseEditFragment implements OnItemSelecte
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -113,7 +113,7 @@ public class NotesEditFragment extends BaseEditFragment implements OnItemSelecte
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.app.Fragment#onActivityCreated(android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
 	 */
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {

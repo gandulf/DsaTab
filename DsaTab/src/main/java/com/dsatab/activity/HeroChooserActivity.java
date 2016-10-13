@@ -1,6 +1,6 @@
 package com.dsatab.activity;
 
-import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -24,10 +24,10 @@ public class HeroChooserActivity extends BaseActivity implements OnHeroSelectedL
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
 
-		fragment = (HeroChooserFragment) getFragmentManager().findFragmentById(R.id.content);
+		fragment = (HeroChooserFragment) getSupportFragmentManager().findFragmentById(R.id.content);
 
 		if (fragment == null) {
-			FragmentTransaction ft = getFragmentManager().beginTransaction();
+			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 			if (fragment != null) {
 				ft.remove(fragment);
 			}

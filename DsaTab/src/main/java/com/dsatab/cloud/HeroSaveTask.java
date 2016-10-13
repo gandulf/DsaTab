@@ -80,7 +80,14 @@ public class HeroSaveTask extends AsyncTask<Void, Void, Boolean> {
                 Util.close(outConfig);
             }
 
-            heroExchange.upload(hero.getFileInfo(),null);
+            heroExchange.upload(hero.getFileInfo(), new HeroExchange.CloudResult<Boolean>() {
+                @Override
+                public void onSuccess(Boolean result) {
+                    if (result!=null && result) {
+                        ViewUtils.snackbar(context,hero.getName() +" hochgeladen.");
+                    }
+                }
+            });
 
             return true;
         } catch (Exception e) {

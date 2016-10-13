@@ -65,12 +65,22 @@
     </LinearLayout>
 
     <com.thebnich.floatinghintedittext.FloatingHintTextView
-        android:id="@+id/popup_edit_category"
+        android:id="@+id/popup_edit_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_columnSpan="2"
         android:layout_gravity="start|end"
         android:layout_row="3"
+        android:hint="@string/label_count"/>
+
+
+    <com.thebnich.floatinghintedittext.FloatingHintTextView
+        android:id="@+id/popup_edit_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_columnSpan="2"
+        android:layout_gravity="start|end"
+        android:layout_row="4"
         android:hint="@string/label_category"/>
 
     <Space

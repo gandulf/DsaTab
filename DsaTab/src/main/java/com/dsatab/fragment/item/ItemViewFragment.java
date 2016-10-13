@@ -26,8 +26,7 @@ import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Util;
 import com.dsatab.view.CardView;
 import com.dsatab.view.ItemListItem;
-import com.gandulf.guilib.util.ResUtil;
-import com.wnafee.vector.compat.ResourcesCompat;
+import com.dsatab.util.ResUtil;
 
 import java.util.UUID;
 
@@ -36,7 +35,7 @@ public class ItemViewFragment extends BaseEditFragment {
     private CardView imageView;
     private ItemListItem itemView;
 
-    private TextView nameView, titleView, priceView, weightView;
+    private TextView nameView, titleView, priceView, weightView, countView;
     private ImageView iconView;
     private TextView categoryView;
 
@@ -128,7 +127,7 @@ public class ItemViewFragment extends BaseEditFragment {
     /*
     * (non-Javadoc)
     *
-    * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+    * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -138,6 +137,7 @@ public class ItemViewFragment extends BaseEditFragment {
         titleView = (TextView) root.findViewById(R.id.popup_edit_title);
         priceView = (TextView) root.findViewById(R.id.popup_edit_price);
         weightView = (TextView) root.findViewById(R.id.popup_edit_weight);
+        countView = (TextView) root.findViewById(R.id.popup_edit_count);
         iconView = (ImageView) root.findViewById(R.id.popup_edit_icon);
         imageView = (CardView) root.findViewById(R.id.popup_edit_image);
         imageView.setHighQuality(true);
@@ -207,7 +207,7 @@ public class ItemViewFragment extends BaseEditFragment {
                 if (item.getIconUri() != null) {
                     iconView.setImageDrawable(ResUtil.getDrawableByUri(iconView.getContext(),item.getIconUri()));
                 } else if (itemSpecification != null) {
-                    iconView.setImageDrawable(ResourcesCompat.getDrawable(iconView.getContext(),DsaUtil.getResourceId(itemSpecification)));
+                    iconView.setImageResource(DsaUtil.getResourceId(itemSpecification));
                 }
             }
 
@@ -222,9 +222,11 @@ public class ItemViewFragment extends BaseEditFragment {
             }
 
             if (priceView != null)
-                priceView.setText(Util.toString(item.getPrice()) + " " + getString(R.string.label_kreuzer));
+                priceView.setText(Util.toString(item.getPrice()) + " " + priceView.getContext().getString(R.string.label_kreuzer));
             if (weightView != null)
-                weightView.setText(Util.toString(item.getWeight()) + " " + getString(R.string.label_ounces));
+                weightView.setText(Util.toString(item.getWeight()) + " " + priceView.getContext().getString(R.string.label_ounces));
+            if (countView != null)
+                countView.setText(Util.toString(item.getCount()));
             if (categoryView != null)
                 categoryView.setText(item.getCategory());
         }

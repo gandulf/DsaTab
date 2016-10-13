@@ -202,7 +202,7 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -222,7 +222,7 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.app.Fragment#onActivityCreated(android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
 	 */
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -337,7 +337,7 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.app.Fragment#onActivityResult(int, int, android.content.Intent)
+	 * @see android.support.v4.app.Fragment#onActivityResult(int, int, android.content.Intent)
 	 */
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {

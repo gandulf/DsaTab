@@ -2,6 +2,7 @@ package com.dsatab.data.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,6 @@ import android.widget.TextView;
 
 import com.dsatab.R;
 import com.dsatab.data.enums.EventCategory;
-import com.wnafee.vector.compat.ResourcesCompat;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class EventCatgoryAdapter extends SpinnerSimpleAdapter<EventCategory> {
 			TextView textView = (TextView) view;
 			EventCategory e = getItem(position);
 
-            Drawable icon = ResourcesCompat.getDrawable(getContext(), e.getDrawableId());
+            Drawable icon = VectorDrawableCompat.create(getContext().getResources(), e.getDrawableId(),getContext().getTheme());
 			textView.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null);
 			textView.setCompoundDrawablePadding(getContext().getResources().getDimensionPixelSize(R.dimen.default_gap));
 			textView.setText(e.name());
@@ -49,7 +49,7 @@ public class EventCatgoryAdapter extends SpinnerSimpleAdapter<EventCategory> {
 			TextView textView = (TextView) view;
 			EventCategory e = getItem(position);
 
-            Drawable icon = ResourcesCompat.getDrawable(getContext(),e.getDrawableId());
+            Drawable icon = VectorDrawableCompat.create(getContext().getResources(), e.getDrawableId(),getContext().getTheme());
 			textView.setCompoundDrawablesWithIntrinsicBounds(icon,null,null,null);
 			textView.setCompoundDrawablePadding(getContext().getResources().getDimensionPixelSize(R.dimen.default_gap));
 			textView.setText(e.name());

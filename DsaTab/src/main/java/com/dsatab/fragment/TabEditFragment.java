@@ -29,8 +29,8 @@ import com.dsatab.util.Util;
 import com.dsatab.view.ListSettings;
 import com.dsatab.view.ListSettings.ListItem;
 import com.dsatab.view.ListSettings.ListItemType;
-import com.gandulf.guilib.util.DefaultTextWatcher;
-import com.gandulf.guilib.util.ResUtil;
+import com.dsatab.util.DefaultTextWatcher;
+import com.dsatab.util.ResUtil;
 import com.github.clans.fab.FloatingActionButton;
 
 import java.util.ArrayList;

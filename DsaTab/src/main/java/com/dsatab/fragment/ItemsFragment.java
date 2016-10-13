@@ -41,12 +41,11 @@ import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Util;
 import com.dsatab.util.ViewUtils;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
-import com.gandulf.guilib.util.ResUtil;
+import com.dsatab.util.ResUtil;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.h6ah4i.android.widget.advrecyclerview.selectable.RecyclerViewSelectionManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
-import com.wnafee.vector.compat.ResourcesCompat;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 
@@ -429,11 +428,7 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
             if (filterSet != null) {
                 ItemType[] itemType = ItemType.values();
                 for (int i = 0; i < itemType.length; i++) {
-                    Drawable icon = null;
-                    if (getActivity()!=null) {
-                        icon = ResourcesCompat.getDrawable(getActivity(), DsaUtil.getResourceId(itemType[i]));
-                    }
-                    MenuItem item = filterSet.add(MENU_FILTER_GROUP, i, Menu.NONE, itemType[i].name()).setIcon(icon);
+                    MenuItem item = filterSet.add(MENU_FILTER_GROUP, i, Menu.NONE, itemType[i].name()).setIcon(DsaUtil.getResourceId(itemType[i]));
                     item.setCheckable(true);
                     item.setChecked(categoriesSelected.contains(itemType[item.getItemId()]));
                 }
@@ -515,7 +510,7 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
     /*
      * (non-Javadoc)
      *
-     * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+     * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -527,11 +522,11 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
 
         FloatingActionButton fabContainer = (FloatingActionButton) root.findViewById(R.id.fab_container_add);
         fabContainer.setOnClickListener(this);
-        fabContainer.setImageDrawable(ResourcesCompat.getDrawable(getActivity(), R.drawable.vd_swap_bag));
+        fabContainer.setImageResource(R.drawable.vd_swap_bag);
 
         FloatingActionButton fabBag = (FloatingActionButton) root.findViewById(R.id.fab_items_add);
         fabBag.setOnClickListener(this);
-        fabBag.setImageDrawable(ResourcesCompat.getDrawable(getActivity(), R.drawable.vd_battle_gear));
+        fabBag.setImageResource(R.drawable.vd_battle_gear);
 
         return root;
     }
@@ -632,7 +627,7 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
     /*
          * (non-Javadoc)
          *
-         * @see android.app.Fragment#onStop()
+         * @see android.support.v4.app.Fragment#onStop()
          */
     @Override
     public void onStop() {

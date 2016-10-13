@@ -11,7 +11,7 @@ import android.webkit.WebView;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.fragment.dialog.ChangeLogDialog;
-import com.gandulf.guilib.util.ResUtil;
+import com.dsatab.util.ResUtil;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.mikepenz.aboutlibraries.LibsConfiguration;
@@ -57,7 +57,7 @@ public class AboutActivity extends BaseActivity {
                             builder.setCancelable(true);
                             WebView webView = new WebView(builder.getContext());
                             webView.getSettings().setDefaultTextEncodingName("utf-8");
-                            String summary = ResUtil.loadResToString(R.raw.ulisses_license, getResources());
+                            String summary = ResUtil.loadResourceIdToString(R.raw.ulisses_license, getResources());
                             webView.loadDataWithBaseURL(null, summary, "text/html", "utf-8", null);
                             builder.setView(webView);
                             builder.setPositiveButton(R.string.label_ok, null);

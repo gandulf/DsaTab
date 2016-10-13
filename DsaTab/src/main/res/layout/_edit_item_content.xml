@@ -90,6 +90,18 @@
             android:textAppearance="?android:attr/textAppearanceSmall"/>
     </LinearLayout>
 
+
+    <com.thebnich.floatinghintedittext.FloatingHintEditText
+        android:id="@+id/popup_edit_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|fill_horizontal"
+        android:layout_weight="1"
+        android:layout_column="0"
+        android:layout_columnSpan="2"
+        android:hint="@string/label_count"
+        android:inputType="number"/>
+
     <TextView
         android:id="@+id/popup_edit_category_label"
         style="@style/TextLabel.Float"

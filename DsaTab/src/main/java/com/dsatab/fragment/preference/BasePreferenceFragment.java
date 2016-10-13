@@ -6,16 +6,16 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.EditTextPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.PreferenceCategory;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceGroup;
-import android.preference.PreferenceManager;
-import android.preference.PreferenceScreen;
 import android.support.design.widget.Snackbar;
+import android.support.v7.preference.CheckBoxPreference;
+import android.support.v7.preference.EditTextPreference;
+import android.support.v7.preference.ListPreference;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceCategory;
+import android.support.v7.preference.PreferenceFragmentCompat;
+import android.support.v7.preference.PreferenceGroup;
+import android.support.v7.preference.PreferenceManager;
+import android.support.v7.preference.PreferenceScreen;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -29,7 +29,7 @@ import com.dsatab.util.Hint;
 import com.dsatab.util.Util;
 import com.dsatab.util.ViewUtils;
 import com.dsatab.view.PreferenceWithButton;
-import com.gandulf.guilib.download.DownloaderGinger;
+import com.gandulf.guilib.download.Downloader;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -59,163 +59,141 @@ import static com.dsatab.fragment.preference.BasePreferenceFragment.DsaTabSettin
 import static com.dsatab.fragment.preference.BasePreferenceFragment.DsaTabSettings.PATH_OSM_MAP_PACK;
 import static com.dsatab.fragment.preference.BasePreferenceFragment.DsaTabSettings.PATH_WESNOTH_PORTRAITS;
 
-public abstract class BasePreferenceFragment extends PreferenceFragment implements OnSharedPreferenceChangeListener {
+public class BasePreferenceFragment extends PreferenceFragmentCompat implements OnSharedPreferenceChangeListener {
 
     public interface DsaTabSettings {
-         String KEY_PROBE_PROBABILITY = "probeProbability";
-         String KEY_PROBE_SHAKE_ROLL_DICE = "shakeRollDice";
-         String KEY_PROBE_ANIM_ROLL_DICE = "animRollDice";
-         String KEY_PROBE_SOUND_ROLL_DICE = "soundRollDice";
-         String KEY_PROBE_AUTO_ROLL_DICE = "autoRollDice";
-         String KEY_PROBE_SOUND_RESULT_DICE = "soundResultDice";
+        String KEY_PROBE_PROBABILITY = "probeProbability";
+        String KEY_PROBE_SHAKE_ROLL_DICE = "shakeRollDice";
+        String KEY_PROBE_ANIM_ROLL_DICE = "animRollDice";
+        String KEY_PROBE_SOUND_ROLL_DICE = "soundRollDice";
+        String KEY_PROBE_AUTO_ROLL_DICE = "autoRollDice";
+        String KEY_PROBE_SOUND_RESULT_DICE = "soundResultDice";
 
-         String KEY_HOUSE_RULES = "houseRules";
-         String KEY_HOUSE_RULES_2_OF_3_DICE = "houseRules.2of3Dice";
-         String KEY_HOUSE_RULES_EASIER_WOUNDS = "houseRules.easierWounds";
-         String KEY_HOUSE_RULES_MORE_WOUND_ZONES = "houseRules.moreWoundZones";
-         String KEY_HOUSE_RULES_MORE_TARGET_ZONES = "houseRules.moreTargetZones";
+        String KEY_HOUSE_RULES = "houseRules";
+        String KEY_HOUSE_RULES_2_OF_3_DICE = "houseRules.2of3Dice";
+        String KEY_HOUSE_RULES_EASIER_WOUNDS = "houseRules.easierWounds";
+        String KEY_HOUSE_RULES_MORE_WOUND_ZONES = "houseRules.moreWoundZones";
+        String KEY_HOUSE_RULES_MORE_TARGET_ZONES = "houseRules.moreTargetZones";
 
-         String KEY_ARMOR_TYPE = "armorType";
-         String KEY_WOUND_TYPE = "woundType";
+        String KEY_ARMOR_TYPE = "armorType";
+        String KEY_WOUND_TYPE = "woundType";
 
         @Deprecated
-         String KEY_SETUP_SDCARD_PATH = "sdcardPath";
-         String KEY_CUSTOM_DIRECTORY = "sdcardPath";
-         String DIR_PDFS = "pdfs";
+        String KEY_SETUP_SDCARD_PATH = "sdcardPath";
+        String KEY_CUSTOM_DIRECTORY = "sdcardPath";
+        String DIR_PDFS = "pdfs";
 
-         String KEY_SETUP_SDCARD_HERO_PATH = "sdcardHeroPath";
+        String KEY_SETUP_SDCARD_HERO_PATH = "sdcardHeroPath";
 
-         String KEY_DOWNLOAD_ALL = "downloadAll";
-         String KEY_DOWNLOAD_MAPS = "downloadMaps";
-         String KEY_DOWNLOAD_BACKGROUNDS = "downloadBackgrounds";
-         String KEY_DOWNLOAD_OSMMAPS = "downloadOSMMaps";
-         String KEY_DOWNLOAD_WESNOTH_PORTRAITS = "downloadWesnothPortraits";
-         String KEY_DOWNLOAD_ITEMS = "downloadItems";
+        String KEY_DOWNLOAD_ALL = "downloadAll";
+        String KEY_DOWNLOAD_MAPS = "downloadMaps";
+        String KEY_DOWNLOAD_BACKGROUNDS = "downloadBackgrounds";
+        String KEY_DOWNLOAD_OSMMAPS = "downloadOSMMaps";
+        String KEY_DOWNLOAD_WESNOTH_PORTRAITS = "downloadWesnothPortraits";
+        String KEY_DOWNLOAD_ITEMS = "downloadItems";
 
-         String KEY_THEME = "theme";
+        String KEY_THEME = "theme";
 
-         String KEY_STYLE_BG_PATH = "theme.bg.path";
-         String KEY_STYLE_BG_DELETE = "theme.bg.delete";
+        String KEY_STYLE_BG_PATH = "theme.bg.path";
+        String KEY_STYLE_BG_DELETE = "theme.bg.delete";
 
-         String KEY_STYLE_BG_WOUNDS_PATH = "theme.wound.bg.path";
-         String KEY_STYLE_BG_WOUNDS_DELETE = "theme.wound.bg.delete";
+        String KEY_STYLE_BG_WOUNDS_PATH = "theme.wound.bg.path";
+        String KEY_STYLE_BG_WOUNDS_DELETE = "theme.wound.bg.delete";
 
-         String KEY_EXCHANGE_TOKEN = "exchange_token";
+        String KEY_EXCHANGE_TOKEN = "exchange_token";
 
-         String KEY_SCREEN_ORIENTATION = "screen_orientation";
+        String KEY_SCREEN_ORIENTATION = "screen_orientation";
 
-         String KEY_TIP_TODAY = "tipToday";
-         String KEY_TIP_TODAY_RESET = "tipTodayReset";
+        String KEY_TIP_TODAY = "tipToday";
+        String KEY_TIP_TODAY_RESET = "tipTodayReset";
 
-         String KEY_AUTO_SAVE = "hero_auto_save";
+        String KEY_AUTO_SAVE = "hero_auto_save";
 
-         String SCREEN_ORIENTATION_AUTO = "auto";
-         String SCREEN_ORIENTATION_LANDSCAPE = "landscape";
-         String SCREEN_ORIENTATION_PORTRAIT = "portrait";
+        String SCREEN_ORIENTATION_AUTO = "auto";
+        String SCREEN_ORIENTATION_LANDSCAPE = "landscape";
+        String SCREEN_ORIENTATION_PORTRAIT = "portrait";
 
-         String DEFAULT_SCREEN_ORIENTATION = SCREEN_ORIENTATION_AUTO;
+        String DEFAULT_SCREEN_ORIENTATION = SCREEN_ORIENTATION_AUTO;
         // http://dl.dropbox.com/u/15750588/dsatab-wesnoth-portraits.zip
-         String PATH_WESNOTH_PORTRAITS = "https://dl.dropboxusercontent.com/u/15750588/dsatab-wesnoth-portraits.zip";
+        String PATH_WESNOTH_PORTRAITS = "https://dl.dropboxusercontent.com/u/15750588/dsatab-wesnoth-portraits.zip";
 
-         String PATH_OFFICIAL_MAP_PACK = "https://dl.dropboxusercontent.com/u/15750588/dsatab-maps-v1.zip";
+        String PATH_OFFICIAL_MAP_PACK = "https://dl.dropboxusercontent.com/u/15750588/dsatab-maps-v1.zip";
 
-         String PATH_OSM_MAP_PACK = "https://dl.dropboxusercontent.com/u/15750588/dsatab-osmmap-v1.zip";
+        String PATH_OSM_MAP_PACK = "https://dl.dropboxusercontent.com/u/15750588/dsatab-osmmap-v1.zip";
 
-         String PATH_BACKGROUNDS = "https://dl.dropboxusercontent.com/u/15750588/dsatab-backgrounds.zip";
+        String PATH_BACKGROUNDS = "https://dl.dropboxusercontent.com/u/15750588/dsatab-backgrounds.zip";
 
     }
 
-    static final int REQUEST_LINK_TO_DBX = 1190;
     public static final int ACTION_PICK_BG_PATH = 1001;
     public static final int ACTION_PICK_BG_WOUNDS_PATH = 1002;
 
-	public abstract int getPreferenceResourceId();
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.preference.PreferenceFragment#onPreferenceTreeClick(android .preference.PreferenceScreen,
-	 * android.preference.Preference)
-	 */
-	@Override
-	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-		if (!TextUtils.isEmpty(preference.getFragment())) {
-			try {
-				BasePreferenceFragment fragment = (BasePreferenceFragment) Class.forName(preference.getFragment())
-						.newInstance();
-				((DsaTabPreferenceActivity) getActivity()).startPreferenceFragment(fragment, true);
-				return true;
-			} catch (Exception e) {
-				Debug.error(e);
-			}
-			return false;
-		} else {
-			return handlePreferenceClick(this, preference, preference.getKey(), getPreferenceManager().getSharedPreferences());
-		}
-	}
+    public int getPreferenceResourceId() {
+        return R.xml.preferences;
+    }
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    public boolean onPreferenceTreeClick(Preference preference) {
+        return handlePreferenceClick(this, preference, preference.getKey(), getPreferenceManager().getSharedPreferences());
+    }
 
-		addPreferencesFromResource(getPreferenceResourceId());
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        setPreferencesFromResource(getPreferenceResourceId(), rootKey);
+        initPreferences(getPreferenceManager(), getPreferenceScreen());
 
-		initPreferences(getPreferenceManager(), getPreferenceScreen());
+        for (int i = 0; i < getPreferenceScreen().getPreferenceCount(); i++)
+            initSummary(getPreferenceScreen().getPreference(i));
+    }
 
-		for (int i = 0; i < getPreferenceScreen().getPreferenceCount(); i++)
-			initSummary(getPreferenceScreen().getPreference(i));
-	}
+    private void initSummary(Preference pref) {
+        if (pref instanceof PreferenceScreen) {
+            final PreferenceScreen screen = (PreferenceScreen) pref;
+            for (int i = 0; i < screen.getPreferenceCount(); i++)
+                initSummary(screen.getPreference(i));
+        } else if (pref instanceof PreferenceCategory) {
+            final PreferenceCategory category = (PreferenceCategory) pref;
+            for (int i = 0; i < category.getPreferenceCount(); i++)
+                initSummary(category.getPreference(i));
+        } else
+            updatePrefSummary(pref);
+    }
 
-	private void initSummary(Preference pref) {
-		if (pref instanceof PreferenceScreen) {
-			final PreferenceScreen screen = (PreferenceScreen) pref;
-			for (int i = 0; i < screen.getPreferenceCount(); i++)
-				initSummary(screen.getPreference(i));
-		}
-		else if (pref instanceof PreferenceCategory) {
-			final PreferenceCategory category = (PreferenceCategory) pref;
-			for (int i = 0; i < category.getPreferenceCount(); i++)
-				initSummary(category.getPreference(i));
-		}
-		else
-			updatePrefSummary(pref);
-	}
-
-	private void updatePrefSummary(Preference pref) {
-		if (pref instanceof ListPreference) {
-			final ListPreference list = (ListPreference) pref;
-			pref.setSummary(list.getEntry());
-		}
-		else if (pref instanceof EditTextPreference) {
-			final EditTextPreference edit = (EditTextPreference) pref;
-			if (!pref.getKey().equalsIgnoreCase("editKey"))
-				pref.setSummary(edit.getText());
-		}
-	}
-
-	@Override
-	public void onPause() {
-		getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
-		super.onPause();
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-	}
-
-	@Override
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-		handlePreferenceChange(findPreference(key), sharedPreferences, key);
-		final Preference preference = findPreference(key);
-		if (preference instanceof ListPreference) {
-            preference.setSummary(((ListPreference) preference).getEntry());
-        } else if (preference instanceof  CheckBoxPreference) {
-            CheckBoxPreference checkPreference = (CheckBoxPreference) preference;
-            checkPreference.setChecked(sharedPreferences.getBoolean(key,false));
+    private void updatePrefSummary(Preference pref) {
+        if (pref instanceof ListPreference) {
+            final ListPreference list = (ListPreference) pref;
+            pref.setSummary(list.getEntry());
+        } else if (pref instanceof EditTextPreference) {
+            final EditTextPreference edit = (EditTextPreference) pref;
+            if (!pref.getKey().equalsIgnoreCase("editKey"))
+                pref.setSummary(edit.getText());
         }
-	}
+    }
+
+    @Override
+    public void onPause() {
+        getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        handlePreferenceChange(findPreference(key), sharedPreferences, key);
+        final Preference preference = findPreference(key);
+        if (preference instanceof ListPreference) {
+            preference.setSummary(((ListPreference) preference).getEntry());
+        } else if (preference instanceof CheckBoxPreference) {
+            CheckBoxPreference checkPreference = (CheckBoxPreference) preference;
+            checkPreference.setChecked(sharedPreferences.getBoolean(key, false));
+        }
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -275,18 +253,18 @@ public abstract class BasePreferenceFragment extends PreferenceFragment implemen
     }
 
     public boolean handlePreferenceClick(final BasePreferenceFragment fragment, Preference preference, final String key,
-                                                final SharedPreferences preferences) {
-        DownloaderGinger downloader;
+                                         final SharedPreferences preferences) {
+        Downloader downloader;
         Activity context = fragment.getActivity();
         if (KEY_DOWNLOAD_ALL.equals(key)) {
             cleanCardFiles();
-            downloader = DownloaderGinger.getInstance(DsaTabApplication.getDirectory(), context);
+            downloader = Downloader.getInstance(DsaTabApplication.getDirectory(), context);
             downloader.download(context.getString(R.string.path_items));
             downloader.download(PATH_WESNOTH_PORTRAITS);
             ViewUtils.snackbar(fragment, R.string.message_download_started_in_background, Snackbar.LENGTH_SHORT);
             return true;
         } else if (KEY_DOWNLOAD_MAPS.equals(key)) {
-            downloader = DownloaderGinger.getInstance(DsaTabApplication.getDirectory(DsaTabApplication.DIR_MAPS),
+            downloader = Downloader.getInstance(DsaTabApplication.getDirectory(DsaTabApplication.DIR_MAPS),
                     context);
             downloader.download(PATH_OFFICIAL_MAP_PACK);
 
@@ -294,22 +272,22 @@ public abstract class BasePreferenceFragment extends PreferenceFragment implemen
             return true;
         } else if (KEY_DOWNLOAD_ITEMS.equals(key)) {
             cleanCardFiles();
-            downloader = DownloaderGinger.getInstance(DsaTabApplication.getDirectory(), context);
+            downloader = Downloader.getInstance(DsaTabApplication.getDirectory(), context);
             downloader.download(context.getString(R.string.path_items));
             ViewUtils.snackbar(fragment, R.string.message_download_started_in_background, Snackbar.LENGTH_SHORT);
             return true;
         } else if (KEY_DOWNLOAD_WESNOTH_PORTRAITS.equals(key)) {
-            downloader = DownloaderGinger.getInstance(DsaTabApplication.getDirectory(), context);
+            downloader = Downloader.getInstance(DsaTabApplication.getDirectory(), context);
             downloader.download(PATH_WESNOTH_PORTRAITS);
             ViewUtils.snackbar(fragment, R.string.message_download_started_in_background, Snackbar.LENGTH_SHORT);
             return true;
         } else if (KEY_DOWNLOAD_BACKGROUNDS.equals(key)) {
-            downloader = DownloaderGinger.getInstance(DsaTabApplication.getDirectory(), context);
+            downloader = Downloader.getInstance(DsaTabApplication.getDirectory(), context);
             downloader.download(PATH_BACKGROUNDS);
             ViewUtils.snackbar(fragment, R.string.message_download_started_in_background, Snackbar.LENGTH_SHORT);
             return true;
         } else if (KEY_DOWNLOAD_OSMMAPS.equals(key)) {
-            downloader = DownloaderGinger.getInstance(DsaTabApplication.getDirectory(), context);
+            downloader = Downloader.getInstance(DsaTabApplication.getDirectory(), context);
             downloader.download(PATH_OSM_MAP_PACK);
             ViewUtils.snackbar(fragment, R.string.message_download_started_in_background, Snackbar.LENGTH_SHORT);
             return true;
@@ -340,15 +318,19 @@ public abstract class BasePreferenceFragment extends PreferenceFragment implemen
                  */
                 @Override
                 public void onChooseDirectory(String dir) {
-
-                    File directory = new File(dir);
-                    if (directory.exists() && directory.canWrite()) {
-                        SharedPreferences.Editor edit = preferences.edit();
-                        edit.putString(KEY_SETUP_SDCARD_PATH, dir);
-                        edit.apply();
-                    } else {
-                        ViewUtils.snackbar(fragment, R.string.message_no_write_access_in_directory_choose_another,
+                    if (TextUtils.isEmpty(dir)) {
+                        ViewUtils.snackbar(fragment, R.string.message_no_directory_chosen,
                                 Snackbar.LENGTH_LONG);
+                    } else {
+                        File directory = new File(dir);
+                        if (directory.exists() && directory.canWrite()) {
+                            SharedPreferences.Editor edit = preferences.edit();
+                            edit.putString(KEY_SETUP_SDCARD_PATH, dir);
+                            edit.apply();
+                        } else {
+                            ViewUtils.snackbar(fragment, R.string.message_no_write_access_in_directory_choose_another,
+                                    Snackbar.LENGTH_LONG);
+                        }
                     }
                 }
             };
@@ -366,14 +348,19 @@ public abstract class BasePreferenceFragment extends PreferenceFragment implemen
                  */
                 @Override
                 public void onChooseDirectory(String dir) {
-                    File directory = new File(dir);
-                    if (directory.exists() && directory.canWrite()) {
-                        SharedPreferences.Editor edit = preferences.edit();
-                        edit.putString(KEY_SETUP_SDCARD_HERO_PATH, dir);
-                        edit.apply();
-                    } else {
-                        ViewUtils.snackbar(fragment, R.string.message_no_write_access_in_directory_choose_another,
+                    if (TextUtils.isEmpty(dir)) {
+                        ViewUtils.snackbar(fragment, R.string.message_no_directory_chosen,
                                 Snackbar.LENGTH_LONG);
+                    } else {
+                        File directory = new File(dir);
+                        if (directory.exists() && directory.canWrite()) {
+                            SharedPreferences.Editor edit = preferences.edit();
+                            edit.putString(KEY_SETUP_SDCARD_HERO_PATH, dir);
+                            edit.apply();
+                        } else {
+                            ViewUtils.snackbar(fragment, R.string.message_no_write_access_in_directory_choose_another,
+                                    Snackbar.LENGTH_LONG);
+                        }
                     }
                 }
             };

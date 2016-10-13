@@ -9,6 +9,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -38,7 +39,6 @@ import com.dsatab.util.DsaUtil;
 import com.github.clans.fab.FloatingActionButton;
 import com.h6ah4i.android.widget.advrecyclerview.selectable.RecyclerViewSelectionManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
-import com.wnafee.vector.compat.ResourcesCompat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -218,7 +218,7 @@ public class ItemListFragment extends BaseRecyclerFragment implements CursorRecy
     /*
      * (non-Javadoc)
      *
-     * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+     * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -338,7 +338,7 @@ public class ItemListFragment extends BaseRecyclerFragment implements CursorRecy
             if (filterSet != null) {
                 ItemType[] itemType = ItemType.values();
                 for (int i = 0; i < itemType.length; i++) {
-                    Drawable icon = ResourcesCompat.getDrawable(getActivity(),DsaUtil.getResourceId(itemType[i]));
+                    Drawable icon = VectorDrawableCompat.create(getResources(),DsaUtil.getResourceId(itemType[i]),getActivity().getTheme());
                     MenuItem childItem = filterSet.add(MENU_FILTER_GROUP, i, Menu.NONE, itemType[i].name()).setIcon(icon);
                     childItem.setCheckable(true);
                     childItem.setChecked(itemTypes.contains(itemType[childItem.getItemId()]));
@@ -378,7 +378,7 @@ public class ItemListFragment extends BaseRecyclerFragment implements CursorRecy
     /*
      * (non-Javadoc)
      *
-     * @see android.app.Fragment#onOptionsItemSelected(android.view.MenuItem )
+     * @see android.support.v4.app.Fragment#onOptionsItemSelected(android.view.MenuItem )
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -85,14 +84,13 @@ import com.dsatab.view.ListSettings.ListItemType;
 import com.dsatab.view.listener.EditListener;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
 import com.dsatab.view.listener.OnClickActionListenerDelegate;
-import com.gandulf.guilib.util.FileFileFilter;
+import com.dsatab.util.FileFileFilter;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.h6ah4i.android.widget.advrecyclerview.selectable.RecyclerViewSelectionManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
-import com.wnafee.vector.compat.ResourcesCompat;
 
 import java.io.File;
 import java.io.IOException;
@@ -181,7 +179,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                 mode.getMenuInflater().inflate(R.menu.equipped_item_popupmenu, menu);
             }
 
-            return super.onCreateActionMode(mode,menu);
+            return super.onCreateActionMode(mode, menu);
         }
 
         @Override
@@ -198,9 +196,9 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                 Object obj = adapter.getItem(index);
 
                 if (obj instanceof CustomModificator) {
-                    return ViewUtils.menuIconState(edit,true);
+                    return ViewUtils.menuIconState(edit, true);
                 } else {
-                    return ViewUtils.menuIconState(edit,false);
+                    return ViewUtils.menuIconState(edit, false);
                 }
             }
 
@@ -279,7 +277,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                 mode.getMenuInflater().inflate(R.menu.menuitem_delete, menu);
             }
 
-            return super.onCreateActionMode(mode,menu);
+            return super.onCreateActionMode(mode, menu);
         }
 
         @Override
@@ -296,9 +294,9 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                 Object obj = adapter.getItem(index);
 
                 if (obj instanceof CustomProbe) {
-                    return ViewUtils.menuIconState(edit,true);
+                    return ViewUtils.menuIconState(edit, true);
                 } else {
-                    return ViewUtils.menuIconState(edit,false);
+                    return ViewUtils.menuIconState(edit, false);
                 }
             }
 
@@ -511,7 +509,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             mode.getMenuInflater().inflate(R.menu.equipped_item_popupmenu, menu);
 
-            return super.onCreateActionMode(mode,menu);
+            return super.onCreateActionMode(mode, menu);
         }
 
 
@@ -569,11 +567,11 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                 }
             }
 
-            boolean changed = ViewUtils.menuIconState(menu.findItem(R.id.option_view),selected ==1);
-            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_assign_secondary),selected ==1);
-            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_assign_hunting),selected ==1);
-            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_select_version),selected ==1);
-            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_select_talent),selected ==1);
+            boolean changed = ViewUtils.menuIconState(menu.findItem(R.id.option_view), selected == 1);
+            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_assign_secondary), selected == 1);
+            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_assign_hunting), selected == 1);
+            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_select_version), selected == 1);
+            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_select_talent), selected == 1);
 
             return changed;
         }
@@ -641,7 +639,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
             mode.getMenuInflater().inflate(R.menu.menuitem_edit, menu);
             mode.getMenuInflater().inflate(R.menu.menuitem_mark, menu);
             mode.setTitle("Künste");
-            return super.onCreateActionMode(mode,menu);
+            return super.onCreateActionMode(mode, menu);
         }
 
 
@@ -672,8 +670,8 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
 
             boolean changed = false;
 
-            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_view),selected ==1);
-            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_unmark),marked);
+            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_view), selected == 1);
+            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_unmark), marked);
 
             return changed;
         }
@@ -737,7 +735,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
             mode.getMenuInflater().inflate(R.menu.menuitem_edit, menu);
             mode.getMenuInflater().inflate(R.menu.menuitem_mark, menu);
             mode.setTitle("Zauber");
-            return super.onCreateActionMode(mode,menu);
+            return super.onCreateActionMode(mode, menu);
         }
 
 
@@ -764,8 +762,8 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
             mode.setSubtitle(selected + " ausgewählt");
 
             boolean changed = false;
-            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_view),selected==1);
-            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_unmark),marked);
+            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_view), selected == 1);
+            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_unmark), marked);
 
             return changed;
         }
@@ -826,7 +824,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
             mode.getMenuInflater().inflate(R.menu.menuitem_mark, menu);
             mode.setTitle("Talente");
 
-            return super.onCreateActionMode(mode,menu);
+            return super.onCreateActionMode(mode, menu);
         }
 
 
@@ -858,8 +856,8 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
 
             mode.setSubtitle(selected + " ausgewählt");
 
-            boolean changed = ViewUtils.menuIconState(menu.findItem(R.id.option_unmark),marked);
-            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_edit),!metaTalent && selected == 1);
+            boolean changed = ViewUtils.menuIconState(menu.findItem(R.id.option_unmark), marked);
+            changed |= ViewUtils.menuIconState(menu.findItem(R.id.option_edit), !metaTalent && selected == 1);
 
             return changed;
         }
@@ -917,7 +915,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
             mode.getMenuInflater().inflate(R.menu.menuitem_edit, menu);
             mode.getMenuInflater().inflate(R.menu.menuitem_delete, menu);
             mode.setTitle("Notizen");
-            return super.onCreateActionMode(mode,menu);
+            return super.onCreateActionMode(mode, menu);
         }
 
 
@@ -948,7 +946,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
             }
             mode.setSubtitle(selected + " ausgewählt");
 
-            return ViewUtils.menuIconState(view,allDeletable);
+            return ViewUtils.menuIconState(view, allDeletable);
         }
     }
 
@@ -1035,7 +1033,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                         art.fireValueChangedEvent();
 
                         ViewUtils.snackbar(getActivity(), "Kunstinformationen wurden gespeichert", Snackbar.LENGTH_SHORT)
-                                ;
+                        ;
                     }
                 }
             }
@@ -1064,7 +1062,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                         spell.fireValueChangedEvent();
 
                         ViewUtils.snackbar(getActivity(), "Zauberinformationen wurden gespeichert", Snackbar.LENGTH_SHORT)
-                                ;
+                        ;
 
                     }
                 }
@@ -1118,11 +1116,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
 
                     for (int i = 0; i < eventCategory.length; i++) {
                         MenuItem item = filterSet.add(MENU_FILTER_GROUP, i, Menu.NONE, eventCategory[i].name());
-
-                        if (getActivity()!=null) {
-                            Drawable icon = ResourcesCompat.getDrawable(getActivity(), eventCategory[i].getDrawableId());
-                            item.setIcon(icon);
-                        }
+                        item.setIcon(eventCategory[i].getDrawableId());
                         item.setCheckable(true);
                         item.setChecked(getListSettings().getEventCategories()
                                 .contains(eventCategory[item.getItemId()]));
@@ -1200,18 +1194,22 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                      */
                     @Override
                     public void onChooseDirectory(String dir) {
-
-                        File directory = new File(dir);
-                        if (directory.exists()) {
-                            if (getHero() != null) {
-                                getHero().getHeroConfiguration().setProperty(
-                                        DsaTabPreferenceActivity.KEY_CUSTOM_DIRECTORY + DsaTabPreferenceActivity.DIR_PDFS,
-                                        dir);
-                            }
-                            fillListItems(getHero());
-                        } else {
-                            ViewUtils.snackbar(getActivity(), "Verzeichnis existiert nicht. Wähle bitte ein anderes aus.",
+                        if (TextUtils.isEmpty(dir)) {
+                            ViewUtils.snackbar(getActivity(), R.string.message_no_directory_chosen,
                                     Snackbar.LENGTH_LONG);
+                        } else {
+                            File directory = new File(dir);
+                            if (directory.exists()) {
+                                if (getHero() != null) {
+                                    getHero().getHeroConfiguration().setProperty(
+                                            DsaTabPreferenceActivity.KEY_CUSTOM_DIRECTORY + DsaTabPreferenceActivity.DIR_PDFS,
+                                            dir);
+                                }
+                                fillListItems(getHero());
+                            } else {
+                                ViewUtils.snackbar(getActivity(), "Verzeichnis existiert nicht. Wähle bitte ein anderes aus.",
+                                        Snackbar.LENGTH_LONG);
+                            }
                         }
                     }
                 };
@@ -1279,7 +1277,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
     /*
      * (non-Javadoc)
      *
-     * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+     * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -1345,8 +1343,8 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
         if (getListSettings().hasListItem(ListItemType.Modificator)) {
 
             int index = mAdapter.lastIndexOf(item.getClass());
-            if (index>=0)
-                mAdapter.insert(item,index);
+            if (index >= 0)
+                mAdapter.insert(item, index);
             else
                 mAdapter.add(item);
         }
@@ -1415,7 +1413,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
 
     private void fillListItems(Hero hero) {
         fabMenu.removeAllMenuButtons();
-        int fabItems =0;
+        int fabItems = 0;
         mAdapter.clear();
         if (getListSettings() != null && getListSettings().getListItems() != null) {
             for (ListItem listItem : getListSettings().getListItems()) {
@@ -1529,7 +1527,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                         FloatingActionButton modAdd = new FloatingActionButton(getActivity());
                         modAdd.setColorPressed(getResources().getColor(R.color.white_pressed));
                         modAdd.setColorNormal(getResources().getColor(R.color.white));
-                        modAdd.setImageDrawable(ResourcesCompat.getDrawable(modAdd.getContext(),R.drawable.vd_orb_direction));
+                        modAdd.setImageResource( R.drawable.vd_orb_direction);
                         modAdd.setOnClickListener(new OnClickActionListenerDelegate(ACTION_MODIFICATOR_ADD, this));
                         fabMenu.addMenuButton(modAdd);
                         fabItems++;
@@ -1571,7 +1569,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                                 String path = pdfsDir.getAbsolutePath();
                                 ViewUtils.snackbar(getActivity(),
                                         Util.getText(R.string.message_documents_empty, path).toString(), Snackbar.LENGTH_SHORT)
-                                        ;
+                                ;
                             }
                             for (File file : documents) {
                                 mAdapter.add(new FileListable(file));
@@ -1601,7 +1599,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                         FloatingActionButton notesRecord = new FloatingActionButton(getActivity());
                         notesRecord.setColorPressed(getResources().getColor(R.color.white_pressed));
                         notesRecord.setColorNormal(getResources().getColor(R.color.white));
-                        notesRecord.setImageDrawable(ResourcesCompat.getDrawable(notesRecord.getContext(), R.drawable.vd_nothing_to_say));
+                        notesRecord.setImageResource( R.drawable.vd_nothing_to_say);
                         notesRecord.setOnClickListener(new OnClickActionListenerDelegate(ACTION_NOTES_RECORD, this));
                         fabMenu.addMenuButton(notesRecord);
                         fabItems++;
@@ -1609,7 +1607,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                         FloatingActionButton notesAdd = new FloatingActionButton(getActivity());
                         notesAdd.setColorPressed(getResources().getColor(R.color.white_pressed));
                         notesAdd.setColorNormal(getResources().getColor(R.color.white));
-                        notesAdd.setImageDrawable(ResourcesCompat.getDrawable(notesAdd.getContext(), R.drawable.vd_tied_scroll));
+                        notesAdd.setImageResource( R.drawable.vd_tied_scroll);
                         notesAdd.setOnClickListener(new OnClickActionListenerDelegate(ACTION_NOTES_ADD, this));
                         fabMenu.addMenuButton(notesAdd);
                         fabItems++;
@@ -1642,7 +1640,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                         FloatingActionButton probeAdd = new FloatingActionButton(getActivity());
                         probeAdd.setColorPressed(getResources().getColor(R.color.white_pressed));
                         probeAdd.setColorNormal(getResources().getColor(R.color.white));
-                        probeAdd.setImageDrawable(ResourcesCompat.getDrawable(probeAdd.getContext(), R.drawable.vd_dice_six_faces_two));
+                        probeAdd.setImageResource(R.drawable.vd_dice_six_faces_two);
                         probeAdd.setOnClickListener(new OnClickActionListenerDelegate(ACTION_CUSTOM_PROBE_ADD, this));
                         fabMenu.addMenuButton(probeAdd);
                         fabItems++;
@@ -1653,7 +1651,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
             }
         }
 
-        if (fabItems == 0 ) {
+        if (fabItems == 0) {
             fabMenu.setVisibility(View.GONE);
         } else
             fabMenu.setVisibility(View.VISIBLE);
@@ -1795,7 +1793,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                     } catch (ActivityNotFoundException e) {
                         ViewUtils.snackbar(getActivity(),
                                 "Keine App zum Betrachten von " + file.getName() + " gefunden", Snackbar.LENGTH_SHORT)
-                                ;
+                        ;
                     }
                 }
             } else if (object instanceof Event) {
@@ -1832,7 +1830,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
             RecyclerView.ViewHolder holder = RecyclerViewAdapterUtils.getViewHolder(v);
             mRecyclerViewSelectionManager.setSelected(holder, false);
         } else {
-            super.onItemClicked(adapter, position,v);
+            super.onItemClicked(adapter, position, v);
         }
     }
 

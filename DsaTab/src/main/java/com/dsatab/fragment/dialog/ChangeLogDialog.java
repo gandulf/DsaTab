@@ -1,8 +1,6 @@
 package com.dsatab.fragment.dialog;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -10,13 +8,15 @@ import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.WebView;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
-import com.gandulf.guilib.util.ResUtil;
+import com.dsatab.util.ResUtil;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -40,7 +40,7 @@ import java.io.IOException;
  * limitations under the License.
  *
  */
-public class ChangeLogDialog extends DialogFragment {
+public class ChangeLogDialog extends AppCompatDialogFragment {
 	static final private String TAG = "ChangeLogDialog";
 
     private static  boolean newsShown = false;
@@ -57,10 +57,10 @@ public class ChangeLogDialog extends DialogFragment {
 
 	private String html;
 
-    public static void show(Activity activity) {
+    public static void show(AppCompatActivity activity) {
         show(activity,false);
     }
-	public static void show(Activity activity, boolean forceShow) {
+	public static void show(AppCompatActivity activity, boolean forceShow) {
 		if (activity == null)
 			return;
 
@@ -82,7 +82,7 @@ public class ChangeLogDialog extends DialogFragment {
 		// dialog.setTargetFragment(parent, requestCode);
 
 		if (hasContent && activity != null) {
-			dialog.show(activity.getFragmentManager(), TAG);
+			dialog.show(activity.getSupportFragmentManager(), TAG);
 		}
         newsShown = true;
 	}
@@ -176,7 +176,7 @@ public class ChangeLogDialog extends DialogFragment {
 		String _Result = "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />"
 				+ getStyle() + "</head><body>";
 
-		String summary = ResUtil.loadResToString(R.raw.donate, aResource);
+		String summary = ResUtil.loadResourceIdToString(R.raw.donate, aResource);
 		if (summary != null) {
 			summary = summary.replace("{hs-version}", DsaTabApplication.HS_VERSION);
 			_Result += summary;

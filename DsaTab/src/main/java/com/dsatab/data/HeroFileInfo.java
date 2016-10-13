@@ -71,9 +71,14 @@ public class HeroFileInfo implements JSONable, Serializable {
 		key = json.optString(JSON_KEY);
 		id = json.optString(JSON_ID);
 		version = json.optString(JSON_VERSION);
-		storageType = StorageType.valueOf(json.optString(JSON_STORAGE_TYPE, StorageType.FileSystem.name()));
 
-		if (json.has(JSON_FILE))
+        try {
+            storageType = StorageType.valueOf(json.optString(JSON_STORAGE_TYPE));
+        } catch (IllegalArgumentException e) {
+            storageType = null;
+        }
+
+        if (json.has(JSON_FILE))
 			file = new File(json.optString(JSON_FILE));
 		else
 			file = new File(DsaTabApplication.getHeroDirectory(), getId() + HeroFileInfo.HERO_FILE_EXTENSION);
@@ -90,38 +95,31 @@ public class HeroFileInfo implements JSONable, Serializable {
 
 	}
 
-	public HeroFileInfo(File internalHeroFile, File internalConfigFile, HeroExchange exchange)
+	public HeroFileInfo(File internalHeroFile, HeroExchange exchange)
 			throws IllegalArgumentException {
 
 		storageType = null;
 		file = internalHeroFile;
-		fileConfig = internalConfigFile;
 
-		if (fileConfig == null && file !=null) {
-			fileConfig = new File(file.getAbsolutePath().replace(HERO_FILE_EXTENSION, CONFIG_FILE_EXTENSION));
+		if (file !=null) {
+			fileConfig = new File(file.getParentFile(),file.getName().replace(HERO_FILE_EXTENSION, CONFIG_FILE_EXTENSION));
 		}
 
 		prepare(exchange);
 	}
 
-	public HeroFileInfo(CloudMetaData heroFile, CloudMetaData configFile, StorageType storageType, HeroExchange exchange)
+	public HeroFileInfo(CloudMetaData heroFile, StorageType storageType, HeroExchange exchange)
 			throws IllegalArgumentException {
 
 		this.storageType = storageType;
 
 		remoteHeroId = heroFile.getPath();
-
-		if (configFile != null) {
-			remoteConfigId = configFile.getPath();
-		}
+        remoteConfigId = heroFile.getPath().replace(
+                HERO_FILE_EXTENSION, CONFIG_FILE_EXTENSION);
 
 		file = new File(DsaTabApplication.getHeroDirectory(), heroFile.getName());
-		if (configFile != null) {
-			fileConfig = new File(DsaTabApplication.getHeroDirectory(), configFile.getName());
-		} else {
-			fileConfig = new File(DsaTabApplication.getHeroDirectory(), heroFile.getName().replace(
+		fileConfig = new File(DsaTabApplication.getHeroDirectory(), heroFile.getName().replace(
 					HERO_FILE_EXTENSION, CONFIG_FILE_EXTENSION));
-		}
 
 		prepare(exchange);
 	}
@@ -340,7 +338,7 @@ public class HeroFileInfo implements JSONable, Serializable {
 	}
 
 	public boolean isOnline() {
-		return getStorageType()!=null && getStorageType() != StorageType.FileSystem;
+		return getStorageType()!=null;
 	}
 
 	public boolean isInternal() {

@@ -1,14 +1,14 @@
 package com.dsatab.fragment.dialog;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.dsatab.util.Util;
 import com.dsatab.util.ViewUtils;
-import com.gandulf.guilib.util.DirectoryFileFilter;
+import com.dsatab.util.DirectoryFileFilter;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class DirectoryChooserDialog extends DialogFragment implements AdapterView.OnItemClickListener {
+public class DirectoryChooserDialog extends AppCompatDialogFragment implements AdapterView.OnItemClickListener {
 
 	public static final String TAG = "DirectoryChooserDialogHelper";
 
@@ -63,13 +63,13 @@ public class DirectoryChooserDialog extends DialogFragment implements AdapterVie
 
 			File item = getItem(position);
 
-			if (item.equals(currentDir)) {
+			if (currentDir!=null &&  item.equals(currentDir)) {
 				textview.setText(item.getPath());
 				textview.setCompoundDrawablesWithIntrinsicBounds(
                         ViewUtils.icon(getContext(), MaterialDrawableBuilder.IconValue.FILE)
                         ,
 						null, null, null);
-			} else if (item.equals(currentDir.getParentFile())) {
+			} else if (currentDir!=null && item.equals(currentDir.getParentFile())) {
 				textview.setText("..");
 				textview.setCompoundDrawablesWithIntrinsicBounds(
                         ViewUtils.icon(getContext(), MaterialDrawableBuilder.IconValue.CHEVRON_UP),
@@ -89,17 +89,18 @@ public class DirectoryChooserDialog extends DialogFragment implements AdapterVie
 		adapter.clear();
 
 		// Add the ".." entry and current dir
-		if (currentDir != null)
-			adapter.add(currentDir);
-		if (currentDir.getParent() != null)
-			adapter.add(currentDir.getParentFile());
+		if (currentDir != null) {
+            adapter.add(currentDir);
+            if (currentDir.getParent() != null)
+                adapter.add(currentDir.getParentFile());
 
-		// Get files
-		File[] files = currentDir.listFiles(new DirectoryFileFilter());
-		if (files != null) {
-			Arrays.sort(files, NAMECOMPARATOR);
-			adapter.addAll(files);
-		}
+            // Get files
+            File[] files = currentDir.listFiles(new DirectoryFileFilter());
+            if (files != null) {
+                Arrays.sort(files, NAMECOMPARATOR);
+                adapter.addAll(files);
+            }
+        }
 	}
 
 	public static void show(Fragment parent, String startDir, OnDirectoryChooserListener res, int requestCode) {
@@ -139,7 +140,7 @@ public class DirectoryChooserDialog extends DialogFragment implements AdapterVie
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
 				if (result != null)
-					result.onChooseDirectory(currentDir.getAbsolutePath());
+					result.onChooseDirectory(currentDir!=null ? currentDir.getAbsolutePath(): null);
 				dialog.dismiss();
 			}
 		});

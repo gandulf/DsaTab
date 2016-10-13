@@ -1,10 +1,10 @@
 package com.dsatab.fragment.dialog;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -17,7 +17,7 @@ import com.dsatab.R;
 import com.dsatab.data.adapter.SpinnerSimpleAdapter;
 import com.dsatab.db.DataManager;
 
-public class WebInfoDialog extends DialogFragment implements OnItemSelectedListener {
+public class WebInfoDialog extends AppCompatDialogFragment implements OnItemSelectedListener {
 
 	public static final String TAG = "WebInfoDialog";
 
@@ -31,7 +31,7 @@ public class WebInfoDialog extends DialogFragment implements OnItemSelectedListe
 	private String data;
 
 	public static void show(Fragment parent, CharSequence tag, int requestCode) {
-		DialogFragment dialog = new WebInfoDialog();
+        WebInfoDialog dialog = new WebInfoDialog();
 		Bundle args = new Bundle();
 		if (tag != null) {
 			args.putString(KEY_TAG, tag.toString());

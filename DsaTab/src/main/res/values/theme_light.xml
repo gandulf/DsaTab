@@ -6,11 +6,18 @@
     <style name="DsaTabTheme.Light" parent="Base.DsaTabTheme.Light">
     </style>
 
-    <style name="Base.DsaTabTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- 
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        -->
+
+
+
+
+
+      <style name="Base.DsaTabTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
+          <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+
+          <!--
+          <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+          <item name="android:statusBarColor">@android:color/transparent</item>
+          -->
         <item name="windowActionModeOverlay">true</item>
         <item name="android:windowActionModeOverlay">true</item>
         <item name="android:windowActionBarOverlay">true</item>        

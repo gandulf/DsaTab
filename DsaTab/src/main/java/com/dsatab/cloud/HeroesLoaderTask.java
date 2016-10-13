@@ -5,7 +5,7 @@ import android.content.Context;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.data.HeroFileInfo;
-import com.gandulf.guilib.util.FileFileFilter;
+import com.dsatab.util.FileFileFilter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -70,7 +70,7 @@ public class HeroesLoaderTask extends AsyncTaskLoader<List<HeroFileInfo>> {
             if (files!=null) {
                 for (File file : files) {
                     if (file.getName().toLowerCase(Locale.GERMAN).endsWith(HeroFileInfo.HERO_FILE_EXTENSION)) {
-                        HeroFileInfo heroFileInfo = new HeroFileInfo(file, null, heroExchange);
+                        HeroFileInfo heroFileInfo = new HeroFileInfo(file, heroExchange);
                         HeroFileInfo.merge(fileInfos, heroFileInfo);
                     }
                 }

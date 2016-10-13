@@ -1,11 +1,11 @@
 package com.dsatab.fragment.dialog;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
@@ -21,7 +21,7 @@ import com.dsatab.data.items.Weapon;
 import java.util.Collections;
 import java.util.List;
 
-public class EquippedItemChooserDialog extends DialogFragment implements AdapterView.OnItemClickListener,
+public class EquippedItemChooserDialog extends AppCompatDialogFragment implements AdapterView.OnItemClickListener,
 		DialogInterface.OnClickListener {
 
 	public static final String TAG = "EquippedItemChooserDialog";

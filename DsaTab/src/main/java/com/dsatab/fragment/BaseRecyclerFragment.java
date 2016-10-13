@@ -225,7 +225,7 @@ public abstract class BaseRecyclerFragment extends BaseFragment implements BaseR
     /*
          * (non-Javadoc)
          *
-         * @see android.app.Fragment#setUserVisibleHint(boolean)
+         * @see android.support.v4.app.Fragment#setUserVisibleHint(boolean)
          */
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {

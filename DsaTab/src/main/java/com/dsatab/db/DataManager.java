@@ -13,7 +13,7 @@ import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.items.Item;
 import com.dsatab.data.items.ItemSpecification;
 import com.dsatab.util.Debug;
-import com.gandulf.guilib.util.ResUtil;
+import com.dsatab.util.ResUtil;
 import com.j256.ormlite.android.AndroidCompiledStatement;
 import com.j256.ormlite.dao.Dao.CreateOrUpdateStatus;
 import com.j256.ormlite.dao.GenericRawResults;

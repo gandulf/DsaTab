@@ -4,7 +4,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.0'
+        classpath 'com.android.tools.build:gradle:2.2.1'
     }
 }
 
@@ -32,6 +32,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:recyclerview-v7:24.2.1'
     compile 'com.android.support:gridlayout-v7:24.2.1'
+    compile 'com.android.support:preference-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
     compile 'com.android.support:multidex:1.0.1'
 
@@ -100,11 +101,11 @@ android {
         minSdkVersion 15
         targetSdkVersion 24
 
-        versionName "4.5"
-        versionCode 110
+        versionName "4.5.2"
+        versionCode 112
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        //generatedDensities = []
+
         vectorDrawables.useSupportLibrary = true
     }
 

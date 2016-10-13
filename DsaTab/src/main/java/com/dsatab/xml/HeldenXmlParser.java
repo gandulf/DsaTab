@@ -1678,10 +1678,9 @@ public class HeldenXmlParser {
 					iter.remove();
 				}
 			} else {
-
+                //TODO BUG somehow items are duplicated here on save
 				Item item = hero.getItem(itemElement.getAttributeValue(Xml.KEY_NAME),
 						itemElement.getAttributeValue(Xml.KEY_SLOT));
-
 				if (item != null) {
 					allItems.remove(item);
 					writeItem(item, itemElement);
@@ -1691,7 +1690,6 @@ public class HeldenXmlParser {
 					iter.remove();
 				}
 			}
-
 		}
 
 		for (Item newItem : allItems) {

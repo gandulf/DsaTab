@@ -1,11 +1,11 @@
 package com.dsatab.fragment.dialog;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
@@ -18,7 +18,7 @@ import com.dsatab.data.CombatMeleeTalent;
 import com.dsatab.data.Value;
 import com.dsatab.util.Util;
 
-public class InlineEditFightDialog extends DialogFragment implements android.content.DialogInterface.OnClickListener,
+public class InlineEditFightDialog extends AppCompatDialogFragment implements android.content.DialogInterface.OnClickListener,
 		OnValueChangeListener {
 
 	public static final String TAG = "InlineEditFightDialog";

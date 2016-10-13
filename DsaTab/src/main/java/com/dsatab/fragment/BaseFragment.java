@@ -1,10 +1,11 @@
 package com.dsatab.fragment;
 
-import android.app.Fragment;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -85,7 +86,7 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.app.Fragment#onResume()
+	 * @see android.support.v4.app.Fragment#onResume()
 	 */
 	@Override
 	public void onResume() {
@@ -156,7 +157,7 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.app.Fragment#onDestroyView()
+	 * @see android.support.v4.app.Fragment#onDestroyView()
 	 */
 	@Override
 	public void onDestroyView() {
@@ -182,7 +183,7 @@ public abstract class BaseFragment extends Fragment implements HeroChangedListen
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.app.Fragment#onActivityCreated(android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
 	 */
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {

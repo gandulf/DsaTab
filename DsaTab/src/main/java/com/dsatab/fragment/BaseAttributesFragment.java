@@ -24,7 +24,7 @@ public abstract class BaseAttributesFragment extends BaseFragment {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.app.Fragment#onViewCreated(android.view.View, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onViewCreated(android.view.View, android.os.Bundle)
 	 */
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {

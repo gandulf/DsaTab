@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import com.dsatab.R;
-import com.wnafee.vector.compat.ResourcesCompat;
 
 import java.util.List;
 
@@ -45,7 +44,7 @@ public class TabIconAdapter extends ArrayAdapter<Integer> {
 		}
 		view.setFocusable(false);
 		view.setClickable(false);
-		view.setImageDrawable(ResourcesCompat.getDrawable(parent.getContext(),getItem(position)));
+		view.setImageResource(getItem(position));
 		return view;
 	}
 

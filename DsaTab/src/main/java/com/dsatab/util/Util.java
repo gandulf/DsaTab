@@ -1,7 +1,7 @@
 package com.dsatab.util;
 
 import android.app.Activity;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;

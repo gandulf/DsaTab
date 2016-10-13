@@ -91,7 +91,7 @@ public class HeroLoaderTask extends AsyncTaskLoader<Hero> {
 			hero = HeldenXmlParser.readHero(getContext(), fileInfo, fis, fisConfig);
 			if (hero != null) {
 				Editor editor = preferences.edit();
-				editor.putString(DsaTabActivity.PREF_LAST_HERO, hero.getFileInfo().toJSONObject().toString());
+				editor.putString(DsaTabActivity.PREF_LAST_HERO, hero.getFileInfo().getPath(FileType.Hero));
 				editor.apply();
 				// Debug.verbose("Stored path of current hero in prefs:" +
 				// hero.getPath());

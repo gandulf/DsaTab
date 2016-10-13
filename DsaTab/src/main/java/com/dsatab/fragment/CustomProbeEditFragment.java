@@ -1,6 +1,6 @@
 package com.dsatab.fragment;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -24,7 +24,7 @@ import com.dsatab.data.adapter.SpinnerSimpleAdapter;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 import com.dsatab.fragment.dialog.ImageChooserDialog;
 import com.dsatab.util.Util;
-import com.gandulf.guilib.util.ResUtil;
+import com.dsatab.util.ResUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -71,7 +71,7 @@ public class CustomProbeEditFragment extends BaseEditFragment implements OnClick
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

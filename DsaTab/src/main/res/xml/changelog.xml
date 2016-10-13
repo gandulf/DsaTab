@@ -1,5 +1,17 @@
 
 <changelog>
+    <release version="4.5.2" versioncode="112">
+        <fix>Fehler beim Wiederherstellen der App</fix>
+        <change>Einstellungen auf neues Framework von Google umgestellt</change>
+        <change>Wechsel zur nativen Vektorgrafik-Unterstützung</change>
+        <change>Anzahl von Gegenständen kann nun bearbeiten werden</change>
+    </release>
+
+    <release version="4.5.1" versioncode="111">
+        <fix>Cloud Synchronisation kann nun wieder aufgehoben werden</fix>
+        <fix>Fehler beim Löschen von Helden ohne Cloud Synchonisation</fix>
+    </release>
+
     <release version="4.5" versioncode="110">
         <fix>Cloud Synchronisation komplett überarbeitet</fix>
         <fix>Fehlende Ritualkenntnise,Zauber,Talente hinzugefügt</fix>

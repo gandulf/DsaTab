@@ -4,8 +4,8 @@ import android.content.Context;
 import android.support.v7.widget.AppCompatImageButton;
 import android.util.AttributeSet;
 
-import com.gandulf.guilib.listener.CheckableListenable;
-import com.gandulf.guilib.listener.OnCheckedChangeListener;
+import com.franlopez.flipcheckbox.CheckableListenable;
+import com.franlopez.flipcheckbox.OnCheckedChangeListener;
 
 public class CheckableImageButton extends AppCompatImageButton implements CheckableListenable {
 	boolean mChecked = false;

@@ -31,7 +31,7 @@ public class ItemsActivity extends BaseItemActivity implements OnItemSelectedLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_items);
 
-        itemListFragment = (ItemListFragment) getFragmentManager().findFragmentById(R.id.fragment_item_list);
+        itemListFragment = (ItemListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_item_list);
 
         Object itemType = getIntent().getSerializableExtra(INTENT_EXTRA_ITEM_TYPES);
         if (itemType instanceof ItemType) {
@@ -49,7 +49,7 @@ public class ItemsActivity extends BaseItemActivity implements OnItemSelectedLis
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        itemViewFragment =(ItemViewFragment) getFragmentManager().findFragmentById(R.id.fragment_item_view);
+        itemViewFragment =(ItemViewFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_item_view);
 
     }
 

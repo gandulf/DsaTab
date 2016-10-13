@@ -6,8 +6,8 @@ import android.widget.CheckBox;
 import android.widget.Checkable;
 
 import com.dsatab.R;
-import com.gandulf.guilib.listener.CheckableListenable;
-import com.gandulf.guilib.listener.OnCheckedChangeListener;
+import com.franlopez.flipcheckbox.CheckableListenable;
+import com.franlopez.flipcheckbox.OnCheckedChangeListener;
 import com.h6ah4i.android.widget.advrecyclerview.selectable.SelectableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.selectable.SelectableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableSwipeableSelectableItemViewHolder;

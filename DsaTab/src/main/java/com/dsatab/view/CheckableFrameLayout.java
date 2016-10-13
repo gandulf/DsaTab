@@ -5,8 +5,8 @@ import android.util.AttributeSet;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 
-import com.gandulf.guilib.listener.CheckableListenable;
-import com.gandulf.guilib.listener.OnCheckedChangeListener;
+import com.franlopez.flipcheckbox.CheckableListenable;
+import com.franlopez.flipcheckbox.OnCheckedChangeListener;
 import com.h6ah4i.android.widget.advrecyclerview.selectable.CheckableState;
 
 public class CheckableFrameLayout extends FrameLayout implements CheckableListenable, CheckableState {

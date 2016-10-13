@@ -1,14 +1,14 @@
 package com.dsatab.view;
 
 import android.content.Context;
-import android.preference.Preference;
+import android.support.v7.preference.PreferenceViewHolder;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.dsatab.R;
 
-public class PreferenceWithButton extends Preference {
+public class PreferenceWithButton extends android.support.v7.preference.Preference {
 
 	private View mView;
 
@@ -31,26 +31,20 @@ public class PreferenceWithButton extends Preference {
 		setWidgetLayoutResource(R.layout.widget_delete_button);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.preference.Preference#onBindView(android.view.View)
-	 */
-	@Override
-	@SuppressWarnings("WrongConstant")
-	protected void onBindView(View view) {
-		super.onBindView(view);
+    @Override
+    public void onBindViewHolder(PreferenceViewHolder holder) {
+        super.onBindViewHolder(holder);
 
-		mView = view.findViewById(R.id.pref_btn);
-		if (mView != null) {
-			mView.setOnClickListener(buttonClickListener);
-			mView.setFocusable(false);
-			mView.setTag(this);
-			mView.setVisibility(widgetVisibility);
-		}
-	}
+        mView = holder.findViewById(R.id.pref_btn);
+        if (mView != null) {
+            mView.setOnClickListener(buttonClickListener);
+            mView.setFocusable(false);
+            mView.setTag(this);
+            mView.setVisibility(widgetVisibility);
+        }
+    }
 
-	public View getButton() {
+    public View getButton() {
 		return mView;
 	}
 

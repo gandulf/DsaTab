@@ -1,15 +1,15 @@
 package com.dsatab.fragment.dialog;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.graphics.drawable.NinePatchDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,8 +25,8 @@ import com.dsatab.data.adapter.BaseRecyclerAdapter;
 import com.dsatab.data.adapter.ListRecyclerAdapter;
 import com.dsatab.util.Util;
 import com.dsatab.view.AutofitRecyclerView;
-import com.gandulf.guilib.util.FileFileFilter;
-import com.gandulf.guilib.util.ResUtil;
+import com.dsatab.util.FileFileFilter;
+import com.dsatab.util.ResUtil;
 import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
 
@@ -34,7 +34,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImageChooserDialog extends DialogFragment implements ListRecyclerAdapter.EventListener {
+public class ImageChooserDialog extends AppCompatDialogFragment implements ListRecyclerAdapter.EventListener {
 
 	public static final String TAG = "ImageChooserDialog";
 

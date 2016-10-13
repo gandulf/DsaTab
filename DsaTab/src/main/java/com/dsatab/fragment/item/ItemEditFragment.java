@@ -33,9 +33,8 @@ import com.dsatab.util.DsaUtil;
 import com.dsatab.util.Util;
 import com.dsatab.view.CardView;
 import com.dsatab.view.ItemListItem;
-import com.gandulf.guilib.util.DefaultTextWatcher;
-import com.gandulf.guilib.util.ResUtil;
-import com.wnafee.vector.compat.ResourcesCompat;
+import com.dsatab.util.DefaultTextWatcher;
+import com.dsatab.util.ResUtil;
 
 import java.util.UUID;
 
@@ -50,7 +49,7 @@ public class ItemEditFragment extends BaseEditFragment implements OnClickListene
     private CardView imageView;
     private ItemListItem itemView;
 
-    private EditText nameView, titleView, priceView, weightView;
+    private EditText nameView, titleView, priceView, weightView, countView;
     private ImageView iconView;
     private CheckBox imageTextOverlayView;
     private Spinner categorySpn;
@@ -113,7 +112,7 @@ public class ItemEditFragment extends BaseEditFragment implements OnClickListene
     /*
          * (non-Javadoc)
          *
-         * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+         * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
          */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -149,6 +148,7 @@ public class ItemEditFragment extends BaseEditFragment implements OnClickListene
 
         priceView = (EditText) root.findViewById(R.id.popup_edit_price);
         weightView = (EditText) root.findViewById(R.id.popup_edit_weight);
+        countView = (EditText) root.findViewById(R.id.popup_edit_count);
         iconView = (ImageView) root.findViewById(R.id.popup_edit_icon);
         iconView.setOnClickListener(this);
 
@@ -197,7 +197,7 @@ public class ItemEditFragment extends BaseEditFragment implements OnClickListene
     /*
      * (non-Javadoc)
      *
-     * @see android.app.Fragment#onActivityResult(int, int, android.content.Intent)
+     * @see android.support.v4.app.Fragment#onActivityResult(int, int, android.content.Intent)
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -226,7 +226,7 @@ public class ItemEditFragment extends BaseEditFragment implements OnClickListene
                 if (cloneItem.getIconUri() != null) {
                     iconView.setImageDrawable(ResUtil.getDrawableByUri(iconView.getContext(),cloneItem.getIconUri()));
                 } else if (itemSpecification != null) {
-                    iconView.setImageDrawable(ResourcesCompat.getDrawable(iconView.getContext(),DsaUtil.getResourceId(itemSpecification)));
+                    iconView.setImageResource(DsaUtil.getResourceId(itemSpecification));
                 }
             }
             if (nameView != null) {
@@ -246,6 +246,9 @@ public class ItemEditFragment extends BaseEditFragment implements OnClickListene
             }
             if (weightView != null && cloneItem.getWeight() > 0.0f) {
                 weightView.setText(Util.toString(cloneItem.getWeight()));
+            }
+            if (countView != null && cloneItem.getCount() > 0) {
+                countView.setText(Util.toString(cloneItem.getCount()));
             }
             if (categorySpn != null) {
                 categorySpn.setSelection(categoryAdapter.getPosition(cloneItem.getCategory()));
@@ -271,6 +274,7 @@ public class ItemEditFragment extends BaseEditFragment implements OnClickListene
         origItem.setTitle(titleView.getText().toString());
         origItem.setPrice(Util.parseInt(priceView.getText().toString(), 0));
         origItem.setWeight(Util.parseFloat(weightView.getText().toString(), 0.0f));
+        origItem.setCount(Util.parseInt(countView.getText().toString(), 0));
         origItem.setIconUri(cloneItem.getIconUri());
         origItem.setImageUri(cloneItem.getImageUri());
         origItem.setCategory((String) categorySpn.getSelectedItem());
@@ -309,7 +313,7 @@ public class ItemEditFragment extends BaseEditFragment implements OnClickListene
                     if (cloneItem.getIconUri() != null)
                         iconView.setImageDrawable(ResUtil.getDrawableByUri(iconView.getContext(), cloneItem.getIconUri()));
                     else
-                        iconView.setImageDrawable(ResourcesCompat.getDrawable(iconView.getContext(), DsaUtil.getResourceId(itemSpecification)));
+                        iconView.setImageResource(DsaUtil.getResourceId(itemSpecification));
                 }
             }
         }, 0);

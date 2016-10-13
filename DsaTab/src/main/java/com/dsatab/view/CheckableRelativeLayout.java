@@ -6,8 +6,8 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
-import com.gandulf.guilib.listener.CheckableListenable;
-import com.gandulf.guilib.listener.OnCheckedChangeListener;
+import com.franlopez.flipcheckbox.CheckableListenable;
+import com.franlopez.flipcheckbox.OnCheckedChangeListener;
 import com.h6ah4i.android.widget.advrecyclerview.selectable.CheckableState;
 
 public class CheckableRelativeLayout extends RelativeLayout implements CheckableListenable,CheckableState {

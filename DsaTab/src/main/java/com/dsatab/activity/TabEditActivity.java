@@ -92,9 +92,9 @@ public class TabEditActivity extends BaseActivity implements TabListFragment.Tab
             return;
         }
 
-        editFragment1 = (TabEditFragment) getFragmentManager().findFragmentById(R.id.fragment_tab_edit1);
-        editFragment2 = (TabEditFragment) getFragmentManager().findFragmentById(R.id.fragment_tab_edit2);
-        listFragment = (TabListFragment) getFragmentManager().findFragmentById(R.id.fragment_tab_list);
+        editFragment1 = (TabEditFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_tab_edit1);
+        editFragment2 = (TabEditFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_tab_edit2);
+        listFragment = (TabListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_tab_list);
         listFragment.setTabListListener(this);
         int tabIndex = 0;
         if (getIntent() != null) {
@@ -214,7 +214,7 @@ public class TabEditActivity extends BaseActivity implements TabListFragment.Tab
     /*
      * (non-Javadoc)
      *
-     * @see android.app.FragmentActivity#onBackPressed()
+     * @see android.support.v4.app.FragmentActivity#onBackPressed()
      */
     @Override
     public void onBackPressed() {

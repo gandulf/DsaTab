@@ -131,7 +131,11 @@ public class HeroConfiguration {
 		int version = in.optInt(FIELD_VERSION);
 
         if (in.has(FIELD_STORAGE_TYPE)) {
-            storageType = HeroExchange.StorageType.valueOf(in.optString(FIELD_STORAGE_TYPE));
+            try {
+                storageType = HeroExchange.StorageType.valueOf(in.optString(FIELD_STORAGE_TYPE));
+            } catch (IllegalArgumentException e) {
+                storageType = null;
+            }
         }
         storageHeroId = in.optString(FIELD_STORAGE_HERO_ID,null);
         storageConfigId = in.optString(FIELD_STORAGE_CONFIG_ID,null);

@@ -75,7 +75,7 @@ public class BaseActivity extends AppCompatActivity implements SharedPreferences
     /*
      * (non-Javadoc)
      *
-     * @see android.app.FragmentActivity#onPostCreate(android.os.Bundle)
+     * @see android.support.v4.app.FragmentActivity#onPostCreate(android.os.Bundle)
      */
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
