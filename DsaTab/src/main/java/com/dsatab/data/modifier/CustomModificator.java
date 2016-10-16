@@ -176,7 +176,7 @@ public class CustomModificator extends AbstractModificator implements JSONable {
                             // errors.append(token);
                             // }
                         } catch (Exception e) {
-                            Debug.warning("Couldn't parse string for modifikators:" + token);
+                            Debug.w("Couldn't parse string for modifikators:" + token);
                             if (errors.length() > 0)
                                 errors.append(", ");
 

@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -17,7 +18,6 @@ import com.dsatab.R;
 import com.dsatab.util.Hint;
 import com.dsatab.util.Util;
 import com.dsatab.util.ViewUtils;
-import com.github.clans.fab.FloatingActionButton;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 

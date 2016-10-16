@@ -151,9 +151,9 @@ public class Hint {
 				eventType = xpp.next();
 			}
 		} catch (XmlPullParserException e) {
-			Debug.error(e);
+			Debug.e(e);
 		} catch (IOException e) {
-			Debug.error(e);
+			Debug.e(e);
 		}
 	}
 

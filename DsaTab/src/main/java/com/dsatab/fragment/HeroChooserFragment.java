@@ -107,7 +107,7 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
                 switch (item.getItemId()) {
                     case R.id.option_delete:
                         if (heroInfo.isDeletable()) {
-                            Debug.verbose("Deleting " + heroInfo.getName());
+                            Debug.v("Deleting " + heroInfo.getName());
                             HeroExchange.getInstance().delete(heroInfo, new HeroExchange.CloudResult<Boolean>() {
                                 @Override
                                 public void onSuccess(Boolean result) {
@@ -140,7 +140,7 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
                                 });
                             }
                         } catch (Exception e) {
-                            Debug.error(e);
+                            Debug.e(e);
                         }
                         break;
                     case R.id.option_upload:
@@ -158,7 +158,7 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
                                 }
                             });
                         } catch (Exception e) {
-                            Debug.error(e);
+                            Debug.e(e);
                         }
                         break;
                 }
@@ -329,9 +329,9 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
                 fos.write(buffer, 0, length);
             }
         } catch (FileNotFoundException e) {
-            Debug.error(e);
+            Debug.e(e);
         } catch (IOException e) {
-            Debug.error(e);
+            Debug.e(e);
         } finally {
             Util.close(fos);
             Util.close(fis);
@@ -385,7 +385,7 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
                             Snackbar.LENGTH_SHORT);
                 } else {
                     ViewUtils.snackbar(getActivity(), R.string.download_error, Snackbar.LENGTH_SHORT);
-                    Debug.error(e);
+                    Debug.e(e);
                 }
             }
             for (HeroFileInfo fileInfo : heroes) {
@@ -403,7 +403,7 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
 
             for (Exception e : heroLoader.getExceptions()) {
                 ViewUtils.snackbar(getActivity(), R.string.download_error, Snackbar.LENGTH_SHORT);
-                Debug.error(e);
+                Debug.e(e);
             }
             adapter.clear();
             adapter.addAll(heroes);
@@ -477,17 +477,19 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
     }
 
     protected  void refresh() {
-        Nammu.askForPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
-            @Override
-            public void permissionGranted() {
-                refresh(REMOTE_LOADER);
-            }
+        if (getActivity()!=null) {
+            Nammu.askForPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
+                @Override
+                public void permissionGranted() {
+                    refresh(REMOTE_LOADER);
+                }
 
-            @Override
-            public void permissionRefused() {
-                ViewUtils.snackbar(getActivity(),"Keine Berechtigung um Helden auf SD-Karte zu speichern.");
-            }
-        });
+                @Override
+                public void permissionRefused() {
+                    ViewUtils.snackbar(getActivity(), "Keine Berechtigung um Helden auf SD-Karte zu speichern.");
+                }
+            });
+        }
     }
 
     @Override

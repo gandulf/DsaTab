@@ -6,11 +6,6 @@
     <style name="DsaTabTheme.Light" parent="Base.DsaTabTheme.Light">
     </style>
 
-
-
-
-
-
       <style name="Base.DsaTabTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
           <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
 
@@ -74,12 +69,8 @@
 
         <item name="listItemBackground">@drawable/list_background</item>
         <item name="slidingPaneShadowBackground">@drawable/slider_shadow</item>
- 
-        <item name="floatingHintEditTextStyle">@style/FloatingHintEditText</item>
-        <item name="floatingHintTextViewStyle">@style/FloatingHintTextView</item>
 
-        <item name="floatingActionButtonStyle">@style/FloatingActionButton</item>
-        <item name="floatingActionMenuStyle">@style/FloatingActionMenu</item>
+        <item name="floatingHintTextViewStyle">@style/FloatingHintTextView</item>
 
         <item name="flipCheckBoxStyle">@style/FlipCheckBoxStyle.Dsa</item>
         <item name="flipFrontImageStyle">@style/FlipFrontImageStyle</item>

@@ -1,8 +1,8 @@
 package com.dsatab.fragment;
 
-import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -119,7 +119,7 @@ public class SpellInfoFragment extends BaseEditFragment {
 					bundle.putInt(DATA_INTENT_SPELL_VALUE, value);
 				}
 			} catch (NumberFormatException e) {
-				Debug.error(e);
+				Debug.e(e);
 			}
 		}
 
@@ -240,22 +240,22 @@ public class SpellInfoFragment extends BaseEditFragment {
 				numberPicker.setEnabled(edit);
 			}
 
-			edit(R.id.popup_spell_castduration, R.id.popup_spell_castduration_edit, spell.getCastDurationDetailed(),
+			edit(R.id.popup_spell_castduration, R.id.popup_spell_castduration_edit,R.id.popup_spell_castduration_layout, spell.getCastDurationDetailed(),
 					edit);
-			edit(R.id.popup_spell_costs, R.id.popup_spell_costs_edit, spell.getCosts(), edit);
-			edit(R.id.popup_spell_effect, R.id.popup_spell_effect_edit, spell.getEffect(), edit);
-			edit(R.id.popup_spell_target, R.id.popup_spell_target_edit, spell.getTargetDetailed(), edit);
-			edit(R.id.popup_spell_range, R.id.popup_spell_range_edit, spell.getRangeDetailed(), edit);
-			edit(R.id.popup_spell_effectduration, R.id.popup_spell_effectduration_edit, spell.getEffectDuration(), edit);
-			edit(R.id.popup_spell_representation, R.id.popup_spell_representation_edit, spell.getRepresentation(), edit);
-			edit(R.id.popup_spell_source, R.id.popup_spell_source_edit, spell.getSource(), edit);
-			edit(R.id.popup_spell_complexity, R.id.popup_spell_complexity_edit, spell.getComplexity(), edit);
-			edit(R.id.popup_spell_merkmal, R.id.popup_spell_merkmal_edit, spell.getMerkmale(), edit);
+			edit(R.id.popup_spell_costs, R.id.popup_spell_costs_edit,R.id.popup_spell_costs_layout, spell.getCosts(), edit);
+			edit(R.id.popup_spell_effect, R.id.popup_spell_effect_edit,R.id.popup_spell_effect_layout, spell.getEffect(), edit);
+			edit(R.id.popup_spell_target, R.id.popup_spell_target_edit,R.id.popup_spell_target_layout,  spell.getTargetDetailed(), edit);
+			edit(R.id.popup_spell_range, R.id.popup_spell_range_edit,R.id.popup_spell_range_layout, spell.getRangeDetailed(), edit);
+			edit(R.id.popup_spell_effectduration, R.id.popup_spell_effectduration_edit,R.id.popup_spell_effectduration_layout, spell.getEffectDuration(), edit);
+			edit(R.id.popup_spell_representation, R.id.popup_spell_representation_edit,R.id.popup_spell_representation_layout, spell.getRepresentation(), edit);
+			edit(R.id.popup_spell_source, R.id.popup_spell_source_edit, R.id.popup_spell_source_layout, spell.getSource(), edit);
+			edit(R.id.popup_spell_complexity, R.id.popup_spell_complexity_edit,R.id.popup_spell_complexity_layout, spell.getComplexity(), edit);
+			edit(R.id.popup_spell_merkmal, R.id.popup_spell_merkmal_edit,R.id.popup_spell_merkmal_layout, spell.getMerkmale(), edit);
 
-			edit(R.id.popup_spell_comment, R.id.popup_spell_comment_edit, comments, edit);
-			edit(R.id.popup_spell_variant, R.id.popup_spell_variant_edit, variant, edit);
+			edit(R.id.popup_spell_comment, R.id.popup_spell_comment_edit,R.id.popup_spell_comment_layout, comments, edit);
+			edit(R.id.popup_spell_variant, R.id.popup_spell_variant_edit,R.id.popup_spell_variant_layout, variant, edit);
 
-			edit(R.id.popup_spell_probe, R.id.popup_spell_probe_edit, spell.getProbe(), edit);
+			edit(R.id.popup_spell_probe, R.id.popup_spell_probe_edit, R.id.popup_spell_probe_layout, spell.getProbe(), edit);
 		}
 	}
 
@@ -270,16 +270,17 @@ public class SpellInfoFragment extends BaseEditFragment {
 		return ((EditText) popupcontent.findViewById(etid)).getText().toString();
 	}
 
-	private void edit(int tfid, int etid, String v, boolean edit) {
+	private void edit(int tfid, int etid,int layoutId, String v, boolean edit) {
 		int editVisibility = edit ? View.VISIBLE : View.GONE;
 		int viewVisibility = edit ? View.GONE : View.VISIBLE;
 
 		TextView tf = (TextView) popupcontent.findViewById(tfid);
 		TextView et = (TextView) popupcontent.findViewById(etid);
+        ViewGroup layout = (ViewGroup) popupcontent.findViewById(layoutId);
 
 		if (tf != null && et != null) {
 			tf.setVisibility(viewVisibility);
-			et.setVisibility(editVisibility);
+			layout.setVisibility(editVisibility);
 
 			et.setText(v);
 			tf.setText(v);

@@ -58,7 +58,7 @@ public class ResUtil {
 
 			return data;
 		} catch (Exception e) {
-			com.gandulf.guilib.util.Debug.error(e);
+			Debug.e(e);
 			return null;
 		}
 
@@ -89,7 +89,7 @@ public class ResUtil {
 
 			return data;
 		} catch (Exception e) {
-			com.gandulf.guilib.util.Debug.error(e);
+			Debug.e(e);
 			return null;
 		}
 
@@ -106,7 +106,7 @@ public class ResUtil {
 					OpenResourceIdResult resourceId = getResourceId(context, mUri);
                     d = VectorDrawableCompat.create(context.getResources(),resourceId.id,context.getTheme());
 				} catch (Exception e) {
-					com.gandulf.guilib.util.Debug.warning("Unable to open content: " + mUri, e);
+					Debug.w("Unable to open content: " + mUri, e);
 				}
 			} else if (ContentResolver.SCHEME_CONTENT.equals(scheme) || ContentResolver.SCHEME_FILE.equals(scheme)) {
 				try {
@@ -115,16 +115,16 @@ public class ResUtil {
 						uri = uri.replace("file:/", "file:///");
 					}
 
-					d = Drawable.createFromStream(context.getContentResolver().openInputStream(Uri.parse(uri)), null);
+					d = VectorDrawableCompat.createFromStream(context.getContentResolver().openInputStream(Uri.parse(uri)), null);
 				} catch (Exception e) {
-					com.gandulf.guilib.util.Debug.warning("Unable to open content: " + mUri, e);
+					Debug.w("Unable to open content: " + mUri, e);
 				}
 			} else {
-				d = Drawable.createFromPath(mUri.toString());
+				d = VectorDrawableCompat.createFromPath(mUri.toString());
 			}
 
 			if (d == null) {
-				com.gandulf.guilib.util.Debug.verbose("resolveUri failed on bad uri: " + mUri);
+				Debug.v("resolveUri failed on bad uri: " + mUri);
 			}
 		}
 

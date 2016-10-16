@@ -76,17 +76,17 @@ import com.dsatab.fragment.dialog.DirectoryChooserDialog;
 import com.dsatab.fragment.dialog.DirectoryChooserDialog.OnDirectoryChooserListener;
 import com.dsatab.fragment.dialog.EquippedItemChooserDialog;
 import com.dsatab.util.Debug;
+import com.dsatab.util.FileFileFilter;
 import com.dsatab.util.Util;
 import com.dsatab.util.ViewUtils;
+import com.dsatab.view.FABToolbarHelper;
 import com.dsatab.view.ListSettings;
 import com.dsatab.view.ListSettings.ListItem;
 import com.dsatab.view.ListSettings.ListItemType;
 import com.dsatab.view.listener.EditListener;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
 import com.dsatab.view.listener.OnClickActionListenerDelegate;
-import com.dsatab.util.FileFileFilter;
-import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
+import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
 import com.h6ah4i.android.widget.advrecyclerview.selectable.RecyclerViewSelectionManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
@@ -111,7 +111,8 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
 
     private ListableItemAdapter mAdapter;
 
-    private FloatingActionMenu fabMenu;
+    private FABToolbarLayout fabToolbar;
+    private FABToolbarHelper fabToolbarHelper;
 
     protected static final class ModifierActionMode extends BaseListableActionMode<ListableFragment> {
 
@@ -364,13 +365,13 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                                         // secondary item existed
                                         if (equippedSecondaryWeapon.getSecondaryItem() != null
                                                 && equippedSecondaryWeapon.getSecondaryItem().getSecondaryItem() != null) {
-                                            Debug.verbose("Removing old weapon sec item "
+                                            Debug.v("Removing old weapon sec item "
                                                     + equippedSecondaryWeapon.getSecondaryItem());
                                             equippedSecondaryWeapon.getSecondaryItem().setSecondaryItem(null);
                                         }
                                         if (equippedPrimaryWeapon.getSecondaryItem() != null
                                                 && equippedPrimaryWeapon.getSecondaryItem().getSecondaryItem() != null) {
-                                            Debug.verbose("Removing old shield sec item "
+                                            Debug.v("Removing old shield sec item "
                                                     + equippedSecondaryWeapon.getSecondaryItem());
                                             equippedPrimaryWeapon.getSecondaryItem().setSecondaryItem(null);
                                         }
@@ -1152,11 +1153,10 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                 }
             }
         }
-
     }
 
     public boolean onAction(int actionId) {
-        fabMenu.close(true);
+        fabToolbar.hide();
 
         switch (actionId) {
             case ACTION_NOTES_RECORD: {
@@ -1284,7 +1284,8 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
         View root = configureContainerView(inflater.inflate(R.layout.sheet_list, container, false));
 
         recyclerView = (RecyclerView) root.findViewById(android.R.id.list);
-        fabMenu = (FloatingActionMenu) root.findViewById(R.id.fab_menu);
+        fabToolbar = (FABToolbarLayout) root.findViewById(R.id.fabtoolbar);
+        fabToolbarHelper = new FABToolbarHelper(fabToolbar);
 
         return root;
     }
@@ -1412,7 +1413,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
     }
 
     private void fillListItems(Hero hero) {
-        fabMenu.removeAllMenuButtons();
+        fabToolbarHelper.removeAllViews();
         int fabItems = 0;
         mAdapter.clear();
         if (getListSettings() != null && getListSettings().getListItems() != null) {
@@ -1497,7 +1498,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
 
                                 }
                             } catch (IllegalArgumentException e) {
-                                Debug.error(e);
+                                Debug.e(e);
                             }
                         }
                         break;
@@ -1523,13 +1524,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                         } else {
                             mAdapter.add(hero.getUserModificators(listItem.getName()));
                         }
-
-                        FloatingActionButton modAdd = new FloatingActionButton(getActivity());
-                        modAdd.setColorPressed(getResources().getColor(R.color.white_pressed));
-                        modAdd.setColorNormal(getResources().getColor(R.color.white));
-                        modAdd.setImageResource( R.drawable.vd_orb_direction);
-                        modAdd.setOnClickListener(new OnClickActionListenerDelegate(ACTION_MODIFICATOR_ADD, this));
-                        fabMenu.addMenuButton(modAdd);
+                        fabToolbarHelper.addToolbarItem(R.drawable.vd_orb_direction, new OnClickActionListenerDelegate(ACTION_MODIFICATOR_ADD, this));
                         fabItems++;
 
                         break;
@@ -1596,20 +1591,10 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                             }
                         }
 
-                        FloatingActionButton notesRecord = new FloatingActionButton(getActivity());
-                        notesRecord.setColorPressed(getResources().getColor(R.color.white_pressed));
-                        notesRecord.setColorNormal(getResources().getColor(R.color.white));
-                        notesRecord.setImageResource( R.drawable.vd_nothing_to_say);
-                        notesRecord.setOnClickListener(new OnClickActionListenerDelegate(ACTION_NOTES_RECORD, this));
-                        fabMenu.addMenuButton(notesRecord);
+                        fabToolbarHelper.addToolbarItem(R.drawable.vd_nothing_to_say, new OnClickActionListenerDelegate(ACTION_NOTES_RECORD, this));
                         fabItems++;
 
-                        FloatingActionButton notesAdd = new FloatingActionButton(getActivity());
-                        notesAdd.setColorPressed(getResources().getColor(R.color.white_pressed));
-                        notesAdd.setColorNormal(getResources().getColor(R.color.white));
-                        notesAdd.setImageResource( R.drawable.vd_tied_scroll);
-                        notesAdd.setOnClickListener(new OnClickActionListenerDelegate(ACTION_NOTES_ADD, this));
-                        fabMenu.addMenuButton(notesAdd);
+                        fabToolbarHelper.addToolbarItem(R.drawable.vd_tied_scroll, new OnClickActionListenerDelegate(ACTION_NOTES_ADD, this));
                         fabItems++;
                         // mAdapter.add(new FooterListItem(ListItemType.Notes));
                         break;
@@ -1636,15 +1621,8 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                                 mAdapter.add(probe);
                             }
                         }
-
-                        FloatingActionButton probeAdd = new FloatingActionButton(getActivity());
-                        probeAdd.setColorPressed(getResources().getColor(R.color.white_pressed));
-                        probeAdd.setColorNormal(getResources().getColor(R.color.white));
-                        probeAdd.setImageResource(R.drawable.vd_dice_six_faces_two);
-                        probeAdd.setOnClickListener(new OnClickActionListenerDelegate(ACTION_CUSTOM_PROBE_ADD, this));
-                        fabMenu.addMenuButton(probeAdd);
+                        fabToolbarHelper.addToolbarItem(R.drawable.vd_dice_six_faces_two, new OnClickActionListenerDelegate(ACTION_CUSTOM_PROBE_ADD, this));
                         fabItems++;
-
                         break;
                 }
 
@@ -1652,9 +1630,9 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
         }
 
         if (fabItems == 0) {
-            fabMenu.setVisibility(View.GONE);
+            fabToolbar.setVisibility(View.GONE);
         } else
-            fabMenu.setVisibility(View.VISIBLE);
+            fabToolbar.setVisibility(View.VISIBLE);
     }
 
     private void recordEvent() {
@@ -1685,7 +1663,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                         try {
                             mediaRecorder.stop();
                         } catch (IllegalStateException e) {
-                            Debug.warning("Couldn't stop mediaRecorder something went wrong.", e);
+                            Debug.w("Couldn't stop mediaRecorder something went wrong.", e);
                         } finally {
                             mediaRecorder.reset();
                         }
@@ -1708,7 +1686,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                         try {
                             mediaRecorder.stop();
                         } catch (IllegalStateException e) {
-                            Debug.warning("Couldn't stop mediaRecorder something went wrong.", e);
+                            Debug.w("Couldn't stop mediaRecorder something went wrong.", e);
                         } finally {
                             mediaRecorder.reset();
                         }
@@ -1730,9 +1708,9 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
             });
 
         } catch (IllegalStateException e) {
-            Debug.error(e);
+            Debug.e(e);
         } catch (IOException e) {
-            Debug.error(e);
+            Debug.e(e);
         }
     }
 
@@ -1818,11 +1796,11 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                             }
                         });
                     } catch (IllegalArgumentException e) {
-                        Debug.error(e);
+                        Debug.e(e);
                     } catch (IllegalStateException e) {
-                        Debug.error(e);
+                        Debug.e(e);
                     } catch (IOException e) {
-                        Debug.error(e);
+                        Debug.e(e);
                     }
 
                 }

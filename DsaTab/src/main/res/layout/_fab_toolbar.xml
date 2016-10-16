@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout android:id="@+id/fabtoolbar"
+                                                       xmlns:android="http://schemas.android.com/apk/res/android"
+                                                       xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                       android:layout_width="match_parent"
+                                                       android:layout_height="match_parent"
+                                                       app:containerId="@+id/fabtoolbar_container"
+                                                       app:fabId="@+id/fabtoolbar_fab"
+                                                       app:fabToolbarId="@+id/fabtoolbar_toolbar"
+                                                       app:fadeInFraction="0.2"
+                                                       app:hideDuration="200"
+                                                       app:horizontalMargin="30dp"
+                                                       app:showDuration="600"
+                                                       app:verticalMargin="30dp">
+
+    <RelativeLayout
+        android:id="@+id/fabtoolbar_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabtoolbar_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/ic_add_white_24px"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/fabtoolbar_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+    </LinearLayout>
+
+</com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout>

@@ -65,7 +65,7 @@ public class BitmapTileSource extends BitmapTileSourceBase {
 			}
 
 		} catch (final OutOfMemoryError e) {
-			Debug.error("OutOfMemoryError loading bitmap");
+			Debug.e("OutOfMemoryError loading bitmap");
 			System.gc();
 		}
 		return null;
@@ -81,10 +81,10 @@ public class BitmapTileSource extends BitmapTileSourceBase {
 				return new BitmapDrawable(DsaTabApplication.getInstance().getResources(), bitmap);
 			} else {
 				// if we couldn't load it then it's invalid - delete it
-				Debug.error("Error loading bitmap " + aFilePath);
+				Debug.e("Error loading bitmap " + aFilePath);
 			}
 		} catch (final OutOfMemoryError e) {
-			Debug.error("OutOfMemoryError loading bitmap: " + aFilePath);
+			Debug.e("OutOfMemoryError loading bitmap: " + aFilePath);
 			System.gc();
 		}
 		return null;

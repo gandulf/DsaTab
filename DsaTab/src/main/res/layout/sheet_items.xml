@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.dsatab.view.CheckableFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                       xmlns:app="http://schemas.android.com/apk/res-auto"
-                                      xmlns:tools="http://schemas.android.com/tools"
                                       android:layout_width="fill_parent"
                                       android:layout_height="fill_parent">
 
     <android.support.design.widget.TabLayout
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="top"
         android:background="@color/primary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:tabGravity="fill"
         app:tabIndicatorColor="@color/colorAccent"
         app:tabMode="fixed"/>
@@ -39,30 +38,11 @@
         </TextView>
     </FrameLayout>
 
-    <com.github.clans.fab.FloatingActionMenu
-        android:id="@+id/fab_menu"
-        style="?attr/floatingActionMenuStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp">
+    <include
+        android:id="@+id/fabtoolbar"
+        layout="@layout/_fab_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_items_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:src="@drawable/vd_battle_gear"
-            app:fab_colorNormal="@color/white"
-            app:fab_colorPressed="@color/white_pressed"/>
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_container_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:src="@drawable/vd_swap_bag"
-            app:fab_colorNormal="@color/white"
-            app:fab_colorPressed="@color/white_pressed"/>
-    </com.github.clans.fab.FloatingActionMenu>
 
 </com.dsatab.view.CheckableFrameLayout>

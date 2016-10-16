@@ -14,9 +14,9 @@ import com.dsatab.fragment.CharacterFragment;
 import com.dsatab.fragment.ItemsFragment;
 import com.dsatab.fragment.ListableFragment;
 import com.dsatab.fragment.MapFragment;
+import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.dsatab.view.ListSettings;
-import com.gandulf.guilib.util.Debug;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -531,7 +531,7 @@ public class TabInfo implements Parcelable, JSONable, Cloneable {
         try {
             return (TabInfo) super.clone();
         } catch (CloneNotSupportedException e) {
-            Debug.error(e);
+            Debug.e(e);
             return null;
         }
     }

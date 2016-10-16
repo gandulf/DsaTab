@@ -1,14 +1,14 @@
 package com.dsatab.activity;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
 import com.dsatab.R;
 import com.dsatab.fragment.EditFragment;
-import com.gandulf.guilib.util.Debug;
+import com.dsatab.util.Debug;
 
 public class BaseEditActivity extends BaseActivity {
 
@@ -58,12 +58,12 @@ public class BaseEditActivity extends BaseActivity {
 
             }
         } catch (InstantiationException e) {
-            Debug.error(e);
+            Debug.e(e);
             setResult(RESULT_CANCELED);
             finish();
             return;
         } catch (IllegalAccessException e) {
-            Debug.error(e);
+            Debug.e(e);
             setResult(RESULT_CANCELED);
             finish();
             return;

@@ -52,10 +52,10 @@ public class Dice {
 					dice.constant = Util.parseInteger(s);
 				}
 			} catch (IllegalStateException e) {
-				Debug.error("unable to parse " + tp, e);
+				Debug.e("unable to parse " + tp, e);
 				return null;
 			} catch (NumberFormatException e) {
-				Debug.error("unable to parse " + tp, e);
+				Debug.e("unable to parse " + tp, e);
 				return null;
 			}
 		}

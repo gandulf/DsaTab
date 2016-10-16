@@ -66,9 +66,9 @@ public class HeroLoaderTask extends AsyncTaskLoader<Hero> {
 	public Hero loadInBackground() {
 		exception = null;
 
-		// Debug.verbose("Getting hero from " + path);
+		// Debug.v("Getting hero from " + path);
 		if (fileInfo == null) {
-			Debug.error("Error: fileInfo was null ");
+			Debug.e("Error: fileInfo was null ");
 			return null;
 		}
 
@@ -79,7 +79,7 @@ public class HeroLoaderTask extends AsyncTaskLoader<Hero> {
 		try {
 			fis = exchange.getInputStream(fileInfo, FileType.Hero);
 			if (fis == null) {
-				Debug.error("Error: Hero file not found at " + fileInfo);
+				Debug.e("Error: Hero file not found at " + fileInfo);
 				throw new FileNotFoundException(fileInfo.toString());
 			}
 
@@ -93,22 +93,22 @@ public class HeroLoaderTask extends AsyncTaskLoader<Hero> {
 				Editor editor = preferences.edit();
 				editor.putString(DsaTabActivity.PREF_LAST_HERO, hero.getFileInfo().getPath(FileType.Hero));
 				editor.apply();
-				// Debug.verbose("Stored path of current hero in prefs:" +
+				// Debug.v("Stored path of current hero in prefs:" +
 				// hero.getPath());
-				// Debug.verbose("Hero successfully loaded and return hero: " +
+				// Debug.v("Hero successfully loaded and return hero: " +
 				// hero.getName());
 			} else {
-				Debug.error("Hero could not be parsed, was null after XmlParserNew.readHero.");
+				Debug.e("Hero could not be parsed, was null after XmlParserNew.readHero.");
 			}
 
 			return hero;
 		} catch (Exception e) {
-			// clear last hero since loading resulted in an error
+			// clear last hero since loading resulted in an e
 			Editor editor = preferences.edit();
 			editor.remove(DsaTabActivity.PREF_LAST_HERO);
 			editor.apply();
 			exception = e;
-			Debug.error(e);
+			Debug.e(e);
 			return null;
 		} finally {
 			Util.close(fis);

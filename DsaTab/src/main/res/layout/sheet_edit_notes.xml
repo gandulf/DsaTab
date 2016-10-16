@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:auto="http://schemas.android.com/apk/res-auto"
-    xmlns:guilib="http://schemas.android.com/apk/com.gandulf.guilib"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:padding="@dimen/default_gap" >
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:padding="@dimen/default_gap">
 
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:columnCount="1"
         android:orientation="vertical"
-        android:useDefaultMargins="true" >
+        android:useDefaultMargins="true">
 
         <TextView
             android:id="@+id/popup_notes_spn_category_label"
@@ -20,42 +18,62 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:labelFor="@+id/popup_notes_spn_category"
-            android:text="@string/label_category" />
+            android:text="@string/label_category"/>
 
         <Spinner
             android:id="@+id/popup_notes_spn_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
             android:layout_gravity="fill_horizontal"
-            android:paddingTop="0dp" >
+            android:layout_marginTop="0dp"
+            android:paddingTop="0dp">
         </Spinner>
 
-        <com.thebnich.floatinghintedittext.FloatingHintEditText
-            android:id="@+id/popup_notes_edit_name"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/label_name"
-            android:inputType="textPersonName" >
-        </com.thebnich.floatinghintedittext.FloatingHintEditText>
+            android:layout_height="wrap_content">
 
-        <com.thebnich.floatinghintedittext.FloatingHintEditText
-            android:id="@+id/popup_notes_edit_so"
+            <EditText
+                android:id="@+id/popup_notes_edit_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/label_name"
+                android:inputType="textPersonName">
+            </EditText>
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_so"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/label_social_state"
-            android:inputType="number" >
-        </com.thebnich.floatinghintedittext.FloatingHintEditText>
+            android:layout_height="wrap_content">
 
-        <com.thebnich.floatinghintedittext.FloatingHintEditText
-            android:id="@+id/popup_notes_edit_text"
+            <EditText
+                android:id="@+id/popup_notes_edit_so"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/label_social_state"
+                android:inputType="number">
+
+            </EditText>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_notes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="fill"
-            android:gravity="top"
-            android:hint="@string/label_note"
-            android:inputType="text|textMultiLine"
-            android:minHeight="50dip" />
+            android:gravity="top">
+
+            <EditText
+                android:id="@+id/popup_notes_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/label_note"
+                android:inputType="text|textMultiLine"
+                android:minHeight="50dip"/>
+        </android.support.design.widget.TextInputLayout>
     </GridLayout>
 
 </ScrollView>

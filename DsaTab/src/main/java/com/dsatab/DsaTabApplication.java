@@ -211,9 +211,9 @@ public class DsaTabApplication extends MultiDexApplication {
 					edit.putString(DsaTabPreferenceActivity.KEY_EXCHANGE_TOKEN, tokenValue.trim());
 				}
 			} catch (FileNotFoundException e) {
-				Debug.error(e);
+				Debug.e(e);
 			} catch (IOException e) {
-				Debug.error(e);
+				Debug.e(e);
 			}
 		}
 

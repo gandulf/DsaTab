@@ -71,7 +71,7 @@ public class ItemListItem extends CheckableRelativeLayout {
 	public void setItem(Item e) {
 		if (e != null) {
 			if (e.getSpecifications().isEmpty()) {
-				Debug.error("Item without spec found " + e.getName());
+				Debug.e("Item without spec found " + e.getName());
 				setItem(e, null);
 			} else {
 				setItem(e, e.getSpecifications().get(0));

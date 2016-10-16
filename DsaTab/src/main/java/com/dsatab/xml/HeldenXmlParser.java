@@ -112,7 +112,7 @@ public class HeldenXmlParser {
 		org.jdom2.Document dom = saxBuilder.build(is);
 
 		if (dom == null) {
-			Debug.error("Error: DOM was null.");
+			Debug.e("Error: DOM was null.");
 		}
 
 		return dom;
@@ -143,7 +143,7 @@ public class HeldenXmlParser {
 
 		hero = new Hero(fileInfo);
 
-		// Debug.verbose("Hero successfully parsed");
+		// Debug.v("Hero successfully parsed");
 		HeroConfiguration configuration = null;
 		if (configIn != null) {
 			String data = Util.slurp(configIn, 1024);
@@ -170,36 +170,36 @@ public class HeldenXmlParser {
 		Element freeXpElement = DomUtil.getChildByTagName(heroElement, Xml.KEY_BASIS, Xml.KEY_FREIE_ABENTEUERPUNKTE);
 		hero.getFreeExperience().setValue(Util.parseInteger(freeXpElement.getAttributeValue(Xml.KEY_VALUE)));
 
-		Debug.verbose("--- fillArtsAndSpecialFeatures");
+		Debug.v("--- fillArtsAndSpecialFeatures");
 		fillArtsAndSpecialFeatures(hero, heroElement);
-		Debug.verbose("--- fillAdvantages");
+		Debug.v("--- fillAdvantages");
 
 		// has to be done before attributes because vollzauber features have a effect on astralenergie
 		fillAdvantages(hero, heroElement);
 
-		Debug.verbose("--- fillAttributes");
+		Debug.v("--- fillAttributes");
 		fillAttributes(hero, heroElement);
 
 		Element basisElement = heroElement.getChild(Xml.KEY_BASIS);
 		if (basisElement == null)
 			basisElement = heroElement;
-		Debug.verbose("--- fillBaseInfo");
+		Debug.v("--- fillBaseInfo");
 		fillBaseInfo(hero, basisElement);
 
-		Debug.verbose("--- fillTalents");
+		Debug.v("--- fillTalents");
 		fillTalents(hero, heroElement);
-		Debug.verbose("--- fillSpells");
+		Debug.v("--- fillSpells");
 		fillSpells(hero, heroElement);
 
-		Debug.verbose("--- fillItems");
+		Debug.v("--- fillItems");
 		fillItems(hero, heroElement);
-		Debug.verbose("--- fillEquippedItems");
+		Debug.v("--- fillEquippedItems");
 		fillEquippedItems(hero, heroElement);
 		fillPurse(hero, heroElement);
 		fillEvents(hero, heroElement);
 		fillConnections(hero, heroElement);
 		fillComments(hero, heroElement);
-		Debug.verbose("--- onPostHeroLoaded");
+		Debug.v("--- onPostHeroLoaded");
 		hero.onPostHeroLoaded(context);
 
 		Debug.TRACE = false;
@@ -730,7 +730,7 @@ public class HeldenXmlParser {
 						feature.setComment(kommentar.getAttributeValue(Xml.KEY_KOMMENTAR));
 					}
 				} catch (FeatureTypeUnknownException e) {
-					Debug.warning(e);
+					Debug.w(e);
 					// heldensofteare comments add values to key which makes it hard so find, so we just ignore them for
 					// now
 
@@ -916,7 +916,7 @@ public class HeldenXmlParser {
 					item1.setBeidhändigerKampf(true);
 					item2.setBeidhändigerKampf(true);
 				} else {
-					Debug.warning("Incorrect BeidhaendigerKampf setting " + bk);
+					Debug.w("Incorrect BeidhaendigerKampf setting " + bk);
 					heroElement.removeContent(element);
 					iter.remove();
 				}
@@ -961,7 +961,7 @@ public class HeldenXmlParser {
 				if (item != null) {
 					item = item.duplicate();
 				} else {
-					Debug.warning("Item not found generating it:" + element.getAttributeValue(Xml.KEY_NAME));
+					Debug.w("Item not found generating it:" + element.getAttributeValue(Xml.KEY_NAME));
 
 					item = new Item();
 					item.setName(element.getAttributeValue(Xml.KEY_NAME));
@@ -1263,7 +1263,7 @@ public class HeldenXmlParser {
                 hero.addTalent(talent);
 
             } catch (TalentTypeUnknownException e) {
-                Debug.error(e);
+                Debug.e(e);
             }
 		}
 
@@ -1271,7 +1271,7 @@ public class HeldenXmlParser {
 		for (Element combatElement : combatAttributesList) {
 
 			String talentName = combatElement.getAttributeValue(Xml.KEY_NAME);
-			Debug.warning("Adding missing CombatTalent:" + talentName);
+			Debug.w("Adding missing CombatTalent:" + talentName);
 			//
 			List<Element> nodes = combatElement.getChildren();
 			CombatMeleeAttribute at = null, pa = null;
@@ -1448,7 +1448,7 @@ public class HeldenXmlParser {
 	 * 
 	 */
 	public static void onPreHeroSaved(Hero hero, Element heldElement) {
-		Debug.verbose("Preparing hero to be saved. Populating data to XML.");
+		Debug.v("Preparing hero to be saved. Populating data to XML.");
 
 		Element equippmentNode = getEquippmentElement(heldElement);
 		Element itemsNode = getItemElement(heldElement);
@@ -1473,9 +1473,9 @@ public class HeldenXmlParser {
 
 			if (attribute != null) {
 				writeAttribute(hero, hero, attribute, attributeElement);
-				Debug.trace("Xml popuplate attr " + attributeElement);
+				Debug.d("Xml popuplate attr " + attributeElement);
 			} else {
-				Debug.trace("Xml popuplate attr not found " + attributeElement);
+				Debug.d("Xml popuplate attr not found " + attributeElement);
 			}
 		}
 
@@ -1486,12 +1486,12 @@ public class HeldenXmlParser {
 				Talent talent = hero.getTalent(talentElement.getAttributeValue(Xml.KEY_NAME));
 				if (talent != null) {
 					writeTalent(hero, talent, talentElement);
-					Debug.trace("Xml popuplate talent " + talentElement);
+					Debug.d("Xml popuplate talent " + talentElement);
 				} else {
-					Debug.trace("Xml popuplate talent not found " + talentElement);
+					Debug.d("Xml popuplate talent not found " + talentElement);
 				}
 			} catch (TalentTypeUnknownException e) {
-				Debug.error("Skipping talent since it's unknown " + talentElement, e);
+				Debug.e("Skipping talent since it's unknown " + talentElement, e);
 			}
 		}
 
@@ -1505,12 +1505,12 @@ public class HeldenXmlParser {
 						.getAttributeValue(Xml.KEY_NAME));
 				if (combatTalent != null) {
 					writeCombatTalent(hero, combatTalent, combatTalentElement);
-					Debug.trace("Xml popuplate combattalent " + combatTalentElement);
+					Debug.d("Xml popuplate combattalent " + combatTalentElement);
 				} else {
-					Debug.trace("Xml popuplate combattalent not found " + combatTalentElement);
+					Debug.d("Xml popuplate combattalent not found " + combatTalentElement);
 				}
 			} catch (TalentTypeUnknownException e) {
-				Debug.error("Skipping combattalent since it's unknown " + combatTalentElement, e);
+				Debug.e("Skipping combattalent since it's unknown " + combatTalentElement, e);
 			}
 		}
 
@@ -1520,9 +1520,9 @@ public class HeldenXmlParser {
 			Spell spell = hero.getSpell(spellElement.getAttributeValue(Xml.KEY_NAME));
 			if (spell != null) {
 				writeSpell(hero, spell, spellElement);
-				Debug.trace("Xml popuplate spell " + spellElement);
+				Debug.d("Xml popuplate spell " + spellElement);
 			} else {
-				Debug.trace("Xml popuplate spell not found " + spellElement);
+				Debug.d("Xml popuplate spell not found " + spellElement);
 			}
 
 		}
@@ -1533,16 +1533,16 @@ public class HeldenXmlParser {
 			Art art = hero.getArt(Art.normalizeName(sf.getAttributeValue(Xml.KEY_NAME)));
 			if (art != null) {
 				writeArt(art, sf);
-				Debug.trace("Xml popuplate art " + sf);
+				Debug.d("Xml popuplate art " + sf);
 			} else {
-				Debug.trace("Xml popuplate art not found " + sf);
+				Debug.d("Xml popuplate art not found " + sf);
 			}
 		}
 
 		Element purseElement = heldElement.getChild(Xml.KEY_GELDBOERSE);
 		if (purseElement != null) {
 			writePurse(hero.getPurse(), purseElement);
-			Debug.trace("Xml popuplate purse " + purseElement);
+			Debug.d("Xml popuplate purse " + purseElement);
 		}
 
 		if (hero.getExperience() != null) {
@@ -1553,7 +1553,7 @@ public class HeldenXmlParser {
 			} else
 				experienceElement.removeAttribute(Xml.KEY_VALUE);
 
-			Debug.trace("Xml popuplate xp " + experienceElement);
+			Debug.d("Xml popuplate xp " + experienceElement);
 		}
 
 		if (hero.getFreeExperience() != null) {
@@ -1565,7 +1565,7 @@ public class HeldenXmlParser {
 			} else
 				freeExperienceElement.removeAttribute(Xml.KEY_VALUE);
 
-			Debug.trace("Xml popuplate free xp " + freeExperienceElement);
+			Debug.d("Xml popuplate free xp " + freeExperienceElement);
 		}
 
 		List<Element> equippedElements = equippmentNode.getChildren(Xml.KEY_HELDENAUSRUESTUNG);
@@ -1592,9 +1592,9 @@ public class HeldenXmlParser {
 			if (equippedItem != null) {
 				allEquippedItems.remove(equippedItem);
 				writeEquippedItem(hero, equippedItem, itemElement);
-				Debug.trace("Xml popuplate equippeditem " + itemElement);
+				Debug.d("Xml popuplate equippeditem " + itemElement);
 			} else {
-				Debug.trace("Xml popuplate NO EQUIPPED ITEM found, removing it: " + itemElement);
+				Debug.d("Xml popuplate NO EQUIPPED ITEM found, removing it: " + itemElement);
 				iter.remove();
 			}
 		}
@@ -1672,9 +1672,9 @@ public class HeldenXmlParser {
 				if (animal != null) {
 					allAnimals.remove(animal);
 					writeAnimal(hero, animal, itemElement);
-					Debug.trace("Xml popuplate animal " + itemElement);
+					Debug.d("Xml popuplate animal " + itemElement);
 				} else {
-					Debug.trace("Xml popuplate NO ANIMAL found remove it " + itemElement);
+					Debug.d("Xml popuplate NO ANIMAL found remove it " + itemElement);
 					iter.remove();
 				}
 			} else {
@@ -1684,9 +1684,9 @@ public class HeldenXmlParser {
 				if (item != null) {
 					allItems.remove(item);
 					writeItem(item, itemElement);
-					Debug.trace("Xml popuplate item " + itemElement);
+					Debug.d("Xml popuplate item " + itemElement);
 				} else {
-					Debug.trace("Xml popuplate NO ITEM found remove it " + itemElement);
+					Debug.d("Xml popuplate NO ITEM found remove it " + itemElement);
 					iter.remove();
 				}
 			}
@@ -1893,7 +1893,7 @@ public class HeldenXmlParser {
 			writeAttribute(hero, animal,
 					animal.getAttribute(AttributeType.valueOfTrim(attribute.getAttributeValue(Xml.KEY_NAME))),
 					attribute);
-			Debug.verbose("Xml popuplate animal attr " + attribute);
+			Debug.v("Xml popuplate animal attr " + attribute);
 		}
 
 	}

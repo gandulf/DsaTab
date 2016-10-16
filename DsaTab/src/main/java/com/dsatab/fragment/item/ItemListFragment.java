@@ -9,6 +9,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 
 import com.dsatab.R;
@@ -35,8 +37,8 @@ import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.items.Item;
 import com.dsatab.db.DataManager;
 import com.dsatab.fragment.BaseRecyclerFragment;
+import com.dsatab.util.Debug;
 import com.dsatab.util.DsaUtil;
-import com.github.clans.fab.FloatingActionButton;
 import com.h6ah4i.android.widget.advrecyclerview.selectable.RecyclerViewSelectionManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
@@ -46,6 +48,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+
+import static com.dsatab.db.DataManager.getItemsCursor;
 
 public class ItemListFragment extends BaseRecyclerFragment implements CursorRecyclerAdapter.EventListener, LoaderCallbacks<Cursor> {
 
@@ -284,7 +288,16 @@ public class ItemListFragment extends BaseRecyclerFragment implements CursorRecy
         menuItem.setTitle(android.R.string.search_go);
 
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
-        final ItemCursorAdapter searchViewCursorAdapter = new ItemCursorAdapter(searchView.getContext(), DataManager.getItemsCursor(constraint, itemTypes, category));
+        final ItemCursorAdapter searchViewCursorAdapter = new ItemCursorAdapter(searchView.getContext(), getItemsCursor(constraint, itemTypes, category),0);
+
+        searchViewCursorAdapter.setFilterQueryProvider(new FilterQueryProvider() {
+
+            public Cursor runQuery(CharSequence constraint) {
+                Debug.v( "runQuery constraint:"+constraint);
+                return DataManager.getItemsCursor(constraint, itemTypes, category);
+            }
+
+        });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -303,8 +316,9 @@ public class ItemListFragment extends BaseRecyclerFragment implements CursorRecy
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                constraint = DataManager.likify(newText, true);
-                searchViewCursorAdapter.changeCursor(DataManager.getItemsCursor(constraint, itemTypes, category));
+                if (searchViewCursorAdapter!=null) {
+                    searchViewCursorAdapter.getFilter().filter(constraint);
+                }
                 return false;
             }
         });

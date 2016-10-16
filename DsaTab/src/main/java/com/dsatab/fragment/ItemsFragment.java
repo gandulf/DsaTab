@@ -38,12 +38,12 @@ import com.dsatab.data.items.ItemContainer;
 import com.dsatab.db.DataManager;
 import com.dsatab.util.Debug;
 import com.dsatab.util.DsaUtil;
+import com.dsatab.util.ResUtil;
 import com.dsatab.util.Util;
 import com.dsatab.util.ViewUtils;
+import com.dsatab.view.FABToolbarHelper;
 import com.dsatab.view.listener.HeroInventoryChangedListener;
-import com.dsatab.util.ResUtil;
-import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
+import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
 import com.h6ah4i.android.widget.advrecyclerview.selectable.RecyclerViewSelectionManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
@@ -78,7 +78,8 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
 
     private EquippedItemRecyclerAdapter itemsAdapter;
 
-    private FloatingActionMenu fabMenu;
+    private FABToolbarLayout fabToolbar;
+    private FABToolbarHelper fabToolbarHelper;
 
     private int mCurrentContainerId = INVALID_SET;
     private String mScreenType = TYPE_LIST;
@@ -395,14 +396,6 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.fab_container_add:
-                ItemContainerEditFragment.insert(this);
-                fabMenu.close(true);
-                break;
-            case R.id.fab_items_add:
-                showItemPopup();
-                fabMenu.close(true);
-                break;
             case android.R.id.empty:
                 // do not remove tab in itemsfragment
                 break;
@@ -518,15 +511,24 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
 
         recyclerView = (RecyclerView) root.findViewById(android.R.id.list);
 
-        fabMenu = (FloatingActionMenu) root.findViewById(R.id.fab_menu);
+        fabToolbar = (FABToolbarLayout) root.findViewById(R.id.fabtoolbar);
+        fabToolbarHelper = new FABToolbarHelper(fabToolbar);
 
-        FloatingActionButton fabContainer = (FloatingActionButton) root.findViewById(R.id.fab_container_add);
-        fabContainer.setOnClickListener(this);
-        fabContainer.setImageResource(R.drawable.vd_swap_bag);
+        fabToolbarHelper.addToolbarItem(R.drawable.vd_swap_bag, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ItemContainerEditFragment.insert(ItemsFragment.this);
+                fabToolbar.hide();
+            }
+        });
 
-        FloatingActionButton fabBag = (FloatingActionButton) root.findViewById(R.id.fab_items_add);
-        fabBag.setOnClickListener(this);
-        fabBag.setImageResource(R.drawable.vd_battle_gear);
+        fabToolbarHelper.addToolbarItem(R.drawable.vd_battle_gear, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showItemPopup();
+                fabToolbar.hide();
+            }
+        });
 
         return root;
     }
@@ -660,7 +662,7 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void showScreen(int containerId) {
-        Debug.trace("Show screen id:" + containerId);
+        Debug.d("Show screen id:" + containerId);
 
         updateScreenType();
 
@@ -702,7 +704,7 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
      */
     @Override
     public void onItemAdded(Item item) {
-        Debug.trace("onItemAdded " + item);
+        Debug.d("onItemAdded " + item);
         if (item.getContainerId() == mCurrentContainerId) {
             // skip items that are equippable since they will be equipped using
             // a onItemEquipped Event. this would cause duplicates
@@ -722,7 +724,7 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
      */
     @Override
     public void onItemChanged(EquippedItem item) {
-        Debug.trace("onItemChanged " + item);
+        Debug.d("onItemChanged " + item);
         if (item.getSet() == mCurrentContainerId) {
             // itemsAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
             // itemListAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
@@ -736,7 +738,7 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
      */
     @Override
     public void onItemChanged(Item item) {
-        Debug.trace("onItemChanged " + item);
+        Debug.d("onItemChanged " + item);
         if (item.getContainerId() == mCurrentContainerId) {
             // itemsAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
             // itemListAdapter.sort(ItemCard.CELL_NUMBER_COMPARATOR);
@@ -750,7 +752,7 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
      */
     @Override
     public void onItemRemoved(Item item) {
-        Debug.trace("onItemRemoved " + item);
+        Debug.d("onItemRemoved " + item);
         if (item.getContainerId() == mCurrentContainerId) {
             itemsAdapter.remove(item);
 
@@ -765,7 +767,7 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
      */
     @Override
     public void onItemEquipped(EquippedItem item) {
-        Debug.trace("onItemEquipped " + item);
+        Debug.d("onItemEquipped " + item);
 
         if (item.getSet() == mCurrentContainerId) {
             itemsAdapter.add(item);
@@ -795,7 +797,7 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
      */
     @Override
     public void onItemUnequipped(EquippedItem item) {
-        Debug.trace("onItemUnequipped " + item);
+        Debug.d("onItemUnequipped " + item);
         if (item.getSet() == mCurrentContainerId) {
             itemsAdapter.remove(item);
 
@@ -827,7 +829,7 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
      */
     @Override
     public void onItemContainerAdded(ItemContainer itemContainer) {
-        Debug.trace("onItemContainerAdded " + itemContainer);
+        Debug.d("onItemContainerAdded " + itemContainer);
 
         containers.add(itemContainer);
         addContainerTab(itemContainer);
@@ -844,7 +846,7 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
      */
     @Override
     public void onItemContainerRemoved(ItemContainer itemContainer) {
-        Debug.trace("onItemContainerRemoved " + itemContainer);
+        Debug.d("onItemContainerRemoved " + itemContainer);
 
         int index = containers.indexOf(itemContainer);
         containers.remove(index);
@@ -862,7 +864,7 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
      */
     @Override
     public void onItemContainerChanged(ItemContainer itemContainer) {
-        Debug.trace("onItemContainerChanged " + itemContainer);
+        Debug.d("onItemContainerChanged " + itemContainer);
 
         int index = containers.indexOf(itemContainer);
         TabLayout.Tab tab = tabLayout.getTabAt(index);

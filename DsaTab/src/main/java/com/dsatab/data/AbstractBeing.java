@@ -99,7 +99,7 @@ public abstract class AbstractBeing {
 
 	public void fireModifierChangedEvent(Modificator modifier) {
 
-		Debug.trace("ON Modifier changed " + modifier);
+		Debug.d("ON Modifier changed " + modifier);
 		clearModifiersCache();
 		for (HeroChangedListener l : listener) {
 			l.onModifierChanged(modifier);
@@ -114,7 +114,7 @@ public abstract class AbstractBeing {
 	}
 
 	void fireModifierAddedEvent(Modificator modifier) {
-		Debug.trace("ON modifier added " + modifier);
+		Debug.d("ON modifier added " + modifier);
 		clearModifiersCache();
 
 		for (HeroChangedListener l : listener) {
@@ -124,7 +124,7 @@ public abstract class AbstractBeing {
 	}
 
 	void fireModifierRemovedEvent(Modificator modifier) {
-		Debug.trace("ON modifier removed " + modifier);
+		Debug.d("ON modifier removed " + modifier);
 		clearModifiersCache();
 
 		for (HeroChangedListener l : listener) {
@@ -177,17 +177,17 @@ public abstract class AbstractBeing {
 	 * @return
 	 */
 	public Feature getFeature(String type) {
-		Debug.trace("getFeature " + type);
+		Debug.d("getFeature " + type);
 		return getFeature(FeatureType.byXmlName(type));
 	}
 
 	public Feature getFeature(FeatureType type) {
-		Debug.trace("getFeature " + type);
+		Debug.d("getFeature " + type);
 		return featuresByType.get(type);
 	}
 
 	public boolean hasFeature(FeatureType type) {
-		Debug.trace("hasFeature " + type);
+		Debug.d("hasFeature " + type);
 		return featuresByType.containsKey(type);
 	}
 
@@ -212,7 +212,7 @@ public abstract class AbstractBeing {
 	}
 
 	public Art getArt(String name) {
-		Debug.trace("getArt " + name);
+		Debug.d("getArt " + name);
 		return artsByName.get(name);
 	}
 
@@ -236,7 +236,7 @@ public abstract class AbstractBeing {
 	}
 
 	public Talent getTalent(String talentName) {
-		Debug.trace("getTalent " + talentName);
+		Debug.d("getTalent " + talentName);
 		TalentType type = TalentType.byXmlName(talentName);
 		return talentByType.get(type);
 

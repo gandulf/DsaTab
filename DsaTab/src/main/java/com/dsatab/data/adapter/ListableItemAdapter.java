@@ -785,7 +785,7 @@ public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHo
             holder.text4.setClickable(false);
             holder.text4.setFocusable(false);
         } else {
-            Debug.warning(spell.getName() + " has no value");
+            Debug.w(spell.getName() + " has no value");
         }
         Util.setVisibility(holder.text5, false, holder.text1);
 

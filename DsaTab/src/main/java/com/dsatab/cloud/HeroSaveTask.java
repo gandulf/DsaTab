@@ -41,7 +41,7 @@ public class HeroSaveTask extends AsyncTask<Void, Void, Boolean> {
         try {
             InputStream fis = heroExchange.getInputStream(hero.getFileInfo(), FileType.Hero);
             if (fis == null) {
-                Debug.warning("Unable to read hero from input stream: " + hero.getFileInfo());
+                Debug.w("Unable to read hero from input stream: " + hero.getFileInfo());
                 return false;
             }
 
@@ -57,7 +57,7 @@ public class HeroSaveTask extends AsyncTask<Void, Void, Boolean> {
 
             OutputStream out = heroExchange.getOutputStream(hero.getFileInfo(), FileType.Hero);
             if (out == null) {
-                Debug.warning("Unable to write hero to output stream: " + hero.getFileInfo());
+                Debug.w("Unable to write hero to output stream: " + hero.getFileInfo());
                 return false;
             }
 
@@ -70,7 +70,7 @@ public class HeroSaveTask extends AsyncTask<Void, Void, Boolean> {
 
             OutputStream outConfig = heroExchange.getOutputStream(hero.getFileInfo(), FileType.Config);
             if (outConfig == null) {
-                Debug.warning("Unable to write config file for hero: " + hero.getFileInfo());
+                Debug.w("Unable to write config file for hero: " + hero.getFileInfo());
                 return false;
             }
 
@@ -91,7 +91,7 @@ public class HeroSaveTask extends AsyncTask<Void, Void, Boolean> {
 
             return true;
         } catch (Exception e) {
-            Debug.error(e);
+            Debug.e(e);
             exception = e;
             return false;
         }

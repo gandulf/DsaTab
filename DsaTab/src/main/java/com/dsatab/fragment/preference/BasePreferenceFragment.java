@@ -247,7 +247,7 @@ public class BasePreferenceFragment extends PreferenceFragmentCompat implements 
                 }
 
                 f.delete();
-                Debug.verbose("Deleting " + f.getAbsolutePath());
+                Debug.v("Deleting " + f.getAbsolutePath());
             }
         }
     }

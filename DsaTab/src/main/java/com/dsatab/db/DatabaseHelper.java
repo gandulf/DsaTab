@@ -12,8 +12,8 @@ import com.dsatab.data.items.Item;
 import com.dsatab.data.items.MiscSpecification;
 import com.dsatab.data.items.Shield;
 import com.dsatab.data.items.Weapon;
+import com.dsatab.util.Debug;
 import com.dsatab.xml.XmlParser;
-import com.gandulf.guilib.util.Debug;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.support.ConnectionSource;
@@ -54,7 +54,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource) {
 		try {
-			Debug.verbose("onCreate Database");
+			Debug.v("onCreate Database");
 			TableUtils.createTable(connectionSource, ArtInfo.class);
 			TableUtils.createTable(connectionSource, SpellInfo.class);
 
@@ -65,7 +65,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(connectionSource, Armor.class);
 			TableUtils.createTable(connectionSource, MiscSpecification.class);
 		} catch (SQLException e) {
-			Debug.error("Can't create database", e);
+			Debug.e("Can't create database", e);
 			throw new RuntimeException(e);
 		}
 
@@ -73,7 +73,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		XmlParser.fillSpells();
 		XmlParser.fillItems();
 
-		Debug.verbose("created new entries in onCreate");
+		Debug.v("created new entries in onCreate");
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVersion, int newVersion) {
 
-		Debug.verbose("onUpgrade from " + oldVersion + " to " + newVersion);
+		Debug.v("onUpgrade from " + oldVersion + " to " + newVersion);
 
 		try {
 			recreateDatabase(db, connectionSource);
@@ -100,7 +100,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			// }
 
 		} catch (SQLException e) {
-			Debug.error("Can't drop databases", e);
+			Debug.e("Can't drop databases", e);
 			throw new RuntimeException(e);
 		}
 	}

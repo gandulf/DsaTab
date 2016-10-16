@@ -236,7 +236,7 @@ public class HeroExchange {
 
     private <T> void execute(final CloudStorage storage, final CloudTask<T> action, final CloudResult<T> cloudResult) {
         if (storage == null) {
-            Debug.warning("Skipping storage task since provider was null");
+            Debug.w("Skipping storage task since provider was null");
             cloudResult.onSuccess(null);
             return;
         }
@@ -250,7 +250,7 @@ public class HeroExchange {
                         result = action.execute(storage);
                     } catch (final Exception e) {
                         result = null;
-                        Debug.error(e);
+                        Debug.e(e);
                         context.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -276,7 +276,7 @@ public class HeroExchange {
             try {
                 result = action.execute(storage);
             } catch (final Exception e) {
-                Debug.error(e);
+                Debug.e(e);
                 result = null;
                 context.runOnUiThread(new Runnable() {
                     @Override
@@ -311,7 +311,7 @@ public class HeroExchange {
         if (storage != null) {
             File local = heroInfo.getFile(FileType.Hero);
             if (local != null && local.exists()) {
-                Debug.verbose("Uploading hero file to" + heroInfo.getRemoteHeroId());
+                Debug.v("Uploading hero file to" + heroInfo.getRemoteHeroId());
                 storage.upload(heroInfo.getRemoteHeroId(), new FileInputStream(local), local.length(), true);
 
                 // keep lastmodified of cloud data in sync with local files
@@ -327,7 +327,7 @@ public class HeroExchange {
                 if (heroInfo.getRemoteConfigId() == null) {
                     heroInfo.setRemoteConfigId(heroInfo.getRemoteHeroId().replace(HERO_FILE_EXTENSION, CONFIG_FILE_EXTENSION));
                 }
-                Debug.verbose("Uploading heroconfig file to" + heroInfo.getRemoteConfigId());
+                Debug.v("Uploading heroconfig file to" + heroInfo.getRemoteConfigId());
                 storage.upload(heroInfo.getRemoteConfigId(), new FileInputStream(localConfig), localConfig.length(), true);
                 result = true;
             }
@@ -366,21 +366,21 @@ public class HeroExchange {
                     }
                     Long cloudModified = cloudMetaData.getModifiedAt();
                     if (localModified.equals(cloudModified)) {
-                        Debug.verbose("No changes - " + heroInfo);
+                        Debug.v("No changes - " + heroInfo);
                     } else if (cloudModified != null && localModified > cloudModified) {
                         ViewUtils.snackbar(context, heroInfo.getName() + ": Uploading...");
-                        Debug.verbose("Upload - " + heroInfo);
+                        Debug.v("Upload - " + heroInfo);
                         upload(storage, heroInfo, cloudMetaData);
                     } else if (cloudModified != null && localModified < cloudModified) {
                         ViewUtils.snackbar(context, heroInfo.getName() + ": Downloading...");
-                        Debug.verbose("Download - " + heroInfo);
+                        Debug.v("Download - " + heroInfo);
                         download(storage, heroInfo, cloudMetaData);
                     } else {
-                        Debug.verbose("Skipping no cloud modified date - " + cloudMetaData);
+                        Debug.v("Skipping no cloud modified date - " + cloudMetaData);
                     }
                 } else {
                     ViewUtils.snackbar(context, heroInfo.getName() + ": Downloading...");
-                    Debug.verbose("Download New - " + heroInfo);
+                    Debug.v("Download New - " + heroInfo);
                     download(storage, heroInfo, cloudMetaData);
                 }
             }
@@ -515,7 +515,7 @@ public class HeroExchange {
                         storage.logout();
                     } catch (AuthenticationException e) {
                         // fine since we wanted to logout anyway
-                        Debug.verbose(e.getLocalizedMessage());
+                        Debug.v(e.getLocalizedMessage());
                     }
                     return Boolean.TRUE;
                 }
@@ -532,7 +532,7 @@ public class HeroExchange {
 
         CloudMetaData basePath = getBasePath(storage);
         if (basePath == null) {
-            Debug.warning("Couldn't create/read BasePath for storage type " + storageType
+            Debug.w("Couldn't create/read BasePath for storage type " + storageType
                     + ". Make sure the directory exists and contains your heroes");
             return heroes;
         }
@@ -548,7 +548,7 @@ public class HeroExchange {
                 }
             }
         } else {
-            Debug.warning("Unable to read directory " + basePath.getName()
+            Debug.w("Unable to read directory " + basePath.getName()
                     + ". Make sure the directory exists and contains your heroes");
         }
 

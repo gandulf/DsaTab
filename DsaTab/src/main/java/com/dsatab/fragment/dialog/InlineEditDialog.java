@@ -107,7 +107,7 @@ public class InlineEditDialog extends AppCompatDialogFragment implements android
 				numberPickerUtils.setValue(currentValue);
                 editValue.append(String.valueOf(currentValue));
 			} else {
-				Debug.error("Setting value was null:" + value);
+				Debug.e("Setting value was null:" + value);
 				numberPickerUtils.setValue(0);
                 editValue.append("0");
 			}
@@ -225,7 +225,7 @@ public class InlineEditDialog extends AppCompatDialogFragment implements android
 				value.setValue(currentValue);
 			}
 		} catch (NumberFormatException e) {
-			Debug.error(e);
+			Debug.e(e);
 		}
 		Util.hideKeyboard(beCalculation);
 		dismiss();

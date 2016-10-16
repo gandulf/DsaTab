@@ -192,7 +192,7 @@ public class ArtInfoFragment extends BaseEditFragment {
 				}
 
 			} catch (NumberFormatException e) {
-				Debug.error(e);
+				Debug.e(e);
 			}
 		}
 
@@ -221,18 +221,18 @@ public class ArtInfoFragment extends BaseEditFragment {
                 numberPicker.setVisibility(edit ? View.VISIBLE : View.GONE);
 			}
 
-			edit(R.id.popup_liturgie_castduration, R.id.popup_liturgie_castduration_edit,
+			edit(R.id.popup_liturgie_castduration, R.id.popup_liturgie_castduration_edit, R.id.popup_liturgie_castduration_layout,
 					artInfo.getCastDurationDetailed(), edit);
-			edit(R.id.popup_liturgie_effect, R.id.popup_liturgie_effect_edit, artInfo.getEffect(), edit);
-			edit(R.id.popup_liturgie_effectduration, R.id.popup_liturgie_effectduration_edit,
+			edit(R.id.popup_liturgie_effect, R.id.popup_liturgie_effect_edit,R.id.popup_liturgie_effect_layout, artInfo.getEffect(), edit);
+			edit(R.id.popup_liturgie_effectduration, R.id.popup_liturgie_effectduration_edit,R.id.popup_liturgie_effectduration_layout,
 					artInfo.getEffectDuration(), edit);
-			edit(R.id.popup_liturgie_merkmal, R.id.popup_liturgie_merkmal_edit, artInfo.getMerkmale(), edit);
-			edit(R.id.popup_liturgie_origin, R.id.popup_liturgie_origin_edit, artInfo.getOrigin(), edit);
-			edit(R.id.popup_liturgie_probe, R.id.popup_liturgie_probe_edit, artInfo.getProbe(), edit);
-			edit(R.id.popup_liturgie_costs, R.id.popup_liturgie_costs_edit, artInfo.getCosts(), edit);
-			edit(R.id.popup_liturgie_range, R.id.popup_liturgie_range_edit, artInfo.getRangeDetailed(), edit);
-			edit(R.id.popup_liturgie_source, R.id.popup_liturgie_source_edit, artInfo.getSource(), edit);
-			edit(R.id.popup_liturgie_target, R.id.popup_liturgie_target_edit, artInfo.getTargetDetailed(), edit);
+			edit(R.id.popup_liturgie_merkmal, R.id.popup_liturgie_merkmal_edit,R.id.popup_liturgie_merkmal_layout, artInfo.getMerkmale(), edit);
+			edit(R.id.popup_liturgie_origin, R.id.popup_liturgie_origin_edit, R.id.popup_liturgie_origin_layout, artInfo.getOrigin(), edit);
+			edit(R.id.popup_liturgie_probe, R.id.popup_liturgie_probe_edit,R.id.popup_liturgie_probe_layout, artInfo.getProbe(), edit);
+			edit(R.id.popup_liturgie_costs, R.id.popup_liturgie_costs_edit, R.id.popup_liturgie_costs_layout, artInfo.getCosts(), edit);
+			edit(R.id.popup_liturgie_range, R.id.popup_liturgie_range_edit,R.id.popup_liturgie_range_layout, artInfo.getRangeDetailed(), edit);
+			edit(R.id.popup_liturgie_source, R.id.popup_liturgie_source_edit, R.id.popup_liturgie_source_layout, artInfo.getSource(), edit);
+			edit(R.id.popup_liturgie_target, R.id.popup_liturgie_target_edit,R.id.popup_liturgie_target_layout, artInfo.getTargetDetailed(), edit);
 		}
 
 	}
@@ -248,16 +248,17 @@ public class ArtInfoFragment extends BaseEditFragment {
 		return ((EditText) popupcontent.findViewById(etid)).getText().toString();
 	}
 
-	private void edit(int tfid, int etid, String v, boolean edit) {
+	private void edit(int tfid, int etid, int layoutid, String v, boolean edit) {
 		int editVisibility = edit ? View.VISIBLE : View.GONE;
 		int viewVisibility = edit ? View.GONE : View.VISIBLE;
 
 		TextView tf = (TextView) popupcontent.findViewById(tfid);
 		TextView et = (TextView) popupcontent.findViewById(etid);
+        ViewGroup layout = (ViewGroup) popupcontent.findViewById(layoutid);
 
 		if (tf != null && et != null) {
 			tf.setVisibility(viewVisibility);
-			et.setVisibility(editVisibility);
+			layout.setVisibility(editVisibility);
 			et.setText(v);
 			tf.setText(v);
 		}

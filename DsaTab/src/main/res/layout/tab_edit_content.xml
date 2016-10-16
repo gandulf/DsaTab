@@ -22,14 +22,21 @@
             android:minWidth="@dimen/icon_button_size"
             android:scaleType="fitCenter"/>
 
-        <com.thebnich.floatinghintedittext.FloatingHintEditText
-            android:id="@+id/popup_edit_title"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="1"
-            android:layout_gravity="fill_horizontal|bottom"
-            android:hint="@string/label_titel"
-            android:inputType="textPersonName"/>
+            android:layout_gravity="fill_horizontal|bottom">
+
+            <EditText
+                android:id="@+id/popup_edit_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/label_titel"
+                android:inputType="textPersonName">
+
+            </EditText>
+        </android.support.design.widget.TextInputLayout>
 
     </GridLayout>
 
@@ -63,15 +70,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <com.github.clans.fab.FloatingActionButton
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
-            style="?attr/floatingActionButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_marginBottom="16dp"
             android:layout_marginRight="16dp"
-            android:src="@drawable/fab_add"/>
+            app:srcCompat="@drawable/ic_add_white_24px"/>
     </FrameLayout>
 
 

@@ -10,7 +10,7 @@ import android.widget.Checkable;
 import android.widget.Filterable;
 
 import com.dsatab.R;
-import com.gandulf.guilib.util.Debug;
+import com.dsatab.util.Debug;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -288,7 +288,7 @@ public abstract class ListRecyclerAdapter<VH extends RecyclerView.ViewHolder, T>
     }
 
     public void swapItems(int positionOne, int positionTwo) {
-        Debug.verbose("swap " + positionOne + ", " + positionTwo);
+        Debug.v("swap " + positionOne + ", " + positionTwo);
 
         if (mOriginalValues != null && mOriginalValues != mObjects) {
             synchronized (mLock) {

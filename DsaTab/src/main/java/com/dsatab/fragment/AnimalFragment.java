@@ -308,18 +308,27 @@ public class AnimalFragment extends BaseProfileFragment {
 
         if (getAnimal() == null || getAnimal().getAttributeValue(AttributeType.Karmaenergie) == null
                 || getAnimal().getAttributeValue(AttributeType.Karmaenergie) == 0) {
-            findViewById(R.id.row_ke).setVisibility(View.GONE);
+
+            tfKE.setVisibility(View.GONE);
+            tfLabelKE.setVisibility(View.GONE);
+            tfTotalKe.setVisibility(View.GONE);
         } else {
             fillAttributeValue(tfTotalKe, AttributeType.Karmaenergie);
-            findViewById(R.id.row_ke).setVisibility(View.VISIBLE);
+            tfKE.setVisibility(View.VISIBLE);
+            tfLabelKE.setVisibility(View.VISIBLE);
+            tfTotalKe.setVisibility(View.VISIBLE);
         }
 
         if (getAnimal() == null || getAnimal().getAttributeValue(AttributeType.Astralenergie) == null
                 || getAnimal().getAttributeValue(AttributeType.Astralenergie) == 0) {
-            findViewById(R.id.row_ae).setVisibility(View.GONE);
+            tfAE.setVisibility(View.GONE);
+            tfLabelAE.setVisibility(View.GONE);
+            tfTotalAe.setVisibility(View.GONE);
         } else {
             fillAttributeValue(tfTotalAe, AttributeType.Astralenergie);
-            findViewById(R.id.row_ae).setVisibility(View.VISIBLE);
+            tfAE.setVisibility(View.VISIBLE);
+            tfLabelAE.setVisibility(View.VISIBLE);
+            tfTotalAe.setVisibility(View.VISIBLE);
         }
 
         // base
@@ -345,9 +354,6 @@ public class AnimalFragment extends BaseProfileFragment {
         // --
         getDsaActivity().updatePortrait(animal);
         updateBaseInfo(false);
-
-        TableLayout attribute2 = (TableLayout) findViewById(R.id.gen_attributes2);
-        Util.applyRowStyle(attribute2);
 
         // -- fill attacks
 

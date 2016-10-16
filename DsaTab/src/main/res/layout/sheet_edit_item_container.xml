@@ -1,83 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:auto="http://schemas.android.com/apk/res-auto"
-    xmlns:guilib="http://schemas.android.com/apk/com.gandulf.guilib"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:padding="@dimen/default_gap" >
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:fillViewport="true"
+            android:padding="@dimen/default_gap">
 
-    <GridLayout
+    <android.support.v7.widget.GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnCount="2"
-        android:orientation="vertical"
-        android:useDefaultMargins="true" >
+        app:columnCount="3"
+        app:orientation="horizontal"
+        app:useDefaultMargins="true">
 
         <ImageView
             android:id="@+id/popup_edit_icon"
             style="?attr/spinnerStyle"
-            android:layout_width="wrap_content"
-            android:minWidth="@dimen/icon_button_size"
             android:layout_height="@dimen/icon_button_size"
-            android:layout_column="0"
-            android:layout_gravity="bottom|right"
-            android:layout_row="0"
-            android:layout_rowSpan="2" />
+            app:layout_gravity="bottom|right"
+            app:layout_columnWeight="1"
+            android:contentDescription="@string/label_icon"
+            android:minWidth="@dimen/icon_button_size"/>
 
-        <com.thebnich.floatinghintedittext.FloatingHintEditText
-            android:id="@+id/popup_edit_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:layout_gravity="bottom|fill_horizontal"
-            android:layout_row="1"
-            android:hint="@string/label_name"
-            android:inputType="textPersonName" >
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_name"
+            app:layout_columnWeight="3"
+            app:layout_columnSpan="2"
+            app:layout_gravity="bottom|fill_horizontal">
 
-            <requestFocus/>
-            
-        </com.thebnich.floatinghintedittext.FloatingHintEditText>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_columnSpan="2"
-            android:layout_gravity="fill_horizontal"            
-            android:layout_row="2"
-            android:layout_column="0" >
-
-            <com.thebnich.floatinghintedittext.FloatingHintEditText
-                android:id="@+id/popup_edit_capacity"
-                android:layout_width="0dp"
+            <EditText
+                android:id="@+id/popup_edit_name"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:hint="@string/label_name"
+                android:inputType="textPersonName">
+                <requestFocus/>
+            </EditText>
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_capacity"
+            app:layout_gravity="fill_horizontal"
+            app:layout_column="0"
+            app:layout_columnSpan="2"
+            app:layout_columnWeight="3"
+            >
+
+            <EditText
+                android:id="@+id/popup_edit_capacity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:hint="@string/label_capacity"
                 android:inputType="number"
-                android:lines="3" >
-            </com.thebnich.floatinghintedittext.FloatingHintEditText>
+                android:lines="3">
+            </EditText>
+        </android.support.design.widget.TextInputLayout>
 
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/default_gap"
-                    android:layout_marginRight="@dimen/default_gap"
-                    android:layout_gravity="right|center_vertical"
-                    android:text="@string/label_ounces"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-            
-        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_columnWeight="1"
+            app:layout_gravity="right|fill_vertical"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/default_gap"
+            android:layout_marginRight="@dimen/default_gap"
+            android:text="@string/label_ounces"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
 
-        <Space
+        <android.support.v4.widget.Space
             android:id="@+id/space1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_columnSpan="2"
-            android:layout_gravity="left|top"
-            android:layout_row="3" />
-    </GridLayout>
+            app:layout_columnSpan="3"
+            app:layout_gravity="left|top"
+            />
+    </android.support.v7.widget.GridLayout>
 
 </ScrollView>

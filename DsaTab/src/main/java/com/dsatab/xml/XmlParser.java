@@ -87,7 +87,7 @@ public class XmlParser {
 				List<ArtInfo> artInfos = artDao.queryForEq("name", item.getName().replace("'", "''"));
 				for (ArtInfo info : artInfos) {
 					if (info.getGrade() == item.getGrade()) {
-						Debug.verbose("Found duplicate " + item.getFullName());
+						Debug.v("Found duplicate " + item.getFullName());
 						continue;
 					}
 				}
@@ -309,7 +309,7 @@ public class XmlParser {
 			return w;
 
 		} catch (NumberFormatException e) {
-			Debug.error(e);
+			Debug.e(e);
 		}
 		return null;
 	}
@@ -363,7 +363,7 @@ public class XmlParser {
 
 			return w;
 		} catch (NumberFormatException e) {
-			Debug.error(e);
+			Debug.e(e);
 		}
 		return null;
 	}
@@ -578,7 +578,7 @@ public class XmlParser {
 	//
 	// itemsW.close();
 	// } catch (IOException e) {
-	// Debug.error(e);
+	// Debug.e(e);
 	// }
 	// }
 

@@ -79,16 +79,16 @@ public class MetaTalent extends Talent implements JSONable {
 				}
 			}
 
-			// Debug.verbose("Wild " + wildnis + " färten " + fährtensuche +
+			// Debug.v("Wild " + wildnis + " färten " + fährtensuche +
 			// " schleich " + schleichen + " tierk " + tierkunde + " fernk " +
 			// distance);
 
 			Integer minValue = DsaUtil.min(wildnis, fährtensuche, schleichen, tierkunde, distance);
 
-			// Debug.verbose("Minium value is " + minValue);
+			// Debug.v("Minium value is " + minValue);
 			int value = Math.round(DsaUtil.sum(wildnis, fährtensuche, schleichen, tierkunde, distance) / 5.0f);
 
-			// Debug.verbose("Sum value/5 is " + value);
+			// Debug.v("Sum value/5 is " + value);
 			if (minValue == null)
 				return null;
 			else {
@@ -133,7 +133,7 @@ public class MetaTalent extends Talent implements JSONable {
 			Integer verstecken = getTalentValue(TalentType.SichVerstecken);
 			Integer wildnis = getTalentValue(TalentType.Wildnisleben);
 
-			Debug.verbose("selbst " + selbst + " sinnen " + sinnen + " schleich " + schleichen + " versteck "
+			Debug.v("selbst " + selbst + " sinnen " + sinnen + " schleich " + schleichen + " versteck "
 					+ verstecken + " wildn " + wildnis);
 
 			Integer minValue = DsaUtil.min(selbst, sinnen, schleichen, verstecken, wildnis);

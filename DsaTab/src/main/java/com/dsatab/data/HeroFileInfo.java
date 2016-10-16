@@ -232,9 +232,9 @@ public class HeroFileInfo implements JSONable, Serializable {
                     }
                 }
             } catch (FileNotFoundException e) {
-                Debug.error(e);
+                Debug.e(e);
             } catch (JSONException e) {
-                Debug.error(e);
+                Debug.e(e);
             }
         }
 
@@ -267,9 +267,9 @@ public class HeroFileInfo implements JSONable, Serializable {
 				}
 			}
 		} catch (XmlPullParserException e) {
-			Debug.error(e);
+			Debug.e(e);
 		} catch (IOException e) {
-			Debug.error(e);
+			Debug.e(e);
 		} finally {
 			Util.close(fis);
 		}

@@ -118,7 +118,7 @@ public class DataManager {
             }
 
         } catch (SQLException e) {
-            Debug.error(e);
+            Debug.e(e);
 
         }
 
@@ -135,7 +135,7 @@ public class DataManager {
                     .queryBuilder().where().eq("name", spellNameArg).prepare();
 
         } catch (SQLException e) {
-            Debug.error(e);
+            Debug.e(e);
         }
 
     }
@@ -150,7 +150,7 @@ public class DataManager {
             itemNameQuery = DsaTabApplication.getInstance().getDBHelper().getItemDao().queryBuilder().where()
                     .eq("name", itemNameArg).prepare();
         } catch (SQLException e) {
-            Debug.error(e);
+            Debug.e(e);
         }
 
     }
@@ -230,7 +230,7 @@ public class DataManager {
             cursor.setNotificationUri(DsaTabApplication.getInstance().getContentResolver(), ITEMS_URI);
             return cursor;
         } catch (SQLException e) {
-            Debug.error(e);
+            Debug.e(e);
         }
 
         return null;
@@ -247,7 +247,7 @@ public class DataManager {
                     StatementType.SELECT);
             cursor = compiledStatement.getCursor();
         } catch (SQLException e) {
-            Debug.error(e);
+            Debug.e(e);
         }
         return cursor;
     }
@@ -285,6 +285,9 @@ public class DataManager {
     }
 
     public static Item getItemByCursor(Cursor cursor) {
+        if (cursor.isClosed())
+            return null;
+
         String _id = cursor.getString(cursor.getColumnIndex("_id"));
         return DataManager.getItemById(UUID.fromString(_id));
     }
@@ -331,7 +334,7 @@ public class DataManager {
         if (info == null) {
             info = getArtByName(name);
             if (info != null)
-                Debug.warning("Art with grade could not be found using the one without grade: " + name);
+                Debug.w("Art with grade could not be found using the one without grade: " + name);
         }
 
         return info;
@@ -349,7 +352,7 @@ public class DataManager {
         if (info == null) {
             info = getArtLikeName(name);
             if (info != null)
-                Debug.warning("Art with grade could not be found using the one without grade: " + name);
+                Debug.w("Art with grade could not be found using the one without grade: " + name);
         }
 
         return info;
@@ -381,14 +384,14 @@ public class DataManager {
                 }
 
             } catch (XPathExpressionException e) {
-                Debug.error(e);
+                Debug.e(e);
             } catch (FileNotFoundException e) {
-                Debug.error(e);
+                Debug.e(e);
             } catch (IOException e) {
-                Debug.error(e);
+                Debug.e(e);
 
             } catch (TransformerFactoryConfigurationError e) {
-                Debug.error(e);
+                Debug.e(e);
             } finally {
                 try {
                     if (is != null)
@@ -434,17 +437,17 @@ public class DataManager {
                 webInfo.put(tag, data);
 
             } catch (XPathExpressionException e) {
-                Debug.error(e);
+                Debug.e(e);
             } catch (FileNotFoundException e) {
-                Debug.error(e);
+                Debug.e(e);
             } catch (IOException e) {
-                Debug.error(e);
+                Debug.e(e);
             } catch (TransformerConfigurationException e) {
-                Debug.error(e);
+                Debug.e(e);
             } catch (TransformerFactoryConfigurationError e) {
-                Debug.error(e);
+                Debug.e(e);
             } catch (TransformerException e) {
-                Debug.error(e);
+                Debug.e(e);
             } finally {
                 try {
                     if (is != null)

@@ -169,7 +169,7 @@ public class Util {
 				}
 			}
 		} else {
-			Debug.error("Intent returned from image pick did not containt uri data:" + data);
+			Debug.e("Intent returned from image pick did not containt uri data:" + data);
 		}
 		return null;
 	}
@@ -328,7 +328,7 @@ public class Util {
 			try {
 				stream.close();
 			} catch (IOException e) {
-				Debug.error(e);
+				Debug.e(e);
 			}
 		}
 	}
@@ -338,7 +338,7 @@ public class Util {
 			try {
 				stream.close();
 			} catch (IOException e) {
-				Debug.error(e);
+				Debug.e(e);
 			}
 		}
 	}
@@ -348,7 +348,7 @@ public class Util {
 			try {
 				stream.close();
 			} catch (IOException e) {
-				Debug.error(e);
+				Debug.e(e);
 			}
 		}
 	}
@@ -403,7 +403,7 @@ public class Util {
 			return null;
 		// gracefull fallback frm float to int
 		if (s.contains(".")) {
-			Debug.warning("Parsing float as integer: " + s);
+			Debug.w("Parsing float as integer: " + s);
 			s = s.substring(0, s.indexOf('.'));
 		}
 		Integer i;
@@ -803,7 +803,7 @@ public class Util {
 	 * 
 	 * int t = 0; if (probe.getProbeBonus() != null) { t = probe.getProbeBonus() + modifier; } else t = modifier;
 	 * 
-	 * Debug.verbose("T=" + t);
+	 * Debug.v("T=" + t);
 	 * 
 	 * // see Wege des Meisters page 170 if (t <= 0) { v = Math.min(20, probe.getProbeValue(0) + t); for (int i = 1; i <
 	 * 3; i++) { v *= Math.min(20, probe.getProbeValue(i) + t); } } else {
@@ -815,7 +815,7 @@ public class Util {
 	 * 
 	 * int ti = Math.min(20 - probe.getProbeValue(i), t);
 	 * 
-	 * Debug.verbose("T" + i + "=" + ti); // E n=1 - Ti for (int n = 1; n <= ti; n++) { v += (Math.min(20,
+	 * Debug.v("T" + i + "=" + ti); // E n=1 - Ti for (int n = 1; n <= ti; n++) { v += (Math.min(20,
 	 * probe.getProbeValue(i % 3) - n) * Math.min(20, probe.getProbeValue((i + 1) % 3) - n)); }
 	 * 
 	 * }
@@ -1099,9 +1099,9 @@ public class Util {
 			File outputfile = DsaTabApplication.getInstance().getFileStreamPath(photoName);
 			return outputfile;
 		} catch (FileNotFoundException e) {
-			Debug.error(e);
+			Debug.e(e);
 		} catch (IOException e) {
-			Debug.error(e);
+			Debug.e(e);
 		} finally {
 			if (fOut != null) {
 				try {

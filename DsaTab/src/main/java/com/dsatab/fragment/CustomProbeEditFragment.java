@@ -1,10 +1,10 @@
 package com.dsatab.fragment;
 
-import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,8 +23,8 @@ import com.dsatab.data.Probe.ProbeType;
 import com.dsatab.data.adapter.SpinnerSimpleAdapter;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 import com.dsatab.fragment.dialog.ImageChooserDialog;
-import com.dsatab.util.Util;
 import com.dsatab.util.ResUtil;
+import com.dsatab.util.Util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -102,7 +102,7 @@ public class CustomProbeEditFragment extends BaseEditFragment implements OnClick
 
 		if (savedInstanceState != null && savedInstanceState.containsKey(ICON_URI)) {
 			iconUri = Uri.parse(savedInstanceState.getString(ICON_URI));
-            Drawable icon = ResUtil.getDrawableByUri(iconView.getContext(),iconUri);
+            Drawable icon =  ResUtil.getDrawableByUri(iconView.getContext(),iconUri);
 			iconView.setImageDrawable(icon);
 		}
 

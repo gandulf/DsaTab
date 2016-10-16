@@ -25,7 +25,7 @@
         <ignore path="res/values/styles_dsatablight.xml" />
     </issue>
 
-    <!-- Change the severity of hardcoded strings to "error" -->
+    <!-- Change the severity of hardcoded strings to "e" -->
 
     <issue
         id="HardcodedText"

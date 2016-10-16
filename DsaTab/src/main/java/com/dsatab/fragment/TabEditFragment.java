@@ -2,6 +2,7 @@ package com.dsatab.fragment;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -25,13 +26,12 @@ import com.dsatab.data.Hero;
 import com.dsatab.data.adapter.ListItemConfigAdapter;
 import com.dsatab.data.adapter.SpinnerSimpleAdapter;
 import com.dsatab.fragment.dialog.ImageChooserDialog;
+import com.dsatab.util.DefaultTextWatcher;
+import com.dsatab.util.ResUtil;
 import com.dsatab.util.Util;
 import com.dsatab.view.ListSettings;
 import com.dsatab.view.ListSettings.ListItem;
 import com.dsatab.view.ListSettings.ListItemType;
-import com.dsatab.util.DefaultTextWatcher;
-import com.dsatab.util.ResUtil;
-import com.github.clans.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;

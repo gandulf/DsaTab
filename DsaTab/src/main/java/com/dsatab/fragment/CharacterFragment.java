@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.dsatab.R;
@@ -57,8 +56,6 @@ public class CharacterFragment extends BaseProfileFragment {
 		tfLabelPA = (TextView) root.findViewById(R.id.attr_pa_label);
 		tfLabelFK = (TextView) root.findViewById(R.id.attr_fk_label);
 		tfLabelINI = (TextView) root.findViewById(R.id.attr_ini_label);
-
-		Util.applyRowStyle((TableLayout) root.findViewById(R.id.gen_attributes));
 
 		return root;
 	}
@@ -214,18 +211,27 @@ public class CharacterFragment extends BaseProfileFragment {
 
 		if (hero.getAttributeValue(AttributeType.Karmaenergie) == null
 				|| hero.getAttributeValue(AttributeType.Karmaenergie) == 0) {
-			findViewById(R.id.row_ke).setVisibility(View.GONE);
+            tfKE.setVisibility(View.GONE);
+            tfLabelKE.setVisibility(View.GONE);
+            tfTotalKe.setVisibility(View.GONE);
 		} else {
 			fillAttributeValue(tfTotalKe, AttributeType.Karmaenergie);
-			findViewById(R.id.row_ke).setVisibility(View.VISIBLE);
+            tfKE.setVisibility(View.VISIBLE);
+            tfLabelKE.setVisibility(View.VISIBLE);
+            tfTotalKe.setVisibility(View.VISIBLE);
 		}
 
 		if (hero.getAttributeValue(AttributeType.Astralenergie) == null
 				|| hero.getAttributeValue(AttributeType.Astralenergie) == 0) {
-			findViewById(R.id.row_ae).setVisibility(View.GONE);
+            tfAE.setVisibility(View.GONE);
+            tfLabelAE.setVisibility(View.GONE);
+            tfTotalAe.setVisibility(View.GONE);
 		} else {
 			fillAttributeValue(tfTotalAe, AttributeType.Astralenergie);
-			findViewById(R.id.row_ae).setVisibility(View.VISIBLE);
+
+            tfAE.setVisibility(View.VISIBLE);
+            tfLabelAE.setVisibility(View.VISIBLE);
+            tfTotalAe.setVisibility(View.VISIBLE);
 		}
 
 		Util.setText(tfST, hero.getLevel(), 0, null);
@@ -234,14 +240,8 @@ public class CharacterFragment extends BaseProfileFragment {
 		tfWS.setText(ws[0] + "/" + ws[1] + "/" + ws[2]);
 
 		updateBaseInfo(false);
-		//
 
 		fillSpecialFeatures(hero);
-
-		// --
-
-		TableLayout attribute2 = (TableLayout) findViewById(R.id.gen_attributes2);
-		Util.applyRowStyle(attribute2);
 
 		if (!getHero().getAnimals().isEmpty()) {
 			Hint.showHint("CharacterFragment", "ANIMAL_FRAGMENT", getActivity());

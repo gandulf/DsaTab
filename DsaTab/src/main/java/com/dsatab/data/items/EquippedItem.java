@@ -14,9 +14,9 @@ import com.dsatab.data.enums.Hand;
 import com.dsatab.data.enums.TalentType;
 import com.dsatab.data.enums.UsageType;
 import com.dsatab.data.listable.Listable;
+import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.dsatab.util.ViewUtils;
-import com.gandulf.guilib.util.Debug;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -202,7 +202,7 @@ public class EquippedItem implements ItemCard, Listable, Serializable {
 		if (itemSpecification == null && !item.getSpecifications().isEmpty()) {
 			for (ItemSpecification itemSpec : item.getSpecifications()) {
 				if (itemSpec.getSpecificationLabel() == null) {
-					Debug.verbose("Could not find a specific itemspecificaton for " + item.toString() + " using "
+					Debug.v("Could not find a specific itemspecificaton for " + item.toString() + " using "
 							+ itemSpec.toString());
 					itemSpecification = itemSpec;
 					break;

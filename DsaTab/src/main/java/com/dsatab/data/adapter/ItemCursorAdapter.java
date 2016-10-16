@@ -18,9 +18,9 @@ import com.h6ah4i.android.widget.advrecyclerview.selectable.ElevatingSelectableV
 
 public class ItemCursorAdapter extends CursorAdapter {
 
-	public ItemCursorAdapter(Context context, Cursor c) {
-		super(context, c,false);
-	}
+    public ItemCursorAdapter(Context context, Cursor c, int flags) {
+        super(context, c, flags);
+    }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
@@ -42,8 +42,7 @@ public class ItemCursorAdapter extends CursorAdapter {
         Util.applyRowStyle(viewHolder.itemView, cursor.getPosition());
     }
 
-
-	protected static class ItemViewHolder extends ElevatingSelectableViewHolder {
+    protected static class ItemViewHolder extends ElevatingSelectableViewHolder {
 
 		TextView text1, text2, text3;
         FlipCheckBox icon1;

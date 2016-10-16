@@ -722,7 +722,7 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 
 					if (info.value[0] != null && info.value[1] != null && info.value[2] != null) {
 						probability = DsaUtil.testTalent(info.value[0], info.value[1], info.value[2], taw);
-						// Debug.verbose("Change for success is :" + probability);
+						// Debug.v("Change for success is :" + probability);
 					}
 
 					break;
@@ -730,13 +730,13 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 
 					if (info.value[0] != null) {
 						probability = DsaUtil.testEigen(info.value[0], taw);
-						// Debug.verbose("Change for success is :" + probability);
+						// Debug.v("Change for success is :" + probability);
 					}
 					break;
 				case One:
 					if (info.value[0] != null) {
 						probability = DsaUtil.testEigen(info.value[0], taw);
-						// Debug.verbose("Change for success is :" + probability);
+						// Debug.v("Change for success is :" + probability);
 					}
 					break;
 				}
@@ -956,15 +956,15 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 				int effect3 = (info.value[2] + valueModifier) - info.dice[2];
 
 				if (effect1 < 0) {
-					// Debug.verbose("Dice1 fail result=" + effect1);
+					// Debug.v("Dice1 fail result=" + effect1);
 					effect += effect1;
 				}
 				if (effect2 < 0) {
-					// Debug.verbose("Dice2 fail result=" + effect2);
+					// Debug.v("Dice2 fail result=" + effect2);
 					effect += effect2;
 				}
 				if (effect3 < 0) {
-					// Debug.verbose("Dice3 fail result=" + effect3);
+					// Debug.v("Dice3 fail result=" + effect3);
 					effect += effect3;
 				}
 				break;
@@ -995,7 +995,7 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 				int dice1 = dices[0];
 				int dice2 = dices[1];
 
-				// Debug.verbose("Value Modifier (Be, Wm, Manuell) " + taw);
+				// Debug.v("Value Modifier (Be, Wm, Manuell) " + taw);
 
 				// check for success
 				int effect1 = info.value[0] - dice1 + taw;
@@ -1032,7 +1032,7 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 					}
 				}
 
-				Debug.verbose("Value Modifier (Be, Wm) " + taw);
+				Debug.v("Value Modifier (Be, Wm) " + taw);
 
 				// check for success
 				effect = (double) info.value[0] - info.dice[0] + taw;

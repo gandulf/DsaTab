@@ -1,6 +1,7 @@
 package com.dsatab.fragment;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,7 +19,6 @@ import com.dsatab.data.adapter.BaseRecyclerAdapter;
 import com.dsatab.data.adapter.TabInfoDraggableItemAdapter;
 import com.dsatab.util.Util;
 import com.dsatab.util.ViewUtils;
-import com.github.clans.fab.FloatingActionButton;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 

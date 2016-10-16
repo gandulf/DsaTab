@@ -124,7 +124,7 @@ public class MapTileAbsoluteFilesystemProvider extends MapTileFileStorageProvide
 
 			// if there's no sdcard then don't do anything
 			if (!isSdCardAvailable()) {
-				Debug.verbose("No sdcard - do nothing for tile: " + tile);
+				Debug.v("No sdcard - do nothing for tile: " + tile);
 				return null;
 			}
 
@@ -149,7 +149,7 @@ public class MapTileAbsoluteFilesystemProvider extends MapTileFileStorageProvide
 						return drawable;
 					} catch (LowMemoryException e) {
 						// low memory so empty the queue
-						Debug.warning("LowMemoryException downloading MapTile: " + tile + " : " + e);
+						Debug.w("LowMemoryException downloading MapTile: " + tile + " : " + e);
 						throw new CantContinueException(e);
 					}
 				} else {
@@ -164,7 +164,7 @@ public class MapTileAbsoluteFilesystemProvider extends MapTileFileStorageProvide
 						return null;
 					} catch (LowMemoryException e) {
 						// low memory so empty the queue
-						Debug.warning("LowMemoryException downloading MapTile: " + tile + " : " + e);
+						Debug.w("LowMemoryException downloading MapTile: " + tile + " : " + e);
 						throw new CantContinueException(e);
 					}
 				}

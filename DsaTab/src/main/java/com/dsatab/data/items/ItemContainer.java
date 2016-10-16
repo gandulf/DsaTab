@@ -74,7 +74,7 @@ public class ItemContainer<T extends ItemCard> extends ArrayList<T> {
 
 	public float getWeight() {
 		if (weightCache == null) {
-			Debug.trace("itemcontainer calculated weight");
+			Debug.d("itemcontainer calculated weight");
 			float weight = 0;
 
 			for (T item : this) {

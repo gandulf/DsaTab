@@ -1,147 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:auto="http://schemas.android.com/apk/res-auto"
-    xmlns:guilib="http://schemas.android.com/apk/com.gandulf.guilib"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:padding="@dimen/default_gap" >
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:padding="@dimen/default_gap">
 
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:columnCount="2"
         android:orientation="vertical"
-        android:useDefaultMargins="true" >
+        android:useDefaultMargins="true">
 
         <ImageView
             android:id="@+id/popup_edit_icon"
             style="?attr/spinnerStyle"
             android:layout_width="wrap_content"
-            android:minWidth="@dimen/icon_button_size"
             android:layout_height="@dimen/icon_button_size"
             android:layout_column="0"
             android:layout_gravity="bottom|right"
             android:layout_row="0"
-             />
+            android:minWidth="@dimen/icon_button_size"
+            />
 
-        <com.thebnich.floatinghintedittext.FloatingHintEditText
-            android:id="@+id/popup_edit_name"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="1"
             android:layout_gravity="bottom|fill_horizontal"
-            android:layout_row="0"
-            android:hint="@string/label_name"
-            android:inputType="text" >
+            android:layout_row="0">
 
-            <requestFocus />
-        </com.thebnich.floatinghintedittext.FloatingHintEditText>
+            <EditText
+                android:id="@+id/popup_edit_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/label_name"
+                android:inputType="text">
 
-        <com.thebnich.floatinghintedittext.FloatingHintEditText
-            android:id="@+id/popup_edit_description"
+                <requestFocus/>
+            </EditText>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_column="0"
-            android:layout_columnSpan="2"
-            android:hint="Beschreibung"
-            android:inputType="text"/>
-        
-        <com.thebnich.floatinghintedittext.FloatingHintEditText
-            android:id="@+id/popup_edit_footer"
+            android:layout_columnSpan="2">
+
+            <EditText
+                android:id="@+id/popup_edit_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Beschreibung"
+                android:inputType="text"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_footer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            
-            android:layout_column="0"
-            android:layout_columnSpan="2"
-            android:hint="Fußnote"
-            android:inputType="text"/>
-        
-        
+            android:layout_columnSpan="2">
+
+            <EditText
+                android:id="@+id/popup_edit_footer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Fußnote"
+                android:inputType="text"/>
+
+        </android.support.design.widget.TextInputLayout>
+
         <TextView
-            
             style="?android:attr/listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_columnSpan="2"
-            android:text="Probe" />
+            android:text="Probe"/>
 
-        <com.thebnich.floatinghintedittext.FloatingHintEditText
-            android:id="@+id/popup_edit_attributes"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_attributes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            
-            android:layout_column="0"
-            android:layout_columnSpan="2"
-            android:hint="Attribute (MU/KL/IN)"
-            android:inputType="text"/>
-        
-        
-        <com.thebnich.floatinghintedittext.FloatingHintEditText
-            android:id="@+id/popup_edit_be"
+            android:layout_columnSpan="2">
+
+            <EditText
+                android:id="@+id/popup_edit_attributes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Attribute (MU/KL/IN)"
+                android:inputType="text"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_be"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            
-            android:layout_column="0"
-            android:layout_columnSpan="2"
-            android:hint="BE (BE-2)"
-            android:inputType="text"/>
-        
-        
-        <com.thebnich.floatinghintedittext.FloatingHintEditText
-            android:id="@+id/popup_edit_value"
+            android:layout_columnSpan="2">
+
+            <EditText
+                android:id="@+id/popup_edit_be"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="BE (BE-2)"
+                android:inputType="text"/>
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            
-            android:layout_column="0"
-            android:layout_columnSpan="2"
-            android:hint="Wert"
-            android:inputType="number"/>
-        
-        
+            android:layout_columnSpan="2">
+
+            <EditText
+                android:id="@+id/popup_edit_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Wert"
+                android:inputType="number"/>
+        </android.support.design.widget.TextInputLayout>
+
         <TextView
             style="@style/TextLabel.Float"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_columnSpan="2"
             android:labelFor="@+id/popup_edit_probe_type"
-            android:text="Probenart" />
+            android:text="Probenart"/>
 
         <Spinner
             android:id="@+id/popup_edit_probe_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="0dp"
-            android:layout_marginTop="0dp"
             android:layout_columnSpan="2"
-            android:layout_gravity="fill_horizontal" >
+            android:layout_gravity="fill_horizontal"
+            android:layout_marginTop="0dp"
+            android:paddingTop="0dp">
         </Spinner>
-        
+
         <TextView
             style="@style/TextLabel.Float"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_columnSpan="2"
             android:labelFor="@+id/popup_edit_modificator_type"
-            android:text="Betroffene Modifikatoren" />
+            android:text="Betroffene Modifikatoren"/>
 
         <Spinner
             android:id="@+id/popup_edit_modificator_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            
-            android:paddingTop="0dp"
-            android:layout_marginTop="0dp"
+
             android:layout_columnSpan="2"
-            android:layout_gravity="fill_horizontal" >
+            android:layout_gravity="fill_horizontal"
+            android:layout_marginTop="0dp"
+            android:paddingTop="0dp">
         </Spinner>
-        
+
         <Space
             android:id="@+id/space1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_column="0"
             android:layout_columnSpan="2"
             android:layout_gravity="left|top"
             />

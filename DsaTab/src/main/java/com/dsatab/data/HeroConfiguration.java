@@ -154,7 +154,7 @@ public class HeroConfiguration {
 						TabInfo info = new TabInfo(tab);
 						tabInfos.add(info);
 					} catch (ClassNotFoundException e) {
-						Debug.error(e);
+						Debug.e(e);
 					}
 				}
 			} else {
@@ -224,7 +224,7 @@ public class HeroConfiguration {
                         WoundAttribute info = new WoundAttribute(hero, tab);
                         wounds.add(info);
                     } catch (Exception e) {
-                        Debug.warning("Unknown WoundAttribute, skipping it: " + tab);
+                        Debug.w("Unknown WoundAttribute, skipping it: " + tab);
                     }
                 }
             } else {
@@ -245,7 +245,7 @@ public class HeroConfiguration {
                             ArmorAttribute info = new ArmorAttribute(hero, tab);
                             armorAttributes[s].add(info);
                         } catch (Exception e) {
-                            Debug.warning("Unknown ArmorAttribute, skipping it: " + tab);
+                            Debug.w("Unknown ArmorAttribute, skipping it: " + tab);
                         }
                     }
                 }
@@ -262,7 +262,7 @@ public class HeroConfiguration {
                         CustomAttribute info = new CustomAttribute(hero, tab);
                         attributes.add(info);
                     } catch (Exception e) {
-                        Debug.warning("Unknown Attribute, skipping it: " + tab);
+                        Debug.w("Unknown Attribute, skipping it: " + tab);
                     }
                 }
             } else {
@@ -279,7 +279,7 @@ public class HeroConfiguration {
                         MetaTalent info = new MetaTalent(hero, tab);
                         metaTalents.add(info);
                     } catch (Exception e) {
-                        Debug.error(e);
+                        Debug.e(e);
                     }
                 }
             } else {

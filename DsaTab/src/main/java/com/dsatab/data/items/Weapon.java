@@ -133,7 +133,7 @@ public class Weapon extends CloseCombatItem {
 			result += dice.constant;
 			// only multiply weapon damage in case of successOne
 			if (successOne) {
-				// Debug.verbose("ONE *2" + result);
+				// Debug.v("ONE *2" + result);
 				result *= 2;
 			}
 
@@ -141,7 +141,7 @@ public class Weapon extends CloseCombatItem {
 			result += getKKModifier(kk);
 			result += modifier;
 
-			// Debug.verbose("const=" + dice.constant + ",mod=" + modifier + ",kk=" + getKKModifier(kk));
+			// Debug.v("const=" + dice.constant + ",mod=" + modifier + ",kk=" + getKKModifier(kk));
 		}
 
 		return result;

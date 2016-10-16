@@ -1,5 +1,11 @@
 
 <changelog>
+
+    <release version="4.5.3" versioncode="114">
+        <fix>Absturz bei der Gegenstandssuche?</fix>
+        <fix>Absturz beim Tabwechsel</fix>
+    </release>
+
     <release version="4.5.2" versioncode="112">
         <fix>Fehler beim Wiederherstellen der App</fix>
         <change>Einstellungen auf neues Framework von Google umgestellt</change>

@@ -206,12 +206,12 @@ public class WoundModificator extends AbstractModificator {
 
 								if (w.isTwoHanded()) {
 									modifier += -1 * getValue();
-									// Debug.verbose("Zweihandwaffen Handwunde AT/PA-1*"
+									// Debug.v("Zweihandwaffen Handwunde AT/PA-1*"
 									// + getValue());
 									break;
 								} else {
 									if (woundAttribute.getPosition() == Position.LinkerArm) {
-										// Debug.verbose("Angriff/Parade mit Hauptwaffe und Wunde auf linkem Arm ignoriert");
+										// Debug.v("Angriff/Parade mit Hauptwaffe und Wunde auf linkem Arm ignoriert");
 										break;
 									}
 								}
@@ -220,12 +220,12 @@ public class WoundModificator extends AbstractModificator {
 								// Shield w = (Shield)
 								// combatProbe.getEquippedItem().getItem();
 								if (woundAttribute.getPosition() == Position.RechterArm) {
-									// Debug.verbose("Angriff/Parade mit Schildwaffe und Wunde auf rechtem Arm ignoriert");
+									// Debug.v("Angriff/Parade mit Schildwaffe und Wunde auf rechtem Arm ignoriert");
 									break;
 								}
 							}
 						}
-						// Debug.verbose(" Wunde auf Arm AT/PA -2*" +
+						// Debug.v(" Wunde auf Arm AT/PA -2*" +
 						// getValue());
 						modifier += -2 * getValue();
 						break;

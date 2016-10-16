@@ -335,7 +335,7 @@ public abstract class BaseRecyclerFragment extends BaseFragment implements BaseR
                     origFabVisibility = fab.getVisibility();
                     fab.setVisibility(View.GONE);
                 }
-                View fabMenu = fragment.getBaseActivity().findViewById(R.id.fab_menu);
+                View fabMenu = fragment.getBaseActivity().findViewById(R.id.fabtoolbar);
                 if (fabMenu != null) {
                     origFabMenuVisibility = fabMenu.getVisibility();
                     fabMenu.setVisibility(View.GONE);
@@ -366,7 +366,7 @@ public abstract class BaseRecyclerFragment extends BaseFragment implements BaseR
                 if (fab != null) {
                     fab.setVisibility(origFabVisibility);
                 }
-                View fabMenu = fragment.getBaseActivity().findViewById(R.id.fab_menu);
+                View fabMenu = fragment.getBaseActivity().findViewById(R.id.fabtoolbar);
                 if (fabMenu != null) {
                     fabMenu.setVisibility(origFabMenuVisibility);
                 }

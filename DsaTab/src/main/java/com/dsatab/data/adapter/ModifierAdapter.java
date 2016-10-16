@@ -16,8 +16,8 @@ import android.widget.TextView;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.modifier.Modifier;
+import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
-import com.gandulf.guilib.util.Debug;
 import com.gandulf.guilib.view.SeekBarEx;
 import com.gandulf.guilib.view.SeekBarEx.SeekBarLabelRenderer;
 
@@ -116,7 +116,7 @@ public class ModifierAdapter extends ListRecyclerAdapter<ModifierAdapter.Modifie
 
                 int nextStep = Math.abs(modifier.getModifier()) + (5 - modifier.getModifier() % 5);
                 nextStep = Math.max(10, nextStep);
-                Debug.verbose("mod = " + modifier.getModifier() + ", next" + nextStep);
+                Debug.v("mod = " + modifier.getModifier() + ", next" + nextStep);
 
                 if (-modifier.getModifier() < 0) {
                     holder.seekBar.setMin(-nextStep);

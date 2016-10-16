@@ -67,11 +67,7 @@
         <item name="listItemBackground">@drawable/list_background_dark</item>
         <item name="slidingPaneShadowBackground">@drawable/slider_shadow</item>
 
-        <item name="floatingHintEditTextStyle">@style/FloatingHintEditText</item>
         <item name="floatingHintTextViewStyle">@style/FloatingHintTextView</item>
-
-        <item name="floatingActionButtonStyle">@style/FloatingActionButton</item>
-        <item name="floatingActionMenuStyle">@style/FloatingActionMenu</item>
 
         <item name="flipCheckBoxStyle">@style/FlipCheckBoxStyle.Dsa.Dark</item>
         <item name="flipFrontImageStyle">@style/FlipFrontImageStyle.Dark</item>

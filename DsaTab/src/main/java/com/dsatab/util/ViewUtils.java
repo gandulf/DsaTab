@@ -30,6 +30,11 @@ public class ViewUtils {
         return (x >= left) && (x <= right) && (y >= top) && (y <= bottom);
     }
 
+    public static Drawable circleIcon(Context context, MaterialDrawableBuilder.IconValue iconValue) {
+        int iconColor = Util.getThemeColors(context, R.attr.circleTint);
+        return MaterialDrawableBuilder.with(context).setIcon(iconValue).setToActionbarSize().setColor(iconColor).build();
+    }
+
     public static Drawable circleIcon(Context context, Uri drawableUri) {
         Drawable drawable = ResUtil.getDrawableByUri(context, drawableUri);
         if (drawable!=null) {
@@ -39,6 +44,7 @@ public class ViewUtils {
         }
         return drawable;
     }
+
     public static Drawable circleIcon(Context context, int drawableId) {
         VectorDrawableCompat drawable = VectorDrawableCompat.create(context.getResources(), drawableId,context.getTheme());
         if (drawable!=null) {
@@ -84,7 +90,7 @@ public class ViewUtils {
             View contentView = rootView.findViewById(android.R.id.content);
             Snackbar.make(contentView !=null ? contentView: rootView, text, duration).show();
         } else {
-            com.gandulf.guilib.util.Debug.warning(text.toString());
+            Debug.w(text.toString());
         }
     }
 
@@ -97,7 +103,7 @@ public class ViewUtils {
             View contentView = actitivity.getView().findViewById(android.R.id.content);
             Snackbar.make(contentView !=null ? contentView: actitivity.getView(), text, duration).show();
         } else {
-            com.gandulf.guilib.util.Debug.warning(text.toString());
+            Debug.w(text.toString());
         }
     }
 

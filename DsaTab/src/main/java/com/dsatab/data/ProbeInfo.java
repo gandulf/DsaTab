@@ -151,26 +151,26 @@ public class ProbeInfo implements Cloneable, Serializable {
 					int beMinus = Util.parseInteger(beModifier.substring(3));
 					beFlag = BE_FLAG_SUBTRACTION + Math.abs(beMinus);
 				} catch (NumberFormatException e) {
-					Debug.error(e);
+					Debug.e(e);
 				}
 			} else if (beModifier.startsWith("BE+")) {
 				try {
 					int beAdd = Util.parseInteger(beModifier.substring(3));
 					beFlag = BE_FLAG_ADDITION + Math.abs(beAdd);
 				} catch (NumberFormatException e) {
-					Debug.error(e);
+					Debug.e(e);
 				}
 			} else if (beModifier.startsWith("BEX")) {
 				try {
 					int beMulti = Util.parseInteger(beModifier.substring(3));
 					beFlag = BE_FLAG_MULTIPLY + beMulti;
 				} catch (NumberFormatException e) {
-					Debug.error(e);
+					Debug.e(e);
 				}
 			} else if ("0->BE".equalsIgnoreCase(beModifier)) {
 				beFlag = BE_FLAG_NONE;
 			} else {
-				Debug.warning("Could not parse beModifier " + beModifier);
+				Debug.w("Could not parse beModifier " + beModifier);
 			}
 		}
 	}
@@ -281,7 +281,7 @@ public class ProbeInfo implements Cloneable, Serializable {
 		try {
 			return (ProbeInfo) super.clone();
 		} catch (CloneNotSupportedException e) {
-			Debug.error(e);
+			Debug.e(e);
 			return null;
 		}
 	}

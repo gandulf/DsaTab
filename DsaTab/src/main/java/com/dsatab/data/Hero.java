@@ -490,7 +490,7 @@ public class Hero extends AbstractBeing {
 							}
 							adv.getValues().remove(i);
 						} else {
-							Debug.error("Could not find talent for spezialisierung " + spezialisierungsName);
+							Debug.e("Could not find talent for spezialisierung " + spezialisierungsName);
 						}
 					}
 				}
@@ -516,7 +516,7 @@ public class Hero extends AbstractBeing {
 							}
 							adv.getValues().remove(i);
 						} else {
-							Debug.error("Could not find spell for spezialisierung " + spezialisierungsName);
+							Debug.e("Could not find spell for spezialisierung " + spezialisierungsName);
 						}
 					}
 				}
@@ -538,7 +538,7 @@ public class Hero extends AbstractBeing {
 					talent.addFlag(Flags.Begabung);
 					iter.remove();
 				} else {
-					Debug.error("Could not find talent for begabung " + value);
+					Debug.e("Could not find talent for begabung " + value);
 				}
 			}
 			if (adv.getValues().isEmpty()) {
@@ -554,7 +554,7 @@ public class Hero extends AbstractBeing {
 					talent.addFlag(Flags.Talentschub);
 					iter.remove();
 				} else {
-					Debug.error("Could not find talent for talentschub " + value);
+					Debug.e("Could not find talent for talentschub " + value);
 				}
 			}
 			if (adv.getValues().isEmpty()) {
@@ -571,7 +571,7 @@ public class Hero extends AbstractBeing {
 						talent.addFlag(Flags.Meisterhandwerk);
 						iter.remove();
 					} else {
-						Debug.error("Could not find talent for meisterhandwerk " + value);
+						Debug.e("Could not find talent for meisterhandwerk " + value);
 					}
 				} catch (TalentTypeUnknownException e) {
 					// Meisterhandwerk can also be used for attributes in this case we have no special handling for it
@@ -592,10 +592,10 @@ public class Hero extends AbstractBeing {
 						talentGroup.addFlag(Flags.Begabung);
 						iter.remove();
 					} else {
-						Debug.error("Could not find talentgroup for begabung " + value);
+						Debug.e("Could not find talentgroup for begabung " + value);
 					}
 				} catch (Exception e) {
-					Debug.warning("Begabung für [Talentgruppe], unknown talentgroup:" + value);
+					Debug.w("Begabung für [Talentgruppe], unknown talentgroup:" + value);
 				}
 			}
 			if (adv.getValues().isEmpty()) {
@@ -611,7 +611,7 @@ public class Hero extends AbstractBeing {
 					spell.addFlag(com.dsatab.data.Spell.Flags.Begabung);
 					iter.remove();
 				} else {
-					Debug.error("Could not find spell for begabung " + value);
+					Debug.e("Could not find spell for begabung " + value);
 				}
 			}
 			if (adv.getValues().isEmpty()) {
@@ -627,7 +627,7 @@ public class Hero extends AbstractBeing {
 					art.addFlag(com.dsatab.data.Art.Flags.Begabung);
 					iter.remove();
 				} else {
-					Debug.error("Could not find art for begabung " + value);
+					Debug.e("Could not find art for begabung " + value);
 				}
 			}
 			if (adv.getValues().isEmpty()) {
@@ -643,7 +643,7 @@ public class Hero extends AbstractBeing {
 					spell.addFlag(com.dsatab.data.Spell.Flags.ÜbernatürlicheBegabung);
 					iter.remove();
 				} else {
-					Debug.error("Could not find Spell for ÜbernatürlicheBegabung " + value);
+					Debug.e("Could not find Spell for ÜbernatürlicheBegabung " + value);
 				}
 			}
 			if (adv.getValues().isEmpty()) {
@@ -732,7 +732,7 @@ public class Hero extends AbstractBeing {
 	}
 
 	public void fireActiveSetChangedEvent(int newSet, int oldSet) {
-		Debug.trace("ON set changed from " + oldSet + " to " + newSet);
+		Debug.d("ON set changed from " + oldSet + " to " + newSet);
 		for (HeroInventoryChangedListener l : itemListener) {
 			l.onActiveSetChanged(newSet, oldSet);
 		}
@@ -811,7 +811,7 @@ public class Hero extends AbstractBeing {
 					for (EquippedItem equippedItem : getEquippedItems(i)) {
 
 						if (equippedItem.getItem() == null) {
-							Debug.warning("Empty EquippedItem found during item delete:" + equippedItem.getName()
+							Debug.w("Empty EquippedItem found during item delete:" + equippedItem.getName()
 									+ " - " + equippedItem.getItem().getName());
 							continue;
 						}
@@ -1699,7 +1699,7 @@ public class Hero extends AbstractBeing {
 	}
 
 	public Spell getSpell(String spellName) {
-		Debug.trace("getSpell " + spellName);
+		Debug.d("getSpell " + spellName);
 		return spellsByName.get(spellName);
 	}
 
@@ -1725,7 +1725,7 @@ public class Hero extends AbstractBeing {
 	}
 
 	public Item getItem(String name, String slot) {
-		Debug.trace("getItem " + name + ", slot=" + slot);
+		Debug.d("getItem " + name + ", slot=" + slot);
 
 		for (ItemContainer<Item> itemContainer : getItemContainers()) {
 			for (Item item : itemContainer.getItems()) {
@@ -1754,7 +1754,7 @@ public class Hero extends AbstractBeing {
 	}
 
 	public BaseCombatTalent getCombatTalent(String talentName) {
-		Debug.trace("getCombatTalent " + talentName);
+		Debug.d("getCombatTalent " + talentName);
 		TalentType type = TalentType.byXmlName(talentName);
 		return getCombatTalent(type);
 	}
@@ -2003,7 +2003,7 @@ public class Hero extends AbstractBeing {
 	}
 
 	public Animal getAnimal(String name, String slot) {
-		Debug.trace("getAnimal " + name + ", slot=" + slot);
+		Debug.d("getAnimal " + name + ", slot=" + slot);
 
 		for (Animal animal : getAnimals()) {
 			if (animal.getName().equals(name)) {
