@@ -1,0 +1,45 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="FlipRearImageStyle" parent="@android:style/Widget">
+        <item name="android:scaleType">centerInside</item>
+        <item name="srcCompat">@drawable/ic_done_white_24px</item>
+        <item name="android:background">@drawable/fcb_circle_back</item>
+        <item name="android:tint">@color/fcb__tint_color</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:contentDescription">@null</item>
+    </style>
+
+    <style name="FlipRearImageStyle.Dark" parent="@style/FlipRearImageStyle">
+        <item name="android:background">@drawable/fcb_circle_back_dark</item>
+        <item name="android:tint">@color/fcb__tint_color_dark</item>
+    </style>
+
+    <style name="FlipFrontImageStyle" parent="@android:style/Widget">
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:background">@drawable/fcb_circle_front</item>
+        <item name="android:tint">@color/fcb__tint_color</item>
+        <item name="android:contentDescription">@null</item>
+    </style>
+
+    <style name="FlipFrontImageStyle.Dark" parent="@style/FlipFrontImageStyle">
+        <item name="android:background">@drawable/fcb_circle_front_dark</item>
+        <item name="android:tint">@color/fcb__tint_color_dark</item>
+    </style>
+
+    <style name="FlipCheckBoxStyle">
+        <item name="checked">false</item>
+        <item name="showAnimations">true</item>
+        <item name="inAnimation">@anim/grow_from_middle</item>
+        <item name="outAnimation">@anim/shrink_to_middle</item>
+        <item name="flipAnimationDuration">150</item>
+        <item name="frontBackgroundDrawable">@drawable/fcb_circle_front</item>
+        <item name="frontClickableBackgroundDrawable">@drawable/fcb_circle_front</item>
+        <item name="android:tint">@color/fcb__tint_color</item>
+    </style>
+
+    <style name="FlipCheckBoxStyle.Dark" parent="@style/FlipCheckBoxStyle">
+        <item name="frontBackgroundDrawable">@drawable/fcb_circle_front_dark</item>
+        <item name="frontClickableBackgroundDrawable">@drawable/fcb_circle_front_dark</item>
+        <item name="android:tint">@color/fcb__tint_color_dark</item>
+    </style>
+</resources>

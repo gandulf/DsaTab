@@ -18,8 +18,8 @@ import com.dsatab.R;
 import com.dsatab.data.modifier.Modifier;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
-import com.gandulf.guilib.view.SeekBarEx;
-import com.gandulf.guilib.view.SeekBarEx.SeekBarLabelRenderer;
+import com.dsatab.view.SeekBarEx;
+import com.dsatab.view.SeekBarEx.SeekBarLabelRenderer;
 
 import java.util.Collection;
 

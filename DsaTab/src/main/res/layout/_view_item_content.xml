@@ -19,7 +19,7 @@
         android:scaleType="fitCenter"
         tools:src="@drawable/vd_trousers"/>
 
-    <com.thebnich.floatinghintedittext.FloatingHintTextView
+    <com.dsatab.view.FloatingHintTextView
         android:id="@+id/popup_edit_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
         android:layout_row="0"
         android:hint="@string/label_name"/>
 
-    <com.thebnich.floatinghintedittext.FloatingHintTextView
+    <com.dsatab.view.FloatingHintTextView
         android:id="@+id/popup_edit_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
         android:layout_gravity="fill_horizontal"
         android:layout_row="2">
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/popup_edit_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
             android:layout_weight="1"
             android:hint="@string/label_price"/>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/popup_edit_weight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
             android:hint="@string/label_weight"/>
     </LinearLayout>
 
-    <com.thebnich.floatinghintedittext.FloatingHintTextView
+    <com.dsatab.view.FloatingHintTextView
         android:id="@+id/popup_edit_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
         android:hint="@string/label_count"/>
 
 
-    <com.thebnich.floatinghintedittext.FloatingHintTextView
+    <com.dsatab.view.FloatingHintTextView
         android:id="@+id/popup_edit_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

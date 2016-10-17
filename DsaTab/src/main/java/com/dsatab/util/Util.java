@@ -1,7 +1,6 @@
 package com.dsatab.util;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +16,7 @@ import android.os.Environment;
 import android.provider.MediaStore.Images.ImageColumns;
 import android.provider.MediaStore.Images.Media;
 import android.provider.MediaStore.MediaColumns;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.text.Html;
 import android.text.Spanned;
@@ -28,8 +28,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.dsatab.DsaTabApplication;
@@ -470,16 +468,6 @@ public class Util {
             levelListDrawable.setLevel(level);
         }
 
-	}
-
-	public static void applyRowStyle(TableLayout tableLayout) {
-		int rowIndex = 0;
-		for (int i = 0; i < tableLayout.getChildCount(); i++) {
-			TableRow row = (TableRow) tableLayout.getChildAt(i);
-			if (row.getVisibility() != View.GONE) {
-				applyRowStyle(row, rowIndex++);
-			}
-		}
 	}
 
 	public static void applyRowStyle(View row, int position) {

@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.dsatab.R;
@@ -122,8 +121,6 @@ public class AnimalFragment extends BaseProfileFragment {
         tfLabelINI = (TextView) root.findViewById(R.id.attr_ini_label);
         tfLabelLO = (TextView) root.findViewById(R.id.attr_lo_label);
         tfLabelRS = (TextView) root.findViewById(R.id.attr_rs_label);
-
-        Util.applyRowStyle((TableLayout) root.findViewById(R.id.gen_attributes));
 
         return root;
     }

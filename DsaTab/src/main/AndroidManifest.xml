@@ -85,7 +85,7 @@
         </activity>
 
         <receiver
-            android:name="com.gandulf.guilib.download.DownloadBroadcastReceiver"
+            android:name=".util.download.DownloadBroadcastReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
@@ -93,7 +93,7 @@
         </receiver>
 
         <service
-            android:name="com.gandulf.guilib.download.UnzipIntentService"
+            android:name=".util.download.UnzipIntentService"
             android:exported="false">
         </service>
 

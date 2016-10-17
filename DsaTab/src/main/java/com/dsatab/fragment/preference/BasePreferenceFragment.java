@@ -29,7 +29,7 @@ import com.dsatab.util.Hint;
 import com.dsatab.util.Util;
 import com.dsatab.util.ViewUtils;
 import com.dsatab.view.PreferenceWithButton;
-import com.gandulf.guilib.download.Downloader;
+import com.dsatab.util.download.Downloader;
 
 import java.io.File;
 import java.io.FileFilter;

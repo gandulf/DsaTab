@@ -45,7 +45,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/dice_talent_value"
             style="@style/TextValue"
             android:layout_width="wrap_content"
@@ -56,14 +56,14 @@
             android:paddingRight="@dimen/default_gap"
             android:textStyle="bold"/>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/dice_value"
             style="@style/TextValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="64dp"/>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/dice_effect_value"
             style="@style/TextValue"
             android:layout_width="wrap_content"

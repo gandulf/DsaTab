@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Default color to apply onto front view when none is provided -->
+    <color name="fcb__front_color">#888888</color>
+    <color name="fcb__front_color_dark">#888888</color>
+    <!-- Default color to apply onto rear view when none is provided -->
+    <color name="fcb__back_color">#99cc00</color>
+    <color name="fcb__back_color_dark">#336600</color>
+
+    <color name="fcb__tint_color">#ffffff</color>
+    <color name="fcb__tint_color_dark">#000000</color>
+
+</resources>

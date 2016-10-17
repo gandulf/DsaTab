@@ -27,7 +27,7 @@
                 app:orientation="horizontal"
                 app:useDefaultMargins="true">
 
-                <com.thebnich.floatinghintedittext.FloatingHintTextView
+                <com.dsatab.view.FloatingHintTextView
                     android:id="@+id/gen_ausbildung"
                     style="@style/TextValue.Small"
                     android:ellipsize="middle"
@@ -36,9 +36,9 @@
                     android:maxLines="1"
                     app:layout_columnSpan="2"
                     app:layout_gravity="fill_horizontal">
-                </com.thebnich.floatinghintedittext.FloatingHintTextView>
+                </com.dsatab.view.FloatingHintTextView>
 
-                <com.thebnich.floatinghintedittext.FloatingHintTextView
+                <com.dsatab.view.FloatingHintTextView
                     android:id="@+id/gen_titel"
                     style="@style/TextValue.Small"
                     android:ellipsize="middle"
@@ -48,7 +48,7 @@
                     app:layout_columnSpan="2"
                     app:layout_gravity="fill_horizontal"/>
 
-                <com.thebnich.floatinghintedittext.FloatingHintTextView
+                <com.dsatab.view.FloatingHintTextView
                     android:id="@+id/gen_stand"
                     style="@style/TextValue.Small"
                     android:ellipsize="middle"
@@ -58,56 +58,56 @@
                     app:layout_columnSpan="2"
                     app:layout_gravity="fill_horizontal"/>
 
-                <com.thebnich.floatinghintedittext.FloatingHintTextView
+                <com.dsatab.view.FloatingHintTextView
                     android:id="@+id/gen_rasse"
                     style="@style/TextValue.Small"
                     android:hint="@string/label_rasse"
                     app:layout_columnSpan="2"
                     app:layout_gravity="fill_horizontal"/>
 
-                <com.thebnich.floatinghintedittext.FloatingHintTextView
+                <com.dsatab.view.FloatingHintTextView
                     android:id="@+id/gen_kultur"
                     style="@style/TextValue.Small"
                     android:hint="@string/label_kultur"
                     app:layout_columnSpan="2"
                     app:layout_gravity="fill_horizontal"/>
 
-                <com.thebnich.floatinghintedittext.FloatingHintTextView
+                <com.dsatab.view.FloatingHintTextView
                     android:id="@+id/gen_gewicht"
                     style="@style/TextValue.Small"
                     android:hint="@string/label_gewicht"
                     android:maxLines="1"
                     app:layout_columnWeight="1"
                     app:layout_gravity="fill_horizontal">
-                </com.thebnich.floatinghintedittext.FloatingHintTextView>
+                </com.dsatab.view.FloatingHintTextView>
 
-                <com.thebnich.floatinghintedittext.FloatingHintTextView
+                <com.dsatab.view.FloatingHintTextView
                     android:id="@+id/gen_groesse"
                     style="@style/TextValue.Small"
                     android:hint="@string/label_groesse"
                     android:maxLines="1"
                     app:layout_columnWeight="1"
                     app:layout_gravity="fill_horizontal">
-                </com.thebnich.floatinghintedittext.FloatingHintTextView>
+                </com.dsatab.view.FloatingHintTextView>
 
-                <com.thebnich.floatinghintedittext.FloatingHintTextView
+                <com.dsatab.view.FloatingHintTextView
                     android:id="@+id/gen_haar_augen"
                     style="@style/TextValue.Small"
                     android:hint="@string/label_haar_augen_farbe"
                     android:maxLines="1"
                     app:layout_columnWeight="1">
-                </com.thebnich.floatinghintedittext.FloatingHintTextView>
+                </com.dsatab.view.FloatingHintTextView>
 
-                <com.thebnich.floatinghintedittext.FloatingHintTextView
+                <com.dsatab.view.FloatingHintTextView
                     android:id="@+id/gen_alter"
                     style="@style/TextValue.Small"
                     android:ellipsize="middle"
                     android:hint="@string/label_alter"
                     android:maxLines="1"
                     app:layout_columnWeight="1">
-                </com.thebnich.floatinghintedittext.FloatingHintTextView>
+                </com.dsatab.view.FloatingHintTextView>
 
-                <com.thebnich.floatinghintedittext.FloatingHintTextView
+                <com.dsatab.view.FloatingHintTextView
                     android:id="@+id/gen_aussehen"
                     style="@style/TextValue.Small"
                     android:ellipsize="middle"
@@ -115,27 +115,27 @@
                     android:maxLines="1"
                     app:layout_columnSpan="2"
                     app:layout_gravity="fill_horizontal">
-                </com.thebnich.floatinghintedittext.FloatingHintTextView>
+                </com.dsatab.view.FloatingHintTextView>
 
-                <com.thebnich.floatinghintedittext.FloatingHintTextView
+                <com.dsatab.view.FloatingHintTextView
                     android:id="@+id/attr_st"
                     style="@style/TextValue.Small"
                     android:ellipsize="none"
                     android:hint="@string/label_st"
                     android:maxLines="1"
                     app:layout_columnWeight="1">
-                </com.thebnich.floatinghintedittext.FloatingHintTextView>
+                </com.dsatab.view.FloatingHintTextView>
 
-                <com.thebnich.floatinghintedittext.FloatingHintTextView
+                <com.dsatab.view.FloatingHintTextView
                     android:id="@+id/attr_ws"
                     style="@style/TextValue.Small"
                     android:ellipsize="none"
                     android:hint="@string/label_ws"
                     android:maxLines="1"
                     app:layout_columnWeight="1">
-                </com.thebnich.floatinghintedittext.FloatingHintTextView>
+                </com.dsatab.view.FloatingHintTextView>
 
-                <com.thebnich.floatinghintedittext.FloatingHintTextView
+                <com.dsatab.view.FloatingHintTextView
                     android:id="@+id/attr_gs"
                     style="@style/TextValue.Small"
                     android:ellipsize="none"
@@ -144,7 +144,7 @@
                     app:layout_column="0"
                     app:layout_columnSpan="2"
                     app:layout_gravity="fill_horizontal">
-                </com.thebnich.floatinghintedittext.FloatingHintTextView>
+                </com.dsatab.view.FloatingHintTextView>
             </android.support.v7.widget.GridLayout>
 
             <net.steamcrafted.materialiconlib.MaterialIconView

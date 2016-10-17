@@ -47,7 +47,7 @@ import com.dsatab.util.ClickSpan.OnSpanClickListener;
 import com.dsatab.util.StyleableSpannableStringBuilder;
 import com.dsatab.util.Util;
 import com.dsatab.util.ViewUtils;
-import com.gandulf.guilib.download.Downloader;
+import com.dsatab.util.download.Downloader;
 
 import java.io.File;
 import java.util.Arrays;

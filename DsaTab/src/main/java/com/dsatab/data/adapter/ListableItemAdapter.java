@@ -89,7 +89,7 @@ import com.dsatab.view.listener.ProbeListener;
 import com.dsatab.view.listener.TargetListener;
 import com.franlopez.flipcheckbox.FlipCheckBox;
 import com.dsatab.util.ResUtil;
-import com.gandulf.guilib.view.SeekBarEx;
+import com.dsatab.view.SeekBarEx;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 

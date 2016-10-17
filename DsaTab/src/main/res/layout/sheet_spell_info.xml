@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/popup_spell_castduration"
             style="@style/TextValue"
             android:layout_width="match_parent"
@@ -49,7 +49,7 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/popup_spell_probe"
             style="@style/TextValue"
             android:layout_width="match_parent"
@@ -71,7 +71,7 @@
                 />
         </android.support.design.widget.TextInputLayout>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/popup_spell_costs"
             style="@style/TextValue"
             android:layout_width="match_parent"
@@ -93,13 +93,13 @@
                 />
         </android.support.design.widget.TextInputLayout>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/popup_spell_target"
             style="@style/TextValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/label_target">
-        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+        </com.dsatab.view.FloatingHintTextView>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/popup_spell_target_layout"
@@ -116,13 +116,13 @@
                 />
         </android.support.design.widget.TextInputLayout>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/popup_spell_range"
             style="@style/TextValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/label_range">
-        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+        </com.dsatab.view.FloatingHintTextView>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/popup_spell_range_layout"
@@ -139,13 +139,13 @@
                 />
         </android.support.design.widget.TextInputLayout>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/popup_spell_effectduration"
             style="@style/TextValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/label_effect_duration">
-        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+        </com.dsatab.view.FloatingHintTextView>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/popup_spell_effectduration_layout"
@@ -162,13 +162,13 @@
                 />
         </android.support.design.widget.TextInputLayout>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/popup_spell_effect"
             style="@style/TextValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/label_effect">
-        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+        </com.dsatab.view.FloatingHintTextView>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/popup_spell_effect_layout"
@@ -185,7 +185,7 @@
                 />
         </android.support.design.widget.TextInputLayout>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/popup_spell_merkmal"
             style="@style/TextValue"
             android:layout_width="match_parent"
@@ -207,13 +207,13 @@
                 />
         </android.support.design.widget.TextInputLayout>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/popup_spell_representation"
             style="@style/TextValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/label_representation">
-        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+        </com.dsatab.view.FloatingHintTextView>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/popup_spell_representation_layout"
@@ -230,13 +230,13 @@
                 />
         </android.support.design.widget.TextInputLayout>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/popup_spell_source"
             style="@style/TextValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/label_source">
-        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+        </com.dsatab.view.FloatingHintTextView>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/popup_spell_source_layout"
@@ -253,13 +253,13 @@
                 />
         </android.support.design.widget.TextInputLayout>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/popup_spell_complexity"
             style="@style/TextValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/label_complexity">
-        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+        </com.dsatab.view.FloatingHintTextView>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/popup_spell_complexity_layout"
@@ -285,13 +285,13 @@
             android:text="@string/label_character_specific_values">
         </TextView>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/popup_spell_comment"
             style="@style/TextValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/label_comment">
-        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+        </com.dsatab.view.FloatingHintTextView>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/popup_spell_comment_layout"
@@ -308,13 +308,13 @@
                 />
         </android.support.design.widget.TextInputLayout>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/popup_spell_variant"
             style="@style/TextValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/label_variant">
-        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+        </com.dsatab.view.FloatingHintTextView>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/popup_spell_variant_layout"

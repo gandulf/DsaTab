@@ -69,9 +69,6 @@ dependencies {
 
     compile 'com.github.paolorotolo:appintro:4.1.0'
 
-    compile project(':guiLib')
-    // compile fileTree(dir: 'libs')
-
     // needed to read xml dom in testcase
     androidTestCompile('com.android.support.test:runner:0.4.1') {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -101,8 +98,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 24
 
-        versionName "4.5.3"
-        versionCode 114
+        versionName "4.5.4"
+        versionCode 115
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 

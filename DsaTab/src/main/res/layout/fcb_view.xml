@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge android:id="@+id/viewFlipper"
+       xmlns:android="http://schemas.android.com/apk/res/android"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+    <!-- Front -->
+    <ImageView
+        android:id="@+id/include_front"
+        style="?attr/flipFrontImageStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        />
+
+
+    <!-- Back -->
+    <FrameLayout
+        android:id="@+id/include_back"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv__card_back__accept"
+            style="?attr/flipRearImageStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            />
+
+    </FrameLayout>
+
+
+</merge>

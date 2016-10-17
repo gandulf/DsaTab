@@ -25,21 +25,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/popup_liturgie_type"
             style="@style/TextValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/label_type">
-        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+        </com.dsatab.view.FloatingHintTextView>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/popup_liturgie_target"
             style="@style/TextValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/label_target">
-        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+        </com.dsatab.view.FloatingHintTextView>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/popup_liturgie_target_layout"
@@ -55,13 +55,13 @@
                 android:inputType="text"/>
         </android.support.design.widget.TextInputLayout>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/popup_liturgie_range"
             style="@style/TextValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/label_range">
-        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+        </com.dsatab.view.FloatingHintTextView>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/popup_liturgie_range_layout"
@@ -78,13 +78,13 @@
                 />
         </android.support.design.widget.TextInputLayout>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/popup_liturgie_castduration"
             style="@style/TextValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/label_ritual_duration">
-        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+        </com.dsatab.view.FloatingHintTextView>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/popup_liturgie_castduration_layout"
@@ -101,14 +101,14 @@
                 />
         </android.support.design.widget.TextInputLayout>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/popup_liturgie_effect"
             style="@style/TextValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/label_effect"
             android:singleLine="false">
-        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+        </com.dsatab.view.FloatingHintTextView>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/popup_liturgie_effect_layout"
@@ -125,13 +125,13 @@
                 />
         </android.support.design.widget.TextInputLayout>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/popup_liturgie_effectduration"
             style="@style/TextValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/label_effect_duration">
-        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+        </com.dsatab.view.FloatingHintTextView>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/popup_liturgie_effectduration_layout"
@@ -148,13 +148,13 @@
                 />
         </android.support.design.widget.TextInputLayout>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/popup_liturgie_probe"
             style="@style/TextValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/label_probe">
-        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+        </com.dsatab.view.FloatingHintTextView>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/popup_liturgie_probe_layout"
@@ -171,13 +171,13 @@
                 />
         </android.support.design.widget.TextInputLayout>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/popup_liturgie_costs"
             style="@style/TextValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/label_costs">
-        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+        </com.dsatab.view.FloatingHintTextView>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/popup_liturgie_costs_layout"
@@ -194,13 +194,13 @@
                 />
         </android.support.design.widget.TextInputLayout>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/popup_liturgie_origin"
             style="@style/TextValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/label_origins">
-        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+        </com.dsatab.view.FloatingHintTextView>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/popup_liturgie_origin_layout"
@@ -217,13 +217,13 @@
                 />
         </android.support.design.widget.TextInputLayout>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/popup_liturgie_source"
             style="@style/TextValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/label_source">
-        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+        </com.dsatab.view.FloatingHintTextView>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/popup_liturgie_source_layout"
@@ -240,13 +240,13 @@
                 />
         </android.support.design.widget.TextInputLayout>
 
-        <com.thebnich.floatinghintedittext.FloatingHintTextView
+        <com.dsatab.view.FloatingHintTextView
             android:id="@+id/popup_liturgie_merkmal"
             style="@style/TextValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/label_feature">
-        </com.thebnich.floatinghintedittext.FloatingHintTextView>
+        </com.dsatab.view.FloatingHintTextView>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/popup_liturgie_merkmal_layout"

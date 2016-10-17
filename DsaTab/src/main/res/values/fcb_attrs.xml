@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FcbCustomTheme">
+        <attr name="flipCheckBoxStyle" format="reference" />
+        <attr name="flipFrontImageStyle" format="reference" />
+        <attr name="flipRearImageStyle" format="reference" />
+    </declare-styleable>
+    <!-- FlipCheckBox attributes -->
+    <declare-styleable name="FlipCheckBox">
+        <!-- Whether or not this component is checked by default (default: false) -->
+        <attr name="checked" format="boolean" />
+        <!-- Whether or not checked status changes should be animated (default: true) -->
+        <attr name="showAnimations" format="boolean" />
+        <!-- Animation to apply when checked state goes from "not checked" to "checked" -->
+        <attr name="inAnimation" format="reference" />
+        <!-- Animation to apply when checked state goes from "checked" to "not checked" -->
+        <attr name="outAnimation" format="reference" />
+        <!-- Set the flip animation duration (default: 150ms) -->
+        <attr name="flipAnimationDuration" format="integer" />
+        <!-- Front view layout resource (for checked state -> false) -->
+        <attr name="frontLayout" format="reference" />
+
+        <!-- Front image resource -->
+        <attr name="frontDrawable" format="reference" />
+        <!-- Front background resource -->
+        <attr name="frontBackgroundDrawable" format="reference" />
+        <!-- Front background resource if clickable -->
+        <attr name="frontClickableBackgroundDrawable" format="reference" />
+
+
+
+    </declare-styleable>
+
+</resources>

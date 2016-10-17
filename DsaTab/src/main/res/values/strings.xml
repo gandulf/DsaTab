@@ -306,4 +306,10 @@ Dsatab kann deine Helden nun auch automatisch in der Cloud speichern.\nVerbinde 
 <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="create_custom_probe">Probe hinzufügen</string>
+
+    <string name="download_finished">Fertig entpackt</string>
+    <string name="download">Herunterladen</string>
+    <string name="download_message">Die benötigten Daten werden heruntergeladen und installiert.</string>
+    <string name="download_error">Es ist ein Fehler aufgetreten, der Download wurde abgebrochen.</string>
+    <string name="download_canceled">Download auf Benutzerwunsch abgebrochen.</string>
 </resources>

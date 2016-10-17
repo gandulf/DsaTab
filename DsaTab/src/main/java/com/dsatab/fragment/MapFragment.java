@@ -27,7 +27,7 @@ import com.dsatab.data.Hero;
 import com.dsatab.map.MapTileProviderLocal;
 import com.dsatab.util.Util;
 import com.dsatab.util.ViewUtils;
-import com.gandulf.guilib.download.Downloader;
+import com.dsatab.util.download.Downloader;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 

@@ -28,7 +28,7 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="4dp" />
 
-    <com.gandulf.guilib.view.SeekBarEx
+    <com.dsatab.view.SeekBarEx
         android:id="@+id/wheel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

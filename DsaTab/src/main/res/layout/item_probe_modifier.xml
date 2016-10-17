@@ -33,7 +33,7 @@
             android:layout_marginRight="@dimen/default_gap"
             android:layout_weight="1" />
 
-        <com.gandulf.guilib.view.SeekBarEx
+        <com.dsatab.view.SeekBarEx
             android:id="@+id/wheel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

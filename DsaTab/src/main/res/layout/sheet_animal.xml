@@ -27,7 +27,7 @@
                 android:orientation="horizontal"
                 android:useDefaultMargins="true">
 
-                <com.thebnich.floatinghintedittext.FloatingHintTextView
+                <com.dsatab.view.FloatingHintTextView
                     android:id="@+id/gen_family"
                     style="@style/TextValue.Small"
                     android:layout_columnSpan="2"
@@ -36,9 +36,9 @@
                     android:fontFamily="sans-serif-condensed"
                     android:hint="@string/label_familie"
                     android:maxLines="1">
-                </com.thebnich.floatinghintedittext.FloatingHintTextView>
+                </com.dsatab.view.FloatingHintTextView>
 
-                <com.thebnich.floatinghintedittext.FloatingHintTextView
+                <com.dsatab.view.FloatingHintTextView
                     android:id="@+id/gen_species"
                     style="@style/TextValue.Small"
                     android:layout_columnSpan="2"
@@ -47,27 +47,27 @@
                     android:fontFamily="sans-serif-condensed"
                     android:hint="@string/label_gattung"
                     android:maxLines="1">
-                </com.thebnich.floatinghintedittext.FloatingHintTextView>
+                </com.dsatab.view.FloatingHintTextView>
 
-                <com.thebnich.floatinghintedittext.FloatingHintTextView
+                <com.dsatab.view.FloatingHintTextView
                     android:id="@+id/gen_gewicht"
                     style="@style/TextValue.Small"
                     android:layout_columnSpan="2"
                     android:layout_gravity="fill_horizontal"
                     android:hint="@string/label_gewicht"
                     android:maxLines="1">
-                </com.thebnich.floatinghintedittext.FloatingHintTextView>
+                </com.dsatab.view.FloatingHintTextView>
 
-                <com.thebnich.floatinghintedittext.FloatingHintTextView
+                <com.dsatab.view.FloatingHintTextView
                     android:id="@+id/gen_groesse"
                     style="@style/TextValue.Small"
                     android:layout_columnSpan="2"
                     android:layout_gravity="fill_horizontal"
                     android:hint="@string/label_groesse"
                     android:maxLines="1">
-                </com.thebnich.floatinghintedittext.FloatingHintTextView>
+                </com.dsatab.view.FloatingHintTextView>
 
-                <com.thebnich.floatinghintedittext.FloatingHintTextView
+                <com.dsatab.view.FloatingHintTextView
                     android:id="@+id/attr_gs"
                     style="@style/TextValue.Small"
                     android:layout_columnSpan="2"
@@ -75,7 +75,7 @@
                     android:ellipsize="none"
                     android:hint="@string/label_gs"
                     android:maxLines="1">
-                </com.thebnich.floatinghintedittext.FloatingHintTextView>
+                </com.dsatab.view.FloatingHintTextView>
             </GridLayout>
 
             <net.steamcrafted.materialiconlib.MaterialIconView
