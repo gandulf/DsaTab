@@ -14,7 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ViewFlipper;
 
-import com.gandulf.guilib.R;
+import com.dsatab.R;
 
 /*
  * Copyright 2014 Francisco Manuel Lopez Jurado
@@ -119,7 +119,7 @@ public class FlipCheckBox extends ViewFlipper implements CheckableListenable {
 
     private Drawable mFrontBackground;
     private Drawable mFrontClickableBackground;
-	/* Constructors */
+    /* Constructors */
 
     /**
      * Constructor.
@@ -168,8 +168,8 @@ public class FlipCheckBox extends ViewFlipper implements CheckableListenable {
      * Initialize this view, by inflating it, finding its UI element references,
      * and applying the custom attributes provided by the programmer.
      *
-     * @param context  The Activity Context.
-     * @param attrs    The view's attributes.
+     * @param context      The Activity Context.
+     * @param attrs        The view's attributes.
      * @param defStyleAttr The default style to apply, if no one was provided.
      */
     private void initComponent(Context context, AttributeSet attrs,
@@ -220,11 +220,13 @@ public class FlipCheckBox extends ViewFlipper implements CheckableListenable {
         else
             setFrontBackgroundDrawable(mFrontBackground);
     }
+
     public void setFrontResource(int drawableId) {
         if (getFrontView() instanceof ImageView) {
             ((ImageView) getFrontView()).setImageResource(drawableId);
         }
     }
+
     public void setFrontDrawable(Drawable drawable) {
         if (getFrontView() instanceof ImageView) {
             ((ImageView) getFrontView()).setImageDrawable(drawable);
@@ -269,15 +271,14 @@ public class FlipCheckBox extends ViewFlipper implements CheckableListenable {
 
     /**
      * Set the front view to be displayed when this component is in a <i>not
-     * checked</i> state. If an invalid resource or 0 is
-     * passed, then the default view will be applied.
+     * checked</i> state.
      *
      * @param layoutResId The layout resource identifier.
      */
     public void setFrontView(int layoutResId) {
-        setFrontView(LayoutInflater.from(getContext()).inflate(
-                layoutResId > 0 ? layoutResId : R.layout.fcb_view_front,
-                null));
+        if (layoutResId > 0) {
+            setFrontView(LayoutInflater.from(getContext()).inflate(layoutResId, null));
+        }
     }
 
     /**
@@ -500,7 +501,7 @@ public class FlipCheckBox extends ViewFlipper implements CheckableListenable {
     public void setOnClickListener(OnClickListener l) {
         super.setOnClickListener(l);
 
-        mOnClickListener=l;
+        mOnClickListener = l;
     }
 
     @Override
@@ -542,8 +543,7 @@ public class FlipCheckBox extends ViewFlipper implements CheckableListenable {
     protected void onDetachedFromWindow() {
         try {
             super.onDetachedFromWindow();
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             stopFlipping();
         }
     }

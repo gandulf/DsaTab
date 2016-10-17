@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import com.gandulf.guilib.R;
+import com.dsatab.R;
 
 public class FloatingHintTextView extends TextView {
 

@@ -13,7 +13,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
-import com.gandulf.guilib.R;
+import com.dsatab.R;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
