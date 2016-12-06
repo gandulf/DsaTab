@@ -25,6 +25,8 @@ import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 import com.dsatab.fragment.dialog.ImageChooserDialog;
 import com.dsatab.util.ResUtil;
 import com.dsatab.util.Util;
+import com.splunk.mint.Mint;
+import com.splunk.mint.MintLogLevel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -277,6 +279,8 @@ public class CustomProbeEditFragment extends BaseEditFragment implements OnClick
 		if (Intent.ACTION_INSERT.equals(getActivity().getIntent().getAction())) {
 			DsaTabApplication.getInstance().getHero().getHeroConfiguration().addCustomProbe(customProbe);
 		}
+
+        Mint.logEvent("Save CustomProbe", MintLogLevel.Info,"Name",customProbe.getName());
 
 		Bundle data = new Bundle();
 		// TODO fill data

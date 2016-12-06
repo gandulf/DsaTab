@@ -1,6 +1,10 @@
 
 <changelog>
 
+    <release version="4.6.1" versioncode="118">
+        <change>OneDrive Synchronisation hinzugefügt</change>
+    </release>
+
     <release version="4.6.0" versioncode="117">
         <change>Unterstützung für unbekannte Talente</change>
         <fix>Absturz beim Laden des Beispiel-Helden</fix>

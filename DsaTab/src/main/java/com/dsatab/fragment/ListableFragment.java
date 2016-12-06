@@ -91,6 +91,8 @@ import com.h6ah4i.android.widget.advrecyclerview.selectable.RecyclerViewSelectio
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.splunk.mint.Mint;
+import com.splunk.mint.MintLogLevel;
 
 import java.io.File;
 import java.io.IOException;
@@ -1652,6 +1654,8 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
             mediaRecorder.prepare();
             mediaRecorder.start(); // Recording is now started
 
+            Mint.logEvent("Recording audio", MintLogLevel.Info);
+
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle(R.string.recording);
             builder.setMessage(R.string.recording_message);
@@ -1669,9 +1673,13 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                         }
                     }
 
+
+
                     File nowAudio = new File(DsaTabApplication.getDirectory(DsaTabApplication.DIR_RECORDINGS), System
                             .currentTimeMillis() + ".3gp");
                     currentAudio.renameTo(nowAudio);
+
+                    Mint.logEvent("Storing audio", MintLogLevel.Info,"FileSize",Util.readableFileSize(nowAudio.length()));
 
                     NotesEditFragment.edit(null, nowAudio.getAbsolutePath(), ListableFragment.this,
                             DsaTabActivity.ACTION_EDIT_NOTES);
@@ -1779,7 +1787,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
 
                 if (event.getAudioPath() != null) {
                     try {
-
+                        Mint.logEvent("Play audio", MintLogLevel.Info);
                         MediaPlayer mediaPlayer = new MediaPlayer();
                         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 

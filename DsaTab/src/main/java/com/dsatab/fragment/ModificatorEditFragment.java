@@ -14,6 +14,8 @@ import com.dsatab.R;
 import com.dsatab.activity.BaseEditActivity;
 import com.dsatab.activity.DsaTabActivity;
 import com.dsatab.data.modifier.CustomModificator;
+import com.splunk.mint.Mint;
+import com.splunk.mint.MintLogLevel;
 
 public class ModificatorEditFragment extends BaseEditFragment {
 
@@ -94,6 +96,8 @@ public class ModificatorEditFragment extends BaseEditFragment {
 		data.putString(INTENT_COMMENT, comment);
 		data.putString(INTENT_RULES, rules);
 		data.putBoolean(INTENT_ACTIVE, cbActive.isChecked());
+
+        Mint.logEvent("Save Modificator", MintLogLevel.Info,"Name",name);
 
 		return data;
 	}
