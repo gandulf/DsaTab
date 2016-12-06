@@ -17,8 +17,12 @@
                 android:title="Dropbox"
                 android:checkable="true" />
             <item
-                android:id="@+id/option_connect_drive"
+                android:id="@+id/option_connect_googledrive"
                 android:title="Google Drive"
+                android:checkable="true" />
+            <item
+                android:id="@+id/option_connect_onedrive"
+                android:title="One Drive"
                 android:checkable="true" />
         </menu>
     </item>

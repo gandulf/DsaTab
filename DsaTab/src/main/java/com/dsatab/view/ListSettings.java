@@ -492,7 +492,7 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
 
     public static String getListItemGroup(Object o) {
         if (o instanceof Talent) {
-            return ((Talent) o).getType().type().name();
+            return ((Talent) o).getGroupType().name();
         } else {
             return null;
         }

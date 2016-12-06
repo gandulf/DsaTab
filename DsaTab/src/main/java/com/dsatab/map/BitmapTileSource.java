@@ -10,12 +10,15 @@ import com.dsatab.util.Debug;
 
 import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.tileprovider.tilesource.BitmapTileSourceBase;
+import org.osmdroid.tileprovider.tilesource.ITileSource;
 
 import java.io.InputStream;
 
 import static org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants.TILE_PATH_EXTENSION;
 
 public class BitmapTileSource extends BitmapTileSourceBase {
+
+    public static final String TILESOURCE_AVENTURIEN = "AVENTURIEN";
 
 	/**
 	 * @param aName
@@ -24,6 +27,8 @@ public class BitmapTileSource extends BitmapTileSourceBase {
 	 * @param aTileSizePixels
 	 * @param aImageFilenameEnding
 	 */
+
+    public static final ITileSource AVENTURIEN = new BitmapTileSource(TILESOURCE_AVENTURIEN, 2, 5, 256, ".jpg");
 
 	public BitmapTileSource(String aName, int aZoomMinLevel, int aZoomMaxLevel,
 			int aTileSizePixels, String aImageFilenameEnding) {

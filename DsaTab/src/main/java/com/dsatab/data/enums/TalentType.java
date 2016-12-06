@@ -1,7 +1,5 @@
 package com.dsatab.data.enums;
 
-import com.dsatab.exception.TalentTypeUnknownException;
-
 public enum TalentType {
     Anderthalbhänder(
             "Anderthalbhänder",
@@ -1441,9 +1439,7 @@ public enum TalentType {
     Immanspiel(
             "Immanspiel",
             TalentGroupType.Körperlich
-    )
-
-    ;
+    );
 
     private static final String DEPRECATED_WACHE_NAME = "Wache";
     private static final String DEPRECATED_KRÄUTERSUCHE_NAME1 = "Kräutersuchen";
@@ -1505,6 +1501,6 @@ public enum TalentType {
                 return attr;
             }
         }
-        throw new TalentTypeUnknownException(code);
+        return null;
     }
 }

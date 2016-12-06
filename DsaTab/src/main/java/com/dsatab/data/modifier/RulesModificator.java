@@ -254,7 +254,7 @@ public class RulesModificator extends AbstractModificator {
 				else
 					meleeTalent = (CombatMeleeTalent) probe;
 
-				if (meleeTalent != null) {
+				if (meleeTalent != null && meleeTalent.getType()!=null) {
 					affected |= Arrays.binarySearch(affectedTalentTypes, meleeTalent.getType()) >= 0;
 				}
 			} else if (probe instanceof CombatProbe) {

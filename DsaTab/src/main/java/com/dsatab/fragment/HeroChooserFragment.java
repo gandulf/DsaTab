@@ -61,6 +61,7 @@ import pl.tajchert.nammu.PermissionCallback;
 
 import static com.dsatab.cloud.HeroExchange.StorageType.Drive;
 import static com.dsatab.cloud.HeroExchange.StorageType.Dropbox;
+import static com.dsatab.cloud.HeroExchange.StorageType.OneDrive;
 
 public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderManager.LoaderCallbacks<List<HeroFileInfo>>, ListRecyclerAdapter.EventListener {
 
@@ -91,7 +92,6 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
             super(fragment, listView, manager);
         }
 
-        @TargetApi(Build.VERSION_CODES.HONEYCOMB)
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 
@@ -135,6 +135,8 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
                                             } else {
                                                 ViewUtils.snackbar(fragment.getActivity(), heroInfo.getName() + " konnte nicht hochgeladen werden.");
                                             }
+                                        } else {
+                                            ViewUtils.snackbar(fragment.getActivity(), heroInfo.getName() + " nicht mit Cloud verbunden.");
                                         }
                                     }
                                 });
@@ -154,6 +156,8 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
                                         } else {
                                             ViewUtils.snackbar(fragment.getActivity(), heroInfo.getName() + " konnte nicht heruntergeladen werden.");
                                         }
+                                    } else {
+                                        ViewUtils.snackbar(fragment.getActivity(), heroInfo.getName() + " nicht mit Cloud verbunden.");
                                     }
                                 }
                             });
@@ -183,7 +187,6 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
             int selected = 0;
             boolean online = false;
             boolean deletable = false;
-            boolean uploadable = false;
             RecyclerView list = listView.get();
             final HeroChooserFragment fragment = listFragment.get();
             if (list == null || fragment == null)
@@ -320,6 +323,7 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
         InputStream fis = null;
         try {
             File out = new File(DsaTabApplication.getHeroDirectory(), DUMMY_FILE);
+            out.getParentFile().mkdirs();
             fos = new FileOutputStream(out);
             fis = new BufferedInputStream(getResources().getAssets().open(DUMMY_FILE));
             byte[] buffer = new byte[8 * 1024];
@@ -457,17 +461,31 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
                 }
             });
         }
-        final MenuItem driveMenuItem = menu.findItem(R.id.option_connect_drive);
-        if (driveMenuItem != null && getActivity() != null) {
+        final MenuItem googleDriveMenuItem = menu.findItem(R.id.option_connect_googledrive);
+        if (googleDriveMenuItem != null && getActivity() != null) {
             HeroExchange.getInstance().isConnected(Drive, new HeroExchange.CloudResult<Boolean>() {
                 @Override
                 public void onSuccess(Boolean result) {
                     if (result!=null) {
-                        driveMenuItem.setChecked(result);
+                        googleDriveMenuItem.setChecked(result);
                     }
                 }
             });
         }
+
+        final MenuItem oneDriveMenuItem = menu.findItem(R.id.option_connect_onedrive);
+        if (oneDriveMenuItem != null && getActivity() != null) {
+            HeroExchange.getInstance().isConnected(OneDrive, new HeroExchange.CloudResult<Boolean>() {
+                @Override
+                public void onSuccess(Boolean result) {
+                    if (result!=null) {
+                        oneDriveMenuItem.setChecked(result);
+                    }
+                }
+            });
+        }
+
+
     }
 
     @Override
@@ -544,14 +562,14 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
                         }
                     });
                     return true;
-                case R.id.option_connect_drive:
+                case R.id.option_connect_googledrive:
                     HeroExchange.getInstance().isConnected(Drive, new HeroExchange.CloudResult<Boolean>() {
                         @Override
                         public void onSuccess(Boolean result) {
                             if (result!=null && result) {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                                 builder.setTitle("Google Drive");
-                                builder.setMessage("Drive Synchronisation aufheben?");
+                                builder.setMessage("Google Drive Synchronisation aufheben?");
                                 builder.setPositiveButton("Aufheben", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -575,6 +593,48 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
                                 builder.show();
                             } else {
                                 HeroExchange.getInstance().connect(Drive, new HeroExchange.CloudResult<Boolean>() {
+                                    @Override
+                                    public void onSuccess(Boolean result) {
+                                        if (result!=null && result) {
+                                            refresh();
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                    return true;
+                case R.id.option_connect_onedrive:
+                    HeroExchange.getInstance().isConnected(OneDrive, new HeroExchange.CloudResult<Boolean>() {
+                        @Override
+                        public void onSuccess(Boolean result) {
+                            if (result!=null && result) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                builder.setTitle("One Drive");
+                                builder.setMessage("One Drive Synchronisation aufheben?");
+                                builder.setPositiveButton("Aufheben", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        HeroExchange.getInstance().disconnect(OneDrive, new HeroExchange.CloudResult<Boolean>() {
+                                            @Override
+                                            public void onSuccess(Boolean result) {
+                                                if (result!=null && result) {
+                                                    item.setChecked(false);
+                                                }
+                                            }
+                                        });
+                                        dialog.dismiss();
+                                    }
+                                });
+                                builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+                                builder.show();
+                            } else {
+                                HeroExchange.getInstance().connect(OneDrive, new HeroExchange.CloudResult<Boolean>() {
                                     @Override
                                     public void onSuccess(Boolean result) {
                                         if (result!=null && result) {
@@ -680,6 +740,11 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
                     case Drive:
                         holder.tag1.setText("Drive");
                         holder.tag1.setBackgroundColor(holder.tag1.getContext().getResources().getColor(R.color.ValueViolettAlpha));
+                        holder.tag1.setVisibility(View.VISIBLE);
+                        break;
+                    case OneDrive:
+                        holder.tag1.setText("OneDrive");
+                        holder.tag1.setBackgroundColor(holder.tag1.getContext().getResources().getColor(R.color.ValueGreenAlpha));
                         holder.tag1.setVisibility(View.VISIBLE);
                         break;
                     default:

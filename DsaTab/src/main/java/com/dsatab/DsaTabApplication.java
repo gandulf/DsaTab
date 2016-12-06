@@ -9,7 +9,6 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.multidex.MultiDexApplication;
 import android.support.v4.content.ContextCompat;
-import android.text.TextUtils;
 
 import com.cloudrail.si.CloudRail;
 import com.dsatab.activity.DsaTabPreferenceActivity;
@@ -17,7 +16,6 @@ import com.dsatab.config.DsaTabConfiguration;
 import com.dsatab.data.Hero;
 import com.dsatab.db.DatabaseHelper;
 import com.dsatab.map.BitmapTileSource;
-import com.dsatab.util.Debug;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -27,14 +25,9 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.splunk.mint.Mint;
 
-import org.osmdroid.tileprovider.tilesource.ITileSource;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -44,13 +37,6 @@ public class DsaTabApplication extends MultiDexApplication {
 
 	public static final int HS_VERSION_INT = 5520;
 	public static final String HS_VERSION = "5.5.2";
-
-	public static final String TILESOURCE_AVENTURIEN = "AVENTURIEN";
-
-	public static final String BUGSENSE_API_KEY = "4b4062da";
-
-	public static final String DROPBOX_API_KEY = "fivprcmrt2bjm2c";
-	public static final String DROPBOX_API_SECRET = "ezq611w6bmie4js";
 
 	public static final String SD_CARD_PATH_PREFIX = Environment.getExternalStorageDirectory().getAbsolutePath()
 			+ File.separator;
@@ -183,12 +169,12 @@ public class DsaTabApplication extends MultiDexApplication {
 
 		setTheme(DsaTabPreferenceActivity.getCustomTheme());
 
-        CloudRail.setAppKey("57de8fdcc28022207da5f79f");
+        CloudRail.setAppKey(BuildConfig.cloudrail_api_key);
 
 		configuration = new DsaTabConfiguration(this);
 
 		if (!BuildConfig.DEBUG)
-			Mint.initAndStartSession(this, BUGSENSE_API_KEY);
+			Mint.initAndStartSession(this, BuildConfig.bugsense_api_key);
 
 		migrateDirectories();
 
@@ -198,24 +184,7 @@ public class DsaTabApplication extends MultiDexApplication {
 		edit.putBoolean("dsaTabFirstRun", false);
 
 		TileSourceFactory.getTileSources().clear();
-		final ITileSource tileSource = new BitmapTileSource(TILESOURCE_AVENTURIEN, 2, 5, 256, ".jpg");
-		TileSourceFactory.addTileSource(tileSource);
-
-		File token = new File(getDirectory(), "token.txt");
-		if (token.exists()) {
-			try {
-				BufferedReader reader = new BufferedReader(new FileReader(token));
-				String tokenValue = reader.readLine();
-				reader.close();
-				if (!TextUtils.isEmpty(tokenValue)) {
-					edit.putString(DsaTabPreferenceActivity.KEY_EXCHANGE_TOKEN, tokenValue.trim());
-				}
-			} catch (FileNotFoundException e) {
-				Debug.e(e);
-			} catch (IOException e) {
-				Debug.e(e);
-			}
-		}
+		TileSourceFactory.addTileSource(BitmapTileSource.AVENTURIEN);
 
 		edit.commit();
 

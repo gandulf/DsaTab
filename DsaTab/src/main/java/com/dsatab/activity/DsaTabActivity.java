@@ -97,8 +97,6 @@ public class DsaTabActivity extends BaseActivity implements NavigationView.OnNav
 
     private static final int LOADER_HERO = 2;
 
-
-
     private ShakeListener mShaker;
 
     private int oldTabInfoPosition = -1;
@@ -176,17 +174,28 @@ public class DsaTabActivity extends BaseActivity implements NavigationView.OnNav
         return DsaTabApplication.getInstance().getHero();
     }
 
-    public final void loadHero(HeroFileInfo heroPath) {
+    public final void loadHero(final HeroFileInfo heroPath) {
 
-        if (getHero() != null && preferences.getBoolean(DsaTabPreferenceActivity.KEY_AUTO_SAVE, true)) {
-            HeroSaveTask heroSaveTask = new HeroSaveTask(this, getHero(),HeroExchange.getInstance());
-            heroSaveTask.execute();
-        }
-        setToolbarRefreshing(true);
+        Nammu.askForPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
+            @Override
+            public void permissionGranted() {
+                if (getHero() != null && preferences.getBoolean(DsaTabPreferenceActivity.KEY_AUTO_SAVE, true)) {
+                    HeroSaveTask heroSaveTask = new HeroSaveTask(DsaTabActivity.this, getHero(),HeroExchange.getInstance());
+                    heroSaveTask.execute();
+                }
+                setToolbarRefreshing(true);
 
-        Bundle args = new Bundle();
-        args.putSerializable(KEY_HERO_PATH, heroPath);
-        getLoaderManager().restartLoader(LOADER_HERO, args, new HeroLoaderCallback(this));
+                Bundle args = new Bundle();
+                args.putSerializable(KEY_HERO_PATH, heroPath);
+                getLoaderManager().restartLoader(LOADER_HERO, args, new HeroLoaderCallback(DsaTabActivity.this));
+            }
+
+            @Override
+            public void permissionRefused() {
+                ViewUtils.snackbar(DsaTabActivity.this, "Keine Berechtigung um Helden auf SD-Karte zu speichern.");
+            }
+        });
+
     }
 
     @Override
@@ -746,6 +755,8 @@ public class DsaTabActivity extends BaseActivity implements NavigationView.OnNav
 
                 HeroFileInfo heroInfo = hero.getFileInfo();
                 CircleImageView imageView = (CircleImageView) mDrawerHeaderItem.findViewById(R.id.profile_image);
+
+
                 Util.setImage(imageView, heroInfo.getPortraitUri(), R.drawable.profile_picture);
 
                 TextView textView = (TextView) mDrawerHeaderItem.findViewById(R.id.profile_title);

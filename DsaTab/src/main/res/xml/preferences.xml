@@ -183,6 +183,11 @@
                 android:summary="Bilder aus DSA Fanpaket (ca. 10 MB)"
                 android:title="Hintergründe herunterladen"/>
 
+            <Preference
+                android:key="intro"
+                android:summary="Start Intro erneut anzeigen"
+                android:title="DsaTab Intro"/>
+
         </PreferenceCategory>
     </PreferenceScreen>
 

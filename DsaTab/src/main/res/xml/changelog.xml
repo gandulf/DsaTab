@@ -1,6 +1,11 @@
 
 <changelog>
 
+    <release version="4.6.0" versioncode="117">
+        <change>Unterstützung für unbekannte Talente</change>
+        <fix>Absturz beim Laden des Beispiel-Helden</fix>
+    </release>
+
     <release version="4.5.3" versioncode="114">
         <fix>Absturz bei der Gegenstandssuche?</fix>
         <fix>Absturz beim Tabwechsel</fix>

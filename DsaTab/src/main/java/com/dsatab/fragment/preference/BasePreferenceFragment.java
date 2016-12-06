@@ -21,6 +21,7 @@ import android.view.View;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
+import com.dsatab.activity.DsaTabIntro;
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.config.DsaTabConfiguration;
 import com.dsatab.fragment.dialog.DirectoryChooserDialog;
@@ -44,6 +45,7 @@ import static com.dsatab.fragment.preference.BasePreferenceFragment.DsaTabSettin
 import static com.dsatab.fragment.preference.BasePreferenceFragment.DsaTabSettings.KEY_DOWNLOAD_MAPS;
 import static com.dsatab.fragment.preference.BasePreferenceFragment.DsaTabSettings.KEY_DOWNLOAD_OSMMAPS;
 import static com.dsatab.fragment.preference.BasePreferenceFragment.DsaTabSettings.KEY_DOWNLOAD_WESNOTH_PORTRAITS;
+import static com.dsatab.fragment.preference.BasePreferenceFragment.DsaTabSettings.KEY_INTRO;
 import static com.dsatab.fragment.preference.BasePreferenceFragment.DsaTabSettings.KEY_PROBE_SHAKE_ROLL_DICE;
 import static com.dsatab.fragment.preference.BasePreferenceFragment.DsaTabSettings.KEY_SETUP_SDCARD_HERO_PATH;
 import static com.dsatab.fragment.preference.BasePreferenceFragment.DsaTabSettings.KEY_SETUP_SDCARD_PATH;
@@ -100,14 +102,14 @@ public class BasePreferenceFragment extends PreferenceFragmentCompat implements 
         String KEY_STYLE_BG_WOUNDS_PATH = "theme.wound.bg.path";
         String KEY_STYLE_BG_WOUNDS_DELETE = "theme.wound.bg.delete";
 
-        String KEY_EXCHANGE_TOKEN = "exchange_token";
-
         String KEY_SCREEN_ORIENTATION = "screen_orientation";
 
         String KEY_TIP_TODAY = "tipToday";
         String KEY_TIP_TODAY_RESET = "tipTodayReset";
 
         String KEY_AUTO_SAVE = "hero_auto_save";
+
+        String KEY_INTRO ="intro";
 
         String SCREEN_ORIENTATION_AUTO = "auto";
         String SCREEN_ORIENTATION_LANDSCAPE = "landscape";
@@ -376,6 +378,9 @@ public class BasePreferenceFragment extends PreferenceFragmentCompat implements 
             }
             edit.commit();
             ViewUtils.snackbar(fragment, R.string.message_tips_reset, Snackbar.LENGTH_SHORT);
+            return true;
+        } else if (KEY_INTRO.equals(key)){
+            startActivity(new Intent(context, DsaTabIntro.class));
             return true;
         }
 

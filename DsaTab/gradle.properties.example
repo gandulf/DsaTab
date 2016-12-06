@@ -1,0 +1,11 @@
+GoogleDriveClientId=""
+GoogleDriveSecret=""
+
+DropboxClientId=""
+DropboxSecret=""
+
+OneDriveClientId=""
+OneDriveSecret=""
+
+BUGSENSE_API_KEY = ""
+CLOUDRAIL_API_KEY =""

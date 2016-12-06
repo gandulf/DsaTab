@@ -24,6 +24,7 @@ import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.data.Hero;
+import com.dsatab.map.BitmapTileSource;
 import com.dsatab.map.MapTileProviderLocal;
 import com.dsatab.util.Util;
 import com.dsatab.util.ViewUtils;
@@ -240,12 +241,12 @@ public class MapFragment extends BaseFragment {
 		if (osmMapView == null) {
 			File osmMapDir = DsaTabApplication.getDirectory(DsaTabApplication.DIR_OSM_MAPS);
 
-			ITileSource tileSource = TileSourceFactory.getTileSource(DsaTabApplication.TILESOURCE_AVENTURIEN);
+			ITileSource tileSource = TileSourceFactory.getTileSource(BitmapTileSource.TILESOURCE_AVENTURIEN);
 			MapTileProviderLocal tileProvider = new MapTileProviderLocal(osmMapDir.getAbsolutePath(), getActivity(),
 					tileSource);
 
 			osmMapView = new MapView(getActivity(), tileProvider);
-
+            osmMapView.setTilesScaledToDpi(true);
 			osmMapView.setUseDataConnection(false);
 			osmMapView.setBuiltInZoomControls(true);
 			osmMapView.setMultiTouchControls(true);

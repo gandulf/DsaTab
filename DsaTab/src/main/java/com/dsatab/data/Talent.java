@@ -1,5 +1,6 @@
 package com.dsatab.data;
 
+import com.dsatab.data.enums.TalentGroupType;
 import com.dsatab.data.enums.TalentType;
 import com.dsatab.data.listable.Listable;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
@@ -11,147 +12,166 @@ import java.util.EnumSet;
 
 public class Talent extends MarkableElement implements Value, Listable {
 
-	private static final long serialVersionUID = -3361581759226651028L;
+    private static final long serialVersionUID = -3361581759226651028L;
 
-	public static final Comparator<Talent> NAME_COMPARATOR = new Comparator<Talent>() {
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
-		 */
-		@Override
-		public int compare(Talent object1, Talent object2) {
-			return object1.getName().compareTo(object2.getName());
-		}
+    public static final Comparator<Talent> NAME_COMPARATOR = new Comparator<Talent>() {
+        /*
+         * (non-Javadoc)
+         *
+         * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+         */
+        @Override
+        public int compare(Talent object1, Talent object2) {
+            return object1.getName().compareTo(object2.getName());
+        }
 
-	};
+    };
 
-	protected Integer value;
+    protected Integer value;
 
-	protected Integer complexity;
+    protected Integer complexity;
 
-	protected TalentType type;
+    protected TalentType type;
 
-	private String talentSpezialisierung;
+    protected String name;
 
-	public enum Flags {
-		Meisterhandwerk, Begabung, Talentschub, TalentSpezialisierung
-	}
+    private String talentSpezialisierung;
 
-	private EnumSet<Flags> flags = EnumSet.noneOf(Flags.class);
+    public enum Flags {
+        Meisterhandwerk, Begabung, Talentschub, TalentSpezialisierung
+    }
 
-	public Talent(AbstractBeing hero, TalentType type) {
-		super(hero);
-		setType(type);
-	}
+    private EnumSet<Flags> flags = EnumSet.noneOf(Flags.class);
 
-	@Override
-	public String getName() {
-		return type.xmlName();
-	}
+    public Talent(AbstractBeing hero, TalentType type) {
+        super(hero);
+        setType(type);
+    }
 
-	public TalentType getType() {
-		return type;
-	}
+    public Talent(AbstractBeing hero, String name) {
+        super(hero);
+        setName(name);
+    }
 
-	protected void setType(TalentType type) {
-		this.type = type;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Integer getComplexity() {
-		return complexity;
-	}
+    @Override
+    public String getName() {
+        return name;
+    }
 
-	public void setComplexity(Integer complexity) {
-		this.complexity = complexity;
-	}
+    public TalentType getType() {
+        return type;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.dsatab.data.Probe#getModificatorType()
-	 */
-	@Override
-	public ModificatorType getModificatorType() {
-		return ModificatorType.Talent;
-	}
+    public TalentGroupType getGroupType() {
+        if (type != null)
+            return type.type();
+        else
+            return TalentGroupType.Unbekannt;
+    }
 
-	public void setProbeBe(String be) {
-		this.probeInfo.applyBePattern(be);
-	}
+    protected void setType(TalentType type) {
+        this.type = type;
+        this.name = type.xmlName();
+    }
 
-	public void setProbePattern(String pattern) {
-		this.probeInfo.applyProbePattern(pattern);
-	}
+    public Integer getComplexity() {
+        return complexity;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.dsatab.data.Value#reset()
-	 */
-	@Override
-	public void reset() {
-		setValue(getReferenceValue());
-	}
+    public void setComplexity(Integer complexity) {
+        this.complexity = complexity;
+    }
 
-	@Override
-	public ProbeType getProbeType() {
-		return ProbeType.ThreeOfThree;
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.dsatab.data.Probe#getModificatorType()
+     */
+    @Override
+    public ModificatorType getModificatorType() {
+        return ModificatorType.Talent;
+    }
 
-	public String getTalentSpezialisierung() {
-		return talentSpezialisierung;
-	}
+    public void setProbeBe(String be) {
+        this.probeInfo.applyBePattern(be);
+    }
 
-	public void setTalentSpezialisierung(String talentSpezialisierung) {
-		this.talentSpezialisierung = talentSpezialisierung;
-	}
+    public void setProbePattern(String pattern) {
+        this.probeInfo.applyProbePattern(pattern);
+    }
 
-	public boolean hasFlag(Flags flag) {
-		return flags.contains(flag);
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see com.dsatab.data.Value#reset()
+     */
+    @Override
+    public void reset() {
+        setValue(getReferenceValue());
+    }
 
-	public void addFlag(Flags flag) {
-		flags.add(flag);
-	}
+    @Override
+    public ProbeType getProbeType() {
+        return ProbeType.ThreeOfThree;
+    }
 
-	@Override
-	public Integer getProbeBonus() {
-		return getValue();
-	}
+    public String getTalentSpezialisierung() {
+        return talentSpezialisierung;
+    }
 
-	@Override
-	public Integer getValue() {
-		return value;
-	}
+    public void setTalentSpezialisierung(String talentSpezialisierung) {
+        this.talentSpezialisierung = talentSpezialisierung;
+    }
 
-	@Override
-	public void setValue(Integer value) {
-		if (ObjectUtils.notEqual(getValue(),value)) {
+    public boolean hasFlag(Flags flag) {
+        return flags.contains(flag);
+    }
+
+    public void addFlag(Flags flag) {
+        flags.add(flag);
+    }
+
+    @Override
+    public Integer getProbeBonus() {
+        return getValue();
+    }
+
+    @Override
+    public Integer getValue() {
+        return value;
+    }
+
+    @Override
+    public void setValue(Integer value) {
+        if (ObjectUtils.notEqual(getValue(), value)) {
             this.value = value;
             if (being != null)
                 being.fireValueChangedEvent(this);
         }
-	}
+    }
 
-	@Override
-	public Integer getReferenceValue() {
-		return getValue();
-	}
+    @Override
+    public Integer getReferenceValue() {
+        return getValue();
+    }
 
-	@Override
-	public int getMinimum() {
-		return 0;
-	}
+    @Override
+    public int getMinimum() {
+        return 0;
+    }
 
-	@Override
-	public int getMaximum() {
-		return 25;
-	}
+    @Override
+    public int getMaximum() {
+        return 25;
+    }
 
-	@Override
-	public String toString() {
-		return getName();
-	}
+    @Override
+    public String toString() {
+        return getName();
+    }
 
 }

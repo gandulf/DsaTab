@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewCompat;
 import android.view.Menu;
@@ -73,6 +74,15 @@ public class ViewUtils {
         MenuItem item = menu.findItem(menuItemId);
         if (item != null && item.getIcon() == null && context !=null) {
             item.setIcon(ViewUtils.toolbarIcon(context, iconValue));
+        }
+    }
+
+    public static void submenuIcon(Context context, Menu menu, int menuItemId, MaterialDrawableBuilder.IconValue iconValue) {
+        MenuItem item = menu.findItem(menuItemId);
+        if (item != null && item.getIcon() == null && context !=null) {
+            int iconColor = ResourcesCompat.getColor(context.getResources(),R.color.icon_color_light,context.getTheme());
+            Drawable icon = MaterialDrawableBuilder.with(context).setIcon(iconValue).setToActionbarSize().setColor(iconColor).build();
+            item.setIcon(icon);
         }
     }
 
@@ -184,8 +194,8 @@ public class ViewUtils {
 
             ViewUtils.menuIcon(context, menu, R.id.option_search, MaterialDrawableBuilder.IconValue.MAGNIFY);
 
-            ViewUtils.menuIcon(context, menu, R.id.option_itemgrid_type_list, MaterialDrawableBuilder.IconValue.VIEW_LIST);
-            ViewUtils.menuIcon(context, menu, R.id.option_itemgrid_type_grid, MaterialDrawableBuilder.IconValue.VIEW_GRID);
+            ViewUtils.submenuIcon(context, menu, R.id.option_itemgrid_type_list, MaterialDrawableBuilder.IconValue.VIEW_LIST);
+            ViewUtils.submenuIcon(context, menu, R.id.option_itemgrid_type_grid, MaterialDrawableBuilder.IconValue.VIEW_GRID);
 
             ViewUtils.menuIcon(context, menu, R.id.option_take_hit, MaterialDrawableBuilder.IconValue.HEART_BROKEN);
             ViewUtils.menuIcon(context, menu, R.id.option_list_items, MaterialDrawableBuilder.IconValue.TSHIRT_CREW);

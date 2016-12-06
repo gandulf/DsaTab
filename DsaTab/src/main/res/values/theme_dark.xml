@@ -74,6 +74,8 @@
         <item name="flipRearImageStyle">@style/FlipRearImageStyle.Dark</item>
 
         <item name="cardViewStyle">@style/CardView.Dark</item>
+
+        <item name="iconColor">@color/icon_color_dark</item>
     </style>
 
 </resources>

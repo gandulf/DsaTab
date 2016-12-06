@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.text.TextUtils;
 
 import com.cloudrail.si.exceptions.AuthenticationException;
+import com.cloudrail.si.exceptions.NotFoundException;
 import com.cloudrail.si.exceptions.ParseException;
 import com.cloudrail.si.interfaces.CloudStorage;
 import com.cloudrail.si.services.Box;
@@ -14,6 +15,7 @@ import com.cloudrail.si.services.Dropbox;
 import com.cloudrail.si.services.GoogleDrive;
 import com.cloudrail.si.services.OneDrive;
 import com.cloudrail.si.types.CloudMetaData;
+import com.dsatab.BuildConfig;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.data.HeroConfiguration;
 import com.dsatab.data.HeroFileInfo;
@@ -36,7 +38,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
 
+import static com.dsatab.cloud.HeroExchange.StorageType.Box;
 import static com.dsatab.cloud.HeroExchange.StorageType.Drive;
+import static com.dsatab.cloud.HeroExchange.StorageType.Dropbox;
+import static com.dsatab.cloud.HeroExchange.StorageType.OneDrive;
 import static com.dsatab.data.HeroFileInfo.CONFIG_FILE_EXTENSION;
 import static com.dsatab.data.HeroFileInfo.HERO_FILE_EXTENSION;
 
@@ -56,7 +61,7 @@ public class HeroExchange {
     private final AtomicReference<CloudStorage> googledrive = new AtomicReference<>();
     private final AtomicReference<CloudStorage> onedrive = new AtomicReference<>();
 
-    public static StorageType[] storageTypes = new StorageType[]{Drive, StorageType.Dropbox};
+    public static StorageType[] storageTypes = new StorageType[]{StorageType.Drive, Dropbox, OneDrive};
 
     public interface CloudResult<T> {
         void onSuccess(T result);
@@ -76,7 +81,7 @@ public class HeroExchange {
     }
 
     private CloudStorage getProvider(StorageType type, boolean initialise) {
-        if (type== null) {
+        if (type == null) {
             return null;
         }
         CloudStorage storage = null;
@@ -86,29 +91,29 @@ public class HeroExchange {
                 switch (type) {
                     case Box:
                         storage = box.get();
-                        if (storage==null) {
+                        if (storage == null) {
                             storage = new Box(context, "", "");
                             box.set(storage);
                         }
                         break;
                     case Drive:
                         storage = googledrive.get();
-                        if (storage==null) {
-                            storage = new GoogleDrive(context, "184938105279-r3u3pn6g7ple46ig6kjeisrultakomgh.apps.googleusercontent.com", "6KeO4m7BCCM3TL739LHj2G0v");
+                        if (storage == null) {
+                            storage = new GoogleDrive(context, BuildConfig.google_drive_client_id, BuildConfig.google_drive_secret);
                             googledrive.set(storage);
                         }
                         break;
                     case Dropbox:
                         storage = dropbox.get();
-                        if (storage==null) {
-                            storage = new Dropbox(context, "8tbps3js3ufundc", "h61le6e0dcbs13x");
+                        if (storage == null) {
+                            storage = new Dropbox(context, BuildConfig.dropbox_client_id, BuildConfig.dropbox_secret);
                             dropbox.set(storage);
                         }
                         break;
                     case OneDrive:
                         storage = onedrive.get();
-                        if (storage==null) {
-                            storage = new OneDrive(context, "", "");
+                        if (storage == null) {
+                            storage = new OneDrive(context, BuildConfig.onedrive_client_id, BuildConfig.onedrive_secret);
                             onedrive.set(storage);
                         }
                         break;
@@ -133,13 +138,13 @@ public class HeroExchange {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         if (dropbox.get() != null)
-            editor.putString(StorageType.Dropbox.getCredentialsKey(), dropbox.get().saveAsString());
+            editor.putString(Dropbox.getCredentialsKey(), dropbox.get().saveAsString());
         if (box.get() != null)
-            editor.putString(StorageType.Box.getCredentialsKey(), box.get().saveAsString());
+            editor.putString(Box.getCredentialsKey(), box.get().saveAsString());
         if (googledrive.get() != null)
             editor.putString(Drive.getCredentialsKey(), googledrive.get().saveAsString());
         if (onedrive.get() != null)
-            editor.putString(StorageType.OneDrive.getCredentialsKey(), onedrive.get().saveAsString());
+            editor.putString(OneDrive.getCredentialsKey(), onedrive.get().saveAsString());
         editor.commit();
     }
 
@@ -221,10 +226,20 @@ public class HeroExchange {
             execute(storage, new CloudTask<Boolean>() {
                 @Override
                 public Boolean execute(CloudStorage storage) {
-                    if (fileInfo.getRemoteHeroId() != null)
-                        storage.delete(fileInfo.getRemoteHeroId());
-                    if (fileInfo.getRemoteConfigId() != null)
-                        storage.delete(fileInfo.getRemoteConfigId());
+                    try {
+                        if (fileInfo.getRemoteHeroId() != null)
+                            storage.delete(fileInfo.getRemoteHeroId());
+                    } catch (NotFoundException e) {
+                        // if its already gone, thats fine.
+                        Debug.v(e.getLocalizedMessage());
+                    }
+                    try {
+                        if (fileInfo.getRemoteConfigId() != null)
+                            storage.delete(fileInfo.getRemoteConfigId());
+                    } catch (NotFoundException e) {
+                        // if its already gone, thats fine.
+                        Debug.v(e.getLocalizedMessage());
+                    }
                     return Boolean.TRUE;
                 }
             }, result);
@@ -250,7 +265,11 @@ public class HeroExchange {
                         result = action.execute(storage);
                     } catch (final Exception e) {
                         result = null;
-                        Debug.e(e);
+                        if (e instanceof AuthenticationException) {
+                            Debug.w(e);
+                        } else {
+                            Debug.e(e);
+                        }
                         context.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -276,7 +295,11 @@ public class HeroExchange {
             try {
                 result = action.execute(storage);
             } catch (final Exception e) {
-                Debug.e(e);
+                if (e instanceof AuthenticationException) {
+                    Debug.w(e);
+                } else {
+                    Debug.e(e);
+                }
                 result = null;
                 context.runOnUiThread(new Runnable() {
                     @Override
@@ -315,10 +338,13 @@ public class HeroExchange {
                 storage.upload(heroInfo.getRemoteHeroId(), new FileInputStream(local), local.length(), true);
 
                 // keep lastmodified of cloud data in sync with local files
-                if (cloudMetaData == null)
+                if (cloudMetaData == null) {
                     cloudMetaData = storage.getMetadata(heroInfo.getRemoteHeroId());
+                }
+                if (cloudMetaData != null && cloudMetaData.getModifiedAt() != null) {
+                    local.setLastModified(cloudMetaData.getModifiedAt());
+                }
 
-                local.setLastModified(cloudMetaData.getModifiedAt());
                 result = true;
             }
 
@@ -400,40 +426,52 @@ public class HeroExchange {
         boolean result = false;
         if (storage != null) {
             if (!TextUtils.isEmpty(heroInfo.getRemoteHeroId())) {
-                File local = heroInfo.getFile(FileType.Hero);
-                if (local != null) {
-                    InputStream data = storage.download(heroInfo.getRemoteHeroId());
-                    pipe(data, local);
-                    // keep lastmodified of cloud data in sync with local files
-                    if (cloudMetaData == null) {
-                        cloudMetaData = storage.getMetadata(heroInfo.getRemoteHeroId());
+                try {
+                    File local = heroInfo.getFile(FileType.Hero);
+                    if (local != null) {
+                        InputStream data = storage.download(heroInfo.getRemoteHeroId());
+                        pipe(data, local);
+                        // keep lastmodified of cloud data in sync with local files
+                        if (cloudMetaData == null) {
+                            cloudMetaData = storage.getMetadata(heroInfo.getRemoteHeroId());
+                        }
+                        if (cloudMetaData != null && cloudMetaData.getModifiedAt() != null) {
+                            local.setLastModified(cloudMetaData.getModifiedAt());
+                        }
+                        result = true;
                     }
-                    local.setLastModified(cloudMetaData.getModifiedAt());
-                    result = true;
+                } catch (NotFoundException e) {
+                    Debug.v("Remote config not found skipping it: " + heroInfo.getRemoteConfigId());
+                    // file is no longer stored on cloud remove storage type
+                    heroInfo.setStorageType(null);
                 }
             }
 
             if (!TextUtils.isEmpty(heroInfo.getRemoteConfigId())) {
                 File localConfig = heroInfo.getFile(FileType.Config);
                 if (localConfig != null) {
-                    InputStream dataConfig = storage.download(heroInfo.getRemoteConfigId());
+                    try {
+                        InputStream dataConfig = storage.download(heroInfo.getRemoteConfigId());
 
-                    pipe(dataConfig, localConfig);
-                    result = true;
-                    if (localConfig.exists()) {
-                        String data = Util.slurp(new FileInputStream(localConfig), 1024);
-                        if (!TextUtils.isEmpty(data)) {
-                            JSONObject jsonObject = new JSONObject(data);
-                            if (HeroConfiguration.updateStorageInfo(jsonObject, heroInfo.getStorageType(), heroInfo.getRemoteHeroId(), heroInfo.getRemoteConfigId())) {
-                                FileOutputStream fos = new FileOutputStream(localConfig);
-                                try {
-                                    fos.write(jsonObject.toString().getBytes());
-                                } finally {
-                                    Util.close(fos);
+                        pipe(dataConfig, localConfig);
+                        result = true;
+                        if (localConfig.exists()) {
+                            String data = Util.slurp(new FileInputStream(localConfig), 1024);
+                            if (!TextUtils.isEmpty(data)) {
+                                JSONObject jsonObject = new JSONObject(data);
+                                if (HeroConfiguration.updateStorageInfo(jsonObject, heroInfo.getStorageType(), heroInfo.getRemoteHeroId(), heroInfo.getRemoteConfigId())) {
+                                    FileOutputStream fos = new FileOutputStream(localConfig);
+                                    try {
+                                        fos.write(jsonObject.toString().getBytes());
+                                    } finally {
+                                        Util.close(fos);
+                                    }
+                                    storage.upload(heroInfo.getRemoteConfigId(), new FileInputStream(localConfig), localConfig.length(), true);
                                 }
-                                storage.upload(heroInfo.getRemoteConfigId(), new FileInputStream(localConfig), localConfig.length(), true);
                             }
                         }
+                    } catch (NotFoundException e) {
+                        Debug.v("Remote config not found skipping it: " + heroInfo.getRemoteConfigId());
                     }
                 }
             }
@@ -453,6 +491,7 @@ public class HeroExchange {
     public OutputStream getOutputStream(HeroFileInfo fileInfo, FileType fileType) throws IOException {
         File file = fileInfo.getFile(fileType);
         if (file != null) {
+            file.getParentFile().mkdirs();
             return new FileOutputStream(file);
         } else {
             return null;
@@ -541,10 +580,15 @@ public class HeroExchange {
         if (files != null) {
             for (CloudMetaData file : files) {
                 if (file != null && file.getName().toLowerCase(Locale.GERMAN).endsWith(HERO_FILE_EXTENSION)) {
-                    HeroFileInfo info = new HeroFileInfo(file, storageType, this);
-                    synchronize(storage, info, file);
-                    info.prepare(this);
-                    heroes.add(info);
+                    try {
+                        HeroFileInfo info = new HeroFileInfo(file, storageType, this);
+                        synchronize(storage, info, file);
+                        info.prepare(this);
+                        heroes.add(info);
+                    } catch (Exception e) {
+                        ViewUtils.snackbar(context, "Fehler: " + file.getName() + " - " + e.getLocalizedMessage());
+                        Debug.e(e);
+                    }
                 }
             }
         } else {

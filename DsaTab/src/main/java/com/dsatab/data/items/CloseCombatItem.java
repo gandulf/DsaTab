@@ -91,7 +91,7 @@ public abstract class CloseCombatItem extends ItemSpecification {
 
 	public void addTalentType(TalentType type) {
 		initTalentTypes();
-		if (!combatTalentType.contains(type)) {
+		if (type!=null && !combatTalentType.contains(type)) {
 			combatTalentType.add(type);
 
 			if (TextUtils.isEmpty(combatTalentTypesWrapper))

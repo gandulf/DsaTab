@@ -24,7 +24,7 @@ public class MapTileAbsoluteFilesystemProvider extends MapTileFileStorageProvide
 	// ===========================================================
 	// Constants
 	// ===========================================================
-	public static final int MAXIMUM_ZOOMLEVEL = 12;
+	public static final int MAXIMUM_ZOOMLEVEL = 18;
     public static final int MINIMUM_ZOOMLEVEL = 0;
 
 	// ===========================================================
