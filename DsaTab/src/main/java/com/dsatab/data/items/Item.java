@@ -177,11 +177,11 @@ public class Item implements Comparable<Item>, Cloneable, ItemCard {
 		return false;
 	}
 
-	public UUID getId() {
+	public UUID getItemId() {
 		return id;
 	}
 
-	public void setId(UUID id) {
+	public void setItemId(UUID id) {
 		this.id = id;
 	}
 
@@ -355,7 +355,7 @@ public class Item implements Comparable<Item>, Cloneable, ItemCard {
 			comp1 = 0;
 
 		int comp2 = getName().compareToIgnoreCase(another.getName());
-		int comp3 = getId().compareTo(another.getId());
+		int comp3 = getItemId().compareTo(another.getItemId());
 
 		return comp1 * 10000 + comp2 * 100 + comp3;
 	}
@@ -377,7 +377,7 @@ public class Item implements Comparable<Item>, Cloneable, ItemCard {
 
 		Item otherItem = (Item) o;
 
-		if (!otherItem.getId().equals(getId()))
+		if (!otherItem.getItemId().equals(getItemId()))
 			return false;
 
 		return true;

@@ -11,4 +11,8 @@ public class WoundListItem implements Listable {
 		return getClass().getSimpleName() + " " + super.hashCode();
 	}
 
+    @Override
+    public long getId() {
+        return hashCode();
+    }
 }

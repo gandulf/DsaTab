@@ -136,8 +136,8 @@ public class CustomProbe extends BaseProbe implements JSONable, Listable {
 		this.iconUri = iconUri;
 	}
 
-	public UUID getId() {
-		return id;
+	public long getId() {
+		return id.hashCode();
 	}
 
 	@Override
@@ -157,4 +157,5 @@ public class CustomProbe extends BaseProbe implements JSONable, Listable {
 		}
 		return json;
 	}
+
 }

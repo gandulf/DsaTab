@@ -488,12 +488,12 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
             case R.id.option_itemgrid_type_grid:
                 setScreenType(TYPE_GRID);
                 item.setChecked(true);
-                getActionBarActivity().invalidateOptionsMenu();
+                getActionBarActivity().supportInvalidateOptionsMenu();
                 return true;
             case R.id.option_itemgrid_type_list:
                 setScreenType(TYPE_LIST);
                 item.setChecked(true);
-                getActionBarActivity().invalidateOptionsMenu();
+                getActionBarActivity().supportInvalidateOptionsMenu();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -639,7 +639,7 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
         Editor edit = pref.edit();
         edit.putInt(PREF_KEY_LAST_OPEN_SCREEN, mCurrentContainerId);
         edit.putString(PREF_KEY_SCREEN_TYPE, mScreenType);
-        edit.commit();
+        edit.apply();
     }
 
     private void setScreenType(String type) {
@@ -834,7 +834,7 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
         containers.add(itemContainer);
         addContainerTab(itemContainer);
         if (getActivity() != null) {
-            getActivity().invalidateOptionsMenu();
+            getActivity().supportInvalidateOptionsMenu();
         }
     }
 
@@ -852,7 +852,7 @@ public class ItemsFragment extends BaseRecyclerFragment implements HeroInventory
         containers.remove(index);
         tabLayout.removeTabAt(index);
         if (getActivity() != null) {
-            getActivity().invalidateOptionsMenu();
+            getActivity().supportInvalidateOptionsMenu();
         }
     }
 

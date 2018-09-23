@@ -1,8 +1,18 @@
 
 <changelog>
+    <release version="4.6.3" versioncode="121">
+        <fix>Zusätzliche Behälter werden nun gespeichert</fix>
+        <fix>Zonenrüstungsübersicht #323</fix>
+    </release>
+
+    <release version="4.6.2" versioncode="120">
+        <fix>Einstellungen: Absturz nach Cloud Sync</fix>
+    </release>
 
     <release version="4.6.1" versioncode="118">
         <change>OneDrive Synchronisation hinzugefügt</change>
+        <change>Cloud Sync via Einstellungen konfigurieren</change>
+        <change>Cloud Sync - Verzeichnis auswählen</change>
     </release>
 
     <release version="4.6.0" versioncode="117">

@@ -77,8 +77,8 @@ public class Hero extends AbstractBeing {
 
     private Map<String, Spell> spellsByName;
 
-    private Map<Position, ArmorAttribute>[] armorAttributes;
-    private Map<Position, WoundAttribute> wounds;
+    private List<ArmorAttribute>[] armorAttributes;
+    private List<WoundAttribute> wounds;
 
     private List<EquippedItem>[] equippedItems = null;
     private List<Connection> connections = null;
@@ -182,19 +182,19 @@ public class Hero extends AbstractBeing {
 
         // fill wounds
         final List<Position> woundPositions = DsaTabApplication.getInstance().getConfiguration().getWoundPositions();
-        wounds = new EnumMap<Position, WoundAttribute>(Position.class);
+        List<Position> missingPositions = new ArrayList<>(woundPositions);
+        wounds = new ArrayList<>();
         for (WoundAttribute rs : configuration.getWounds()) {
-            if (woundPositions.contains(rs.getPosition()))
-                wounds.put(rs.getPosition(), rs);
+            if (woundPositions.contains(rs.getPosition())) {
+                wounds.add(rs);
+                missingPositions.remove(rs.getPosition());
+            }
         }
         // fill not existing values with 0
-        for (Position pos : woundPositions) {
-            WoundAttribute wound = wounds.get(pos);
-            if (wound == null) {
-                wound = new WoundAttribute(this, pos);
-                configuration.addWound(wound);
-                wounds.put(pos, wound);
-            }
+        for (Position pos : missingPositions) {
+            WoundAttribute wound = new WoundAttribute(this, pos);
+            configuration.addWound(wound);
+            wounds.add(wound);
         }
     }
 
@@ -224,7 +224,7 @@ public class Hero extends AbstractBeing {
     public EquippedItem getEquippedItem(UUID id) {
         for (int i = 0; i < INVENTORY_SET_COUNT; i++) {
             for (EquippedItem equippedItem : getEquippedItems(i)) {
-                if (equippedItem.getId().equals(id))
+                if (equippedItem.getItemId().equals(id))
                     return equippedItem;
             }
         }
@@ -304,7 +304,7 @@ public class Hero extends AbstractBeing {
     public void setActiveSet(int activeSet) {
 
         if (activeSet != this.activeSet) {
-            int oldSet = activeSet;
+            int oldSet = this.activeSet;
             this.activeSet = activeSet;
 
             resetBe();
@@ -907,12 +907,6 @@ public class Hero extends AbstractBeing {
             }
             addEquippedItem(equippedItem);
 
-            if (equippedItem.getItemSpecification() instanceof Armor) {
-                recalcArmorAttributes(set);
-                if (set == activeSet) {
-                    resetBe();
-                }
-            }
             fireItemEquippedEvent(equippedItem);
         }
     }
@@ -941,14 +935,14 @@ public class Hero extends AbstractBeing {
         }
     }
 
-    public Map<Position, ArmorAttribute> getArmorAttributes() {
+    public List<ArmorAttribute> getArmorAttributes() {
         return getArmorAttributes(activeSet);
     }
 
     @SuppressWarnings("unchecked")
-    public Map<Position, ArmorAttribute> getArmorAttributes(int set) {
+    public List<ArmorAttribute> getArmorAttributes(int set) {
         if (armorAttributes == null) {
-            armorAttributes = new EnumMap[INVENTORY_SET_COUNT];
+            armorAttributes = new ArrayList[INVENTORY_SET_COUNT];
         }
 
         if (armorAttributes[set] == null) {
@@ -956,27 +950,26 @@ public class Hero extends AbstractBeing {
             final List<Position> armorPositions = DsaTabApplication.getInstance().getConfiguration()
                     .getArmorPositions();
 
-            Map<Position, ArmorAttribute> map = new EnumMap<Position, ArmorAttribute>(Position.class);
+            List<Position> missingPositions = new ArrayList<>(armorPositions);
+
+            List<ArmorAttribute> map = new ArrayList<>();
 
             if (getHeroConfiguration().getArmorAttributes(set) != null) {
                 for (ArmorAttribute rs : getHeroConfiguration().getArmorAttributes(set)) {
                     if (armorPositions.contains(rs.getPosition())) {
-                        map.put(rs.getPosition(), rs);
+                        map.add(rs);
+                        missingPositions.remove(rs.getPosition());
                     }
                 }
             }
 
             // fill not existing values with 0
-            for (Position pos : armorPositions) {
-                ArmorAttribute rs = map.get(pos);
+            for (Position pos : missingPositions) {
+                ArmorAttribute rs = new ArmorAttribute(this, pos);
+                rs.setValue(getArmorRs(pos));
 
-                if (rs == null) {
-                    rs = new ArmorAttribute(this, pos);
-                    rs.setValue(getArmorRs(pos));
-
-                    getHeroConfiguration().addArmorAttribute(set, rs);
-                    map.put(pos, rs);
-                }
+                getHeroConfiguration().addArmorAttribute(set, rs);
+                map.add(rs);
             }
 
             armorAttributes[set] = map;
@@ -985,7 +978,15 @@ public class Hero extends AbstractBeing {
         return armorAttributes[set];
     }
 
-    public Map<Position, WoundAttribute> getWounds() {
+    public WoundAttribute getWound(Position position) {
+        for (WoundAttribute woundAttribute : wounds) {
+            if (woundAttribute.getPosition() == position)
+                return woundAttribute;
+        }
+        return null;
+    }
+
+    public List<WoundAttribute> getWounds() {
         return wounds;
     }
 
@@ -1506,7 +1507,7 @@ public class Hero extends AbstractBeing {
     }
 
     /**
-     * @param wundschwelle
+     * @param type
      * @return
      */
     private int getModifier(AttributeType type) {
@@ -1741,7 +1742,7 @@ public class Hero extends AbstractBeing {
     public Item getItem(UUID id) {
         for (ItemContainer<Item> itemContainer : getItemContainers()) {
             for (Item item : itemContainer.getItems()) {
-                if (item.getId().equals(id)) {
+                if (item.getItemId().equals(id)) {
                     return item;
                 }
             }
@@ -1944,7 +1945,7 @@ public class Hero extends AbstractBeing {
             if (auModificator.fulfills())
                 modificators.add(auModificator);
 
-            for (WoundAttribute attr : getWounds().values()) {
+            for (WoundAttribute attr : getWounds()) {
                 if (attr.getModificator().fulfills()) {
                     modificators.add(attr.getModificator());
                 }
@@ -1962,7 +1963,7 @@ public class Hero extends AbstractBeing {
     }
 
     protected void recalcArmorAttributes(int set) {
-        for (ArmorAttribute a : getArmorAttributes(set).values()) {
+        for (ArmorAttribute a : getArmorAttributes(set)) {
             a.recalcValue();
         }
     }
@@ -2020,14 +2021,22 @@ public class Hero extends AbstractBeing {
 
     public void addEquippedItem(EquippedItem equippedItem, boolean sort) {
         equippedItems[equippedItem.getSet()].add(equippedItem);
-        if (sort)
+        if (sort) {
             Util.sort(equippedItems[equippedItem.getSet()]);
+        }
+
+        if (equippedItem.getItemSpecification() instanceof Armor) {
+            recalcArmorAttributes(equippedItem.getSet());
+            if (equippedItem.getSet() == activeSet) {
+                resetBe();
+            }
+        }
     }
 
     /**
      * @param equippedItem
      */
-    public void addEquippedItem(EquippedItem equippedItem) {
+    protected void addEquippedItem(EquippedItem equippedItem) {
         addEquippedItem(equippedItem, true);
     }
 

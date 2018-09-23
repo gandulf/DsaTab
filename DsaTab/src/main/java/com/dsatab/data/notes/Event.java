@@ -181,4 +181,8 @@ public class Event implements JSONable, NotesItem, Listable {
 			return super.hashCode();
 	}
 
+    @Override
+    public long getId() {
+        return id.hashCode();
+    }
 }

@@ -207,7 +207,7 @@ public class ArtInfoFragment extends BaseEditFragment {
 		else
 			inflateDone();
 
-		getActivity().invalidateOptionsMenu();
+		getActivity().supportInvalidateOptionsMenu();
 
 	}
 

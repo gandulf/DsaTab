@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
 
+import com.crashlytics.android.Crashlytics;
 import com.dsatab.data.AbstractBeing;
 import com.dsatab.data.Animal;
 import com.dsatab.data.AnimalAttack;
@@ -59,8 +60,6 @@ import com.dsatab.exception.FeatureTypeUnknownException;
 import com.dsatab.exception.InconsistentDataException;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
-import com.splunk.mint.Mint;
-import com.splunk.mint.MintLogLevel;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -136,8 +135,8 @@ public class HeldenXmlParser {
                     + "> element with in root node. HS-Version=" + hsVersion);
         }
 
-        Mint.clearExtraData();
-        Mint.addExtraData("HS-Version", hsVersion);
+
+        Crashlytics.setString("HS-Version", hsVersion);
 
         hero = new Hero(fileInfo);
 
@@ -222,7 +221,7 @@ public class HeldenXmlParser {
                 name = element.getAttributeValue(Xml.KEY_NAME).trim();
                 featureType = FeatureType.byXmlName(name);
             } catch (FeatureTypeUnknownException e) {
-                Mint.logEvent("Unknown FeatureType", MintLogLevel.Warning, "Name", name);
+                Debug.logCustomEvent("Unknown FeatureType","name",name);
                 continue;
             }
             if (featureType != null) {
@@ -268,7 +267,7 @@ public class HeldenXmlParser {
                 try {
                     featureType = FeatureType.byXmlName(name);
                 } catch (FeatureTypeUnknownException e) {
-                    Mint.logEvent("Unknown FeatureType", MintLogLevel.Warning, "Name", name);
+                    Debug.logCustomEvent("Unknown FeatureType","name",name);
                     continue;
                 }
                 Feature specialFeature = new Feature(featureType);
@@ -730,8 +729,7 @@ public class HeldenXmlParser {
                     Debug.w(e);
                     // heldensofteare comments add values to key which makes it hard so find, so we just ignore them for
                     // now
-
-                    Mint.logEvent("Unknown FeatureType in comment", MintLogLevel.Debug, "Name", key);
+                    Debug.logCustomEvent("Unknown FeatureType in comment","name",key);
                 }
             }
 
@@ -842,11 +840,11 @@ public class HeldenXmlParser {
             Item item = hero.getItem(itemName, itemSlot);
 
             if (item == null) {
-                HashMap<String, Object> customData = new HashMap<>(2);
+                HashMap<String, String> customData = new HashMap<>(2);
                 customData.put("Name", itemName);
                 customData.put("Slot", itemSlot);
                 customData.put("Element", element.toString());
-                Mint.logEvent("Unable to find an item", MintLogLevel.Warning, customData);
+                Debug.logCustomEvent("Unable to find an item",customData);
                 continue;
             }
 
@@ -963,7 +961,7 @@ public class HeldenXmlParser {
                     item = new Item();
                     item.setName(element.getAttributeValue(Xml.KEY_NAME));
                     item.addSpecification(new MiscSpecification(item, ItemType.Sonstiges));
-                    item.setId(UUID.randomUUID());
+                    item.setItemId(UUID.randomUUID());
                     item.setCategory("Sonstiges");
                 }
 

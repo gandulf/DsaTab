@@ -222,12 +222,12 @@ public class HeroFileInfo implements JSONable, Serializable {
                         if (!TextUtils.isEmpty(configuration.getStorageHeroId())) {
                             remoteHeroId = configuration.getStorageHeroId();
                         } else {
-                            remoteHeroId = HeroExchange.BASE_DIRECTORY + "/" + file.getName();
+                            remoteHeroId = HeroExchange.getInstance().getBaseDirectory(storageType) + "/" + file.getName();
                         }
                         if (!TextUtils.isEmpty(configuration.getStorageConfigId())) {
                             remoteConfigId = configuration.getStorageConfigId();
                         } else {
-                            remoteConfigId = HeroExchange.BASE_DIRECTORY + "/" + fileConfig.getName();
+                            remoteConfigId = HeroExchange.getInstance().getBaseDirectory(storageType) + "/" + fileConfig.getName();
                         }
                     }
                 }

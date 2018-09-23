@@ -101,9 +101,9 @@ public class ItemViewFragment extends BaseEditFragment {
             if (getItem()!=null) {
                 Item newItem;
                 if (getExtra()!=null && getExtra().containsKey(ItemEditFragment.INTENT_EXTRA_HERO_KEY)) {
-                    newItem = DsaTabApplication.getInstance().getHero().getItem(getItem().getId());
+                    newItem = DsaTabApplication.getInstance().getHero().getItem(getItem().getItemId());
                 } else {
-                    newItem = DataManager.getItemById(getItem().getId());
+                    newItem = DataManager.getItemById(getItem().getItemId());
                 }
 
                 if (newItem != null) {
@@ -174,7 +174,7 @@ public class ItemViewFragment extends BaseEditFragment {
             this.itemSpecification = null;
         }
         if (getActivity() != null) {
-            getActivity().invalidateOptionsMenu();
+            getActivity().supportInvalidateOptionsMenu();
         }
         showCard();
     }

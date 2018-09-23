@@ -39,10 +39,6 @@ public abstract class ListRecyclerAdapter<VH extends RecyclerView.ViewHolder, T>
 
     public ListRecyclerAdapter(Collection<T> objects) {
         this.mObjects = new ArrayList<T>(objects);
-
-
-
-
     }
 
     protected View inflate(LayoutInflater inflater, ViewGroup parent, int layoutId, boolean markable) {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.dsatab.view.AutofitRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-                                        xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+
 	    android:id="@+id/popup_portrait_chooser_list"
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent">
-</com.dsatab.view.AutofitRecyclerView>
+</android.support.v7.widget.RecyclerView>
 

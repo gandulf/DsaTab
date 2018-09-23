@@ -352,7 +352,7 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
 
 		Editor edit = getPreferences().edit();
 		edit.putBoolean(Modifier.PREF_PREFIX_ACTIVE + mod.getTitle(), mod.isActive());
-		edit.commit();
+		edit.apply();
 
 		updateProgressView(probeData, mod);
 		if (isAutoRoll()) {

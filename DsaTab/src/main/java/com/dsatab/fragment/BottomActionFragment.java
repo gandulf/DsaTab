@@ -1,6 +1,5 @@
 package com.dsatab.fragment;
 
-import android.app.Dialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 
 /**
@@ -10,8 +9,5 @@ import android.support.design.widget.BottomSheetDialogFragment;
 public class BottomActionFragment extends BottomSheetDialogFragment {
 
 
-    @Override
-    public void setupDialog(Dialog dialog, int style) {
-        super.setupDialog(dialog, style);
-    }
+
 }

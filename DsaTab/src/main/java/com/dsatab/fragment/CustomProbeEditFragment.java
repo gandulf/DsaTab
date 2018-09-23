@@ -23,15 +23,13 @@ import com.dsatab.data.Probe.ProbeType;
 import com.dsatab.data.adapter.SpinnerSimpleAdapter;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 import com.dsatab.fragment.dialog.ImageChooserDialog;
+import com.dsatab.util.Debug;
 import com.dsatab.util.ResUtil;
 import com.dsatab.util.Util;
-import com.splunk.mint.Mint;
-import com.splunk.mint.MintLogLevel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 public class CustomProbeEditFragment extends BaseEditFragment implements OnClickListener, OnItemSelectedListener {
 
@@ -46,7 +44,7 @@ public class CustomProbeEditFragment extends BaseEditFragment implements OnClick
 		Intent intent = new Intent(fragment.getActivity(), BaseEditActivity.class);
 		intent.setAction(Intent.ACTION_EDIT);
 		intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, CustomProbeEditFragment.class);
-		intent.putExtra(INTENT_PROBE_CHOOSER_ID, probe.getId().toString());
+		intent.putExtra(INTENT_PROBE_CHOOSER_ID, probe.getId());
 		fragment.startActivityForResult(intent, requestCode);
 	}
 
@@ -118,8 +116,8 @@ public class CustomProbeEditFragment extends BaseEditFragment implements OnClick
 		CustomProbe probe = null;
 		Bundle extra = getExtra();
 		if (extra != null && extra.containsKey(INTENT_PROBE_CHOOSER_ID)) {
-			UUID containerId = UUID.fromString(extra.getString(INTENT_PROBE_CHOOSER_ID));
-			if (containerId != null) {
+			long containerId = extra.getInt(INTENT_PROBE_CHOOSER_ID,-1);
+			if (containerId != -1) {
 				probe = DsaTabApplication.getInstance().getHero().getHeroConfiguration().getCustomProbe(containerId);
 			}
 		}
@@ -280,7 +278,7 @@ public class CustomProbeEditFragment extends BaseEditFragment implements OnClick
 			DsaTabApplication.getInstance().getHero().getHeroConfiguration().addCustomProbe(customProbe);
 		}
 
-        Mint.logEvent("Save CustomProbe", MintLogLevel.Info,"Name",customProbe.getName());
+        Debug.logCustomEvent("Save CustomProbe","name", customProbe.getName());
 
 		Bundle data = new Bundle();
 		// TODO fill data

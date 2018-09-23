@@ -56,7 +56,7 @@ public abstract class BaseRecyclerAdapter<VH extends RecyclerView.ViewHolder, T>
     private OnCheckedChangeListener mCheckedChangeListener;
     private RippleForegroundListener rippleForegroundListener;
 
-    protected  BaseRecyclerAdapter() {
+    protected BaseRecyclerAdapter() {
         rippleForegroundListener = new RippleForegroundListener(R.id.list_item_container);
 
         mItemViewOnClickListener = new View.OnClickListener() {
@@ -165,7 +165,6 @@ public abstract class BaseRecyclerAdapter<VH extends RecyclerView.ViewHolder, T>
             if (check instanceof CheckBox) {
                 check.setOnClickListener(mCheckboxOnClickListener);
             }
-
         }
     }
 }

@@ -17,6 +17,7 @@ import com.dsatab.data.WoundAttribute;
 import com.dsatab.data.enums.Position;
 import com.dsatab.util.Util;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -128,7 +129,7 @@ public class BodyLayout extends FrameLayout {
 		setValue(rsText, attr);
 	}
 
-	public void setArmorAttributes(Map<Position, ArmorAttribute> attributes) {
+	public void setArmorAttributes(Collection<ArmorAttribute> attributes) {
 
 		// remove old buttons if existing
 		for (TextView tv : armorButtons.values()) {
@@ -137,7 +138,7 @@ public class BodyLayout extends FrameLayout {
 		armorButtons.clear();
 
 		// add new ones
-		for (ArmorAttribute attr : attributes.values()) {
+		for (ArmorAttribute attr : attributes) {
 			setArmorAttribute(attr);
 		}
 
@@ -176,9 +177,9 @@ public class BodyLayout extends FrameLayout {
 		}
 	}
 
-	public void setWoundAttributes(Map<Position, WoundAttribute> attributes) {
+	public void setWoundAttributes(Collection<WoundAttribute> attributes) {
 
-		for (WoundAttribute attr : attributes.values()) {
+		for (WoundAttribute attr : attributes) {
 			setWoundAttribute(attr);
 		}
 		requestLayout();

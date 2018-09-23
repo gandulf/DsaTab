@@ -105,7 +105,6 @@ public class HeroSaveTask extends AsyncTask<Void, Void, Boolean> {
                 ViewUtils.snackbar(context, R.string.hero_saved, Snackbar.LENGTH_SHORT, hero.getName());
             }
         } else {
-
             ViewUtils.snackbar(context, R.string.message_save_hero_failed, Snackbar.LENGTH_LONG);
         }
 

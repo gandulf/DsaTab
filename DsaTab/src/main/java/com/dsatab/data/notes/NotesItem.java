@@ -35,4 +35,6 @@ public interface NotesItem extends Serializable, Listable {
 	public String getName();
 
 	public String getComment();
+
+
 }

@@ -6,4 +6,5 @@
     <dimen name="portrait_height">220dp</dimen>
     <dimen name="portrait_width">150dp</dimen>
 
+    <integer name="hero_chooser_span_count">5</integer>
 </resources>

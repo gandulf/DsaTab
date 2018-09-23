@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
@@ -33,213 +34,215 @@ import java.util.List;
 
 public class TakeHitDialog extends AppCompatDialogFragment implements DialogInterface.OnClickListener, OnItemSelectedListener {
 
-	public static final String TAG = "TakeHitDialog";
+    public static final String TAG = "TakeHitDialog";
 
-	private static final String PREF_CONSIDER_RS = "takeHitDialog.considerRs";
-	private static final String PREF_CONSIDER_WOUND = "takeHitDialog.considerWound";
-	private static final String PREF_DAMAGE_TYPE = "takeHitDialog.damageType";
+    private static final String PREF_CONSIDER_RS = "takeHitDialog.considerRs";
+    private static final String PREF_CONSIDER_WOUND = "takeHitDialog.considerWound";
+    private static final String PREF_DAMAGE_TYPE = "takeHitDialog.damageType";
 
-	private NumberPicker numberPicker;
+    private NumberPicker numberPicker;
 
-	private CompoundButton rsConsideration, woundConsideration;
-	private CompoundButton damageType;
-	private Spinner targetZone;
-	private TextView targetZoneLabel;
+    private CompoundButton rsConsideration, woundConsideration;
+    private CompoundButton damageType;
+    private Spinner targetZone;
+    private TextView targetZoneLabel;
 
-	private AbstractBeing being;
-	private Position position;
+    private AbstractBeing being;
+    private Position position;
 
-	public static void show(Fragment parent, FragmentManager fragmentManager, AbstractBeing being, Position position,
+    public static void show(Fragment parent, FragmentManager fragmentManager, AbstractBeing being, Position position,
                             int requestCode) {
-		TakeHitDialog dialog = new TakeHitDialog();
+        TakeHitDialog dialog = new TakeHitDialog();
 
-		Bundle args = new Bundle();
-		// TODO value should be set as argument
-		dialog.being = being;
-		dialog.position = position;
-		dialog.setArguments(args);
-		if (parent != null) {
-			dialog.setTargetFragment(parent, requestCode);
-		}
-		dialog.show(fragmentManager, TAG);
+        Bundle args = new Bundle();
+        // TODO value should be set as argument
+        dialog.being = being;
+        dialog.position = position;
+        dialog.setArguments(args);
+        if (parent != null) {
+            dialog.setTargetFragment(parent, requestCode);
+        }
+        dialog.show(fragmentManager, TAG);
 
-	}
+    }
 
-	public static void show(Fragment parent, AbstractBeing being, Position position, int requestCode) {
-		show(parent, parent.getFragmentManager(), being, position, requestCode);
-	}
+    public static void show(Fragment parent, AbstractBeing being, Position position, int requestCode) {
+        show(parent, parent.getFragmentManager(), being, position, requestCode);
+    }
 
-	@Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) {
+    @Override
+    public
+    @NonNull
+    Dialog onCreateDialog(Bundle savedInstanceState) {
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = LayoutInflater.from(builder.getContext());
-		View popupcontent = inflater.inflate(R.layout.popup_take_hit, null, false);
+        View popupcontent = inflater.inflate(R.layout.popup_take_hit, null, false);
 
         builder.setView(popupcontent);
-		builder.setIcon(R.drawable.vd_sticking_plaster);
+        builder.setIcon(R.drawable.vd_sticking_plaster);
         builder.setTitle("Treffer kassieren");
 
-		targetZone = (Spinner) popupcontent.findViewById(R.id.popup_position);
-		targetZoneLabel = (TextView) popupcontent.findViewById(R.id.popup_position_label);
+        targetZone = (Spinner) popupcontent.findViewById(R.id.popup_position);
+        targetZoneLabel = (TextView) popupcontent.findViewById(R.id.popup_position_label);
 
-		final List<Position> positions = DsaTabApplication.getInstance().getConfiguration().getArmorPositions();
-		SpinnerSimpleAdapter<Position> typeAdapter = new SpinnerSimpleAdapter<Position>(builder.getContext(),
-				android.R.layout.simple_spinner_item, positions);
+        final List<Position> positions = DsaTabApplication.getInstance().getConfiguration().getArmorPositions();
+        SpinnerSimpleAdapter<Position> typeAdapter = new SpinnerSimpleAdapter<>(builder.getContext(),
+                android.R.layout.simple_spinner_item, positions);
 
-		typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		targetZone.setAdapter(typeAdapter);
-		targetZone.setOnItemSelectedListener(this);
-		if (position != null) {
-			targetZone.setSelection(positions.indexOf(position));
-		}
+        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        targetZone.setAdapter(typeAdapter);
+        targetZone.setOnItemSelectedListener(this);
+        if (position != null) {
+            targetZone.setSelection(positions.indexOf(position));
+        }
 
-		numberPicker = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_text);
-		numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-		numberPicker.setMinValue(0);
-		numberPicker.setMaxValue(50);
-		numberPicker.setValue(0);
-		numberPicker.setWrapSelectorWheel(false);
+        numberPicker = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_text);
+        numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+        numberPicker.setMinValue(0);
+        numberPicker.setMaxValue(50);
+        numberPicker.setValue(0);
+        numberPicker.setWrapSelectorWheel(false);
 
-		rsConsideration = (CompoundButton) popupcontent.findViewById(R.id.popup_consider_rs);
-		rsConsideration.setText(getText(R.string.label_consider_rs) + " (" + getRS() + ")");
-		rsConsideration.setChecked(DsaTabApplication.getPreferences().getBoolean(PREF_CONSIDER_RS, true));
+        rsConsideration = (CompoundButton) popupcontent.findViewById(R.id.popup_consider_rs);
+        rsConsideration.setText(getText(R.string.label_consider_rs) + " (" + getRS() + ")");
+        rsConsideration.setChecked(DsaTabApplication.getPreferences().getBoolean(PREF_CONSIDER_RS, true));
 
-		woundConsideration = (CompoundButton) popupcontent.findViewById(R.id.popup_consider_wound);
-		woundConsideration.setChecked(DsaTabApplication.getPreferences().getBoolean(PREF_CONSIDER_WOUND, true));
+        woundConsideration = (CompoundButton) popupcontent.findViewById(R.id.popup_consider_wound);
+        woundConsideration.setChecked(DsaTabApplication.getPreferences().getBoolean(PREF_CONSIDER_WOUND, true));
 
-		damageType = (CompoundButton) popupcontent.findViewById(R.id.popup_damage_type);
+        damageType = (CompoundButton) popupcontent.findViewById(R.id.popup_damage_type);
         damageType.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                buttonView.setText("Schadensart " + (isChecked ? "(TP)": "(AuP)"));
+                buttonView.setText("Schadensart " + (isChecked ? "(TP)" : "(AuP)"));
             }
         });
-		damageType.setChecked(DsaTabApplication.getPreferences().getBoolean(PREF_DAMAGE_TYPE, true));
+        damageType.setChecked(DsaTabApplication.getPreferences().getBoolean(PREF_DAMAGE_TYPE, true));
 
-		builder.setPositiveButton(android.R.string.ok, this);
-		builder.setNegativeButton(android.R.string.cancel, this);
+        builder.setPositiveButton(android.R.string.ok, this);
+        builder.setNegativeButton(android.R.string.cancel, this);
 
-		AlertDialog dialog = builder.create();
+        AlertDialog dialog = builder.create();
 
-		dialog.setCanceledOnTouchOutside(true);
+        dialog.setCanceledOnTouchOutside(true);
 
-		return dialog;
+        return dialog;
 
-	}
+    }
 
-	protected int getRS() {
-		int rs = 0;
-		Position damageZone = (Position) targetZone.getSelectedItem();
+    protected int getRS() {
+        int rs = 0;
+        Position damageZone = (Position) targetZone.getSelectedItem();
 
-		if (being instanceof Animal) {
-			Animal animal = (Animal) being;
-			rs = animal.getAttributeValue(AttributeType.Rüstungsschutz);
-		} else if (being instanceof Hero) {
-			Hero hero = (Hero) being;
+        if (being instanceof Animal) {
+            Animal animal = (Animal) being;
+            rs = animal.getAttributeValue(AttributeType.Rüstungsschutz);
+        } else if (being instanceof Hero) {
+            Hero hero = (Hero) being;
 
-			switch (DsaTabApplication.getInstance().getConfiguration().getArmorType()) {
-			case GesamtRuestung:
-				rs = hero.getArmorRs();
-				break;
-			case ZonenRuestung:
-				rs = hero.getArmorRs(damageZone);
-			}
-		}
+            switch (DsaTabApplication.getInstance().getConfiguration().getArmorType()) {
+                case GesamtRuestung:
+                    rs = hero.getArmorRs();
+                    break;
+                case ZonenRuestung:
+                    rs = hero.getArmorRs(damageZone);
+            }
+        }
 
-		return rs;
-	}
+        return rs;
+    }
 
-	private void accept() {
+    private void accept() {
 
-		boolean damageTp = damageType.isChecked();
-		Position damageZone = (Position) targetZone.getSelectedItem();
-		Position woundDamageZone = damageZone;
-		if (woundDamageZone == Position.Ruecken)
-			woundDamageZone = Position.Brust;
+        boolean damageTp = damageType.isChecked();
+        Position woundDamageZone = (Position) targetZone.getSelectedItem();
+        if (woundDamageZone == Position.Ruecken) {
+            woundDamageZone = Position.Brust;
+        }
 
-		int damage = numberPicker.getValue();
+        int damage = numberPicker.getValue();
 
-		if (rsConsideration.isChecked()) {
-			damage = Math.max(0, damage - getRS());
-		}
+        if (rsConsideration.isChecked()) {
+            damage = Math.max(0, damage - getRS());
+        }
 
-		int leDamage = 0;
+        int leDamage = 0;
 
-		if (damageTp) {
-			leDamage = damage;
+        if (damageTp) {
+            leDamage = damage;
 
-			Attribute le = being.getAttribute(AttributeType.Lebensenergie_Aktuell);
-			le.setValue(le.getValue() - leDamage);
+            Attribute le = being.getAttribute(AttributeType.Lebensenergie_Aktuell);
+            le.setValue(le.getValue() - leDamage);
 
-		} else {
-			Attribute au = being.getAttribute(AttributeType.Ausdauer_Aktuell);
-			au.setValue(au.getValue() - damage);
+        } else {
+            Attribute au = being.getAttribute(AttributeType.Ausdauer_Aktuell);
+            au.setValue(au.getValue() - damage);
 
-			Attribute le = being.getAttribute(AttributeType.Lebensenergie_Aktuell);
-			leDamage = damage / 2;
-			le.setValue(le.getValue() - leDamage);
-		}
+            Attribute le = being.getAttribute(AttributeType.Lebensenergie_Aktuell);
+            leDamage = damage / 2;
+            le.setValue(le.getValue() - leDamage);
+        }
 
-		if (being instanceof Hero && woundConsideration.isChecked()) {
-			Hero hero = (Hero) being;
+        if (being instanceof Hero && woundConsideration.isChecked()) {
+            Hero hero = (Hero) being;
 
-			WoundAttribute woundAttribute = hero.getWounds().get(woundDamageZone);
-			if (woundAttribute != null) {
-				int wounds = 0;
-				for (int ws : hero.getWundschwelle()) {
-					if (leDamage > ws) {
-						wounds++;
-					}
-				}
+            WoundAttribute woundAttribute = hero.getWound(woundDamageZone);
+            if (woundAttribute != null) {
+                int wounds = 0;
+                for (int ws : hero.getWundschwelle()) {
+                    if (leDamage > ws) {
+                        wounds++;
+                    }
+                }
 
-				if (wounds > 0) {
-					woundAttribute.addValue(wounds);
-				}
-			}
-		}
+                if (wounds > 0) {
+                    woundAttribute.addValue(wounds);
+                }
+            }
+        }
 
-		Editor edit = DsaTabApplication.getPreferences().edit();
-		edit.putBoolean(PREF_CONSIDER_RS, rsConsideration.isChecked());
-		edit.putBoolean(PREF_CONSIDER_WOUND, woundConsideration.isChecked());
-		edit.putBoolean(PREF_DAMAGE_TYPE, damageTp);
-		edit.commit();
+        Editor edit = DsaTabApplication.getPreferences().edit();
+        edit.putBoolean(PREF_CONSIDER_RS, rsConsideration.isChecked());
+        edit.putBoolean(PREF_CONSIDER_WOUND, woundConsideration.isChecked());
+        edit.putBoolean(PREF_DAMAGE_TYPE, damageTp);
+        edit.apply();
 
-		Util.hideKeyboard(rsConsideration);
-		dismiss();
-	}
+        Util.hideKeyboard(rsConsideration);
+        dismiss();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.content.DialogInterface.OnClickListener#onClick(android.content .DialogInterface, int)
-	 */
-	@Override
-	public void onClick(DialogInterface dialog, int which) {
-		switch (which) {
-		case DialogInterface.BUTTON_POSITIVE:
-			accept();
-			break;
+    /*
+     * (non-Javadoc)
+     *
+     * @see android.content.DialogInterface.OnClickListener#onClick(android.content .DialogInterface, int)
+     */
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        switch (which) {
+            case DialogInterface.BUTTON_POSITIVE:
+                accept();
+                break;
 
-		case DialogInterface.BUTTON_NEGATIVE:
-			dismiss();
-			break;
-		}
+            case DialogInterface.BUTTON_NEGATIVE:
+                dismiss();
+                break;
+        }
 
-	}
+    }
 
-	@Override
-	public void onItemSelected(AdapterView<?> paramAdapterView, View paramView, int paramInt, long paramLong) {
-		if (paramAdapterView == targetZone) {
-			rsConsideration.setText(DsaTabApplication.getInstance().getText(R.string.label_consider_rs) + " ("
-					+ getRS() + ")");
-		}
-	}
+    @Override
+    public void onItemSelected(AdapterView<?> paramAdapterView, View paramView, int paramInt, long paramLong) {
+        if (paramAdapterView == targetZone) {
+            rsConsideration.setText(DsaTabApplication.getInstance().getText(R.string.label_consider_rs) + " ("
+                    + getRS() + ")");
+        }
+    }
 
-	@Override
-	public void onNothingSelected(AdapterView<?> paramAdapterView) {
+    @Override
+    public void onNothingSelected(AdapterView<?> paramAdapterView) {
 
-	}
+    }
 
 }

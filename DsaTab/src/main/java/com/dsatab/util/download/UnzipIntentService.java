@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.dsatab.R;
@@ -199,10 +200,14 @@ public class UnzipIntentService extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		long downloadId = intent.getLongExtra(INTENT_DOWNLOAD_ID, -1);
-		Uri outputURI = Uri.parse(intent.getStringExtra(INTENT_OUTPUT_URI));
-
-		int result = unzip(this, downloadId, outputURI);
-
+        String outputURIExtra = intent.getStringExtra(INTENT_OUTPUT_URI);
+        int result;
+        if (!TextUtils.isEmpty(outputURIExtra)) {
+            Uri outputURI = Uri.parse(outputURIExtra);
+            result = unzip(this, downloadId, outputURI);
+        } else {
+            result = RESULT_CANCELED;
+        }
 		Intent broadcastIntent = new Intent(ACTION_UNZIP_COMPLETE);
 		broadcastIntent.putExtra(INTENT_RESULT, result);
 		sendBroadcast(broadcastIntent);

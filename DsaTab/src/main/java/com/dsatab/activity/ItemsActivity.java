@@ -85,7 +85,7 @@ public class ItemsActivity extends BaseItemActivity implements OnItemSelectedLis
         if (item != null) {
             if (Intent.ACTION_PICK.equals(getIntent().getAction())) {
                 Intent data = getIntent();
-                data.putExtra(INTENT_EXTRA_ITEM_ID, item.getId());
+                data.putExtra(INTENT_EXTRA_ITEM_ID, item.getItemId());
 
                 setResult(Activity.RESULT_OK, data);
                 finish();

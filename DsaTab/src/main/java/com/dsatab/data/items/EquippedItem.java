@@ -252,7 +252,7 @@ public class EquippedItem implements ItemCard, Listable, Serializable {
 		return hand;
 	}
 
-	public UUID getId() {
+	public UUID getItemId() {
 		return id;
 	}
 
@@ -430,4 +430,8 @@ public class EquippedItem implements ItemCard, Listable, Serializable {
 		return name + " " + talent + " = " + item != null ? item.getName() : "";
 	}
 
+    @Override
+    public long getId() {
+        return id.hashCode();
+    }
 }

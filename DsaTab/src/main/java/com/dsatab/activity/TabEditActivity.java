@@ -194,7 +194,8 @@ public class TabEditActivity extends BaseActivity implements TabListFragment.Tab
             if (editFragment2 != null) {
                 editFragment2.setTabInfo(tabInfo, 1);
             }
-            invalidateOptionsMenu();
+
+            supportInvalidateOptionsMenu();
         } else {
             edit(this, tabInfo, index, ACTION_EDIT);
         }
@@ -207,7 +208,7 @@ public class TabEditActivity extends BaseActivity implements TabListFragment.Tab
             if (editFragment2 != null) {
                 editFragment2.setTabInfo(info, 1);
             }
-            invalidateOptionsMenu();
+            supportInvalidateOptionsMenu();
         }
     }
 

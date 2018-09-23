@@ -96,8 +96,8 @@ public class CustomModificator extends AbstractModificator implements JSONable {
 
     }
 
-    public UUID getId() {
-        return id;
+    public long getId() {
+        return id.hashCode();
     }
 
     /*

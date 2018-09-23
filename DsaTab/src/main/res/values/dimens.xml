@@ -24,4 +24,6 @@
 
     <dimen name="toolbar_icon_size">24dp</dimen>
 
+    <integer name="hero_chooser_span_count">3</integer>
+
 </resources>

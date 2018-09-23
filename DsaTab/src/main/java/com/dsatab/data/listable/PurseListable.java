@@ -18,4 +18,8 @@ public class PurseListable implements Listable {
 		this.currency = currency;
 	}
 
+    @Override
+    public long getId() {
+        return hashCode();
+    }
 }

@@ -167,7 +167,7 @@ public class Util {
 				}
 			}
 		} else {
-			Debug.e("Intent returned from image pick did not containt uri data:" + data);
+			Debug.e("Intent returned from image pick did not contain uri data:" + data);
 		}
 		return null;
 	}

@@ -8,16 +8,16 @@ import com.dsatab.data.enums.TalentType;
 import com.dsatab.data.listable.Listable;
 import com.dsatab.data.modifier.RulesModificator.ModificatorType;
 import com.dsatab.db.DataManager;
+import com.dsatab.util.Debug;
 import com.dsatab.util.StyleableSpannableStringBuilder;
 import com.dsatab.util.Util;
-import com.splunk.mint.Mint;
-import com.splunk.mint.MintLogLevel;
 
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Art extends MarkableElement implements Value, Listable, Serializable {
 
@@ -182,7 +182,7 @@ public class Art extends MarkableElement implements Value, Listable, Serializabl
 		if (groupType != null) {
 			name = groupType.truncateName(name);
 		} else {
-            Mint.logEvent("Unknown Art GroupType", MintLogLevel.Warning,"Name",name);
+            Debug.logCustomEvent("Unknown Art GroupType","name",name);
 		}
 
 		String grade = null;
@@ -228,10 +228,10 @@ public class Art extends MarkableElement implements Value, Listable, Serializabl
 				info.setGrade(Util.gradeToInt(grade));
 			}
 
-            HashMap customData = new HashMap(2);
+            Map<String,String> customData = new HashMap(2);
             customData.put("Name" , name);
             customData.put("Grade" , grade);
-            Mint.logEvent("Unknown Art", MintLogLevel.Warning, customData);
+            Debug.logCustomEvent("Unknown Art",customData);
 		}
 
 		setProbePattern(info.getProbe());
@@ -345,4 +345,8 @@ public class Art extends MarkableElement implements Value, Listable, Serializabl
 		return 25;
 	}
 
+    @Override
+    public long getId() {
+        return hashCode();
+    }
 }

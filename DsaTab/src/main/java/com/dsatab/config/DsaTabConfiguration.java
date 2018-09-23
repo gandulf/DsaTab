@@ -85,7 +85,7 @@ public class DsaTabConfiguration {
 		for (Field field : allFields) {
 			if (Modifier.isPublic(field.getModifiers()) && Modifier.isStatic(field.getModifiers())) {
 				String fieldName = field.getName();
-				if ((fieldName.startsWith("vd_") ||fieldName.startsWith("dsa_")) && !fieldName.endsWith("_add") && !fieldName.endsWith("_light")
+				if ((fieldName.startsWith("vd_") || fieldName.startsWith("dsa_")) && !fieldName.endsWith("_add") && !fieldName.endsWith("_light")
 						&& !fieldName.endsWith("_dark") && !IGNORE_ICONS.contains(fieldName)) {
 					try {
 						itemIcons.add(field.getInt(null));

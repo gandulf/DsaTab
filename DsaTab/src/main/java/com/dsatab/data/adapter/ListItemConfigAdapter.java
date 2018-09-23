@@ -217,7 +217,12 @@ public class ListItemConfigAdapter  extends ListRecyclerAdapter<ListItemConfigAd
 		}
 	}
 
-	@Override
+    @Override
+    public boolean onCheckCanDrop(int draggingPosition, int dropPosition) {
+        return true;
+    }
+
+    @Override
 	public ItemDraggableRange onGetItemDraggableRange(ViewHolder holder, int position) {
 		// no drag-sortable range specified
 		return null;

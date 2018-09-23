@@ -215,7 +215,7 @@ public class ChangeLogDialog extends AppCompatDialogFragment {
 
 		Editor editor = preferences.edit();
 		editor.putInt(KEY_NEWS_VERSION, version);
-		editor.commit();
+		editor.apply();
 	}
 
 }

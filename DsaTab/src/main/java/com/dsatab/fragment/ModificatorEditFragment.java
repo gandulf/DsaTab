@@ -1,8 +1,8 @@
 package com.dsatab.fragment;
 
-import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +12,8 @@ import android.widget.EditText;
 
 import com.dsatab.R;
 import com.dsatab.activity.BaseEditActivity;
-import com.dsatab.activity.DsaTabActivity;
 import com.dsatab.data.modifier.CustomModificator;
-import com.splunk.mint.Mint;
-import com.splunk.mint.MintLogLevel;
+import com.dsatab.util.Debug;
 
 public class ModificatorEditFragment extends BaseEditFragment {
 
@@ -31,12 +29,11 @@ public class ModificatorEditFragment extends BaseEditFragment {
 		fragment.startActivityForResult(intent, requestCode);
 	}
 
-	public static void insert(Fragment fragment, int actionAddModificator) {
+	public static void insert(Fragment fragment, int requestCode) {
 		Intent intent = new Intent(fragment.getActivity(), BaseEditActivity.class);
 		intent.setAction(Intent.ACTION_INSERT);
 		intent.putExtra(BaseEditActivity.EDIT_FRAGMENT_CLASS, ModificatorEditFragment.class);
-		fragment.startActivityForResult(intent, DsaTabActivity.ACTION_ADD_MODIFICATOR);
-
+		fragment.startActivityForResult(intent, requestCode);
 	}
 
 	public static final String INTENT_ID = "id";
@@ -82,7 +79,7 @@ public class ModificatorEditFragment extends BaseEditFragment {
 
 		Bundle extra = getExtra();
 		if (extra != null) {
-			data.putSerializable(INTENT_ID, extra.getSerializable(INTENT_ID));
+			data.putLong(INTENT_ID, extra.getLong(INTENT_ID));
 		}
 		String name = etName.getText().toString();
 		String comment = etComment.getText().toString();
@@ -97,7 +94,7 @@ public class ModificatorEditFragment extends BaseEditFragment {
 		data.putString(INTENT_RULES, rules);
 		data.putBoolean(INTENT_ACTIVE, cbActive.isChecked());
 
-        Mint.logEvent("Save Modificator", MintLogLevel.Info,"Name",name);
+        Debug.logCustomEvent("Save Modificator", "name", name);
 
 		return data;
 	}

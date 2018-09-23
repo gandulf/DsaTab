@@ -283,7 +283,7 @@ public class ItemEditFragment extends BaseEditFragment implements OnClickListene
         DataManager.createOrUpdateItem(origItem);
 
         if (getActivity().getIntent().hasExtra(ItemEditFragment.INTENT_EXTRA_HERO_KEY)) {
-            if (DsaTabApplication.getInstance().getHero().getItem(origItem.getId()) == null) {
+            if (DsaTabApplication.getInstance().getHero().getItem(origItem.getItemId()) == null) {
                 DsaTabApplication.getInstance().getHero().addItem(origItem);
             } else {
                 DsaTabApplication.getInstance().getHero().fireItemChangedEvent(origItem);

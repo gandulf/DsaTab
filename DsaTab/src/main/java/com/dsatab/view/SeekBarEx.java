@@ -89,11 +89,11 @@ public class SeekBarEx extends AppCompatSeekBar {
 		init();
 	}
 
-	public int getMin() {
+	public int getMinimum() {
 		return min;
 	}
 
-	public void setMin(int min) {
+	public void setMinimum(int min) {
 		int diff = this.min - min;
 
 		super.setMax(getMax() + diff);
@@ -104,7 +104,7 @@ public class SeekBarEx extends AppCompatSeekBar {
 
 	@Override
 	public synchronized void setMax(int max) {
-		super.setMax(max - getMin());
+		super.setMax(max - getMinimum());
 		invalidate();
 	}
 

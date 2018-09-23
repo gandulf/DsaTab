@@ -91,8 +91,6 @@ import com.h6ah4i.android.widget.advrecyclerview.selectable.RecyclerViewSelectio
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
-import com.splunk.mint.Mint;
-import com.splunk.mint.MintLogLevel;
 
 import java.io.File;
 import java.io.IOException;
@@ -101,7 +99,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
 
 import pl.tajchert.nammu.Nammu;
 import pl.tajchert.nammu.PermissionCallback;
@@ -985,12 +982,12 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
         } else if (requestCode == DsaTabActivity.ACTION_EDIT_MODIFICATOR) {
             if (resultCode == Activity.RESULT_OK) {
 
-                UUID id = (UUID) data.getSerializableExtra(ModificatorEditFragment.INTENT_ID);
+                long id = data.getLongExtra(ModificatorEditFragment.INTENT_ID,-1);
 
                 for (Modificator modificator : getHero().getUserModificators()) {
                     if (modificator instanceof CustomModificator) {
                         CustomModificator customModificator = (CustomModificator) modificator;
-                        if (customModificator.getId().equals(id)) {
+                        if (customModificator.getId() ==id) {
                             customModificator.setModificatorName(data
                                     .getStringExtra(ModificatorEditFragment.INTENT_NAME));
                             customModificator.setRules(data.getStringExtra(ModificatorEditFragment.INTENT_RULES));
@@ -1654,7 +1651,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
             mediaRecorder.prepare();
             mediaRecorder.start(); // Recording is now started
 
-            Mint.logEvent("Recording audio", MintLogLevel.Info);
+            Debug.logCustomEvent("Recording audio");
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle(R.string.recording);
@@ -1679,7 +1676,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
                             .currentTimeMillis() + ".3gp");
                     currentAudio.renameTo(nowAudio);
 
-                    Mint.logEvent("Storing audio", MintLogLevel.Info,"FileSize",Util.readableFileSize(nowAudio.length()));
+                    Debug.logCustomEvent("Storing audio", "FileSize", Util.readableFileSize(nowAudio.length()));
 
                     NotesEditFragment.edit(null, nowAudio.getAbsolutePath(), ListableFragment.this,
                             DsaTabActivity.ACTION_EDIT_NOTES);
@@ -1787,7 +1784,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
 
                 if (event.getAudioPath() != null) {
                     try {
-                        Mint.logEvent("Play audio", MintLogLevel.Info);
+                        Debug.logCustomEvent("Play audio");
                         MediaPlayer mediaPlayer = new MediaPlayer();
                         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
@@ -1829,7 +1826,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
     public void onActiveSetChanged(int newSet, int oldSet) {
         fillListItems(getHero());
         if (getActivity() != null) {
-            getActivity().invalidateOptionsMenu();
+            getActivity().supportInvalidateOptionsMenu();
         }
     }
 

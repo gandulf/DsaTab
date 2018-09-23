@@ -39,9 +39,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 
-public class HeroConfiguration {
+public class HeroConfiguration implements JSONable{
 
 	private static final String FIELD_TABS_PORTRAIT = "tabsPortrait";
 	private static final String FIELD_MODIFICATORS = "modificators";
@@ -53,6 +52,8 @@ public class HeroConfiguration {
 	private static final String FIELD_META_TALENTS = "metaTalents";
 	private static final String FIELD_EVENTS = "events";
 	private static final String FIELD_PROPERTIES = "properties";
+
+    private static final String FIELD_ITEM_CONTAINERS = "itemContainers";
 
 	private static final String FIELD_LE_MODIFIER = "leModifier";
 	private static final String FIELD_AU_MODIFIER = "auModifier";
@@ -69,7 +70,7 @@ public class HeroConfiguration {
 
 	private List<CustomModificator> modificators;
 	private List<WoundAttribute> wounds;
-	private List<ArmorAttribute>[] armorAttributes;
+	private ArrayList<ArmorAttribute>[] armorAttributes;
 	private Set<CustomAttribute> attributes;
 	private Set<MetaTalent> metaTalents;
 	private List<Event> events;
@@ -92,20 +93,20 @@ public class HeroConfiguration {
 	 * 
 	 */
 	public HeroConfiguration(Hero hero) {
-		modificators = new ArrayList<CustomModificator>();
-		wounds = new ArrayList<WoundAttribute>();
+		modificators = new ArrayList<>();
+		wounds = new ArrayList<>();
 		armorAttributes = new ArrayList[Hero.INVENTORY_SET_COUNT];
-		attributes = new HashSet<CustomAttribute>();
-		metaTalents = new HashSet<MetaTalent>();
-		events = new ArrayList<Event>();
-		customProbes = new ArrayList<CustomProbe>();
+		attributes = new HashSet<>();
+		metaTalents = new HashSet<>();
+		events = new ArrayList<>();
+		customProbes = new ArrayList<>();
 		combatStyle = CombatStyle.Offensive;
 		beCalculation = true;
 
 		leModifierActive = true;
 		auModifierActive = true;
 
-		properties = new HashMap<String, String>();
+		properties = new HashMap<>();
 
 		tabInfos = getDefaultTabs(null);
 	}
@@ -140,14 +141,14 @@ public class HeroConfiguration {
         storageHeroId = in.optString(FIELD_STORAGE_HERO_ID,null);
         storageConfigId = in.optString(FIELD_STORAGE_CONFIG_ID,null);
 
-		JSONArray array = null;
+		JSONArray array;
 
 		if (version < 95) {
 			tabInfos = getDefaultTabs(tabInfos);
 		} else {
 			if (in.has(FIELD_TABS_PORTRAIT)) {
 				array = in.getJSONArray(FIELD_TABS_PORTRAIT);
-				tabInfos = new ArrayList<TabInfo>(array.length());
+				tabInfos = new ArrayList<>(array.length());
 				for (int i = 0; i < array.length(); i++) {
 					JSONObject tab = array.getJSONObject(i);
 					try {
@@ -158,7 +159,7 @@ public class HeroConfiguration {
 					}
 				}
 			} else {
-				tabInfos = new ArrayList<TabInfo>();
+				tabInfos = new ArrayList<>();
 			}
 		}
 
@@ -178,7 +179,7 @@ public class HeroConfiguration {
             auModifierActive = in.getBoolean(FIELD_AU_MODIFIER);
         }
 
-        properties = new HashMap<String, String>();
+        properties = new HashMap<>();
         if (in.has(FIELD_PROPERTIES)) {
 
             JSONObject map = in.getJSONObject(FIELD_PROPERTIES);
@@ -192,32 +193,44 @@ public class HeroConfiguration {
 
         if (in.has(FIELD_EVENTS)) {
             array = in.getJSONArray(FIELD_EVENTS);
-            events = new ArrayList<Event>(array.length());
+            events = new ArrayList<>(array.length());
             for (int i = 0; i < array.length(); i++) {
                 JSONObject tab = array.getJSONObject(i);
                 Event info = new Event(tab);
                 events.add(info);
             }
         } else {
-            events = new ArrayList<Event>();
+            events = new ArrayList<>();
+        }
+
+        if (in.has(FIELD_ITEM_CONTAINERS)) {
+            array = in.getJSONArray(FIELD_ITEM_CONTAINERS);
+            itemContainers = getItemContainers();
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject tab = array.getJSONObject(i);
+                ItemContainer info = new ItemContainer(tab);
+                if (!itemContainers.contains(info)) {
+                    itemContainers.add(info);
+                }
+            }
         }
 
         if (hero !=null) {
 
             if (in.has(FIELD_MODIFICATORS)) {
                 array = in.getJSONArray(FIELD_MODIFICATORS);
-                modificators = new ArrayList<CustomModificator>(array.length());
+                modificators = new ArrayList<>(array.length());
                 for (int i = 0; i < array.length(); i++) {
                     JSONObject tab = array.getJSONObject(i);
                     CustomModificator info = new CustomModificator(hero, tab);
                     modificators.add(info);
                 }
             } else {
-                modificators = new ArrayList<CustomModificator>();
+                modificators = new ArrayList<>();
             }
             if (in.has(FIELD_WOUNDS)) {
                 array = in.getJSONArray(FIELD_WOUNDS);
-                wounds = new ArrayList<WoundAttribute>(array.length());
+                wounds = new ArrayList<>(array.length());
                 for (int i = 0; i < array.length(); i++) {
                     JSONObject tab = array.getJSONObject(i);
                     try {
@@ -228,7 +241,7 @@ public class HeroConfiguration {
                     }
                 }
             } else {
-                wounds = new ArrayList<WoundAttribute>();
+                wounds = new ArrayList<>();
             }
 
             if (in.has(FIELD_ARMOR_ATTRIBUTES)) {
@@ -237,7 +250,7 @@ public class HeroConfiguration {
                 for (int s = 0; s < array.length(); s++) {
                     JSONArray inArray = array.getJSONArray(s);
 
-                    armorAttributes[s] = new ArrayList<ArmorAttribute>(inArray.length());
+                    armorAttributes[s] = new ArrayList<>(inArray.length());
 
                     for (int i = 0; i < inArray.length(); i++) {
                         JSONObject tab = inArray.getJSONObject(i);
@@ -255,7 +268,7 @@ public class HeroConfiguration {
 
             if (in.has(FIELD_ATTRIBUTES)) {
                 array = in.getJSONArray(FIELD_ATTRIBUTES);
-                attributes = new HashSet<CustomAttribute>(array.length());
+                attributes = new HashSet<>(array.length());
                 for (int i = 0; i < array.length(); i++) {
                     JSONObject tab = array.getJSONObject(i);
                     try {
@@ -266,12 +279,12 @@ public class HeroConfiguration {
                     }
                 }
             } else {
-                attributes = new HashSet<CustomAttribute>();
+                attributes = new HashSet<>();
             }
 
             if (in.has(FIELD_META_TALENTS)) {
                 array = in.getJSONArray(FIELD_META_TALENTS);
-                metaTalents = new HashSet<MetaTalent>(array.length());
+                metaTalents = new HashSet<>(array.length());
 
                 for (int i = 0; i < array.length(); i++) {
                     JSONObject tab = array.getJSONObject(i);
@@ -283,19 +296,19 @@ public class HeroConfiguration {
                     }
                 }
             } else {
-                metaTalents = new HashSet<MetaTalent>();
+                metaTalents = new HashSet<>();
             }
 
             if (in.has(FIELD_CUSTOM_PROBES)) {
                 array = in.getJSONArray(FIELD_CUSTOM_PROBES);
-                customProbes = new ArrayList<CustomProbe>(array.length());
+                customProbes = new ArrayList<>(array.length());
                 for (int i = 0; i < array.length(); i++) {
                     JSONObject tab = array.getJSONObject(i);
                     CustomProbe info = new CustomProbe(hero, tab);
                     customProbes.add(info);
                 }
             } else {
-                customProbes = new ArrayList<CustomProbe>();
+                customProbes = new ArrayList<>();
             }
         }
 	}
@@ -389,7 +402,7 @@ public class HeroConfiguration {
 		return customProbes;
 	}
 
-	public CustomProbe getCustomProbe(UUID id) {
+	public CustomProbe getCustomProbe(long id) {
 		for (CustomProbe customProbe : customProbes) {
 			if (Util.equalsOrNull(customProbe.getId(), id))
 				return customProbe;
@@ -539,20 +552,16 @@ public class HeroConfiguration {
 
 	public List<ItemContainer<Item>> getItemContainers() {
 		if (itemContainers == null) {
-			itemContainers = new ArrayList<ItemContainer<Item>>();
+			itemContainers = new ArrayList<>();
 			itemContainers.add(new ItemContainer<Item>(3, "Rucksack", Util.getUriForResourceId(R.drawable.vd_backpack)));
 		}
 		return itemContainers;
 	}
 
-	public void setItemContainers(List<ItemContainer<Item>> itemContainers) {
-		this.itemContainers = itemContainers;
-	}
-
 	public List<TabInfo> getDefaultTabs(List<TabInfo> tabInfos) {
 
 		if (tabInfos == null) {
-			tabInfos = new ArrayList<TabInfo>(15);
+			tabInfos = new ArrayList<>(15);
 		} else {
 			tabInfos.clear();
 		}
@@ -697,8 +706,7 @@ public class HeroConfiguration {
 
 	/**
 	 * Constructs a json object with the current data
-	 * 
-	 * @return
+	 *
 	 * @throws JSONException
 	 */
 	public JSONObject toJSONObject() throws JSONException {
@@ -724,6 +732,7 @@ public class HeroConfiguration {
 		Util.putArray(out, attributes, FIELD_ATTRIBUTES);
 		Util.putArray(out, metaTalents, FIELD_META_TALENTS);
 		Util.putArray(out, events, FIELD_EVENTS);
+        Util.putArray(out, itemContainers, FIELD_ITEM_CONTAINERS);
 		Util.putArray(out, customProbes, FIELD_CUSTOM_PROBES);
 
         out.put(FIELD_COMBAT_STYLE, combatStyle.name());

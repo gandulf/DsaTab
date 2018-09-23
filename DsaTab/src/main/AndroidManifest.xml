@@ -25,7 +25,7 @@
         android:required="true"/>
 
     <application
-        tools:replace="android:label,android:supportsRtl"
+        tools:replace="android:label"
 
         android:name="DsaTabApplication"
         android:allowBackup="true"
@@ -38,6 +38,7 @@
         android:theme="@style/DsaTabTheme.Light">
         <activity
             android:name=".activity.DsaTabActivity"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="stateAlwaysHidden|adjustUnspecified">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -66,7 +67,21 @@
             />
         <activity
             android:name=".activity.HeroChooserActivity"
-            android:label="Held auswählen"/>
+            android:label="Held auswählen"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:host="www.cloudrailauth.com" android:scheme="https" android:path="/auth"  />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="com.dsatab" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activity.TabEditActivity"
             android:label="Tab bearbeiten"
@@ -102,6 +117,9 @@
             android:value="com.dsatab.activity.SearchableActivity"
             android:voiceSearchMode="showVoiceSearchButton|launchRecognizer"/>
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="${fabric_api_key}" />
     </application>
 
 </manifest>

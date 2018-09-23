@@ -265,7 +265,7 @@ public abstract class BaseProfileFragment extends BaseAttributesFragment impleme
                 showComments = !showComments;
                 Editor edit = getPreferences().edit();
                 edit.putBoolean(PREF_SHOW_FEATURE_COMMENTS, showComments);
-                edit.commit();
+                edit.apply();
 
                 fillSpecialFeatures(getBeing());
                 return true;

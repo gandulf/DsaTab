@@ -12,7 +12,7 @@ import com.dsatab.util.Util;
 
 public abstract class BaseAttributesFragment extends BaseFragment {
 
-	protected TextView tfLabelLE, tfLabelAU, tfLabelKE, tfLabelAE, tfLabelBE, tfLabelGS, tfLabelWS, tfLabelMR;
+	protected TextView tfLabelKE, tfLabelAE, tfLabelBE, tfLabelMR;
 	protected TextView tfLE, tfAU, tfKE, tfAE, tfBE, tfGS, tfWS, tfMR;
 
 	protected TextView tfLabelMU, tfLabelKL, tfLabelIN, tfLabelCH, tfLabelFF, tfLabelGE, tfLabelKO, tfLabelKK;
@@ -37,12 +37,8 @@ public abstract class BaseAttributesFragment extends BaseFragment {
 	 */
 	protected void findViews(View view) {
 		tfLabelAE = (TextView) view.findViewById(R.id.attr_ae_label);
-		tfLabelAU = (TextView) view.findViewById(R.id.attr_au_label);
 		tfLabelKE = (TextView) view.findViewById(R.id.attr_ke_label);
-		tfLabelLE = (TextView) view.findViewById(R.id.attr_le_label);
 		tfLabelBE = (TextView) view.findViewById(R.id.attr_be_label);
-		tfLabelGS = (TextView) view.findViewById(R.id.attr_gs_label);
-		tfLabelWS = (TextView) view.findViewById(R.id.attr_ws_label);
 		tfLabelMR = (TextView) view.findViewById(R.id.attr_mr_label);
 
 		tfLabelMU = (TextView) view.findViewById(R.id.attr_mu_label);

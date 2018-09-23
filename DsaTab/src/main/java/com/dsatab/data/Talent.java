@@ -174,4 +174,8 @@ public class Talent extends MarkableElement implements Value, Listable {
         return getName();
     }
 
+    @Override
+    public long getId() {
+        return hashCode();
+    }
 }

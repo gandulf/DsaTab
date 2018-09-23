@@ -6,11 +6,13 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Bitmap;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.multidex.MultiDexApplication;
 import android.support.v4.content.ContextCompat;
 
 import com.cloudrail.si.CloudRail;
+import com.crashlytics.android.Crashlytics;
 import com.dsatab.activity.DsaTabPreferenceActivity;
 import com.dsatab.config.DsaTabConfiguration;
 import com.dsatab.data.Hero;
@@ -23,7 +25,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.splunk.mint.Mint;
 
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 
@@ -31,6 +32,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
+import io.fabric.sdk.android.Fabric;
 import pl.tajchert.nammu.Nammu;
 
 public class DsaTabApplication extends MultiDexApplication {
@@ -165,6 +167,11 @@ public class DsaTabApplication extends MultiDexApplication {
 		// provide an instance for our static accessors
         instance = this;
 
+        // disable strict mode for file uri exposure
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+        //
+
 		cleanUp();
 
 		setTheme(DsaTabPreferenceActivity.getCustomTheme());
@@ -173,8 +180,7 @@ public class DsaTabApplication extends MultiDexApplication {
 
 		configuration = new DsaTabConfiguration(this);
 
-		if (!BuildConfig.DEBUG)
-			Mint.initAndStartSession(this, BuildConfig.bugsense_api_key);
+		Fabric.with(this, new Crashlytics());
 
 		migrateDirectories();
 
@@ -186,7 +192,7 @@ public class DsaTabApplication extends MultiDexApplication {
 		TileSourceFactory.getTileSources().clear();
 		TileSourceFactory.addTileSource(BitmapTileSource.AVENTURIEN);
 
-		edit.commit();
+		edit.apply();
 
 		// Create global configuration and initialize ImageLoader with this config
 		// Create default options which will be used for every
@@ -237,7 +243,7 @@ public class DsaTabApplication extends MultiDexApplication {
 		if (index < 0) {
 			Editor edit = preferences.edit();
 			edit.putString(DsaTabPreferenceActivity.KEY_THEME, THEME_DEFAULT);
-			edit.commit();
+			edit.apply();
 		}
 
 	}

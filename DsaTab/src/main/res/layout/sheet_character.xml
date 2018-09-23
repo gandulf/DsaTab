@@ -33,7 +33,7 @@
                     android:ellipsize="middle"
                     android:fontFamily="sans-serif-condensed"
                     android:hint="@string/label_education"
-                    android:maxLines="1"
+                    android:singleLine="true"
                     app:layout_columnSpan="2"
                     app:layout_gravity="fill_horizontal">
                 </com.dsatab.view.FloatingHintTextView>
@@ -44,7 +44,7 @@
                     android:ellipsize="middle"
                     android:fontFamily="sans-serif-condensed"
                     android:hint="@string/label_titel"
-                    android:maxLines="1"
+                    android:singleLine="true"
                     app:layout_columnSpan="2"
                     app:layout_gravity="fill_horizontal"/>
 
@@ -54,7 +54,7 @@
                     android:ellipsize="middle"
                     android:fontFamily="sans-serif-condensed"
                     android:hint="@string/label_stand"
-                    android:maxLines="1"
+                    android:singleLine="true"
                     app:layout_columnSpan="2"
                     app:layout_gravity="fill_horizontal"/>
 
@@ -103,7 +103,7 @@
                     style="@style/TextValue.Small"
                     android:ellipsize="middle"
                     android:hint="@string/label_alter"
-                    android:maxLines="1"
+                    android:singleLine="true"
                     app:layout_columnWeight="1">
                 </com.dsatab.view.FloatingHintTextView>
 
@@ -112,7 +112,7 @@
                     style="@style/TextValue.Small"
                     android:ellipsize="middle"
                     android:hint="@string/label_aussehen"
-                    android:maxLines="1"
+                    android:singleLine="true"
                     app:layout_columnSpan="2"
                     app:layout_gravity="fill_horizontal">
                 </com.dsatab.view.FloatingHintTextView>
@@ -122,7 +122,7 @@
                     style="@style/TextValue.Small"
                     android:ellipsize="none"
                     android:hint="@string/label_st"
-                    android:maxLines="1"
+                    android:singleLine="true"
                     app:layout_columnWeight="1">
                 </com.dsatab.view.FloatingHintTextView>
 
@@ -131,7 +131,7 @@
                     style="@style/TextValue.Small"
                     android:ellipsize="none"
                     android:hint="@string/label_ws"
-                    android:maxLines="1"
+                    android:singleLine="true"
                     app:layout_columnWeight="1">
                 </com.dsatab.view.FloatingHintTextView>
 
@@ -140,7 +140,7 @@
                     style="@style/TextValue.Small"
                     android:ellipsize="none"
                     android:hint="@string/label_gs"
-                    android:maxLines="1"
+                    android:singleLine="true"
                     app:layout_column="0"
                     app:layout_columnSpan="2"
                     app:layout_gravity="fill_horizontal">
@@ -534,7 +534,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="none"
                 android:gravity="center"
-                android:maxLines="1">
+                android:singleLine="true">
             </Button>
 
             <com.dsatab.view.FlexibleTextView
@@ -557,7 +557,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="none"
                 android:gravity="center"
-                android:maxLines="1">
+                android:singleLine="true">
             </Button>
 
             <com.dsatab.view.FlexibleTextView
@@ -580,7 +580,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="none"
                 android:gravity="center"
-                android:maxLines="1">
+                android:singleLine="true">
             </Button>
 
             <com.dsatab.view.FlexibleTextView
@@ -603,7 +603,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="none"
                 android:gravity="center"
-                android:maxLines="1">
+                android:singleLine="true">
             </Button>
         </LinearLayout>
 

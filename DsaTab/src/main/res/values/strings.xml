@@ -14,8 +14,7 @@
     <string name="item_container_edit_title">Behälter bearbeiten</string>
     
     <string name="capacity_value">%1$d von %2$d Unzen</string>
-    
-    <string name="path_items">https://dl.dropboxusercontent.com/u/15750588/dsatab-items3.zip</string>
+
     <string name="app_name">DsaTab</string>
     <string name="label_haar_augen_farbe">Haar,Augen</string>
     <string name="label_alter">Alter</string>
@@ -238,7 +237,6 @@ Dsatab kann deine Helden nun auch automatisch in der Cloud speichern.\nVerbinde 
 <string name="mark_as_unused">Als ungenützt markieren</string>
 <string name="clear_selection">Markierung aufheben</string>
 <string name="choose_folder">Ordner auswählen</string>
-<string name="import_from_hero_exchange">Aus Heldenaustausch importieren</string>
 <string name="refresh">Refresh</string>
 <string name="items">Gegenstände</string>
 <string name="label_create">Erstellen</string>
@@ -289,20 +287,22 @@ Dsatab kann deine Helden nun auch automatisch in der Cloud speichern.\nVerbinde 
 <string name="option_reset_tabs">Tabs zurücksetzen</string>
 <string name="title_choose_icon">Wähle ein Icon&#8230;</string>
 <string name="title_insert_title">Titel eingeben</string>
-<string name="message_insert_login_token_first">Bitte zuerst das Logintoken unter Setup > Heldenaustausch Einstellungen angeben.</string>
-<string name="message_connection_to_server_failed">Konnte keine Verbindung zum Austausch Server herstellen.</string>
 <string name="title_import_heroes">Held importieren</string>
-<string name="message_loading_data_from_server">Daten werden von Helden-Austausch Server geladen</string>
-<string name="message_connect_to_server">Verbinde mit Server&#8230;</string>
-<string name="message_hero_import_successful">Held erfolgreich importiert.</string>
-<string name="message_invalid_hero_file">Konnte Heldendatei nicht öffnen, ungültige Datei </string>
-<string name="message_no_heo_file_found_on_server">Konnte keine Heldendatei am Helden-Austausch Server finden.</string>
-<string name="message_invalid_token_please_check">Token ungültig. Überprüfe ob das Token mit dem in der Helden-Software erstelltem Zugangstoken übereinstimmt.</string>
 <string name="portrait">Portrait</string>
 <string name="choose_animal">Tier auswählen</string>
 <string name="pref_dropbox_title">Dropbox Synchronisation</string>
 <string name="pref_dropbox_description_off">DsaTab wir nicht mit Dropbox synchronisiert.</string>
 <string name="pref_dropbox_description_on">Dsatab ist mit deinem Dropbox Account verbunden.</string>
+    <string name="pref_google_drive_title">Google Drive Synchronisation</string>
+    <string name="pref_google_drive_description_off">DsaTab wir nicht mit Google Drive synchronisiert.</string>
+    <string name="pref_google_drive_description_on">Dsatab ist mit deinem Google Drive Account verbunden.</string>
+
+    <string name="pref_one_drive_title">One Drive Synchronisation</string>
+    <string name="pref_one_drive_description_off">DsaTab wir nicht mit One Drive synchronisiert.</string>
+    <string name="pref_one_drive_description_on">Dsatab ist mit deinem One Drive Account verbunden.</string>
+
+    <string name="pref_cloud_directory_choose">Verzeichnis für Helden in %1$s auswählen:\n %2$s</string>
+
 <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="create_custom_probe">Probe hinzufügen</string>

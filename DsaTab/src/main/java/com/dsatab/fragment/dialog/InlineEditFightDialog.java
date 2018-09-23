@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
 import android.widget.NumberPicker.OnValueChangeListener;
@@ -50,6 +49,8 @@ public class InlineEditFightDialog extends AppCompatDialogFragment implements an
 		dialog.show(parent.getFragmentManager(), TAG);
 	}
 
+
+
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -60,8 +61,7 @@ public class InlineEditFightDialog extends AppCompatDialogFragment implements an
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setTitle(talent.getName());
 
-        LayoutInflater inflater = LayoutInflater.from(builder.getContext());
-		View popupcontent = inflater.inflate(R.layout.popup_edit_fight, null, false);
+		View popupcontent = View.inflate(builder.getContext(),R.layout.popup_edit_fight,null);
         builder.setView(popupcontent);
 		numberPicker = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_text);
 		editAt = (NumberPicker) popupcontent.findViewById(R.id.popup_edit_at);

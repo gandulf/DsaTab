@@ -104,4 +104,8 @@ public abstract class AbstractModificator implements Modificator {
 		}
 	}
 
+    @Override
+    public long getId() {
+        return modifier.hashCode();
+    }
 }

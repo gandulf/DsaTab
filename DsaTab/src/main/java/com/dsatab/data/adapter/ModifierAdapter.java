@@ -40,14 +40,14 @@ public class ModifierAdapter extends ListRecyclerAdapter<ModifierAdapter.Modifie
         }
     };
 
-    protected static class ModifierViewHolder extends RecyclerView.ViewHolder {
+    static class ModifierViewHolder extends RecyclerView.ViewHolder {
         private TextView text1;
         private TextView text2;
         private CheckBox checkBox;
         private SeekBarEx seekBar;
         private Spinner spinner;
 
-        public ModifierViewHolder(View v) {
+        ModifierViewHolder(View v) {
             super(v);
             text1 = (TextView) v.findViewById(android.R.id.text1);
             text2 = (TextView) v.findViewById(android.R.id.text2);
@@ -119,9 +119,9 @@ public class ModifierAdapter extends ListRecyclerAdapter<ModifierAdapter.Modifie
                 Debug.v("mod = " + modifier.getModifier() + ", next" + nextStep);
 
                 if (-modifier.getModifier() < 0) {
-                    holder.seekBar.setMin(-nextStep);
+                    holder.seekBar.setMinimum(-nextStep);
                 } else {
-                    holder.seekBar.setMin(-10);
+                    holder.seekBar.setMinimum(-10);
                 }
 
                 if (-modifier.getModifier() > 0) {
@@ -159,7 +159,7 @@ public class ModifierAdapter extends ListRecyclerAdapter<ModifierAdapter.Modifie
 
                 holder.text1.setText(modifier.getTitle());
 
-                SpinnerSimpleAdapter<String> adapter = new SpinnerSimpleAdapter<String>(holder.spinner.getContext(),
+                SpinnerSimpleAdapter<String> adapter = new SpinnerSimpleAdapter<>(holder.spinner.getContext(),
                         modifier.getSpinnerOptions());
                 holder.spinner.setOnItemSelectedListener(null);
                 holder.spinner.setAdapter(adapter);
@@ -186,7 +186,7 @@ public class ModifierAdapter extends ListRecyclerAdapter<ModifierAdapter.Modifie
                                 SharedPreferences preferences = DsaTabApplication.getPreferences();
                                 Editor edit = preferences.edit();
                                 edit.putInt(Modifier.PREF_PREFIX_SPINNER_INDEX + spinnerModifier.getTitle(), position);
-                                edit.commit();
+                                edit.apply();
                             }
                         }
                     }
@@ -262,8 +262,8 @@ public class ModifierAdapter extends ListRecyclerAdapter<ModifierAdapter.Modifie
 
             seekBarEx.setOnSeekBarChangeListener(null);
 
-            if (seekBarEx.getValue() == seekBarEx.getMin()) {
-                seekBarEx.setMin(seekBarEx.getMin() - 5);
+            if (seekBarEx.getValue() == seekBarEx.getMinimum()) {
+                seekBarEx.setMinimum(seekBarEx.getMinimum() - 5);
             }
 
             if (seekBarEx.getValue() == seekBarEx.getMax()) {

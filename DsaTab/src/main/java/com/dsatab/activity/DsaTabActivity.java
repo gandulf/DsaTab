@@ -155,8 +155,9 @@ public class DsaTabActivity extends BaseActivity implements NavigationView.OnNav
                 if (hero != null) {
                     context.checkHsVersion(hero);
                 }
-                if (!context.isFinishing())
+                if (!context.isFinishing()) {
                     context.onHeroLoaded(hero);
+                }
 
             }
         }
@@ -851,7 +852,7 @@ public class DsaTabActivity extends BaseActivity implements NavigationView.OnNav
 
             int tabIndex = getHeroConfiguration().getActiveTabs(getHero()).indexOf(tabInfo);
             edit.putInt(TAB_INDEX, tabIndex);
-            edit.commit();
+            edit.apply();
         }
 
         super.onDestroy();
@@ -1017,7 +1018,7 @@ public class DsaTabActivity extends BaseActivity implements NavigationView.OnNav
      */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        // super.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
         outState.putParcelable(KEY_TAB_INFO, tabInfo);
     }
 
@@ -1028,7 +1029,7 @@ public class DsaTabActivity extends BaseActivity implements NavigationView.OnNav
      */
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        // super.onRestoreInstanceState(savedInstanceState);
+        super.onRestoreInstanceState(savedInstanceState);
         if (savedInstanceState.containsKey(KEY_TAB_INFO))
             tabInfo = savedInstanceState.getParcelable(KEY_TAB_INFO);
     }

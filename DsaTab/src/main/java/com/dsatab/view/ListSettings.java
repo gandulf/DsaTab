@@ -45,10 +45,6 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
     private static final String FIELD_ITEMS = "items";
     private static final String FIELD_EVENT_CATEGORIES = "eventCategories";
 
-    public enum FilterType {
-        Talent, Spell, Art, Fight
-    }
-
     private boolean showNormal, showFavorite, showUnused;
 
     private boolean includeModifiers;
@@ -70,17 +66,17 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
 
         if (jsonObject.has(FIELD_ITEMS)) {
             JSONArray array = jsonObject.getJSONArray(FIELD_ITEMS);
-            listItems = new ArrayList<ListItem>(array.length());
+            listItems = new ArrayList<>(array.length());
             for (int i = 0; i < array.length(); i++) {
                 JSONObject tab = array.getJSONObject(i);
                 ListItem info = new ListItem(tab);
                 listItems.add(info);
             }
         } else {
-            listItems = new ArrayList<ListItem>();
+            listItems = new ArrayList<>();
         }
 
-        eventCategories = new HashSet<EventCategory>();
+        eventCategories = new HashSet<>();
         if (jsonObject.has(FIELD_EVENT_CATEGORIES)) {
             JSONArray array = jsonObject.getJSONArray(FIELD_EVENT_CATEGORIES);
             for (int i = 0; i < array.length(); i++) {
@@ -102,8 +98,8 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
         this.showUnused = unused;
         this.includeModifiers = incMod;
 
-        listItems = new ArrayList<ListItem>();
-        eventCategories = new HashSet<EventCategory>(Arrays.asList(EventCategory.values()));
+        listItems = new ArrayList<>();
+        eventCategories = new HashSet<>(Arrays.asList(EventCategory.values()));
     }
 
     /**
@@ -117,10 +113,10 @@ public class ListSettings implements JSONable, Serializable, Parcelable {
         showUnused = booleans[2];
         includeModifiers = booleans[3];
 
-        listItems = new ArrayList<ListItem>();
+        listItems = new ArrayList<>();
         in.readTypedList(listItems, ListItem.CREATOR);
 
-        eventCategories = new HashSet<EventCategory>();
+        eventCategories = new HashSet<>();
         List<String> enumStrings = new ArrayList<String>();
         in.readList(enumStrings, null);
         for (String enumString : enumStrings) {

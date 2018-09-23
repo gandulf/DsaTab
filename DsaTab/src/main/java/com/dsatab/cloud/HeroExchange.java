@@ -20,6 +20,7 @@ import com.dsatab.DsaTabApplication;
 import com.dsatab.data.HeroConfiguration;
 import com.dsatab.data.HeroFileInfo;
 import com.dsatab.data.HeroFileInfo.FileType;
+import com.dsatab.fragment.dialog.CloudDirectoryChooserDialog;
 import com.dsatab.util.Debug;
 import com.dsatab.util.Util;
 import com.dsatab.util.ViewUtils;
@@ -34,6 +35,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
@@ -80,48 +82,56 @@ public class HeroExchange {
         return ourInstance;
     }
 
-    private CloudStorage getProvider(StorageType type, boolean initialise) {
+    public CloudStorage getProvider(StorageType type, boolean initialise) {
         if (type == null) {
             return null;
         }
         CloudStorage storage = null;
         try {
             String persistent = getCredentialsKey(type);
-            if (initialise || persistent != null) {
-                switch (type) {
-                    case Box:
-                        storage = box.get();
-                        if (storage == null) {
-                            storage = new Box(context, "", "");
-                            box.set(storage);
-                        }
-                        break;
-                    case Drive:
-                        storage = googledrive.get();
-                        if (storage == null) {
-                            storage = new GoogleDrive(context, BuildConfig.google_drive_client_id, BuildConfig.google_drive_secret);
-                            googledrive.set(storage);
-                        }
-                        break;
-                    case Dropbox:
-                        storage = dropbox.get();
-                        if (storage == null) {
-                            storage = new Dropbox(context, BuildConfig.dropbox_client_id, BuildConfig.dropbox_secret);
-                            dropbox.set(storage);
-                        }
-                        break;
-                    case OneDrive:
-                        storage = onedrive.get();
-                        if (storage == null) {
-                            storage = new OneDrive(context, BuildConfig.onedrive_client_id, BuildConfig.onedrive_secret);
-                            onedrive.set(storage);
-                        }
-                        break;
-                }
+            boolean lazyInitialise = initialise || persistent != null;
+
+            switch (type) {
+                case Box:
+                    storage = box.get();
+                    if (lazyInitialise && storage == null) {
+                        storage = new Box(context, "", "");
+                        box.set(storage);
+                    }
+                    break;
+                case Drive:
+                    storage = googledrive.get();
+                    if (lazyInitialise && storage == null) {
+                        storage = new GoogleDrive(context, BuildConfig.google_drive_client_id, BuildConfig.google_drive_secret, "com.dsatab:/auth", "com.dsatab");
+                        ((GoogleDrive) storage).useAdvancedAuthentication();
+                        googledrive.set(storage);
+                    }
+                    break;
+                case Dropbox:
+                    storage = dropbox.get();
+                    if (lazyInitialise && storage == null) {
+                        storage = new Dropbox(context, BuildConfig.dropbox_client_id, BuildConfig.dropbox_secret,"https://auth.cloudrail.com/com.dsatab","com.dsatab");
+                        ((Dropbox) storage).useAdvancedAuthentication();
+                        dropbox.set(storage);
+                    }
+                    break;
+                case OneDrive:
+                    storage = onedrive.get();
+                    if (lazyInitialise && storage == null) {
+                        storage = new OneDrive(context, BuildConfig.onedrive_client_id, BuildConfig.onedrive_secret);
+                        ((OneDrive) storage).useAdvancedAuthentication();
+                        onedrive.set(storage);
+                    }
+                    break;
+            }
+            if (storage != null) {
                 if (persistent != null) {
                     storage.loadAsString(persistent);
+                } else {
+                    storePersistent(storage, type);
                 }
             }
+
         } catch (ParseException e) {
         }
 
@@ -145,9 +155,19 @@ public class HeroExchange {
             editor.putString(Drive.getCredentialsKey(), googledrive.get().saveAsString());
         if (onedrive.get() != null)
             editor.putString(OneDrive.getCredentialsKey(), onedrive.get().saveAsString());
-        editor.commit();
+        editor.apply();
     }
 
+    protected void storePersistent(CloudStorage storage, StorageType storageType) {
+        if (storage!=null) {
+            SharedPreferences sharedPreferences = DsaTabApplication.getPreferences();
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            editor.putString(storageType.getCredentialsKey(), storage.saveAsString());
+
+            editor.apply();
+        }
+    }
     private CloudStorage getProvider(HeroFileInfo fileInfo, boolean initialise) {
         return getProvider(fileInfo.getStorageType(), initialise);
     }
@@ -169,10 +189,10 @@ public class HeroExchange {
         }
     }
 
-    public void isConnected(final StorageType type, CloudResult<Boolean> cloudResult) {
+    public AsyncTask<Void,Void,Boolean> isConnected(final StorageType type, CloudResult<Boolean> cloudResult) {
         if (type == null) {
             cloudResult.onSuccess(false);
-            return;
+            return null;
         }
 
         String persistent = getCredentialsKey(type);
@@ -183,7 +203,7 @@ public class HeroExchange {
             if (storage == null) {
                 cloudResult.onSuccess(false);
             } else {
-                execute(storage, new CloudTask<Boolean>() {
+                return execute(storage, new CloudTask<Boolean>() {
                     @Override
                     public Boolean execute(CloudStorage storage) throws Exception {
                         return storage.getUserLogin() != null;
@@ -191,6 +211,7 @@ public class HeroExchange {
                 }, cloudResult);
             }
         }
+        return null;
     }
 
     private String getCredentialsKey(StorageType type) {
@@ -202,11 +223,24 @@ public class HeroExchange {
             return key;
     }
 
-    private CloudMetaData getBasePath(CloudStorage provider) {
-        if (!provider.exists(BASE_DIRECTORY))
-            provider.createFolder(BASE_DIRECTORY);
+    public String getBaseDirectory(StorageType storageType) {
+        SharedPreferences sharedPreferences = DsaTabApplication.getPreferences();
+        return sharedPreferences.getString("cloud.baseDirectory."+storageType.name(), BASE_DIRECTORY);
+    }
 
-        return provider.getMetadata(BASE_DIRECTORY);
+    public void setBaseDirectory(StorageType storageType, String path) {
+        SharedPreferences sharedPreferences = DsaTabApplication.getPreferences();
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putString("cloud.baseDirectory."+storageType.name(), path);
+        edit.apply();
+    }
+
+    private CloudMetaData getBasePath(CloudStorage provider,StorageType storageType) {
+        String base = getBaseDirectory(storageType);
+        if (!provider.exists(base)) {
+            provider.createFolder(base);
+        }
+        return provider.getMetadata(base);
     }
 
     public void delete(final HeroFileInfo fileInfo, CloudResult<Boolean> result) {
@@ -249,17 +283,17 @@ public class HeroExchange {
 
     }
 
-    private <T> void execute(final CloudStorage storage, final CloudTask<T> action, final CloudResult<T> cloudResult) {
+    private <T> AsyncTask<Void,Void,T> execute(final CloudStorage storage, final CloudTask<T> action, final CloudResult<T> cloudResult) {
         if (storage == null) {
             Debug.w("Skipping storage task since provider was null");
             cloudResult.onSuccess(null);
-            return;
+            return null;
         }
 
         if (Looper.myLooper() == Looper.getMainLooper()) {
-            AsyncTask.execute(new Runnable() {
+            AsyncTask<Void,Void,T> asyncTask = new AsyncTask<Void,Void,T>() {
                 @Override
-                public void run() {
+                protected T doInBackground(Void... params) {
                     T result;
                     try {
                         result = action.execute(storage);
@@ -277,19 +311,16 @@ public class HeroExchange {
                             }
                         });
                     }
-
-                    final T finalResult = result;
-                    if (cloudResult != null) {
-                        context.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                cloudResult.onSuccess(finalResult);
-                            }
-                        });
-                    }
-
+                    return result;
                 }
-            });
+
+                @Override
+                protected void onPostExecute(T t) {
+                    cloudResult.onSuccess(t);
+                }
+            };
+            asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            return asyncTask;
         } else {
             T result;
             try {
@@ -310,13 +341,14 @@ public class HeroExchange {
             }
             final T finalResult = result;
             if (cloudResult != null) {
-                AsyncTask.execute(new Runnable() {
+                context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         cloudResult.onSuccess(finalResult);
                     }
                 });
             }
+            return null;
         }
     }
 
@@ -514,8 +546,29 @@ public class HeroExchange {
         return heroes;
     }
 
-    public void connect(StorageType storageType, CloudResult<Boolean> result) {
-        execute(getProvider(storageType, true), new CloudTask<Boolean>() {
+    public void getDirectories(StorageType storageType, final String path, CloudResult<List<CloudMetaData>> result){
+        execute(getProvider(storageType, true), new CloudTask<List<CloudMetaData>>() {
+            @Override
+            public List<CloudMetaData> execute(CloudStorage storage) {
+                List<CloudMetaData> data= new ArrayList<CloudMetaData>();
+                try {
+                    List<CloudMetaData> children = storage.getChildren(path);
+                    Collections.sort(children, CloudDirectoryChooserDialog.NAMECOMPARATOR);
+                    for (CloudMetaData metaData : children) {
+                        if (metaData.getFolder()) {
+                            data.add(metaData);
+                        }
+                    }
+                } catch (NotFoundException e) {
+                    Debug.d(e.getLocalizedMessage());
+                }
+                return data;
+            }
+        }, result);
+    }
+
+    public AsyncTask<Void,Void,Boolean> connect(StorageType storageType, CloudResult<Boolean> result) {
+        return execute(getProvider(storageType, true), new CloudTask<Boolean>() {
             @Override
             public Boolean execute(CloudStorage storage) {
                 storage.login();
@@ -569,14 +622,14 @@ public class HeroExchange {
 
         CloudStorage storage = getProvider(storageType, false);
 
-        CloudMetaData basePath = getBasePath(storage);
+        CloudMetaData basePath = getBasePath(storage,storageType);
         if (basePath == null) {
             Debug.w("Couldn't create/read BasePath for storage type " + storageType
                     + ". Make sure the directory exists and contains your heroes");
             return heroes;
         }
 
-        List<CloudMetaData> files = storage.getChildren(BASE_DIRECTORY);
+        List<CloudMetaData> files = storage.getChildren(getBaseDirectory(storageType));
         if (files != null) {
             for (CloudMetaData file : files) {
                 if (file != null && file.getName().toLowerCase(Locale.GERMAN).endsWith(HERO_FILE_EXTENSION)) {

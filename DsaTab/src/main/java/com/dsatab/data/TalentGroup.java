@@ -2,12 +2,13 @@ package com.dsatab.data;
 
 import com.dsatab.data.Talent.Flags;
 import com.dsatab.data.enums.TalentGroupType;
+import com.dsatab.data.listable.Listable;
 
 import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.List;
 
-public class TalentGroup {
+public class TalentGroup  implements Listable {
 
 	private List<Talent> talents = new LinkedList<Talent>();
 
@@ -39,4 +40,8 @@ public class TalentGroup {
 		return type;
 	}
 
+    @Override
+    public long getId() {
+        return hashCode();
+    }
 }

@@ -1274,18 +1274,6 @@ public enum FeatureType {
 		return xmlName;
 	}
 
-	public boolean isAdvantage() {
-		return type == FeatureGroupType.Advantage;
-	}
-
-	public boolean isDisdvantage() {
-		return type == FeatureGroupType.Disadvantage;
-	}
-
-	public boolean isSpecialFeature() {
-		return type == FeatureGroupType.SpecialFeature;
-	}
-
 	public FeatureGroupType type() {
 		return type;
 	}

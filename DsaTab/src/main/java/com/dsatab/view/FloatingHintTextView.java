@@ -4,13 +4,13 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
 import com.dsatab.R;
 
-public class FloatingHintTextView extends TextView {
+public class FloatingHintTextView extends AppCompatTextView {
 
 	private final Paint mFloatingHintPaint = new Paint();
 	private final ColorStateList mHintColors;

@@ -23,8 +23,6 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
-import android.widget.NumberPicker.OnValueChangeListener;
 import android.widget.PopupMenu;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -79,26 +77,24 @@ import com.dsatab.fragment.dialog.DiceSliderFragment;
 import com.dsatab.fragment.dialog.TakeHitDialog;
 import com.dsatab.util.Debug;
 import com.dsatab.util.DsaUtil;
+import com.dsatab.util.ResUtil;
 import com.dsatab.util.StyleableSpannableStringBuilder;
 import com.dsatab.util.Util;
 import com.dsatab.util.ViewUtils;
 import com.dsatab.view.ListSettings;
+import com.dsatab.view.SeekBarEx;
 import com.dsatab.view.listener.EditListener;
 import com.dsatab.view.listener.OnActionListener;
 import com.dsatab.view.listener.ProbeListener;
 import com.dsatab.view.listener.TargetListener;
 import com.franlopez.flipcheckbox.FlipCheckBox;
-import com.dsatab.util.ResUtil;
-import com.dsatab.view.SeekBarEx;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 
 import java.util.Collections;
 import java.util.List;
 
-public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHolder, Listable> implements
-        OnSeekBarChangeListener,
-        OnCheckedChangeListener, OnClickListener {
+public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHolder, Listable> {
 
     private Hero hero;
 
@@ -108,6 +104,89 @@ public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHo
     private ProbeListener probeListener;
     private EditListener editListener;
     private TargetListener targetListener;
+
+    private OnClickListener onClickListener = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            if (v.getTag() == null && v instanceof ToggleButton) {
+
+                final ToggleButton button = (ToggleButton) v;
+
+                switch (DsaTabApplication.getInstance().getConfiguration().getWoundType()) {
+                    case Standard:
+                        WoundAttribute attr = hero.getWound(Position.Kopf);
+                        attr.addValue(1);
+                        button.setTag(attr);
+                        break;
+                    case Trefferzonen:
+                        button.setChecked(false);
+
+                        final List<Position> positions = DsaTabApplication.getInstance().getConfiguration().getWoundPositions();
+
+                        PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+
+                        for (int i = 0; i < positions.size(); i++) {
+                            popupMenu.getMenu().add(0, i, i, positions.get(i).getName());
+                        }
+
+                        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                Position position = positions.get(item.getItemId());
+                                WoundAttribute attr = hero.getWound(position);
+                                button.setChecked(true);
+                                attr.addValue(1);
+                                button.setTag(attr);
+                                return true;
+                            }
+                        });
+
+                        popupMenu.show();
+                        break;
+                }
+            }
+        }
+    };
+
+    private static OnCheckedChangeListener onCheckedChangeListener = new OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(final CompoundButton button, final boolean checked) {
+            if (button.getTag() instanceof WoundAttribute) {
+                WoundAttribute attribute = (WoundAttribute) button.getTag();
+                if (checked)
+                    attribute.addValue(1);
+                else
+                    attribute.addValue(-1);
+            } else if (button.getTag() instanceof AbstractModificator) {
+                AbstractModificator modificator = (AbstractModificator) button.getTag();
+                modificator.setActive(checked);
+            }
+        }
+    };
+
+
+    private static OnSeekBarChangeListener onSeekBarChangeListener = new OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+            SeekBarEx seekBarEx = (SeekBarEx) seekBar;
+            Attribute attribute = (Attribute) seekBar.getTag();
+            if (attribute != null && attribute.getValue() != null) {
+                attribute.setValue(seekBarEx.getValue());
+            }
+        }
+    };
 
     private Bitmap indicatorStar, indicatorStarGray, indicatorHouse, indicatorHouseGray, indicatorFlash,
             indicatorFlashGray;
@@ -147,19 +226,6 @@ public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHo
         @Override
         public void onNothingSelected(AdapterView<?> arg0) {
 
-        }
-    };
-
-    private OnValueChangeListener onPurseValueChangeListener = new OnValueChangeListener() {
-
-        @Override
-        public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-            if (hero.getPurse() != null) {
-                PurseUnit unit = (PurseUnit) picker.getTag();
-                if (unit != null) {
-                    hero.getPurse().setCoins(unit, newVal);
-                }
-            }
         }
     };
 
@@ -247,7 +313,7 @@ public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHo
 
     public ListableListFilter<Listable> getFilter() {
         if (filter == null) {
-            filter = new ListableListFilter<Listable>(this);
+            filter = new ListableListFilter<>(this);
         }
         return filter;
     }
@@ -317,7 +383,7 @@ public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHo
                 return new PurseViewHolder(inflate(inflater, parent, R.layout.item_listitem_purse, false));
             }
             case ITEM_TYPE_WOUND: {
-                return new WoundViewHolder(inflate(inflater, parent, R.layout.item_listitem_wound, false), parent, this);
+                return new WoundViewHolder(inflate(inflater, parent, R.layout.item_listitem_wound, false), parent, onClickListener);
             }
             default:
                 return null;
@@ -396,7 +462,7 @@ public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHo
         holder.text3.setText(probe.getFooter());
 
         holder.icon1.setVisibility(View.VISIBLE);
-        holder.icon1.setFrontDrawable(ViewUtils.circleIcon(holder.icon1.getContext(),probe.getIconUri()));
+        holder.icon1.setFrontDrawable(ViewUtils.circleIcon(holder.icon1.getContext(), probe.getIconUri()));
         holder.icon1.setOnClickListener(probeListener);
         holder.icon1.setTag(probe);
 
@@ -416,7 +482,7 @@ public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHo
         switch (DsaTabApplication.getInstance().getConfiguration().getWoundType()) {
             case Standard:
 
-                for (WoundAttribute attr : hero.getWounds().values()) {
+                for (WoundAttribute attr : hero.getWounds()) {
 
                     for (int i = 0; i < attr.getValue() && offset + i < holder.wounds.length; i++) {
                         holder.wounds[offset + i].setChecked(true);
@@ -431,7 +497,7 @@ public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHo
                 }
                 break;
             case Trefferzonen:
-                for (WoundAttribute attr : hero.getWounds().values()) {
+                for (WoundAttribute attr : hero.getWounds()) {
 
                     for (int i = 0; i < attr.getValue() && offset + i < holder.wounds.length; i++) {
                         holder.wounds[offset + i].setTextOn(attr.getPosition().getNameSort());
@@ -453,68 +519,12 @@ public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHo
         }
 
         for (int i = 0; i < holder.wounds.length; i++) {
-            holder.wounds[i].setOnCheckedChangeListener(this);
+            holder.wounds[i].setOnCheckedChangeListener(onCheckedChangeListener);
         }
 
 
     }
 
-    @Override
-    public void onClick(View v) {
-
-        if (v.getTag() == null && v instanceof ToggleButton) {
-
-            final ToggleButton button = (ToggleButton) v;
-
-            switch (DsaTabApplication.getInstance().getConfiguration().getWoundType()) {
-                case Standard:
-                    WoundAttribute attr = hero.getWounds().get(Position.Kopf);
-                    attr.addValue(1);
-                    button.setTag(attr);
-                    break;
-                case Trefferzonen:
-                    button.setChecked(false);
-
-                    final List<Position> positions = DsaTabApplication.getInstance().getConfiguration().getWoundPositions();
-
-                    PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
-
-                    for (int i = 0; i < positions.size(); i++) {
-                        popupMenu.getMenu().add(0, i, i, positions.get(i).getName());
-                    }
-
-                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            Position position = (Position) positions.get(item.getItemId());
-                            WoundAttribute attr = hero.getWounds().get(position);
-                            button.setChecked(true);
-                            attr.addValue(1);
-                            button.setTag(attr);
-                            return true;
-                        }
-                    });
-
-                    popupMenu.show();
-                    break;
-            }
-        }
-    }
-
-    @Override
-    public void onCheckedChanged(final CompoundButton button, final boolean checked) {
-        if (button.getTag() instanceof WoundAttribute) {
-            WoundAttribute attribute = (WoundAttribute) button.getTag();
-            if (checked)
-                attribute.addValue(1);
-            else
-                attribute.addValue(-1);
-        } else if (button.getTag() instanceof AbstractModificator) {
-            AbstractModificator modificator = (AbstractModificator) button.getTag();
-            modificator.setActive(checked);
-        }
-    }
 
     protected void prepareView(PurseListable item, int position, PurseViewHolder holder) {
 
@@ -695,7 +705,7 @@ public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHo
             holder.active.setVisibility(View.VISIBLE);
             holder.active.setChecked(modificator.isActive());
             holder.active.setTag(modificator);
-            holder.active.setOnCheckedChangeListener(this);
+            holder.active.setOnCheckedChangeListener(onCheckedChangeListener);
         } else {
             holder.active.setVisibility(View.GONE);
         }
@@ -752,7 +762,7 @@ public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHo
     protected void prepareView(Attribute attribute, int position, SeekViewHolder viewHolder) {
         if (attribute.getValue() != null) {
             viewHolder.seek.setMax(attribute.getMaximum());
-            viewHolder.seek.setMin(attribute.getMinimum());
+            viewHolder.seek.setMinimum(attribute.getMinimum());
             viewHolder.seek.setValue(attribute.getValue());
             viewHolder.seek.setEnabled(true);
         } else {
@@ -760,7 +770,7 @@ public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHo
         }
         viewHolder.seek.setLabel(viewHolder.value);
         viewHolder.seek.setTag(attribute);
-        viewHolder.seek.setOnSeekBarChangeListener(this);
+        viewHolder.seek.setOnSeekBarChangeListener(onSeekBarChangeListener);
 
         viewHolder.text.setText(attribute.getType().code());
         Util.setLabel(viewHolder.text, attribute.getType(), probeListener, editListener);
@@ -838,7 +848,7 @@ public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHo
         String probe;
         if (art.hasCustomProbe() && !TextUtils.isEmpty(art.getProbeInfo().getAttributesString())) {
             probe = art.getProbeInfo().getAttributesString();
-        } else if (!TextUtils.isEmpty(artInfo.getProbe())
+        } else if (artInfo != null && !TextUtils.isEmpty(artInfo.getProbe())
                 && TextUtils.isEmpty(art.getProbeInfo().getAttributesString())) {
             probe = artInfo.getProbe();
         } else {
@@ -1054,7 +1064,7 @@ public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHo
             holder.icon1.setOnClickListener(null);
 
             if (equippedItem.getUsageType() == UsageType.Paradewaffe)
-                holder.icon2.setImageDrawable(ResUtil.getDrawableByUri(holder.icon2.getContext(),item.getIconUri()));
+                holder.icon2.setImageDrawable(ResUtil.getDrawableByUri(holder.icon2.getContext(), item.getIconUri()));
             else
                 holder.icon2.setImageDrawable(ViewUtils.circleIcon(holder.icon2.getContext(), R.drawable.vd_round_shield));
 
@@ -1170,43 +1180,21 @@ public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHo
                 holder.icon_chain_bottom.setVisibility(View.GONE);
             }
         }
-
         holder.text1.setText(title);
-
-
     }
 
 
     @Override
     public long getItemId(int position) {
-        return getItem(position).hashCode();
-    }
-
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-    }
-
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-
-    }
-
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-        SeekBarEx seekBarEx = (SeekBarEx) seekBar;
-        Attribute attribute = (Attribute) seekBar.getTag();
-        if (attribute != null && attribute.getValue() != null) {
-            attribute.setValue(seekBarEx.getValue());
-        }
+        return getItem(position).getId();
     }
 
     private static class ViewHolder extends BaseListableViewHolder {
         TextView text1, text2, text3;
         FlipCheckBox icon1;
-        ImageView  icon2, icon_chain_top, icon_chain_bottom;
+        ImageView icon2, icon_chain_top, icon_chain_bottom;
 
-        public ViewHolder(View v) {
+        ViewHolder(View v) {
             super(v);
             text1 = (TextView) v.findViewById(android.R.id.text1);
             text2 = (TextView) v.findViewById(android.R.id.text2);
@@ -1228,7 +1216,7 @@ public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHo
         Button value;
         SeekBarEx seek;
 
-        public SeekViewHolder(View v) {
+        SeekViewHolder(View v) {
             super(v);
             seek = (SeekBarEx) v.findViewById(R.id.wheel);
             text = (TextView) v.findViewById(R.id.wheel_label);
@@ -1246,7 +1234,7 @@ public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHo
         Button text4, text5;
         ImageView indicator;
 
-        public TalentViewHolder(View v) {
+        TalentViewHolder(View v) {
             super(v);
             // name
             text1 = (TextView) v.findViewById(R.id.talent_list_item_text1);
@@ -1272,9 +1260,7 @@ public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHo
         TextView text1, text2;
         CheckBox active;
 
-        OnCheckedChangeListener changeListener;
-
-        public ModifierViewHolder(View v) {
+        ModifierViewHolder(View v) {
             super(v);
             text1 = (TextView) v.findViewById(android.R.id.text1);
             text2 = (TextView) v.findViewById(android.R.id.text2);
@@ -1293,7 +1279,7 @@ public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHo
         TextView text1;
         ImageButton button1;
 
-        public HeaderViewHolder(View v) {
+        HeaderViewHolder(View v) {
             super(v);
             text1 = (TextView) v.findViewById(android.R.id.text1);
             button1 = (ImageButton) v.findViewById(android.R.id.button1);
@@ -1308,7 +1294,7 @@ public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHo
     private static class WoundViewHolder extends BaseListableViewHolder {
         ToggleButton[] wounds;
 
-        public WoundViewHolder(View v, ViewGroup parent, OnClickListener clickListener) {
+        WoundViewHolder(View v, ViewGroup parent, OnClickListener clickListener) {
             super(v);
 
             ViewGroup woundContainer = (ViewGroup) v.findViewById(R.id.container);
@@ -1364,13 +1350,12 @@ public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHo
     }
 
 
-
     private static class EventViewHolder extends BaseListableViewHolder {
         TextView text1, text2, text3;
         FlipCheckBox icon1;
         ImageView icon2;
 
-        public EventViewHolder(View v) {
+        EventViewHolder(View v) {
             super(v);
             text1 = (TextView) v.findViewById(android.R.id.text1);
             text2 = (TextView) v.findViewById(android.R.id.text2);
@@ -1391,7 +1376,7 @@ public class ListableItemAdapter extends ListRecyclerAdapter<RecyclerView.ViewHo
         private Button[] picker;
         private TextView[] labels;
 
-        public PurseViewHolder(View v) {
+        PurseViewHolder(View v) {
             super(v);
             currencySpinner = (Spinner) v.findViewById(R.id.sp_currency);
             header = (TextView) v.findViewById(R.id.tv_currency_header);

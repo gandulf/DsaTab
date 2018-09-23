@@ -50,9 +50,9 @@ public abstract class BaseItemActivity extends BaseActivity {
             intent.putExtra(BaseEditActivity.EDIT_TITLE,item.getTitle());
 			intent.setAction(Intent.ACTION_VIEW);
 			if (itemCard instanceof EquippedItem) {
-				intent.putExtra(INTENT_EXTRA_EQUIPPED_ITEM_ID, ((EquippedItem) itemCard).getId());
+				intent.putExtra(INTENT_EXTRA_EQUIPPED_ITEM_ID, ((EquippedItem) itemCard).getItemId());
 			} else {
-				intent.putExtra(INTENT_EXTRA_ITEM_ID, item.getId());
+				intent.putExtra(INTENT_EXTRA_ITEM_ID, item.getItemId());
 			}
 			if (hero != null) {
 				intent.putExtra(INTENT_EXTRA_HERO_KEY, hero.getFileInfo().getKey());
@@ -92,9 +92,9 @@ public abstract class BaseItemActivity extends BaseActivity {
             intent.putExtra(BaseEditActivity.EDIT_TITLE,fragment.getString(R.string.label_edit));
 			intent.setAction(Intent.ACTION_EDIT);
 			if (itemCard instanceof EquippedItem) {
-				intent.putExtra(ItemEditFragment.INTENT_EXTRA_EQUIPPED_ITEM_ID, ((EquippedItem) itemCard).getId());
+				intent.putExtra(ItemEditFragment.INTENT_EXTRA_EQUIPPED_ITEM_ID, ((EquippedItem) itemCard).getItemId());
 			} else {
-				intent.putExtra(ItemEditFragment.INTENT_EXTRA_ITEM_ID, item.getId());
+				intent.putExtra(ItemEditFragment.INTENT_EXTRA_ITEM_ID, item.getItemId());
 			}
 			if (heroKey != null) {
 				intent.putExtra(ItemEditFragment.INTENT_EXTRA_HERO_KEY, heroKey);

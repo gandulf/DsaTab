@@ -10,23 +10,22 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.data.AbstractBeing;
+import com.dsatab.data.adapter.BaseImageAdapter;
 import com.dsatab.data.adapter.BaseRecyclerAdapter;
+import com.dsatab.data.adapter.ImageResourceIdAdapter;
+import com.dsatab.data.adapter.ImageUriAdapter;
 import com.dsatab.data.adapter.ListRecyclerAdapter;
-import com.dsatab.util.Util;
-import com.dsatab.view.AutofitRecyclerView;
 import com.dsatab.util.FileFileFilter;
-import com.dsatab.util.ResUtil;
+import com.dsatab.util.Util;
+import com.dsatab.view.GridAutoFitLayoutManager;
 import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
 
@@ -36,131 +35,149 @@ import java.util.List;
 
 public class ImageChooserDialog extends AppCompatDialogFragment implements ListRecyclerAdapter.EventListener {
 
-	public static final String TAG = "ImageChooserDialog";
+    public static final String TAG = "ImageChooserDialog";
 
-	private OnImageSelectedListener imageSelectedListener;
+    private OnImageSelectedListener imageSelectedListener;
 
-	private AutofitRecyclerView list;
-	private PortraitAdapter adapter;
+    private RecyclerView list;
+    private BaseImageAdapter adapter;
 
-	private ScaleType scaleType = ScaleType.FIT_CENTER;
-	private int columnWidth;
-	private int columnHeight;
+    private ScaleType scaleType = ScaleType.FIT_CENTER;
+    private int columnWidth;
+    private int columnHeight;
 
-	private Uri imageUri;
+    private Uri imageUri;
 
-	private List<Uri> imageUris = new ArrayList<Uri>();
+    private List<Uri> imageUris = new ArrayList<Uri>();
+    private List<Integer> imageIds = new ArrayList<Integer>();
 
-	public interface OnImageSelectedListener {
-		void onImageSelected(Uri imageUri);
-	}
+    public interface OnImageSelectedListener {
+        void onImageSelected(Uri imageUri);
+    }
 
-	public static boolean hasFiles(File dir) {
-		File[] files = dir.listFiles(new FileFileFilter());
-		if (files != null && files.length > 0) {
-			return true;
-		}
-		return false;
-	}
+    public static boolean hasFiles(File dir) {
+        File[] files = dir.listFiles(new FileFileFilter());
+        if (files != null && files.length > 0) {
+            return true;
+        }
+        return false;
+    }
 
-	public static void pickPortrait(Fragment parent, File dir, final OnImageSelectedListener imageSelectedListener,
-			int requestCode) {
-		ImageChooserDialog dialog = new ImageChooserDialog();
+    public static void pickPortrait(Fragment parent, File dir, final OnImageSelectedListener imageSelectedListener,
+                                    int requestCode) {
+        ImageChooserDialog dialog = new ImageChooserDialog();
 
-		Bundle args = new Bundle();
-		// TODO value should be set as argument
-		File[] files = dir.listFiles(new FileFileFilter());
-		if (files != null) {
-			for (File file : files) {
-				dialog.imageUris.add(Uri.fromFile(file));
-			}
-		}
+        Bundle args = new Bundle();
 
-		if (dialog.imageUris.isEmpty()) {
-			String path = dir.getAbsolutePath();
+        // TODO value should be set as argument
+        File[] files = dir.listFiles(new FileFileFilter());
+
+        List<Uri> imageUris = null;
+        if (files != null) {
+            imageUris = new ArrayList<>(files.length);
+            for (File file : files) {
+                imageUris.add(Uri.fromFile(file));
+            }
+        }
+
+        if (imageUris == null || imageUris.isEmpty()) {
+            String path = dir.getAbsolutePath();
             Snackbar.make(dialog.getView(), "Keine Bilder gefunden. Kopiere deine eigenen auf deine SD-Karte unter \"" + path
                     + "\" oder lade die Standardportraits in den Einstellungen herunter.", Snackbar.LENGTH_LONG).show();
-			return;
-		} else {
-			dialog.imageSelectedListener = imageSelectedListener;
-
+            return;
+        } else {
+            dialog.setImageUris(imageUris);
+            dialog.setImageSelectedListener(imageSelectedListener);
+            dialog.setScaleType(ScaleType.CENTER_CROP);
             dialog.setGridColumnWidth(DsaTabApplication.getInstance().getResources()
                     .getDimensionPixelSize(R.dimen.portrait_width));
-			dialog.setGridColumnHeight(DsaTabApplication.getInstance().getResources()
+            dialog.setGridColumnHeight(DsaTabApplication.getInstance().getResources()
                     .getDimensionPixelSize(R.dimen.portrait_height));
 
-			dialog.setArguments(args);
-			dialog.setTargetFragment(parent, requestCode);
-			dialog.show(parent.getFragmentManager(), TAG);
-		}
-	}
+            dialog.setArguments(args);
+            if (parent != null) {
+                dialog.setTargetFragment(parent, requestCode);
+            }
+            dialog.show(parent.getFragmentManager(), TAG);
+        }
+    }
 
-	public static boolean hasPortraits() {
-		return hasFiles(DsaTabApplication.getDirectory(DsaTabApplication.DIR_PORTRAITS));
-	}
+    public static void pickPortrait(Fragment parent, final AbstractBeing being, int requestCode) {
 
-	public static void pickIcons(Fragment parent, FragmentManager fragmentManager,
-			final OnImageSelectedListener imageSelectedListener, int requestCode) {
-		ImageChooserDialog dialog = new ImageChooserDialog();
+        OnImageSelectedListener imageSelectedListener = new OnImageSelectedListener() {
+            @Override
+            public void onImageSelected(Uri imageUri) {
+                being.setPortraitUri(imageUri);
+            }
+        };
 
-		List<Integer> itemIcons = DsaTabApplication.getInstance().getConfiguration().getDsaIcons();
-		dialog.setImageIds(itemIcons);
-		dialog.setGridColumnWidth(DsaTabApplication.getInstance().getResources()
+        pickPortrait(parent, DsaTabApplication.getDirectory(DsaTabApplication.DIR_PORTRAITS), imageSelectedListener,
+                requestCode);
+    }
+
+    public static void pickIcons(Fragment parent, FragmentManager fragmentManager,
+                                 final OnImageSelectedListener imageSelectedListener, int requestCode) {
+        ImageChooserDialog dialog = new ImageChooserDialog();
+
+        List<Integer> itemIcons = DsaTabApplication.getInstance().getConfiguration().getDsaIcons();
+
+        dialog.setImageIds(itemIcons);
+        dialog.setGridColumnWidth(DsaTabApplication.getInstance().getResources()
                 .getDimensionPixelSize(R.dimen.icon_button_size));
         dialog.setGridColumnHeight(DsaTabApplication.getInstance().getResources()
                 .getDimensionPixelSize(R.dimen.icon_button_size));
-		dialog.setScaleType(ScaleType.FIT_CENTER);
-		dialog.setImageSelectedListener(imageSelectedListener);
+        dialog.setScaleType(ScaleType.FIT_CENTER);
+        dialog.setImageSelectedListener(imageSelectedListener);
 
-		if (parent != null) {
-			dialog.setTargetFragment(parent, 0);
-		}
-		dialog.show(fragmentManager, ImageChooserDialog.TAG);
-	}
+        if (parent != null) {
+            dialog.setTargetFragment(parent, requestCode);
+        }
+        dialog.show(fragmentManager, ImageChooserDialog.TAG);
+    }
 
-	public static void pickIcons(Fragment parent, final OnImageSelectedListener imageSelectedListener, int requestCode) {
-		pickIcons(parent, parent.getFragmentManager(), imageSelectedListener, requestCode);
-	}
+    public static void pickIcons(Fragment parent, final OnImageSelectedListener imageSelectedListener, int requestCode) {
+        pickIcons(parent, parent.getFragmentManager(), imageSelectedListener, requestCode);
+    }
 
-	public static void pickPortrait(Fragment parent, final AbstractBeing being, int requestCode) {
+    public static boolean hasPortraits() {
+        return hasFiles(DsaTabApplication.getDirectory(DsaTabApplication.DIR_PORTRAITS));
+    }
 
-		OnImageSelectedListener imageSelectedListener = new OnImageSelectedListener() {
-			@Override
-			public void onImageSelected(Uri imageUri) {
-				being.setPortraitUri(imageUri);
-			}
-		};
+    public void setImageUris(List<Uri> uris) {
+        imageUris.clear();
+        imageIds.clear();
+        imageUris.addAll(uris);
+    }
 
-		pickPortrait(parent, DsaTabApplication.getDirectory(DsaTabApplication.DIR_PORTRAITS), imageSelectedListener,
-                requestCode);
-	}
+    public void setImageIds(List<Integer> ids) {
+        imageUris.clear();
+        imageIds.clear();
+        imageIds.addAll(ids);
+    }
 
-	public void setImageIds(List<Integer> imageIds) {
-		imageUris.clear();
-		for (Integer resId : imageIds) {
-			imageUris.add(Util.getUriForResourceId(resId));
-		}
-	}
-
-	@Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = LayoutInflater.from(builder.getContext());
 
-		View popupcontent = inflater.inflate(R.layout.popup_portrait_chooser,null,false);
+        View popupcontent = inflater.inflate(R.layout.popup_portrait_chooser, null, false);
         builder.setView(popupcontent);
 
-		list = (AutofitRecyclerView) popupcontent.findViewById(R.id.popup_portrait_chooser_list);
-		adapter = new PortraitAdapter(imageUris);
-		adapter.setMinHeight(columnHeight);
+        list = (RecyclerView) popupcontent.findViewById(R.id.popup_portrait_chooser_list);
+        if (!imageIds.isEmpty()) {
+            adapter = new ImageResourceIdAdapter(imageIds);
+        } else {
+            adapter = new ImageUriAdapter(imageUris);
+        }
+        adapter.setMinHeight(columnHeight);
         adapter.setMinWidth(columnWidth);
         adapter.setScaleType(scaleType);
 
-        list.setColumnWidth(columnWidth);
-		list.setAdapter(adapter);
+        list.setAdapter(adapter);
 
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),3);
+        GridAutoFitLayoutManager layoutManager = new GridAutoFitLayoutManager(getActivity(), 3);
+        layoutManager.setColumnWidth(columnWidth);
         list.setLayoutManager(layoutManager);
         list.setItemAnimator(new SwipeDismissItemAnimator());
 
@@ -172,19 +189,28 @@ public class ImageChooserDialog extends AppCompatDialogFragment implements ListR
             list.addItemDecoration(new ItemShadowDecorator((NinePatchDrawable) getResources().getDrawable(R.drawable.material_shadow_z1)));
         }
 
-		adapter.setEventListener(this);
+        adapter.setEventListener(this);
 
-		builder.setTitle("Wähle ein Bild...");
+        builder.setTitle("Wähle ein Bild...");
 
-		AlertDialog dialog = builder.create();
-		dialog.setCanceledOnTouchOutside(true);
-		return dialog;
+        AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(true);
+        return dialog;
 
-	}
+    }
 
     @Override
     public void onItemClicked(BaseRecyclerAdapter adapter, int position, View v) {
-        imageUri = this.adapter.getItem(position);
+        Object result = this.adapter.getItem(position);
+        Uri imageUri;
+        if (result instanceof Uri) {
+            imageUri = (Uri) result;
+        } else if (result instanceof Integer) {
+            imageUri = Util.getUriForResourceId((Integer) result);
+        } else {
+            imageUri = null;
+        }
+
         if (imageUri != null && imageSelectedListener != null) {
             imageSelectedListener.onImageSelected(imageUri);
         }
@@ -208,105 +234,35 @@ public class ImageChooserDialog extends AppCompatDialogFragment implements ListR
     }
 
     public Uri getImageUri() {
-		return imageUri;
-	}
+        return imageUri;
+    }
 
-	public ScaleType getScaleType() {
-		return scaleType;
-	}
+    public ScaleType getScaleType() {
+        return scaleType;
+    }
 
-	public void setScaleType(ScaleType scaleType) {
-		this.scaleType = scaleType;
-		if (adapter != null) {
-			adapter.setScaleType(scaleType);
-		}
-	}
+    public void setScaleType(ScaleType scaleType) {
+        this.scaleType = scaleType;
+        if (adapter != null) {
+            adapter.setScaleType(scaleType);
+        }
+    }
 
-	public void setImageSelectedListener(OnImageSelectedListener imageSelectedListener) {
-		this.imageSelectedListener = imageSelectedListener;
-	}
+    public void setImageSelectedListener(OnImageSelectedListener imageSelectedListener) {
+        this.imageSelectedListener = imageSelectedListener;
+    }
 
-	public void setGridColumnWidth(int width) {
-		this.columnWidth = width;
+    public void setGridColumnWidth(int width) {
+        this.columnWidth = width;
 
-	}
+    }
 
-	public void setGridColumnHeight(int height) {
-		this.columnHeight = height;
-	}
+    public void setGridColumnHeight(int height) {
+        this.columnHeight = height;
+    }
 
     protected final boolean supportsViewElevation() {
         return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
     }
-	static class PortraitAdapter extends ListRecyclerAdapter<PortraitAdapter.PortraitViewHolder, Uri> {
-
-		private ScaleType scaleType;
-
-		private int minHeight;
-        private int minWidth;
-
-        protected  class PortraitViewHolder extends RecyclerView.ViewHolder {
-            ImageView imageView = null;
-
-            public PortraitViewHolder(View v) {
-                super(v);
-                imageView = (ImageView) v;
-            }
-        }
-
-		public PortraitAdapter() {
-            super(new ArrayList<Uri>());
-		}
-
-		public PortraitAdapter(List<Uri> objects) {
-			super(objects);
-		}
-
-		public ScaleType getScaleType() {
-			return scaleType;
-		}
-
-		public void setScaleType(ScaleType scaleType) {
-			this.scaleType = scaleType;
-		}
-
-		public int getMinHeight() {
-			return minHeight;
-		}
-
-		public void setMinHeight(int minHeight) {
-			this.minHeight = minHeight;
-		}
-
-        public int getMinWidth() {
-            return minWidth;
-        }
-
-        public void setMinWidth(int minWidth) {
-            this.minWidth = minWidth;
-        }
-
-        @Override
-        public PortraitViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            ImageView iv = new ImageView(parent.getContext());
-            iv.setScaleType(scaleType);
-            iv.setAdjustViewBounds(true);
-
-            int padding = parent.getResources().getDimensionPixelSize(R.dimen.default_gap);
-            iv.setPadding(padding,padding,padding,padding);
-            return new PortraitViewHolder(iv);
-        }
-
-
-        @Override
-        public void onBindViewHolder(PortraitViewHolder holder, int position) {
-            super.onBindViewHolder(holder, position);
-
-            Uri file = getItem(position);
-            holder.imageView.setImageDrawable(ResUtil.getDrawableByUri(holder.imageView.getContext(), file));
-        }
-
-
-	}
 
 }

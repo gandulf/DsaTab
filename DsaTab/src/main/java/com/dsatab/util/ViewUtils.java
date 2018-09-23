@@ -178,10 +178,7 @@ public class ViewUtils {
 
             ViewUtils.menuIcon(context, menu, R.id.option_take_photo, MaterialDrawableBuilder.IconValue.CAMERA);
 
-
             ViewUtils.menuIcon(context, menu, R.id.option_documents_choose, MaterialDrawableBuilder.IconValue.FILE_DOCUMENT);
-
-            ViewUtils.menuIcon(context, menu, R.id.option_connect, MaterialDrawableBuilder.IconValue.CLOUD);
 
             ViewUtils.menuIcon(context, menu, R.id.option_load_example_heroes, MaterialDrawableBuilder.IconValue.ACCOUNT_STAR_VARIANT);
             ViewUtils.menuIcon(context, menu, R.id.option_pick_avatar, MaterialDrawableBuilder.IconValue.ACCOUNT_BOX);

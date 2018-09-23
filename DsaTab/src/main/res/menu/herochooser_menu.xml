@@ -5,27 +5,7 @@
         android:showAsAction="withText|ifRoom"
         app:showAsAction="always"
         android:title="@string/refresh"/>
-    <item
-        android:id="@+id/option_connect"
 
-        android:showAsAction="withText|ifRoom"
-        app:showAsAction="withText|ifRoom"
-        android:title="Cloud Connect">
-        <menu>
-            <item
-                android:id="@+id/option_connect_dropbox"
-                android:title="Dropbox"
-                android:checkable="true" />
-            <item
-                android:id="@+id/option_connect_googledrive"
-                android:title="Google Drive"
-                android:checkable="true" />
-            <item
-                android:id="@+id/option_connect_onedrive"
-                android:title="One Drive"
-                android:checkable="true" />
-        </menu>
-    </item>
     <item
         android:id="@+id/option_load_example_heroes"
         android:showAsAction="withText|ifRoom"

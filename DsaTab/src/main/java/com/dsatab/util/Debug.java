@@ -2,9 +2,14 @@ package com.dsatab.util;
 
 import android.util.Log;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
 import com.dsatab.BuildConfig;
 import com.dsatab.DsaTabApplication;
-import com.splunk.mint.Mint;
+
+import java.util.Map;
+
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Functions and helpers to aid debugging. DebugMode can be toggled .
@@ -16,6 +21,23 @@ public class Debug {
     public static boolean TRACE = true;
 
     protected static boolean debugMode = com.dsatab.BuildConfig.DEBUG;
+
+    public static void logCustomEvent(String name) {
+        CustomEvent event = new CustomEvent(name);
+        Answers.getInstance().logCustom(event);
+    }
+    public static void logCustomEvent(String name,String key,String value) {
+        CustomEvent event = new CustomEvent(name);
+        event.putCustomAttribute(key,value);
+        Answers.getInstance().logCustom(event);
+    }
+    public static void logCustomEvent(String name,Map<String,String> data) {
+        CustomEvent event = new CustomEvent(name);
+        for (Map.Entry<String,String> entry : data.entrySet()) {
+            event.putCustomAttribute(entry.getKey(),entry.getValue());
+        }
+        Answers.getInstance().logCustom(event);
+    }
 
     public static void d(String message) {
         if (debugMode && TRACE)
@@ -70,7 +92,7 @@ public class Debug {
 
     public static void e(String message, Throwable e) {
         if (e instanceof Exception && !BuildConfig.DEBUG) {
-            Mint.logException((Exception) e);
+            Fabric.getLogger().e(tag,e.getLocalizedMessage(),e);
         }
         Log.e(tag, message);
         e.printStackTrace();
@@ -94,7 +116,7 @@ public class Debug {
      */
     public static void e(Throwable t) {
         if (t instanceof Exception && !BuildConfig.DEBUG) {
-            Mint.logException((Exception) t);
+            Fabric.getLogger().e(tag,t.getLocalizedMessage(),t);
         }
         Log.e(tag, t.getMessage(), t);
     }

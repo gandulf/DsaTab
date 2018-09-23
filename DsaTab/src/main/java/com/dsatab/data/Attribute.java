@@ -392,4 +392,9 @@ public class Attribute extends BaseProbe implements Value, Cloneable, Listable {
 			return null;
 		}
 	}
+
+    @Override
+    public long getId() {
+        return hashCode();
+    }
 }

@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.dsatab.view.AutofitRecyclerView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/popup_hero_chooser_list"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" />

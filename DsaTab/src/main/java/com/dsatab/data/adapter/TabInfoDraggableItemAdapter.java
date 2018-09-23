@@ -31,7 +31,6 @@ public class TabInfoDraggableItemAdapter extends ListRecyclerAdapter<TabViewHold
         public View mDragHandle;
         public TextView mTextView;
         public ImageView mImageView;
-
         public TabViewHolder(View v) {
             super(v);
             mContainer = (ViewGroup) v.findViewById(R.id.container);
@@ -120,6 +119,11 @@ public class TabInfoDraggableItemAdapter extends ListRecyclerAdapter<TabViewHold
         } else {
             return false;
         }
+    }
+
+    @Override
+    public boolean onCheckCanDrop(int draggingPosition, int dropPosition) {
+        return true;
     }
 
     @Override

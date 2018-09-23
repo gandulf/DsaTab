@@ -349,7 +349,7 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 					SharedPreferences preferences = DsaTabApplication.getPreferences();
 					Editor edit = preferences.edit();
 					edit.putString(DsaTabPreferenceActivity.KEY_STYLE_BG_WOUNDS_PATH, uri.toString());
-					edit.commit();
+					edit.apply();
 
 					ViewUtils.snackbar(getActivity(), "Hintergrundbild wurde verändert.", Snackbar.LENGTH_SHORT);
 					updateBackground();
@@ -367,9 +367,9 @@ public class BodyFragment extends BaseFragment implements OnClickListener, OnLon
 	@Override
 	public void onActiveSetChanged(int newSet, int oldSet) {
 		updateView();
-		bodyLayout.setArmorAttributes(getHero().getArmorAttributes());
+		bodyLayout.setArmorAttributes(getHero().getArmorAttributes(newSet));
 		if (getActivity() != null) {
-			getActivity().invalidateOptionsMenu();
+			getActivity().supportInvalidateOptionsMenu();
 		}
 	}
 

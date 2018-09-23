@@ -183,7 +183,7 @@ public class AnimalFragment extends BaseProfileFragment {
 
         Editor edit = getPreferences().edit();
         edit.putInt(PREF_KEY_LAST_ANIMAL, animalIndex);
-        edit.commit();
+        edit.apply();
 
         removeAnimalNavigation();
     }

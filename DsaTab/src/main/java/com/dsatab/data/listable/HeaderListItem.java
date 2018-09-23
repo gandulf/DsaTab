@@ -42,4 +42,8 @@ public class HeaderListItem implements Listable {
 		return getClass().getSimpleName() + " " + title + " " + super.hashCode();
 	}
 
+    @Override
+    public long getId() {
+        return hashCode();
+    }
 }

@@ -16,8 +16,6 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import java.io.File;
 
 import static org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants.DEFAULT_MAXIMUM_CACHED_FILE_AGE;
-import static org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants.NUMBER_OF_TILE_FILESYSTEM_THREADS;
-import static org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants.TILE_FILESYSTEM_MAXIMUM_QUEUE_SIZE;
 
 public class MapTileAbsoluteFilesystemProvider extends MapTileFileStorageProviderBase {
 
@@ -27,6 +25,9 @@ public class MapTileAbsoluteFilesystemProvider extends MapTileFileStorageProvide
 	public static final int MAXIMUM_ZOOMLEVEL = 18;
     public static final int MINIMUM_ZOOMLEVEL = 0;
 
+
+    private static final int NUMBER_OF_TILE_FILESYSTEM_THREADS=8;
+    public static final int TILE_FILESYSTEM_MAXIMUM_QUEUE_SIZE = 40;
 	// ===========================================================
 	// Fields
 	// ===========================================================

@@ -327,7 +327,7 @@ public class MapFragment extends BaseFragment {
 
 					Editor edit = getPreferences().edit();
 					edit.putBoolean(PREF_KEY_OSM_ASK, false);
-					edit.commit();
+					edit.apply();
 					dialog.dismiss();
 
 				}

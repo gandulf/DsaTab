@@ -191,4 +191,65 @@
         </PreferenceCategory>
     </PreferenceScreen>
 
-</PreferenceScreen>
+    <PreferenceScreen
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:key="cloud"
+        android:summary="Synchronisiere deine Helden mit Dropbox, Google Drive, One Drive, ..."
+        android:title="Cloud Sync">
+
+        <PreferenceCategory
+            android:title="Dropbox">
+
+            <android.support.v7.preference.SwitchPreferenceCompat
+                android:defaultValue="false"
+                android:key="dropbox_sync"
+                android:summaryOff="@string/pref_dropbox_description_off"
+                android:summaryOn="@string/pref_dropbox_description_on"
+                android:title="@string/pref_dropbox_title"/>
+
+            <Preference
+                android:key="dropbox_choose"
+                android:dependency="dropbox_sync"
+                android:summary="@string/pref_cloud_directory_choose"
+                android:title="Verzeichnis"/>
+
+        </PreferenceCategory>
+
+        <PreferenceCategory
+            android:title="Google Drive">
+
+            <android.support.v7.preference.SwitchPreferenceCompat
+                android:defaultValue="false"
+                android:key="google_drive_sync"
+                android:summaryOff="@string/pref_google_drive_description_off"
+                android:summaryOn="@string/pref_google_drive_description_on"
+                android:title="@string/pref_google_drive_title"/>
+
+            <Preference
+                android:key="google_drive_choose"
+                android:dependency="google_drive_sync"
+                android:summary="@string/pref_cloud_directory_choose"
+                android:title="Verzeichnis"/>
+
+        </PreferenceCategory>
+
+        <PreferenceCategory
+            android:title="One Drive">
+
+            <android.support.v7.preference.SwitchPreferenceCompat
+                android:defaultValue="false"
+                android:key="one_drive_sync"
+                android:summaryOff="@string/pref_one_drive_description_off"
+                android:summaryOn="@string/pref_one_drive_description_on"
+                android:title="@string/pref_one_drive_title"/>
+
+            <Preference
+                android:key="one_drive_choose"
+                android:dependency="one_drive_sync"
+                android:summary="@string/pref_cloud_directory_choose"
+                android:title="Verzeichnis"/>
+
+        </PreferenceCategory>
+
+    </PreferenceScreen>
+    </PreferenceScreen>

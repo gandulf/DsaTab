@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.cloudrail.si.CloudRail;
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
 import com.dsatab.util.Hint;
@@ -26,6 +27,8 @@ import pl.tajchert.nammu.Nammu;
 public class BaseActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     public static final int REQUEST_CODE_STORAGE = 1;
+
+    private static final String BROWSABLE = "android.intent.category.BROWSABLE";
 
     private static final String INTENT ="intent";
 
@@ -49,7 +52,6 @@ public class BaseActivity extends AppCompatActivity implements SharedPreferences
         setTheme(DsaTabPreferenceActivity.getCustomTheme());
         applyPreferencesToTheme();
         super.onCreate(savedInstanceState);
-
         DsaTabApplication.getPreferences().registerOnSharedPreferenceChangeListener(this);
 
         if (getIntent() == null && savedInstanceState!=null) {
@@ -239,7 +241,7 @@ public class BaseActivity extends AppCompatActivity implements SharedPreferences
     public void inflateSave(View.OnClickListener saveListener) {
         inflateSaveButton = true;
         this.saveListener = saveListener;
-        invalidateOptionsMenu();
+        supportInvalidateOptionsMenu();
     }
 
     public void inflateDiscard(View.OnClickListener listener) {
@@ -270,4 +272,13 @@ public class BaseActivity extends AppCompatActivity implements SharedPreferences
         Nammu.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        if(intent !=null && intent.getCategories()!=null && intent.getCategories().contains(BROWSABLE)) {
+            // Here we pass the response to the SDK which will automatically
+            // complete the authentication process
+            CloudRail.setAuthenticationResponse(intent);
+        }
+        super.onNewIntent(intent);
+    }
 }

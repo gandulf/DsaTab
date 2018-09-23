@@ -226,7 +226,7 @@ public class SpellInfoFragment extends BaseEditFragment {
 		else
 			inflateDone();
 
-		getActivity().invalidateOptionsMenu();
+		getActivity().supportInvalidateOptionsMenu();
 
 	}
 

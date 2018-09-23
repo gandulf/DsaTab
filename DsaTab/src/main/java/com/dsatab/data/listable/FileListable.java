@@ -31,4 +31,8 @@ public class FileListable implements Listable {
 		}
 	}
 
+    @Override
+    public long getId() {
+        return file.hashCode();
+    }
 }
