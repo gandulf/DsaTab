@@ -188,10 +188,12 @@ public class HeroChooserFragment extends BaseRecyclerFragment implements LoaderM
             HeroAdapter adapter = WrapperAdapterUtils.findWrappedAdapter(list.getAdapter(), HeroAdapter.class);
             for (int index : getManager().getSelectedPositions()) {
                 HeroFileInfo heroInfo = adapter.getItem(index);
-                selected++;
+                if (heroInfo!=null) {
+                    selected++;
 
-                online |= heroInfo.isOnline();
-                deletable |= heroInfo.isDeletable();
+                    online |= heroInfo.isOnline();
+                    deletable |= heroInfo.isDeletable();
+                }
             }
 
             mode.setSubtitle(fragment.getString(R.string.count_selected, String.valueOf(selected)));

@@ -233,20 +233,20 @@ public class TabEditFragment extends BaseRecyclerFragment implements
                 modifier.setOnCheckedChangeListener(this);
 
 				recyclerView.setVisibility(View.VISIBLE);
-                fab.setVisibility(View.VISIBLE);
+                fab.show();
 				mAdapter.clear();
 				mAdapter.addAll(listSettings.getListItems());
 			} else {
                 modifier.setVisibility(View.GONE);
                 modifier.setOnCheckedChangeListener(null);
 				recyclerView.setVisibility(View.GONE);
-                fab.setVisibility(View.GONE);
+                fab.hide();
 			}
 		} else {
             modifier.setVisibility(View.GONE);
             modifier.setOnCheckedChangeListener(null);
 			recyclerView.setVisibility(View.GONE);
-            fab.setVisibility(View.GONE);
+            fab.show();
 		}
 	}
 

@@ -8,6 +8,7 @@ import android.util.LruCache;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.data.ArtInfo;
+import com.dsatab.data.DatabaseContentProvider;
 import com.dsatab.data.SpellInfo;
 import com.dsatab.data.enums.ItemType;
 import com.dsatab.data.items.Item;
@@ -60,7 +61,7 @@ import javax.xml.xpath.XPathFactory;
  */
 public class DataManager {
 
-    private static Uri ITEMS_URI = Uri.parse("content://com.dsatab/items/");
+    private static Uri ITEMS_URI = Uri.parse("content://"+ DatabaseContentProvider.CONTENT_PROVIDER_AUTHORITY+"/items/");
 
     private static SelectArg artNameArg, artGradeArg, artNameLikeArg;
     private static PreparedQuery<ArtInfo> artNameQuery, artNameGradeQuery, artNameLikeQuery, artNameGradeLikeQuery;

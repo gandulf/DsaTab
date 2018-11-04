@@ -146,7 +146,9 @@ public class DiceSliderFragment extends DialogFragment implements View.OnClickLi
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(probeData.probe.getName());
+        if (probeData!=null && probeData.probe!=null) {
+            builder.setTitle(probeData.probe.getName());
+        }
 
 		root = (ViewGroup) View.inflate(builder.getContext(), R.layout.dice_slider_content, null);
 

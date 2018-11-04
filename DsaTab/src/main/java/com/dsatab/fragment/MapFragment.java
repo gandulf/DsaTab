@@ -29,6 +29,7 @@ import com.dsatab.map.MapTileProviderLocal;
 import com.dsatab.util.Util;
 import com.dsatab.util.ViewUtils;
 import com.dsatab.util.download.Downloader;
+import com.github.chrisbanes.photoview.PhotoViewAttacher;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 
@@ -46,8 +47,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class MapFragment extends BaseFragment {
 

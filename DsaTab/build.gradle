@@ -10,7 +10,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.4'
+        classpath 'com.android.tools.build:gradle:3.2.1'
         classpath 'io.fabric.tools:gradle:1.+'
     }
 }
@@ -37,16 +37,17 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.android.support:cardview-v7:27.+'
-    implementation 'com.android.support:appcompat-v7:27.+'
-    implementation 'com.android.support:recyclerview-v7:27.+'
-    implementation 'com.android.support:gridlayout-v7:27.+'
-    implementation 'com.android.support:preference-v7:27.+'
-    implementation 'com.android.support:design:27.+'
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.android.support:gridlayout-v7:28.0.0'
+    implementation 'com.android.support:preference-v7:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
+
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.github.fafaldo:fab-toolbar:1.2.0'
     implementation 'net.steamcrafted:materialiconlib:1.0.4'
-    implementation 'com.github.chrisbanes.photoview:library:1.2.4'
+    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     implementation 'org.osmdroid:osmdroid-android:5.6.5'
@@ -58,7 +59,7 @@ dependencies {
     implementation 'com.j256.ormlite:ormlite-android:5.0'
     implementation 'org.slf4j:slf4j-android:1.7.25'
     implementation 'org.jdom:jdom2:2.0.6'
-    implementation('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
         transitive = true
     }
     implementation 'com.squareup.okhttp:okhttp:2.7.5'
@@ -66,7 +67,9 @@ dependencies {
     implementation('com.mikepenz:aboutlibraries:6.0.0@aar') {
         transitive = true
     }
-    implementation 'com.github.tajchert:nammu:1.1.1'
+    implementation ('com.github.tajchert:nammu:1.2.1') {
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
     implementation 'com.github.paolorotolo:appintro:4.1.0'
     // needed to read xml dom in testcase
     androidTestImplementation('com.android.support.test:runner:0.6-alpha') {
@@ -87,18 +90,18 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '28.0.2'
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         // Enabling multidex support.
         multiDexEnabled true
 
         minSdkVersion 15
-        targetSdkVersion 26
+        targetSdkVersion 28
 
-        versionName "4.7.0"
-        versionCode 125
+        versionName "4.7.1"
+        versionCode 128
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 

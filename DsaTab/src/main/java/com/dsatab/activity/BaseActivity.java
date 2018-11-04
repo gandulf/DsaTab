@@ -3,6 +3,7 @@ package com.dsatab.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -49,10 +50,15 @@ public class BaseActivity extends AppCompatActivity implements SharedPreferences
     protected void onCreate(Bundle savedInstanceState) {
         preferences = DsaTabApplication.getPreferences();
 
+
         setTheme(DsaTabPreferenceActivity.getCustomTheme());
         applyPreferencesToTheme();
         super.onCreate(savedInstanceState);
         DsaTabApplication.getPreferences().registerOnSharedPreferenceChangeListener(this);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(Util.getThemeColors(this, R.attr.colorPrimaryDark));
+        }
 
         if (getIntent() == null && savedInstanceState!=null) {
             Intent intent = savedInstanceState.getParcelable(INTENT);

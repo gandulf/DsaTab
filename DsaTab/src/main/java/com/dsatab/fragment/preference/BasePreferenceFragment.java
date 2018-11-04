@@ -171,33 +171,35 @@ public class BasePreferenceFragment extends PreferenceFragmentCompat implements 
             @Override
             public void onSuccess(Boolean result) {
                 if (result != null && result) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle(storageType.toString());
-                    builder.setMessage(storageType.toString() + " Synchronisation aufheben?");
-                    builder.setPositiveButton("Aufheben", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            HeroExchange.getInstance().disconnect(storageType, new HeroExchange.CloudResult<Boolean>() {
-                                @Override
-                                public void onSuccess(Boolean result) {
-                                    if (result != null && result) {
-                                        ViewUtils.snackbar(getActivity(), storageType.toString() + " Verbindung getrennt");
-                                        if (preference != null) {
-                                            preference.setChecked(false);
+                    if (getActivity()!=null) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle(storageType.toString());
+                        builder.setMessage(storageType.toString() + " Synchronisation aufheben?");
+                        builder.setPositiveButton("Aufheben", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                HeroExchange.getInstance().disconnect(storageType, new HeroExchange.CloudResult<Boolean>() {
+                                    @Override
+                                    public void onSuccess(Boolean result) {
+                                        if (result != null && result) {
+                                            ViewUtils.snackbar(getActivity(), storageType.toString() + " Verbindung getrennt");
+                                            if (preference != null) {
+                                                preference.setChecked(false);
+                                            }
                                         }
                                     }
-                                }
-                            });
-                            dialog.dismiss();
-                        }
-                    });
-                    builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-                    builder.show();
+                                });
+                                dialog.dismiss();
+                            }
+                        });
+                        builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                        builder.show();
+                    }
                 } else {
                     setToolbarRefreshing(true);
                     if (connectTask!=null && connectTask.getStatus() != AsyncTask.Status.FINISHED) {

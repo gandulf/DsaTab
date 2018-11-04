@@ -46,11 +46,14 @@ public class AnimalFragment extends BaseProfileFragment {
 
     private void initAnimalNavigation() {
 
-        if (getActionBarActivity() != null) {
+        if (getActionBarActivity() != null ) {
             List<String> animalNames = new ArrayList<String>();
-            for (int i = 0; i < getHero().getAnimals().size(); i++) {
-                Animal animal = getHero().getAnimals().get(i);
-                animalNames.add(animal.getTitle());
+
+            if (getHero()!=null && getHero().hasAnimals()) {
+                for (int i = 0; i < getHero().getAnimals().size(); i++) {
+                    Animal animal = getHero().getAnimals().get(i);
+                    animalNames.add(animal.getTitle());
+                }
             }
 
             if (animalNames.size() > 1) {
@@ -160,7 +163,7 @@ public class AnimalFragment extends BaseProfileFragment {
 
         animalIndex = getPreferences().getInt(PREF_KEY_LAST_ANIMAL, 0);
 
-        if (getHero() != null) {
+        if (getHero() != null && getHero().hasAnimals()) {
             if (animalIndex >= getHero().getAnimals().size() || animalIndex < 0)
                 animalIndex = 0;
 

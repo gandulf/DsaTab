@@ -45,10 +45,11 @@ public class ItemsActivity extends BaseItemActivity implements OnItemSelectedLis
             setToolbarTitle(R.string.choose_item);
         }
 
+
+
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
         itemViewFragment =(ItemViewFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_item_view);
 
     }

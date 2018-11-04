@@ -2,6 +2,7 @@ package com.dsatab.activity;
 
 import android.Manifest;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v4.content.res.ResourcesCompat;
 
 import com.dsatab.DsaTabApplication;
 import com.dsatab.R;
+import com.dsatab.util.Util;
 import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 
@@ -27,6 +29,9 @@ public class DsaTabIntro extends AppIntro {
         // AppIntro will automatically generate the dots indicator and buttons.
         //addSlide(first_fragment);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(Util.getThemeColors(this, R.attr.colorPrimaryDark));
+        }
         // Instead of fragments, you can also use our default slide
         // Just set a title, description, background and image. AppIntro will do the rest
 
@@ -55,7 +60,7 @@ public class DsaTabIntro extends AppIntro {
         setBarColor(ResourcesCompat.getColor(getResources(), R.color.blue_grey_500, getTheme()));
         //setSeparatorColor(Color.parseColor("#2196F3"));
 
-        setImmersiveMode(true);
+        setImmersiveMode(false);
         // Hide Skip/Done button
         //showSkipButton(false);
         //showDoneButton(false);

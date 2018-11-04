@@ -177,3 +177,4 @@ gradle
 gradlew
 gradlew.bat
 DsaTab/gradle.properties
+DsaTab/fabric.properties

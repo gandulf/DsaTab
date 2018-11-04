@@ -1340,7 +1340,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
 
     @Override
     public void onModifierAdded(Modificator item) {
-        if (getListSettings().hasListItem(ListItemType.Modificator)) {
+        if (getListSettings()!=null && getListSettings().hasListItem(ListItemType.Modificator)) {
 
             int index = mAdapter.lastIndexOf(item.getClass());
             if (index >= 0)
@@ -1362,7 +1362,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
 
     @Override
     public void onModifierRemoved(Modificator value) {
-        if (getListSettings().hasListItem(ListItemType.Modificator)) {
+        if (getListSettings()!=null && getListSettings().hasListItem(ListItemType.Modificator)) {
             mAdapter.remove(value);
         }
 
@@ -1857,7 +1857,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
      */
     @Override
     public void onItemChanged(EquippedItem item) {
-        if (getListSettings().hasListItem(ListItemType.EquippedItem)) {
+        if (getListSettings()!=null && getListSettings().hasListItem(ListItemType.EquippedItem)) {
             if (item.getSet() == getHero().getActiveSet()) {
                 mAdapter.notifyDataSetChanged();
             }
@@ -1871,7 +1871,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
      */
     @Override
     public void onItemEquipped(EquippedItem item) {
-        if (getListSettings().hasListItem(ListItemType.EquippedItem)) {
+        if (getListSettings()!=null && getListSettings().hasListItem(ListItemType.EquippedItem)) {
             if (item.getSet() == getHero().getActiveSet()) {
 
                 int index = mAdapter.lastIndexOf(item.getClass());
@@ -1890,7 +1890,7 @@ public class ListableFragment extends BaseRecyclerFragment implements HeroInvent
      */
     @Override
     public void onItemUnequipped(EquippedItem item) {
-        if (getListSettings().hasListItem(ListItemType.EquippedItem)) {
+        if (getListSettings()!=null && getListSettings().hasListItem(ListItemType.EquippedItem)) {
             if (item.getSet() == getHero().getActiveSet()) {
                 mAdapter.remove(item);
             }

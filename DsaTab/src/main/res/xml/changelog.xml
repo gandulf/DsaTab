@@ -1,5 +1,12 @@
 
 <changelog>
+    <release version="4.7.1" versioncode="128">
+        <change>Libraries updated</change>
+        <fix>Minor Crashes fixes</fix>
+    </release>
+    <release version="4.7.0" versioncode="125">
+        <fix>Cloud Sync </fix>
+    </release>
     <release version="4.6.3" versioncode="121">
         <fix>Zusätzliche Behälter werden nun gespeichert</fix>
         <fix>Zonenrüstungsübersicht #323</fix>

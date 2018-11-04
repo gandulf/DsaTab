@@ -16,6 +16,7 @@
 package com.dsatab.util.download;
 
 import android.app.DownloadManager;
+import android.app.NotificationChannel;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -50,6 +51,7 @@ public class DownloadBroadcastReceiver extends BroadcastReceiver {
 		builder.setAutoCancel(true);
 		builder.setContentTitle("DsaTab Download");
 		builder.setContentText(message);
+		builder.setChannelId(NotificationChannel.DEFAULT_CHANNEL_ID);
 		PendingIntent contentIntent = PendingIntent.getActivity(context, 0, new Intent(), 0);
 		builder.setContentIntent(contentIntent);
 
@@ -86,7 +88,7 @@ public class DownloadBroadcastReceiver extends BroadcastReceiver {
 							Intent serviceIntent = new Intent(context, UnzipIntentService.class);
 							serviceIntent.putExtra(UnzipIntentService.INTENT_DOWNLOAD_ID, downloadId);
 							serviceIntent.putExtra(UnzipIntentService.INTENT_OUTPUT_URI, basePath);
-							context.startService(serviceIntent);
+                            UnzipIntentService.enqueueWork(context,serviceIntent);
 							Downloader.todoUnzip.remove(downloadId);
 						} else if (status == DownloadManager.STATUS_FAILED) {
 							notify(context, "Fehler:\n" + reason);

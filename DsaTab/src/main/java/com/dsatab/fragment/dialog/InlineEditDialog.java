@@ -50,14 +50,18 @@ public class InlineEditDialog extends AppCompatDialogFragment implements android
 	private CheckBox beCalculation;
 
 	public static void show(Fragment parent, Value value, int requestCode) {
-		InlineEditDialog dialog = new InlineEditDialog();
+        try {
+            InlineEditDialog dialog = new InlineEditDialog();
 
-		Bundle args = new Bundle();
-		// TODO value should be set as argument
-		dialog.value = value;
-		dialog.setArguments(args);
-		dialog.setTargetFragment(parent, requestCode);
-		dialog.show(parent.getFragmentManager(), TAG);
+            Bundle args = new Bundle();
+            // TODO value should be set as argument
+            dialog.value = value;
+            dialog.setArguments(args);
+            dialog.setTargetFragment(parent, requestCode);
+            dialog.show(parent.getFragmentManager(), TAG);
+        } catch (IllegalStateException ignored) {
+            // There's no way to avoid getting this if saveInstanceState has already been called.
+        }
 	}
 
 
@@ -236,7 +240,7 @@ public class InlineEditDialog extends AppCompatDialogFragment implements android
         int currentValue = Util.parseInt(editValue.getText().toString(),0);
         switch (v.getId()) {
             case R.id.popup_edit_value_minus:
-                if (currentValue > value.getMinimum()) {
+                if (value ==null || currentValue > value.getMinimum()) {
                     currentValue--;
                     editValue.setText("");
                     editValue.append(String.valueOf(currentValue));
@@ -244,7 +248,7 @@ public class InlineEditDialog extends AppCompatDialogFragment implements android
                 }
                 break;
             case R.id.popup_edit_value_plus:
-                if (currentValue < value.getMaximum()) {
+                if (value==null || currentValue < value.getMaximum()) {
                     currentValue++;
                     editValue.setText("");
                     editValue.append(String.valueOf(currentValue));

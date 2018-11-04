@@ -304,12 +304,15 @@ public class HeroExchange {
                         } else {
                             Debug.e(e);
                         }
-                        context.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                ViewUtils.snackbar(context, "Fehler: " + e.getLocalizedMessage());
-                            }
-                        });
+                        if (context!=null) {
+                            context.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ViewUtils.snackbar(context, "Fehler: " + e.getLocalizedMessage());
+                                }
+
+                            });
+                        }
                     }
                     return result;
                 }

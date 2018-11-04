@@ -1,8 +1,8 @@
 package com.dsatab.fragment.dialog;
 
 import android.app.Dialog;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
@@ -70,6 +70,7 @@ public class WebInfoDialog extends AppCompatDialogFragment implements OnItemSele
 
 		AlertDialog dialog = builder.create();
 		dialog.setCanceledOnTouchOutside(true);
+
 		return dialog;
 
 	}

@@ -1,7 +1,7 @@
 package com.dsatab.util.download;
 
 import android.app.DownloadManager;
-import android.app.IntentService;
+import android.app.NotificationChannel;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.database.Cursor;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
+import android.support.annotation.NonNull;
+import android.support.v4.app.JobIntentService;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.text.TextUtils;
@@ -23,7 +25,7 @@ import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-public class UnzipIntentService extends IntentService {
+public class UnzipIntentService extends JobIntentService {
 
     private static final String TAG="Downloader";
 
@@ -40,8 +42,11 @@ public class UnzipIntentService extends IntentService {
 	public static final int RESULT_CANCELED = 3;
 
 	public UnzipIntentService() {
-		super("UnzipIntentService");
+
 	}
+    public static void enqueueWork(Context context, Intent work) {
+        enqueueWork(context, UnzipIntentService.class, UNZIP_ID, work);
+    }
 
 	public static int unzip(Context context, long downloadId, Uri outputURI) {
 
@@ -53,6 +58,7 @@ public class UnzipIntentService extends IntentService {
 		NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
 		notificationBuilder.setSmallIcon(android.R.drawable.stat_sys_download);
 		notificationBuilder.setContentTitle("Unpacking package");
+		notificationBuilder.setChannelId(NotificationChannel.DEFAULT_CHANNEL_ID);
 		notificationBuilder.setWhen(System.currentTimeMillis());
 		notificationBuilder.setContentIntent(contentIntent);
 
@@ -95,6 +101,7 @@ public class UnzipIntentService extends IntentService {
 
 					bitsread += entry.getCompressedSize();
 
+					notificationBuilder.setChannelId(NotificationChannel.DEFAULT_CHANNEL_ID);
 					notificationBuilder.setContentTitle(title);
 					notificationBuilder.setContentText(entry.getName());
 					notificationBuilder.setProgress(totalSize, bitsread, true);
@@ -165,6 +172,7 @@ public class UnzipIntentService extends IntentService {
 
 		switch (result) {
 		case RESULT_OK:
+            notificationBuilder.setChannelId(NotificationChannel.DEFAULT_CHANNEL_ID);
 			notificationBuilder.setContentTitle("Unpacking completed");
 			notificationBuilder.setContentText(context.getString(R.string.download_finished));
 			notificationBuilder.setSmallIcon(android.R.drawable.stat_sys_download_done);
@@ -181,6 +189,7 @@ public class UnzipIntentService extends IntentService {
 			notificationManager.cancel(UNZIP_ID);
 			break;
 		case RESULT_ERROR:
+            notificationBuilder.setChannelId(NotificationChannel.DEFAULT_CHANNEL_ID);
 			notificationBuilder.setContentTitle("Unpacking failed");
 			notificationBuilder.setContentText(context.getString(R.string.download_error));
 			notificationBuilder.setSmallIcon(android.R.drawable.stat_sys_warning);
@@ -192,14 +201,9 @@ public class UnzipIntentService extends IntentService {
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.IntentService#onHandleIntent(android.content.Intent)
-	 */
-	@Override
-	protected void onHandleIntent(Intent intent) {
-		long downloadId = intent.getLongExtra(INTENT_DOWNLOAD_ID, -1);
+    @Override
+    protected void onHandleWork(@NonNull Intent intent) {
+        long downloadId = intent.getLongExtra(INTENT_DOWNLOAD_ID, -1);
         String outputURIExtra = intent.getStringExtra(INTENT_OUTPUT_URI);
         int result;
         if (!TextUtils.isEmpty(outputURIExtra)) {
@@ -208,11 +212,12 @@ public class UnzipIntentService extends IntentService {
         } else {
             result = RESULT_CANCELED;
         }
-		Intent broadcastIntent = new Intent(ACTION_UNZIP_COMPLETE);
-		broadcastIntent.putExtra(INTENT_RESULT, result);
-		sendBroadcast(broadcastIntent);
+        Intent broadcastIntent = new Intent(ACTION_UNZIP_COMPLETE);
+        broadcastIntent.putExtra(INTENT_RESULT, result);
+        sendBroadcast(broadcastIntent);
+    }
 
-	}
+
 
     static class MediaScannerWrapper implements MediaScannerConnection.MediaScannerConnectionClient {
 
