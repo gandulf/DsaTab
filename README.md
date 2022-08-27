@@ -5,9 +5,7 @@ DsaTab
 An android app to handle your [DSA][2] Pen&amp;Paper roleplaying characters.
 DsaTab requires Android 4.1 and is compatible with the newest version of [Helden-Software][1] 5.5.2
 
-Get the current version (only in german) from the [google play store][3], old release can be found in the [releases](https://github.com/gandulf/DsaTab/tree/master/Releases) folder:
-
-[![Get it on Google Play](http://www.android.com/images/brand/get_it_on_play_logo_small.png)](http://play.google.com/store/apps/details?id=com.dsatab)
+Release can be found in the [releases](https://github.com/gandulf/DsaTab/tree/master/Releases) folder:
 
 Screenshot showing the first character and talents tab, for more images goto the google play store:
 ![DsaTab Screenshot](Web/screen.png)
@@ -58,7 +56,6 @@ This Project is developed using Android Studio. Gradle dependencies should take 
      
 [1]: http://www.helden-software.de/
 [2]: http://www.dasschwarzeauge.de/
-[3]: https://play.google.com/store/apps/details?id=com.dsatab
 [5]: https://github.com/gandulf/GuiLib
 [6]: https://github.com/nhaarman/ListViewAnimations
 [7]: https://github.com/chrisbanes/PhotoView
